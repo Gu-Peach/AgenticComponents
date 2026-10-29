@@ -1,10 +1,12 @@
 # 八类设备的接口与行为契约规范
 
+空间结构采用 [设备契约 1.1](设备契约.md)：interfaces 仅空间吸附连接；signal_ports 属于设备/服务，由未来引擎管理。本文旧基础 JSON 链接为历史参考，不表示继续采用其 physical_interfaces/process_ports 或事件式信号。
+
 本规范保留现有 DeviceSpec 的安装锚点、工艺端口、行为能力和资源定义，统一接口方向、参数含义及逐行为执行契约。每类设备以一张行为契约表同时定义行为标识、类型、触发来源、前置／持续条件和完成依据，避免行为清单与条件表分别维护而失配。本文是待实施的目标规范，不表示 DeviceSpec JSON、PLC 或运行器已经支持所有条目。
 
 ## 通用约定
 
-- `in/out` 均从设备或设备服务视角描述。安装锚点、取放点、工艺端口不是 PLC 变量，继续分别保存于 `physical_interfaces` 和 `process_ports`。
+- `in/out` 均从设备或设备服务视角描述。空间吸附接口不绑定信号；取放点、TCP、支承面和工艺观测区分别放入类型专属几何/运动学模型，设备信号独立保存于 `signal_ports`。
 - 表内 `BOOL/INT/DINT/REAL` 表示建议的 PLC 侧类型。上层 `event/command` 仍可作为 Agent/Runtime 的消息；适配器负责把命令载荷拆为有类型的参数和触发信号，不把 JSON 对象直接塞入一个 REAL。
 - BOOL 必须说明是持续状态、持续许可还是请求／通知。一次事件可用有确认的锁存位、序号或队列编码；不能只在一个 PLC 扫描中置 TRUE 后立即清零，否则可能被设备采样漏掉。
 - 接口名为语义标识；`runTag` 等名称沿用手稿，实际映射到场景中的 PLC 变量名。别名只对应一个逻辑接口，不产生两个写入者。
@@ -46,7 +48,7 @@
 
 基础定义：[conveyor_1.json](E:/project/AgenticComponents/test1/docs/scene1/device_specs/conveyor_1.json)。参考：[普通皮带](E:/project/Open-Industry/examples/parts/belt-conveyor/part.js:678)、[Flex Conveyor 分区积放](E:/project/Open-Industry/examples/parts/flex-conveyor/part.js:359)。
 
-物理／工艺接口：保留四个底部安装锚点和 `flow_input/flow_output`。停留区由独立 `zones/stop_points` 描述，包含几何范围、检测位置、物料长度约束和占用规则，不混入安装锚点。
+空间结构：Conveyor_aankws 当前只有沿带方向的两个端点，仅用于吸附，坐标待提供。输送面及工艺观测区分别声明在 type_specific_contract.conveying_surface/observation_regions。普通整带输送由接触物理驱动，不为每件物料生成两点插值任务。
 
 | 方向 | 接口信息 | 含义 |
 | --- | --- | --- |
@@ -94,7 +96,7 @@
 
 基础定义：[lift_table_1.json](E:/project/agent/docs/business/SimulationSchema/1.DeviceSpec/lift_table/lift_table_1.json)。参考：[Gantry 位置控制](E:/project/Open-Industry/examples/parts/gantry/part.js)、[Chain Transfer 抬升](E:/project/Open-Industry/examples/parts/chain-transfer/part.js:237)。Open-Industry 无一一对应的独立升降台，以下为本项目拟定义。
 
-物理／工艺接口：保留 `lower_dock/upper_dock/platform` 和 `flow_input/flow_output`，明确平台与交接口当前世界高度。容量基线为 1，平台为互斥资源。
+空间结构：接口只描述设备安装和对接吸附；平台、升降轴与层高属于运动模型，对接高度与交接检测区属于类型专属工艺几何，不在空间接口绑定信号。
 
 | 方向 | 接口信息 | 含义 |
 | --- | --- | --- |
@@ -134,7 +136,7 @@
 
 基础定义：[material_source_station_1.json](E:/project/agent/docs/business/SimulationSchema/1.DeviceSpec/material_source_station/material_source_station_1.json)。参考：[Spawner](E:/project/Open-Industry/examples/parts/box-spawner/behavior.ts)。此处“出料口”是向产线提供物料的源端；产线末端移除物料是另一种 Sink。
 
-物理／工艺接口：保留 `output/buffer_area` 和 `flow_output`。保留生产周期、缓冲容量、按需模式和取走后释放策略。
+空间结构：接口只描述安装与空间连接；出料呈现位置和缓存区域属于类型专属工艺几何与观测区域，由运行时判断物料可取。
 
 | 方向 | 接口信息 | 含义 |
 | --- | --- | --- |
@@ -166,7 +168,7 @@
 
 基础定义：[robot_arm_1.json](E:/project/AgenticComponents/test1/docs/scene1/device_specs/robot_arm_1.json)。参考：[Six-Axis Robot](E:/project/Open-Industry/examples/parts/six-axis-robot/part.js:325)。
 
-物理／工艺接口：保留底部安装锚点、`flow_input/flow_output`、关节轴与限位、GLB 节点映射和 TCP。工艺抓放点与模型安装点分开，TCP 偏移必须实际进入运动求解。
+空间结构：安装/工具连接可声明空间吸附接口；TCP、抓取范围与目标区域属于运动学/工具模型，信号独立声明。
 
 | 方向 | 接口信息 | 含义 |
 | --- | --- | --- |
@@ -210,7 +212,7 @@ execute_job 是外部任务入口，pick_and_place 可作为其中一个任务�
 
 基础定义：[rotary_table_1.json](E:/project/agent/docs/business/SimulationSchema/1.DeviceSpec/rotary_table/rotary_table_1.json)。参考：[Turntable Conveyor](E:/project/Open-Industry/examples/parts/turntable-conveyor/part.js:513)。
 
-物理／工艺接口：保留 `station_a/station_b`、`flow_input/flow_output`。工位编号、目标角度、旋转轴、物料支承区域和交接姿态分别声明；工位坐标应随台面姿态更新。
+空间结构：安装与空间对接由接口描述；台面、转轴、工位及交接区域属于类型专属几何与观测模型。
 
 | 方向 | 接口信息 | 含义 |
 | --- | --- | --- |
@@ -249,7 +251,7 @@ execute_job 是外部任务入口，pick_and_place 可作为其中一个任务�
 
 本节接口属于仓储服务或逻辑控制器。普通货架本身不执行搬运；机器人、AGV 或升降机构完成物理存取，仓储服务负责库位、预留和交接确认。
 
-物理／工艺接口：保留 `cell_input/cell_output` 和 `flow_input/flow_output`；每个库位具有稳定 ID、位置、允许物料类型、容量及状态。初始 3×3 共 9 个库位，数量由配置确定。
+空间结构：货架安装和连接使用空间接口；库位坐标、允许物料与预留状态属于仓储结构/服务，不把每个库位当作绑定 PLC 的空间接口。
 
 | 方向 | 接口信息 | 含义 |
 | --- | --- | --- |
@@ -286,7 +288,7 @@ reserve_cell、store_to_cell、release_from_cell 的完成确认已分别包含�
 
 基础定义：[workpiece_1.json](E:/project/AgenticComponents/test1/docs/scene1/device_specs/workpiece_1.json)。参考：[Box](E:/project/Open-Industry/examples/parts/box/behavior.ts) 的被动货物与物理属性。
 
-物理／工艺信息：保留安装／布局锚点和质量、形状、尺寸等属性；抓取与稳定放置位置位于 `process_geometry`。`grasp_surface/bottom` 等旧引用需要映射到真实存在的几何区域或标准角色，不能保留悬空引用。
+空间结构：按需要声明空间装配/连接接口；物料形状、质量、抓取与稳定支承参考属于 process_geometry 或类型专属物料模型。物料是被动刚体，移动由外部设备接触或持有关系求解。
 
 以下 out 接口为运行时观测投影，由抓取器、物理或物料服务发布，不表示每件物料自带 PLC。物料数量大时，通过选择物料 ID 的查询或内部记录表达，避免给每件动态物料永久分配一组硬件 I/O。
 
@@ -319,7 +321,7 @@ reserve_cell、store_to_cell、release_from_cell 的完成确认已分别包含�
 
 基础定义：[carrier_tray_1.json](E:/project/AgenticComponents/test1/docs/scene1/device_specs/carrier_tray_1.json)。参考：[Pallet](E:/project/Open-Industry/examples/parts/pallet/behavior.ts)。本项目是带槽位载具，不能直接等同于 Open-Industry 的叉车托盘。
 
-物理／工艺接口：保留底部安装锚点、`flow_input/flow_output`、载荷表面、3×4 槽位布局、允许物料类别及部分装载策略。每个槽位具有位置和唯一 ID，容量默认 12，由参数控制。
+空间结构：按需要声明载具空间连接接口；槽位、载荷表面、允许物料与部分装载策略属于载具模型/服务，信号为独立观测投影。
 
 | 方向 | 接口信息 | 含义 |
 | --- | --- | --- |
@@ -423,3 +425,11 @@ definePart({
 4. 每类行为至少验证正常执行、条件不满足、重复请求、暂停恢复和错误结果；资源争抢与多物料交接再进入场景级测试。
 
 本稿中的接口表是目标规范，实施时需同步修改 DeviceSpec、类型校验、绑定适配器、行为运行器和测试。不能仅增加接口字段后就把“支持暂停”“验证到位”或“资源互斥”标记为已完成。
+
+## 接触式输送与未来信号引擎的解释
+
+空间接口只对齐设备，不充当运输路径或检测区。输送面设置实际接触表面速度，物料必须具备动态刚体、碰撞和有效摩擦；物料速度由接触求解，不等于直接复制皮带速度。工艺观测区域只检测实际事实，不推动或吸住物料。
+
+accept_material/release_material 在接触式实现中属于交接服务，transport_to_exit 是实际运输跟踪；这些服务与原物料任务协议兼容，但不得直接写物料位置。持续输送无需每件物料先请求执行。blocked/part_ready/capacity_available 分别由观测、容量及交接服务组合发布，不以全局 running 或动画进度替代。
+
+未来信号引擎按设备实例注册信号并管理 PLC/调度/手动输入的单一写入权，采用固定仿真步交换快照。接口禁止保存信号关联；设备信号、观测源及执行器职责分别可校验。当前 apps 尚未实现该引擎。

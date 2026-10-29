@@ -168,11 +168,10 @@
             "equals": "zoned"
           },
           "count_param": "stop_point_count",
-          "layout": "between_process_ports",
-          "entry_port": "flow_input",
-          "exit_port": "flow_output",
+          "layout": "along_conveying_surface",
           "drive_requirement": "independently_driven_sections",
-          "one_load_per_zone": true
+          "one_load_per_zone": true,
+          "surface_ref": "main_belt"
         },
         "release_model": {
           "gap_param": "release_gap_s",
@@ -182,7 +181,61 @@
           "enabled_if_parameter_present": "encoder_pitch_m",
           "pitch_param": "encoder_pitch_m",
           "measurement": "surface_travel"
-        }
+        },
+        "conveying_surface": {
+          "surface_id": "main_belt",
+          "node_binding_role": "upper_belt_surface",
+          "coordinate_space": "device_local",
+          "flow_axis": [1, 0, 0],
+          "normal": [0, 1, 0],
+          "geometry": {
+            "length_param": "length_m",
+            "width_param": "width_m",
+            "height_param": "surface_height_m",
+            "calibration_status": "pending",
+            "collision_shape": "box"
+          },
+          "contact": {
+            "model": "moving_surface_contact",
+            "friction_status": "pending",
+            "material_body_requirement": "dynamic_rigid_body",
+            "contact_requirement": "valid_support_contact",
+            "collision_response": "physics_solver"
+          },
+          "drive": {
+            "run_signal": "runTag",
+            "speed_signal": "speedTag",
+            "actual_speed_signal": "actual_speed",
+            "speed_param": "speed_mps",
+            "accel_time_param": "accel_time_s",
+            "decel_time_param": "decel_time_s"
+          },
+          "material_motion": "physics_contact_only",
+          "implementation_status": "pending_engine"
+        },
+        "observation_regions": [
+          {
+            "region_id": "entry_zone",
+            "surface_ref": "main_belt",
+            "purpose": "entry_availability",
+            "geometry_status": "pending",
+            "observation_keys": ["entry_region_clear"]
+          },
+          {
+            "region_id": "exit_zone",
+            "surface_ref": "main_belt",
+            "purpose": "exit_arrival",
+            "geometry_status": "pending",
+            "observation_keys": ["subject_at_exit", "exit_arrival_confirmed"]
+          },
+          {
+            "region_id": "support_zone",
+            "surface_ref": "main_belt",
+            "purpose": "surface_occupancy",
+            "geometry_status": "pending",
+            "observation_keys": ["subject_on_conveyor"]
+          }
+        ]
       }
     },
     {
@@ -566,7 +619,7 @@
           "required": true,
           "default": 0.001,
           "unit": "m",
-          "min": 0.00001,
+          "min": 1e-5,
           "max": 0.05,
           "mutability": "stopped_only",
           "description": "TCP 位置求解误差阈值"

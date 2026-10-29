@@ -1,3 +1,4 @@
+import { hasPendingContactModel } from "@/contracts/conveyor";
 import type { ProjectDocument, ParamValue } from "@/contracts/device";
 import {
   isActive,
@@ -64,7 +65,7 @@ export class PreviewController {
     );
     if (!instance || !definition || !behavior)
       throw new Error("设备或行为不存在");
-    if (!["action", "service"].includes(behavior.kind))
+    if (!["action", "composite", "service"].includes(behavior.kind))
       throw new Error("该行为不可直接调用");
     if (
       request.sceneRevision !== project.revision ||
@@ -88,6 +89,14 @@ export class PreviewController {
       ...validateParameters(behavior.arguments, request.args),
     ];
     if (request.mode === "real") {
+      if (hasPendingContactModel(definition.typeSpecificContract))
+        issues.push("接触式输送模型与引擎尚未标定接入");
+      if (definition.spatialInterfaces?.some((p) => p.local_frame_pending))
+        issues.push("接口坐标待提供，禁止真实执行");
+      if (behavior.implementationStatus === "pending_adapter")
+        issues.push("行为执行器尚未完成接入");
+      if (behavior.sustainingConditions?.length)
+        issues.push("持续条件监控尚未接入，禁止真实执行");
       const conditions = evaluateConditions(
         behavior.preconditions,
         parameters,

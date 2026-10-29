@@ -1,3 +1,4 @@
+import { spatialInterfaceSchema } from "@/contracts/spatial";
 import { z } from "zod";
 import {
   deviceTypes,
@@ -18,7 +19,7 @@ export const parameterSchema = z.object({
   required_when: z.object({ parameter: z.string(), equals: value }).optional(),
   mutability: z.enum(["stopped_only", "runtime_setpoint"]).optional(),
 });
-const condition = z.object({
+export const condition = z.object({
   id: z.string(),
   label: z.string(),
   source: z.enum(["parameter", "observation", "authorization"]),
@@ -39,6 +40,7 @@ export const definitionSchema = z.object({
   }),
   paramsSchema: z.record(z.string(), parameterSchema),
   typeSpecificContract: z.record(z.string(), z.unknown()),
+  spatialInterfaces: z.array(spatialInterfaceSchema).optional(),
   interfaces: z.array(
     z.object({
       id: z.string(),
@@ -51,7 +53,20 @@ export const definitionSchema = z.object({
     z.object({
       id: z.string(),
       label: z.string(),
-      kind: z.enum(["action", "service", "passive", "observer", "internal"]),
+      kind: z.enum([
+        "action",
+        "composite",
+        "service",
+        "passive",
+        "observer",
+        "internal",
+      ]),
+      schedulable: z.boolean().optional(),
+      implementationStatus: z
+        .enum(["pending_adapter", "implemented"])
+        .optional(),
+      sustainingConditions: z.array(condition).optional(),
+      completionMode: z.enum(["continuous", "observed"]).optional(),
       executorRef: z.string(),
       arguments: z.record(z.string(), parameterSchema),
       requiredInterfaces: z.array(z.string()),
@@ -195,6 +210,54 @@ export function semanticIssues(
     }
   };
   walk(def.typeSpecificContract, "type_specific_contract");
+  const spatial = def.spatialInterfaces ?? [];
+  if (new Set(spatial.map((i) => i.interface_id)).size !== spatial.length)
+    errors.push("空间接口 ID 重复");
+  for (const i of spatial) {
+    walk(i.local_frame_rule, i.interface_id);
+    if (i.local_frame_rule) {
+      let current: unknown = {
+        type_specific_contract: def.typeSpecificContract,
+      };
+      for (const key of i.local_frame_rule.origin_ref.split("."))
+        current =
+          current && typeof current === "object" && Object.hasOwn(current, key)
+            ? (current as Record<string, unknown>)[key]
+            : undefined;
+      if (!current || typeof current !== "object")
+        errors.push(`${i.interface_id}: 坐标来源不存在`);
+    }
+  }
+  for (const [key, spec] of Object.entries(def.paramsSchema)) {
+    if (spec.min !== undefined && spec.max !== undefined && spec.min > spec.max)
+      errors.push(`${key}: min 大于 max`);
+    if (spec.default !== undefined)
+      errors.push(
+        ...validateParameters({ [key]: spec }, { [key]: spec.default }),
+      );
+    if (spec.type === "enum" && !spec.options?.length)
+      errors.push(`${key}: 缺少枚举选项`);
+  }
+  for (const b of def.behaviors) {
+    if (["observer", "internal", "passive"].includes(b.kind) && b.schedulable)
+      errors.push(`${b.id}: 此行为类型不可调度`);
+    if (b.completionMode === "observed" && !b.completionChecks.length)
+      errors.push(`${b.id}: 缺少完成观测`);
+    for (const c of [
+      ...b.preconditions,
+      ...(b.sustainingConditions ?? []),
+      ...b.completionChecks,
+    ])
+      if (c.source === "parameter" && !(c.key in def.paramsSchema))
+        errors.push(`${b.id}: 条件参数不存在 ${c.key}`);
+  }
+  if (
+    p.allow_reverse === false &&
+    typeof p.speed_mps === "number" &&
+    p.speed_mps < 0
+  )
+    errors.push("当前设备不允许反转");
+
   return errors;
 }
 export function parseProject(raw: unknown) {

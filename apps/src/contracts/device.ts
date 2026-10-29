@@ -1,3 +1,4 @@
+import type { SpatialInterface } from "./spatial";
 export const deviceTypes = [
   "conveyor",
   "lift_table",
@@ -44,7 +45,12 @@ export interface Condition {
 export interface BehaviorContract {
   id: string;
   label: string;
-  kind: "action" | "service" | "passive" | "observer" | "internal";
+  kind:
+    "action" | "composite" | "service" | "passive" | "observer" | "internal";
+  schedulable?: boolean;
+  implementationStatus?: "pending_adapter" | "implemented";
+  sustainingConditions?: Condition[];
+  completionMode?: "continuous" | "observed";
   executorRef: string;
   arguments: Record<string, ParameterSpec>;
   requiredInterfaces: string[];
@@ -62,7 +68,9 @@ export interface DeviceDefinition {
   asset: { assetId?: string; sourceKey?: string; rootNode?: string };
   paramsSchema: Record<string, ParameterSpec>;
   typeSpecificContract: Record<string, unknown>;
+  /** Historical internal name for signal ports. */
   interfaces: SignalPort[];
+  spatialInterfaces?: SpatialInterface[];
   behaviors: BehaviorContract[];
   source?: Record<string, unknown>;
   diagnostics: string[];

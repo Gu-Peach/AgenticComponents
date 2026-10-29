@@ -1,3 +1,4 @@
+import { normalizeUnifiedDevice } from "./normalizeUnifiedDevice";
 import { z } from "zod";
 import {
   definitionSchema,
@@ -51,6 +52,8 @@ export function normalizeDeviceSpec(raw: unknown): DeviceDefinition {
     if (errors.length) throw new Error(errors.join("；"));
     return def;
   }
+  if (raw && typeof raw === "object" && "contract_version" in raw)
+    return normalizeUnifiedDevice(raw);
   const s = legacy.parse(raw);
   const passive =
     s.device_type === "workpiece" || s.device_type === "workpiece_carrier";

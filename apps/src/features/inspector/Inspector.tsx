@@ -240,12 +240,38 @@ export function Inspector() {
           />
         </Section>
         <Section
+          title="空间接口"
+          badge={`${def.spatialInterfaces?.length ?? 0}`}
+          open={false}
+        >
+          {(def.spatialInterfaces ?? []).map((port) => (
+            <details key={port.interface_id}>
+              <summary>
+                {port.name} · {port.capabilities.snap ? "吸附 " : ""}
+              </summary>
+              <p className="muted-note">
+                {port.interface_id} ·{" "}
+                {port.local_frame
+                  ? `局部位置 ${port.local_frame.position.join(", ")}`
+                  : port.local_frame_pending
+                    ? "坐标待提供，暂不可吸附"
+                    : "参数化坐标待求解"}
+              </p>
+            </details>
+          ))}
+          {!def.spatialInterfaces?.length && (
+            <small>尚未声明统一空间接口；旧定义可从原始数据迁移。</small>
+          )}
+        </Section>
+        <Section
           sectionId="inspector-interfaces"
           title="信号接口"
           badge={`${def.interfaces.length}`}
           open={false}
         >
-          <p className="muted-note">方向以设备为参照；PLC 绑定保存在实例上。</p>
+          <p className="muted-note">
+            设备级信号独立于空间接口；PLC 映射保存在实例上，运行值待引擎接入。
+          </p>
           {def.interfaces.map((port) => (
             <div className="binding-row" key={port.id}>
               <span className={`direction ${port.direction}`}>

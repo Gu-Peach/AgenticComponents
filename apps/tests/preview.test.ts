@@ -23,6 +23,8 @@ function setup(
   const def = p.definitions[0];
   if (mode === "real") {
     def.template = false;
+    // These protocol tests use a fake adapter, independent of contact-model calibration.
+    def.typeSpecificContract = {};
     def.behaviors[0].preconditions = [];
     def.behaviors[0].executorRef = adapter.id;
   }
@@ -154,5 +156,57 @@ describe("preview lifecycle", () => {
     await expect(c.start({ ...request, sceneRevision: 12 }, p)).rejects.toThrow(
       "版本",
     );
+  });
+});
+
+describe("declared execution support", () => {
+  it("rejects pending implementations even when an adapter is registered", async () => {
+    const { c, p, request } = setup(mockAdapter, "real");
+    p.definitions[0].behaviors[0].implementationStatus = "pending_adapter";
+    await expect(c.start(request, p)).rejects.toThrow("尚未完成接入");
+  });
+  it("blocks unmonitored sustaining conditions and non-callable observers", async () => {
+    const { c, p, request } = setup(mockAdapter, "real");
+    p.definitions[0].behaviors[0].sustainingConditions = [
+      {
+        id: "permit",
+        label: "运行许可",
+        source: "observation",
+        key: "permit",
+        equals: true,
+      },
+    ];
+    await expect(c.start(request, p)).rejects.toThrow("持续条件监控");
+    p.definitions[0].behaviors[0].kind = "observer";
+    await expect(c.start({ ...request, mode: "mock" }, p)).rejects.toThrow(
+      "不可直接调用",
+    );
+  });
+});
+
+describe("unresolved spatial coordinates", () => {
+  it("blocks real preview when coordinates are pending", async () => {
+    const { c, p, request } = setup(mockAdapter, "real");
+    p.definitions[0].spatialInterfaces = [
+      {
+        interface_id: "end",
+        name: "端点",
+        local_frame_pending: true,
+        capabilities: {
+          snap: { role: "conveyor_end", accepts: ["conveyor_end"] },
+        },
+      },
+    ];
+    await expect(c.start(request, p)).rejects.toThrow("接口坐标待提供");
+  });
+});
+
+describe("pending contact model", () => {
+  it("blocks a registered real adapter until the conveying surface model is calibrated", async () => {
+    const { c, p, request } = setup(mockAdapter, "real");
+    p.definitions[0].typeSpecificContract = {
+      conveying_surface: { implementation_status: "pending_engine" },
+    };
+    await expect(c.start(request, p)).rejects.toThrow("接触式输送模型");
   });
 });

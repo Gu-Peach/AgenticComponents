@@ -1,3 +1,4 @@
+import { hasPendingContactModel } from "@/contracts/conveyor";
 import { useState, useSyncExternalStore } from "react";
 import {
   Play,
@@ -35,7 +36,8 @@ export function BehaviorPanel({
   const state = usePreview();
   const behavior = definition.behaviors.find((b) => b.id === behaviorId);
   const active = isActive(state.status);
-  const callable = behavior && ["action", "service"].includes(behavior.kind);
+  const callable =
+    behavior && ["action", "composite", "service"].includes(behavior.kind);
   const facts = useSyncExternalStore(
     observations.subscribe,
     () => observations.read(instance.instanceId),
@@ -52,7 +54,11 @@ export function BehaviorPanel({
   const registered = behavior && Boolean(executors.get(behavior.executorRef));
   const blocked =
     !mock &&
-    (!registered ||
+    (hasPendingContactModel(definition.typeSpecificContract) ||
+      definition.spatialInterfaces?.some((p) => p.local_frame_pending) ||
+      behavior?.implementationStatus === "pending_adapter" ||
+      Boolean(behavior?.sustainingConditions?.length) ||
+      !registered ||
       definition.template ||
       conditions.some((c) => c.state !== "satisfied") ||
       !behavior?.completionChecks.length);
