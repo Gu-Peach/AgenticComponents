@@ -19,6 +19,7 @@ import {
   X,
   CircleAlert,
 } from "lucide-react";
+import { ProjectMark } from "@/components/ui/ProjectMark";
 import { TopBar } from "./TopBar";
 import { SceneTree } from "@/features/bom/SceneTree";
 import { Inspector } from "@/features/inspector/Inspector";
@@ -36,7 +37,7 @@ const SceneCanvas = dynamic(() => import("@/renderer/SceneCanvas"), {
   ssr: false,
   loading: () => (
     <div className="viewport-loading">
-      <Boxes size={32} />
+      <ProjectMark size={36} />
       <span>正在初始化三维工作区…</span>
     </div>
   ),
@@ -185,7 +186,7 @@ export default function WorkspaceClient() {
     return (
       <div className="boot-screen">
         <div className="brand-mark">
-          <Boxes />
+          <ProjectMark size={48} />
         </div>
         <h1>Agentic Components</h1>
         <p>正在打开设备工作台…</p>

@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import {
-  Boxes,
   ChevronDown,
   Maximize,
   Minimize,
@@ -16,6 +15,7 @@ import {
   Cuboid,
   CircleHelp,
 } from "lucide-react";
+import { ProjectMark } from "@/components/ui/ProjectMark";
 import { useWorkspace } from "@/stores/workspace";
 import { usePreview } from "@/hooks/usePreview";
 import { preview } from "@/runtime/services";
@@ -68,7 +68,7 @@ export function TopBar() {
   return (
     <header className="topbar">
       <div className="brand-mark" title="Agentic Components">
-        <Boxes size={23} />
+        <ProjectMark />
       </div>
       <div className="brand-name">
         AGENTIC<span>COMPONENTS</span>

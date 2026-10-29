@@ -253,8 +253,8 @@ button.text-button {
 .brand-mark {
   width: 29px;
   height: 29px;
-  background: #2c4657;
-  border: 1px solid #45667b;
+  background: transparent;
+  border: 0;
   border-radius: 7px;
   color: #a2d5e9;
   display: grid;

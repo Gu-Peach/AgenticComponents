@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
+  <title>Agentic Components</title>
+  <rect x="0.75" y="0.75" width="34.5" height="34.5" rx="8" fill="#172832" stroke="#385260" stroke-width="1.5"/>
+  <path d="M6.5 25L12.5 10L18.5 25M9 19H16" stroke="#78D6D0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M29 11.5H25A6.5 6.5 0 0 0 18.5 18A6.5 6.5 0 0 0 25 24.5H27" stroke="#E2EDF0" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M27 24.5H30" stroke="#E6B66D" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="30" cy="24.5" r="2" fill="#E6B66D"/>
+</svg>
