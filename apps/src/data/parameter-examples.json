@@ -1,0 +1,1365 @@
+{
+  "format": "proposed-device-parameter-contract-examples",
+  "version": "0.1",
+  "examples": [
+    {
+      "device_type": "conveyor",
+      "params_schema": {
+        "speed_mps": {
+          "type": "number",
+          "required": true,
+          "default": 0.4,
+          "unit": "m/s",
+          "min": -2,
+          "max": 2,
+          "mutability": "runtime_setpoint",
+          "description": "有符号目标输送速度；反向还需模式许可"
+        },
+        "length_m": {
+          "type": "number",
+          "required": true,
+          "default": 1.6,
+          "unit": "m",
+          "min": 0.1,
+          "max": 50,
+          "mutability": "stopped_only",
+          "description": "输送面长度"
+        },
+        "width_m": {
+          "type": "number",
+          "required": true,
+          "default": 0.35,
+          "unit": "m",
+          "min": 0.05,
+          "max": 5,
+          "mutability": "stopped_only",
+          "description": "输送面宽度"
+        },
+        "surface_height_m": {
+          "type": "number",
+          "required": true,
+          "default": 0.45,
+          "unit": "m",
+          "min": 0,
+          "max": 10,
+          "mutability": "stopped_only",
+          "description": "输送面相对设备基准的高度"
+        },
+        "transport_mode": {
+          "type": "enum",
+          "required": true,
+          "default": "continuous",
+          "options": ["continuous", "zoned"],
+          "mutability": "stopped_only",
+          "description": "整体驱动或独立分区驱动"
+        },
+        "allow_reverse": {
+          "type": "boolean",
+          "required": true,
+          "default": false,
+          "mutability": "stopped_only",
+          "description": "是否允许反向；还需执行器支持"
+        },
+        "capacity": {
+          "type": "integer",
+          "required": true,
+          "default": 3,
+          "min": 1,
+          "max": 100,
+          "mutability": "stopped_only",
+          "description": "允许的同时承载件数，含预留时不得超限"
+        },
+        "resume_threshold": {
+          "type": "integer",
+          "required": true,
+          "default": 2,
+          "min": 0,
+          "max": 99,
+          "mutability": "stopped_only",
+          "description": "积压解除后的恢复阈值"
+        },
+        "stop_point_count": {
+          "type": "integer",
+          "required": false,
+          "default": 4,
+          "min": 1,
+          "max": 100,
+          "mutability": "stopped_only",
+          "description": "分区数量；普通模式不据此获得分区驱动能力",
+          "required_when": {
+            "parameter": "transport_mode",
+            "equals": "zoned"
+          }
+        },
+        "accel_time_s": {
+          "type": "number",
+          "required": true,
+          "default": 0.5,
+          "unit": "s",
+          "min": 0,
+          "max": 30,
+          "mutability": "stopped_only",
+          "description": "从零到额定速度的加速时间；0表示理想瞬时切换"
+        },
+        "decel_time_s": {
+          "type": "number",
+          "required": true,
+          "default": 0.5,
+          "unit": "s",
+          "min": 0,
+          "max": 30,
+          "mutability": "stopped_only",
+          "description": "从额定速度到零的减速时间"
+        },
+        "release_gap_s": {
+          "type": "number",
+          "required": false,
+          "default": 0,
+          "unit": "s",
+          "min": 0,
+          "max": 60,
+          "mutability": "stopped_only",
+          "description": "相邻物料出口放行的最小间隔",
+          "required_when": {
+            "parameter": "transport_mode",
+            "equals": "zoned"
+          }
+        },
+        "encoder_pitch_m": {
+          "type": "number",
+          "required": false,
+          "default": 0.0254,
+          "unit": "m",
+          "min": 0.0001,
+          "max": 10,
+          "mutability": "stopped_only",
+          "description": "每编码脉冲对应的表面行程"
+        }
+      },
+      "type_specific_contract": {
+        "coordinate_system": {
+          "handedness": "right",
+          "up_axis": "Y",
+          "length_unit": "m",
+          "angle_unit": "rad",
+          "origin": "authored_device_root"
+        },
+        "conveyor_geometry": {
+          "length_param": "length_m",
+          "width_param": "width_m",
+          "surface_height_param": "surface_height_m"
+        },
+        "motion_model": {
+          "axis": [1, 0, 0],
+          "axis_frame": "device_local",
+          "speed_param": "speed_mps",
+          "accel_time_param": "accel_time_s",
+          "decel_time_param": "decel_time_s",
+          "reverse_permission_param": "allow_reverse"
+        },
+        "capacity_model": {
+          "capacity_param": "capacity",
+          "resume_threshold_param": "resume_threshold",
+          "counting_unit": "material_or_declared_unit_load"
+        },
+        "zone_model": {
+          "enabled_when": {
+            "parameter": "transport_mode",
+            "equals": "zoned"
+          },
+          "count_param": "stop_point_count",
+          "layout": "between_process_ports",
+          "entry_port": "flow_input",
+          "exit_port": "flow_output",
+          "drive_requirement": "independently_driven_sections",
+          "one_load_per_zone": true
+        },
+        "release_model": {
+          "gap_param": "release_gap_s",
+          "clock": "simulation_time"
+        },
+        "encoder_model": {
+          "enabled_if_parameter_present": "encoder_pitch_m",
+          "pitch_param": "encoder_pitch_m",
+          "measurement": "surface_travel"
+        }
+      }
+    },
+    {
+      "device_type": "lift_table",
+      "params_schema": {
+        "lift_speed_mps": {
+          "type": "number",
+          "required": true,
+          "default": 0.2,
+          "unit": "m/s",
+          "min": 0.001,
+          "max": 1,
+          "mutability": "runtime_setpoint",
+          "description": "主升降速度上限"
+        },
+        "lift_accel_mps2": {
+          "type": "number",
+          "required": true,
+          "default": 0.4,
+          "unit": "m/s²",
+          "min": 0.001,
+          "max": 5,
+          "mutability": "stopped_only",
+          "description": "升降加减速能力"
+        },
+        "min_height_m": {
+          "type": "number",
+          "required": true,
+          "default": 0.3,
+          "unit": "m",
+          "min": 0,
+          "max": 10,
+          "mutability": "stopped_only",
+          "description": "最低允许平台高度"
+        },
+        "max_height_m": {
+          "type": "number",
+          "required": true,
+          "default": 2,
+          "unit": "m",
+          "min": 0.01,
+          "max": 10,
+          "mutability": "stopped_only",
+          "description": "最高允许平台高度"
+        },
+        "upper_level_m": {
+          "type": "number",
+          "required": true,
+          "default": 1.8,
+          "unit": "m",
+          "min": 0,
+          "max": 10,
+          "mutability": "stopped_only",
+          "description": "本示例上层工位高度"
+        },
+        "platform_length_m": {
+          "type": "number",
+          "required": true,
+          "default": 1.2,
+          "unit": "m",
+          "min": 0.1,
+          "max": 5,
+          "mutability": "stopped_only",
+          "description": "平台长度"
+        },
+        "platform_width_m": {
+          "type": "number",
+          "required": true,
+          "default": 1,
+          "unit": "m",
+          "min": 0.1,
+          "max": 5,
+          "mutability": "stopped_only",
+          "description": "平台宽度"
+        },
+        "max_payload_kg": {
+          "type": "number",
+          "required": true,
+          "default": 100,
+          "unit": "kg",
+          "min": 0.1,
+          "max": 5000,
+          "mutability": "stopped_only",
+          "description": "允许载荷上限，需设备依据"
+        },
+        "position_tolerance_m": {
+          "type": "number",
+          "required": true,
+          "default": 0.02,
+          "unit": "m",
+          "min": 0.0001,
+          "max": 0.1,
+          "mutability": "stopped_only",
+          "description": "层高及定位误差界"
+        },
+        "settle_speed_mps": {
+          "type": "number",
+          "required": true,
+          "default": 0.001,
+          "unit": "m/s",
+          "min": 0,
+          "max": 0.05,
+          "mutability": "stopped_only",
+          "description": "到位时允许的剩余速度"
+        },
+        "transfer_module": {
+          "type": "boolean",
+          "required": true,
+          "default": false,
+          "mutability": "stopped_only",
+          "description": "是否有独立辅助横移机构"
+        },
+        "transfer_speed_mps": {
+          "type": "number",
+          "required": false,
+          "default": 0.3,
+          "unit": "m/s",
+          "min": -2,
+          "max": 2,
+          "mutability": "runtime_setpoint",
+          "description": "辅助输送速度",
+          "required_when": {
+            "parameter": "transfer_module",
+            "equals": true
+          }
+        },
+        "popup_stroke_m": {
+          "type": "number",
+          "required": false,
+          "default": 0.08,
+          "unit": "m",
+          "min": 0.001,
+          "max": 0.5,
+          "mutability": "stopped_only",
+          "description": "辅助机构行程",
+          "required_when": {
+            "parameter": "transfer_module",
+            "equals": true
+          }
+        }
+      },
+      "type_specific_contract": {
+        "coordinate_system": {
+          "up_axis": "Y",
+          "length_unit": "m",
+          "angle_unit": "rad",
+          "height_reference": "device_base"
+        },
+        "platform_geometry": {
+          "length_param": "platform_length_m",
+          "width_param": "platform_width_m"
+        },
+        "lift_motion": {
+          "joint_name": "lift_axis",
+          "joint_type": "prismatic",
+          "axis": [0, 1, 0],
+          "axis_frame": "device_local",
+          "min_param": "min_height_m",
+          "max_param": "max_height_m",
+          "speed_param": "lift_speed_mps",
+          "acceleration_param": "lift_accel_mps2",
+          "platform_node": "platform"
+        },
+        "height_levels": [
+          {
+            "level_id": "lower",
+            "height_param": "min_height_m"
+          },
+          {
+            "level_id": "upper",
+            "height_param": "upper_level_m"
+          }
+        ],
+        "dock_policy": {
+          "requires_level_match": true,
+          "tolerance_param": "position_tolerance_m",
+          "settle_speed_param": "settle_speed_mps"
+        },
+        "load_limits": {
+          "max_payload_param": "max_payload_kg",
+          "max_active_materials": 1
+        },
+        "transfer": {
+          "enabled_param": "transfer_module",
+          "joint_name": "transfer_lift",
+          "stroke_param": "popup_stroke_m",
+          "speed_param": "transfer_speed_mps",
+          "requires_main_platform_settled": true
+        }
+      }
+    },
+    {
+      "device_type": "material_source_station",
+      "params_schema": {
+        "production_mode": {
+          "type": "enum",
+          "required": true,
+          "default": "on_demand",
+          "options": ["on_demand", "periodic"],
+          "mutability": "stopped_only",
+          "description": "按需单件或周期生产"
+        },
+        "cycle_time_s": {
+          "type": "number",
+          "required": true,
+          "default": 5,
+          "unit": "s",
+          "min": 0.01,
+          "max": 3600,
+          "mutability": "stopped_only",
+          "description": "一个生产周期的有效仿真时长"
+        },
+        "buffer_capacity": {
+          "type": "integer",
+          "required": true,
+          "default": 1,
+          "min": 1,
+          "max": 100,
+          "mutability": "stopped_only",
+          "description": "源端缓冲容量"
+        },
+        "product_spec": {
+          "type": "string",
+          "required": true,
+          "default": "workpiece_1",
+          "mutability": "stopped_only",
+          "description": "被生成物料定义的引用 ID"
+        },
+        "buffer_length_m": {
+          "type": "number",
+          "required": true,
+          "default": 0.6,
+          "unit": "m",
+          "min": 0.01,
+          "max": 10,
+          "mutability": "stopped_only",
+          "description": "缓冲有效长度"
+        },
+        "buffer_width_m": {
+          "type": "number",
+          "required": true,
+          "default": 0.4,
+          "unit": "m",
+          "min": 0.01,
+          "max": 10,
+          "mutability": "stopped_only",
+          "description": "缓冲有效宽度"
+        },
+        "fixed_interval": {
+          "type": "boolean",
+          "required": false,
+          "default": true,
+          "mutability": "stopped_only",
+          "description": "周期模式是否采用固定间隔",
+          "required_when": {
+            "parameter": "production_mode",
+            "equals": "periodic"
+          }
+        },
+        "interval_jitter_ratio": {
+          "type": "number",
+          "required": false,
+          "default": 0.5,
+          "unit": "ratio",
+          "min": 0,
+          "max": 0.99,
+          "mutability": "stopped_only",
+          "description": "随机周期相对扰动比例"
+        },
+        "random_seed": {
+          "type": "integer",
+          "required": false,
+          "default": 1,
+          "min": 0,
+          "max": 2147483647,
+          "mutability": "stopped_only",
+          "description": "可复现随机种子"
+        },
+        "vary_attribute": {
+          "type": "string",
+          "required": false,
+          "default": "",
+          "mutability": "stopped_only",
+          "description": "可选产品变化属性名"
+        }
+      },
+      "type_specific_contract": {
+        "coordinate_system": {
+          "up_axis": "Y",
+          "length_unit": "m",
+          "time_unit": "s"
+        },
+        "production_policy": {
+          "mode_param": "production_mode",
+          "cycle_time_param": "cycle_time_s",
+          "fixed_interval_param": "fixed_interval",
+          "jitter_param": "interval_jitter_ratio",
+          "seed_param": "random_seed",
+          "pause_clock": "freeze_remaining",
+          "resume": "continue_same_cycle"
+        },
+        "buffer": {
+          "capacity_param": "buffer_capacity",
+          "length_param": "buffer_length_m",
+          "width_param": "buffer_width_m",
+          "release_policy": "after_confirmed_pick"
+        },
+        "output_material": {
+          "spec_param": "product_spec"
+        },
+        "presentation_geometry": {
+          "source_region": "buffer_area",
+          "output_process_port": "flow_output",
+          "placement_pattern": "validated_slots"
+        },
+        "attribute_variation": {
+          "enabled_if_nonempty": "vary_attribute",
+          "attribute_param": "vary_attribute",
+          "values": [],
+          "order": "cycle"
+        }
+      }
+    },
+    {
+      "device_type": "robot_arm",
+      "params_schema": {
+        "cartesian_speed_mps": {
+          "type": "number",
+          "required": true,
+          "default": 1,
+          "unit": "m/s",
+          "min": 0.01,
+          "max": 3,
+          "mutability": "runtime_setpoint",
+          "description": "笛卡尔路径速度上限",
+          "legacy_aliases": ["speed"]
+        },
+        "joint_speed_rad_s": {
+          "type": "number",
+          "required": true,
+          "default": 1.2,
+          "unit": "rad/s",
+          "min": 0.01,
+          "max": 6,
+          "mutability": "stopped_only",
+          "description": "各关节的默认速度上限，具体关节可更严格"
+        },
+        "joint_accel_rad_s2": {
+          "type": "number",
+          "required": true,
+          "default": 2,
+          "unit": "rad/s²",
+          "min": 0.01,
+          "max": 20,
+          "mutability": "stopped_only",
+          "description": "默认关节加速度上限"
+        },
+        "max_payload_kg": {
+          "type": "number",
+          "required": true,
+          "default": 5,
+          "unit": "kg",
+          "min": 0.01,
+          "max": 5,
+          "mutability": "stopped_only",
+          "description": "模型允许载荷上限；不同于当前物料实际质量",
+          "legacy_aliases": ["payload_kg"]
+        },
+        "lift_height": {
+          "type": "number",
+          "required": true,
+          "default": 0.3,
+          "unit": "m",
+          "min": 0,
+          "max": 1.5,
+          "mutability": "stopped_only",
+          "description": "抓放路径的默认抬升高度"
+        },
+        "ik_position_tolerance_m": {
+          "type": "number",
+          "required": true,
+          "default": 0.001,
+          "unit": "m",
+          "min": 0.00001,
+          "max": 0.05,
+          "mutability": "stopped_only",
+          "description": "TCP 位置求解误差阈值"
+        },
+        "ik_max_iterations": {
+          "type": "integer",
+          "required": true,
+          "default": 50,
+          "min": 1,
+          "max": 1000,
+          "mutability": "stopped_only",
+          "description": "一次 IK 求解迭代预算"
+        },
+        "ik_mode": {
+          "type": "enum",
+          "required": true,
+          "default": "position_only",
+          "options": ["position_only", "pose"],
+          "mutability": "stopped_only",
+          "description": "仅位置或位置及姿态；后者需执行器支持"
+        },
+        "orientation_tolerance_rad": {
+          "type": "number",
+          "required": false,
+          "default": 0.01,
+          "unit": "rad",
+          "min": 0.0001,
+          "max": 0.2,
+          "mutability": "stopped_only",
+          "description": "姿态误差阈值",
+          "required_when": {
+            "parameter": "ik_mode",
+            "equals": "pose"
+          }
+        },
+        "settle_speed_rad_s": {
+          "type": "number",
+          "required": true,
+          "default": 0.01,
+          "unit": "rad/s",
+          "min": 0,
+          "max": 0.1,
+          "mutability": "stopped_only",
+          "description": "精确停稳完成时的关节速度阈值"
+        }
+      },
+      "type_specific_contract": {
+        "coordinate_system": {
+          "up_axis": "Y",
+          "length_unit": "m",
+          "joint_angle_unit": "rad",
+          "rest_pose_source": "asset_calibration"
+        },
+        "rootNodeName": "UR10_00Hn",
+        "urdf": {
+          "format": "project_urdf_like",
+          "structure_mode": "serial",
+          "rest_transform_source": "glb_calibrated",
+          "joints": [
+            {
+              "name": "joint_1",
+              "nodeName": "Link1_00In",
+              "type": "revolute",
+              "axis": {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              "limit": {
+                "lower": -3.14,
+                "upper": 3.14
+              },
+              "parent_joint": null,
+              "axis_frame": "joint_local",
+              "velocity_limit_param": "joint_speed_rad_s",
+              "acceleration_limit_param": "joint_accel_rad_s2"
+            },
+            {
+              "name": "joint_2",
+              "nodeName": "Link2_00Jn",
+              "type": "revolute",
+              "axis": {
+                "x": 0,
+                "y": 0,
+                "z": 1
+              },
+              "limit": {
+                "lower": -1.57,
+                "upper": 2.36
+              },
+              "parent_joint": "joint_1",
+              "axis_frame": "joint_local",
+              "velocity_limit_param": "joint_speed_rad_s",
+              "acceleration_limit_param": "joint_accel_rad_s2"
+            },
+            {
+              "name": "joint_3",
+              "nodeName": "Link3_00Kn",
+              "type": "revolute",
+              "axis": {
+                "x": 0,
+                "y": 0,
+                "z": 1
+              },
+              "limit": {
+                "lower": -1.57,
+                "upper": 2.36
+              },
+              "parent_joint": "joint_2",
+              "axis_frame": "joint_local",
+              "velocity_limit_param": "joint_speed_rad_s",
+              "acceleration_limit_param": "joint_accel_rad_s2"
+            },
+            {
+              "name": "joint_4",
+              "nodeName": "Link4_00Ln",
+              "type": "revolute",
+              "axis": {
+                "x": 0,
+                "y": 0,
+                "z": 1
+              },
+              "limit": {
+                "lower": -1.57,
+                "upper": 2.36
+              },
+              "parent_joint": "joint_3",
+              "axis_frame": "joint_local",
+              "velocity_limit_param": "joint_speed_rad_s",
+              "acceleration_limit_param": "joint_accel_rad_s2"
+            },
+            {
+              "name": "joint_5",
+              "nodeName": "Link5_00Mn",
+              "type": "revolute",
+              "axis": {
+                "x": 1,
+                "y": 0,
+                "z": 0
+              },
+              "limit": {
+                "lower": -1.57,
+                "upper": 2.36
+              },
+              "parent_joint": "joint_4",
+              "axis_frame": "joint_local",
+              "velocity_limit_param": "joint_speed_rad_s",
+              "acceleration_limit_param": "joint_accel_rad_s2"
+            },
+            {
+              "name": "joint_6",
+              "nodeName": "Link6_00Nn",
+              "type": "revolute",
+              "axis": {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              "limit": {
+                "lower": -1.57,
+                "upper": 2.36
+              },
+              "parent_joint": "joint_5",
+              "axis_frame": "joint_local",
+              "velocity_limit_param": "joint_speed_rad_s",
+              "acceleration_limit_param": "joint_accel_rad_s2"
+            }
+          ]
+        },
+        "tooling": {
+          "tcp_node_name": "Link6_00Nn",
+          "tcp_local_frame": {
+            "position": [0, 0, 0.8],
+            "rotation_euler": [0, 0, 0]
+          },
+          "calibration_required": true
+        },
+        "trajectoryConfig": {
+          "cartesian_speed_param": "cartesian_speed_mps",
+          "lift_height_param": "lift_height",
+          "joint_speed_param": "joint_speed_rad_s",
+          "joint_acceleration_param": "joint_accel_rad_s2"
+        },
+        "ik": {
+          "mode_param": "ik_mode",
+          "position_tolerance_param": "ik_position_tolerance_m",
+          "orientation_tolerance_param": "orientation_tolerance_rad",
+          "max_iterations_param": "ik_max_iterations",
+          "completion_requires_convergence": true
+        },
+        "workspace": {
+          "shape": "cylinder",
+          "radius_m": 1.2,
+          "height_m": 1.5,
+          "frame": "device_local",
+          "purpose": "coarse_candidate_filter"
+        },
+        "gripper": {
+          "type": "vacuum",
+          "supported_material_classes": ["workpiece", "workpiece_carrier"],
+          "max_payload_param": "max_payload_kg"
+        },
+        "completion": {
+          "settle_speed_param": "settle_speed_rad_s",
+          "tcp_required": true
+        }
+      }
+    },
+    {
+      "device_type": "rotary_table",
+      "params_schema": {
+        "rotate_speed_deg_s": {
+          "type": "number",
+          "required": true,
+          "default": 90,
+          "unit": "°/s",
+          "min": 0.1,
+          "max": 360,
+          "mutability": "runtime_setpoint",
+          "description": "角速度上限"
+        },
+        "rotate_accel_deg_s2": {
+          "type": "number",
+          "required": true,
+          "default": 180,
+          "unit": "°/s²",
+          "min": 0.1,
+          "max": 720,
+          "mutability": "stopped_only",
+          "description": "角加速度上限"
+        },
+        "angle_tolerance_deg": {
+          "type": "number",
+          "required": true,
+          "default": 1,
+          "unit": "°",
+          "min": 0.001,
+          "max": 5,
+          "mutability": "stopped_only",
+          "description": "定位误差阈值"
+        },
+        "settle_speed_deg_s": {
+          "type": "number",
+          "required": true,
+          "default": 0.1,
+          "unit": "°/s",
+          "min": 0,
+          "max": 5,
+          "mutability": "stopped_only",
+          "description": "到位稳定的角速度阈值"
+        },
+        "deck_radius_m": {
+          "type": "number",
+          "required": true,
+          "default": 0.6,
+          "unit": "m",
+          "min": 0.05,
+          "max": 5,
+          "mutability": "stopped_only",
+          "description": "转台支承面半径"
+        },
+        "max_payload_kg": {
+          "type": "number",
+          "required": true,
+          "default": 50,
+          "unit": "kg",
+          "min": 0.01,
+          "max": 5000,
+          "mutability": "stopped_only",
+          "description": "允许载荷"
+        },
+        "capacity": {
+          "type": "integer",
+          "required": true,
+          "default": 2,
+          "min": 1,
+          "max": 50,
+          "mutability": "stopped_only",
+          "description": "允许同时承载数量"
+        },
+        "position_mode": {
+          "type": "enum",
+          "required": true,
+          "default": "station",
+          "options": ["station", "angle"],
+          "mutability": "stopped_only",
+          "description": "工位号或角度设定"
+        },
+        "transfer_module": {
+          "type": "boolean",
+          "required": true,
+          "default": false,
+          "mutability": "stopped_only",
+          "description": "是否含台面输送"
+        },
+        "deck_speed_mps": {
+          "type": "number",
+          "required": false,
+          "default": 0.4,
+          "unit": "m/s",
+          "min": -3,
+          "max": 3,
+          "mutability": "runtime_setpoint",
+          "description": "台面输送速度",
+          "required_when": {
+            "parameter": "transfer_module",
+            "equals": true
+          }
+        }
+      },
+      "type_specific_contract": {
+        "coordinate_system": {
+          "up_axis": "Y",
+          "length_unit": "m",
+          "angle_unit": "deg"
+        },
+        "rotary_geometry": {
+          "deck_radius_param": "deck_radius_m",
+          "deck_node": "turntable_deck",
+          "pivot_frame": {
+            "position": [0, 0, 0],
+            "rotation_euler_rad": [0, 0, 0]
+          }
+        },
+        "rotation_axis": {
+          "direction": [0, 1, 0],
+          "frame": "device_local",
+          "joint_name": "rotate"
+        },
+        "stations": [
+          {
+            "station_id": "station_a",
+            "angle_deg": 180
+          },
+          {
+            "station_id": "station_b",
+            "angle_deg": 0
+          }
+        ],
+        "indexing_policy": {
+          "mode_param": "position_mode",
+          "speed_param": "rotate_speed_deg_s",
+          "acceleration_param": "rotate_accel_deg_s2",
+          "tolerance_param": "angle_tolerance_deg",
+          "settle_speed_param": "settle_speed_deg_s",
+          "angle_wrap": "minus180_to_180"
+        },
+        "capacity_model": {
+          "capacity_param": "capacity",
+          "max_payload_param": "max_payload_kg"
+        },
+        "transfer": {
+          "enabled_param": "transfer_module",
+          "speed_param": "deck_speed_mps",
+          "requires_rotation_settled": true
+        },
+        "derived_values": {
+          "station_count": "length(stations)"
+        }
+      }
+    },
+    {
+      "device_type": "storage_rack",
+      "params_schema": {
+        "rows": {
+          "type": "integer",
+          "required": true,
+          "default": 3,
+          "min": 1,
+          "max": 20,
+          "mutability": "stopped_only",
+          "description": "垂直层数"
+        },
+        "columns": {
+          "type": "integer",
+          "required": true,
+          "default": 3,
+          "min": 1,
+          "max": 50,
+          "mutability": "stopped_only",
+          "description": "水平方向列数"
+        },
+        "cell_width_m": {
+          "type": "number",
+          "required": true,
+          "default": 0.8,
+          "unit": "m",
+          "min": 0.01,
+          "max": 5,
+          "mutability": "stopped_only",
+          "description": "单库位净宽"
+        },
+        "cell_depth_m": {
+          "type": "number",
+          "required": true,
+          "default": 0.8,
+          "unit": "m",
+          "min": 0.01,
+          "max": 5,
+          "mutability": "stopped_only",
+          "description": "单库位净深"
+        },
+        "cell_height_m": {
+          "type": "number",
+          "required": true,
+          "default": 0.6,
+          "unit": "m",
+          "min": 0.01,
+          "max": 5,
+          "mutability": "stopped_only",
+          "description": "单库位净高"
+        },
+        "cell_gap_x_m": {
+          "type": "number",
+          "required": true,
+          "default": 0.05,
+          "unit": "m",
+          "min": 0,
+          "max": 1,
+          "mutability": "stopped_only",
+          "description": "相邻列之间的结构间隙"
+        },
+        "cell_gap_y_m": {
+          "type": "number",
+          "required": true,
+          "default": 0.05,
+          "unit": "m",
+          "min": 0,
+          "max": 1,
+          "mutability": "stopped_only",
+          "description": "层间结构间隙"
+        },
+        "max_payload_per_cell_kg": {
+          "type": "number",
+          "required": true,
+          "default": 20,
+          "unit": "kg",
+          "min": 0.01,
+          "max": 5000,
+          "mutability": "stopped_only",
+          "description": "每库位允许载荷"
+        },
+        "capacity_per_cell": {
+          "type": "integer",
+          "required": true,
+          "default": 1,
+          "min": 1,
+          "max": 100,
+          "mutability": "stopped_only",
+          "description": "每库位最多存放的物料／载荷单元数"
+        }
+      },
+      "type_specific_contract": {
+        "coordinate_system": {
+          "up_axis": "Y",
+          "length_unit": "m",
+          "origin": "rack_lower_left_front"
+        },
+        "cells": {
+          "layout": "rectangular_grid",
+          "rows_param": "rows",
+          "columns_param": "columns",
+          "width_param": "cell_width_m",
+          "depth_param": "cell_depth_m",
+          "height_param": "cell_height_m",
+          "gap_x_param": "cell_gap_x_m",
+          "gap_y_param": "cell_gap_y_m",
+          "id_rule": "row_letter_then_1_based_column",
+          "generation_owner": "scene_compiler"
+        },
+        "capacity": {
+          "per_cell_param": "capacity_per_cell",
+          "max_payload_param": "max_payload_per_cell_kg",
+          "material_classes": ["workpiece", "workpiece_carrier"]
+        },
+        "reservation_policy": {
+          "allocation_owner": "scheduler_or_storage_service",
+          "fallback": "first_available",
+          "release_condition": "confirmed_material_exit"
+        },
+        "derived_values": {
+          "total_cells": "rows * columns",
+          "total_capacity": "rows * columns * capacity_per_cell",
+          "cell_ids": "generated_from_grid"
+        },
+        "geometry_binding": {
+          "storage_region": "cell_interior",
+          "ingress_role": "cell_input",
+          "egress_role": "cell_output"
+        }
+      }
+    },
+    {
+      "device_type": "workpiece",
+      "params_schema": {
+        "mass_kg": {
+          "type": "number",
+          "required": true,
+          "default": 0.2,
+          "unit": "kg",
+          "min": 0.001,
+          "max": 500,
+          "mutability": "stopped_only",
+          "description": "物料物理质量"
+        },
+        "shape": {
+          "type": "enum",
+          "required": true,
+          "default": "cylinder",
+          "options": ["cylinder", "box"],
+          "mutability": "stopped_only",
+          "description": "参数化碰撞形状；复杂网格需另选几何配置"
+        },
+        "height_m": {
+          "type": "number",
+          "required": true,
+          "default": 0.12,
+          "unit": "m",
+          "min": 0.001,
+          "max": 5,
+          "mutability": "stopped_only",
+          "description": "高度"
+        },
+        "diameter_m": {
+          "type": "number",
+          "required": false,
+          "default": 0.08,
+          "unit": "m",
+          "min": 0.001,
+          "max": 5,
+          "mutability": "stopped_only",
+          "description": "圆柱直径",
+          "required_when": {
+            "parameter": "shape",
+            "equals": "cylinder"
+          }
+        },
+        "length_m": {
+          "type": "number",
+          "required": false,
+          "default": 0.1,
+          "unit": "m",
+          "min": 0.001,
+          "max": 5,
+          "mutability": "stopped_only",
+          "description": "盒形长度",
+          "required_when": {
+            "parameter": "shape",
+            "equals": "box"
+          }
+        },
+        "width_m": {
+          "type": "number",
+          "required": false,
+          "default": 0.1,
+          "unit": "m",
+          "min": 0.001,
+          "max": 5,
+          "mutability": "stopped_only",
+          "description": "盒形宽度",
+          "required_when": {
+            "parameter": "shape",
+            "equals": "box"
+          }
+        },
+        "friction": {
+          "type": "number",
+          "required": false,
+          "default": 0.5,
+          "unit": "ratio",
+          "min": 0,
+          "max": 2,
+          "mutability": "stopped_only",
+          "description": "接触摩擦参数"
+        },
+        "restitution": {
+          "type": "number",
+          "required": false,
+          "default": 0,
+          "unit": "ratio",
+          "min": 0,
+          "max": 1,
+          "mutability": "stopped_only",
+          "description": "恢复系数"
+        },
+        "can_stack": {
+          "type": "boolean",
+          "required": true,
+          "default": false,
+          "mutability": "stopped_only",
+          "description": "是否允许作为合法堆叠对象"
+        }
+      },
+      "type_specific_contract": {
+        "coordinate_system": {
+          "up_axis": "Y",
+          "length_unit": "m",
+          "origin": "material_bottom_center"
+        },
+        "material_class": "workpiece",
+        "geometry": {
+          "shape_param": "shape",
+          "height_param": "height_m",
+          "diameter_param": "diameter_m",
+          "length_param": "length_m",
+          "width_param": "width_m",
+          "dimension_applicability": {
+            "diameter": "cylinder",
+            "length": "box",
+            "width": "box"
+          }
+        },
+        "physics": {
+          "body_type": "dynamic",
+          "mass_param": "mass_kg",
+          "friction_param": "friction",
+          "restitution_param": "restitution",
+          "optional_coefficient_defaults": "execution_profile"
+        },
+        "process_geometry": {
+          "regions": [
+            {
+              "region_id": "grasp_surface",
+              "placement_rule": "top_center_from_geometry"
+            },
+            {
+              "region_id": "bottom",
+              "placement_rule": "bottom_center_from_geometry"
+            }
+          ]
+        },
+        "grasping": {
+          "allowed_grasp_regions": ["grasp_surface"],
+          "preferred_grasp": "top",
+          "frame_source": "process_geometry"
+        },
+        "placement": {
+          "stable_regions": ["bottom"],
+          "can_stack_param": "can_stack"
+        },
+        "movement_role": "passive_subject"
+      }
+    },
+    {
+      "device_type": "workpiece_carrier",
+      "params_schema": {
+        "length_m": {
+          "type": "number",
+          "required": true,
+          "default": 0.8,
+          "unit": "m",
+          "min": 0.01,
+          "max": 5,
+          "mutability": "stopped_only",
+          "description": "载具外形长度"
+        },
+        "width_m": {
+          "type": "number",
+          "required": true,
+          "default": 0.45,
+          "unit": "m",
+          "min": 0.01,
+          "max": 5,
+          "mutability": "stopped_only",
+          "description": "载具外形宽度"
+        },
+        "height_m": {
+          "type": "number",
+          "required": true,
+          "default": 0.08,
+          "unit": "m",
+          "min": 0.001,
+          "max": 1,
+          "mutability": "stopped_only",
+          "description": "载具高度"
+        },
+        "empty_mass_kg": {
+          "type": "number",
+          "required": true,
+          "default": 3,
+          "unit": "kg",
+          "min": 0.001,
+          "max": 500,
+          "mutability": "stopped_only",
+          "description": "空载质量"
+        },
+        "max_load_kg": {
+          "type": "number",
+          "required": true,
+          "default": 20,
+          "unit": "kg",
+          "min": 0.01,
+          "max": 5000,
+          "mutability": "stopped_only",
+          "description": "可装载物料总质量上限"
+        },
+        "slot_rows": {
+          "type": "integer",
+          "required": true,
+          "default": 3,
+          "min": 1,
+          "max": 20,
+          "mutability": "stopped_only",
+          "description": "沿局部 Z 的槽位行数"
+        },
+        "slot_columns": {
+          "type": "integer",
+          "required": true,
+          "default": 4,
+          "min": 1,
+          "max": 20,
+          "mutability": "stopped_only",
+          "description": "沿局部 X 的槽位列数"
+        },
+        "slot_pitch_x_m": {
+          "type": "number",
+          "required": true,
+          "default": 0.2,
+          "unit": "m",
+          "min": 0.001,
+          "max": 2,
+          "mutability": "stopped_only",
+          "description": "相邻列中心距离"
+        },
+        "slot_pitch_z_m": {
+          "type": "number",
+          "required": true,
+          "default": 0.12,
+          "unit": "m",
+          "min": 0.001,
+          "max": 2,
+          "mutability": "stopped_only",
+          "description": "相邻行中心距离"
+        },
+        "edge_margin_m": {
+          "type": "number",
+          "required": true,
+          "default": 0.05,
+          "unit": "m",
+          "min": 0,
+          "max": 0.5,
+          "mutability": "stopped_only",
+          "description": "物料外廓与载具边缘最小距离"
+        },
+        "allow_partial_load": {
+          "type": "boolean",
+          "required": true,
+          "default": true,
+          "mutability": "stopped_only",
+          "description": "是否允许未满载就参与运输"
+        }
+      },
+      "type_specific_contract": {
+        "coordinate_system": {
+          "up_axis": "Y",
+          "length_unit": "m",
+          "origin": "carrier_bottom_center"
+        },
+        "carrier_geometry": {
+          "length_param": "length_m",
+          "width_param": "width_m",
+          "height_param": "height_m"
+        },
+        "slots": {
+          "layout": "centered_grid",
+          "rows_param": "slot_rows",
+          "columns_param": "slot_columns",
+          "pitch_x_param": "slot_pitch_x_m",
+          "pitch_z_param": "slot_pitch_z_m",
+          "margin_param": "edge_margin_m",
+          "surface_height_param": "height_m",
+          "id_rule": "slot_01_to_slot_count"
+        },
+        "load_policy": {
+          "accepted_material_classes": ["workpiece"],
+          "allow_partial_load_param": "allow_partial_load",
+          "max_load_param": "max_load_kg"
+        },
+        "physics": {
+          "empty_mass_param": "empty_mass_kg",
+          "load_motion_mode": "relative_constraint",
+          "supported_modes": [
+            "relative_constraint",
+            "rigid_compound",
+            "physical_support"
+          ]
+        },
+        "derived_values": {
+          "slot_count": "slot_rows * slot_columns",
+          "total_mass": "empty_mass_kg + sum(confirmed_loaded_material_masses)"
+        },
+        "movement_role": "passive_subject"
+      }
+    }
+  ]
+}

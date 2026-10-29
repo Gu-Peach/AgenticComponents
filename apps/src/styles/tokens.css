@@ -1,0 +1,15 @@
+:root {
+  color-scheme: dark;
+  --workspace: #14181d;
+  --panel: #1b222a;
+  --raised: #252e38;
+  --border: #303c48;
+  --text: #e2eaf2;
+  --muted: #8d9eaf;
+  --accent: #64b6de;
+  --accent-soft: #293f50;
+  --success: #6acaa0;
+  --warning: #e4b76b;
+  --error: #ef8884;
+  --mono: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+}

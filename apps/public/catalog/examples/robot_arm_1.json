@@ -1,0 +1,638 @@
+{
+  "schema_id": "robot_arm_1",
+  "schema_type": "DeviceSpec",
+  "version": "0.2.0",
+  "name": "Fanuc 机械臂 1",
+  "description": "Six-axis robot arm. Physical interfaces describe base/layout anchors; process ports describe pick/place material points.",
+  "source": {
+    "kind": "image_and_existing_driver_config",
+    "path": "docs/business/SimulationSchema/1.DeviceSpec/robot_arm/robot_arm_1.json"
+  },
+  "created_for": "图 1 / 图 4 / 图 11 中机械臂设备本体建模",
+  "references": [
+    "schema.json",
+    "../../../test/1.png",
+    "../../../test/4.png",
+    "../../../test/11.png"
+  ],
+  "notes": [
+    "Physical interfaces are reserved for base/model connection anchors and are not used as material pick/place points.",
+    "Pick and place points are process_ports with local_frame coordinates.",
+    "TCP and IK node mapping remain in type_specific_contract, not physical_interfaces."
+  ],
+  "id": "robot_arm_1",
+  "device_spec_id": "robot_arm_1",
+  "device_type": "robot_arm",
+  "display_name": "Fanuc 机械臂 1",
+  "asset": {
+    "model_format": "glb",
+    "model_key": "assets/models/robot_arm/fanuc_robot_arm.glb",
+    "root_node_name": "UR10_00Hn"
+  },
+  "params_schema": {
+    "speed": {
+      "type": "number",
+      "default": 1,
+      "min": 0.05,
+      "max": 3,
+      "unit": "m/s"
+    },
+    "payload_kg": {
+      "type": "number",
+      "default": 5,
+      "min": 0,
+      "max": 20,
+      "unit": "kg"
+    },
+    "lift_height": {
+      "type": "number",
+      "default": 0.3,
+      "min": 0,
+      "max": 1.5,
+      "unit": "m"
+    }
+  },
+  "physical_interfaces": [
+    {
+      "interface_id": "bbox_bottom_front_left",
+      "kind": "layout_mount_anchor",
+      "direction": "none",
+      "node_name": "BboxBottomFrontLeft",
+      "local_frame": {
+        "position": [
+          -0.4,
+          -0.4,
+          0
+        ],
+        "rotation_euler": [
+          0,
+          0,
+          0
+        ],
+        "forward": [
+          0,
+          0,
+          -1
+        ],
+        "up": [
+          0,
+          1,
+          0
+        ]
+      },
+      "snap_tolerance": {
+        "distance_m": 0.02,
+        "angle_deg": 3
+      },
+      "compatibility_fields": [
+        {
+          "field_id": "anchor_role",
+          "type": "layout_anchor",
+          "name": "Anchor role",
+          "value": "robot_base_mount",
+          "match_rule": "equals"
+        }
+      ]
+    },
+    {
+      "interface_id": "bbox_bottom_front_right",
+      "kind": "layout_mount_anchor",
+      "direction": "none",
+      "node_name": "BboxBottomFrontRight",
+      "local_frame": {
+        "position": [
+          0.4,
+          -0.4,
+          0
+        ],
+        "rotation_euler": [
+          0,
+          0,
+          0
+        ],
+        "forward": [
+          0,
+          0,
+          -1
+        ],
+        "up": [
+          0,
+          1,
+          0
+        ]
+      },
+      "snap_tolerance": {
+        "distance_m": 0.02,
+        "angle_deg": 3
+      },
+      "compatibility_fields": [
+        {
+          "field_id": "anchor_role",
+          "type": "layout_anchor",
+          "name": "Anchor role",
+          "value": "robot_base_mount",
+          "match_rule": "equals"
+        }
+      ]
+    },
+    {
+      "interface_id": "bbox_bottom_back_left",
+      "kind": "layout_mount_anchor",
+      "direction": "none",
+      "node_name": "BboxBottomBackLeft",
+      "local_frame": {
+        "position": [
+          -0.4,
+          0.4,
+          0
+        ],
+        "rotation_euler": [
+          0,
+          0,
+          0
+        ],
+        "forward": [
+          0,
+          0,
+          -1
+        ],
+        "up": [
+          0,
+          1,
+          0
+        ]
+      },
+      "snap_tolerance": {
+        "distance_m": 0.02,
+        "angle_deg": 3
+      },
+      "compatibility_fields": [
+        {
+          "field_id": "anchor_role",
+          "type": "layout_anchor",
+          "name": "Anchor role",
+          "value": "robot_base_mount",
+          "match_rule": "equals"
+        }
+      ]
+    },
+    {
+      "interface_id": "bbox_bottom_back_right",
+      "kind": "layout_mount_anchor",
+      "direction": "none",
+      "node_name": "BboxBottomBackRight",
+      "local_frame": {
+        "position": [
+          0.4,
+          0.4,
+          0
+        ],
+        "rotation_euler": [
+          0,
+          0,
+          0
+        ],
+        "forward": [
+          0,
+          0,
+          -1
+        ],
+        "up": [
+          0,
+          1,
+          0
+        ]
+      },
+      "snap_tolerance": {
+        "distance_m": 0.02,
+        "angle_deg": 3
+      },
+      "compatibility_fields": [
+        {
+          "field_id": "anchor_role",
+          "type": "layout_anchor",
+          "name": "Anchor role",
+          "value": "robot_base_mount",
+          "match_rule": "equals"
+        }
+      ]
+    }
+  ],
+  "process_ports": [
+    {
+      "port_id": "flow_input",
+      "direction": "input",
+      "label": "Pick Process Point",
+      "role": "flow_input",
+      "local_frame": {
+        "position": [
+          0.45,
+          0,
+          0.2
+        ],
+        "rotation_euler": [
+          0,
+          0,
+          0
+        ],
+        "forward": [
+          1,
+          0,
+          0
+        ],
+        "up": [
+          0,
+          0,
+          1
+        ]
+      },
+      "accepted_material_types": [
+        "workpiece",
+        "workpiece_carrier"
+      ],
+      "bound_signal_ports": [
+        "start_pick",
+        "pause_pick",
+        "resume_pick"
+      ],
+      "process_frame_role": "pick_point"
+    },
+    {
+      "port_id": "flow_output",
+      "direction": "output",
+      "label": "Place Process Point",
+      "role": "flow_output",
+      "local_frame": {
+        "position": [
+          -0.45,
+          0,
+          0.2
+        ],
+        "rotation_euler": [
+          0,
+          0,
+          0
+        ],
+        "forward": [
+          -1,
+          0,
+          0
+        ],
+        "up": [
+          0,
+          0,
+          1
+        ]
+      },
+      "accepted_material_types": [
+        "workpiece",
+        "workpiece_carrier"
+      ],
+      "bound_signal_ports": [
+        "done"
+      ],
+      "process_frame_role": "place_point"
+    }
+  ],
+  "signal_ports": [
+    {
+      "port_id": "start_pick",
+      "direction": "input",
+      "value_type": "event",
+      "description": "触发抓取动作",
+      "edge_trigger": "on_rising_edge",
+      "retention": "event_log",
+      "semantic": "启动抓取命令。",
+      "bound_to": {
+        "type": "process_port",
+        "id": "flow_input"
+      }
+    },
+    {
+      "port_id": "pause_pick",
+      "direction": "input",
+      "value_type": "event",
+      "description": "暂停启动新的抓取任务；通常由出料传送带 blocked 信号触发",
+      "edge_trigger": "on_rising_edge",
+      "retention": "event_log",
+      "semantic": "暂停抓取命令。",
+      "bound_to": {
+        "type": "process_port",
+        "id": "flow_input"
+      }
+    },
+    {
+      "port_id": "resume_pick",
+      "direction": "input",
+      "value_type": "event",
+      "description": "恢复启动新的抓取任务；通常由出料传送带 capacity_available 信号触发",
+      "edge_trigger": "on_rising_edge",
+      "retention": "event_log",
+      "semantic": "恢复抓取命令。",
+      "bound_to": {
+        "type": "process_port",
+        "id": "flow_input"
+      }
+    },
+    {
+      "port_id": "busy",
+      "direction": "output",
+      "value_type": "boolean",
+      "description": "机械臂正在执行动作",
+      "edge_trigger": "on_change",
+      "retention": "latest_value",
+      "default_value": false,
+      "semantic": "执行机构忙碌状态。"
+    },
+    {
+      "port_id": "done",
+      "direction": "output",
+      "value_type": "event",
+      "description": "动作完成",
+      "edge_trigger": "on_rising_edge",
+      "retention": "event_log",
+      "semantic": "当前动作完成事件。",
+      "bound_to": {
+        "type": "process_port",
+        "id": "flow_output"
+      }
+    },
+    {
+      "port_id": "error",
+      "direction": "output",
+      "value_type": "event",
+      "description": "动作失败或目标不可达",
+      "edge_trigger": "on_rising_edge",
+      "retention": "event_log",
+      "semantic": "设备异常事件。"
+    }
+  ],
+  "interface_bindings": [
+    {
+      "process_port": "flow_input",
+      "binding_id": "bind_flow_input_pick_point",
+      "binding_role": "pick_point",
+      "signal_ports": [
+        "start_pick",
+        "pause_pick",
+        "resume_pick"
+      ],
+      "transport_behaviors": [
+        "pick_and_place"
+      ]
+    },
+    {
+      "process_port": "flow_output",
+      "binding_id": "bind_flow_output_place_point",
+      "binding_role": "place_point",
+      "signal_ports": [
+        "done"
+      ],
+      "transport_behaviors": [
+        "pick_and_place"
+      ]
+    }
+  ],
+  "transport_behaviors": [
+    {
+      "behavior_id": "pick_and_place",
+      "behavior_type": "material_transfer",
+      "default_algorithm": "robot_pick_place",
+      "input_signals": [
+        "start_pick",
+        "resume_pick"
+      ],
+      "control_signals": [
+        "pause_pick"
+      ],
+      "output_signals": [
+        "busy",
+        "done",
+        "error"
+      ],
+      "resources": [
+        "robot_arm",
+        "gripper"
+      ],
+      "preconditions": [
+        "fsm_state == idle",
+        "material_at(input_process_port)",
+        "gripper.empty == true",
+        "pause_pick.active != true"
+      ],
+      "effects": [
+        "material_at(output_process_port)",
+        "emit done"
+      ],
+      "input_process_port": "flow_input",
+      "output_process_port": "flow_output"
+    }
+  ],
+  "runtime_contract": {
+    "fsm_states": [
+      "idle",
+      "busy",
+      "waiting",
+      "error"
+    ],
+    "default_state": "idle",
+    "resources": [
+      {
+        "resource_id": "robot_arm",
+        "exclusive": true
+      },
+      {
+        "resource_id": "gripper",
+        "exclusive": true
+      }
+    ],
+    "capacity": {
+      "max_active_materials": 1
+    },
+    "error_policy": {
+      "on_timeout": "emit_observation",
+      "on_unreachable_target": "pause_and_request_replan"
+    }
+  },
+  "runtime_execution_contract": {
+    "path_resolution_order": [
+      "Runtime event payload.waypoints",
+      "Runtime event payload.pick_position + payload.place_position",
+      "SceneDocument material/object asset bindings resolved by payload.material_id and payload.target_conveyor_id",
+      "DeviceSpec.type_specific_contract.workspace fallback"
+    ],
+    "behavior_payloads": {
+      "pick_and_place": {
+        "subject_fields": [
+          "material_id",
+          "workpiece_id",
+          "subject_id"
+        ],
+        "target_fields": [
+          "target_conveyor_id",
+          "target_object_id",
+          "to_instance_id"
+        ],
+        "recommended_fields": [
+          "pick_position",
+          "place_position",
+          "waypoints",
+          "lift_height",
+          "duration_s"
+        ]
+      },
+      "pause_pick": {
+        "recommended_fields": [
+          "reason",
+          "source_signal",
+          "conveyor_id"
+        ]
+      },
+      "resume_pick": {
+        "recommended_fields": [
+          "source_signal",
+          "conveyor_id"
+        ]
+      }
+    },
+    "ik_solver": {
+      "type": "frontend_behavior_lib",
+      "config_source": "type_specific_contract.urdf",
+      "requires_glb_node_mapping": true
+    }
+  },
+  "type_specific_contract": {
+    "rootNodeName": "UR10_00Hn",
+    "urdf": {
+      "joints": [
+        {
+          "name": "joint_1",
+          "nodeName": "Link1_00In",
+          "type": "revolute",
+          "axis": {
+            "x": 0,
+            "y": 1,
+            "z": 0
+          },
+          "limit": {
+            "lower": -3.14,
+            "upper": 3.14
+          }
+        },
+        {
+          "name": "joint_2",
+          "nodeName": "Link2_00Jn",
+          "type": "revolute",
+          "axis": {
+            "x": 0,
+            "y": 0,
+            "z": 1
+          },
+          "limit": {
+            "lower": -1.57,
+            "upper": 2.36
+          }
+        },
+        {
+          "name": "joint_3",
+          "nodeName": "Link3_00Kn",
+          "type": "revolute",
+          "axis": {
+            "x": 0,
+            "y": 0,
+            "z": 1
+          },
+          "limit": {
+            "lower": -1.57,
+            "upper": 2.36
+          }
+        },
+        {
+          "name": "joint_4",
+          "nodeName": "Link4_00Ln",
+          "type": "revolute",
+          "axis": {
+            "x": 0,
+            "y": 0,
+            "z": 1
+          },
+          "limit": {
+            "lower": -1.57,
+            "upper": 2.36
+          }
+        },
+        {
+          "name": "joint_5",
+          "nodeName": "Link5_00Mn",
+          "type": "revolute",
+          "axis": {
+            "x": 1,
+            "y": 0,
+            "z": 0
+          },
+          "limit": {
+            "lower": -1.57,
+            "upper": 2.36
+          }
+        },
+        {
+          "name": "joint_6",
+          "nodeName": "Link6_00Nn",
+          "type": "revolute",
+          "axis": {
+            "x": 0,
+            "y": 1,
+            "z": 0
+          },
+          "limit": {
+            "lower": -1.57,
+            "upper": 2.36
+          }
+        }
+      ]
+    },
+    "trajectoryConfig": {
+      "liftHeight": 0.3,
+      "speed": 1
+    },
+    "workspace": {
+      "shape": "cylinder",
+      "radius_m": 1.2,
+      "height_m": 1.5
+    },
+    "gripper": {
+      "type": "vacuum_or_clamp",
+      "supported_material_classes": [
+        "workpiece",
+        "workpiece_carrier"
+      ],
+      "max_payload_kg": 5
+    },
+    "tooling": {
+      "tcp_node_name": "Link6_00Nn",
+      "tcp_local_frame": {
+        "position": [
+          0,
+          0,
+          0.8
+        ],
+        "rotation_euler": [
+          0,
+          0,
+          0
+        ],
+        "forward": [
+          1,
+          0,
+          0
+        ],
+        "up": [
+          0,
+          0,
+          1
+        ]
+      },
+      "note": "TCP is used for IK and animation; it is not a physical connection interface in this scene schema split."
+    }
+  }
+}
