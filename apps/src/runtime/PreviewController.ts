@@ -1,3 +1,4 @@
+import { runtimeController } from "@/services/RuntimeController";
 import { hasPendingContactModel } from "@/contracts/conveyor";
 import type { ProjectDocument, ParamValue } from "@/contracts/device";
 import {
@@ -51,6 +52,7 @@ export class PreviewController {
     this.listeners.forEach((fn) => fn());
   }
   async start(request: PreviewRequest, project: ProjectDocument) {
+    if (runtimeController.isBusy()) throw new Error("请先停止场景仿真");
     if (isActive(this.snapshot.status))
       throw new Error("已有活动预览，请先停止");
     if (this.seen.has(request.requestId)) throw new Error("请求 ID 已使用");

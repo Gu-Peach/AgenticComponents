@@ -1,7 +1,7 @@
 # 003 Runtime engine and device templates
 
 日期：2026-10-30  
-阶段：开发计划，待实施  
+阶段：首个接触输送闭环已实现并验证
 首个闭环：Conveyor_aankws + 一个被动物料 + 接触式输送 + 实际到达观测。
 
 ## 1. 架构评价与决策
@@ -254,61 +254,92 @@ Conveyor 待补：静态输送碰撞体的局部尺寸/偏移，摩擦与反弹�
 
 模板保留的其他入口：直线轴目标/限位/到位反馈、旋转轴角度/工位、机器人链/TCP/求解器、物料源生成配置、仓储和载具资源服务。首期只定义必要类型和 unsupported 诊断，不填虚假默认限位或完成结果。
 
-## 14. 建议文件架构
+## 14. 建议文件架构与职责注释
 
-以下均为 apps 下路径；多数为新增。最终可合并过小的文件，但保持职责边界。
+以下均为 apps 下路径，多数为计划新增文件。目录职责、文件职责和运行分工如下；这些注释描述目标架构，不表示文件和能力已实现。最终可合并过小的文件，但应保持边界。
 
 ```text
-src/contracts/
-  runtime.ts                         # 会话、快照、命令、诊断
-  device-template.ts                 # 模板/脚本生命周期与上下文
-  physics.ts                         # PhysicsPort、句柄、碰撞描述
-  runtime-signals.ts                  # 信号、控制权、有效性、事件
-src/domain/runtime/
-  compileRuntimeScene.ts
-  compileConveyor.ts
-  compileMaterial.ts
-  runtimeCapabilities.ts
-src/runtime/engine/
-  RuntimeKernel.ts
-  SimulationSession.ts
-  RuntimeClock.ts
-  SignalRegistry.ts
-  ActionGateway.ts
-  RunOwnership.ts
-  RegionObserver.ts
-  RuntimeSnapshot.ts
-src/runtime/templates/
-  DeviceTemplateRegistry.ts
-  registerTemplates.ts
-  conveyor/ConveyorTemplate.ts
-  conveyor/ConveyorState.ts
-  workpiece/PassiveMaterialTemplate.ts
-  reservedTemplates.ts
-src/runtime/mechanisms/
-  SpeedRamp.ts
-  Encoder.ts
-src/runtime/physics/
-  createPhysicsBackend.ts
-  jolt/JoltPhysicsBackend.ts           # 后端通过 P0 后建立
-  jolt/ConveyorContacts.ts
-  jolt/BodyRegistry.ts
-src/runtime/adapters/
-  RuntimeSessionAdapter.ts
-src/services/
-  RuntimeController.ts
-src/renderer/
-  RuntimeSceneBridge.tsx
-  RuntimeMaterialView.tsx
-src/features/runtime/
-  SimulationPanel.tsx
-  RuntimeSignalsPanel.tsx
-src/data/runtime-fixtures/
-  conveyor-box.json
-  conveyor-calibration.json
+src/contracts/                       # 模块间的数据与 API 约定，不负责推进设备运动
+  runtime.ts                         # 会话状态、运行快照、控制命令和诊断的数据结构
+  device-template.ts                 # 模板/脚本协议：初始化、物理步前后执行、释放及可访问上下文
+  physics.ts                         # PhysicsPort、刚体句柄、碰撞体和接触观测，隔离具体物理库类型
+  runtime-signals.ts                  # 信号类型、写入权、有效性、采样 tick 和事件结构
+
+src/domain/runtime/                  # 将设备声明编译成可执行配置；不是编译 PLC，也不推进物理
+  compileRuntimeScene.ts             # 汇总场景参与对象、实例参数和模板，生成 CompiledRuntimeScene
+  compileConveyor.ts                 # 解析输送面尺寸/方向、驱动信号、碰撞描述及观测区域
+  compileMaterial.ts                 # 解析物料形状、质量、初始位姿及接触物理属性
+  runtimeCapabilities.ts            # 检查设备、模板、标定和后端组合是否支持请求能力，列出缺项
+
+src/runtime/engine/                  # 统一运行场景，持有时钟、信号和资源生命周期
+  RuntimeKernel.ts                   # 每步总调度：输入快照 → 脚本 → 物理 → 观测 → 输出与结果
+  SimulationSession.ts              # 一次场景会话的准备、开始、暂停、恢复、停止、重置和释放
+  RuntimeClock.ts                    # 固定步长、模拟时间与补算预算；每个会话只有一套推进时钟
+  SignalRegistry.ts                  # 按实例管理信号值/类型/有效性/来源，仲裁单一有效写入者
+  ActionGateway.ts                   # 离散任务接受、请求去重、参数冻结及 requestId/subjectId 结果关联
+  RunOwnership.ts                    # 设备驱动、节点和物料的执行访问权；不承担工艺优化调度
+  RegionObserver.ts                  # 根据实际物理状态计算入口/出口/承载区域的占用、进入和离开
+  RuntimeSnapshot.ts                 # 原子整理运行状态和事件，向渲染与界面发布一致的只读快照
+
+src/runtime/templates/               # 设备如何执行的通用脚本；代码共享，可变状态按实例隔离
+  DeviceTemplateRegistry.ts          # 按模板 ID/版本查找工厂，拒绝重复注册、缺失和不支持的能力
+  registerTemplates.ts               # 集中登记支持的模板；统一注册入口，不集中堆放所有设备逻辑
+  conveyor/ConveyorTemplate.ts       # 读取许可/速度，调用坡道机制，提交表面驱动并发布设备反馈
+  conveyor/ConveyorState.ts          # 单台输送机的驱动速度、里程等局部状态，不能跨实例共享
+  workpiece/PassiveMaterialTemplate.ts # 绑定被动物料定义与物理句柄；不自行插值物料位置
+  reservedTemplates.ts               # 声明未实现设备模板及所需能力，明确返回 unsupported
+
+src/runtime/mechanisms/              # 比设备更小的可复用执行算法，不开启时钟或访问全局 store
+  SpeedRamp.ts                       # 按当前值、目标值、加减速约束和 dt 求下一步驱动速度
+  Encoder.ts                         # 按已应用表面速度与 dt 累计行程，计算编码反馈
+
+src/runtime/physics/                 # 通用物理操作到具体求解器的适配，拥有动态刚体的实际运动结果
+  createPhysicsBackend.ts            # 动态加载并创建后端，向引擎返回统一 PhysicsPort
+  jolt/JoltPhysicsBackend.ts         # 通用物理 API 到 Jolt 的具体调用；后端通过 P0 后建立
+  jolt/ConveyorContacts.ts            # 在输送面/物料接触中应用表面速度，落实接触式输送
+  jolt/BodyRegistry.ts               # 业务对象 ID、引擎句柄与 Jolt 刚体的映射和释放
+
+src/runtime/adapters/                # 现有预览框架与新场景引擎之间的协议桥接
+  RuntimeSessionAdapter.ts           # 将有限行为交给已有会话并观察结果，不另建世界或物理时钟
+
+src/services/                        # 面向 UI 的运行用例入口，组织准备、切换与错误处理
+  RuntimeController.ts               # 暴露 prepare/start/setDeviceSignal/requestBehavior/pause/reset 等操作
+
+src/renderer/                        # 消费实际运行结果，不重新积分，不改写作者初始位姿
+  RuntimeSceneBridge.tsx             # 将快照中的世界姿态转换到渲染父坐标并更新对应对象
+  RuntimeMaterialView.tsx            # 显示运行时生成的实验物料，管理渲染对象及其会话归属
+
+src/features/runtime/                # 用户操作与状态面板，通过 RuntimeController 调用运行时
+  SimulationPanel.tsx                # 准备实验、启动/暂停/恢复/停止/重置及设备设定值输入
+  RuntimeSignalsPanel.tsx            # 展示输入输出、实际观测、有效性和采样更新时间
+
+src/data/runtime-fixtures/           # 显式、可检查、可重复的首个实验配置，不散落成代码常量
+  conveyor-box.json                  # 实验箱体尺寸、质量、初始位姿和物理属性
+  conveyor-calibration.json          # 输送碰撞体、摩擦、检测区域和到达/静止等判断配置
 ```
 
-reservedTemplates.ts 集中声明未实现模板及所需能力，首期不为七类预留模板各建一个空执行脚本。模板协议统一，文件仍按机制和设备族拆分。专属实现未来可放 runtime/templates/custom/<device>/，必须走相同注册和验证入口。
+### 14.1 引擎、脚本和其他目录的边界
+
+- **contracts 规定协议**：例如模板只能通过 PhysicsPort 提交表面速度，不直接调用 Jolt；此目录可以声明类型和约束，但不创建世界或执行设备。
+- **domain/runtime 检查能否运行并解析配置**：确认参数、引用、单位、模板能力和标定条件完整，输出明确的编译结果或诊断；不启动时钟。
+- **engine 管理运行秩序**：统一调用脚本与物理后端。SignalRegistry 回答“值是什么、谁能写”，ActionGateway 回答“本次请求是否接受/完成”，RunOwnership 回答“谁有权操作对象”，RegionObserver 回答“实际发生了什么”。
+- **templates 描述设备语义**：例如传送带如何响应 runTag/speedTag、如何发布反馈。一个模板工厂可创建多台设备，但每台设备的速度、里程和任务状态独立。
+- **mechanisms 提供局部算法**：模板调用 SpeedRamp 求速度，再经上下文提交驱动。机制本身不启动计时器，也不直接操作 UI 或全局状态。
+- **physics 求解实际运动**：根据驱动、碰撞、重力和摩擦计算物料状态。动态物料的位姿只由物理后端写入，不能再由动画脚本同时做直线插值。
+- **adapters 连接旧框架与新协议**：转交请求、观察结果，复用场景会话；不是另一套引擎。
+- **services 提供操作入口**：UI 无需了解物理后端或模板注册细节；每步执行顺序仍由 RuntimeKernel 负责，避免两个总调度器。
+- **renderer 显示结果，features 接收用户操作**：界面按钮不直接改刚体，渲染层不计算第二份物料运动轨迹。运行位置不回写 project.instances[].transform。
+- **runtime-fixtures 保存实验条件**：物料配置与标定配置具有明确来源和版本，不能用未确认数值冒充已完成标定。成熟后可迁入正式设备/场景配置体系。
+
+### 14.2 模板预留与专属脚本
+
+reservedTemplates.ts 集中声明未实现模板及所需能力，首期不为七类预留模板各建一个空执行脚本。模板协议统一，文件仍按机制和设备族拆分。专属实现未来可放 runtime/templates/custom/<device>/，必须走相同注册与验证入口。
+
+### 14.3 一次输送的调用示例
+
+用户点击运行后，RuntimeController 准备并启动 SimulationSession；RuntimeKernel 按固定步调用 ConveyorTemplate。模板读取信号，通过 SpeedRamp 得到表面驱动速度，PhysicsBackend 将该速度应用于接触，求解箱体的实际运动。RegionObserver 判断指定箱体是否到达出口，ActionGateway 关联本次任务结果，RuntimeSnapshot 发布一致状态，renderer 和运行面板据此更新。
+
+这条链路里，设备脚本不直接更新载荷位置，物理后端不决定生产工艺，界面也不负责计算接触运动。
 
 ## 15. 现有文件改动表
 
@@ -365,6 +396,20 @@ P0 不通过，不将非物理近似替代品算作 P3 成功。首期任务关�
 
 最终运行 npm test、typecheck、lint、build 与相应 Playwright 流程。验收截图/日志应显示实际载荷位姿、接触、表面速度和区域状态；测试等待有效状态，不以固定墙钟延时代表成功。
 
-## 18. 本轮文档交付状态
+## 18. 本轮实施结果与范围
 
-本轮只完成架构评价和开发计划。尚未安装物理库、创建执行脚本、修改设备 schema 或解除真实运行门控。后续按 P0 开始实施，并将实际选择、标定参数、验证结果和范围变更回写本文件。
+已完成首个接触输送闭环：编译配置、模板工厂/注册表、运行 Kernel/Session/固定时钟、每实例信号快照、物料主体关联、Jolt 接触输送、入口/出口/支承观测、实验面板和渲染投影。其他设备保留 unsupported 注册描述。
+
+物理后端锁定本地 MIT 的 jolt-physics 1.1.0-oip.9，依赖包保存在 vendor，许可证随包保留，来源见 THIRD_PARTY_RUNTIME.md。P0 先用最小世界确认支承接触输送，然后用自动化测试验证无接触不驱动、障碍碰撞、两个世界独立和释放。
+
+实际文件与设计的差异：首期为单输送机/单箱体，碰撞体映射和接触回调暂集中在 JoltPhysicsBackend，未拆出两个只有少量代码的辅助文件；初始化并入模板工厂与 Kernel 构造。旧有限行为预览保留，RuntimeSessionAdapter 未注册；场景实验通过独立 RuntimeController 和专用观察任务运行。并非完整通用 PLC/调度引擎。
+
+Conveyor 发布为设备 0.5.0 / 契约 1.2，明确选择实验模板与标定配置；1.1 草稿仍可导入，但不运行接触实验，旧项目定义不自动升级。场景编辑锁已与旧预览互斥；物理结果不写作者文档。数据源与公共发布副本同步更新。
+
+实验配置在 src/data/runtime-fixtures：立方体 0.10 m、0.2 kg，带面厚度 0.1 m、接触摩擦 0.6、固定逻辑步 1/60 s、每步两个子步。位置/到速/区域判断是明确的仿真校准值，不宣称硬件实测。到达请求匹配本世界 subjectId；计时结束、掉落或取消不返回成功。
+
+输入先支持手动 runTag/speedTag；实时输出支持范围见 schema.runtime_execution_contract.supported_io。信号按会话内设备实例隔离，具有类型、valid、tick 和来源。没有 PLC 驱动者接入、DINT 身份映射、事件队列或所有声明端口的完整桥接；不将未提供的资源授权统一设为 true。
+
+验证：64 项单元测试和生产构建通过；7 个浏览器流程通过，包含实际物料输送、暂停/恢复、到达观察、文档不变及重置，同时覆盖此前的资产与吸附流程。类型检查、lint 通过。截图为 test-results/conveyor-runtime.png。
+
+后续工作：多设备同时运行、完整信号声明驱动的注册器、带主体作用域的通用条件解释器、离散服务握手、RuntimeSessionAdapter、Worker 后端、机械臂等模板，以及跨带几何连续性和下游交接验收。当前只选中的输送面与实验箱体参与物理；场景其余设备保持编辑展示。

@@ -1,0 +1,23 @@
+{
+  "id": "conveyor-contact-v1",
+  "source": "simulation_fixture_verified_contact_tests",
+  "surfaceThickness": 0.1,
+  "friction": 0.6,
+  "exitRegion": [
+    0.45,
+    0.62
+  ],
+  "referenceSpeed": 2,
+  "timeout": 15,
+  "fixedDt": 0.016666666666666666,
+  "substeps": 2,
+  "entryRegion": [
+    -0.65,
+    -0.35
+  ],
+  "regionHeight": [
+    0.69,
+    0.9
+  ],
+  "speedTolerance": 0.001
+}

@@ -1,7 +1,13 @@
 "use client";
+import { runtimeController } from "@/services/RuntimeController";
 import { TransformToolbar } from "./TransformToolbar";
 import dynamic from "next/dynamic";
-import { useEffect, useState, type CSSProperties } from "react";
+import {
+  useEffect,
+  useState,
+  useSyncExternalStore,
+  type CSSProperties,
+} from "react";
 import {
   Boxes,
   FileCode2,
@@ -123,6 +129,11 @@ export default function WorkspaceClient() {
   const { project, selectedId, dock, dockOpen, dirty, notice, logs } =
     useWorkspace();
   const state = usePreview();
+  const runtime = useSyncExternalStore(
+    runtimeController.subscribe,
+    runtimeController.snapshot,
+    runtimeController.snapshot,
+  );
   const [ready, setReady] = useState(false);
   const [left, setLeft] = useState(242);
   const [right, setRight] = useState(320);
@@ -159,6 +170,7 @@ export default function WorkspaceClient() {
     return () => {
       alive = false;
       stopClock();
+      runtimeController.reset();
       void preview.reset();
     };
   }, []);
@@ -409,7 +421,11 @@ export default function WorkspaceClient() {
         </span>
         <span>{selected?.name ?? "未选择设备"}</span>
         <span className="status-spacer" />
-        <span>预览 {state.status}</span>
+        <span>
+          {runtime.status !== "idle"
+            ? `仿真 ${runtime.status}`
+            : `预览 ${state.status}`}
+        </span>
         <span>{project?.instances.length} 个实例</span>
         <button
           onClick={() =>

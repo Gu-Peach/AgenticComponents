@@ -1653,3 +1653,21 @@ button.interface-dot.active {
   background: #334d60;
   color: #c7ecff;
 }
+
+.simulation-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px solid #455a65;
+  padding: 9px;
+  border-radius: 5px;
+}
+.simulation-panel .row {
+  flex-wrap: wrap;
+}
+.simulation-panel small {
+  color: #afbdc9;
+}
+.simulation-panel input {
+  width: 90px;
+}

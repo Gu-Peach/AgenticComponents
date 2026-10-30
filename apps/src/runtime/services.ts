@@ -1,3 +1,4 @@
+import { runtimeController } from "@/services/RuntimeController";
 import { ExecutorRegistry } from "./ExecutorRegistry";
 import { PreviewController } from "./PreviewController";
 import { mockAdapter } from "./adapters/MockAdapter";
@@ -20,7 +21,8 @@ export const preview = new PreviewController(
   observations.read,
 );
 preview.subscribe(() => {
-  const documentLocked = isActive(preview.getSnapshot().status);
+  const documentLocked =
+    isActive(preview.getSnapshot().status) || runtimeController.isBusy();
   if (useWorkspace.getState().documentLocked !== documentLocked) {
     useWorkspace.setState({ documentLocked });
   }

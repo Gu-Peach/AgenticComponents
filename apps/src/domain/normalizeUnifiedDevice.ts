@@ -18,7 +18,7 @@ const parameter = parameterSchema.extend({
 });
 const schema = z
   .object({
-    contract_version: z.literal("1.1"),
+    contract_version: z.enum(["1.1", "1.2"]),
     schema_type: z.literal("DeviceSpec"),
     schema_id: z.string().min(1),
     device_spec_id: z.string().min(1),
@@ -133,6 +133,19 @@ export function normalizeUnifiedDevice(raw: unknown) {
   if (s.device_type === "conveyor") {
     const model = conveyorModelSchema.parse(s.type_specific_contract);
     const surface = model.conveying_surface;
+    if (
+      s.contract_version === "1.2" &&
+      (surface.implementation_status !== "implemented" ||
+        surface.geometry.calibration_status !== "calibrated" ||
+        surface.contact.friction_status !== "calibrated" ||
+        model.observation_regions.some(
+          (r) => r.geometry_status !== "calibrated",
+        ) ||
+        s.runtime_execution_contract.template_ref !==
+          "conveyor.continuous-contact@1" ||
+        s.runtime_execution_contract.calibration_ref !== "conveyor-contact-v1")
+    )
+      throw new Error("可执行契约缺少支持的模板或完整标定");
     for (const region of model.observation_regions) {
       if (region.surface_ref !== surface.surface_id)
         throw new Error("观测区域的输送面引用不存在");

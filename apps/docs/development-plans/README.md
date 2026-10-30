@@ -6,4 +6,4 @@
 | --- | --- | --- | --- |
 | 001 | 2026-10-29 | [公共模型资产、参数明细与接口可视化](001-2026-10-29-public-model-assets-and-interface-visualization.md) | 已实现并验证 |
 | 002 | 2026-10-29 | [模型移动与接口吸附](002-2026-10-29-model-transform-and-interface-snapping.md) | 已实现并验证 |
-| 003 | 2026-10-30 | [运行引擎架构与设备模板](003-2026-10-30-runtime-engine-and-device-templates.md) | 方案已编写，待实施 |
+| 003 | 2026-10-30 | [运行引擎架构与设备模板](003-2026-10-30-runtime-engine-and-device-templates.md) | 首个接触输送闭环已实现并验证 |

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import {
   ChevronDown,
   Maximize,
@@ -15,6 +15,8 @@ import {
   Cuboid,
   CircleHelp,
 } from "lucide-react";
+import { runtimeController } from "@/services/RuntimeController";
+import { RuntimeTransport } from "@/features/runtime/RuntimeTransport";
 import { ProjectMark } from "@/components/ui/ProjectMark";
 import { useWorkspace } from "@/stores/workspace";
 import { usePreview } from "@/hooks/usePreview";
@@ -31,6 +33,11 @@ export function TopBar() {
   const dirty = useWorkspace((s) => s.dirty);
   const saving = useWorkspace((s) => s.saving);
   const state = usePreview();
+  const runtime = useSyncExternalStore(
+    runtimeController.subscribe,
+    runtimeController.snapshot,
+    runtimeController.snapshot,
+  );
   const [full, setFull] = useState(false);
   const menu = useRef<HTMLDetailsElement>(null);
   const picker = useRef<HTMLInputElement>(null);
@@ -144,40 +151,48 @@ export function TopBar() {
           }
         }}
       />
-      <div className="transport-controls">
-        <span className="preview-indicator" title={owner ?? "在右侧选择行为"}>
-          {state.request?.mode === "mock" ? "MOCK" : "预览"}
-          <span className={state.status === "running" ? "led green" : "led"} />
-        </span>
-        <button
-          className="icon-button play"
-          aria-label="继续预览"
-          title="继续已暂停的预览；新预览请从右侧启动"
-          disabled={state.status !== "paused"}
-          onClick={() => preview.resume()}
-        >
-          <Play size={15} fill="currentColor" />
-        </button>
-        <button
-          className="icon-button"
-          aria-label="暂停预览"
-          title="暂停预览"
-          disabled={state.status !== "running" || !state.supportsPause}
-          onClick={() => preview.pause()}
-        >
-          <Pause size={15} />
-        </button>
-        <button
-          className="icon-button stop"
-          aria-label="停止预览"
-          title="停止预览"
-          disabled={!["running", "paused", "preparing"].includes(state.status)}
-          onClick={() => preview.stop().catch(reportError)}
-        >
-          <Square size={13} fill="currentColor" />
-        </button>
-        <span className="clock-display">{state.time.toFixed(2)} s</span>
-      </div>
+      {runtime.status !== "idle" ? (
+        <RuntimeTransport />
+      ) : (
+        <div className="transport-controls">
+          <span className="preview-indicator" title={owner ?? "在右侧选择行为"}>
+            {state.request?.mode === "mock" ? "MOCK" : "预览"}
+            <span
+              className={state.status === "running" ? "led green" : "led"}
+            />
+          </span>
+          <button
+            className="icon-button play"
+            aria-label="继续预览"
+            title="继续已暂停的预览；新预览请从右侧启动"
+            disabled={state.status !== "paused"}
+            onClick={() => preview.resume()}
+          >
+            <Play size={15} fill="currentColor" />
+          </button>
+          <button
+            className="icon-button"
+            aria-label="暂停预览"
+            title="暂停预览"
+            disabled={state.status !== "running" || !state.supportsPause}
+            onClick={() => preview.pause()}
+          >
+            <Pause size={15} />
+          </button>
+          <button
+            className="icon-button stop"
+            aria-label="停止预览"
+            title="停止预览"
+            disabled={
+              !["running", "paused", "preparing"].includes(state.status)
+            }
+            onClick={() => preview.stop().catch(reportError)}
+          >
+            <Square size={13} fill="currentColor" />
+          </button>
+          <span className="clock-display">{state.time.toFixed(2)} s</span>
+        </div>
+      )}
       <div className="top-actions">
         <span className="save-hint">
           {saving ? "保存中…" : dirty ? "未保存" : "本地工作区"}

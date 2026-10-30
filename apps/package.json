@@ -20,6 +20,7 @@
   "dependencies": {
     "@react-three/drei": "^10.0.0",
     "@react-three/fiber": "^9.0.0",
+    "jolt-physics": "file:vendor/jolt-physics-1.1.0-oip.9.tgz",
     "lucide-react": "^0.468.0",
     "next": "^16.0.0",
     "react": "^19.0.0",

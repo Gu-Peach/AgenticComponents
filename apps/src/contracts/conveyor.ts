@@ -5,7 +5,7 @@ const axis = z
 export const signalManagementSchema = z
   .object({
     owner: z.literal("simulation_engine"),
-    status: z.literal("pending_engine"),
+    status: z.enum(["pending_engine", "implemented"]),
     namespace: z.literal("instance_id/port_id"),
     definition_source: z.literal("signal_ports"),
     spatial_binding: z.literal(false),
@@ -29,14 +29,14 @@ export const conveyorModelSchema = z
             length_param: z.string(),
             width_param: z.string(),
             height_param: z.string(),
-            calibration_status: z.literal("pending"),
+            calibration_status: z.enum(["pending", "calibrated"]),
             collision_shape: z.literal("box"),
           })
           .strict(),
         contact: z
           .object({
             model: z.literal("moving_surface_contact"),
-            friction_status: z.literal("pending"),
+            friction_status: z.enum(["pending", "calibrated"]),
             material_body_requirement: z.literal("dynamic_rigid_body"),
             contact_requirement: z.literal("valid_support_contact"),
             collision_response: z.literal("physics_solver"),
@@ -53,7 +53,7 @@ export const conveyorModelSchema = z
           })
           .strict(),
         material_motion: z.literal("physics_contact_only"),
-        implementation_status: z.literal("pending_engine"),
+        implementation_status: z.enum(["pending_engine", "implemented"]),
       })
       .strict()
       .refine(
@@ -73,7 +73,7 @@ export const conveyorModelSchema = z
               "exit_arrival",
               "surface_occupancy",
             ]),
-            geometry_status: z.literal("pending"),
+            geometry_status: z.enum(["pending", "calibrated"]),
             observation_keys: z.array(z.string().min(1)).min(1),
           })
           .strict(),

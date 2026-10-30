@@ -1,4 +1,5 @@
 "use client";
+import { RuntimeSceneBridge } from "./RuntimeSceneBridge";
 import { DeviceTransformControls } from "./DeviceTransformControls";
 import { useInteraction } from "@/stores/interaction";
 import { Component, useEffect, useRef, useState, type ReactNode } from "react";
@@ -286,6 +287,7 @@ export default function SceneCanvas() {
             />
           ) : null;
         })}
+        <RuntimeSceneBridge />
         <CameraRig token={focusToken} />
         <FrameReady onReady={() => setReady(true)} />
         <GizmoHelper alignment="top-right" margin={[55, 60]}>

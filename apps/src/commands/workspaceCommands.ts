@@ -1,3 +1,4 @@
+import { runtimeController } from "@/services/RuntimeController";
 import type { CatalogEntry } from "@/contracts/catalog";
 import {
   fetchPublicCatalog,
@@ -43,6 +44,7 @@ export async function newProject() {
     !window.confirm("当前项目有未保存修改，仍要新建吗？")
   )
     return;
+  runtimeController.reset();
   await preview.reset();
   useWorkspace.getState().initialize();
   useWorkspace.setState((s) => ({
@@ -64,6 +66,7 @@ export async function importProject(file: File) {
     !window.confirm("导入将替换当前未保存项目，继续吗？")
   )
     return;
+  runtimeController.reset();
   await preview.reset();
   useWorkspace.getState().initialize(project);
   useWorkspace.setState({ dirty: true });
@@ -95,6 +98,7 @@ export async function associateGlb(file: File) {
     throw new Error("请先选择现场设备，GLB 将关联至其设备定义");
   const bytes = await file.arrayBuffer();
   validateGlb(bytes);
+  runtimeController.reset();
   await preview.reset();
   if (useWorkspace.getState().project !== p)
     throw new Error("场景已改变，请重新关联");
@@ -124,6 +128,7 @@ export async function associateGlb(file: File) {
 export async function removeSelected() {
   const id = useWorkspace.getState().selectedId;
   if (!id) return;
+  runtimeController.reset();
   await preview.reset();
   useWorkspace.getState().updateProject((p) => ({
     ...p,

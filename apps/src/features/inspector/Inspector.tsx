@@ -1,3 +1,5 @@
+import { SimulationPanel } from "@/features/runtime/SimulationPanel";
+import { RuntimeSignalsPanel } from "@/features/runtime/RuntimeSignalsPanel";
 import { resolveInterfaceFrame } from "@/domain/resolveInterfaceFrame";
 import { useState, type ReactNode } from "react";
 import { SlidersHorizontal, ChevronDown, Cuboid, Info } from "lucide-react";
@@ -43,12 +45,13 @@ export function Inspector() {
     selectedAsset,
     catalogDefinitions,
     selectedInterface,
+    documentLocked,
   } = useWorkspace();
   const state = usePreview();
   const [error, setError] = useState("");
   const instance = project?.instances.find((i) => i.instanceId === selectedId);
   const def = project?.definitions.find((d) => d.specId === instance?.specId);
-  const locked = isActive(state.status);
+  const locked = isActive(state.status) || documentLocked;
   if (inspectorTarget === "catalog") {
     const asset =
       catalogDefinitions[selectedAsset ?? ""] ??
@@ -137,6 +140,12 @@ export function Inspector() {
             {def.template ? "待配置模板" : "定义已加载"}
           </span>
         </div>
+        {def.deviceType === "conveyor" && !def.template && (
+          <Section title="接触式运行">
+            <SimulationPanel />
+            <RuntimeSignalsPanel />
+          </Section>
+        )}
         <div className="inspector-shortcuts">
           {[
             ["inspector-params", "参数"],

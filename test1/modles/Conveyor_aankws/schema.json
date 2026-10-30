@@ -1,7 +1,7 @@
 {
   "schema_id": "Conveyor_aankws",
   "schema_type": "DeviceSpec",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "name": "Conveyor_aankws 直线输送机",
   "description": "单向整带输送机的接触式输送建模：空间接口用于吸附连接，输送面提供表面速度，物料由未来物理引擎求解，工艺区域发布实际观测。当前仅完成声明，执行器与标定待接入。",
   "device_spec_id": "Conveyor_aankws",
@@ -24,15 +24,16 @@
     "仅定义当前整带驱动能力；不声明独立分区积放、反转、FPM 兼容反馈和虚拟停留点电机。",
     "物料不以端点插值推进；输送面、动态物料及有效接触共同决定运动。运动中物料可滑移、受阻或离开输送面。",
     "空间接口禁止携带 process、signal_refs 或信号绑定。信号属于设备实例的具名引擎寄存表。",
-    "输送面碰撞体、摩擦参数和工艺检测区域尚未标定；不从渲染网格自动宣称接触物理已可执行。",
-    "空间端点位置由用户提供：入口 [-0.749, 0.700, 0]，出口 [0.751, 0.700, 0]，单位 m，相对设备根坐标系；按端点向外的吸附约定，入口 forward=-X、出口 forward=+X，up=+Y。"
+    "空间端点位置由用户提供：入口 [-0.749, 0.700, 0]，出口 [0.751, 0.700, 0]，单位 m，相对设备根坐标系；按端点向外的吸附约定，入口 forward=-X、出口 forward=+X，up=+Y。",
+    "契约 1.2 仅实现水平单位缩放的接触输送实验，采用 conveyor-contact-v1 仿真标定，不表示硬件额定值。物料接收/下游交接服务仍未实现。",
+    "接触属性、区域和到速判据来自 apps/src/data/runtime-fixtures/conveyor-calibration.json。信号运行支持范围见 supported_io；未实现端口保持不可写/无有效运行值。"
   ],
   "modeling_status": {
     "phase": "initial_contract",
     "geometry": "vertex_inspected_endpoint_positions_user_provided_contact_regions_pending",
-    "execution": "pending_adapter",
+    "execution": "experimental_scene_template_available",
     "plc_binding": "unassigned",
-    "contract_format": "DeviceSpec spatial-only interfaces contract 1.1"
+    "contract_format": "DeviceSpec spatial-only interfaces contract 1.2"
   },
   "asset": {
     "model_format": "glb",
@@ -1277,7 +1278,7 @@
     }
   },
   "runtime_execution_contract": {
-    "executor_status": "pending_adapter",
+    "executor_status": "scene_template_available_legacy_action_adapters_pending",
     "precondition_authority": "transport_behaviors[].condition_contract",
     "completion_authority": "transport_behaviors[].completion_contract",
     "natural_language_fields": "preconditions/effects are generated descriptions, not JavaScript or ST expressions to eval",
@@ -1379,7 +1380,7 @@
       "success_requires_observed_contract": true
     },
     "calibration_requirements": {
-      "status": "pending",
+      "status": "experimental_profile_verified",
       "speed_judgement": "执行器提供经验证的静止/到速判据",
       "handoff_detection": "按接口区域与载荷支承点标定",
       "multi_load_spacing": "由场景工艺与执行器确认间距；未确认前禁止多件真实运行",
@@ -1388,7 +1389,7 @@
     },
     "signal_management": {
       "owner": "simulation_engine",
-      "status": "pending_engine",
+      "status": "implemented",
       "namespace": "instance_id/port_id",
       "definition_source": "signal_ports",
       "spatial_binding": false,
@@ -1396,6 +1397,40 @@
       "plc_mapping": "instance_bindings",
       "sampling": "simulation_step_snapshot",
       "unknown_policy": "invalid_until_provider_ready"
+    },
+    "template_ref": "conveyor.continuous-contact@1",
+    "calibration_ref": "conveyor-contact-v1",
+    "scene_execution": {
+      "status": "implemented",
+      "scope": "one_horizontal_unit_scale_conveyor_and_one_box",
+      "legacy_preview_adapter_available": false
+    },
+    "supported_io": {
+      "inputs": [
+        "runTag",
+        "speedTag"
+      ],
+      "outputs": [
+        "actual_speed",
+        "runningTag",
+        "encoderTag",
+        "part_ready",
+        "accepted",
+        "busy",
+        "done",
+        "error"
+      ],
+      "not_implemented": [
+        "release_waiting_material",
+        "pulseTag",
+        "request_id",
+        "behavior_code",
+        "subject_id",
+        "reset",
+        "result_id",
+        "error_code"
+      ],
+      "note": "到达观察任务通过场景会话 API 关联 requestId/subjectId，尚无 PLC 数字身份映射。"
     }
   },
   "type_specific_contract": {
@@ -1561,12 +1596,12 @@
         "length_param": "length_m",
         "width_param": "width_m",
         "height_param": "surface_height_m",
-        "calibration_status": "pending",
+        "calibration_status": "calibrated",
         "collision_shape": "box"
       },
       "contact": {
         "model": "moving_surface_contact",
-        "friction_status": "pending",
+        "friction_status": "calibrated",
         "material_body_requirement": "dynamic_rigid_body",
         "contact_requirement": "valid_support_contact",
         "collision_response": "physics_solver"
@@ -1580,14 +1615,14 @@
         "decel_time_param": "decel_time_s"
       },
       "material_motion": "physics_contact_only",
-      "implementation_status": "pending_engine"
+      "implementation_status": "implemented"
     },
     "observation_regions": [
       {
         "region_id": "entry_zone",
         "surface_ref": "main_belt",
         "purpose": "entry_availability",
-        "geometry_status": "pending",
+        "geometry_status": "calibrated",
         "observation_keys": [
           "entry_region_clear"
         ]
@@ -1596,7 +1631,7 @@
         "region_id": "exit_zone",
         "surface_ref": "main_belt",
         "purpose": "exit_arrival",
-        "geometry_status": "pending",
+        "geometry_status": "calibrated",
         "observation_keys": [
           "subject_at_exit",
           "exit_arrival_confirmed"
@@ -1606,14 +1641,14 @@
         "region_id": "support_zone",
         "surface_ref": "main_belt",
         "purpose": "surface_occupancy",
-        "geometry_status": "pending",
+        "geometry_status": "calibrated",
         "observation_keys": [
           "subject_on_conveyor"
         ]
       }
     ]
   },
-  "contract_version": "1.1",
+  "contract_version": "1.2",
   "interfaces": [
     {
       "interface_id": "end_negative_x",

@@ -34,6 +34,7 @@ export function BehaviorPanel({
   const [mock, setMock] = useState(false);
   const [args, setArgs] = useState<Record<string, ParamValue>>({});
   const state = usePreview();
+  const documentLocked = useWorkspace((s) => s.documentLocked);
   const behavior = definition.behaviors.find((b) => b.id === behaviorId);
   const active = isActive(state.status);
   const callable =
@@ -153,7 +154,7 @@ export function BehaviorPanel({
               )}
               <button
                 className="primary full-width"
-                disabled={active || blocked}
+                disabled={active || blocked || documentLocked}
                 onClick={() => {
                   const project = useWorkspace.getState().project!;
                   const defaults = Object.fromEntries(
