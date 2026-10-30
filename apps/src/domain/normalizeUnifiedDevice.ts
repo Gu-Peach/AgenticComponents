@@ -31,6 +31,27 @@ const schema = z
         model_format: z.literal("glb"),
         model_key: z.string().min(1),
         root_node_name: z.string().optional(),
+        import_transform: z
+          .object({
+            position: z.tuple([
+              z.number().finite(),
+              z.number().finite(),
+              z.number().finite(),
+            ]),
+            rotation_euler: z.tuple([
+              z.number().finite(),
+              z.number().finite(),
+              z.number().finite(),
+            ]),
+            scale: z
+              .tuple([
+                z.number().finite(),
+                z.number().finite(),
+                z.number().finite(),
+              ])
+              .refine((v) => v.every((n) => n > 0)),
+          })
+          .optional(),
       })
       .passthrough(),
     params_schema: z.record(z.string(), parameter),
@@ -183,7 +204,19 @@ export function normalizeUnifiedDevice(raw: unknown) {
     deviceType: s.device_type,
     description: s.description,
     template: false,
-    asset: { sourceKey: s.asset.model_key, rootNode: s.asset.root_node_name },
+    asset: {
+      sourceKey: s.asset.model_key,
+      rootNode: s.asset.root_node_name,
+      ...(s.asset.import_transform
+        ? {
+            importTransform: {
+              position: s.asset.import_transform.position,
+              rotation: s.asset.import_transform.rotation_euler,
+              scale: s.asset.import_transform.scale,
+            },
+          }
+        : {}),
+    },
     paramsSchema: s.params_schema,
     typeSpecificContract: s.type_specific_contract,
     spatialInterfaces: s.interfaces,

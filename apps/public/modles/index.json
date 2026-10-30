@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "packageKey": "Conveyor_aankws",
+      "specId": "Conveyor_aankws",
+      "revision": "0.4.1",
+      "name": "Conveyor_aankws 直线输送机",
+      "deviceType": "conveyor",
+      "schemaUrl": "/modles/Conveyor_aankws/schema.json",
+      "modelUrl": "/modles/Conveyor_aankws/Conveyor_aankws.glb",
+      "schemaSha256": "df6615f18d24ade4be49992a655ebe6f6236d3460936e6935c2f7d58ff8665fa",
+      "modelSha256": "46a159554c0f5d5eda8073d749a5d94dc9b23a2f15fbe8204b56eb66766c767d"
+    }
+  ]
+}

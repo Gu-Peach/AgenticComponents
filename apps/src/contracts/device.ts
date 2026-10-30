@@ -65,7 +65,14 @@ export interface DeviceDefinition {
   deviceType: DeviceType;
   description: string;
   template: boolean;
-  asset: { assetId?: string; sourceKey?: string; rootNode?: string };
+  asset: {
+    assetId?: string;
+    sourceKey?: string;
+    rootNode?: string;
+    sourceUrl?: string;
+    sha256?: string;
+    importTransform?: Transform;
+  };
   paramsSchema: Record<string, ParameterSpec>;
   typeSpecificContract: Record<string, unknown>;
   /** Historical internal name for signal ports. */
@@ -91,7 +98,13 @@ export interface AssetRecord {
   kind: "glb";
   size: number;
 }
+export interface SpatialConnection {
+  id: string;
+  a: { instanceId: string; interfaceId: string };
+  b: { instanceId: string; interfaceId: string };
+}
 export interface ProjectDocument {
+  connections?: SpatialConnection[];
   format: "agentic-workbench";
   version: 1;
   id: string;

@@ -1,4 +1,5 @@
 "use client";
+import { TransformToolbar } from "./TransformToolbar";
 import dynamic from "next/dynamic";
 import { useEffect, useState, type CSSProperties } from "react";
 import {
@@ -31,7 +32,11 @@ import { usePreview } from "@/hooks/usePreview";
 import { preview } from "@/runtime/services";
 import { startPreviewClock } from "@/runtime/PreviewClock";
 import { projectRepository } from "@/services/BrowserProjectRepository";
-import { saveProject, reportError } from "@/commands/workspaceCommands";
+import {
+  saveProject,
+  reportError,
+  refreshPublicCatalog,
+} from "@/commands/workspaceCommands";
 import styles from "./Workspace.module.css";
 const SceneCanvas = dynamic(() => import("@/renderer/SceneCanvas"), {
   ssr: false,
@@ -127,6 +132,7 @@ export default function WorkspaceClient() {
   const [maximized, setMaximized] = useState(false);
   useEffect(() => {
     let alive = true;
+    void refreshPublicCatalog();
     projectRepository
       .load()
       .then((p) => {
@@ -235,6 +241,7 @@ export default function WorkspaceClient() {
                   <PanelLeftOpen size={16} />
                 )}
               </button>
+              <TransformToolbar />
               <span className="divider" />
               <span className="tool-active" title="选择模式">
                 <MousePointer2 size={16} />
@@ -293,7 +300,7 @@ export default function WorkspaceClient() {
               <span className="led green" />
               透视视图
             </span>
-            <span>左键选择 / 拖动旋转 · 滚轮缩放 · 右键平移</span>
+            <span>选中后拖动坐标轴 · Esc 取消 · 空白拖动旋转视角</span>
             <span className="mock-watermark">示意资产 · 非物理仿真</span>
           </div>
         </main>

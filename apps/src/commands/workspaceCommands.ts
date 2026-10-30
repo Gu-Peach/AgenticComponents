@@ -1,3 +1,11 @@
+import type { CatalogEntry } from "@/contracts/catalog";
+import {
+  fetchPublicCatalog,
+  fetchPublicDefinition,
+  fetchPublicModel,
+} from "@/services/PublicModelCatalog";
+import { validateGlb } from "@/domain/validateGlb";
+import { instantiate } from "@/domain/catalog";
 import { useWorkspace } from "@/stores/workspace";
 import { preview } from "@/runtime/services";
 import {
@@ -71,6 +79,8 @@ export async function importDefinition(raw: unknown) {
     throw new Error(`定义 ${def.specId} 已存在，请使用新 ID 或先移除旧定义`);
   state.updateProject((p) => ({ ...p, definitions: [...p.definitions, def] }));
   useWorkspace.setState({
+    inspectorTarget: "catalog",
+    selectedId: null,
     selectedAsset: def.specId,
     dock: "assets",
     dockOpen: true,
@@ -83,29 +93,8 @@ export async function associateGlb(file: File) {
   const instance = p?.instances.find((i) => i.instanceId === state.selectedId);
   if (!instance || !p)
     throw new Error("请先选择现场设备，GLB 将关联至其设备定义");
-  if (file.size > 100 * 1024 * 1024)
-    throw new Error("首期支持最大 100 MB 的 GLB");
   const bytes = await file.arrayBuffer();
-  const header = new DataView(bytes);
-  if (
-    bytes.byteLength < 20 ||
-    header.getUint32(0, true) !== 0x46546c67 ||
-    header.getUint32(4, true) !== 2 ||
-    header.getUint32(8, true) !== bytes.byteLength
-  )
-    throw new Error("不是有效的 GLB 2.0 文件");
-  const length = header.getUint32(12, true);
-  if (
-    header.getUint32(16, true) !== 0x4e4f534a ||
-    20 + length > bytes.byteLength
-  )
-    throw new Error("GLB JSON 数据块无效");
-  const data = JSON.parse(
-    new TextDecoder().decode(bytes.slice(20, 20 + length)),
-  );
-  for (const entry of [...(data.buffers ?? []), ...(data.images ?? [])])
-    if (entry.uri && !entry.uri.startsWith("data:"))
-      throw new Error("请使用资源嵌入式 GLB，不支持外部纹理或 buffer 路径");
+  validateGlb(bytes);
   await preview.reset();
   if (useWorkspace.getState().project !== p)
     throw new Error("场景已改变，请重新关联");
@@ -139,6 +128,13 @@ export async function removeSelected() {
   useWorkspace.getState().updateProject((p) => ({
     ...p,
     instances: p.instances.filter((i) => i.instanceId !== id),
+    ...(p.connections
+      ? {
+          connections: p.connections.filter(
+            (c) => c.a.instanceId !== id && c.b.instanceId !== id,
+          ),
+        }
+      : {}),
   }));
   useWorkspace.getState().select(null);
 }
@@ -182,4 +178,86 @@ export function reportError(error: unknown) {
         ? error.message
         : String(error);
   useWorkspace.getState().log(message, "error");
+}
+
+let catalogGeneration = 0;
+export async function refreshPublicCatalog() {
+  const generation = ++catalogGeneration;
+  useWorkspace.setState({ catalogStatus: "loading", catalogError: "" });
+  try {
+    const entries = await fetchPublicCatalog();
+    if (generation === catalogGeneration)
+      useWorkspace.setState({ publicEntries: entries, catalogStatus: "ready" });
+  } catch (e) {
+    if (generation === catalogGeneration)
+      useWorkspace.setState({
+        catalogStatus: "error",
+        catalogError: e instanceof Error ? e.message : String(e),
+      });
+  }
+}
+let selectionGeneration = 0;
+export async function selectPublicAsset(e: CatalogEntry) {
+  const generation = ++selectionGeneration;
+  useWorkspace.getState().selectAsset(e.specId);
+  const def = await fetchPublicDefinition(e);
+  if (generation === selectionGeneration)
+    useWorkspace.setState((s) => ({
+      catalogDefinitions: { ...s.catalogDefinitions, [def.specId]: def },
+    }));
+}
+const inserting = new Set<string>();
+export async function addPublicAsset(e: CatalogEntry) {
+  if (inserting.has(e.specId)) return;
+  inserting.add(e.specId);
+  const initial = useWorkspace.getState().project;
+  try {
+    if (!initial || useWorkspace.getState().documentLocked)
+      throw new Error("请先停止预览再添加设备");
+    const def = await fetchPublicDefinition(e);
+    const existing = initial.definitions.find((d) => d.specId === def.specId);
+    if (
+      existing &&
+      (existing.revision !== def.revision ||
+        existing.asset.sha256 !== e.modelSha256 ||
+        JSON.stringify(existing.source) !== JSON.stringify(def.source))
+    )
+      throw new Error("项目已有不同版本或内容的同名设备定义");
+    const id = `sha256-${e.modelSha256}`;
+    const blob =
+      (await projectRepository.getAsset(id)) ?? (await fetchPublicModel(e));
+    await projectRepository.putAsset(id, blob);
+    const state = useWorkspace.getState();
+    if (state.project !== initial || state.documentLocked)
+      throw new Error("场景已改变，请重新添加设备");
+    const definition = existing ?? {
+      ...def,
+      asset: { ...def.asset, assetId: id },
+    };
+    const instance = instantiate(definition, initial.instances.length);
+    state.updateProject((p) => ({
+      ...p,
+      definitions: existing ? p.definitions : [...p.definitions, definition],
+      assets: p.assets.some((a) => a.id === id)
+        ? p.assets
+        : [
+            ...p.assets,
+            {
+              id,
+              name: e.modelUrl.split("/").pop()!,
+              kind: "glb",
+              size: blob.size,
+            },
+          ],
+      instances: [...p.instances, instance],
+    }));
+    state.select(instance.instanceId);
+    useWorkspace.setState((s) => ({
+      selectedAsset: def.specId,
+      focusToken: s.focusToken + 1,
+    }));
+    state.log(`已添加公共模型 ${def.name}`);
+  } finally {
+    inserting.delete(e.specId);
+  }
 }

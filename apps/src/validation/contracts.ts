@@ -37,6 +37,29 @@ export const definitionSchema = z.object({
     assetId: z.string().optional(),
     sourceKey: z.string().optional(),
     rootNode: z.string().optional(),
+    sourceUrl: z.string().optional(),
+    sha256: z.string().optional(),
+    importTransform: z
+      .object({
+        position: z.tuple([
+          z.number().finite(),
+          z.number().finite(),
+          z.number().finite(),
+        ]),
+        rotation: z.tuple([
+          z.number().finite(),
+          z.number().finite(),
+          z.number().finite(),
+        ]),
+        scale: z
+          .tuple([
+            z.number().finite(),
+            z.number().finite(),
+            z.number().finite(),
+          ])
+          .refine((v) => v.every((n) => n > 0)),
+      })
+      .optional(),
   }),
   paramsSchema: z.record(z.string(), parameterSchema),
   typeSpecificContract: z.record(z.string(), z.unknown()),
@@ -114,6 +137,15 @@ export const projectSchema = z.object({
       size: z.number().nonnegative(),
     }),
   ),
+  connections: z
+    .array(
+      z.object({
+        id: z.string().min(1),
+        a: z.object({ instanceId: z.string(), interfaceId: z.string() }),
+        b: z.object({ instanceId: z.string(), interfaceId: z.string() }),
+      }),
+    )
+    .optional(),
   plc: z.string(),
 });
 export function resolveParameters(
@@ -288,6 +320,25 @@ export function parseProject(raw: unknown) {
     if (!def) throw new Error(`${i.name}: 设备定义或版本不存在`);
     const errors = semanticIssues(def, i.paramOverrides);
     if (errors.length) throw new Error(`${i.name}: ${errors.join("；")}`);
+  }
+  const used = new Set<string>();
+  unique(
+    (project.connections ?? []).map((c) => c.id),
+    "连接",
+  );
+  for (const c of project.connections ?? []) {
+    if (c.a.instanceId === c.b.instanceId) throw new Error("不能连接设备自身");
+    for (const end of [c.a, c.b]) {
+      const i = project.instances.find((i) => i.instanceId === end.instanceId);
+      const d = project.definitions.find((d) => d.specId === i?.specId);
+      if (
+        !d?.spatialInterfaces?.some((p) => p.interface_id === end.interfaceId)
+      )
+        throw new Error("连接引用不存在");
+      const key = `${end.instanceId}/${end.interfaceId}`;
+      if (used.has(key)) throw new Error("接口已连接");
+      used.add(key);
+    }
   }
   return project;
 }

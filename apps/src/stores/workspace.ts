@@ -1,3 +1,4 @@
+import type { CatalogEntry } from "@/contracts/catalog";
 import { create } from "zustand";
 import { createDemoProject, instantiate } from "@/domain/catalog";
 import type {
@@ -12,6 +13,13 @@ export interface LogEntry {
   message: string;
 }
 interface WorkspaceState {
+  publicEntries: CatalogEntry[];
+  catalogDefinitions: Record<string, DeviceDefinition>;
+  catalogStatus: "idle" | "loading" | "ready" | "error";
+  catalogError: string;
+  inspectorTarget: "scene" | "catalog";
+  selectedInterface: string | null;
+  selectAsset(id: string): void;
   project: ProjectDocument | null;
   selectedId: string | null;
   selectedAsset: string | null;
@@ -34,6 +42,20 @@ interface WorkspaceState {
 }
 let logId = 0;
 export const useWorkspace = create<WorkspaceState>((set, get) => ({
+  publicEntries: [],
+  catalogDefinitions: {},
+  catalogStatus: "idle",
+  catalogError: "",
+  inspectorTarget: "scene",
+  selectedInterface: null,
+  selectAsset(id) {
+    set({
+      selectedAsset: id,
+      selectedId: null,
+      inspectorTarget: "catalog",
+      selectedInterface: null,
+    });
+  },
   project: null,
   selectedId: null,
   selectedAsset: null,
@@ -50,6 +72,8 @@ export const useWorkspace = create<WorkspaceState>((set, get) => ({
   initialize(project = createDemoProject()) {
     set({
       project,
+      inspectorTarget: "scene",
+      selectedInterface: null,
       selectedId: project.instances[0]?.instanceId ?? null,
       selectedAsset: project.definitions[0]?.specId ?? null,
       dirty: false,
@@ -58,7 +82,7 @@ export const useWorkspace = create<WorkspaceState>((set, get) => ({
     });
   },
   select(id) {
-    set({ selectedId: id });
+    set({ selectedId: id, inspectorTarget: "scene", selectedInterface: null });
   },
   updateProject(fn) {
     if (get().documentLocked) {
@@ -72,6 +96,13 @@ export const useWorkspace = create<WorkspaceState>((set, get) => ({
   updateInstance(id, patch) {
     get().updateProject((p) => ({
       ...p,
+      ...((patch.transform || patch.paramOverrides) && p.connections
+        ? {
+            connections: p.connections.filter(
+              (c) => c.a.instanceId !== id && c.b.instanceId !== id,
+            ),
+          }
+        : {}),
       instances: p.instances.map((i) =>
         i.instanceId === id ? { ...i, ...patch } : i,
       ),
@@ -82,7 +113,11 @@ export const useWorkspace = create<WorkspaceState>((set, get) => ({
     if (!p || get().documentLocked) return;
     const item = instantiate(def, p.instances.length);
     get().updateProject((p) => ({ ...p, instances: [...p.instances, item] }));
-    set({ selectedId: item.instanceId });
+    set({
+      selectedId: item.instanceId,
+      inspectorTarget: "scene",
+      selectedInterface: null,
+    });
     get().log(`添加实例 ${item.name}`);
   },
   log(message, level = "info") {

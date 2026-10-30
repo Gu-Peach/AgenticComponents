@@ -1,3 +1,4 @@
+import { resolveInterfaceFrame } from "@/domain/resolveInterfaceFrame";
 import { useState, type ReactNode } from "react";
 import { SlidersHorizontal, ChevronDown, Cuboid, Info } from "lucide-react";
 import { useWorkspace } from "@/stores/workspace";
@@ -33,12 +34,66 @@ function Section({
   );
 }
 export function Inspector() {
-  const { project, selectedId, modelErrors, modelNodes } = useWorkspace();
+  const {
+    project,
+    selectedId,
+    modelErrors,
+    modelNodes,
+    inspectorTarget,
+    selectedAsset,
+    catalogDefinitions,
+    selectedInterface,
+  } = useWorkspace();
   const state = usePreview();
   const [error, setError] = useState("");
   const instance = project?.instances.find((i) => i.instanceId === selectedId);
   const def = project?.definitions.find((d) => d.specId === instance?.specId);
   const locked = isActive(state.status);
+  if (inspectorTarget === "catalog") {
+    const asset =
+      catalogDefinitions[selectedAsset ?? ""] ??
+      project?.definitions.find((d) => d.specId === selectedAsset);
+    return (
+      <aside className="panel inspector">
+        <div className="panel-heading">资产定义 · 只读</div>
+        <div className="inspector-scroll">
+          {asset ? (
+            <>
+              <h3>{asset.name}</h3>
+              <p>
+                {asset.specId} · {asset.revision}
+              </p>
+              <p className="muted-note">{asset.description}</p>
+              {Object.entries(asset.paramsSchema).map(([key, spec]) => (
+                <div className="parameter-row" key={key}>
+                  <label title={spec.description}>
+                    {key}
+                    <small>{spec.description}</small>
+                  </label>
+                  <ParameterField
+                    name={`定义 ${key}`}
+                    spec={spec}
+                    value={spec.default}
+                    disabled
+                    onCommit={() => {}}
+                  />
+                </div>
+              ))}
+              <Section title="空间接口">
+                {asset.spatialInterfaces?.map((p) => (
+                  <p key={p.interface_id}>
+                    {p.name} · {p.local_frame?.position.join(", ") ?? "待标定"}
+                  </p>
+                ))}
+              </Section>
+            </>
+          ) : (
+            <p>正在读取设备定义…</p>
+          )}
+        </div>
+      </aside>
+    );
+  }
   if (!instance || !def)
     return (
       <aside className="panel inspector">
@@ -242,10 +297,14 @@ export function Inspector() {
         <Section
           title="空间接口"
           badge={`${def.spatialInterfaces?.length ?? 0}`}
-          open={false}
+          open={Boolean(selectedInterface)}
         >
           {(def.spatialInterfaces ?? []).map((port) => (
-            <details key={port.interface_id}>
+            <details
+              id={`interface-${port.interface_id}`}
+              key={port.interface_id}
+              open={selectedInterface === port.interface_id}
+            >
               <summary>
                 {port.name} · {port.capabilities.snap ? "吸附 " : ""}
               </summary>
@@ -255,7 +314,13 @@ export function Inspector() {
                   ? `局部位置 ${port.local_frame.position.join(", ")}`
                   : port.local_frame_pending
                     ? "坐标待提供，暂不可吸附"
-                    : "参数化坐标待求解"}
+                    : (() => {
+                        try {
+                          return `派生位置 ${resolveInterfaceFrame(port, def, values)?.position.join(", ")}`;
+                        } catch (e) {
+                          return `接口无法求解：${e instanceof Error ? e.message : String(e)}`;
+                        }
+                      })()}
               </p>
             </details>
           ))}

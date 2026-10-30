@@ -3,12 +3,50 @@ import { Search, Plus, ArrowUpRight, Upload } from "lucide-react";
 import { useWorkspace } from "@/stores/workspace";
 import { DeviceIcon } from "@/components/ui/DeviceIcon";
 import { typeLabels } from "@/contracts/device";
-import { importDefinition, reportError } from "@/commands/workspaceCommands";
+import {
+  importDefinition,
+  reportError,
+  refreshPublicCatalog,
+  selectPublicAsset,
+  addPublicAsset,
+} from "@/commands/workspaceCommands";
 export function AssetPanel() {
-  const { project, selectedAsset } = useWorkspace();
+  const {
+    project,
+    selectedAsset,
+    publicEntries,
+    catalogDefinitions,
+    catalogStatus,
+    catalogError,
+  } = useWorkspace();
+  const definitions = [
+    ...(project?.definitions ?? []),
+    ...publicEntries
+      .filter((e) => !project?.definitions.some((d) => d.specId === e.specId))
+      .map(
+        (e) =>
+          catalogDefinitions[e.specId] ?? {
+            specId: e.specId,
+            name: e.name,
+            deviceType: e.deviceType,
+            template: false,
+            asset: { sourceUrl: e.modelUrl },
+            paramsSchema: {},
+            behaviors: [],
+          },
+      ),
+  ];
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("all");
-  const selected = project?.definitions.find((d) => d.specId === selectedAsset);
+  const selected = definitions.find((d) => d.specId === selectedAsset);
+  const add = (id: string) => {
+    const e = publicEntries.find((e) => e.specId === id);
+    if (e) void addPublicAsset(e).catch(reportError);
+    else {
+      const d = project?.definitions.find((d) => d.specId === id);
+      if (d) useWorkspace.getState().add(d);
+    }
+  };
   return (
     <div className="asset-panel">
       <div className="asset-toolbar">
@@ -17,7 +55,7 @@ export function AssetPanel() {
             className={filter === "all" ? "active" : ""}
             onClick={() => setFilter("all")}
           >
-            全部资产 <small>{project?.definitions.length}</small>
+            全部资产 <small>{definitions.length}</small>
           </button>
           <button
             className={filter === "equipment" ? "active" : ""}
@@ -41,6 +79,17 @@ export function AssetPanel() {
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
+        <button
+          onClick={() => void refreshPublicCatalog()}
+          disabled={catalogStatus === "loading"}
+        >
+          刷新目录
+        </button>
+        {catalogError && (
+          <span role="alert" className="error-text">
+            {catalogError}
+          </span>
+        )}
         <select
           aria-label="导入已有样例"
           value=""
@@ -65,7 +114,7 @@ export function AssetPanel() {
       </div>
       <div className="asset-body">
         <div className="asset-grid">
-          {project?.definitions
+          {definitions
             .filter(
               (d) =>
                 d.name.includes(search) ||
@@ -81,10 +130,12 @@ export function AssetPanel() {
               <button
                 key={d.specId}
                 className={`asset-card ${selectedAsset === d.specId ? "selected" : ""}`}
-                onClick={() =>
-                  useWorkspace.setState({ selectedAsset: d.specId })
-                }
-                onDoubleClick={() => useWorkspace.getState().add(d)}
+                onClick={() => {
+                  const e = publicEntries.find((e) => e.specId === d.specId);
+                  if (e) void selectPublicAsset(e).catch(reportError);
+                  else useWorkspace.getState().selectAsset(d.specId);
+                }}
+                onDoubleClick={() => add(d.specId)}
               >
                 <div className={`asset-art art-${d.deviceType}`}>
                   <span className="asset-grid-pattern" />
@@ -95,9 +146,11 @@ export function AssetPanel() {
                 <small>
                   {d.template
                     ? "待配置模板"
-                    : d.asset.assetId
-                      ? "已关联模型"
-                      : "模型未关联"}
+                    : d.asset.sourceUrl
+                      ? "公共模型"
+                      : d.asset.assetId
+                        ? "已关联模型"
+                        : "模型未关联"}
                 </small>
               </button>
             ))}
@@ -119,10 +172,7 @@ export function AssetPanel() {
               <span className="pill warning">
                 {selected.template ? "模板 · 需完善契约" : "执行器待接入"}
               </span>
-              <button
-                className="primary"
-                onClick={() => useWorkspace.getState().add(selected)}
-              >
+              <button className="primary" onClick={() => add(selected.specId)}>
                 <Plus size={15} />
                 添加到现场
               </button>

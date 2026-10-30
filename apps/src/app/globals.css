@@ -1589,3 +1589,67 @@ td {
   pointer-events: none;
   z-index: 2;
 }
+
+.interface-dot {
+  width: 8px;
+  height: 8px;
+  min-width: 8px;
+  padding: 0;
+  border: 1px solid #ffc795;
+  border-radius: 50%;
+  background: #f39a4b;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 0 2px #281808;
+}
+.interface-dot::before {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+}
+.interface-dot:hover,
+.interface-dot.active {
+  width: 10px;
+  height: 10px;
+  outline: 1px solid #fff0dc;
+}
+.interface-tooltip {
+  display: none;
+  position: absolute;
+  bottom: 17px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  background: #19232e;
+  color: #f4dcc7;
+  padding: 5px 8px;
+  border: 1px solid #805637;
+  border-radius: 4px;
+  font-size: 11px;
+  pointer-events: none;
+}
+.interface-dot:hover .interface-tooltip {
+  display: block;
+}
+.model-loading {
+  white-space: nowrap;
+  color: #b8c6d1;
+  font-size: 12px;
+}
+
+button.interface-dot:hover:not(:disabled),
+button.interface-dot.active {
+  background: #f39a4b;
+  border-color: #fff0dc;
+}
+
+.snap-hint {
+  color: #ffbd83;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.viewport-toolstrip button[aria-pressed="true"] {
+  background: #334d60;
+  color: #c7ecff;
+}

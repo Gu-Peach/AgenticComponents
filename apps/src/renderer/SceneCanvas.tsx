@@ -1,65 +1,50 @@
 "use client";
+import { DeviceTransformControls } from "./DeviceTransformControls";
+import { useInteraction } from "@/stores/interaction";
 import { Component, useEffect, useRef, useState, type ReactNode } from "react";
 import { Canvas, useThree, useFrame } from "@react-three/fiber";
 import { OrbitControls, GizmoHelper, GizmoViewport } from "@react-three/drei";
-import { Box3, Group, Mesh, Object3D, Texture, Vector3 } from "three";
+import { Box3, Group, Object3D, Vector3 } from "three";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { acquireModel } from "@/services/ModelRepository";
+import { SelectionHighlight } from "./SelectionHighlight";
+import { InterfaceMarkers } from "./InterfaceMarkers";
+import { Html } from "@react-three/drei";
 import { useWorkspace } from "@/stores/workspace";
 import type { DeviceDefinition, DeviceInstance } from "@/contracts/device";
 import { DeviceShape } from "./DeviceShape";
 import { sceneObjects } from "./SceneObjectRegistry";
-import { projectRepository } from "@/services/BrowserProjectRepository";
-function disposeModel(root: Object3D) {
-  const textures = new Set<Texture>();
-  root.traverse((o) => {
-    if (o instanceof Mesh) {
-      o.geometry.dispose();
-      for (const m of Array.isArray(o.material) ? o.material : [o.material]) {
-        Object.values(m).forEach((v) => {
-          if (v instanceof Texture) textures.add(v);
-        });
-        m.dispose();
-      }
-    }
-  });
-  textures.forEach((t) => t.dispose());
-}
+
 function ImportedModel({
   assetId,
   instanceId,
-  fallback,
+  selected,
 }: {
   assetId: string;
   instanceId: string;
-  fallback: ReactNode;
+  selected: boolean;
 }) {
+  const [failure, setFailure] = useState("");
+  const [retry, setRetry] = useState(0);
   const [model, setModel] = useState<Object3D | null>(null);
   useEffect(() => {
     let disposed = false;
-    let owned: Object3D | undefined;
+    let release: (() => void) | undefined;
     const state = useWorkspace.getState();
     useWorkspace.setState({
       modelErrors: { ...state.modelErrors, [instanceId]: "" },
     });
     (async () => {
-      const blob = await projectRepository.getAsset(assetId);
-      if (!blob) throw new Error("模型文件缺失，请重新关联 GLB");
-      const data = await blob.arrayBuffer();
-      if (disposed) return;
-      const gltf = await new GLTFLoader().parseAsync(data, "");
-      owned = gltf.scene;
+      const loaded = await acquireModel(assetId);
+      release = loaded.release;
+      const owned = loaded.root;
       if (disposed) {
-        disposeModel(owned);
+        release();
         return;
       }
       const nodes: string[] = [];
       owned.traverse((o) => {
         if (o.name) nodes.push(o.name);
-        if (o instanceof Mesh) {
-          o.castShadow = true;
-          o.receiveShadow = true;
-        }
       });
       useWorkspace.setState((s) => ({
         modelNodes: { ...s.modelNodes, [instanceId]: nodes },
@@ -67,6 +52,7 @@ function ImportedModel({
       setModel(owned);
     })().catch((e) => {
       if (!disposed) {
+        setFailure(String(e.message));
         useWorkspace.setState((s) => ({
           modelErrors: { ...s.modelErrors, [instanceId]: String(e.message) },
         }));
@@ -75,10 +61,37 @@ function ImportedModel({
     });
     return () => {
       disposed = true;
-      if (owned) disposeModel(owned);
+      release?.();
     };
-  }, [assetId, instanceId]);
-  return model ? <primitive object={model} dispose={null} /> : fallback;
+  }, [assetId, instanceId, retry]);
+  useEffect(() => {
+    if (model && useWorkspace.getState().selectedId === instanceId)
+      useWorkspace.setState((s) => ({ focusToken: s.focusToken + 1 }));
+  }, [model, instanceId]);
+  if (failure)
+    return (
+      <Html center>
+        <button
+          onClick={() => {
+            setFailure("");
+            setRetry((r) => r + 1);
+          }}
+          title={failure}
+        >
+          模型加载失败 · 重试
+        </button>
+      </Html>
+    );
+  return model ? (
+    <>
+      <primitive object={model} dispose={null} />
+      <SelectionHighlight model={model} selected={selected} />
+    </>
+  ) : (
+    <Html center>
+      <span className="model-loading">正在加载模型…</span>
+    </Html>
+  );
 }
 function Device({
   instance,
@@ -89,7 +102,14 @@ function Device({
   definition: DeviceDefinition;
   selected: boolean;
 }) {
-  const root = useRef<Group>(null);
+  const root = useRef<Group>(null!);
+  const live = useInteraction((s) =>
+    s.drag?.instanceId === instance.instanceId
+      ? s.drag.transform
+      : instance.transform,
+  );
+  const locked = useWorkspace((s) => s.documentLocked);
+  const body = useRef<Group>(null!);
   useEffect(
     () =>
       root.current
@@ -98,43 +118,59 @@ function Device({
     [instance.instanceId],
   );
   return (
-    <group
-      ref={root}
-      visible={instance.visible}
-      position={instance.transform.position}
-      rotation={instance.transform.rotation}
-      scale={instance.transform.scale}
-      onClick={(e) => {
-        e.stopPropagation();
-        useWorkspace.getState().select(instance.instanceId);
-      }}
-      onDoubleClick={(e) => {
-        e.stopPropagation();
-        useWorkspace.setState((s) => ({
-          selectedId: instance.instanceId,
-          focusToken: s.focusToken + 1,
-        }));
-      }}
-    >
-      {definition.asset.assetId ? (
-        <ImportedModel
-          key={definition.asset.assetId}
-          assetId={definition.asset.assetId}
-          instanceId={instance.instanceId}
-          fallback={<DeviceShape type={definition.deviceType} />}
-        />
-      ) : (
-        <DeviceShape type={definition.deviceType} />
-      )}
-      {selected && (
-        <group>
-          <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.015, 0]}>
-            <ringGeometry args={[1.02, 1.045, 64]} />
-            <meshBasicMaterial color="#64c9e7" transparent opacity={0.85} />
-          </mesh>
+    <>
+      <group
+        ref={root}
+        visible={instance.visible}
+        position={live.position}
+        rotation={live.rotation}
+        scale={live.scale}
+        onClick={(e) => {
+          e.stopPropagation();
+          if (
+            !useInteraction.getState().drag &&
+            Date.now() > useInteraction.getState().suppressClickUntil
+          )
+            useWorkspace.getState().select(instance.instanceId);
+        }}
+        onDoubleClick={(e) => {
+          e.stopPropagation();
+          useWorkspace.setState((s) => ({
+            selectedId: instance.instanceId,
+            focusToken: s.focusToken + 1,
+          }));
+        }}
+      >
+        <group
+          position={definition.asset.importTransform?.position}
+          rotation={definition.asset.importTransform?.rotation}
+          scale={definition.asset.importTransform?.scale}
+        >
+          <group ref={body}>
+            {definition.asset.assetId ? (
+              <ImportedModel
+                key={definition.asset.assetId}
+                assetId={definition.asset.assetId}
+                instanceId={instance.instanceId}
+                selected={selected}
+              />
+            ) : (
+              <DeviceShape type={definition.deviceType} />
+            )}
+          </group>
+          {selected && (
+            <InterfaceMarkers
+              definition={definition}
+              instance={instance}
+              occluder={body}
+            />
+          )}
         </group>
+      </group>
+      {selected && !locked && (
+        <DeviceTransformControls instance={instance} root={root} />
       )}
-    </group>
+    </>
   );
 }
 function CameraRig({ token }: { token: number }) {
@@ -204,7 +240,13 @@ export default function SceneCanvas() {
         dpr={[1, 1.5]}
         camera={{ position: [9, 7.5, 10], fov: 43 }}
         gl={{ antialias: true }}
-        onPointerMissed={() => useWorkspace.getState().select(null)}
+        onPointerMissed={() => {
+          if (
+            !useInteraction.getState().drag &&
+            Date.now() > useInteraction.getState().suppressClickUntil
+          )
+            useWorkspace.getState().select(null);
+        }}
       >
         <color attach="background" args={["#171e26"]} />
         <fog attach="fog" args={["#171e26", 20, 55]} />
