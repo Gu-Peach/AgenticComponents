@@ -201,9 +201,20 @@ export function validateParameters(
 export function semanticIssues(
   def: DeviceDefinition,
   overrides: Record<string, ParamValue> = {},
+  allowIncomplete = false,
 ) {
   const p = resolveParameters(def, overrides);
-  const errors = validateParameters(def.paramsSchema, p);
+  const errors = validateParameters(
+    allowIncomplete
+      ? Object.fromEntries(
+          Object.entries(def.paramsSchema).map(([k, v]) => [
+            k,
+            { ...v, required: false, required_when: undefined },
+          ]),
+        )
+      : def.paramsSchema,
+    p,
+  );
   const ids = def.interfaces.map((s) => s.id);
   if (new Set(ids).size !== ids.length) errors.push("接口 ID 重复");
   if (new Set(def.behaviors.map((b) => b.id)).size !== def.behaviors.length)
@@ -310,7 +321,11 @@ export function parseProject(raw: unknown) {
     "资源",
   );
   for (const def of project.definitions) {
-    const errors = semanticIssues(def);
+    const errors = semanticIssues(
+      def,
+      {},
+      def.source?.contract_version === "1.3",
+    );
     if (errors.length) throw new Error(`${def.name}: ${errors.join("；")}`);
   }
   for (const i of project.instances) {
@@ -318,7 +333,11 @@ export function parseProject(raw: unknown) {
       (d) => d.specId === i.specId && d.revision === i.specRevision,
     );
     if (!def) throw new Error(`${i.name}: 设备定义或版本不存在`);
-    const errors = semanticIssues(def, i.paramOverrides);
+    const errors = semanticIssues(
+      def,
+      i.paramOverrides,
+      def.source?.contract_version === "1.3",
+    );
     if (errors.length) throw new Error(`${i.name}: ${errors.join("；")}`);
   }
   const used = new Set<string>();

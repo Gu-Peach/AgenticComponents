@@ -1,3 +1,6 @@
+import { placeMaterial } from "@/domain/runtime/placeMaterial";
+import { ParameterField } from "@/components/ui/ParameterField";
+import { resolveParameters } from "@/validation/contracts";
 import { useState, useSyncExternalStore } from "react";
 import { runtimeController } from "@/services/RuntimeController";
 import { useWorkspace } from "@/stores/workspace";
@@ -10,24 +13,123 @@ export function SimulationPanel() {
   );
   const { project, selectedId, documentLocked } = useWorkspace();
   const [speed, setSpeed] = useState("0.4");
+  const [materialId, setMaterialId] = useState("");
   const selected = project?.instances.find((i) => i.instanceId === selectedId);
   const definition = project?.definitions.find(
     (d) => d.specId === selected?.specId,
   );
-  const executable = definition?.source?.contract_version === "1.2";
+  const version = definition?.source?.contract_version;
+  const executable = ["1.2", "1.3"].includes(String(version));
+  const materials =
+    project?.instances.filter(
+      (i) =>
+        i.visible &&
+        project.definitions.some(
+          (d) =>
+            d.specId === i.specId &&
+            d.deviceType === "workpiece" &&
+            d.source?.contract_version === "1.3",
+        ),
+    ) ?? [];
+  const material =
+    materials.find((i) => i.instanceId === materialId) ?? materials[0];
+  const md = project?.definitions.find((d) => d.specId === material?.specId);
+  const mass =
+    md && material
+      ? resolveParameters(md, material.paramOverrides).mass_kg
+      : undefined;
+
   const run = () => {
     if (project && selected)
-      void runtimeController.prepare(project, selected).catch(reportError);
+      void runtimeController
+        .prepare(project, selected, material?.instanceId)
+        .catch(reportError);
   };
   return (
     <div className="simulation-panel">
       <strong>接触式输送实验</strong>
       <small>
-        仅选中输送面与 0.2 kg 实验箱体参与物理；其余场景设备不参与本实验。
+        仅选中输送面与所选物料参与物理；质量需明确填写，其他场景设备不参与本次运行。
       </small>
+      {version === "1.3" && (
+        <>
+          <label>
+            运行物料
+            <select
+              aria-label="运行物料"
+              disabled={documentLocked}
+              value={material?.instanceId ?? ""}
+              onChange={(e) => setMaterialId(e.target.value)}
+            >
+              <option value="" disabled>
+                请先添加物料资产
+              </option>
+              {materials.map((i) => (
+                <option key={i.instanceId} value={i.instanceId}>
+                  {i.name}
+                </option>
+              ))}
+            </select>
+          </label>
+          {material && md && (
+            <>
+              <label>
+                物料质量（kg，实验设定）
+                <ParameterField
+                  name="物料质量"
+                  spec={md.paramsSchema.mass_kg}
+                  value={mass}
+                  disabled={documentLocked}
+                  onCommit={(value) => {
+                    const n = Number(value);
+                    if (!Number.isFinite(n) || n <= 0 || n > 500) {
+                      reportError(new Error("请输入有效的正质量，最多500 kg"));
+                      return;
+                    }
+                    useWorkspace
+                      .getState()
+                      .updateInstance(material.instanceId, {
+                        paramOverrides: {
+                          ...material.paramOverrides,
+                          mass_kg: n,
+                        },
+                      });
+                  }}
+                />
+              </label>
+              <button
+                disabled={documentLocked}
+                onClick={() => {
+                  try {
+                    if (project && selected)
+                      useWorkspace
+                        .getState()
+                        .updateInstance(material.instanceId, {
+                          transform: placeMaterial(
+                            project,
+                            selected.instanceId,
+                            material.instanceId,
+                          ),
+                        });
+                  } catch (e) {
+                    reportError(e);
+                  }
+                }}
+              >
+                物料放到入口并对齐
+              </button>
+            </>
+          )}
+        </>
+      )}
       <div className="row">
         <button
-          disabled={!selected || documentLocked || !executable}
+          disabled={
+            !selected ||
+            documentLocked ||
+            !executable ||
+            (version === "1.3" && !material)
+          }
           onClick={run}
         >
           启动输送实验

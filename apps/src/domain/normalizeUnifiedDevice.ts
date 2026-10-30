@@ -1,3 +1,4 @@
+import { rigidPhysicsSchema } from "@/contracts/rigid-body";
 import {
   conveyorModelSchema,
   signalManagementSchema,
@@ -18,7 +19,7 @@ const parameter = parameterSchema.extend({
 });
 const schema = z
   .object({
-    contract_version: z.enum(["1.1", "1.2"]),
+    contract_version: z.enum(["1.1", "1.2", "1.3"]),
     schema_type: z.literal("DeviceSpec"),
     schema_id: z.string().min(1),
     device_spec_id: z.string().min(1),
@@ -134,7 +135,7 @@ export function normalizeUnifiedDevice(raw: unknown) {
     const model = conveyorModelSchema.parse(s.type_specific_contract);
     const surface = model.conveying_surface;
     if (
-      s.contract_version === "1.2" &&
+      ["1.2", "1.3"].includes(s.contract_version) &&
       (surface.implementation_status !== "implemented" ||
         surface.geometry.calibration_status !== "calibrated" ||
         surface.contact.friction_status !== "calibrated" ||
@@ -175,6 +176,21 @@ export function normalizeUnifiedDevice(raw: unknown) {
         port.plc_type !== (key === "run_signal" ? "BOOL" : "REAL")
       )
         throw new Error("输送面驱动信号引用、方向或类型错误");
+    }
+  }
+  if (s.contract_version === "1.3") {
+    const physics = rigidPhysicsSchema.parse(s.type_specific_contract.physics);
+    if (s.device_type === "conveyor") {
+      const surface = s.type_specific_contract.conveying_surface as {
+        body_ref?: string;
+      };
+      if (
+        !physics.bodies.some(
+          (b) =>
+            b.body_id === surface.body_ref && b.role === "conveying_support",
+        )
+      )
+        throw new Error("输送面刚体引用不存在或角色错误");
     }
   }
   const ids = new Map(s.signal_ports.map((p) => [p.port_id, p]));
@@ -258,10 +274,10 @@ export function normalizeUnifiedDevice(raw: unknown) {
     })),
     source: structuredClone(raw),
     diagnostics: [
-      "设备契约 1.1 已加载；空间吸附、接口求解与真实执行器仍需接入。",
+      `设备契约 ${s.contract_version} 已加载；运行前校验完整参数与已实现能力。`,
     ],
   });
-  const errors = semanticIssues(def);
+  const errors = semanticIssues(def, {}, s.contract_version === "1.3");
   if (errors.length) throw new Error(errors.join("；"));
   return def;
 }

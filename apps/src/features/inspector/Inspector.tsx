@@ -277,7 +277,11 @@ export function Inspector() {
                     ...instance.paramOverrides,
                     [key]: value,
                   };
-                  const errors = semanticIssues(def, overrides);
+                  const errors = semanticIssues(
+                    def,
+                    overrides,
+                    def.source?.contract_version === "1.3",
+                  );
                   if (errors.length) {
                     setError(errors.join("；"));
                     return;

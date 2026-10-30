@@ -1,0 +1,1712 @@
+{
+  "schema_id": "Conveyor_aankws",
+  "schema_type": "DeviceSpec",
+  "version": "0.5.0",
+  "name": "Conveyor_aankws 直线输送机",
+  "description": "单向整带输送机的接触式输送建模：空间接口用于吸附连接，输送面提供表面速度，物料由未来物理引擎求解，工艺区域发布实际观测。当前仅完成声明，执行器与标定待接入。",
+  "device_spec_id": "Conveyor_aankws",
+  "device_type": "conveyor",
+  "display_name": "Conveyor_aankws 直线输送机",
+  "source": {
+    "kind": "glb_inspected_and_contract_authored",
+    "path": "Conveyor_aankws.glb",
+    "sha256": "46a159554c0f5d5eda8073d749a5d94dc9b23a2f15fbe8204b56eb66766c767d"
+  },
+  "references": [
+    "../../docs/参数契约.md",
+    "../../docs/schema.md",
+    "../../docs/scene1/device_specs/conveyor_1.json"
+  ],
+  "notes": [
+    "本文件为 DeviceSpec 声明，不是 JSON Schema Draft 校验器。",
+    "GLB 原生采用 Y-up；不沿用旧 conveyor_1 的 Z-up 工艺点。所有本地长度为 m，旋转为 rad。",
+    "当前网格没有内置动画，也没有骨骼。皮带顶层没有 UV 属性且无纹理，初版预览应移动载荷，不能假定可直接滚动皮带纹理。",
+    "仅定义当前整带驱动能力；不声明独立分区积放、反转、FPM 兼容反馈和虚拟停留点电机。",
+    "物料不以端点插值推进；输送面、动态物料及有效接触共同决定运动。运动中物料可滑移、受阻或离开输送面。",
+    "空间接口禁止携带 process、signal_refs 或信号绑定。信号属于设备实例的具名引擎寄存表。",
+    "空间端点位置由用户提供：入口 [-0.749, 0.700, 0]，出口 [0.751, 0.700, 0]，单位 m，相对设备根坐标系；按端点向外的吸附约定，入口 forward=-X、出口 forward=+X，up=+Y。",
+    "契约 1.2 仅实现水平单位缩放的接触输送实验，采用 conveyor-contact-v1 仿真标定，不表示硬件额定值。物料接收/下游交接服务仍未实现。",
+    "接触属性、区域和到速判据来自 apps/src/data/runtime-fixtures/conveyor-calibration.json。信号运行支持范围见 supported_io；未实现端口保持不可写/无有效运行值。"
+  ],
+  "modeling_status": {
+    "phase": "initial_contract",
+    "geometry": "vertex_inspected_endpoint_positions_user_provided_contact_regions_pending",
+    "execution": "experimental_scene_template_available",
+    "plc_binding": "unassigned",
+    "contract_format": "DeviceSpec spatial-only interfaces contract 1.2"
+  },
+  "asset": {
+    "model_format": "glb",
+    "model_key": "Conveyor_aankws.glb",
+    "path_base": "device_spec_directory",
+    "root_node_name": "Conveyor(1)",
+    "root_node_index": 38,
+    "scene_index": 0,
+    "sha256": "46a159554c0f5d5eda8073d749a5d94dc9b23a2f15fbe8204b56eb66766c767d",
+    "import_transform": {
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation_euler": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "node_lookup": "gltf_node_index_with_source_hash_then_verify_name; loader names may be sanitized"
+  },
+  "params_schema": {
+    "speed_mps": {
+      "type": "number",
+      "required": true,
+      "default": 0.4,
+      "unit": "m/s",
+      "min": 0,
+      "max": 2,
+      "mutability": "runtime_setpoint",
+      "description": "非负目标表面速度；0 表示停止。0.4 m/s 为仿真初值，2 m/s 是初始软件限幅，非硬件额定值。"
+    },
+    "length_m": {
+      "type": "number",
+      "required": true,
+      "default": 1.4,
+      "unit": "m",
+      "min": 1.4,
+      "max": 1.4,
+      "mutability": "stopped_only",
+      "description": "按上层皮带网格估算的有效输送长度。当前 GLB 固定几何，未实现参数化拉伸，暂锁定为 1.4 m。"
+    },
+    "width_m": {
+      "type": "number",
+      "required": true,
+      "default": 0.5,
+      "unit": "m",
+      "min": 0.5,
+      "max": 0.5,
+      "mutability": "stopped_only",
+      "description": "按皮带网格估算的有效宽度；固定几何暂锁定为 0.5 m，不是整机包围盒宽度。"
+    },
+    "surface_height_m": {
+      "type": "number",
+      "required": true,
+      "default": 0.7,
+      "unit": "m",
+      "min": 0.7,
+      "max": 0.7,
+      "mutability": "stopped_only",
+      "description": "设备局部 Y 轴上的输送面高度；GLB 顶层皮带顶面约为 0.7 m，需场景交接标定。"
+    },
+    "transport_mode": {
+      "type": "enum",
+      "required": true,
+      "default": "continuous",
+      "options": [
+        "continuous"
+      ],
+      "mutability": "stopped_only",
+      "description": "初版仅允许整带驱动。模型未提供独立分区驱动依据，不声明 zoned 模式。"
+    },
+    "allow_reverse": {
+      "type": "boolean",
+      "required": true,
+      "default": false,
+      "mutability": "stopped_only",
+      "description": "初版固定为 false；反向能力尚未建模和接入，不因网格外观对称就声明支持。"
+    },
+    "capacity": {
+      "type": "integer",
+      "required": true,
+      "default": 3,
+      "min": 1,
+      "max": 100,
+      "mutability": "stopped_only",
+      "description": "仿真允许的最大载荷单元数量，初值 3；实际接收还需检查载荷外形、间隙、支承和已有预留。非硬件承载认证。"
+    },
+    "resume_threshold": {
+      "type": "integer",
+      "required": true,
+      "default": 2,
+      "min": 0,
+      "max": 99,
+      "mutability": "stopped_only",
+      "description": "数量积压锁存解除阈值，初值 2；数量降到该值后仍需满足入口与下游几何条件才能恢复。"
+    },
+    "accel_time_s": {
+      "type": "number",
+      "required": true,
+      "default": 0.5,
+      "unit": "s",
+      "min": 0,
+      "max": 30,
+      "mutability": "stopped_only",
+      "description": "从零到额定速度的加速时间；0表示理想瞬时切换"
+    },
+    "decel_time_s": {
+      "type": "number",
+      "required": true,
+      "default": 0.5,
+      "unit": "s",
+      "min": 0,
+      "max": 30,
+      "mutability": "stopped_only",
+      "description": "从额定速度到零的减速时间"
+    },
+    "encoder_pitch_m": {
+      "type": "number",
+      "required": false,
+      "default": 0.0254,
+      "unit": "m",
+      "min": 0.0001,
+      "max": 10,
+      "mutability": "stopped_only",
+      "description": "每编码脉冲对应的表面行程"
+    }
+  },
+  "signal_ports": [
+    {
+      "port_id": "runTag",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "持续运行许可；FALSE 将目标速度置零并受控减速，允许空带运行。",
+      "semantic": "持续运行许可；FALSE 将目标速度置零并受控减速，允许空带运行。",
+      "signal_role": "level_permission",
+      "retention": "latest_value",
+      "edge_trigger": "none",
+      "writer": "command_arbiter",
+      "default_value": false
+    },
+    {
+      "port_id": "speedTag",
+      "direction": "input",
+      "value_type": "number",
+      "plc_type": "REAL",
+      "description": "m/s 非负目标表面速度；受限于 speed_mps 的软件范围，不能与手动预览同时写入。",
+      "semantic": "m/s 非负目标表面速度；受限于 speed_mps 的软件范围，不能与手动预览同时写入。",
+      "signal_role": "setpoint",
+      "retention": "latest_value",
+      "edge_trigger": "none",
+      "writer": "command_arbiter",
+      "default_value": 0,
+      "unit": "m/s"
+    },
+    {
+      "port_id": "release_waiting_material",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "出口持续放行许可；不是每扫描一次就创建新任务。TRUE 仍需本任务的下游预留和交接授权。",
+      "semantic": "出口持续放行许可；不是每扫描一次就创建新任务。TRUE 仍需本任务的下游预留和交接授权。",
+      "signal_role": "level_permission",
+      "retention": "latest_value",
+      "edge_trigger": "none",
+      "writer": "command_arbiter",
+      "default_value": false
+    },
+    {
+      "port_id": "runningTag",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "实际表面速度超过静止容差；减速期间仍可能为 TRUE。",
+      "semantic": "实际表面速度超过静止容差；减速期间仍可能为 TRUE。",
+      "signal_role": "state",
+      "retention": "latest_value",
+      "edge_trigger": "none",
+      "writer": "conveyor_runtime",
+      "default_value": false
+    },
+    {
+      "port_id": "actual_speed",
+      "direction": "output",
+      "value_type": "number",
+      "plc_type": "REAL",
+      "description": "实际表面速度，区别于目标速度与物料速度。",
+      "semantic": "实际表面速度，区别于目标速度与物料速度。",
+      "signal_role": "state",
+      "retention": "latest_value",
+      "edge_trigger": "none",
+      "writer": "conveyor_runtime",
+      "default_value": 0,
+      "unit": "m/s"
+    },
+    {
+      "port_id": "blocked",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "确有物料因下游不可接收或空间不足而等待；空带停机不算阻塞。",
+      "semantic": "确有物料因下游不可接收或空间不足而等待；空带停机不算阻塞。",
+      "signal_role": "state",
+      "retention": "latest_value",
+      "edge_trigger": "none",
+      "writer": "conveyor_runtime",
+      "default_value": false
+    },
+    {
+      "port_id": "part_ready",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "指定出口检测区域有可交接物料；交接后清除。属于持续状态。",
+      "semantic": "指定出口检测区域有可交接物料；交接后清除。属于持续状态。",
+      "signal_role": "state",
+      "retention": "latest_value",
+      "edge_trigger": "none",
+      "writer": "conveyor_runtime",
+      "default_value": false
+    },
+    {
+      "port_id": "capacity_available",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "入口可用，已占用加有效预留小于容量，且待交接物料的兼容性检查通过。",
+      "semantic": "入口可用，已占用加有效预留小于容量，且待交接物料的兼容性检查通过。",
+      "signal_role": "state",
+      "retention": "latest_value",
+      "edge_trigger": "none",
+      "writer": "conveyor_runtime",
+      "default_value": false
+    },
+    {
+      "port_id": "pulseTag",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "每 encoder_pitch_m 表面行程产生一仿真步的编码脉冲；仅在扫描采样约束满足时启用，不能保证任意频率无漏计。",
+      "semantic": "每 encoder_pitch_m 表面行程产生一仿真步的编码脉冲；仅在扫描采样约束满足时启用，不能保证任意频率无漏计。",
+      "signal_role": "sampled_pulse",
+      "retention": "latest_value",
+      "edge_trigger": "none",
+      "writer": "conveyor_runtime",
+      "default_value": false
+    },
+    {
+      "port_id": "encoderTag",
+      "direction": "output",
+      "value_type": "number",
+      "plc_type": "REAL",
+      "description": "累计有符号表面行程，初版单向所以非递减；不等于工件位移。",
+      "semantic": "累计有符号表面行程，初版单向所以非递减；不等于工件位移。",
+      "signal_role": "state",
+      "retention": "latest_value",
+      "edge_trigger": "none",
+      "writer": "conveyor_runtime",
+      "default_value": 0,
+      "unit": "m"
+    },
+    {
+      "port_id": "request_id",
+      "direction": "input",
+      "value_type": "integer",
+      "plc_type": "DINT",
+      "description": "离散交接/运输任务编号，1..2147483647；0 表示无请求，重复编号不得重复启动。",
+      "semantic": "离散交接/运输任务编号，1..2147483647；0 表示无请求，重复编号不得重复启动。",
+      "signal_role": "request_identity",
+      "retention": "latest_value",
+      "edge_trigger": "none",
+      "writer": "command_arbiter",
+      "default_value": 0
+    },
+    {
+      "port_id": "behavior_code",
+      "direction": "input",
+      "value_type": "integer",
+      "plc_type": "INT",
+      "description": "离散入口：1=accept_material，2=transport_to_exit，3=release_material；0=无操作。",
+      "semantic": "离散入口：1=accept_material，2=transport_to_exit，3=release_material；0=无操作。",
+      "signal_role": "request_argument",
+      "retention": "latest_value",
+      "edge_trigger": "none",
+      "writer": "command_arbiter",
+      "default_value": 0
+    },
+    {
+      "port_id": "subject_id",
+      "direction": "input",
+      "value_type": "integer",
+      "plc_type": "DINT",
+      "description": "物料或整托载荷的场景映射编号；0 表示无目标，不用 REAL 保存身份。",
+      "semantic": "物料或整托载荷的场景映射编号；0 表示无目标，不用 REAL 保存身份。",
+      "signal_role": "request_argument",
+      "retention": "latest_value",
+      "edge_trigger": "none",
+      "writer": "command_arbiter",
+      "default_value": 0
+    },
+    {
+      "port_id": "execute",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "离散任务启动位；参数与编号先稳定，保持 TRUE 直到 accepted，撤销后才可形成新请求。",
+      "semantic": "离散任务启动位；参数与编号先稳定，保持 TRUE 直到 accepted，撤销后才可形成新请求。",
+      "signal_role": "latched_request",
+      "retention": "latest_value",
+      "edge_trigger": "none",
+      "writer": "command_arbiter",
+      "default_value": false
+    },
+    {
+      "port_id": "reset",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "故障原因消失且允许复位时请求清除可复位故障；不得清空实际占用和在途物料。",
+      "semantic": "故障原因消失且允许复位时请求清除可复位故障；不得清空实际占用和在途物料。",
+      "signal_role": "reset_request",
+      "retention": "latest_value",
+      "edge_trigger": "none",
+      "writer": "command_arbiter",
+      "default_value": false
+    },
+    {
+      "port_id": "accepted",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "已接受当前 request_id；保持至 execute 撤销。",
+      "semantic": "已接受当前 request_id；保持至 execute 撤销。",
+      "signal_role": "acceptance",
+      "retention": "latest_value",
+      "edge_trigger": "none",
+      "writer": "conveyor_runtime",
+      "default_value": false
+    },
+    {
+      "port_id": "busy",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "离散任务已接受且尚未终止；阻塞等待或受控暂停时仍为 TRUE。",
+      "semantic": "离散任务已接受且尚未终止；阻塞等待或受控暂停时仍为 TRUE。",
+      "signal_role": "state",
+      "retention": "latest_value",
+      "edge_trigger": "none",
+      "writer": "conveyor_runtime",
+      "default_value": false
+    },
+    {
+      "port_id": "done",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "本次离散任务达到其真实完成判据；锁存至下一请求被接受，连续空转没有全局 done。",
+      "semantic": "本次离散任务达到其真实完成判据；锁存至下一请求被接受，连续空转没有全局 done。",
+      "signal_role": "latched_result",
+      "retention": "latest_value",
+      "edge_trigger": "none",
+      "writer": "conveyor_runtime",
+      "default_value": false
+    },
+    {
+      "port_id": "result_id",
+      "direction": "output",
+      "value_type": "integer",
+      "plc_type": "DINT",
+      "description": "终止结果关联的 request_id；0 表示尚无任务结果。",
+      "semantic": "终止结果关联的 request_id；0 表示尚无任务结果。",
+      "signal_role": "result_identity",
+      "retention": "latest_value",
+      "edge_trigger": "none",
+      "writer": "conveyor_runtime",
+      "default_value": 0
+    },
+    {
+      "port_id": "error",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "设备故障或当前请求失败，正常阻塞等待不属于故障。",
+      "semantic": "设备故障或当前请求失败，正常阻塞等待不属于故障。",
+      "signal_role": "latched_result",
+      "retention": "latest_value",
+      "edge_trigger": "none",
+      "writer": "conveyor_runtime",
+      "default_value": false
+    },
+    {
+      "port_id": "error_code",
+      "direction": "output",
+      "value_type": "integer",
+      "plc_type": "INT",
+      "description": "0=无错误；其他值见 runtime_contract.error_codes。",
+      "semantic": "0=无错误；其他值见 runtime_contract.error_codes。",
+      "signal_role": "result_code",
+      "retention": "latest_value",
+      "edge_trigger": "none",
+      "writer": "conveyor_runtime",
+      "default_value": 0
+    }
+  ],
+  "transport_behaviors": [
+    {
+      "behavior_id": "accept_material",
+      "display_name": "接收物料",
+      "behavior_type": "service",
+      "schedulable": true,
+      "executor_ref": "agent.conveyor.accept_material",
+      "implementation_status": "pending_adapter",
+      "trigger": {
+        "kind": "task_gateway",
+        "behavior_code": 1
+      },
+      "arguments_schema": {
+        "subject_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "场景载荷登记表编号；动作请求必须覆盖为有效正整数。",
+          "min": 1,
+          "max": 2147483647
+        }
+      },
+      "input_signals": [
+        "request_id",
+        "behavior_code",
+        "subject_id",
+        "execute"
+      ],
+      "output_signals": [
+        "capacity_available",
+        "accepted",
+        "busy",
+        "done",
+        "result_id",
+        "error",
+        "error_code"
+      ],
+      "preconditions": [
+        "设备配置已解析、执行器已接入且无阻止动作的故障",
+        "入口与含预留容量允许接收",
+        "指定物料类别、尺寸与支承条件兼容",
+        "本任务获得有效入料交接授权"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "device_ready",
+            "label": "设备配置已解析、执行器已接入且无阻止动作的故障",
+            "source": "observation",
+            "key": "device_ready",
+            "equals": true
+          },
+          {
+            "id": "entry_capacity_available",
+            "label": "入口与含预留容量允许接收",
+            "source": "observation",
+            "key": "entry_capacity_available",
+            "equals": true
+          },
+          {
+            "id": "subject_compatible",
+            "label": "指定物料类别、尺寸与支承条件兼容",
+            "source": "observation",
+            "key": "subject_compatible",
+            "equals": true
+          },
+          {
+            "id": "handoff_authorized",
+            "label": "本任务获得有效入料交接授权",
+            "source": "authorization",
+            "key": "handoff_authorized",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "handoff_authorized",
+            "label": "本任务获得有效入料交接授权",
+            "source": "authorization",
+            "key": "handoff_authorized",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "指定物料实际进入入口并完成交接，才更新归属和占用。",
+        "checks": [
+          {
+            "id": "entry_handoff_confirmed",
+            "label": "指定物料真实进入入口且双方确认交接",
+            "source": "observation",
+            "key": "entry_handoff_confirmed",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false,
+        "request_correlation_required": true
+      },
+      "effects": [
+        "指定物料实际进入入口并完成交接，才更新归属和占用。"
+      ],
+      "request_protocol": "discrete_task_gateway",
+      "execution_responsibility": "engine_handoff_service_no_position_write"
+    },
+    {
+      "behavior_id": "transport_to_exit",
+      "display_name": "运输至出口",
+      "behavior_type": "composite",
+      "schedulable": true,
+      "executor_ref": "agent.conveyor.transport_to_exit",
+      "implementation_status": "pending_adapter",
+      "trigger": {
+        "kind": "task_gateway",
+        "behavior_code": 2
+      },
+      "arguments_schema": {
+        "subject_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "场景载荷登记表编号；动作请求必须覆盖为有效正整数。",
+          "min": 1,
+          "max": 2147483647
+        }
+      },
+      "input_signals": [
+        "runTag",
+        "speedTag",
+        "request_id",
+        "behavior_code",
+        "subject_id",
+        "execute"
+      ],
+      "output_signals": [
+        "part_ready",
+        "blocked",
+        "accepted",
+        "busy",
+        "done",
+        "result_id",
+        "error",
+        "error_code"
+      ],
+      "preconditions": [
+        "设备配置已解析、执行器已接入且无阻止动作的故障",
+        "指定物料已经有效交接给本设备",
+        "指定物料的整带运输路径有效",
+        "目标速度有限且符合单向与软件范围约束"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "device_ready",
+            "label": "设备配置已解析、执行器已接入且无阻止动作的故障",
+            "source": "observation",
+            "key": "device_ready",
+            "equals": true
+          },
+          {
+            "id": "subject_on_conveyor",
+            "label": "指定物料已经有效交接给本设备",
+            "source": "observation",
+            "key": "subject_on_conveyor",
+            "equals": true
+          },
+          {
+            "id": "transport_path_valid",
+            "label": "指定物料的整带运输路径有效",
+            "source": "observation",
+            "key": "transport_path_valid",
+            "equals": true
+          },
+          {
+            "id": "speed_setpoint_valid",
+            "label": "目标速度有限且符合单向与软件范围约束",
+            "source": "observation",
+            "key": "speed_setpoint_valid",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "run_permission",
+            "label": "持续运行许可有效",
+            "source": "observation",
+            "key": "run_permission",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "指定物料到达出口交接区，发布本次到达结果和 part_ready；出口交接由 release_material 负责。",
+        "checks": [
+          {
+            "id": "exit_arrival_confirmed",
+            "label": "本次运输的指定物料真实到达出口",
+            "source": "observation",
+            "key": "exit_arrival_confirmed",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false,
+        "request_correlation_required": true
+      },
+      "effects": [
+        "指定物料到达出口交接区，发布本次到达结果和 part_ready；出口交接由 release_material 负责。"
+      ],
+      "request_protocol": "discrete_task_gateway",
+      "composition": {
+        "strategy": "observe_contact_transport_until_exit",
+        "mechanisms": [
+          "publish_drive_feedback"
+        ],
+        "note": "运输任务跟踪实际物料到达；输送面可以在没有此任务时带动物料。驱动由唯一运行许可与速度通道管理，任务不得独立插值物料位置。"
+      },
+      "execution_responsibility": "observe_subject_transport_no_position_write"
+    },
+    {
+      "behavior_id": "release_material",
+      "display_name": "出口交接",
+      "behavior_type": "service",
+      "schedulable": true,
+      "executor_ref": "agent.conveyor.release_material",
+      "implementation_status": "pending_adapter",
+      "trigger": {
+        "kind": "task_gateway",
+        "behavior_code": 3
+      },
+      "arguments_schema": {
+        "subject_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "场景载荷登记表编号；动作请求必须覆盖为有效正整数。",
+          "min": 1,
+          "max": 2147483647
+        }
+      },
+      "input_signals": [
+        "release_waiting_material",
+        "request_id",
+        "behavior_code",
+        "subject_id",
+        "execute"
+      ],
+      "output_signals": [
+        "part_ready",
+        "capacity_available",
+        "accepted",
+        "busy",
+        "done",
+        "result_id",
+        "error",
+        "error_code"
+      ],
+      "preconditions": [
+        "设备配置已解析、执行器已接入且无阻止动作的故障",
+        "指定物料到达出口交接区",
+        "出口持续放行许可有效",
+        "下游容量已为本任务有效预留",
+        "本任务获得有效出口交接授权"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "device_ready",
+            "label": "设备配置已解析、执行器已接入且无阻止动作的故障",
+            "source": "observation",
+            "key": "device_ready",
+            "equals": true
+          },
+          {
+            "id": "subject_at_exit",
+            "label": "指定物料到达出口交接区",
+            "source": "observation",
+            "key": "subject_at_exit",
+            "equals": true
+          },
+          {
+            "id": "release_permission",
+            "label": "出口持续放行许可有效",
+            "source": "observation",
+            "key": "release_permission",
+            "equals": true
+          },
+          {
+            "id": "downstream_reserved",
+            "label": "下游容量已为本任务有效预留",
+            "source": "authorization",
+            "key": "downstream_reserved",
+            "equals": true
+          },
+          {
+            "id": "release_authorized",
+            "label": "本任务获得有效出口交接授权",
+            "source": "authorization",
+            "key": "release_authorized",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "release_permission",
+            "label": "出口持续放行许可有效",
+            "source": "observation",
+            "key": "release_permission",
+            "equals": true
+          },
+          {
+            "id": "downstream_reserved",
+            "label": "下游容量已为本任务有效预留",
+            "source": "authorization",
+            "key": "downstream_reserved",
+            "equals": true
+          },
+          {
+            "id": "release_authorized",
+            "label": "本任务获得有效出口交接授权",
+            "source": "authorization",
+            "key": "release_authorized",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "指定物料离开本设备并由下游确认接收，之后释放本设备占用；仅离开画面或计时结束不算成功。",
+        "checks": [
+          {
+            "id": "exit_handoff_confirmed",
+            "label": "物料离开且下游确认接收",
+            "source": "observation",
+            "key": "exit_handoff_confirmed",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false,
+        "request_correlation_required": true
+      },
+      "effects": [
+        "指定物料离开本设备并由下游确认接收，之后释放本设备占用；仅离开画面或计时结束不算成功。"
+      ],
+      "request_protocol": "discrete_task_gateway",
+      "execution_responsibility": "engine_handoff_service_no_position_write"
+    },
+    {
+      "behavior_id": "start_conveying",
+      "display_name": "连续运行",
+      "behavior_type": "action",
+      "schedulable": false,
+      "executor_ref": "agent.conveyor.start_conveying",
+      "implementation_status": "pending_adapter",
+      "trigger": {
+        "kind": "level",
+        "signal": "runTag",
+        "equals": true
+      },
+      "arguments_schema": {},
+      "input_signals": [
+        "runTag",
+        "speedTag"
+      ],
+      "output_signals": [
+        "runningTag",
+        "actual_speed",
+        "blocked"
+      ],
+      "preconditions": [
+        "设备配置已解析、执行器已接入且无阻止动作的故障",
+        "持续运行许可有效",
+        "目标速度有限且符合单向与软件范围约束",
+        "本任务取得整条输送面驱动控制权"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "device_ready",
+            "label": "设备配置已解析、执行器已接入且无阻止动作的故障",
+            "source": "observation",
+            "key": "device_ready",
+            "equals": true
+          },
+          {
+            "id": "run_permission",
+            "label": "持续运行许可有效",
+            "source": "observation",
+            "key": "run_permission",
+            "equals": true
+          },
+          {
+            "id": "speed_setpoint_valid",
+            "label": "目标速度有限且符合单向与软件范围约束",
+            "source": "observation",
+            "key": "speed_setpoint_valid",
+            "equals": true
+          },
+          {
+            "id": "drive_authorized",
+            "label": "本任务取得整条输送面驱动控制权",
+            "source": "authorization",
+            "key": "drive_authorized",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "run_permission",
+            "label": "持续运行许可有效",
+            "source": "observation",
+            "key": "run_permission",
+            "equals": true
+          },
+          {
+            "id": "drive_authorized",
+            "label": "本任务取得整条输送面驱动控制权",
+            "source": "authorization",
+            "key": "drive_authorized",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "continuous",
+        "description": "持续发布实际速度；允许空转，无单次 done。停止由 stop_conveying 的速度观测确认。",
+        "checks": [],
+        "timer_or_progress_is_success": false
+      },
+      "effects": [
+        "持续发布实际速度；允许空转，无单次 done。停止由 stop_conveying 的速度观测确认。"
+      ]
+    },
+    {
+      "behavior_id": "set_speed",
+      "display_name": "调整速度",
+      "behavior_type": "action",
+      "schedulable": false,
+      "executor_ref": "agent.conveyor.set_speed",
+      "implementation_status": "pending_adapter",
+      "trigger": {
+        "kind": "setpoint_change",
+        "signal": "speedTag",
+        "dispatch": "positive_same_direction"
+      },
+      "arguments_schema": {},
+      "input_signals": [
+        "runTag",
+        "speedTag"
+      ],
+      "output_signals": [
+        "actual_speed"
+      ],
+      "preconditions": [
+        "设备配置已解析、执行器已接入且无阻止动作的故障",
+        "持续运行许可有效",
+        "目标速度有限且符合单向与软件范围约束",
+        "本任务取得整条输送面驱动控制权"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "device_ready",
+            "label": "设备配置已解析、执行器已接入且无阻止动作的故障",
+            "source": "observation",
+            "key": "device_ready",
+            "equals": true
+          },
+          {
+            "id": "run_permission",
+            "label": "持续运行许可有效",
+            "source": "observation",
+            "key": "run_permission",
+            "equals": true
+          },
+          {
+            "id": "speed_setpoint_valid",
+            "label": "目标速度有限且符合单向与软件范围约束",
+            "source": "observation",
+            "key": "speed_setpoint_valid",
+            "equals": true
+          },
+          {
+            "id": "drive_authorized",
+            "label": "本任务取得整条输送面驱动控制权",
+            "source": "authorization",
+            "key": "drive_authorized",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "run_permission",
+            "label": "持续运行许可有效",
+            "source": "observation",
+            "key": "run_permission",
+            "equals": true
+          },
+          {
+            "id": "drive_authorized",
+            "label": "本任务取得整条输送面驱动控制权",
+            "source": "authorization",
+            "key": "drive_authorized",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "实际表面速度在容差内达到已接受目标；状态反馈不占用离散任务 done。",
+        "checks": [
+          {
+            "id": "target_speed_reached",
+            "label": "实际速度已在容差内达到当前冻结目标",
+            "source": "observation",
+            "key": "target_speed_reached",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "effects": [
+        "实际表面速度在容差内达到已接受目标；状态反馈不占用离散任务 done。"
+      ]
+    },
+    {
+      "behavior_id": "stop_conveying",
+      "display_name": "受控停止",
+      "behavior_type": "action",
+      "schedulable": false,
+      "executor_ref": "agent.conveyor.stop_conveying",
+      "implementation_status": "pending_adapter",
+      "trigger": {
+        "kind": "any",
+        "rules": [
+          "runTag = FALSE",
+          "speedTag = 0",
+          "whole_belt_interlock_stop"
+        ]
+      },
+      "arguments_schema": {},
+      "input_signals": [
+        "runTag",
+        "speedTag"
+      ],
+      "output_signals": [
+        "actual_speed",
+        "runningTag"
+      ],
+      "preconditions": [],
+      "condition_contract": {
+        "preconditions": [],
+        "sustaining_conditions": [],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "实际速度低于静止容差，已静止时幂等完成；停止不释放在带物料和在途资源。",
+        "checks": [
+          {
+            "id": "surface_stopped",
+            "label": "实际输送面速度已低于静止容差",
+            "source": "observation",
+            "key": "surface_stopped",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "effects": [
+        "实际速度低于静止容差，已静止时幂等完成；停止不释放在带物料和在途资源。"
+      ]
+    },
+    {
+      "behavior_id": "publish_drive_feedback",
+      "display_name": "发布驱动反馈",
+      "behavior_type": "observer",
+      "schedulable": false,
+      "executor_ref": "agent.conveyor.publish_drive_feedback",
+      "implementation_status": "pending_adapter",
+      "trigger": {
+        "kind": "simulation_tick"
+      },
+      "arguments_schema": {},
+      "input_signals": [],
+      "output_signals": [
+        "runningTag",
+        "actual_speed",
+        "encoderTag",
+        "pulseTag",
+        "blocked",
+        "part_ready",
+        "capacity_available"
+      ],
+      "preconditions": [
+        "设备配置已解析、执行器已接入且无阻止动作的故障"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "device_ready",
+            "label": "设备配置已解析、执行器已接入且无阻止动作的故障",
+            "source": "observation",
+            "key": "device_ready",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "continuous",
+        "description": "由真实或明确声明的仿真观测更新驱动和占用反馈；无动作 done。",
+        "checks": [],
+        "timer_or_progress_is_success": false
+      },
+      "effects": [
+        "由真实或明确声明的仿真观测更新驱动和占用反馈；无动作 done。"
+      ]
+    }
+  ],
+  "runtime_contract": {
+    "fsm_states": [
+      "idle",
+      "accelerating",
+      "running",
+      "decelerating",
+      "waiting_downstream",
+      "blocked",
+      "fault"
+    ],
+    "default_state": "idle",
+    "resources": [
+      {
+        "resource_id": "belt_drive",
+        "exclusive": true,
+        "scope": "entire_conveyor",
+        "owner": "command_arbiter"
+      },
+      {
+        "resource_id": "belt_surface",
+        "exclusive": false,
+        "capacity_param": "capacity",
+        "unit": "declared_load_unit",
+        "reservation_provider": "resource_service"
+      }
+    ],
+    "capacity": {
+      "capacity_param": "capacity",
+      "resume_threshold_param": "resume_threshold",
+      "counting_unit": "one_workpiece_or_one_declared_unit_load",
+      "admission_rule": "occupied_count + active_reservations < capacity AND physical_entry_free AND subject_compatible",
+      "counting_note": "整托与散件采用场景指定的一致计量；托盘内部物料不再重复计件。"
+    },
+    "observation_definitions": {
+      "device_ready": {
+        "type": "boolean",
+        "source": "conveyor_runtime",
+        "description": "设备配置已解析、执行器已接入且无阻止动作的故障",
+        "derivation": "schema、节点绑定、几何标定、执行器注册和故障检查均通过；未接入时不得为 true。",
+        "request_scoped": false,
+        "missing_policy": "unknown_blocks_execution"
+      },
+      "run_permission": {
+        "type": "boolean",
+        "source": "conveyor_runtime",
+        "description": "持续运行许可有效",
+        "derivation": "唯一写入者仲裁后的 runTag。",
+        "request_scoped": false,
+        "missing_policy": "unknown_blocks_execution"
+      },
+      "speed_setpoint_valid": {
+        "type": "boolean",
+        "source": "conveyor_runtime",
+        "description": "目标速度有限且符合单向与软件范围约束",
+        "derivation": "对唯一速度来源做数值、范围和 allow_reverse 检查。",
+        "request_scoped": false,
+        "missing_policy": "unknown_blocks_execution"
+      },
+      "entry_capacity_available": {
+        "type": "boolean",
+        "source": "conveyor_runtime",
+        "description": "入口与含预留容量允许接收",
+        "derivation": "入口区域空间可用，occupied_count + active_reservations < capacity；由交接服务原子校验。",
+        "request_scoped": true,
+        "missing_policy": "unknown_blocks_execution"
+      },
+      "subject_compatible": {
+        "type": "boolean",
+        "source": "conveyor_runtime",
+        "description": "指定物料类别、尺寸与支承条件兼容",
+        "derivation": "使用指定 subject 的实际外形及底部支承参考点，检查有效带宽、带长和 场景规定的物料间距；无载荷上限资料时不宣称校验了硬件额定载荷。",
+        "request_scoped": true,
+        "missing_policy": "unknown_blocks_execution"
+      },
+      "subject_on_conveyor": {
+        "type": "boolean",
+        "source": "conveyor_runtime",
+        "description": "指定物料已经有效交接给本设备",
+        "derivation": "未来物理引擎检测载荷与 main_belt 输送面形成有效支承接触，并结合载荷登记表报告本次任务的 subject。不需要先执行一个运输插值动作。",
+        "request_scoped": true,
+        "missing_policy": "unknown_blocks_execution"
+      },
+      "transport_path_valid": {
+        "type": "boolean",
+        "source": "conveyor_runtime",
+        "description": "输送面和沿面运动方向有效，满足当前场景的运输约束",
+        "derivation": "检查 main_belt、载荷外形、实际接触和下游布局；此键是兼容旧行为名的可行性检查，不代表两点路径驱动。",
+        "request_scoped": true,
+        "missing_policy": "unknown_blocks_execution"
+      },
+      "subject_at_exit": {
+        "type": "boolean",
+        "source": "conveyor_runtime",
+        "description": "指定物料到达出口交接区",
+        "derivation": "引擎检测当前 subject 的实际支承位置与 exit_zone 的空间关系；按接收方要求校验速度。",
+        "request_scoped": true,
+        "missing_policy": "unknown_blocks_execution"
+      },
+      "release_permission": {
+        "type": "boolean",
+        "source": "conveyor_runtime",
+        "description": "出口持续放行许可有效",
+        "derivation": "唯一控制写入者仲裁后的 release_waiting_material。",
+        "request_scoped": false,
+        "missing_policy": "unknown_blocks_execution"
+      },
+      "entry_handoff_confirmed": {
+        "type": "boolean",
+        "source": "conveyor_runtime",
+        "description": "指定物料真实进入入口且双方确认交接",
+        "derivation": "entry_zone 的实际进入观测与交接服务记录匹配，之后提交任务关联和占用；不通过位置插值创建成功。",
+        "request_scoped": true,
+        "missing_policy": "unknown_blocks_execution"
+      },
+      "exit_arrival_confirmed": {
+        "type": "boolean",
+        "source": "conveyor_runtime",
+        "description": "本次运输的指定物料真实到达出口",
+        "derivation": "exit_zone 的实际到达观测与当前 request_id/subject_id 关联；只确认到达，不提前转移下游归属。",
+        "request_scoped": true,
+        "missing_policy": "unknown_blocks_execution"
+      },
+      "exit_handoff_confirmed": {
+        "type": "boolean",
+        "source": "conveyor_runtime",
+        "description": "物料离开且下游确认接收",
+        "derivation": "出口离开观测和接收方确认均成立，匹配当前任务，原子转移占用后返回结果。",
+        "request_scoped": true,
+        "missing_policy": "unknown_blocks_execution"
+      },
+      "target_speed_reached": {
+        "type": "boolean",
+        "source": "conveyor_runtime",
+        "description": "实际速度已在容差内达到当前冻结目标",
+        "derivation": "abs(actual_speed - accepted_target_speed) <= 执行器标定的速度容差；禁用或被下游联锁压低速度时不得为 true。",
+        "request_scoped": true,
+        "missing_policy": "unknown_blocks_execution"
+      },
+      "surface_stopped": {
+        "type": "boolean",
+        "source": "conveyor_runtime",
+        "description": "实际输送面速度已低于静止容差",
+        "derivation": "abs(actual_speed) <= 执行器标定的速度容差。",
+        "request_scoped": false,
+        "missing_policy": "unknown_blocks_execution"
+      },
+      "entry_region_clear": {
+        "type": "boolean",
+        "source": "future_engine_region_detector",
+        "description": "入口区实际空间是否可接收当前载荷",
+        "derivation": "按已标定 entry_zone 与待入料物料外形检测，不用端点坐标或数量容量替代。",
+        "request_scoped": true,
+        "missing_policy": "unknown_blocks_execution"
+      }
+    },
+    "authorization_definitions": {
+      "handoff_authorized": {
+        "type": "boolean",
+        "provider": "handoff_service",
+        "description": "本任务获得有效入料交接授权",
+        "missing_policy": "unknown_blocks_execution",
+        "scope": "instance_id + request_id + subject_id + reservation_id where applicable"
+      },
+      "downstream_reserved": {
+        "type": "boolean",
+        "provider": "resource_service",
+        "description": "下游容量已为本任务有效预留",
+        "missing_policy": "unknown_blocks_execution",
+        "scope": "instance_id + request_id + subject_id + reservation_id where applicable"
+      },
+      "release_authorized": {
+        "type": "boolean",
+        "provider": "handoff_service",
+        "description": "本任务获得有效出口交接授权",
+        "missing_policy": "unknown_blocks_execution",
+        "scope": "instance_id + request_id + subject_id + reservation_id where applicable"
+      },
+      "drive_authorized": {
+        "type": "boolean",
+        "provider": "command_arbiter",
+        "description": "本任务取得整条输送面驱动控制权",
+        "missing_policy": "unknown_blocks_execution",
+        "scope": "instance_id + request_id + subject_id + reservation_id where applicable"
+      }
+    },
+    "error_codes": {
+      "0": "none",
+      "1": "invalid_parameter_or_identity",
+      "2": "executor_or_model_binding_unavailable",
+      "3": "incompatible_subject",
+      "4": "authorization_lost",
+      "5": "handoff_failed",
+      "6": "execution_timeout",
+      "7": "unsupported_operation",
+      "8": "observation_unavailable"
+    },
+    "error_policy": {
+      "ordinary_blocking": "wait_and_publish_blocked_not_error",
+      "timeout": "controlled_stop_report_correlated_failure_keep_physical_occupancy",
+      "authorization_loss": "controlled_stop_preserve_ownership_require_revalidation",
+      "reset": "cause_cleared_and_stopped_only_never_clear_cargo",
+      "unknown_observation": "block_new_action_do_not_assume_true"
+    }
+  },
+  "runtime_execution_contract": {
+    "executor_status": "scene_template_available_legacy_action_adapters_pending",
+    "precondition_authority": "transport_behaviors[].condition_contract",
+    "completion_authority": "transport_behaviors[].completion_contract",
+    "natural_language_fields": "preconditions/effects are generated descriptions, not JavaScript or ST expressions to eval",
+    "protocols": {
+      "discrete_task_gateway": {
+        "selector": {
+          "signal": "behavior_code",
+          "codes": {
+            "1": "accept_material",
+            "2": "transport_to_exit",
+            "3": "release_material"
+          }
+        },
+        "request_signals": [
+          "request_id",
+          "behavior_code",
+          "subject_id",
+          "execute"
+        ],
+        "feedback_signals": [
+          "accepted",
+          "busy",
+          "done",
+          "result_id",
+          "error",
+          "error_code"
+        ],
+        "request_id_range": [
+          1,
+          2147483647
+        ],
+        "reserved_identity": 0,
+        "identity_mapping": "scene registry maps stable string task/subject IDs to DINT; no lossy string/REAL cast",
+        "acceptance": "execute true + new valid request_id + free gateway + frozen valid arguments + all preconditions satisfied",
+        "idempotency": "repeated same request_id cannot restart; stale execute true cannot restart after completion",
+        "accepted_retention": "until execute goes false",
+        "result_retention": "done/error/result_id retained until next valid request accepted",
+        "completion": "all observed checks true for the accepted request and subject; continuous drive never raises task done",
+        "concurrency": "initial gateway accepts one discrete task per instance; multi-subject planning serializes requests and cannot independently drive the shared belt",
+        "rearm": "execute must fall before a different new request can be accepted; request_id rollover only after acknowledged quiescent reset",
+        "reset": "clear resettable fault only after cause cleared; preserve last result correlation and actual material ownership until acknowledged"
+      }
+    },
+    "command_arbitration": {
+      "writers": [
+        "plc",
+        "manual_preview"
+      ],
+      "active_writer_count": 1,
+      "transfer_control": "stop and acknowledge previous owner before switching",
+      "speed_resolution": "unbound local preview uses speed_mps; bound mode uses speedTag; never simultaneously apply both",
+      "dispatch": "run false or effective target zero -> stop_conveying; stopped to positive -> start_conveying; positive target change -> set_speed; negative -> reject",
+      "task_drive": "物料任务仅协调驱动请求与等待观测；没有任务时已运行输送面仍可带动物料，不能按任务单独控制同带载荷位置。"
+    },
+    "whole_belt_policy": {
+      "independent_zones": false,
+      "downstream_wait": "brake the entire belt before the leading load crosses the exit; preserve every carried load",
+      "braking_guard": "remaining_distance must exceed actual_speed^2/(2*configured_deceleration) + safety_margin; derive deceleration from reference_speed_mps/decel_time_s; zero time means explicit ideal stop",
+      "geometry_guard": "consider leading edge, whole subject footprint and all co-moving loads; a contact reference reaching the edge alone is not proof of support",
+      "release_permission": "许可限制未来引擎/控制器是否允许继续驱动整带；不能把 FALSE 实现为隐形挡墙或冻结一件物料。应按实际检测和制动距离受控停带，实体挡停须另建几何。",
+      "unsupported": "cannot promise independent per-load positioning, zero-pressure accumulation or geometric collision freedom from capacity alone"
+    },
+    "material_motion": {
+      "method": "moving_surface_contact",
+      "owner": "future_physics_engine",
+      "surface_ref": "main_belt",
+      "material_requirements": [
+        "dynamic_collision_body",
+        "mass_and_shape",
+        "compatible_contact_friction"
+      ],
+      "transport_task_required_for_physical_motion": false,
+      "position_update": "physics_solver_only",
+      "two_endpoint_interpolation": false,
+      "handoff_commit": "observed_crossing_and_receiver_confirmation"
+    },
+    "animation_hooks": {
+      "adapter_namespace": "agent.conveyor",
+      "registration_target": "apps/src/runtime/adapters/agent/registerAgentAdapters.ts",
+      "executor_refs": [
+        "agent.conveyor.accept_material",
+        "agent.conveyor.transport_to_exit",
+        "agent.conveyor.release_material",
+        "agent.conveyor.start_conveying",
+        "agent.conveyor.set_speed",
+        "agent.conveyor.stop_conveying",
+        "agent.conveyor.publish_drive_feedback"
+      ],
+      "surface_drive_hook": "future engine sets main_belt contact surface velocity, not cargo transforms",
+      "cargo_pose_hook": "renderer reads physics body poses; no concurrent animation writes",
+      "observation_hook": "future engine publishes calibrated region detections and drive measurements",
+      "note": "仅预留引擎职责，未实现任何物理/信号引擎；MOCK 不代表接触求解。"
+    },
+    "preview": {
+      "real_execution_available": false,
+      "mock_requires_explicit_label": true,
+      "pause_supported": false,
+      "save_runtime_pose_as_definition": false,
+      "success_requires_observed_contract": true
+    },
+    "calibration_requirements": {
+      "status": "experimental_profile_verified",
+      "speed_judgement": "执行器提供经验证的静止/到速判据",
+      "handoff_detection": "按接口区域与载荷支承点标定",
+      "multi_load_spacing": "由场景工艺与执行器确认间距；未确认前禁止多件真实运行",
+      "surface_contact": "标定输送面碰撞体、接触法向和摩擦模型；不以 GLB 贴图或两个端点代替",
+      "observation_regions": "entry_zone/exit_zone/support_zone 的有效体积和判断规则待标定"
+    },
+    "signal_management": {
+      "owner": "simulation_engine",
+      "status": "implemented",
+      "namespace": "instance_id/port_id",
+      "definition_source": "signal_ports",
+      "spatial_binding": false,
+      "write_policy": "single_writer_per_input",
+      "plc_mapping": "instance_bindings",
+      "sampling": "simulation_step_snapshot",
+      "unknown_policy": "invalid_until_provider_ready"
+    },
+    "template_ref": "conveyor.continuous-contact@1",
+    "calibration_ref": "conveyor-contact-v1",
+    "scene_execution": {
+      "status": "implemented",
+      "scope": "one_horizontal_unit_scale_conveyor_and_one_box",
+      "legacy_preview_adapter_available": false
+    },
+    "supported_io": {
+      "inputs": [
+        "runTag",
+        "speedTag"
+      ],
+      "outputs": [
+        "actual_speed",
+        "runningTag",
+        "encoderTag",
+        "part_ready",
+        "accepted",
+        "busy",
+        "done",
+        "error"
+      ],
+      "not_implemented": [
+        "release_waiting_material",
+        "pulseTag",
+        "request_id",
+        "behavior_code",
+        "subject_id",
+        "reset",
+        "result_id",
+        "error_code"
+      ],
+      "note": "到达观察任务通过场景会话 API 关联 requestId/subjectId，尚无 PLC 数字身份映射。"
+    }
+  },
+  "type_specific_contract": {
+    "coordinate_system": {
+      "handedness": "right",
+      "up_axis": "Y",
+      "transport_axis": "+X",
+      "lateral_axis": "Z",
+      "length_unit": "m",
+      "angle_unit": "rad",
+      "origin": "authored_device_root_no_recentering"
+    },
+    "model_geometry": {
+      "bounds_source": "all binary POSITION vertices; all source node transforms identity",
+      "aabb_m": {
+        "min": [
+          -0.7504997849464417,
+          0.0,
+          -0.31300088763237
+        ],
+        "max": [
+          0.7505003213882446,
+          0.699999988079071,
+          0.3129992187023163
+        ]
+      },
+      "size_m": [
+        1.5010001063346863,
+        0.699999988079071,
+        0.6260001063346863
+      ],
+      "node_count": 39,
+      "mesh_count": 36,
+      "animation_count": 0,
+      "skin_count": 0
+    },
+    "node_bindings": [
+      {
+        "role": "device_root",
+        "gltf_node_index": 38,
+        "gltf_node_name": "Conveyor(1)",
+        "calibration": "verified_node_identity"
+      },
+      {
+        "role": "geometry_root",
+        "gltf_node_index": 36,
+        "gltf_node_name": "__Geometry__ [00Ac]",
+        "calibration": "verified_node_identity"
+      },
+      {
+        "role": "upper_belt_surface",
+        "gltf_node_index": 34,
+        "gltf_node_name": "Mesh [00yg]",
+        "calibration": "role_inferred_from_bounds_and_rubber_material",
+        "aabb_m": {
+          "min": [
+            -0.6994996666908264,
+            0.6949999928474426,
+            -0.25000089406967163
+          ],
+          "max": [
+            0.7005003094673157,
+            0.699999988079071,
+            0.24999922513961792
+          ]
+        }
+      },
+      {
+        "role": "positive_x_end_roller",
+        "gltf_node_index": 20,
+        "gltf_node_name": "Mesh [00rg]",
+        "calibration": "role_inferred_not_kinematically_bound"
+      },
+      {
+        "role": "negative_x_end_roller",
+        "gltf_node_index": 24,
+        "gltf_node_name": "Mesh [00tg]",
+        "calibration": "role_inferred_not_kinematically_bound"
+      }
+    ],
+    "conveyor_geometry": {
+      "length_param": "length_m",
+      "width_param": "width_m",
+      "surface_height_param": "surface_height_m",
+      "surface_center": {
+        "x": 0.0005,
+        "z": -8.3446502685e-07,
+        "y_param": "surface_height_m"
+      },
+      "parameterized_mesh_resize_supported": false,
+      "dimensions_policy": "fixed GLB dimensions; change asset calibration and parameter contract together"
+    },
+    "motion_model": {
+      "type": "linear_shared_surface",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "axis_frame": "device_local",
+      "speed_param": "speed_mps",
+      "accel_time_param": "accel_time_s",
+      "decel_time_param": "decel_time_s",
+      "reverse_permission_param": "allow_reverse",
+      "reference_speed_mps": 2,
+      "reference_speed_provenance": "software_profile_not_hardware_rating",
+      "ramp": "linear simulation profile at fixed reference speed; do not retime ramps by changing speed setpoint"
+    },
+    "capacity_model": {
+      "capacity_param": "capacity",
+      "resume_threshold_param": "resume_threshold",
+      "counting_unit": "material_or_declared_unit_load",
+      "geometry_check_required": true
+    },
+    "encoder_model": {
+      "enabled_if_parameter_present": "encoder_pitch_m",
+      "pitch_param": "encoder_pitch_m",
+      "measurement": "surface_travel",
+      "counter_update": "integrate observed actual_speed over simulation dt",
+      "pulse_policy": "one sampled BOOL pulse per crossing; enable only if simulation and PLC sampling preserve an intervening low sample; otherwise use encoderTag delta and runtime event counts"
+    },
+    "validation_rules": [
+      {
+        "id": "single_direction",
+        "rule": "transport_mode = continuous AND allow_reverse = false AND speed_mps >= 0"
+      },
+      {
+        "id": "capacity_hysteresis",
+        "rule": "0 <= resume_threshold < capacity"
+      },
+      {
+        "id": "fixed_geometry",
+        "rule": "length_m = 1.4 AND width_m = 0.5 AND surface_height_m = 0.7 until mesh resize/calibration adapter exists"
+      },
+      {
+        "id": "binding_integrity",
+        "rule": "asset SHA256 and every gltf_node_index/name must match before binding"
+      },
+      {
+        "id": "real_execution_gate",
+        "rule": "adapter registered AND geometry calibrated AND all referenced observations/authorizations available"
+      },
+      {
+        "id": "no_self_grant",
+        "rule": "grant/reservation observations come from independent services; device cannot assert its own resource grant"
+      }
+    ],
+    "conveying_surface": {
+      "surface_id": "main_belt",
+      "node_binding_role": "upper_belt_surface",
+      "coordinate_space": "device_local",
+      "flow_axis": [
+        1,
+        0,
+        0
+      ],
+      "normal": [
+        0,
+        1,
+        0
+      ],
+      "geometry": {
+        "length_param": "length_m",
+        "width_param": "width_m",
+        "height_param": "surface_height_m",
+        "calibration_status": "calibrated",
+        "collision_shape": "box"
+      },
+      "contact": {
+        "model": "moving_surface_contact",
+        "friction_status": "calibrated",
+        "material_body_requirement": "dynamic_rigid_body",
+        "contact_requirement": "valid_support_contact",
+        "collision_response": "physics_solver"
+      },
+      "drive": {
+        "run_signal": "runTag",
+        "speed_signal": "speedTag",
+        "actual_speed_signal": "actual_speed",
+        "speed_param": "speed_mps",
+        "accel_time_param": "accel_time_s",
+        "decel_time_param": "decel_time_s"
+      },
+      "material_motion": "physics_contact_only",
+      "implementation_status": "implemented"
+    },
+    "observation_regions": [
+      {
+        "region_id": "entry_zone",
+        "surface_ref": "main_belt",
+        "purpose": "entry_availability",
+        "geometry_status": "calibrated",
+        "observation_keys": [
+          "entry_region_clear"
+        ]
+      },
+      {
+        "region_id": "exit_zone",
+        "surface_ref": "main_belt",
+        "purpose": "exit_arrival",
+        "geometry_status": "calibrated",
+        "observation_keys": [
+          "subject_at_exit",
+          "exit_arrival_confirmed"
+        ]
+      },
+      {
+        "region_id": "support_zone",
+        "surface_ref": "main_belt",
+        "purpose": "surface_occupancy",
+        "geometry_status": "calibrated",
+        "observation_keys": [
+          "subject_on_conveyor"
+        ]
+      }
+    ]
+  },
+  "contract_version": "1.2",
+  "interfaces": [
+    {
+      "interface_id": "end_negative_x",
+      "name": "传送带负向端点",
+      "capabilities": {
+        "snap": {
+          "role": "conveyor_end",
+          "accepts": [
+            "conveyor_end"
+          ]
+        }
+      },
+      "local_frame": {
+        "position": [
+          -0.749,
+          0.7,
+          0
+        ],
+        "forward": [
+          -1,
+          0,
+          0
+        ],
+        "up": [
+          0,
+          1,
+          0
+        ]
+      }
+    },
+    {
+      "interface_id": "end_positive_x",
+      "name": "传送带正向端点",
+      "capabilities": {
+        "snap": {
+          "role": "conveyor_end",
+          "accepts": [
+            "conveyor_end"
+          ]
+        }
+      },
+      "local_frame": {
+        "position": [
+          0.751,
+          0.7,
+          0
+        ],
+        "forward": [
+          1,
+          0,
+          0
+        ],
+        "up": [
+          0,
+          1,
+          0
+        ]
+      }
+    }
+  ]
+}

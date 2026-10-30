@@ -9,7 +9,7 @@ import { SimulationSession } from "../src/runtime/engine/SimulationSession";
 import { SignalRegistry } from "../src/runtime/engine/SignalRegistry";
 import { registerTemplates } from "../src/runtime/templates/registerTemplates";
 const def = normalizeDeviceSpec(
-  JSON.parse(readFileSync("public/modles/Conveyor_aankws/schema.json", "utf8")),
+  JSON.parse(readFileSync("tests/fixtures/conveyor-v1.2.json", "utf8")),
 );
 function config() {
   const i = instantiate(def, 0);

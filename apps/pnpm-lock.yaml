@@ -14,6 +14,9 @@ importers:
       '@react-three/fiber':
         specifier: ^9.0.0
         version: 9.8.2(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(three@0.180.0)
+      jolt-physics:
+        specifier: file:vendor/jolt-physics-1.1.0-oip.9.tgz
+        version: file:vendor/jolt-physics-1.1.0-oip.9.tgz
       lucide-react:
         specifier: ^0.468.0
         version: 0.468.0(react@19.3.1)
@@ -1845,6 +1848,10 @@ packages:
     resolution: {integrity: sha512-C5ZoVkeqSt0Aje0tzESO+iT/EQpNFNL39GkP7mCACtoZUFD6GcyerFCr6kp0ZtiII4W9HoYkY48Soy5xE/uHKw==}
     peerDependencies:
       react: ^19.0.0
+
+  jolt-physics@file:vendor/jolt-physics-1.1.0-oip.9.tgz:
+    resolution: {integrity: sha512-s9F2gwZyASwGD0dppMad9YONJpGNrh2eMne8wYTM6bUB6OPngDuzWP72dUgDX9iC3KMvYSHyLB5hhozk07KIjQ==, tarball: file:vendor/jolt-physics-1.1.0-oip.9.tgz}
+    version: 1.1.0-oip.9
 
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
@@ -4442,6 +4449,8 @@ snapshots:
       react: 19.3.1
     transitivePeerDependencies:
       - '@types/react'
+
+  jolt-physics@file:vendor/jolt-physics-1.1.0-oip.9.tgz: {}
 
   js-tokens@4.0.0: {}
 

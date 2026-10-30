@@ -1,0 +1,173 @@
+{
+  "schema_type": "DeviceSpec",
+  "schema_id": "engine_block",
+  "device_spec_id": "engine_block",
+  "contract_version": "1.3",
+  "version": "0.1.0",
+  "device_type": "workpiece",
+  "display_name": "Engine block 测试物料",
+  "description": "真实 GLB 被动物料；盒形碰撞代理、均匀盒惯性近似。质量需用户填写，摩擦为仿真设定。",
+  "asset": {
+    "model_format": "glb",
+    "model_key": "engine_block.glb",
+    "root_node_name": "Mesh [00Sg]",
+    "sha256": "7e279b484bc6dd6a63a177c4c9ef36e936705cba1c6c06841adba615223e2d72",
+    "import_transform": {
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation_euler": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    }
+  },
+  "params_schema": {
+    "length_m": {
+      "type": "number",
+      "required": true,
+      "default": 0.397171676,
+      "min": 0.397171676,
+      "max": 0.397171676,
+      "unit": "m",
+      "mutability": "stopped_only",
+      "description": "固定模型 X 包围尺寸"
+    },
+    "height_m": {
+      "type": "number",
+      "required": true,
+      "default": 0.3,
+      "min": 0.3,
+      "max": 0.3,
+      "unit": "m",
+      "mutability": "stopped_only",
+      "description": "固定模型 Y 包围尺寸"
+    },
+    "width_m": {
+      "type": "number",
+      "required": true,
+      "default": 0.49,
+      "min": 0.49,
+      "max": 0.49,
+      "unit": "m",
+      "mutability": "stopped_only",
+      "description": "固定模型 Z 包围尺寸"
+    },
+    "mass_kg": {
+      "type": "number",
+      "required": true,
+      "min": 0.001,
+      "max": 500,
+      "unit": "kg",
+      "mutability": "stopped_only",
+      "description": "请输入真实质量或明确选择的仿真实验质量；无推断默认值"
+    },
+    "friction": {
+      "type": "number",
+      "required": true,
+      "default": 0.6,
+      "min": 0,
+      "max": 2,
+      "unit": "ratio",
+      "mutability": "stopped_only",
+      "description": "物料接触摩擦，仿真实验设定"
+    },
+    "restitution": {
+      "type": "number",
+      "required": true,
+      "default": 0,
+      "min": 0,
+      "max": 1,
+      "unit": "ratio",
+      "mutability": "stopped_only",
+      "description": "物料恢复系数，仿真实验设定"
+    }
+  },
+  "interfaces": [],
+  "signal_ports": [],
+  "transport_behaviors": [],
+  "type_specific_contract": {
+    "coordinate_system": {
+      "up_axis": "Y",
+      "length_unit": "m"
+    },
+    "physics": {
+      "bodies": [
+        {
+          "body_id": "material_body",
+          "motion_type": "dynamic",
+          "role": "material",
+          "coordinate_space": "device_local",
+          "local_pose": {
+            "position": [
+              0,
+              0.1500005,
+              0
+            ],
+            "rotation_quaternion": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          "collider": {
+            "kind": "box",
+            "length_param": "length_m",
+            "height_param": "height_m",
+            "width_param": "width_m",
+            "approximation": true
+          },
+          "mass_param": "mass_kg",
+          "contact_material_ref": "material_contact",
+          "inertia": "uniform_box"
+        }
+      ],
+      "contact_materials": {
+        "material_contact": {
+          "friction_param": "friction",
+          "restitution_param": "restitution"
+        }
+      }
+    },
+    "placement": {
+      "support_point": [
+        0,
+        0,
+        0
+      ],
+      "coordinate_space": "device_local"
+    }
+  },
+  "runtime_contract": {
+    "observation_definitions": {},
+    "authorization_definitions": {}
+  },
+  "runtime_execution_contract": {
+    "template_ref": "workpiece.rigid-body@1",
+    "signal_management": {
+      "owner": "simulation_engine",
+      "status": "implemented",
+      "namespace": "instance_id/port_id",
+      "definition_source": "signal_ports",
+      "spatial_binding": false,
+      "write_policy": "single_writer_per_input",
+      "plc_mapping": "instance_bindings",
+      "sampling": "simulation_step_snapshot",
+      "unknown_policy": "invalid_until_provider_ready"
+    }
+  },
+  "notes": [
+    "模型原点靠近底面；碰撞中心位于局部 y=0.1500005，须用完整刚体绑定变换恢复模型位姿。",
+    "盒形碰撞代理不保留孔洞，均匀盒质心不是真实发动机零件重心。",
+    "宽度0.49m与0.5m带宽仅有约0.01m总余量；不得自动缩小模型。"
+  ]
+}

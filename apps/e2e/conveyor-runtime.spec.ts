@@ -12,6 +12,23 @@ test("physical conveyor experiment, pause, arrival and reset", async ({
   await expect(card).toBeVisible();
   await card.click();
   await page.getByRole("button", { name: "添加到现场", exact: true }).click();
+  await expect(page.getByLabel("设备名称")).toHaveValue(/Conveyor_aankws/);
+  const cargoCard = page
+    .locator(".asset-card")
+    .filter({ hasText: "Engine block" });
+  await cargoCard.click();
+  await page.getByRole("button", { name: "添加到现场", exact: true }).click();
+  await expect(page.getByLabel("设备名称")).toHaveValue(/Engine block/);
+  await page
+    .locator(".tree-select")
+    .filter({ hasText: "Conveyor_aankws" })
+    .click();
+  await page.getByLabel("物料质量", { exact: true }).fill("5");
+  await page.getByLabel("物料质量", { exact: true }).press("Tab");
+  await page
+    .getByRole("button", { name: "物料放到入口并对齐", exact: true })
+    .click();
+  await page.getByRole("button", { name: "定位", exact: true }).click();
   await expect(
     page.getByRole("button", { name: "启动输送实验", exact: true }),
   ).toBeEnabled();

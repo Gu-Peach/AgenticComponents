@@ -7,6 +7,8 @@ export interface CompiledRuntimeScene {
   revision: number;
   templateId: string;
   physics: PhysicsConfig;
+  materialInstanceId?: string;
+  bodyLocalMatrix?: number[];
   speed: number;
   referenceSpeed: number;
   accelTime: number;
@@ -40,6 +42,8 @@ export interface RuntimeSnapshot {
   subjectId?: string;
   pose?: BodyPose;
   size?: Vec3;
+  materialInstanceId?: string;
+  bodyLocalMatrix?: number[];
   signals: Record<string, RuntimeSignal>;
   supported: boolean;
   atExit: boolean;

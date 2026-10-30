@@ -48,7 +48,11 @@ const legacy = z
 export function normalizeDeviceSpec(raw: unknown): DeviceDefinition {
   if (raw && typeof raw === "object" && "specId" in raw) {
     const def = definitionSchema.parse(raw);
-    const errors = semanticIssues(def);
+    const errors = semanticIssues(
+      def,
+      {},
+      def.source?.contract_version === "1.3",
+    );
     if (errors.length) throw new Error(errors.join("；"));
     return def;
   }
@@ -104,7 +108,11 @@ export function normalizeDeviceSpec(raw: unknown): DeviceDefinition {
       "真实动作执行器及完成观测需要接入；坐标/TCP 需按模型校准。",
     ],
   };
-  const errors = semanticIssues(def);
+  const errors = semanticIssues(
+    def,
+    {},
+    def.source?.contract_version === "1.3",
+  );
   if (errors.length) throw new Error(errors.join("；"));
   return def;
 }

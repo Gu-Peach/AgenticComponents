@@ -4,13 +4,24 @@
     {
       "packageKey": "Conveyor_aankws",
       "specId": "Conveyor_aankws",
-      "revision": "0.5.0",
+      "revision": "0.6.0",
       "name": "Conveyor_aankws 直线输送机",
       "deviceType": "conveyor",
       "schemaUrl": "/modles/Conveyor_aankws/schema.json",
       "modelUrl": "/modles/Conveyor_aankws/Conveyor_aankws.glb",
-      "schemaSha256": "722866eca7fe87dafbbeab7b64232c8ed98e9df999f3fda8d44ce55ceb1bc062",
+      "schemaSha256": "e353ca4a3687901c8325c0ccf8acf7eecaae233bea9f8a4fb6789a93a764b5ad",
       "modelSha256": "46a159554c0f5d5eda8073d749a5d94dc9b23a2f15fbe8204b56eb66766c767d"
+    },
+    {
+      "packageKey": "engine_block",
+      "specId": "engine_block",
+      "revision": "0.1.0",
+      "name": "Engine block 测试物料",
+      "deviceType": "workpiece",
+      "schemaUrl": "/modles/engine_block/schema.json",
+      "modelUrl": "/modles/engine_block/engine_block.glb",
+      "schemaSha256": "33d84efa0d83ebb03d84c3be3fb40bc1e3e9e5a5fb1473942e296a45659ed19b",
+      "modelSha256": "7e279b484bc6dd6a63a177c4c9ef36e936705cba1c6c06841adba615223e2d72"
     }
   ]
 }

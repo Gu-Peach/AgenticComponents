@@ -84,4 +84,16 @@ describe("public model packages", () => {
         .project!.definitions.some((d) => d.specId === entry.specId),
     ).toBe(false);
   });
+  it("does not steal a later asset selection when an earlier insertion completes", async () => {
+    serve();
+    useWorkspace.getState().initialize();
+    vi.spyOn(projectRepository, "getAsset").mockImplementation(async () => {
+      useWorkspace.getState().selectAsset("keep-this-selection");
+      return undefined;
+    });
+    vi.spyOn(projectRepository, "putAsset").mockResolvedValue();
+    await addPublicAsset(entry);
+    expect(useWorkspace.getState().selectedAsset).toBe("keep-this-selection");
+    expect(useWorkspace.getState().addingAsset).toBeNull();
+  });
 });

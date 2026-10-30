@@ -39,7 +39,7 @@ test("asset insertion, old spec import, project export and responsive shell", as
   page,
 }) => {
   await page.goto("/");
-  await expect(page.locator(".asset-card")).toHaveCount(9);
+  await expect(page.locator(".asset-card")).toHaveCount(10);
   await expect(page.locator("canvas")).toBeVisible();
   await expect(page.locator(".scene-label")).toBeVisible();
   await page.screenshot({ path: "test-results/workbench-1440.png" });
@@ -48,7 +48,7 @@ test("asset insertion, old spec import, project export and responsive shell", as
   await expect(page.locator(".statusbar")).toContainText("9 个实例");
   await expect(page.getByLabel("设备名称")).toHaveValue("机械臂 09");
   await page.getByLabel("导入已有样例").selectOption("robot_arm_1");
-  await expect(page.locator(".asset-card")).toHaveCount(10);
+  await expect(page.locator(".asset-card")).toHaveCount(11);
   await page.getByRole("tab", { name: "PLC", exact: true }).click();
   await page.getByLabel("PLC 程序").fill("PROGRAM Main\nEND_PROGRAM");
   await page.getByText("文件", { exact: true }).click();
@@ -109,7 +109,7 @@ test("GLB import survives local save and reload, invalid imports leave scene int
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("/");
-  await expect(page.locator(".asset-card")).toHaveCount(9);
+  await expect(page.locator(".asset-card")).toHaveCount(10);
   await page.getByText("文件", { exact: true }).click();
   const chooser = page.waitForEvent("filechooser");
   await page.getByRole("button", { name: "为选中设备关联 GLB" }).click();

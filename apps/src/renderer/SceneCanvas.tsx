@@ -1,8 +1,17 @@
 "use client";
 import { RuntimeSceneBridge } from "./RuntimeSceneBridge";
+import { runtimeController } from "@/services/RuntimeController";
+import { bodyVisualPose } from "@/domain/runtime/bodyVisualPose";
 import { DeviceTransformControls } from "./DeviceTransformControls";
 import { useInteraction } from "@/stores/interaction";
-import { Component, useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  Component,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type ReactNode,
+} from "react";
 import { Canvas, useThree, useFrame } from "@react-three/fiber";
 import { OrbitControls, GizmoHelper, GizmoViewport } from "@react-three/drei";
 import { Box3, Group, Object3D, Vector3 } from "three";
@@ -104,11 +113,24 @@ function Device({
   selected: boolean;
 }) {
   const root = useRef<Group>(null!);
-  const live = useInteraction((s) =>
+  const runtime = useSyncExternalStore(
+    runtimeController.subscribe,
+    runtimeController.snapshot,
+    runtimeController.snapshot,
+  );
+  const authored = useInteraction((s) =>
     s.drag?.instanceId === instance.instanceId
       ? s.drag.transform
       : instance.transform,
   );
+  const live =
+    ["ready", "running", "paused"].includes(runtime.status) &&
+    runtime.subjectId === instance.instanceId &&
+    runtime.materialInstanceId &&
+    runtime.pose &&
+    runtime.bodyLocalMatrix
+      ? bodyVisualPose(runtime.pose, runtime.bodyLocalMatrix)
+      : authored;
   const locked = useWorkspace((s) => s.documentLocked);
   const body = useRef<Group>(null!);
   useEffect(

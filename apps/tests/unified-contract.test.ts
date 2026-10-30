@@ -24,7 +24,7 @@ describe("unified device contract", () => {
       ).toBeUndefined();
       expect("signal_refs" in endpoint).toBe(false);
     }
-    expect(Object.keys(def.paramsSchema)).toHaveLength(11);
+    expect(Object.keys(def.paramsSchema)).toHaveLength(14);
     expect(def.interfaces.find((p) => p.id === "runTag")?.valueType).toBe(
       "BOOL",
     );

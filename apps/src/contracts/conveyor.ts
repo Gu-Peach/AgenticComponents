@@ -20,6 +20,7 @@ export const conveyorModelSchema = z
     conveying_surface: z
       .object({
         surface_id: z.string().min(1),
+        body_ref: z.string().optional(),
         node_binding_role: z.string().min(1),
         coordinate_space: z.literal("device_local"),
         flow_axis: axis,
@@ -74,6 +75,25 @@ export const conveyorModelSchema = z
               "surface_occupancy",
             ]),
             geometry_status: z.enum(["pending", "calibrated"]),
+            geometry: z
+              .discriminatedUnion("kind", [
+                z
+                  .object({
+                    kind: z.literal("longitudinal_band"),
+                    coordinate_space: z.literal("device_local"),
+                    axis_range: z
+                      .tuple([z.number().finite(), z.number().finite()])
+                      .refine((v) => v[0] < v[1]),
+                  })
+                  .strict(),
+                z
+                  .object({
+                    kind: z.literal("surface_contact"),
+                    coordinate_space: z.literal("device_local"),
+                  })
+                  .strict(),
+              ])
+              .optional(),
             observation_keys: z.array(z.string().min(1)).min(1),
           })
           .strict(),

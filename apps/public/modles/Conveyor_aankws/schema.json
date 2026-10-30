@@ -1,7 +1,7 @@
 {
   "schema_id": "Conveyor_aankws",
   "schema_type": "DeviceSpec",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "name": "Conveyor_aankws 直线输送机",
   "description": "单向整带输送机的接触式输送建模：空间接口用于吸附连接，输送面提供表面速度，物料由未来物理引擎求解，工艺区域发布实际观测。当前仅完成声明，执行器与标定待接入。",
   "device_spec_id": "Conveyor_aankws",
@@ -26,14 +26,15 @@
     "空间接口禁止携带 process、signal_refs 或信号绑定。信号属于设备实例的具名引擎寄存表。",
     "空间端点位置由用户提供：入口 [-0.749, 0.700, 0]，出口 [0.751, 0.700, 0]，单位 m，相对设备根坐标系；按端点向外的吸附约定，入口 forward=-X、出口 forward=+X，up=+Y。",
     "契约 1.2 仅实现水平单位缩放的接触输送实验，采用 conveyor-contact-v1 仿真标定，不表示硬件额定值。物料接收/下游交接服务仍未实现。",
-    "接触属性、区域和到速判据来自 apps/src/data/runtime-fixtures/conveyor-calibration.json。信号运行支持范围见 supported_io；未实现端口保持不可写/无有效运行值。"
+    "接触属性、区域和到速判据来自 apps/src/data/runtime-fixtures/conveyor-calibration.json。信号运行支持范围见 supported_io；未实现端口保持不可写/无有效运行值。",
+    "契约1.3：physics.bodies 声明静态输送刚体；输送方向唯一来源为 conveying_surface.flow_axis。需选择真实 workpiece 实例，不自动生成实验箱体。"
   ],
   "modeling_status": {
     "phase": "initial_contract",
     "geometry": "vertex_inspected_endpoint_positions_user_provided_contact_regions_pending",
     "execution": "experimental_scene_template_available",
     "plc_binding": "unassigned",
-    "contract_format": "DeviceSpec spatial-only interfaces contract 1.2"
+    "contract_format": "DeviceSpec declarative bodies contract 1.3"
   },
   "asset": {
     "model_format": "glb",
@@ -167,6 +168,36 @@
       "max": 10,
       "mutability": "stopped_only",
       "description": "每编码脉冲对应的表面行程"
+    },
+    "deck_thickness_m": {
+      "type": "number",
+      "required": true,
+      "default": 0.1,
+      "min": 0.1,
+      "max": 0.1,
+      "unit": "m",
+      "mutability": "stopped_only",
+      "description": "输送碰撞体厚度，仿真实验设定"
+    },
+    "surface_friction": {
+      "type": "number",
+      "required": true,
+      "default": 0.6,
+      "min": 0,
+      "max": 2,
+      "unit": "ratio",
+      "mutability": "stopped_only",
+      "description": "输送面摩擦，仿真实验设定"
+    },
+    "surface_restitution": {
+      "type": "number",
+      "required": true,
+      "default": 0,
+      "min": 0,
+      "max": 1,
+      "unit": "ratio",
+      "mutability": "stopped_only",
+      "description": "输送面恢复系数，仿真实验设定"
     }
   },
   "signal_ports": [
@@ -1402,7 +1433,7 @@
     "calibration_ref": "conveyor-contact-v1",
     "scene_execution": {
       "status": "implemented",
-      "scope": "one_horizontal_unit_scale_conveyor_and_one_box",
+      "scope": "one_static_conveyor_and_one_selected_dynamic_workpiece",
       "legacy_preview_adapter_available": false
     },
     "supported_io": {
@@ -1525,11 +1556,6 @@
     },
     "motion_model": {
       "type": "linear_shared_surface",
-      "axis": [
-        1,
-        0,
-        0
-      ],
       "axis_frame": "device_local",
       "speed_param": "speed_mps",
       "accel_time_param": "accel_time_s",
@@ -1537,7 +1563,8 @@
       "reverse_permission_param": "allow_reverse",
       "reference_speed_mps": 2,
       "reference_speed_provenance": "software_profile_not_hardware_rating",
-      "ramp": "linear simulation profile at fixed reference speed; do not retime ramps by changing speed setpoint"
+      "ramp": "linear simulation profile at fixed reference speed; do not retime ramps by changing speed setpoint",
+      "direction_ref": "conveying_surface.flow_axis"
     },
     "capacity_model": {
       "capacity_param": "capacity",
@@ -1615,7 +1642,8 @@
         "decel_time_param": "decel_time_s"
       },
       "material_motion": "physics_contact_only",
-      "implementation_status": "implemented"
+      "implementation_status": "implemented",
+      "body_ref": "belt_body"
     },
     "observation_regions": [
       {
@@ -1625,7 +1653,15 @@
         "geometry_status": "calibrated",
         "observation_keys": [
           "entry_region_clear"
-        ]
+        ],
+        "geometry": {
+          "kind": "longitudinal_band",
+          "coordinate_space": "device_local",
+          "axis_range": [
+            -0.65,
+            -0.35
+          ]
+        }
       },
       {
         "region_id": "exit_zone",
@@ -1635,7 +1671,15 @@
         "observation_keys": [
           "subject_at_exit",
           "exit_arrival_confirmed"
-        ]
+        ],
+        "geometry": {
+          "kind": "longitudinal_band",
+          "coordinate_space": "device_local",
+          "axis_range": [
+            0.45,
+            0.62
+          ]
+        }
       },
       {
         "region_id": "support_zone",
@@ -1644,11 +1688,53 @@
         "geometry_status": "calibrated",
         "observation_keys": [
           "subject_on_conveyor"
-        ]
+        ],
+        "geometry": {
+          "kind": "surface_contact",
+          "coordinate_space": "device_local"
+        }
       }
-    ]
+    ],
+    "physics": {
+      "bodies": [
+        {
+          "body_id": "belt_body",
+          "motion_type": "static",
+          "role": "conveying_support",
+          "coordinate_space": "device_local",
+          "local_pose": {
+            "position": [
+              0.0005,
+              0,
+              0
+            ],
+            "rotation_quaternion": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "surface_height_param": "surface_height_m",
+            "thickness_param": "deck_thickness_m"
+          },
+          "collider": {
+            "kind": "box",
+            "length_param": "length_m",
+            "height_param": "deck_thickness_m",
+            "width_param": "width_m"
+          },
+          "contact_material_ref": "belt_contact"
+        }
+      ],
+      "contact_materials": {
+        "belt_contact": {
+          "friction_param": "surface_friction",
+          "restitution_param": "surface_restitution"
+        }
+      }
+    }
   },
-  "contract_version": "1.2",
+  "contract_version": "1.3",
   "interfaces": [
     {
       "interface_id": "end_negative_x",

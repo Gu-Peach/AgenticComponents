@@ -213,6 +213,9 @@ export async function selectPublicAsset(e: CatalogEntry) {
 }
 const inserting = new Set<string>();
 export async function addPublicAsset(e: CatalogEntry) {
+  if (useWorkspace.getState().addingAsset) return;
+  const selection = useWorkspace.getState();
+  useWorkspace.setState({ addingAsset: e.specId });
   if (inserting.has(e.specId)) return;
   inserting.add(e.specId);
   const initial = useWorkspace.getState().project;
@@ -256,13 +259,21 @@ export async function addPublicAsset(e: CatalogEntry) {
           ],
       instances: [...p.instances, instance],
     }));
-    state.select(instance.instanceId);
-    useWorkspace.setState((s) => ({
-      selectedAsset: def.specId,
-      focusToken: s.focusToken + 1,
-    }));
+    const current = useWorkspace.getState();
+    if (
+      current.selectedAsset === selection.selectedAsset &&
+      current.selectedId === selection.selectedId &&
+      current.inspectorTarget === selection.inspectorTarget
+    ) {
+      state.select(instance.instanceId);
+      useWorkspace.setState((s) => ({
+        selectedAsset: def.specId,
+        focusToken: s.focusToken + 1,
+      }));
+    }
     state.log(`已添加公共模型 ${def.name}`);
   } finally {
     inserting.delete(e.specId);
+    useWorkspace.setState({ addingAsset: null });
   }
 }

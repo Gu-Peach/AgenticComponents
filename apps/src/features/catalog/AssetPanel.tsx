@@ -18,6 +18,7 @@ export function AssetPanel() {
     catalogDefinitions,
     catalogStatus,
     catalogError,
+    addingAsset,
   } = useWorkspace();
   const definitions = [
     ...(project?.definitions ?? []),
@@ -172,7 +173,11 @@ export function AssetPanel() {
               <span className="pill warning">
                 {selected.template ? "模板 · 需完善契约" : "执行器待接入"}
               </span>
-              <button className="primary" onClick={() => add(selected.specId)}>
+              <button
+                className="primary"
+                disabled={Boolean(addingAsset)}
+                onClick={() => add(selected.specId)}
+              >
                 <Plus size={15} />
                 添加到现场
               </button>

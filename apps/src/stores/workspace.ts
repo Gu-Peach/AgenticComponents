@@ -13,6 +13,7 @@ export interface LogEntry {
   message: string;
 }
 interface WorkspaceState {
+  addingAsset: string | null;
   publicEntries: CatalogEntry[];
   catalogDefinitions: Record<string, DeviceDefinition>;
   catalogStatus: "idle" | "loading" | "ready" | "error";
@@ -42,6 +43,7 @@ interface WorkspaceState {
 }
 let logId = 0;
 export const useWorkspace = create<WorkspaceState>((set, get) => ({
+  addingAsset: null,
   publicEntries: [],
   catalogDefinitions: {},
   catalogStatus: "idle",

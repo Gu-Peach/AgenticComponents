@@ -4,7 +4,7 @@ export function RuntimeMaterialView({
 }: {
   snapshot: RuntimeSnapshot;
 }) {
-  if (!s.pose || !s.size) return null;
+  if (s.materialInstanceId || !s.pose || !s.size) return null;
   return (
     <mesh
       name="runtime-experiment-box"

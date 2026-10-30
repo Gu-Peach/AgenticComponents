@@ -37,6 +37,8 @@ export class RuntimeKernel {
       subjectId: scene.subjectId,
       pose: physics.readMaterial(),
       size: scene.physics.materialSize,
+      materialInstanceId: scene.materialInstanceId,
+      bodyLocalMatrix: scene.bodyLocalMatrix,
       signals: this.signals.snapshot(),
       supported: false,
       atExit: false,

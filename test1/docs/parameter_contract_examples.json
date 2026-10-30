@@ -1488,5 +1488,334 @@
         "movement_role": "passive_subject"
       }
     }
+  ],
+  "rigid_body_examples": [
+    {
+      "contract_version": "1.3",
+      "device_type": "conveyor",
+      "params_schema": {
+        "speed_mps": {
+          "type": "number",
+          "required": true,
+          "default": 0.4,
+          "unit": "m/s",
+          "min": 0,
+          "max": 2,
+          "mutability": "runtime_setpoint",
+          "description": "非负目标表面速度；0 表示停止。0.4 m/s 为仿真初值，2 m/s 是初始软件限幅，非硬件额定值。"
+        },
+        "length_m": {
+          "type": "number",
+          "required": true,
+          "default": 1.4,
+          "unit": "m",
+          "min": 1.4,
+          "max": 1.4,
+          "mutability": "stopped_only",
+          "description": "按上层皮带网格估算的有效输送长度。当前 GLB 固定几何，未实现参数化拉伸，暂锁定为 1.4 m。"
+        },
+        "width_m": {
+          "type": "number",
+          "required": true,
+          "default": 0.5,
+          "unit": "m",
+          "min": 0.5,
+          "max": 0.5,
+          "mutability": "stopped_only",
+          "description": "按皮带网格估算的有效宽度；固定几何暂锁定为 0.5 m，不是整机包围盒宽度。"
+        },
+        "surface_height_m": {
+          "type": "number",
+          "required": true,
+          "default": 0.7,
+          "unit": "m",
+          "min": 0.7,
+          "max": 0.7,
+          "mutability": "stopped_only",
+          "description": "设备局部 Y 轴上的输送面高度；GLB 顶层皮带顶面约为 0.7 m，需场景交接标定。"
+        },
+        "transport_mode": {
+          "type": "enum",
+          "required": true,
+          "default": "continuous",
+          "options": [
+            "continuous"
+          ],
+          "mutability": "stopped_only",
+          "description": "初版仅允许整带驱动。模型未提供独立分区驱动依据，不声明 zoned 模式。"
+        },
+        "allow_reverse": {
+          "type": "boolean",
+          "required": true,
+          "default": false,
+          "mutability": "stopped_only",
+          "description": "初版固定为 false；反向能力尚未建模和接入，不因网格外观对称就声明支持。"
+        },
+        "capacity": {
+          "type": "integer",
+          "required": true,
+          "default": 3,
+          "min": 1,
+          "max": 100,
+          "mutability": "stopped_only",
+          "description": "仿真允许的最大载荷单元数量，初值 3；实际接收还需检查载荷外形、间隙、支承和已有预留。非硬件承载认证。"
+        },
+        "resume_threshold": {
+          "type": "integer",
+          "required": true,
+          "default": 2,
+          "min": 0,
+          "max": 99,
+          "mutability": "stopped_only",
+          "description": "数量积压锁存解除阈值，初值 2；数量降到该值后仍需满足入口与下游几何条件才能恢复。"
+        },
+        "accel_time_s": {
+          "type": "number",
+          "required": true,
+          "default": 0.5,
+          "unit": "s",
+          "min": 0,
+          "max": 30,
+          "mutability": "stopped_only",
+          "description": "从零到额定速度的加速时间；0表示理想瞬时切换"
+        },
+        "decel_time_s": {
+          "type": "number",
+          "required": true,
+          "default": 0.5,
+          "unit": "s",
+          "min": 0,
+          "max": 30,
+          "mutability": "stopped_only",
+          "description": "从额定速度到零的减速时间"
+        },
+        "encoder_pitch_m": {
+          "type": "number",
+          "required": false,
+          "default": 0.0254,
+          "unit": "m",
+          "min": 0.0001,
+          "max": 10,
+          "mutability": "stopped_only",
+          "description": "每编码脉冲对应的表面行程"
+        },
+        "deck_thickness_m": {
+          "type": "number",
+          "required": true,
+          "default": 0.1,
+          "min": 0.1,
+          "max": 0.1,
+          "unit": "m",
+          "mutability": "stopped_only",
+          "description": "输送碰撞体厚度，仿真实验设定"
+        },
+        "surface_friction": {
+          "type": "number",
+          "required": true,
+          "default": 0.6,
+          "min": 0,
+          "max": 2,
+          "unit": "ratio",
+          "mutability": "stopped_only",
+          "description": "输送面摩擦，仿真实验设定"
+        },
+        "surface_restitution": {
+          "type": "number",
+          "required": true,
+          "default": 0,
+          "min": 0,
+          "max": 1,
+          "unit": "ratio",
+          "mutability": "stopped_only",
+          "description": "输送面恢复系数，仿真实验设定"
+        }
+      },
+      "type_specific_contract": {
+        "physics": {
+          "bodies": [
+            {
+              "body_id": "belt_body",
+              "motion_type": "static",
+              "role": "conveying_support",
+              "coordinate_space": "device_local",
+              "local_pose": {
+                "position": [
+                  0.0005,
+                  0,
+                  0
+                ],
+                "rotation_quaternion": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "surface_height_param": "surface_height_m",
+                "thickness_param": "deck_thickness_m"
+              },
+              "collider": {
+                "kind": "box",
+                "length_param": "length_m",
+                "height_param": "deck_thickness_m",
+                "width_param": "width_m"
+              },
+              "contact_material_ref": "belt_contact"
+            }
+          ],
+          "contact_materials": {
+            "belt_contact": {
+              "friction_param": "surface_friction",
+              "restitution_param": "surface_restitution"
+            }
+          }
+        },
+        "conveying_surface": {
+          "surface_id": "main_belt",
+          "node_binding_role": "upper_belt_surface",
+          "coordinate_space": "device_local",
+          "flow_axis": [
+            1,
+            0,
+            0
+          ],
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "geometry": {
+            "length_param": "length_m",
+            "width_param": "width_m",
+            "height_param": "surface_height_m",
+            "calibration_status": "calibrated",
+            "collision_shape": "box"
+          },
+          "contact": {
+            "model": "moving_surface_contact",
+            "friction_status": "calibrated",
+            "material_body_requirement": "dynamic_rigid_body",
+            "contact_requirement": "valid_support_contact",
+            "collision_response": "physics_solver"
+          },
+          "drive": {
+            "run_signal": "runTag",
+            "speed_signal": "speedTag",
+            "actual_speed_signal": "actual_speed",
+            "speed_param": "speed_mps",
+            "accel_time_param": "accel_time_s",
+            "decel_time_param": "decel_time_s"
+          },
+          "material_motion": "physics_contact_only",
+          "implementation_status": "implemented",
+          "body_ref": "belt_body"
+        }
+      }
+    },
+    {
+      "contract_version": "1.3",
+      "device_type": "workpiece",
+      "params_schema": {
+        "length_m": {
+          "type": "number",
+          "required": true,
+          "default": 0.397171676,
+          "min": 0.397171676,
+          "max": 0.397171676,
+          "unit": "m",
+          "mutability": "stopped_only",
+          "description": "固定模型 X 包围尺寸"
+        },
+        "height_m": {
+          "type": "number",
+          "required": true,
+          "default": 0.3,
+          "min": 0.3,
+          "max": 0.3,
+          "unit": "m",
+          "mutability": "stopped_only",
+          "description": "固定模型 Y 包围尺寸"
+        },
+        "width_m": {
+          "type": "number",
+          "required": true,
+          "default": 0.49,
+          "min": 0.49,
+          "max": 0.49,
+          "unit": "m",
+          "mutability": "stopped_only",
+          "description": "固定模型 Z 包围尺寸"
+        },
+        "mass_kg": {
+          "type": "number",
+          "required": true,
+          "min": 0.001,
+          "max": 500,
+          "unit": "kg",
+          "mutability": "stopped_only",
+          "description": "请输入真实质量或明确选择的仿真实验质量；无推断默认值"
+        },
+        "friction": {
+          "type": "number",
+          "required": true,
+          "default": 0.6,
+          "min": 0,
+          "max": 2,
+          "unit": "ratio",
+          "mutability": "stopped_only",
+          "description": "物料接触摩擦，仿真实验设定"
+        },
+        "restitution": {
+          "type": "number",
+          "required": true,
+          "default": 0,
+          "min": 0,
+          "max": 1,
+          "unit": "ratio",
+          "mutability": "stopped_only",
+          "description": "物料恢复系数，仿真实验设定"
+        }
+      },
+      "type_specific_contract": {
+        "physics": {
+          "bodies": [
+            {
+              "body_id": "material_body",
+              "motion_type": "dynamic",
+              "role": "material",
+              "coordinate_space": "device_local",
+              "local_pose": {
+                "position": [
+                  0,
+                  0.1500005,
+                  0
+                ],
+                "rotation_quaternion": [
+                  0,
+                  0,
+                  0,
+                  1
+                ]
+              },
+              "collider": {
+                "kind": "box",
+                "length_param": "length_m",
+                "height_param": "height_m",
+                "width_param": "width_m",
+                "approximation": true
+              },
+              "mass_param": "mass_kg",
+              "contact_material_ref": "material_contact",
+              "inertia": "uniform_box"
+            }
+          ],
+          "contact_materials": {
+            "material_contact": {
+              "friction_param": "friction",
+              "restitution_param": "restitution"
+            }
+          }
+        }
+      }
+    }
   ]
 }

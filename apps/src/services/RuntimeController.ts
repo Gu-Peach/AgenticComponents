@@ -26,10 +26,14 @@ export class RuntimeController {
     this.value = value;
     this.listeners.forEach((f) => f());
   }
-  async prepare(project: ProjectDocument, instance: DeviceInstance) {
+  async prepare(
+    project: ProjectDocument,
+    instance: DeviceInstance,
+    materialId?: string,
+  ) {
     if (useWorkspace.getState().documentLocked)
       throw new Error("请先停止当前预览或仿真");
-    const scene = compileRuntimeScene(project, instance.instanceId);
+    const scene = compileRuntimeScene(project, instance.instanceId, materialId);
     this.reset();
     const generation = ++this.generation;
     useWorkspace.setState({ documentLocked: true });
@@ -45,6 +49,15 @@ export class RuntimeController {
       )?.asset.assetId;
       if (!asset || !(await projectRepository.getAsset(asset)))
         throw new Error("传送带模型资源缺失，请重新关联或添加公共模型");
+      if (scene.materialInstanceId) {
+        const material = project.instances.find(
+            (i) => i.instanceId === scene.materialInstanceId,
+          ),
+          asset = project.definitions.find((d) => d.specId === material?.specId)
+            ?.asset.assetId;
+        if (!asset || !(await projectRepository.getAsset(asset)))
+          throw new Error("物料模型资源缺失");
+      }
       const physics = await createPhysicsBackend(scene.physics);
       allocated = physics;
       if (
