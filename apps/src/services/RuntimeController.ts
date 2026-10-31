@@ -1,3 +1,7 @@
+import type { RobotCommand } from "@/contracts/robot-command";
+import type { RobotExperimentOptions } from "@/domain/runtime/compileRobotExperiment";
+import { validateRobotAsset } from "@/domain/runtime/validateRobotAsset";
+import { sha256 } from "@/domain/validateGlb";
 import { projectRepository } from "./BrowserProjectRepository";
 import type { PhysicsPort } from "@/contracts/physics";
 import { emptySnapshot } from "@/runtime/engine/RuntimeSnapshot";
@@ -30,10 +34,16 @@ export class RuntimeController {
     project: ProjectDocument,
     instance: DeviceInstance,
     materialId?: string,
+    robotOptions?: RobotExperimentOptions,
   ) {
     if (useWorkspace.getState().documentLocked)
       throw new Error("请先停止当前预览或仿真");
-    const scene = compileRuntimeScene(project, instance.instanceId, materialId);
+    const scene = compileRuntimeScene(
+      project,
+      instance.instanceId,
+      materialId,
+      robotOptions,
+    );
     this.reset();
     const generation = ++this.generation;
     useWorkspace.setState({ documentLocked: true });
@@ -48,7 +58,7 @@ export class RuntimeController {
         (d) => d.specId === instance.specId,
       )?.asset.assetId;
       if (!asset || !(await projectRepository.getAsset(asset)))
-        throw new Error("传送带模型资源缺失，请重新关联或添加公共模型");
+        throw new Error("设备模型资源缺失，请重新关联或添加公共模型");
       if (scene.materialInstanceId) {
         const material = project.instances.find(
             (i) => i.instanceId === scene.materialInstanceId,
@@ -58,23 +68,34 @@ export class RuntimeController {
         if (!asset || !(await projectRepository.getAsset(asset)))
           throw new Error("物料模型资源缺失");
       }
-      const physics = await createPhysicsBackend(scene.physics);
+      if (scene.kind === "robot_experiment") {
+        const blob = await projectRepository.getAsset(asset);
+        const bytes = await blob!.arrayBuffer();
+        if ((await sha256(bytes)) !== scene.model.calibration.asset_sha256)
+          throw new Error("机械臂模型与校准哈希不符");
+        validateRobotAsset(scene, bytes);
+      }
+      const physics = scene.physics
+        ? await createPhysicsBackend(scene.physics)
+        : undefined;
       allocated = physics;
       if (
         generation !== this.generation ||
         useWorkspace.getState().project !== project
       ) {
-        physics.dispose();
+        physics?.dispose();
         if (generation === this.generation) this.reset();
         return;
       }
       this.session = new SimulationSession(new RuntimeKernel(scene, physics));
       this.publish(this.session.snapshot());
-      this.session.kernel.tasks.submit(
-        `arrival-${generation}`,
-        scene.subjectId,
-      );
-      this.session.kernel.signals.command("runTag", true);
+      if (scene.kind !== "robot_experiment") {
+        this.session.kernel.tasks.submit(
+          `arrival-${generation}`,
+          scene.subjectId,
+        );
+        this.session.kernel.signals.command("runTag", true);
+      }
       this.session.start();
       this.publish(this.session.snapshot());
       this.clock = startRuntimeClock(
@@ -105,7 +126,16 @@ export class RuntimeController {
   }
   command(id: string, value: boolean | number) {
     if (!this.session || !this.isBusy()) throw new Error("仿真会话未就绪");
-    this.session.kernel.signals.command(id, value);
+    this.session.kernel.command(id, value);
+  }
+  submitAction(command: RobotCommand) {
+    if (!this.session || !this.isBusy()) throw new Error("会话未准备");
+    this.session.kernel.submitAction(command);
+    this.publish(this.session.snapshot());
+  }
+  pickAndPlace(requestId: number) {
+    if (!this.session || !this.isBusy()) throw new Error("会话未准备");
+    this.submitAction(this.session.kernel.pickPlaceCommand(requestId));
   }
   pause() {
     this.session?.pause();

@@ -4,6 +4,7 @@ export interface BodyPose {
   position: Vec3;
   rotation: Quat;
   velocity: Vec3;
+  angularVelocity?: Vec3;
 }
 export interface PhysicsConfig {
   surfacePosition: Vec3;
@@ -24,6 +25,10 @@ export interface PhysicsPort {
   readMaterial(): BodyPose;
   hasSupport(bodyId?: string, surfaceId?: string): boolean;
   readBody?(bodyId: string): BodyPose;
+  moveTool?(bodyId: string, pose: BodyPose, dt: number): void;
+  createGrasp?(id: string, tool: string, material: string): void;
+  removeGrasp?(id: string): void;
+  hasGrasp?(id: string): boolean;
   dispose(): void;
 }
 
@@ -31,7 +36,7 @@ export interface RuntimeBody {
   id: string;
   instanceId: string;
   motionType: "static" | "dynamic" | "kinematic";
-  role: "conveying_support" | "material" | "ground";
+  role: "conveying_support" | "material" | "ground" | "tool";
   position: Vec3;
   rotation: Quat;
   size: Vec3;

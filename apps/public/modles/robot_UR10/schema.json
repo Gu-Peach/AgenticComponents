@@ -1,0 +1,1381 @@
+{
+  "contract_version": "1.4",
+  "schema_type": "DeviceSpec",
+  "schema_id": "robot_UR10",
+  "device_spec_id": "robot_UR10",
+  "device_type": "robot_arm",
+  "version": "0.1.0",
+  "display_name": "robot_UR10 六轴机械臂（仿真）",
+  "description": "六轴串联运动学及虚拟固定约束抓取；轴、限位和载荷为明确的实验配置，非实机标定。",
+  "asset": {
+    "model_format": "glb",
+    "model_key": "robot_UR10.glb",
+    "root_node_name": "robot(UR10)(1)(center)",
+    "sha256": "75b9d773c59f477fcf3667ecd3f54e8c96fc3fa964b5e89a0ca6cce04215ea5a"
+  },
+  "params_schema": {
+    "joint_speed_rad_s": {
+      "type": "number",
+      "required": true,
+      "default": 0.8,
+      "mutability": "stopped_only",
+      "description": "显式仿真实验配置，不代表实机额定参数",
+      "unit": "rad/s",
+      "min": 0.01,
+      "max": 2
+    },
+    "joint_accel_rad_s2": {
+      "type": "number",
+      "required": true,
+      "default": 1.5,
+      "mutability": "stopped_only",
+      "description": "显式仿真实验配置，不代表实机额定参数",
+      "unit": "rad/s²",
+      "min": 0.01,
+      "max": 5
+    },
+    "settle_speed_rad_s": {
+      "type": "number",
+      "required": true,
+      "default": 0.01,
+      "mutability": "stopped_only",
+      "description": "显式仿真实验配置，不代表实机额定参数",
+      "unit": "rad/s",
+      "min": 0.0001,
+      "max": 0.1
+    },
+    "ik_position_tolerance_m": {
+      "type": "number",
+      "required": true,
+      "default": 0.002,
+      "mutability": "stopped_only",
+      "description": "显式仿真实验配置，不代表实机额定参数",
+      "unit": "m",
+      "min": 1e-05,
+      "max": 0.02
+    },
+    "ik_max_iterations": {
+      "type": "integer",
+      "required": true,
+      "default": 200,
+      "mutability": "stopped_only",
+      "description": "显式仿真实验配置，不代表实机额定参数",
+      "min": 1,
+      "max": 1000
+    },
+    "ik_mode": {
+      "type": "enum",
+      "required": true,
+      "default": "position_only",
+      "mutability": "stopped_only",
+      "description": "显式仿真实验配置，不代表实机额定参数",
+      "options": [
+        "position_only"
+      ]
+    },
+    "max_payload_kg": {
+      "type": "number",
+      "required": true,
+      "default": 5,
+      "mutability": "stopped_only",
+      "description": "显式仿真实验配置，不代表实机额定参数",
+      "unit": "kg",
+      "min": 0.001,
+      "max": 20
+    },
+    "lift_height": {
+      "type": "number",
+      "required": true,
+      "default": 0.12,
+      "mutability": "stopped_only",
+      "description": "显式仿真实验配置，不代表实机额定参数",
+      "unit": "m",
+      "min": 0.01,
+      "max": 0.4
+    }
+  },
+  "interfaces": [],
+  "signal_ports": [
+    {
+      "port_id": "commandTag",
+      "direction": "input",
+      "value_type": "integer",
+      "plc_type": "INT",
+      "description": "机器人任务控制或反馈，详见接口行为契约",
+      "signal_role": "commandTag",
+      "retention": "state"
+    },
+    {
+      "port_id": "start_pick",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "新任务请求；保持到接受后撤销",
+      "signal_role": "start_pick",
+      "retention": "state"
+    },
+    {
+      "port_id": "request_id",
+      "direction": "input",
+      "value_type": "integer",
+      "plc_type": "DINT",
+      "description": "机器人任务控制或反馈，详见接口行为契约",
+      "signal_role": "request_id",
+      "retention": "state"
+    },
+    {
+      "port_id": "enableTag",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "在途使能；失能减速保持",
+      "signal_role": "enableTag",
+      "retention": "state"
+    },
+    {
+      "port_id": "pause_pick",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "禁止接受新抓取，不停止在途任务",
+      "signal_role": "pause_pick",
+      "retention": "state"
+    },
+    {
+      "port_id": "reset",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "机器人任务控制或反馈，详见接口行为契约",
+      "signal_role": "reset",
+      "retention": "state"
+    },
+    {
+      "port_id": "accepted",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "机器人任务控制或反馈，详见接口行为契约",
+      "signal_role": "accepted",
+      "retention": "state"
+    },
+    {
+      "port_id": "busy",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "机器人任务控制或反馈，详见接口行为契约",
+      "signal_role": "busy",
+      "retention": "state"
+    },
+    {
+      "port_id": "done",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "机器人任务控制或反馈，详见接口行为契约",
+      "signal_role": "done",
+      "retention": "latched_result"
+    },
+    {
+      "port_id": "error",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "机器人任务控制或反馈，详见接口行为契约",
+      "signal_role": "error",
+      "retention": "latched_result"
+    },
+    {
+      "port_id": "result_id",
+      "direction": "output",
+      "value_type": "integer",
+      "plc_type": "DINT",
+      "description": "机器人任务控制或反馈，详见接口行为契约",
+      "signal_role": "result_id",
+      "retention": "latched_result"
+    },
+    {
+      "port_id": "error_code",
+      "direction": "output",
+      "value_type": "integer",
+      "plc_type": "INT",
+      "description": "机器人任务控制或反馈，详见接口行为契约",
+      "signal_role": "error_code",
+      "retention": "latched_result"
+    },
+    {
+      "port_id": "holding_material",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "实际固定约束持有反馈",
+      "signal_role": "holding_material",
+      "retention": "state"
+    },
+    {
+      "port_id": "in1Tag",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "机器人任务控制或反馈，详见接口行为契约",
+      "signal_role": "in1Tag",
+      "retention": "state"
+    },
+    {
+      "port_id": "out1Tag",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "机器人任务控制或反馈，详见接口行为契约",
+      "signal_role": "out1Tag",
+      "retention": "state"
+    },
+    {
+      "port_id": "in2Tag",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "机器人任务控制或反馈，详见接口行为契约",
+      "signal_role": "in2Tag",
+      "retention": "state"
+    },
+    {
+      "port_id": "out2Tag",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "机器人任务控制或反馈，详见接口行为契约",
+      "signal_role": "out2Tag",
+      "retention": "state"
+    },
+    {
+      "port_id": "in3Tag",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "机器人任务控制或反馈，详见接口行为契约",
+      "signal_role": "in3Tag",
+      "retention": "state"
+    },
+    {
+      "port_id": "out3Tag",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "机器人任务控制或反馈，详见接口行为契约",
+      "signal_role": "out3Tag",
+      "retention": "state"
+    },
+    {
+      "port_id": "in4Tag",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "机器人任务控制或反馈，详见接口行为契约",
+      "signal_role": "in4Tag",
+      "retention": "state"
+    },
+    {
+      "port_id": "out4Tag",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "机器人任务控制或反馈，详见接口行为契约",
+      "signal_role": "out4Tag",
+      "retention": "state"
+    }
+  ],
+  "transport_behaviors": [
+    {
+      "behavior_id": "execute_job",
+      "display_name": "执行任务",
+      "behavior_type": "composite",
+      "schedulable": true,
+      "executor_ref": "robot.articulated@1",
+      "implementation_status": "implemented",
+      "arguments_schema": {},
+      "payload_contract_ref": "robot-command@1",
+      "trigger": {
+        "source": "runtime_gateway"
+      },
+      "input_signals": [
+        "enableTag",
+        "start_pick",
+        "request_id",
+        "commandTag"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "result_id",
+        "error_code"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "kinematics_ready",
+            "label": "运动学与参数已验证",
+            "source": "observation",
+            "key": "kinematics_ready",
+            "equals": true
+          },
+          {
+            "id": "device_idle",
+            "label": "没有在途任务",
+            "source": "observation",
+            "key": "device_idle",
+            "equals": true
+          },
+          {
+            "id": "target_valid",
+            "label": "命令已通过帧、限位与IK预检查",
+            "source": "observation",
+            "key": "target_valid",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "执行器按实际FK/约束/支承观测确认；请求参数及授权有效，详见005方案逐行为表",
+        "checks": [
+          {
+            "id": "execute_job.succeeded",
+            "label": "执行器实际完成观测",
+            "source": "observation",
+            "key": "execute_job.succeeded",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      }
+    },
+    {
+      "behavior_id": "pick_and_place",
+      "display_name": "抓取放置",
+      "behavior_type": "composite",
+      "schedulable": true,
+      "executor_ref": "robot.articulated@1",
+      "implementation_status": "implemented",
+      "arguments_schema": {},
+      "payload_contract_ref": "robot-command@1",
+      "trigger": {
+        "source": "runtime_gateway"
+      },
+      "input_signals": [
+        "enableTag",
+        "start_pick",
+        "request_id",
+        "commandTag"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "result_id",
+        "error_code"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "kinematics_ready",
+            "label": "运动学与参数已验证",
+            "source": "observation",
+            "key": "kinematics_ready",
+            "equals": true
+          },
+          {
+            "id": "device_idle",
+            "label": "没有在途任务",
+            "source": "observation",
+            "key": "device_idle",
+            "equals": true
+          },
+          {
+            "id": "tool_empty",
+            "label": "没有实际持有关系",
+            "source": "observation",
+            "key": "tool_empty",
+            "equals": true
+          },
+          {
+            "id": "source_authorized",
+            "label": "显式准备的单物料会话拥有源/目标操作权；不是自动调度器授权",
+            "source": "authorization",
+            "key": "source_authorized",
+            "equals": true
+          },
+          {
+            "id": "target_reserved",
+            "label": "显式准备的单物料会话拥有源/目标操作权；不是自动调度器授权",
+            "source": "authorization",
+            "key": "target_reserved",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "执行器按实际FK/约束/支承观测确认；请求参数及授权有效，详见005方案逐行为表",
+        "checks": [
+          {
+            "id": "pick_and_place.succeeded",
+            "label": "执行器实际完成观测",
+            "source": "observation",
+            "key": "pick_and_place.succeeded",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      }
+    },
+    {
+      "behavior_id": "move_to_pose",
+      "display_name": "TCP位置移动",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "robot.articulated@1",
+      "implementation_status": "implemented",
+      "arguments_schema": {},
+      "payload_contract_ref": "robot-command@1",
+      "trigger": {
+        "source": "runtime_gateway"
+      },
+      "input_signals": [
+        "enableTag"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "result_id",
+        "error_code"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "kinematics_ready",
+            "label": "运动学与参数已验证",
+            "source": "observation",
+            "key": "kinematics_ready",
+            "equals": true
+          },
+          {
+            "id": "target_valid",
+            "label": "命令已通过帧、限位与IK预检查",
+            "source": "observation",
+            "key": "target_valid",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "执行器按实际FK/约束/支承观测确认；请求参数及授权有效，详见005方案逐行为表",
+        "checks": [
+          {
+            "id": "move_to_pose.succeeded",
+            "label": "执行器实际完成观测",
+            "source": "observation",
+            "key": "move_to_pose.succeeded",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      }
+    },
+    {
+      "behavior_id": "grip",
+      "display_name": "建立物理抓取",
+      "behavior_type": "action",
+      "schedulable": false,
+      "executor_ref": "robot.articulated@1",
+      "implementation_status": "implemented",
+      "arguments_schema": {},
+      "payload_contract_ref": "robot-command@1",
+      "trigger": {
+        "source": "runtime_gateway"
+      },
+      "input_signals": [
+        "enableTag"
+      ],
+      "output_signals": [
+        "holding_material"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "kinematics_ready",
+            "label": "运动学与参数已验证",
+            "source": "observation",
+            "key": "kinematics_ready",
+            "equals": true
+          },
+          {
+            "id": "tool_empty",
+            "label": "没有实际持有关系",
+            "source": "observation",
+            "key": "tool_empty",
+            "equals": true
+          },
+          {
+            "id": "material_in_capture",
+            "label": "工具和物料捕获参考距离满足标定",
+            "source": "observation",
+            "key": "material_in_capture",
+            "equals": true
+          },
+          {
+            "id": "payload_compatible",
+            "label": "指定物料类型和质量满足允许载荷",
+            "source": "observation",
+            "key": "payload_compatible",
+            "equals": true
+          },
+          {
+            "id": "source_authorized",
+            "label": "显式准备的单物料会话拥有源/目标操作权；不是自动调度器授权",
+            "source": "authorization",
+            "key": "source_authorized",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "执行器按实际FK/约束/支承观测确认；请求参数及授权有效，详见005方案逐行为表",
+        "checks": [
+          {
+            "id": "grip.succeeded",
+            "label": "执行器实际完成观测",
+            "source": "observation",
+            "key": "grip.succeeded",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      }
+    },
+    {
+      "behavior_id": "release",
+      "display_name": "解除抓取并确认支承",
+      "behavior_type": "action",
+      "schedulable": false,
+      "executor_ref": "robot.articulated@1",
+      "implementation_status": "implemented",
+      "arguments_schema": {},
+      "payload_contract_ref": "robot-command@1",
+      "trigger": {
+        "source": "runtime_gateway"
+      },
+      "input_signals": [
+        "enableTag"
+      ],
+      "output_signals": [
+        "holding_material"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "kinematics_ready",
+            "label": "运动学与参数已验证",
+            "source": "observation",
+            "key": "kinematics_ready",
+            "equals": true
+          },
+          {
+            "id": "holding_material",
+            "label": "实际固定约束存在",
+            "source": "observation",
+            "key": "holding_material",
+            "equals": true
+          },
+          {
+            "id": "release_pose_valid",
+            "label": "物料位于指定释放区域",
+            "source": "observation",
+            "key": "release_pose_valid",
+            "equals": true
+          },
+          {
+            "id": "target_reserved",
+            "label": "显式准备的单物料会话拥有源/目标操作权；不是自动调度器授权",
+            "source": "authorization",
+            "key": "target_reserved",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "执行器按实际FK/约束/支承观测确认；请求参数及授权有效，详见005方案逐行为表",
+        "checks": [
+          {
+            "id": "release.succeeded",
+            "label": "执行器实际完成观测",
+            "source": "observation",
+            "key": "release.succeeded",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      }
+    },
+    {
+      "behavior_id": "wait_time",
+      "display_name": "仿真时间等待",
+      "behavior_type": "action",
+      "schedulable": false,
+      "executor_ref": "robot.articulated@1",
+      "implementation_status": "implemented",
+      "arguments_schema": {},
+      "payload_contract_ref": "robot-command@1",
+      "trigger": {
+        "source": "runtime_gateway"
+      },
+      "input_signals": [],
+      "output_signals": [],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "kinematics_ready",
+            "label": "运动学与参数已验证",
+            "source": "observation",
+            "key": "kinematics_ready",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "执行器按实际FK/约束/支承观测确认；请求参数及授权有效，详见005方案逐行为表",
+        "checks": [
+          {
+            "id": "wait_time.succeeded",
+            "label": "执行器实际完成观测",
+            "source": "observation",
+            "key": "wait_time.succeeded",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      }
+    },
+    {
+      "behavior_id": "wait_signal",
+      "display_name": "等待有效信号",
+      "behavior_type": "action",
+      "schedulable": false,
+      "executor_ref": "robot.articulated@1",
+      "implementation_status": "implemented",
+      "arguments_schema": {},
+      "payload_contract_ref": "robot-command@1",
+      "trigger": {
+        "source": "runtime_gateway"
+      },
+      "input_signals": [],
+      "output_signals": [],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "kinematics_ready",
+            "label": "运动学与参数已验证",
+            "source": "observation",
+            "key": "kinematics_ready",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "执行器按实际FK/约束/支承观测确认；请求参数及授权有效，详见005方案逐行为表",
+        "checks": [
+          {
+            "id": "wait_signal.succeeded",
+            "label": "执行器实际完成观测",
+            "source": "observation",
+            "key": "wait_signal.succeeded",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      }
+    },
+    {
+      "behavior_id": "set_output",
+      "display_name": "设置输出",
+      "behavior_type": "action",
+      "schedulable": false,
+      "executor_ref": "robot.articulated@1",
+      "implementation_status": "implemented",
+      "arguments_schema": {},
+      "payload_contract_ref": "robot-command@1",
+      "trigger": {
+        "source": "runtime_gateway"
+      },
+      "input_signals": [],
+      "output_signals": [],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "kinematics_ready",
+            "label": "运动学与参数已验证",
+            "source": "observation",
+            "key": "kinematics_ready",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "执行器按实际FK/约束/支承观测确认；请求参数及授权有效，详见005方案逐行为表",
+        "checks": [
+          {
+            "id": "set_output.succeeded",
+            "label": "执行器实际完成观测",
+            "source": "observation",
+            "key": "set_output.succeeded",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      }
+    },
+    {
+      "behavior_id": "pause_pick_intake",
+      "display_name": "暂停接单",
+      "behavior_type": "action",
+      "schedulable": false,
+      "executor_ref": "robot.articulated@1",
+      "implementation_status": "implemented",
+      "arguments_schema": {},
+      "payload_contract_ref": "robot-command@1",
+      "trigger": {
+        "source": "runtime_gateway"
+      },
+      "input_signals": [],
+      "output_signals": [],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "kinematics_ready",
+            "label": "运动学与参数已验证",
+            "source": "observation",
+            "key": "kinematics_ready",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "执行器按实际FK/约束/支承观测确认；请求参数及授权有效，详见005方案逐行为表",
+        "checks": [
+          {
+            "id": "pause_pick_intake.succeeded",
+            "label": "执行器实际完成观测",
+            "source": "observation",
+            "key": "pause_pick_intake.succeeded",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      }
+    },
+    {
+      "behavior_id": "resume_pick_intake",
+      "display_name": "恢复接单",
+      "behavior_type": "action",
+      "schedulable": false,
+      "executor_ref": "robot.articulated@1",
+      "implementation_status": "implemented",
+      "arguments_schema": {},
+      "payload_contract_ref": "robot-command@1",
+      "trigger": {
+        "source": "runtime_gateway"
+      },
+      "input_signals": [],
+      "output_signals": [],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "kinematics_ready",
+            "label": "运动学与参数已验证",
+            "source": "observation",
+            "key": "kinematics_ready",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "执行器按实际FK/约束/支承观测确认；请求参数及授权有效，详见005方案逐行为表",
+        "checks": [
+          {
+            "id": "resume_pick_intake.succeeded",
+            "label": "执行器实际完成观测",
+            "source": "observation",
+            "key": "resume_pick_intake.succeeded",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      }
+    },
+    {
+      "behavior_id": "hold_motion",
+      "display_name": "减速保持",
+      "behavior_type": "action",
+      "schedulable": false,
+      "executor_ref": "robot.articulated@1",
+      "implementation_status": "implemented",
+      "arguments_schema": {},
+      "payload_contract_ref": "robot-command@1",
+      "trigger": {
+        "source": "runtime_gateway"
+      },
+      "input_signals": [],
+      "output_signals": [],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "kinematics_ready",
+            "label": "运动学与参数已验证",
+            "source": "observation",
+            "key": "kinematics_ready",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "执行器按实际FK/约束/支承观测确认；请求参数及授权有效，详见005方案逐行为表",
+        "checks": [
+          {
+            "id": "hold_motion.succeeded",
+            "label": "执行器实际完成观测",
+            "source": "observation",
+            "key": "hold_motion.succeeded",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      }
+    },
+    {
+      "behavior_id": "resume_motion",
+      "display_name": "恢复原运动",
+      "behavior_type": "action",
+      "schedulable": false,
+      "executor_ref": "robot.articulated@1",
+      "implementation_status": "implemented",
+      "arguments_schema": {},
+      "payload_contract_ref": "robot-command@1",
+      "trigger": {
+        "source": "runtime_gateway"
+      },
+      "input_signals": [],
+      "output_signals": [],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "kinematics_ready",
+            "label": "运动学与参数已验证",
+            "source": "observation",
+            "key": "kinematics_ready",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "执行器按实际FK/约束/支承观测确认；请求参数及授权有效，详见005方案逐行为表",
+        "checks": [
+          {
+            "id": "resume_motion.succeeded",
+            "label": "执行器实际完成观测",
+            "source": "observation",
+            "key": "resume_motion.succeeded",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      }
+    },
+    {
+      "behavior_id": "publish_robot_state",
+      "display_name": "发布机器人状态",
+      "behavior_type": "observer",
+      "schedulable": false,
+      "executor_ref": "robot.articulated@1",
+      "implementation_status": "implemented",
+      "arguments_schema": {},
+      "payload_contract_ref": "robot-command@1",
+      "trigger": {
+        "source": "runtime_gateway"
+      },
+      "input_signals": [],
+      "output_signals": [],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "kinematics_ready",
+            "label": "运动学与参数已验证",
+            "source": "observation",
+            "key": "kinematics_ready",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "continuous",
+        "description": "执行器按实际FK/约束/支承观测确认；请求参数及授权有效，详见005方案逐行为表",
+        "checks": [],
+        "timer_or_progress_is_success": false
+      }
+    }
+  ],
+  "type_specific_contract": {
+    "coordinate_system": {
+      "length_unit": "m",
+      "joint_angle_unit": "rad",
+      "up_axis": "Y"
+    },
+    "rootNodeName": "robot(UR10)(1)(center)",
+    "calibration": {
+      "asset_sha256": "75b9d773c59f477fcf3667ecd3f54e8c96fc3fa964b5e89a0ca6cce04215ea5a",
+      "status": "simulation_configured",
+      "source": "GLB matrices; axes are explicit simulation hinge choices, joint ranges are simulation limits, not manufacturer data; TCP is virtual flange origin, no physical gripper model"
+    },
+    "urdf": {
+      "format": "project_urdf_like",
+      "structure_mode": "serial",
+      "joints": [
+        {
+          "name": "joint_1",
+          "nodeName": "Link1_003n",
+          "parent_joint": null,
+          "type": "revolute",
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "axis_frame": "joint_local",
+          "rest_position": [
+            0,
+            0.6272999814011158,
+            0
+          ],
+          "rest_quaternion": [
+            0,
+            0.5909204581198041,
+            0,
+            0.8067298260108405
+          ],
+          "render_rest_quaternion": [
+            0,
+            -0.15259991733978065,
+            0,
+            0.9882880477006145
+          ],
+          "limit": {
+            "lower": -3.141592653589793,
+            "upper": 3.141592653589793
+          },
+          "velocity_limit_param": "joint_speed_rad_s",
+          "acceleration_limit_param": "joint_accel_rad_s2"
+        },
+        {
+          "name": "joint_2",
+          "nodeName": "Link2_004n",
+          "parent_joint": "joint_1",
+          "type": "revolute",
+          "axis": [
+            0,
+            0,
+            1
+          ],
+          "axis_frame": "joint_local",
+          "rest_position": [
+            -2.6226054477412886e-07,
+            1.1444091541079615e-07,
+            -0.16394160328518328
+          ],
+          "rest_quaternion": [
+            -5.520823602844384e-09,
+            2.5971698729132537e-10,
+            -0.017424574234621782,
+            0.9998481805818034
+          ],
+          "render_rest_quaternion": [
+            0,
+            0,
+            -0.017424574233021524,
+            0.9998481805818311
+          ],
+          "limit": {
+            "lower": -3.141592653589793,
+            "upper": 3.141592653589793
+          },
+          "velocity_limit_param": "joint_speed_rad_s",
+          "acceleration_limit_param": "joint_accel_rad_s2"
+        },
+        {
+          "name": "joint_3",
+          "nodeName": "Link3_005n",
+          "parent_joint": "joint_2",
+          "type": "revolute",
+          "axis": [
+            0,
+            0,
+            1
+          ],
+          "axis_frame": "joint_local",
+          "rest_position": [
+            -1.314404383147283e-07,
+            0.6120001087175294,
+            -3.770935013691634e-07
+          ],
+          "rest_quaternion": [
+            3.099097042560161e-09,
+            -2.7366081533509205e-08,
+            -0.721939201127169,
+            0.6919564942074496
+          ],
+          "render_rest_quaternion": [
+            0,
+            0,
+            -0.7219392054650435,
+            0.6919564896816142
+          ],
+          "limit": {
+            "lower": -3.141592653589793,
+            "upper": 3.141592653589793
+          },
+          "velocity_limit_param": "joint_speed_rad_s",
+          "acceleration_limit_param": "joint_accel_rad_s2"
+        },
+        {
+          "name": "joint_4",
+          "nodeName": "Link4_006n",
+          "parent_joint": "joint_3",
+          "type": "revolute",
+          "axis": [
+            0,
+            0,
+            1
+          ],
+          "axis_frame": "joint_local",
+          "rest_position": [
+            9.216097396347323e-08,
+            0.5722997325254676,
+            -5.409328245331579e-07
+          ],
+          "rest_quaternion": [
+            -9.14969887196945e-08,
+            1.2646564923010432e-08,
+            0.4921687185235966,
+            0.8704998291251024
+          ],
+          "render_rest_quaternion": [
+            0,
+            0,
+            0.4921687297482429,
+            0.8704998227788454
+          ],
+          "limit": {
+            "lower": -3.141592653589793,
+            "upper": 3.141592653589793
+          },
+          "velocity_limit_param": "joint_speed_rad_s",
+          "acceleration_limit_param": "joint_accel_rad_s2"
+        },
+        {
+          "name": "joint_5",
+          "nodeName": "Link5_007n",
+          "parent_joint": "joint_4",
+          "type": "revolute",
+          "axis": [
+            1,
+            0,
+            0
+          ],
+          "axis_frame": "joint_local",
+          "rest_position": [
+            -3.814698351645163e-08,
+            -2.1666283966936817e-07,
+            -5.388262324657056e-07
+          ],
+          "rest_quaternion": [
+            0.9283970073814932,
+            7.795661445194903e-08,
+            -4.8646054778312603e-08,
+            0.3715898231721091
+          ],
+          "render_rest_quaternion": [
+            0.9283969930346365,
+            0,
+            0,
+            0.3715898590169612
+          ],
+          "limit": {
+            "lower": -3.141592653589793,
+            "upper": 3.141592653589793
+          },
+          "velocity_limit_param": "joint_speed_rad_s",
+          "acceleration_limit_param": "joint_accel_rad_s2"
+        },
+        {
+          "name": "joint_6",
+          "nodeName": "Link6_008n",
+          "parent_joint": "joint_5",
+          "type": "revolute",
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "axis_frame": "joint_local",
+          "rest_position": [
+            0.1157003329016027,
+            0.092199964886579,
+            -3.908786072592818e-08
+          ],
+          "rest_quaternion": [
+            1.215995760705638e-07,
+            -0.8468617547624806,
+            2.4895668907977213e-08,
+            0.5318130952887461
+          ],
+          "render_rest_quaternion": [
+            0,
+            -0.8468617739220008,
+            0,
+            0.5318130647790462
+          ],
+          "limit": {
+            "lower": -3.141592653589793,
+            "upper": 3.141592653589793
+          },
+          "velocity_limit_param": "joint_speed_rad_s",
+          "acceleration_limit_param": "joint_accel_rad_s2"
+        }
+      ]
+    },
+    "tooling": {
+      "flange_node_name": "mountplate_009n",
+      "tcp_node_name": "mountplate_009n",
+      "tcp_local_frame": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation_quaternion": [
+          0,
+          0,
+          0,
+          1
+        ]
+      },
+      "rest_position": [
+        -9.536748302174658e-08,
+        -1.4432899320127035e-15,
+        -3.337861492758165e-08
+      ],
+      "rest_quaternion": [
+        8.0518721941641e-08,
+        0.7071068555320518,
+        -4.7427678883028456e-08,
+        0.7071067068410295
+      ],
+      "simulation_tool": true
+    },
+    "ik": {
+      "solver": "ccd_position",
+      "mode_param": "ik_mode",
+      "position_tolerance_param": "ik_position_tolerance_m",
+      "max_iterations_param": "ik_max_iterations"
+    },
+    "trajectoryConfig": {
+      "motion_mode": "joint_ptp",
+      "joint_speed_param": "joint_speed_rad_s",
+      "joint_acceleration_param": "joint_accel_rad_s2"
+    },
+    "gripper": {
+      "type": "virtual_fixed_grasp",
+      "capture_radius_m": 0.06,
+      "max_relative_speed_mps": 0.08,
+      "max_payload_param": "max_payload_kg",
+      "tool_size_m": [
+        0.025,
+        0.025,
+        0.025
+      ],
+      "constraint_tolerance_m": 0.015,
+      "orientation_policy": "spherical_virtual_capture"
+    }
+  },
+  "runtime_contract": {
+    "observation_definitions": {
+      "kinematics_ready": {
+        "producer": "robot.articulated@1",
+        "meaning": "编译器验证节点、米制链及运动参数；未通过阻止准备"
+      },
+      "execute_job.succeeded": {
+        "producer": "robot.articulated@1",
+        "meaning": "执行器按实际FK/约束/支承观测确认；请求参数及授权有效，详见005方案逐行为表",
+        "scope": "current request / current internal step; executor completion result"
+      },
+      "pick_and_place.succeeded": {
+        "producer": "robot.articulated@1",
+        "meaning": "执行器按实际FK/约束/支承观测确认；请求参数及授权有效，详见005方案逐行为表",
+        "scope": "current request / current internal step; executor completion result"
+      },
+      "move_to_pose.succeeded": {
+        "producer": "robot.articulated@1",
+        "meaning": "执行器按实际FK/约束/支承观测确认；请求参数及授权有效，详见005方案逐行为表",
+        "scope": "current request / current internal step; executor completion result"
+      },
+      "grip.succeeded": {
+        "producer": "robot.articulated@1",
+        "meaning": "执行器按实际FK/约束/支承观测确认；请求参数及授权有效，详见005方案逐行为表",
+        "scope": "current request / current internal step; executor completion result"
+      },
+      "release.succeeded": {
+        "producer": "robot.articulated@1",
+        "meaning": "执行器按实际FK/约束/支承观测确认；请求参数及授权有效，详见005方案逐行为表",
+        "scope": "current request / current internal step; executor completion result"
+      },
+      "wait_time.succeeded": {
+        "producer": "robot.articulated@1",
+        "meaning": "执行器按实际FK/约束/支承观测确认；请求参数及授权有效，详见005方案逐行为表",
+        "scope": "current request / current internal step; executor completion result"
+      },
+      "wait_signal.succeeded": {
+        "producer": "robot.articulated@1",
+        "meaning": "执行器按实际FK/约束/支承观测确认；请求参数及授权有效，详见005方案逐行为表",
+        "scope": "current request / current internal step; executor completion result"
+      },
+      "set_output.succeeded": {
+        "producer": "robot.articulated@1",
+        "meaning": "执行器按实际FK/约束/支承观测确认；请求参数及授权有效，详见005方案逐行为表",
+        "scope": "current request / current internal step; executor completion result"
+      },
+      "pause_pick_intake.succeeded": {
+        "producer": "robot.articulated@1",
+        "meaning": "执行器按实际FK/约束/支承观测确认；请求参数及授权有效，详见005方案逐行为表",
+        "scope": "current request / current internal step; executor completion result"
+      },
+      "resume_pick_intake.succeeded": {
+        "producer": "robot.articulated@1",
+        "meaning": "执行器按实际FK/约束/支承观测确认；请求参数及授权有效，详见005方案逐行为表",
+        "scope": "current request / current internal step; executor completion result"
+      },
+      "hold_motion.succeeded": {
+        "producer": "robot.articulated@1",
+        "meaning": "执行器按实际FK/约束/支承观测确认；请求参数及授权有效，详见005方案逐行为表",
+        "scope": "current request / current internal step; executor completion result"
+      },
+      "resume_motion.succeeded": {
+        "producer": "robot.articulated@1",
+        "meaning": "执行器按实际FK/约束/支承观测确认；请求参数及授权有效，详见005方案逐行为表",
+        "scope": "current request / current internal step; executor completion result"
+      },
+      "publish_robot_state.succeeded": {
+        "producer": "robot.articulated@1",
+        "meaning": "执行器按实际FK/约束/支承观测确认；请求参数及授权有效，详见005方案逐行为表",
+        "scope": "current request / current internal step; executor completion result"
+      },
+      "device_idle": {
+        "producer": "robot.articulated@1",
+        "meaning": "没有在途任务"
+      },
+      "tool_empty": {
+        "producer": "robot.articulated@1",
+        "meaning": "没有实际持有关系"
+      },
+      "holding_material": {
+        "producer": "robot.articulated@1",
+        "meaning": "实际固定约束存在"
+      },
+      "target_valid": {
+        "producer": "robot.articulated@1",
+        "meaning": "命令已通过帧、限位与IK预检查"
+      },
+      "material_in_capture": {
+        "producer": "robot.articulated@1",
+        "meaning": "工具和物料捕获参考距离满足标定"
+      },
+      "payload_compatible": {
+        "producer": "robot.articulated@1",
+        "meaning": "指定物料类型和质量满足允许载荷"
+      },
+      "release_pose_valid": {
+        "producer": "robot.articulated@1",
+        "meaning": "物料位于指定释放区域"
+      }
+    },
+    "authorization_definitions": {
+      "source_authorized": {
+        "provider": "exclusive_manual_experiment",
+        "meaning": "显式准备的单物料会话拥有源/目标操作权；不是自动调度器授权"
+      },
+      "target_reserved": {
+        "provider": "exclusive_manual_experiment",
+        "meaning": "显式准备的单物料会话拥有源/目标操作权；不是自动调度器授权"
+      }
+    }
+  },
+  "runtime_execution_contract": {
+    "template_ref": "robot.articulated@1",
+    "payload_contract_ref": "robot-command@1",
+    "signal_management": {
+      "owner": "simulation_engine",
+      "status": "implemented",
+      "namespace": "instance_id/port_id",
+      "definition_source": "signal_ports",
+      "spatial_binding": false,
+      "write_policy": "single_writer_per_input",
+      "plc_mapping": "instance_bindings",
+      "sampling": "simulation_step_snapshot",
+      "unknown_policy": "invalid_until_provider_ready"
+    }
+  },
+  "notes": [
+    "仿真实验参数，不代表实机UR10参数。q=0为源GLB静止姿态。",
+    "虚拟球形捕获不约束工具朝向；不模拟夹爪或真空吸盘。",
+    "无全臂碰撞/自动避障；抓取使用运动学工具+动态物料固定约束。"
+  ]
+}

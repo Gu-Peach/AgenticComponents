@@ -1,0 +1,12 @@
+{
+  "asset_sha256": "75b9d773c59f477fcf3667ecd3f54e8c96fc3fa964b5e89a0ca6cce04215ea5a",
+  "source": "GLB matrices; axes are explicit simulation hinge choices, joint ranges are simulation limits, not manufacturer data",
+  "expected_nodes": [
+    "Link1_003n",
+    "Link2_004n",
+    "Link3_005n",
+    "Link4_006n",
+    "Link5_007n",
+    "Link6_008n"
+  ]
+}

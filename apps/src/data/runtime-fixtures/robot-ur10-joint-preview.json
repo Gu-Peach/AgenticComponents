@@ -1,0 +1,12 @@
+{
+  "jointTargets": [
+    0.2,
+    0.1,
+    -0.1,
+    0,
+    0,
+    0
+  ],
+  "angleUnit": "rad",
+  "frame": "asset_rest_delta"
+}

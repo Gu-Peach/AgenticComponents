@@ -1,4 +1,6 @@
 "use client";
+import { RobotSceneBridge } from "./RobotSceneBridge";
+import { RobotDebugOverlay } from "./RobotDebugOverlay";
 import { RuntimeSceneBridge } from "./RuntimeSceneBridge";
 import { runtimeController } from "@/services/RuntimeController";
 import { bodyVisualPose } from "@/domain/runtime/bodyVisualPose";
@@ -95,6 +97,7 @@ function ImportedModel({
   return model ? (
     <>
       <primitive object={model} dispose={null} />
+      <RobotSceneBridge model={model} instanceId={instanceId} />
       <SelectionHighlight model={model} selected={selected} />
     </>
   ) : (
@@ -310,6 +313,7 @@ export default function SceneCanvas() {
           ) : null;
         })}
         <RuntimeSceneBridge />
+        <RobotDebugOverlay />
         <CameraRig token={focusToken} />
         <FrameReady onReady={() => setReady(true)} />
         <GizmoHelper alignment="top-right" margin={[55, 60]}>

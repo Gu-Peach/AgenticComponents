@@ -433,3 +433,15 @@ definePart({
 accept_material/release_material 在接触式实现中属于交接服务，transport_to_exit 是实际运输跟踪；这些服务与原物料任务协议兼容，但不得直接写物料位置。持续输送无需每件物料先请求执行。blocked/part_ready/capacity_available 分别由观测、容量及交接服务组合发布，不以全局 running 或动画进度替代。
 
 未来信号引擎按设备实例注册信号并管理 PLC/调度/手动输入的单一写入权，采用固定仿真步交换快照。接口禁止保存信号关联；设备信号、观测源及执行器职责分别可校验。当前 apps 尚未实现该引擎。
+
+## 机械臂执行器接入说明（robot.articulated@1）
+
+当前robot_UR10的接口行为schema与通用机械臂模板配套。execute_job、pick_and_place经统一网关执行Move/Grip/Release/Wait/Set步骤；move_to_pose首版为位置IK+关节PTP，关节预览另走有类型MoveJ命令，不宣称支持TCP直线轨迹或姿态IK。
+
+虚拟球形工具使用Jolt固定约束抓取。grip先校验指定物料身份、独占许可、空夹具、质量/载荷、捕获距离和相对速度，再以实际相对位姿创建约束；holding_material来自约束而非命令。release在指定释放区域解除约束后，等待目标有效支承、位置/速度与外形适配，才提交本次交接成功。携物目标使用持有偏移换算物料中心，并按旋转外形计算释放高度。
+
+物理会话为显式单物料实验，source_authorized/target_reserved来自用户选择并准备的独占会话，不是多设备调度器自动授权。场景其他资产不参与这个物理世界。缺失的外部输入维持无效，wait_signal阻塞并按仿真时间超时；没有默认许可。
+
+pause_pick只控制新抓取接单，enableTag失能对在途动作减速保持并保留busy/物料；恢复从当前执行态规划剩余阶段。会话暂停则冻结整个世界。done是本请求的实际终态，结果关联result_id；手动API通过网关更新请求握手，不能绕过网关直接写start_pick/request_id/commandTag启动任务。
+
+参数、源节点与虚拟工具范围见参数契约第7节和模型README；当前不声称真实夹爪/吸盘、夹持力、自动避障、全臂碰撞或实机UR10标定。

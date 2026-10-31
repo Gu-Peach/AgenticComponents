@@ -562,269 +562,279 @@
     {
       "device_type": "robot_arm",
       "params_schema": {
-        "cartesian_speed_mps": {
-          "type": "number",
-          "required": true,
-          "default": 1,
-          "unit": "m/s",
-          "min": 0.01,
-          "max": 3,
-          "mutability": "runtime_setpoint",
-          "description": "笛卡尔路径速度上限",
-          "legacy_aliases": ["speed"]
-        },
         "joint_speed_rad_s": {
           "type": "number",
           "required": true,
-          "default": 1.2,
+          "default": 0.8,
+          "mutability": "stopped_only",
+          "description": "显式仿真实验配置，不代表实机额定参数",
           "unit": "rad/s",
           "min": 0.01,
-          "max": 6,
-          "mutability": "stopped_only",
-          "description": "各关节的默认速度上限，具体关节可更严格"
+          "max": 2
         },
         "joint_accel_rad_s2": {
           "type": "number",
           "required": true,
-          "default": 2,
+          "default": 1.5,
+          "mutability": "stopped_only",
+          "description": "显式仿真实验配置，不代表实机额定参数",
           "unit": "rad/s²",
           "min": 0.01,
-          "max": 20,
-          "mutability": "stopped_only",
-          "description": "默认关节加速度上限"
-        },
-        "max_payload_kg": {
-          "type": "number",
-          "required": true,
-          "default": 5,
-          "unit": "kg",
-          "min": 0.01,
-          "max": 5,
-          "mutability": "stopped_only",
-          "description": "模型允许载荷上限；不同于当前物料实际质量",
-          "legacy_aliases": ["payload_kg"]
-        },
-        "lift_height": {
-          "type": "number",
-          "required": true,
-          "default": 0.3,
-          "unit": "m",
-          "min": 0,
-          "max": 1.5,
-          "mutability": "stopped_only",
-          "description": "抓放路径的默认抬升高度"
-        },
-        "ik_position_tolerance_m": {
-          "type": "number",
-          "required": true,
-          "default": 0.001,
-          "unit": "m",
-          "min": 1e-5,
-          "max": 0.05,
-          "mutability": "stopped_only",
-          "description": "TCP 位置求解误差阈值"
-        },
-        "ik_max_iterations": {
-          "type": "integer",
-          "required": true,
-          "default": 50,
-          "min": 1,
-          "max": 1000,
-          "mutability": "stopped_only",
-          "description": "一次 IK 求解迭代预算"
-        },
-        "ik_mode": {
-          "type": "enum",
-          "required": true,
-          "default": "position_only",
-          "options": ["position_only", "pose"],
-          "mutability": "stopped_only",
-          "description": "仅位置或位置及姿态；后者需执行器支持"
-        },
-        "orientation_tolerance_rad": {
-          "type": "number",
-          "required": false,
-          "default": 0.01,
-          "unit": "rad",
-          "min": 0.0001,
-          "max": 0.2,
-          "mutability": "stopped_only",
-          "description": "姿态误差阈值",
-          "required_when": {
-            "parameter": "ik_mode",
-            "equals": "pose"
-          }
+          "max": 5
         },
         "settle_speed_rad_s": {
           "type": "number",
           "required": true,
           "default": 0.01,
-          "unit": "rad/s",
-          "min": 0,
-          "max": 0.1,
           "mutability": "stopped_only",
-          "description": "精确停稳完成时的关节速度阈值"
+          "description": "显式仿真实验配置，不代表实机额定参数",
+          "unit": "rad/s",
+          "min": 0.0001,
+          "max": 0.1
+        },
+        "ik_position_tolerance_m": {
+          "type": "number",
+          "required": true,
+          "default": 0.002,
+          "mutability": "stopped_only",
+          "description": "显式仿真实验配置，不代表实机额定参数",
+          "unit": "m",
+          "min": 1e-5,
+          "max": 0.02
+        },
+        "ik_max_iterations": {
+          "type": "integer",
+          "required": true,
+          "default": 200,
+          "mutability": "stopped_only",
+          "description": "显式仿真实验配置，不代表实机额定参数",
+          "min": 1,
+          "max": 1000
+        },
+        "ik_mode": {
+          "type": "enum",
+          "required": true,
+          "default": "position_only",
+          "mutability": "stopped_only",
+          "description": "显式仿真实验配置，不代表实机额定参数",
+          "options": ["position_only"]
+        },
+        "max_payload_kg": {
+          "type": "number",
+          "required": true,
+          "default": 5,
+          "mutability": "stopped_only",
+          "description": "显式仿真实验配置，不代表实机额定参数",
+          "unit": "kg",
+          "min": 0.001,
+          "max": 20
+        },
+        "lift_height": {
+          "type": "number",
+          "required": true,
+          "default": 0.12,
+          "mutability": "stopped_only",
+          "description": "显式仿真实验配置，不代表实机额定参数",
+          "unit": "m",
+          "min": 0.01,
+          "max": 0.4
         }
       },
       "type_specific_contract": {
         "coordinate_system": {
-          "up_axis": "Y",
           "length_unit": "m",
           "joint_angle_unit": "rad",
-          "rest_pose_source": "asset_calibration"
+          "up_axis": "Y"
         },
-        "rootNodeName": "UR10_00Hn",
+        "rootNodeName": "robot(UR10)(1)(center)",
+        "calibration": {
+          "asset_sha256": "75b9d773c59f477fcf3667ecd3f54e8c96fc3fa964b5e89a0ca6cce04215ea5a",
+          "status": "simulation_configured",
+          "source": "GLB matrices; axes are explicit simulation hinge choices, joint ranges are simulation limits, not manufacturer data; TCP is virtual flange origin, no physical gripper model"
+        },
         "urdf": {
           "format": "project_urdf_like",
           "structure_mode": "serial",
-          "rest_transform_source": "glb_calibrated",
           "joints": [
             {
               "name": "joint_1",
-              "nodeName": "Link1_00In",
-              "type": "revolute",
-              "axis": {
-                "x": 0,
-                "y": 1,
-                "z": 0
-              },
-              "limit": {
-                "lower": -3.14,
-                "upper": 3.14
-              },
+              "nodeName": "Link1_003n",
               "parent_joint": null,
+              "type": "revolute",
+              "axis": [0, 1, 0],
               "axis_frame": "joint_local",
+              "rest_position": [0, 0.6272999814011158, 0],
+              "rest_quaternion": [0, 0.5909204581198041, 0, 0.8067298260108405],
+              "render_rest_quaternion": [
+                0, -0.15259991733978065, 0, 0.9882880477006145
+              ],
+              "limit": {
+                "lower": -3.141592653589793,
+                "upper": 3.141592653589793
+              },
               "velocity_limit_param": "joint_speed_rad_s",
               "acceleration_limit_param": "joint_accel_rad_s2"
             },
             {
               "name": "joint_2",
-              "nodeName": "Link2_00Jn",
-              "type": "revolute",
-              "axis": {
-                "x": 0,
-                "y": 0,
-                "z": 1
-              },
-              "limit": {
-                "lower": -1.57,
-                "upper": 2.36
-              },
+              "nodeName": "Link2_004n",
               "parent_joint": "joint_1",
+              "type": "revolute",
+              "axis": [0, 0, 1],
               "axis_frame": "joint_local",
+              "rest_position": [
+                -2.6226054477412886e-7, 1.1444091541079615e-7,
+                -0.16394160328518328
+              ],
+              "rest_quaternion": [
+                -5.520823602844384e-9, 2.5971698729132537e-10,
+                -0.017424574234621782, 0.9998481805818034
+              ],
+              "render_rest_quaternion": [
+                0, 0, -0.017424574233021524, 0.9998481805818311
+              ],
+              "limit": {
+                "lower": -3.141592653589793,
+                "upper": 3.141592653589793
+              },
               "velocity_limit_param": "joint_speed_rad_s",
               "acceleration_limit_param": "joint_accel_rad_s2"
             },
             {
               "name": "joint_3",
-              "nodeName": "Link3_00Kn",
-              "type": "revolute",
-              "axis": {
-                "x": 0,
-                "y": 0,
-                "z": 1
-              },
-              "limit": {
-                "lower": -1.57,
-                "upper": 2.36
-              },
+              "nodeName": "Link3_005n",
               "parent_joint": "joint_2",
+              "type": "revolute",
+              "axis": [0, 0, 1],
               "axis_frame": "joint_local",
+              "rest_position": [
+                -1.314404383147283e-7, 0.6120001087175294, -3.770935013691634e-7
+              ],
+              "rest_quaternion": [
+                3.099097042560161e-9, -2.7366081533509205e-8,
+                -0.721939201127169, 0.6919564942074496
+              ],
+              "render_rest_quaternion": [
+                0, 0, -0.7219392054650435, 0.6919564896816142
+              ],
+              "limit": {
+                "lower": -3.141592653589793,
+                "upper": 3.141592653589793
+              },
               "velocity_limit_param": "joint_speed_rad_s",
               "acceleration_limit_param": "joint_accel_rad_s2"
             },
             {
               "name": "joint_4",
-              "nodeName": "Link4_00Ln",
-              "type": "revolute",
-              "axis": {
-                "x": 0,
-                "y": 0,
-                "z": 1
-              },
-              "limit": {
-                "lower": -1.57,
-                "upper": 2.36
-              },
+              "nodeName": "Link4_006n",
               "parent_joint": "joint_3",
+              "type": "revolute",
+              "axis": [0, 0, 1],
               "axis_frame": "joint_local",
+              "rest_position": [
+                9.216097396347323e-8, 0.5722997325254676, -5.409328245331579e-7
+              ],
+              "rest_quaternion": [
+                -9.14969887196945e-8, 1.2646564923010432e-8, 0.4921687185235966,
+                0.8704998291251024
+              ],
+              "render_rest_quaternion": [
+                0, 0, 0.4921687297482429, 0.8704998227788454
+              ],
+              "limit": {
+                "lower": -3.141592653589793,
+                "upper": 3.141592653589793
+              },
               "velocity_limit_param": "joint_speed_rad_s",
               "acceleration_limit_param": "joint_accel_rad_s2"
             },
             {
               "name": "joint_5",
-              "nodeName": "Link5_00Mn",
-              "type": "revolute",
-              "axis": {
-                "x": 1,
-                "y": 0,
-                "z": 0
-              },
-              "limit": {
-                "lower": -1.57,
-                "upper": 2.36
-              },
+              "nodeName": "Link5_007n",
               "parent_joint": "joint_4",
+              "type": "revolute",
+              "axis": [1, 0, 0],
               "axis_frame": "joint_local",
+              "rest_position": [
+                -3.814698351645163e-8, -2.1666283966936817e-7,
+                -5.388262324657056e-7
+              ],
+              "rest_quaternion": [
+                0.9283970073814932, 7.795661445194903e-8,
+                -4.8646054778312603e-8, 0.3715898231721091
+              ],
+              "render_rest_quaternion": [
+                0.9283969930346365, 0, 0, 0.3715898590169612
+              ],
+              "limit": {
+                "lower": -3.141592653589793,
+                "upper": 3.141592653589793
+              },
               "velocity_limit_param": "joint_speed_rad_s",
               "acceleration_limit_param": "joint_accel_rad_s2"
             },
             {
               "name": "joint_6",
-              "nodeName": "Link6_00Nn",
-              "type": "revolute",
-              "axis": {
-                "x": 0,
-                "y": 1,
-                "z": 0
-              },
-              "limit": {
-                "lower": -1.57,
-                "upper": 2.36
-              },
+              "nodeName": "Link6_008n",
               "parent_joint": "joint_5",
+              "type": "revolute",
+              "axis": [0, 1, 0],
               "axis_frame": "joint_local",
+              "rest_position": [
+                0.1157003329016027, 0.092199964886579, -3.908786072592818e-8
+              ],
+              "rest_quaternion": [
+                1.215995760705638e-7, -0.8468617547624806,
+                2.4895668907977213e-8, 0.5318130952887461
+              ],
+              "render_rest_quaternion": [
+                0, -0.8468617739220008, 0, 0.5318130647790462
+              ],
+              "limit": {
+                "lower": -3.141592653589793,
+                "upper": 3.141592653589793
+              },
               "velocity_limit_param": "joint_speed_rad_s",
               "acceleration_limit_param": "joint_accel_rad_s2"
             }
           ]
         },
         "tooling": {
-          "tcp_node_name": "Link6_00Nn",
+          "flange_node_name": "mountplate_009n",
+          "tcp_node_name": "mountplate_009n",
           "tcp_local_frame": {
-            "position": [0, 0, 0.8],
-            "rotation_euler": [0, 0, 0]
+            "position": [0, 0, 0],
+            "rotation_quaternion": [0, 0, 0, 1]
           },
-          "calibration_required": true
+          "rest_position": [
+            -9.536748302174658e-8, -1.4432899320127035e-15,
+            -3.337861492758165e-8
+          ],
+          "rest_quaternion": [
+            8.0518721941641e-8, 0.7071068555320518, -4.7427678883028456e-8,
+            0.7071067068410295
+          ],
+          "simulation_tool": true
+        },
+        "ik": {
+          "solver": "ccd_position",
+          "mode_param": "ik_mode",
+          "position_tolerance_param": "ik_position_tolerance_m",
+          "max_iterations_param": "ik_max_iterations"
         },
         "trajectoryConfig": {
-          "cartesian_speed_param": "cartesian_speed_mps",
-          "lift_height_param": "lift_height",
+          "motion_mode": "joint_ptp",
           "joint_speed_param": "joint_speed_rad_s",
           "joint_acceleration_param": "joint_accel_rad_s2"
         },
-        "ik": {
-          "mode_param": "ik_mode",
-          "position_tolerance_param": "ik_position_tolerance_m",
-          "orientation_tolerance_param": "orientation_tolerance_rad",
-          "max_iterations_param": "ik_max_iterations",
-          "completion_requires_convergence": true
-        },
-        "workspace": {
-          "shape": "cylinder",
-          "radius_m": 1.2,
-          "height_m": 1.5,
-          "frame": "device_local",
-          "purpose": "coarse_candidate_filter"
-        },
         "gripper": {
-          "type": "vacuum",
-          "supported_material_classes": ["workpiece", "workpiece_carrier"],
-          "max_payload_param": "max_payload_kg"
-        },
-        "completion": {
-          "settle_speed_param": "settle_speed_rad_s",
-          "tcp_required": true
+          "type": "virtual_fixed_grasp",
+          "capture_radius_m": 0.06,
+          "max_relative_speed_mps": 0.08,
+          "max_payload_param": "max_payload_kg",
+          "tool_size_m": [0.025, 0.025, 0.025],
+          "constraint_tolerance_m": 0.015,
+          "orientation_policy": "spherical_virtual_capture"
         }
       }
     },

@@ -1,3 +1,4 @@
+import { RobotSimulationPanel } from "@/features/runtime/RobotSimulationPanel";
 import { SimulationPanel } from "@/features/runtime/SimulationPanel";
 import { RuntimeSignalsPanel } from "@/features/runtime/RuntimeSignalsPanel";
 import { resolveInterfaceFrame } from "@/domain/resolveInterfaceFrame";
@@ -146,6 +147,12 @@ export function Inspector() {
             <RuntimeSignalsPanel />
           </Section>
         )}
+        {def.deviceType === "robot_arm" &&
+          def.source?.contract_version === "1.4" && (
+            <Section title="机械臂运行">
+              <RobotSimulationPanel />
+            </Section>
+          )}
         <div className="inspector-shortcuts">
           {[
             ["inspector-params", "参数"],
@@ -280,7 +287,9 @@ export function Inspector() {
                   const errors = semanticIssues(
                     def,
                     overrides,
-                    def.source?.contract_version === "1.3",
+                    ["1.3", "1.4"].includes(
+                      String(def.source?.contract_version),
+                    ),
                   );
                   if (errors.length) {
                     setError(errors.join("；"));

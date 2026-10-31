@@ -1,0 +1,44 @@
+{
+  "main": {
+    "file": "examples/pick-place/process.acp",
+    "start_byte": 557,
+    "end_byte": 1060,
+    "line": 14,
+    "column": 5
+  },
+  "feed": {
+    "file": "examples/pick-place/process.acp",
+    "start_byte": 573,
+    "end_byte": 755,
+    "line": 15,
+    "column": 7
+  },
+  "transport": {
+    "file": "examples/pick-place/process.acp",
+    "start_byte": 627,
+    "end_byte": 754,
+    "line": 16,
+    "column": 9
+  },
+  "still_at_exit": {
+    "file": "examples/pick-place/process.acp",
+    "start_byte": 762,
+    "end_byte": 817,
+    "line": 19,
+    "column": 7
+  },
+  "transfer": {
+    "file": "examples/pick-place/process.acp",
+    "start_byte": 824,
+    "end_byte": 998,
+    "line": 20,
+    "column": 7
+  },
+  "verify_loaded": {
+    "file": "examples/pick-place/process.acp",
+    "start_byte": 1005,
+    "end_byte": 1059,
+    "line": 25,
+    "column": 7
+  }
+}

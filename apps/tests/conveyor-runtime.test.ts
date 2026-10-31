@@ -92,7 +92,9 @@ describe("contact transport runtime", () => {
     expect(() => signals.command("speedTag", -1)).toThrow();
     expect(() => signals.command("runTag", 1)).toThrow();
     expect(() => signals.command("done", true)).toThrow();
-    expect(() => registerTemplates().get("robot.articulated")).toThrow();
+    expect(registerTemplates().get("robot.articulated").id).toBe(
+      "robot.articulated",
+    );
     const c = config(),
       p = await createJoltBackend(c.physics),
       k = new RuntimeKernel(c, p);

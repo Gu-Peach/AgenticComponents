@@ -324,7 +324,7 @@ export function parseProject(raw: unknown) {
     const errors = semanticIssues(
       def,
       {},
-      def.source?.contract_version === "1.3",
+      ["1.3", "1.4"].includes(String(def.source?.contract_version)),
     );
     if (errors.length) throw new Error(`${def.name}: ${errors.join("；")}`);
   }
@@ -336,7 +336,7 @@ export function parseProject(raw: unknown) {
     const errors = semanticIssues(
       def,
       i.paramOverrides,
-      def.source?.contract_version === "1.3",
+      ["1.3", "1.4"].includes(String(def.source?.contract_version)),
     );
     if (errors.length) throw new Error(`${i.name}: ${errors.join("；")}`);
   }

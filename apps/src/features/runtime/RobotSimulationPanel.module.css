@@ -1,0 +1,35 @@
+.panel {
+  display: grid;
+  gap: 8px;
+  font-size: 11px;
+}
+.panel label {
+  display: grid;
+  gap: 4px;
+}
+.panel input,
+.panel select {
+  width: 100%;
+  min-width: 0;
+}
+.panel button {
+  white-space: normal;
+  min-height: 28px;
+}
+.panel details {
+  border-top: 1px solid var(--border, #2c3d49);
+  padding-top: 8px;
+}
+.panel details[open] {
+  display: grid;
+  gap: 8px;
+}
+.panel summary {
+  cursor: pointer;
+  margin-bottom: 6px;
+}
+.panel p {
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+  margin: 4px 0;
+}

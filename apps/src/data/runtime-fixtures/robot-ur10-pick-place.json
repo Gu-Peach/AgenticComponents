@@ -1,0 +1,28 @@
+{
+  "description": "explicit simulation test layout; tool and material remain Jolt bodies",
+  "robot": {
+    "position": [
+      0,
+      0,
+      0
+    ]
+  },
+  "conveyor": {
+    "position": [
+      0.099129,
+      0,
+      -0.647548
+    ]
+  },
+  "engine_block": {
+    "position": [
+      -0.020371,
+      0.7,
+      -0.647548
+    ],
+    "rotation_y_rad": 1.5707963267948966,
+    "mass_kg": 1
+  },
+  "sourceAuthorization": "exclusive manual experiment session",
+  "targetReservation": "one material on selected static support; other scene assets excluded"
+}

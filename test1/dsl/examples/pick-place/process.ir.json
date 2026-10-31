@@ -1,0 +1,115 @@
+{
+  "ir_version": "0.1",
+  "language": "ac-process/0.1",
+  "process_id": "conveyor_to_tray",
+  "environment_ref": "cell.design.json",
+  "execution_profile_ref": "fixed_60hz",
+  "entry": "main",
+  "conditions": {
+    "at_exit": {
+      "kind": "is",
+      "read": {
+        "source": "observation",
+        "owner_ref": "conveyor",
+        "key": "subject_at_exit",
+        "subject_ref": "material",
+        "request_node_ref": "transport"
+      },
+      "equals": {
+        "kind": "boolean",
+        "value": true
+      }
+    },
+    "loaded": {
+      "kind": "is",
+      "read": {
+        "source": "observation",
+        "owner_ref": "handoff",
+        "key": "slot_loaded",
+        "subject_ref": "material",
+        "slot_ref": "target",
+        "request_node_ref": "transfer"
+      },
+      "equals": {
+        "kind": "boolean",
+        "value": true
+      }
+    }
+  },
+  "nodes": [
+    {
+      "node_id": "main",
+      "kind": "seq",
+      "children": [
+        "feed",
+        "still_at_exit",
+        "transfer",
+        "verify_loaded"
+      ]
+    },
+    {
+      "node_id": "feed",
+      "kind": "with-control",
+      "control_ref": "feed_drive",
+      "policy_ref": "normal",
+      "child": "transport"
+    },
+    {
+      "node_id": "transport",
+      "kind": "invoke",
+      "target_ref": "conveyor",
+      "behavior_id": "transport_to_exit",
+      "arguments": {
+        "subject_id": {
+          "kind": "index",
+          "registry_ref": "subjects",
+          "binding_ref": "material"
+        }
+      },
+      "policy_ref": "normal"
+    },
+    {
+      "node_id": "still_at_exit",
+      "kind": "await",
+      "condition": {
+        "kind": "ref",
+        "condition_ref": "at_exit"
+      },
+      "timeout": {
+        "value": "2",
+        "unit": "s"
+      }
+    },
+    {
+      "node_id": "transfer",
+      "kind": "invoke",
+      "target_ref": "robot",
+      "behavior_id": "pick_and_place",
+      "arguments": {
+        "subject_id": {
+          "kind": "index",
+          "registry_ref": "subjects",
+          "binding_ref": "material"
+        },
+        "target_slot_id": {
+          "kind": "index",
+          "registry_ref": "slots",
+          "binding_ref": "target"
+        }
+      },
+      "policy_ref": "normal"
+    },
+    {
+      "node_id": "verify_loaded",
+      "kind": "await",
+      "condition": {
+        "kind": "ref",
+        "condition_ref": "loaded"
+      },
+      "timeout": {
+        "value": "2",
+        "unit": "s"
+      }
+    }
+  ]
+}

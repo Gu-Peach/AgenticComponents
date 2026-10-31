@@ -22,6 +22,17 @@
       "modelUrl": "/modles/engine_block/engine_block.glb",
       "schemaSha256": "33d84efa0d83ebb03d84c3be3fb40bc1e3e9e5a5fb1473942e296a45659ed19b",
       "modelSha256": "7e279b484bc6dd6a63a177c4c9ef36e936705cba1c6c06841adba615223e2d72"
+    },
+    {
+      "packageKey": "robot_UR10",
+      "specId": "robot_UR10",
+      "revision": "0.1.0",
+      "name": "robot_UR10 六轴机械臂（仿真）",
+      "deviceType": "robot_arm",
+      "schemaUrl": "/modles/robot_UR10/schema.json",
+      "modelUrl": "/modles/robot_UR10/robot_UR10.glb",
+      "schemaSha256": "7a864a5f864002afab28032594267908989bd920eec6757d53d135af709907f1",
+      "modelSha256": "75b9d773c59f477fcf3667ecd3f54e8c96fc3fa964b5e89a0ca6cce04215ea5a"
     }
   ]
 }

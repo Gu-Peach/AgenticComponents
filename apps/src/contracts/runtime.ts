@@ -1,7 +1,9 @@
+import type { CompiledRobotScene, RobotObservation } from "./robot";
 import type { Vec3 } from "./device";
 import type { PhysicsConfig, BodyPose } from "./physics";
 import type { RuntimeSignal } from "./runtime-signals";
 export interface CompiledRuntimeScene {
+  kind?: "conveyor_experiment";
   instanceId: string;
   subjectId: string;
   revision: number;
@@ -21,6 +23,7 @@ export interface CompiledRuntimeScene {
   exit: [number, number];
   timeout: number;
 }
+export type RuntimeScene = CompiledRuntimeScene | CompiledRobotScene;
 export interface RuntimeRequest {
   requestId: string;
   subjectId: string;
@@ -49,4 +52,6 @@ export interface RuntimeSnapshot {
   atExit: boolean;
   request: RuntimeRequest | null;
   error?: string;
+  kind?: "conveyor_experiment" | "robot_experiment";
+  robot?: RobotObservation;
 }

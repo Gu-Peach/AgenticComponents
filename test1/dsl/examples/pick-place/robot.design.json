@@ -1,0 +1,196 @@
+{
+  "contract_version": "1.3",
+  "schema_type": "DeviceSpec",
+  "schema_id": "design.robot_pick_place",
+  "device_spec_id": "design.robot_pick_place",
+  "version": "0.1.0",
+  "device_type": "robot_arm",
+  "display_name": "抓放能力设计夹具",
+  "description": "仅静态工艺设计，非已标定机器人；不用于真实执行。",
+  "asset": {
+    "model_format": "glb",
+    "model_key": "pending/robot.glb"
+  },
+  "params_schema": {},
+  "interfaces": [],
+  "signal_ports": [],
+  "transport_behaviors": [
+    {
+      "behavior_id": "pick_and_place",
+      "display_name": "抓放",
+      "behavior_type": "composite",
+      "schedulable": true,
+      "executor_ref": "design.robot.pick_and_place@1",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {
+        "subject_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "min": 1,
+          "max": 2147483647,
+          "description": "subjects 登记表中的物料编号"
+        },
+        "target_slot_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "min": 1,
+          "max": 2147483647,
+          "description": "slots 登记表中的目标载位编号"
+        }
+      },
+      "trigger": {
+        "kind": "gateway_request",
+        "protocol_ref": "design.request-v1"
+      },
+      "input_signals": [],
+      "output_signals": [],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "source_ready",
+            "label": "source_ready",
+            "source": "observation",
+            "key": "source_ready",
+            "equals": true
+          },
+          {
+            "id": "gripper_empty",
+            "label": "gripper_empty",
+            "source": "observation",
+            "key": "gripper_empty",
+            "equals": true
+          },
+          {
+            "id": "target_compatible",
+            "label": "target_compatible",
+            "source": "observation",
+            "key": "target_compatible",
+            "equals": true
+          },
+          {
+            "id": "transfer_granted",
+            "label": "transfer_granted",
+            "source": "authorization",
+            "key": "transfer_granted",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "motion_allowed",
+            "label": "motion_allowed",
+            "source": "observation",
+            "key": "motion_allowed",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "本请求实际落槽、归属提交且夹具释放。",
+        "checks": [
+          {
+            "id": "handoff_confirmed",
+            "label": "handoff_confirmed",
+            "source": "observation",
+            "key": "handoff_confirmed",
+            "equals": true
+          },
+          {
+            "id": "gripper_released",
+            "label": "gripper_released",
+            "source": "observation",
+            "key": "gripper_released",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      }
+    }
+  ],
+  "runtime_contract": {
+    "observation_definitions": {
+      "source_ready": {
+        "type": "boolean",
+        "source": "design.robot_handoff",
+        "description": "source_ready",
+        "request_scoped": true,
+        "missing_policy": "unknown_blocks_execution"
+      },
+      "gripper_empty": {
+        "type": "boolean",
+        "source": "design.robot_handoff",
+        "description": "gripper_empty",
+        "request_scoped": true,
+        "missing_policy": "unknown_blocks_execution"
+      },
+      "target_compatible": {
+        "type": "boolean",
+        "source": "design.robot_handoff",
+        "description": "target_compatible",
+        "request_scoped": true,
+        "missing_policy": "unknown_blocks_execution"
+      },
+      "motion_allowed": {
+        "type": "boolean",
+        "source": "design.robot_handoff",
+        "description": "motion_allowed",
+        "request_scoped": true,
+        "missing_policy": "unknown_blocks_execution"
+      },
+      "handoff_confirmed": {
+        "type": "boolean",
+        "source": "design.robot_handoff",
+        "description": "handoff_confirmed",
+        "request_scoped": true,
+        "missing_policy": "unknown_blocks_execution"
+      },
+      "gripper_released": {
+        "type": "boolean",
+        "source": "design.robot_handoff",
+        "description": "gripper_released",
+        "request_scoped": true,
+        "missing_policy": "unknown_blocks_execution"
+      }
+    },
+    "authorization_definitions": {
+      "transfer_granted": {
+        "type": "boolean",
+        "source": "design.resource_manager",
+        "request_scoped": true,
+        "description": "提交门控；集中仲裁后才能为 true。"
+      }
+    }
+  },
+  "type_specific_contract": {
+    "calibration_status": "pending",
+    "notes": "关节、TCP、碰撞及载位几何待接入。"
+  },
+  "runtime_execution_contract": {
+    "protocol_ref": "design.request-v1",
+    "scene_execution": {
+      "available": false
+    },
+    "preview": {
+      "real_execution_available": false
+    },
+    "signal_management": {
+      "owner": "simulation_engine",
+      "status": "pending_engine",
+      "namespace": "instance_id/port_id",
+      "definition_source": "signal_ports",
+      "spatial_binding": false,
+      "write_policy": "single_writer_per_input",
+      "plc_mapping": "instance_bindings",
+      "sampling": "simulation_step_snapshot",
+      "unknown_policy": "invalid_until_provider_ready"
+    }
+  },
+  "modeling_status": "design_only",
+  "notes": [
+    "参数为本示例提案，不是现有 robot_arm_1 的能力。"
+  ]
+}

@@ -51,7 +51,7 @@ export function normalizeDeviceSpec(raw: unknown): DeviceDefinition {
     const errors = semanticIssues(
       def,
       {},
-      def.source?.contract_version === "1.3",
+      ["1.3", "1.4"].includes(String(def.source?.contract_version)),
     );
     if (errors.length) throw new Error(errors.join("；"));
     return def;
@@ -111,7 +111,7 @@ export function normalizeDeviceSpec(raw: unknown): DeviceDefinition {
   const errors = semanticIssues(
     def,
     {},
-    def.source?.contract_version === "1.3",
+    ["1.3", "1.4"].includes(String(def.source?.contract_version)),
   );
   if (errors.length) throw new Error(errors.join("；"));
   return def;

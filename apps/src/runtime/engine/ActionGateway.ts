@@ -1,17 +1,17 @@
+import { RequestLedger } from "./RequestLedger";
 import type { RuntimeRequest } from "@/contracts/runtime";
 export class ActionGateway {
   constructor(private subjectId: string) {}
-  request: RuntimeRequest | null = null;
-  private seen = new Set<string>();
+  private ledger = new RequestLedger();
+  get request(): RuntimeRequest | null {
+    return this.ledger.request;
+  }
   private acceptedTick = 0;
   submit(requestId: string, subjectId: string) {
     if (subjectId !== this.subjectId)
       throw new Error("请求主体不属于该物理世界");
-    if (this.seen.has(requestId)) throw new Error("重复请求");
-    if (this.request && ["waiting", "busy"].includes(this.request.status))
-      throw new Error("已有运输观察任务");
-    this.seen.add(requestId);
-    this.request = { requestId, subjectId, status: "waiting" };
+    this.ledger.accept(requestId, subjectId);
+    this.ledger.request!.status = "waiting";
     this.acceptedTick = 0;
   }
   observe(

@@ -8,3 +8,4 @@
 | 002 | 2026-10-29 | [模型移动与接口吸附](002-2026-10-29-model-transform-and-interface-snapping.md) | 已实现并验证 |
 | 003 | 2026-10-30 | [运行引擎架构与设备模板](003-2026-10-30-runtime-engine-and-device-templates.md) | 首个接触输送闭环已实现并验证 |
 | 004 | 2026-10-30 | [行为与物理引擎前置知识](004-2026-10-30-behavior-and-physics-foundations.md) | 声明式刚体与真实物料闭环已实现 |
+| 005 | 2026-10-30 | [robot_UR10 建模与机械臂运行脚本](005-2026-10-30-robot-ur10-modeling-and-runtime.md) | 机械臂运动与固定约束抓放已实现并验证 |

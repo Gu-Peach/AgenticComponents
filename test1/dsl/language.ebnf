@@ -1,0 +1,34 @@
+(* ac-process/0.1. Whitespace/comments may occur between all tokens.
+   ID, STRING, INT, NUMBER follow 01-language.md; reserved words are not IDs.
+   {} repetition, [] optional, | alternation; quoted terminals are literal. *)
+process = "(", "process", STRING, ID,
+          "(", "environment", STRING, ")",
+          "(", "profile", ID, ")",
+          "(", "conditions", { condition_def }, ")",
+          "(", "body", node, ")", ")" ;
+condition_def = "(", "condition", ID, predicate, ")" ;
+node = seq | par | branch | repeat | await | delay | invoke | control | fail ;
+seq = "(", "seq", ID, node, { node }, ")" ;
+par = "(", "par", ID, node, node, { node }, ")" ;
+branch = "(", "branch", ID, ("ordered" | "exclusive"), timeout,
+         case, { case }, "(", "else", node, ")", ")" ;
+case = "(", "case", predicate, node, ")" ;
+repeat = "(", "repeat", ID, INT, node, ")" ;
+await = "(", "await", ID, predicate, timeout, ")" ;
+delay = "(", "delay", ID, duration, ")" ;
+invoke = "(", "invoke", ID, ID, ID, "(", "args", { argument }, ")", policy, ")" ;
+argument = "(", ID, value, ")" ;
+control = "(", "with-control", ID, ID, policy, node, ")" ;
+fail = "(", "fail", ID, STRING, ")" ;
+policy = "(", "policy", ID, ")" ;
+timeout = "(", "timeout", duration, ")" ;
+duration = (INT | NUMBER), ("s" | "ms") ;
+predicate = "(", "condition", ID, ")"
+          | "(", "is", read, literal, ")"
+          | "(", ("all" | "any"), predicate, { predicate }, ")"
+          | "(", "not", predicate, ")" ;
+read = "(", ("parameter" | "observation" | "authorization"), ID, STRING,
+       [ "(", "subject", ID, ")" ], [ "(", "slot", ID, ")" ],
+       [ "(", "request", ID, ")" ], ")" ;
+value = literal | "(", "binding", ID, ")" | "(", "index", ID, ID, ")" ;
+literal = "true" | "false" | INT | NUMBER | STRING | "(", "q", (INT | NUMBER), STRING, ")" ;

@@ -1,3 +1,4 @@
+import { robotModelSchema } from "@/contracts/robot";
 import { rigidPhysicsSchema } from "@/contracts/rigid-body";
 import {
   conveyorModelSchema,
@@ -19,7 +20,7 @@ const parameter = parameterSchema.extend({
 });
 const schema = z
   .object({
-    contract_version: z.enum(["1.1", "1.2", "1.3"]),
+    contract_version: z.enum(["1.1", "1.2", "1.3", "1.4"]),
     schema_type: z.literal("DeviceSpec"),
     schema_id: z.string().min(1),
     device_spec_id: z.string().min(1),
@@ -193,6 +194,14 @@ export function normalizeUnifiedDevice(raw: unknown) {
         throw new Error("输送面刚体引用不存在或角色错误");
     }
   }
+  if (s.contract_version === "1.4") {
+    if (
+      s.device_type !== "robot_arm" ||
+      s.runtime_execution_contract.template_ref !== "robot.articulated@1"
+    )
+      throw new Error("不支持的1.4设备模板");
+    robotModelSchema.parse(s.type_specific_contract);
+  }
   const ids = new Map(s.signal_ports.map((p) => [p.port_id, p]));
   for (const p of s.signal_ports) {
     const expected =
@@ -277,7 +286,11 @@ export function normalizeUnifiedDevice(raw: unknown) {
       `设备契约 ${s.contract_version} 已加载；运行前校验完整参数与已实现能力。`,
     ],
   });
-  const errors = semanticIssues(def, {}, s.contract_version === "1.3");
+  const errors = semanticIssues(
+    def,
+    {},
+    ["1.3", "1.4"].includes(s.contract_version),
+  );
   if (errors.length) throw new Error(errors.join("；"));
   return def;
 }

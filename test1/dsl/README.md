@@ -1,10 +1,22 @@
 # 契约驱动的工业工艺 DSL 设计规范
 
-版本：0.1 设计基线。更新日期：2026-10-30。
+版本：0.1 设计基线；配套语言为 ac-process/0.1，IR 为 0.1。
 
 本文规定 test1 后续工艺领域语言的目标、分层、语义约束、执行协议和验收要求。本文中的“必须”“不得”是本项目拟实施的规则；不表示解析器、编译器、信号管理或运行器已经实现。已有设备建模与受限运行实验的可用范围，以各设备契约及实际执行器声明为准。
 
 DSL 面向工业仿真中的设备能力调用和多设备工艺编排。核心产物是可检查、可执行、可追踪的工艺程序；Lisp 风格文本、图形编辑器和可选 PLC 后端围绕同一工艺中间表示工作。本文不宣称 IEC 完整实现、标准符合性或安全认证。
+
+## 阅读与验证入口
+
+先看 [现有实现边界](implementation.md)，再按三个阶段阅读：
+
+1. **语法与语义**：[01-language.md](01-language.md) 和 [language.ebnf](language.ebnf)，固定词法、类型、三态条件、九种组合节点、时钟、请求和取消规则。
+2. **IR 与绑定**：[02-ir.md](02-ir.md) 和 [process-ir.schema.json](process-ir.schema.json)，区分工艺结构、环境、可执行计划与运行记录，定义引用、来源、资源、交接及验证义务。
+3. **完整工艺示例**：[03-example.md](03-example.md)，包含输送→停带确认→抓放→载位确认的文本、派生 IR、环境与能力草稿。
+
+本目录提供可运行的参考静态检查工具，不包含接入 apps 的生产编译器或工艺运行器。示例固定 design_only；未接入的执行器、观测和交接服务仍阻止真实执行。具体字段和本版取舍以以上三份细则为准；本页描述架构和目标。
+
+在本目录执行 `python tools/check_design.py` 和 `python -m unittest discover -s tools -p "test_*.py"`（Python 3.10+，依赖 jsonschema）。默认只检查；有意修改文本后使用 `--write` 更新派生 IR 与 source map。
 
 ## 1 开发目标与采用 DSL 的理由
 
@@ -115,7 +127,7 @@ DSL 前端解析或工艺图编辑
 ## 4 语言与类型基线
 
 - 第一版采用有限的结构化工艺语言，不提供任意脚本 eval、操作系统调用或任意对象方法调用。
-- 可以保留 Lisp 风格作为文本前端。最终关键字、词法及完整 EBNF 应在解析器实现前固定；本文的 IR 示例不是旧解释器可直接执行的代码。
+- 0.1 采用 Lisp 风格文本前端；关键字、词法及完整 EBNF 见配套语言规范。它不是旧解释器的兼容语法，旧命令须显式迁移。
 - 设备、行为、信号、资源、物料、载位和工艺节点使用稳定 ID；显示名称不可用于猜测式绑定。
 - 布尔、有限数值、整数、字符串 ID 及有界集合应有明确类型；位置、姿态等结构参数须声明成员、单位和坐标系。缺少相应结构类型实现时，前端应拒绝而不是隐式转为字符串。
 - 有量纲参数显式声明单位，不进行未声明的数值换算。模型默认参数、实例覆盖、本次动作参数与运行实际值分别解析。
@@ -218,50 +230,11 @@ effects 描述期望结果或声明的逻辑更新，并不是直接修改物料
 
 编译至少输出绑定执行计划、实例/信号/资源引用表、契约版本依赖、来源映射和验证义务。诊断须定位到源节点、实例、behavior_id 与具体字段，不只返回“执行失败”。修改源程序、设备契约、关键场景绑定或执行配置后，旧验证记录失效。
 
-以下是**拟议的 JSON IR 片段**，用于说明引用职责，既不是完整项目，也不表示现有导入器或运行器已经支持。资源要求与成功判据从设备契约解析；工艺不另抄一份可冲突的定义。
+完整结构以 [IR 规范](02-ir.md) 和 [process-ir.schema.json](process-ir.schema.json) 为准；文本与图形前端共同输出 ProcessIR，绑定后才生成 BoundProcess。不要把含未解析名称的 ProcessIR 直接交给设备执行器。
 
-```json
-{
-  "ir_version": "0.1",
-  "process_id": "pick_and_place_example",
-  "execution_profile_ref": "fixed_step_v1",
-  "scene_revision_ref": "scene-r1",
-  "entry": "main",
-  "nodes": [
-    { "node_id": "main", "kind": "seq", "children": ["wait_pick", "transfer"] },
-    {
-      "node_id": "wait_pick",
-      "kind": "await",
-      "condition_ref": "conditions.input_material_ready",
-      "timeout_s": 10,
-      "on_failure": "stop_process"
-    },
-    {
-      "node_id": "transfer",
-      "kind": "invoke",
-      "instance_id": "robot_1",
-      "behavior_id": "pick_and_place",
-      "arguments": {
-        "material_id": { "binding_ref": "bindings.current_material" },
-        "target_slot_id": { "binding_ref": "bindings.target_slot" }
-      },
-      "timeout_policy_ref": "policies.transfer_timeout",
-      "on_failure": "stop_process"
-    }
-  ],
-  "conditions": {
-    "input_material_ready": {
-      "id": "input_material_ready",
-      "label": "传送带出口有料",
-      "source": "observation",
-      "key": "conveyor_1/part_ready",
-      "equals": true
-    }
-  }
-}
-```
+[完整示例](examples/pick-place/process.ir.json) 由 [工艺文本](examples/pick-place/process.acp) 生成；[环境清单](examples/pick-place/cell.design.json) 定义别名、身份登记表、策略和服务依赖。现有输送机使用 `subject_id: integer`，由显式登记表从物料身份转换，不能沿用草稿中的任意字符串参数。机器人示例采用独立草稿契约，真实执行仍被阻止。
 
-bindings、policies、设备依赖及观测提供者应在完整项目中定义；节点 children 引用必须存在。示例 arguments 的名称及类型必须与实际行为 arguments_schema 匹配，否则应拒绝绑定。explicit await 便于表达工艺等待，动作接受时仍重新检查自身全部前置条件，不能认为 await 曾经成功就永久有效。
+explicit await 表达工艺等待；动作接受前仍重新检查自身全部前置条件，不能认为 await 曾经成功就永久有效。条件必须关联准确主体、载位、请求以及有效观测版本。
 
 ## 10 实验配置与验证要求
 

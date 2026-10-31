@@ -1,0 +1,236 @@
+{
+  "schema_type": "DesignEnvironment",
+  "version": "0.1",
+  "mode": "design_only",
+  "scene": {
+    "id": "pick_place_cell",
+    "revision": "design-1",
+    "status": "pending_calibration"
+  },
+  "profiles": {
+    "fixed_60hz": {
+      "id": "fixed_60hz_v1",
+      "step_seconds": {
+        "numerator": 1,
+        "denominator": 60
+      },
+      "max_transitions_per_tick": 1024,
+      "successor_submission": "next_tick",
+      "event_order": "01-language.md#5",
+      "pause": "freeze_global_tick",
+      "on_failure": "stop_process"
+    }
+  },
+  "bindings": {
+    "conveyor": {
+      "type": "device",
+      "id": "conveyor_1",
+      "contract": "../../../modles/Conveyor_aankws/schema.json"
+    },
+    "robot": {
+      "type": "device",
+      "id": "robot_1",
+      "contract": "robot.design.json"
+    },
+    "material": {
+      "type": "material",
+      "id": "workpiece_1"
+    },
+    "tray": {
+      "type": "carrier",
+      "id": "tray_1"
+    },
+    "target": {
+      "type": "slot",
+      "id": "tray_1/slot_01",
+      "owner_ref": "tray"
+    }
+  },
+  "registries": {
+    "subjects": {
+      "version": "1",
+      "key_type": "material",
+      "entries": {
+        "workpiece_1": 1
+      }
+    },
+    "slots": {
+      "version": "1",
+      "key_type": "slot",
+      "entries": {
+        "tray_1/slot_01": 1
+      }
+    }
+  },
+  "policies": {
+    "normal": {
+      "gate_ticks": 1800,
+      "accept_ticks": 120,
+      "execute_ticks": 1800,
+      "stop_ticks": 300,
+      "paused_execution_clock": "freeze"
+    }
+  },
+  "controls": {
+    "feed_drive": {
+      "target_ref": "conveyor",
+      "status": "pending_adapter",
+      "writer_resource": "conveyor_command",
+      "enter": {
+        "runTag": {
+          "kind": "boolean",
+          "value": true
+        },
+        "speedTag": {
+          "kind": "quantity",
+          "value": 0.2,
+          "unit": "m/s"
+        }
+      },
+      "exit": {
+        "runTag": {
+          "kind": "boolean",
+          "value": false
+        }
+      },
+      "entry_confirmation": "writer_ack_with_control_epoch",
+      "sustaining_conditions": [
+        "run_permission",
+        "speed_setpoint_valid"
+      ],
+      "exit_condition": {
+        "kind": "is",
+        "read": {
+          "source": "observation",
+          "owner_ref": "conveyor",
+          "key": "surface_stopped"
+        },
+        "equals": {
+          "kind": "boolean",
+          "value": true
+        }
+      },
+      "release": "exit_write_ack_and_surface_stopped",
+      "delegation": "transport observer may read drive state; cannot write drive inputs"
+    }
+  },
+  "providers": {
+    "conveyor": {
+      "contract_ref": "conveyor",
+      "status": "partial_runtime_only",
+      "max_age_ticks": 1,
+      "note": "runtime_contract 为事实权威；现有单机内核没有完整请求关联/持续监控/授权。"
+    },
+    "handoff": {
+      "status": "pending_service",
+      "max_age_ticks": 1,
+      "contract_version": "design.handoff/0.1",
+      "observations": {
+        "slot_loaded": {
+          "type": "boolean",
+          "subject": true,
+          "slot": true,
+          "request": true
+        }
+      },
+      "semantics": "实际支承+夹具释放+同请求的原子归属提交；不能仅由 robot.done 推导。"
+    }
+  },
+  "resources": {
+    "conveyor_command": {
+      "kind": "exclusive",
+      "capacity": 1,
+      "owner": "resource_manager"
+    },
+    "robot_motion": {
+      "kind": "exclusive",
+      "capacity": 1,
+      "owner": "resource_manager"
+    },
+    "material_claim": {
+      "kind": "exclusive",
+      "binding_ref": "material",
+      "capacity": 1,
+      "owner": "handoff"
+    },
+    "target_slot": {
+      "kind": "slot",
+      "binding_ref": "target",
+      "capacity": 1,
+      "owner": "handoff"
+    },
+    "transfer_zone": {
+      "kind": "geometry_zone",
+      "geometry_revision": "pending",
+      "capacity": 1,
+      "owner": "resource_manager"
+    }
+  },
+  "adapters": {
+    "transport": {
+      "target_ref": "conveyor",
+      "behavior_id": "transport_to_exit",
+      "status": "pending_full_protocol",
+      "identity_arguments": {
+        "subject_id": "subjects"
+      },
+      "claims": [
+        "material_claim"
+      ],
+      "release": "tracking_terminal; physical conveyor occupancy remains",
+      "drive_dependency": "feed_drive",
+      "writes_material_pose": false
+    },
+    "transfer": {
+      "target_ref": "robot",
+      "behavior_id": "pick_and_place",
+      "status": "pending_adapter",
+      "identity_arguments": {
+        "subject_id": "subjects",
+        "target_slot_id": "slots"
+      },
+      "claims": [
+        "robot_motion",
+        "material_claim",
+        "target_slot",
+        "transfer_zone"
+      ],
+      "authorization_stage": {
+        "transfer_granted": "after_atomic_grant"
+      },
+      "transactions": [
+        "conveyor_to_gripper",
+        "gripper_to_tray"
+      ],
+      "release": "robot_stopped_and_no_in_transfer; occupied_slot_persists",
+      "writes_material_pose": false,
+      "interlock": "transfer_zone grant excludes all conveyor writers; motion_allowed requires actual stopped surface"
+    }
+  },
+  "acceptance": [
+    "root_succeeded",
+    "material_holder_is_tray_slot",
+    "actual_support_in_target",
+    "gripper_empty",
+    "conveyor_surface_stopped",
+    "no_active_requests",
+    "no_leaked_execution_grants",
+    "no_duplicate_ownership",
+    "no_capacity_violation"
+  ],
+  "execution_blockers": [
+    "scene_geometry_and_assets",
+    "robot_executor_and_calibration",
+    "continuous_control_gateway",
+    "request_correlated_observations",
+    "resource_and_handoff_services",
+    "process_runner",
+    "independent_monitor"
+  ],
+  "resource_conflicts": [
+    [
+      "conveyor_command",
+      "transfer_zone"
+    ]
+  ]
+}

@@ -1,3 +1,5 @@
+import { moveTool } from "./KinematicToolDriver";
+import { GraspConstraints } from "./GraspConstraints";
 import { BodyRegistry } from "./BodyRegistry";
 import { ConveyorContacts } from "./ConveyorContacts";
 import type { RuntimeBody, RuntimeSurface } from "@/contracts/physics";
@@ -18,6 +20,7 @@ class JoltPhysicsBackend implements PhysicsPort {
   private bi: Jolt.BodyInterface;
   private registry = new BodyRegistry();
   private contacts: ConveyorContacts;
+  private grasps?: GraspConstraints;
   private targetId: string;
   private disposed = false;
   constructor(
@@ -116,7 +119,8 @@ class JoltPhysicsBackend implements PhysicsPort {
           Math.abs(Math.hypot(...d.rotation) - 1) > 1e-5
         )
           throw new Error("刚体位姿或接触参数无效");
-        if (d.motionType === "kinematic") throw new Error("运动学刚体暂不支持");
+        if (d.motionType === "kinematic" && d.role !== "tool")
+          throw new Error("当前运动学刚体只支持虚拟工具");
         if (
           d.size.some((n) => !Number.isFinite(n) || n <= 0) ||
           (d.motionType === "dynamic" && (!d.mass || d.mass <= 0))
@@ -140,14 +144,23 @@ class JoltPhysicsBackend implements PhysicsPort {
           throw new Error("输送方向/法向无效");
       }
       this.registry.get(this.targetId);
+      if (definitions.some((d) => d.role === "tool"))
+        this.grasps = new GraspConstraints(
+          J,
+          this.system,
+          this.bi,
+          this.registry,
+        );
       this.contacts = new ConveyorContacts(J, this.registry, surfaces);
       this.system.SetContactListener(this.contacts.listener);
     } catch (e) {
+      this.grasps?.dispose();
       for (const { body } of this.registry.values()) {
         this.bi.RemoveBody(body.GetID());
         this.bi.DestroyBody(body.GetID());
       }
       this.registry.clear();
+      this.grasps?.releaseFilter();
       J.destroy(this.world);
       throw e;
     }
@@ -167,8 +180,12 @@ class JoltPhysicsBackend implements PhysicsPort {
         shape,
         pos,
         q,
-        dynamic ? J.EMotionType_Dynamic : J.EMotionType_Static,
-        dynamic ? 1 : 0,
+        dynamic
+          ? J.EMotionType_Dynamic
+          : d.motionType === "kinematic"
+            ? J.EMotionType_Kinematic
+            : J.EMotionType_Static,
+        d.motionType !== "static" ? 1 : 0,
       );
     settings.mFriction = d.friction;
     settings.mRestitution = d.restitution;
@@ -212,18 +229,43 @@ class JoltPhysicsBackend implements PhysicsPort {
       position: [p.GetX(), p.GetY(), p.GetZ()],
       rotation: [q.GetX(), q.GetY(), q.GetZ(), q.GetW()],
       velocity: [v.GetX(), v.GetY(), v.GetZ()],
+      angularVelocity: [
+        body.GetAngularVelocity().GetX(),
+        body.GetAngularVelocity().GetY(),
+        body.GetAngularVelocity().GetZ(),
+      ],
     };
   }
   hasSupport(id = this.targetId, surface?: string) {
     return this.contacts.hasSupport(id, surface);
   }
+  moveTool(id: string, pose: BodyPose, dt: number) {
+    if (this.disposed) throw new Error("物理世界已释放");
+    const r = this.registry.get(id);
+    if (r.definition.motionType !== "kinematic" || r.definition.role !== "tool")
+      throw new Error("不是运动学工具");
+    moveTool(this.J, this.bi, r.body, pose, dt);
+  }
+  createGrasp(id: string, tool: string, material: string) {
+    if (this.disposed || !this.grasps) throw new Error("约束能力不可用");
+    this.grasps.create(id, tool, material);
+  }
+  removeGrasp(id: string) {
+    if (this.disposed) throw new Error("物理世界已释放");
+    this.grasps?.remove(id);
+  }
+  hasGrasp(id: string) {
+    return !this.disposed && Boolean(this.grasps?.has(id));
+  }
   dispose() {
     if (this.disposed) return;
     this.disposed = true;
+    this.grasps?.dispose();
     for (const { body: b } of this.registry.values()) {
       this.bi.RemoveBody(b.GetID());
       this.bi.DestroyBody(b.GetID());
     }
+    this.grasps?.releaseFilter();
     this.J.destroy(this.world);
     this.contacts.dispose();
     this.registry.clear();

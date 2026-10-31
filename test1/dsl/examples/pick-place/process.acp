@@ -1,0 +1,25 @@
+; 一件已在带面上的物料送到出口，受控停止后抓放到指定载位。
+; 静态设计示例：环境中未接入的执行器/服务禁止真实运行。
+(process "0.1" conveyor_to_tray
+  (environment "cell.design.json")
+  (profile fixed_60hz)
+  (conditions
+    (condition at_exit
+      (is (observation conveyor "subject_at_exit"
+            (subject material) (request transport)) true))
+    (condition loaded
+      (is (observation handoff "slot_loaded"
+            (subject material) (slot target) (request transfer)) true)))
+  (body
+    (seq main
+      (with-control feed feed_drive (policy normal)
+        (invoke transport conveyor transport_to_exit
+          (args (subject_id (index subjects material)))
+          (policy normal)))
+      (await still_at_exit (condition at_exit) (timeout 2 s))
+      (invoke transfer robot pick_and_place
+        (args
+          (subject_id (index subjects material))
+          (target_slot_id (index slots target)))
+        (policy normal))
+      (await verify_loaded (condition loaded) (timeout 2 s)))))
