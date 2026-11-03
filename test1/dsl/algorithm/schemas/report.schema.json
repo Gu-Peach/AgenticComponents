@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "acverify verification result 0.1",
+  "type": "object",
+  "required": ["status", "properties", "truth_source"],
+  "properties": {
+    "status": {"type": "string"},
+    "case_id": {"type": "string"},
+    "model_version": {"type": "string"},
+    "input_digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "model_digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "finite_model_exhausted": {"type": "boolean"},
+    "horizon_reached": {"type": "boolean"},
+    "properties": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["id", "verdict", "applicable", "vacuous", "trigger_reachable"],
+        "properties": {
+          "id": {"type": "string"},
+          "verdict": {"enum": ["NOT_APPLICABLE", "VIOLATED_IN_MODEL", "PROVED_ON_FINITE_MODEL", "NO_VIOLATION_WITHIN_BOUND", "UNKNOWN", "GOAL_REACHABLE_WITHIN_BOUND", "GOAL_NOT_REACHED_ON_FINITE_MODEL", "GOAL_NOT_REACHED_WITHIN_BOUND"]},
+          "applicable": {"type": "boolean"},
+          "vacuous": {"type": "boolean"},
+          "trigger_reachable": {"type": "boolean"}
+        }
+      }
+    },
+    "truth_source": {"enum": ["algorithm_output_not_independent_oracle", "no_conclusion"]}
+  },
+  "allOf": [{"if": {"properties": {"status": {"const": "CHECKED"}}}, "then": {"required": ["case_id", "model_version", "input_digest", "model_digest", "finite_model_exhausted", "states", "replays"]}}]
+}

@@ -1,0 +1,5281 @@
+{
+  "id": "method1-evidence-core/0.3",
+  "semantics_hash": "13a8afe0189165a2f85db8ec00ef5b37ed49c1770eb8285051deaef5f7bbc92f",
+  "queries": [
+    {
+      "case_id": "S01-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S01-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S01-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S01-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S01-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S01-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S01-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S01-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S01-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S01-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S01-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S01-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S01-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S01-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S01-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S01-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S01-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S01-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S01-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S01-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S01-P03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S01-P03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S01-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S01-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S01-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S01-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S01-P03-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S01-P03-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S01-P03-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S01-P03-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S01-P04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S01-P04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S01-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S01-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S01-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S01-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S01-P04-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S01-P04-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S01-P04-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S01-P04-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S01-P05",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S01-P05-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S01-P05-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S01-P05-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S01-P05-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S01-P05-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S01-P05-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S01-P06",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S01-P06",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S01-P06-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S01-P06-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S01-P06-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S01-P06-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S01-P06-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S01-P06-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S01-P06-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S01-P06-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S02-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S02-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S02-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S02-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S02-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S02-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S02-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S02-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S02-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S02-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S02-P03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S02-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S02-P03-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P03-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S02-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S02-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S02-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S02-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S02-P04-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S02-P04-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P05",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P05",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S02-P05-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P05-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S02-P05-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P05-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S02-P05-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P05-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S02-P05-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P05-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S02-P06",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P06",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S02-P06-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P06-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S02-P06-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P06-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S02-P06-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P06-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S02-P06-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P06-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S02-P07",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P07",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S02-P07-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P07-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S02-P07-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P07-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S02-P07-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P07-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S02-P07-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P07-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S02-P08",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P08",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S02-P08-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P08-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S02-P08-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P08-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S02-P08-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P08-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S02-P08-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S02-P08-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S03-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S03-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S03-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S03-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S03-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S03-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S03-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S03-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S03-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S03-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S03-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S03-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S03-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S03-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S03-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S03-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S03-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S03-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S03-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S03-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S03-P03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S03-P03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S03-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S03-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S03-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S03-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S03-P03-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S03-P03-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S03-P03-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S03-P03-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S03-P04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S03-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S03-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S03-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S03-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S03-P04-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S03-P04-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S03-P05",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S03-P05",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S03-P05-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S03-P05-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S03-P05-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S03-P05-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S03-P05-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S03-P05-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S03-P05-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S03-P06",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S03-P06",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S03-P06-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S03-P06-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S03-P06-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S03-P06-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S03-P06-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S03-P06-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S03-P06-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S03-P06-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S04-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S04-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S04-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S04-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S04-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S04-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S04-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S04-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S04-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S04-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S04-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S04-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S04-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S04-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S04-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S04-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S04-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S04-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S04-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S04-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S04-P03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S04-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S04-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S04-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S04-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S04-P03-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S04-P03-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S04-P04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S04-P04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S04-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S04-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S04-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S04-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S04-P04-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S04-P04-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S04-P04-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S05-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S05-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S05-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S05-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S05-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S05-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S05-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S05-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S05-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S05-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S05-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S05-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S05-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S05-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S05-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S05-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S05-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S05-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S05-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S05-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S05-P03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S05-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S05-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S05-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S05-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S05-P03-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S05-P03-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S05-P04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S05-P04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S05-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S05-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S05-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S05-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S05-P04-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S05-P04-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S05-P04-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S05-P04-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S06-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S06-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S06-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S06-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S06-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S06-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S06-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S06-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S06-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S06-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S06-P03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S06-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S06-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S06-P03-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P03-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S06-P03-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P03-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S06-P04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S06-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S06-P04-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P04-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P05",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S06-P05-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S06-P05-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S06-P05-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S06-P05-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S06-P05-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S06-P05-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P06",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S06-P06",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S06-P06-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S06-P06-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S06-P06-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S06-P06-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S06-P06-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S06-P06-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S06-P06-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S06-P07",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P07-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P07-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S06-P07-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P07-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S06-P07-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P07-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P08",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P08",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S06-P08-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P08-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S06-P08-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P08-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S06-P08-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P08-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S06-P08-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S06-P08-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S07-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S07-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S07-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S07-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S07-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S07-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S07-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S07-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S07-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S07-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S07-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S07-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S07-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S07-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S07-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S07-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S07-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S07-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S07-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S07-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S07-P03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S07-P03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S07-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S07-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S07-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S07-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S07-P03-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S07-P03-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S07-P03-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S07-P03-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S07-P04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S07-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S07-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S07-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S07-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S07-P04-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S07-P05",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S07-P05-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S07-P05-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S07-P05-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S07-P05-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S07-P05-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S07-P06",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S07-P06",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S07-P06-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S07-P06-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S07-P06-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S07-P06-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S07-P06-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S07-P06-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S07-P06-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S07-P06-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S07-P07",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S07-P07",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S07-P07-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S07-P07-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S07-P07-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S07-P07-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S07-P07-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S07-P07-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S07-P07-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S07-P07-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S07-P08",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S07-P08-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S07-P08-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S07-P08-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S07-P08-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S07-P08-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S08-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S08-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S08-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S08-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S08-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S08-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S08-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S08-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S08-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S08-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S08-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S08-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S08-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S08-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S08-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S08-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S08-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S08-P03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S08-P03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S08-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S08-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S08-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S08-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S08-P03-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S08-P03-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S08-P03-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S08-P03-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S08-P04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S08-P04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S08-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S08-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S08-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S08-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S08-P04-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S08-P04-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S08-P04-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S08-P04-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S08-P05",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S08-P05",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S08-P05-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S08-P05-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S08-P05-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S08-P05-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S08-P05-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S08-P05-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S08-P05-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S08-P06",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S08-P06",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S08-P06-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S08-P06-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S08-P06-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S08-P06-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S08-P06-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S08-P06-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S08-P06-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S08-P06-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S09-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S09-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S09-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S09-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S09-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S09-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S09-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S09-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S09-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S09-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S09-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S09-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S09-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S09-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S09-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S09-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S09-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S09-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S09-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S09-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S09-P03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S09-P03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S09-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S09-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S09-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S09-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S09-P03-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S09-P03-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S09-P03-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S09-P03-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S09-P04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S09-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S09-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S09-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S09-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S09-P04-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S09-P04-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S09-P05",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S09-P05",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S09-P05-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S09-P05-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S09-P05-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S09-P05-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S09-P05-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S09-P05-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S09-P05-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S09-P05-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S09-P06",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S09-P06",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S09-P06-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S09-P06-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S09-P06-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S09-P06-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S09-P06-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S09-P06-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S09-P06-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S10-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S10-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S10-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S10-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S10-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S10-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S10-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S10-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S10-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S10-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S10-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S10-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S10-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S10-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S10-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S10-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S10-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S10-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S10-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S10-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S10-P03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S10-P03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S10-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S10-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S10-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S10-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S10-P03-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S10-P03-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S10-P03-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S10-P03-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S10-P04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S10-P04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S10-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S10-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S10-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S10-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S10-P04-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S10-P04-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S10-P04-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S11-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S11-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S11-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S11-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S11-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S11-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S11-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S11-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S11-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S11-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S11-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S11-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S11-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S11-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S11-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S11-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S11-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S11-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S11-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S11-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S11-P03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S11-P03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S11-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S11-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S11-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S11-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S11-P03-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S11-P03-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S11-P03-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S11-P04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S11-P04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S11-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S11-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S11-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S11-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S11-P04-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S11-P04-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S11-P04-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S11-P04-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S11-P05",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S11-P05",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S11-P05-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S11-P05-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S11-P05-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S11-P05-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S11-P05-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S11-P05-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S11-P05-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S11-P05-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S11-P06",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S11-P06",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S11-P06-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S11-P06-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S11-P06-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S11-P06-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S11-P06-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S11-P06-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S11-P06-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S12-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S12-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S12-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S12-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S12-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S12-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S12-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S12-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S12-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S12-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S12-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S12-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S12-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S12-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S12-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S12-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S12-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S12-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S12-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S12-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S12-P03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S12-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S12-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S12-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S12-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S12-P03-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S12-P03-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S12-P04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S12-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S12-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S12-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S12-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S12-P04-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S12-P05",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S12-P05",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S12-P05-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S12-P05-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S12-P05-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S12-P05-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S12-P05-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S12-P05-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S12-P05-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S12-P06",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S12-P06",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S12-P06-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S12-P06-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S12-P06-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S12-P06-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "recomputed_logical_certificate"
+    },
+    {
+      "case_id": "S12-P06-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "HOLDS",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S12-P06-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "REACHABLE",
+      "basis": "independent_sequential_timed_witness"
+    },
+    {
+      "case_id": "S12-P06-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V10a",
+      "expected": "UNREACHABLE",
+      "basis": "successful_poststate_overapproximation"
+    },
+    {
+      "case_id": "S12-P06-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "property": "V09",
+      "expected": "VIOLATED",
+      "basis": "independent_sequential_timed_witness"
+    }
+  ],
+  "query_count": 659,
+  "case_count": 356,
+  "boundary": "Reference evidence under declared symbolic semantics; not real-equipment or full timed refinement proof"
+}

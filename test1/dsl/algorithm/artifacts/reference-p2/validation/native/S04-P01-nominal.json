@@ -1,0 +1,59 @@
+{
+  "summary": {
+    "reference_version": "reference-event-agenda/0.1",
+    "model_digest": "1b081c9e719954685a26f8ca50313dc56d66268da865e8b5325085e082891f30",
+    "case_id": "S04-P01",
+    "profile": {
+      "accept": [
+        1,
+        2
+      ],
+      "phase": [
+        1,
+        3
+      ],
+      "stop": [
+        1,
+        3
+      ],
+      "feedback": [
+        0,
+        0
+      ],
+      "faults": [],
+      "max_faults": 0,
+      "forced_stop_loss": null,
+      "max_age": 2,
+      "events": [],
+      "response_window": null,
+      "name": "nominal",
+      "timing_scope": "reference-six-phase/0.1",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "pilot_migration": true,
+      "visibility": 1,
+      "fault_packet_selection": "any_queued_packet"
+    },
+    "bound": 256,
+    "search": "complete",
+    "states": 6469,
+    "edges": 8239,
+    "frontier_exhausted": false,
+    "finite_model_closed": false,
+    "horizon_reached": false,
+    "limit": "TIMEOUT",
+    "elapsed_seconds": 6.000281200002064,
+    "serialized_state_bytes": 23350947,
+    "peak_sampled_rss_bytes": 154906624,
+    "all_edges_retained": false,
+    "memory_tracking": "sampled RSS and serialized keys",
+    "terminal_counts": {},
+    "violations_seen": [],
+    "goal_witness_found": false,
+    "uncovered_obligations": [],
+    "monitor_coverage_complete": true,
+    "edge_digest": "0b4a24bbdd354fb08c373d055f0775847dad05cf7b9a6d0308c082487cf939e2",
+    "reference_queries_admitted": false,
+    "note": "P2 model validation output; P3 must independently check evidence before truth admission."
+  },
+  "witnesses": {}
+}

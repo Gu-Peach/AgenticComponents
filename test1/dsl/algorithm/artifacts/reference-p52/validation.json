@@ -1,0 +1,13 @@
+{
+  "tests_run": 27,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "success": true,
+  "tests_log_sha256": "10e3213da2e29c8336f80af6c390bdce76b9a74e7a52cba26bedded89e64ae56",
+  "manifest_sha256": "3a655d9a991ad3980ce538502bcce7cf66823a26c27f6d2fab0b8fc252eeab4a",
+  "test_sources": {
+    "test_engine.py": "9065d8cdae9326936ec5071eff0ca4aa9fa23743a19378262e826af00d6d7715",
+    "test_package.py": "282ec24c04ff8bcf8d0d0be8a4fdb613c46ebf936761df521a0f1613d4965099"
+  }
+}

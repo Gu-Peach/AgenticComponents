@@ -1,0 +1,805 @@
+{
+  "schema": "method1-audit/0.3",
+  "reviewer_type": "AI_technical_review",
+  "external_human_review_claimed": false,
+  "gates": {
+    "execution_complete": true,
+    "evidence_integrity": true,
+    "static_checks_pass": true,
+    "all_47_universal_claims_reproved": true,
+    "finite_kernel_checks_pass": true,
+    "no_observed_reference_conflicts": true,
+    "whole_line_truth_complete": false,
+    "all_queries_decided": false
+  },
+  "errors": [],
+  "missing_jobs": [],
+  "jobs": 1728,
+  "planned_jobs": 1728,
+  "static_matches": 576,
+  "reference_queries": 659,
+  "reference_cases": 356,
+  "evidence": {
+    "errors": [],
+    "checked_queries": 659,
+    "evidence_bases": {
+      "successful_poststate_overapproximation": 279,
+      "independent_sequential_timed_witness": 168,
+      "recomputed_logical_certificate": 212
+    },
+    "kernel_states": 3274,
+    "kernel_fixtures": 9,
+    "kernel_complete": true,
+    "kernel_invariants_hold": true,
+    "mutations_detected": true,
+    "whole_line_timed_refinement_proved": false
+  },
+  "scores": {
+    "coverage|nominal|auto|0.5": {
+      "counts": {
+        "total": 659,
+        "unresolved": 429,
+        "correct": 230
+      },
+      "coverage": 0.3490136570561457,
+      "accuracy_on_answered": 1.0,
+      "correct_fraction_of_all": 0.3490136570561457,
+      "matrix": {
+        "HOLDS -> None": 194,
+        "REACHABLE -> None": 86,
+        "HOLDS -> HOLDS": 97,
+        "UNREACHABLE -> UNREACHABLE": 86,
+        "UNREACHABLE -> None": 114,
+        "VIOLATED -> VIOLATED": 18,
+        "VIOLATED -> None": 35,
+        "REACHABLE -> REACHABLE": 29
+      }
+    },
+    "ablation|nominal|auto|2.0": {
+      "counts": {
+        "total": 105,
+        "correct": 72,
+        "unresolved": 33
+      },
+      "coverage": 0.6857142857142857,
+      "accuracy_on_answered": 1.0,
+      "correct_fraction_of_all": 0.6857142857142857,
+      "matrix": {
+        "VIOLATED -> VIOLATED": 18,
+        "UNREACHABLE -> UNREACHABLE": 18,
+        "HOLDS -> HOLDS": 18,
+        "REACHABLE -> REACHABLE": 18,
+        "HOLDS -> None": 18,
+        "UNREACHABLE -> None": 9,
+        "VIOLATED -> None": 3,
+        "REACHABLE -> None": 3
+      }
+    },
+    "ablation|nominal|full|0.5": {
+      "counts": {
+        "total": 105,
+        "correct": 9,
+        "unresolved": 96
+      },
+      "coverage": 0.08571428571428572,
+      "accuracy_on_answered": 1.0,
+      "correct_fraction_of_all": 0.08571428571428572,
+      "matrix": {
+        "VIOLATED -> VIOLATED": 6,
+        "UNREACHABLE -> None": 27,
+        "HOLDS -> None": 36,
+        "REACHABLE -> None": 18,
+        "VIOLATED -> None": 15,
+        "REACHABLE -> REACHABLE": 3
+      }
+    },
+    "ablation|nominal|full|2.0": {
+      "counts": {
+        "total": 105,
+        "unresolved": 90,
+        "correct": 15
+      },
+      "coverage": 0.14285714285714285,
+      "accuracy_on_answered": 1.0,
+      "correct_fraction_of_all": 0.14285714285714285,
+      "matrix": {
+        "VIOLATED -> None": 15,
+        "UNREACHABLE -> None": 24,
+        "HOLDS -> None": 33,
+        "REACHABLE -> None": 18,
+        "VIOLATED -> VIOLATED": 6,
+        "UNREACHABLE -> UNREACHABLE": 3,
+        "HOLDS -> HOLDS": 3,
+        "REACHABLE -> REACHABLE": 3
+      }
+    },
+    "ablation|nominal|compact|2.0": {
+      "counts": {
+        "total": 105,
+        "unresolved": 87,
+        "correct": 18
+      },
+      "coverage": 0.17142857142857143,
+      "accuracy_on_answered": 1.0,
+      "correct_fraction_of_all": 0.17142857142857143,
+      "matrix": {
+        "HOLDS -> None": 33,
+        "REACHABLE -> None": 18,
+        "VIOLATED -> None": 12,
+        "UNREACHABLE -> None": 24,
+        "HOLDS -> HOLDS": 3,
+        "REACHABLE -> REACHABLE": 3,
+        "VIOLATED -> VIOLATED": 9,
+        "UNREACHABLE -> UNREACHABLE": 3
+      }
+    },
+    "ablation|nominal|auto|0.5": {
+      "counts": {
+        "total": 105,
+        "unresolved": 78,
+        "correct": 27
+      },
+      "coverage": 0.2571428571428571,
+      "accuracy_on_answered": 1.0,
+      "correct_fraction_of_all": 0.2571428571428571,
+      "matrix": {
+        "HOLDS -> None": 33,
+        "REACHABLE -> None": 12,
+        "VIOLATED -> None": 12,
+        "UNREACHABLE -> None": 21,
+        "REACHABLE -> REACHABLE": 9,
+        "HOLDS -> HOLDS": 3,
+        "VIOLATED -> VIOLATED": 9,
+        "UNREACHABLE -> UNREACHABLE": 6
+      }
+    },
+    "ablation|nominal|full|0.1": {
+      "counts": {
+        "total": 105,
+        "unresolved": 103,
+        "correct": 2
+      },
+      "coverage": 0.01904761904761905,
+      "accuracy_on_answered": 1.0,
+      "correct_fraction_of_all": 0.01904761904761905,
+      "matrix": {
+        "HOLDS -> None": 36,
+        "UNREACHABLE -> None": 27,
+        "VIOLATED -> None": 19,
+        "REACHABLE -> None": 21,
+        "VIOLATED -> VIOLATED": 2
+      }
+    },
+    "ablation|nominal|auto|0.1": {
+      "counts": {
+        "total": 105,
+        "unresolved": 102,
+        "correct": 3
+      },
+      "coverage": 0.02857142857142857,
+      "accuracy_on_answered": 1.0,
+      "correct_fraction_of_all": 0.02857142857142857,
+      "matrix": {
+        "HOLDS -> None": 36,
+        "VIOLATED -> None": 18,
+        "UNREACHABLE -> None": 27,
+        "VIOLATED -> VIOLATED": 3,
+        "REACHABLE -> None": 21
+      }
+    },
+    "ablation|nominal|compact|0.5": {
+      "counts": {
+        "total": 105,
+        "unresolved": 96,
+        "correct": 9
+      },
+      "coverage": 0.08571428571428572,
+      "accuracy_on_answered": 1.0,
+      "correct_fraction_of_all": 0.08571428571428572,
+      "matrix": {
+        "VIOLATED -> None": 15,
+        "UNREACHABLE -> None": 27,
+        "HOLDS -> None": 36,
+        "REACHABLE -> REACHABLE": 3,
+        "VIOLATED -> VIOLATED": 6,
+        "REACHABLE -> None": 18
+      }
+    },
+    "ablation|nominal|compact|0.1": {
+      "counts": {
+        "total": 105,
+        "unresolved": 102,
+        "correct": 3
+      },
+      "coverage": 0.02857142857142857,
+      "accuracy_on_answered": 1.0,
+      "correct_fraction_of_all": 0.02857142857142857,
+      "matrix": {
+        "HOLDS -> None": 36,
+        "UNREACHABLE -> None": 27,
+        "REACHABLE -> None": 21,
+        "VIOLATED -> None": 18,
+        "VIOLATED -> VIOLATED": 3
+      }
+    }
+  },
+  "timing": {
+    "coverage|nominal|auto|0.5": {
+      "n": 360,
+      "median": 0.5001656000094954,
+      "q1": 0.3069908249999571,
+      "q3": 0.500352325001586
+    },
+    "coverage|delayed|auto|0.5": {
+      "n": 360,
+      "median": 0.5002236500004074,
+      "q1": 0.5000569749972783,
+      "q3": 0.5004263250011718
+    },
+    "coverage|fault|auto|0.5": {
+      "n": 355,
+      "median": 0.500192599996808,
+      "q1": 0.500050349997764,
+      "q3": 0.5003885999976774
+    },
+    "coverage|stop_unknown_c1|auto|0.5": {
+      "n": 5,
+      "median": 0.06800610000209417,
+      "q1": 0.06720730000233743,
+      "q3": 0.0685144000017317
+    },
+    "ablation|nominal|auto|2.0": {
+      "n": 72,
+      "median": 1.385948549992463,
+      "q1": 0.720566100000724,
+      "q3": 2.000304800003505
+    },
+    "ablation|nominal|full|0.5": {
+      "n": 72,
+      "median": 0.5001792499970179,
+      "q1": 0.5000753750027798,
+      "q3": 0.5003426750081417
+    },
+    "ablation|nominal|full|2.0": {
+      "n": 72,
+      "median": 2.000248450000072,
+      "q1": 2.0000689499938744,
+      "q3": 2.0004648999965866
+    },
+    "ablation|nominal|compact|2.0": {
+      "n": 72,
+      "median": 2.000192199993762,
+      "q1": 2.0000866999980644,
+      "q3": 2.000312024993036
+    },
+    "ablation|nominal|auto|0.5": {
+      "n": 72,
+      "median": 0.5002470999970683,
+      "q1": 0.5000911750066734,
+      "q3": 0.5004241999995429
+    },
+    "ablation|nominal|full|0.1": {
+      "n": 72,
+      "median": 0.10015194999868982,
+      "q1": 0.10007109999787644,
+      "q3": 0.10026929999730783
+    },
+    "ablation|nominal|auto|0.1": {
+      "n": 72,
+      "median": 0.10018799999670591,
+      "q1": 0.10010985000189976,
+      "q3": 0.100282174997119
+    },
+    "ablation|nominal|compact|0.5": {
+      "n": 72,
+      "median": 0.5002097000033245,
+      "q1": 0.500103800000943,
+      "q3": 0.500338499994541
+    },
+    "ablation|nominal|compact|0.1": {
+      "n": 72,
+      "median": 0.10012754999479512,
+      "q1": 0.10007312500965782,
+      "q3": 0.10025577499618521
+    }
+  },
+  "paired_full_over_auto": {
+    "2.0": {
+      "n": 9,
+      "median": 1.5360680148671748,
+      "q1": 0.9089296647920444,
+      "q3": 4.901461237215176
+    },
+    "0.5": {
+      "n": 3,
+      "median": 0.8001713349031875,
+      "q1": 0.7780653825608044,
+      "q3": 0.8105913195319943
+    },
+    "0.1": {
+      "n": 2,
+      "median": 0.8256687851937529,
+      "q1": 0.8104653591473693,
+      "q3": 0.8408722112401364
+    }
+  },
+  "stable_repetition_coverage": {
+    "auto|2.0": {
+      "total_queries": 35,
+      "decided_in_all_repeats": 24
+    },
+    "full|0.5": {
+      "total_queries": 35,
+      "decided_in_all_repeats": 3
+    },
+    "full|2.0": {
+      "total_queries": 35,
+      "decided_in_all_repeats": 5
+    },
+    "compact|2.0": {
+      "total_queries": 35,
+      "decided_in_all_repeats": 6
+    },
+    "auto|0.5": {
+      "total_queries": 35,
+      "decided_in_all_repeats": 9
+    },
+    "full|0.1": {
+      "total_queries": 35
+    },
+    "auto|0.1": {
+      "total_queries": 35,
+      "decided_in_all_repeats": 1
+    },
+    "compact|0.5": {
+      "total_queries": 35,
+      "decided_in_all_repeats": 3
+    },
+    "compact|0.1": {
+      "total_queries": 35,
+      "decided_in_all_repeats": 1
+    }
+  },
+  "scene_counts": {
+    "coverage|nominal|auto|0.5|S01": {
+      "unresolved": 38,
+      "correct": 19
+    },
+    "coverage|nominal|auto|0.5|S02": {
+      "correct": 40,
+      "unresolved": 34
+    },
+    "coverage|nominal|auto|0.5|S03": {
+      "unresolved": 43,
+      "correct": 13
+    },
+    "coverage|nominal|auto|0.5|S04": {
+      "correct": 16,
+      "unresolved": 20
+    },
+    "coverage|nominal|auto|0.5|S05": {
+      "unresolved": 29,
+      "correct": 8
+    },
+    "coverage|nominal|auto|0.5|S06": {
+      "unresolved": 48,
+      "correct": 22
+    },
+    "coverage|nominal|auto|0.5|S07": {
+      "unresolved": 38,
+      "correct": 30
+    },
+    "coverage|nominal|auto|0.5|S08": {
+      "unresolved": 42,
+      "correct": 14
+    },
+    "coverage|nominal|auto|0.5|S09": {
+      "unresolved": 44,
+      "correct": 12
+    },
+    "coverage|nominal|auto|0.5|S10": {
+      "correct": 25,
+      "unresolved": 14
+    },
+    "coverage|nominal|auto|0.5|S11": {
+      "unresolved": 40,
+      "correct": 18
+    },
+    "coverage|nominal|auto|0.5|S12": {
+      "unresolved": 39,
+      "correct": 13
+    },
+    "ablation|nominal|auto|2.0|S03": {
+      "correct": 12
+    },
+    "ablation|nominal|full|0.5|S02": {
+      "correct": 3,
+      "unresolved": 9
+    },
+    "ablation|nominal|full|2.0|S01": {
+      "unresolved": 12
+    },
+    "ablation|nominal|auto|2.0|S02": {
+      "correct": 12
+    },
+    "ablation|nominal|compact|2.0|S12": {
+      "unresolved": 3
+    },
+    "ablation|nominal|auto|0.5|S11": {
+      "unresolved": 9
+    },
+    "ablation|nominal|auto|0.5|S01": {
+      "unresolved": 12
+    },
+    "ablation|nominal|full|0.1|S08": {
+      "unresolved": 6
+    },
+    "ablation|nominal|full|0.1|S04": {
+      "unresolved": 6
+    },
+    "ablation|nominal|auto|0.1|S12": {
+      "unresolved": 3
+    },
+    "ablation|nominal|compact|0.5|S07": {
+      "unresolved": 12
+    },
+    "ablation|nominal|compact|2.0|S11": {
+      "unresolved": 9
+    },
+    "ablation|nominal|compact|0.1|S12": {
+      "unresolved": 3
+    },
+    "ablation|nominal|compact|0.5|S10": {
+      "unresolved": 3,
+      "correct": 6
+    },
+    "ablation|nominal|full|0.5|S04": {
+      "unresolved": 6
+    },
+    "ablation|nominal|compact|0.5|S11": {
+      "unresolved": 9
+    },
+    "ablation|nominal|full|0.5|S06": {
+      "unresolved": 6
+    },
+    "ablation|nominal|auto|0.5|S03": {
+      "unresolved": 12
+    },
+    "ablation|nominal|compact|2.0|S03": {
+      "unresolved": 12
+    },
+    "ablation|nominal|full|0.1|S06": {
+      "unresolved": 6
+    },
+    "ablation|nominal|full|0.5|S01": {
+      "unresolved": 12
+    },
+    "ablation|nominal|compact|0.1|S08": {
+      "unresolved": 6
+    },
+    "ablation|nominal|full|0.1|S01": {
+      "unresolved": 12
+    },
+    "ablation|nominal|compact|2.0|S10": {
+      "correct": 9
+    },
+    "ablation|nominal|full|2.0|S07": {
+      "unresolved": 12
+    },
+    "ablation|nominal|full|2.0|S04": {
+      "unresolved": 6
+    },
+    "ablation|nominal|full|2.0|S08": {
+      "unresolved": 6
+    },
+    "ablation|nominal|compact|0.1|S03": {
+      "unresolved": 12
+    },
+    "ablation|nominal|compact|0.1|S04": {
+      "unresolved": 6
+    },
+    "ablation|nominal|compact|0.1|S09": {
+      "unresolved": 12
+    },
+    "ablation|nominal|auto|2.0|S10": {
+      "correct": 9
+    },
+    "ablation|nominal|compact|2.0|S07": {
+      "correct": 3,
+      "unresolved": 9
+    },
+    "ablation|nominal|auto|0.1|S09": {
+      "unresolved": 12
+    },
+    "ablation|nominal|compact|0.1|S07": {
+      "unresolved": 12
+    },
+    "ablation|nominal|full|0.1|S03": {
+      "unresolved": 12
+    },
+    "ablation|nominal|full|2.0|S11": {
+      "unresolved": 9
+    },
+    "ablation|nominal|full|0.5|S10": {
+      "correct": 6,
+      "unresolved": 3
+    },
+    "ablation|nominal|full|0.1|S05": {
+      "unresolved": 6
+    },
+    "ablation|nominal|compact|0.5|S05": {
+      "unresolved": 6
+    },
+    "ablation|nominal|full|0.1|S02": {
+      "unresolved": 12
+    },
+    "ablation|nominal|compact|0.5|S12": {
+      "unresolved": 3
+    },
+    "ablation|nominal|full|2.0|S05": {
+      "unresolved": 6
+    },
+    "ablation|nominal|auto|2.0|S08": {
+      "unresolved": 6
+    },
+    "ablation|nominal|auto|0.1|S10": {
+      "correct": 3,
+      "unresolved": 6
+    },
+    "ablation|nominal|compact|0.1|S11": {
+      "unresolved": 9
+    },
+    "ablation|nominal|auto|0.1|S04": {
+      "unresolved": 6
+    },
+    "ablation|nominal|auto|2.0|S05": {
+      "unresolved": 6
+    },
+    "ablation|nominal|full|2.0|S03": {
+      "unresolved": 12
+    },
+    "ablation|nominal|full|0.5|S03": {
+      "unresolved": 12
+    },
+    "ablation|nominal|full|2.0|S02": {
+      "correct": 6,
+      "unresolved": 6
+    },
+    "ablation|nominal|full|0.5|S09": {
+      "unresolved": 12
+    },
+    "ablation|nominal|auto|0.1|S01": {
+      "unresolved": 12
+    },
+    "ablation|nominal|auto|0.1|S02": {
+      "unresolved": 12
+    },
+    "ablation|nominal|auto|0.1|S05": {
+      "unresolved": 6
+    },
+    "ablation|nominal|auto|0.5|S08": {
+      "unresolved": 6
+    },
+    "ablation|nominal|compact|2.0|S01": {
+      "unresolved": 12
+    },
+    "ablation|nominal|compact|0.5|S08": {
+      "unresolved": 6
+    },
+    "ablation|nominal|auto|2.0|S12": {
+      "unresolved": 3
+    },
+    "ablation|nominal|full|2.0|S12": {
+      "unresolved": 3
+    },
+    "ablation|nominal|compact|0.5|S03": {
+      "unresolved": 12
+    },
+    "ablation|nominal|full|0.1|S11": {
+      "unresolved": 9
+    },
+    "ablation|nominal|compact|2.0|S04": {
+      "unresolved": 6
+    },
+    "ablation|nominal|auto|0.5|S07": {
+      "unresolved": 3,
+      "correct": 9
+    },
+    "ablation|nominal|auto|2.0|S04": {
+      "unresolved": 6
+    },
+    "ablation|nominal|compact|2.0|S09": {
+      "unresolved": 12
+    },
+    "ablation|nominal|compact|0.1|S05": {
+      "unresolved": 6
+    },
+    "ablation|nominal|auto|0.5|S06": {
+      "unresolved": 6
+    },
+    "ablation|nominal|compact|0.1|S10": {
+      "correct": 3,
+      "unresolved": 6
+    },
+    "ablation|nominal|full|0.5|S07": {
+      "unresolved": 12
+    },
+    "ablation|nominal|compact|2.0|S06": {
+      "unresolved": 6
+    },
+    "ablation|nominal|compact|2.0|S05": {
+      "unresolved": 6
+    },
+    "ablation|nominal|auto|0.1|S11": {
+      "unresolved": 9
+    },
+    "ablation|nominal|full|0.5|S05": {
+      "unresolved": 6
+    },
+    "ablation|nominal|auto|0.5|S02": {
+      "correct": 12
+    },
+    "ablation|nominal|auto|0.5|S10": {
+      "correct": 6,
+      "unresolved": 3
+    },
+    "ablation|nominal|compact|0.1|S06": {
+      "unresolved": 6
+    },
+    "ablation|nominal|compact|0.1|S02": {
+      "unresolved": 12
+    },
+    "ablation|nominal|compact|0.5|S04": {
+      "unresolved": 6
+    },
+    "ablation|nominal|full|0.5|S11": {
+      "unresolved": 9
+    },
+    "ablation|nominal|auto|0.1|S06": {
+      "unresolved": 6
+    },
+    "ablation|nominal|compact|0.5|S02": {
+      "unresolved": 9,
+      "correct": 3
+    },
+    "ablation|nominal|compact|2.0|S02": {
+      "unresolved": 6,
+      "correct": 6
+    },
+    "ablation|nominal|compact|0.5|S01": {
+      "unresolved": 12
+    },
+    "ablation|nominal|auto|0.5|S05": {
+      "unresolved": 6
+    },
+    "ablation|nominal|full|2.0|S06": {
+      "unresolved": 6
+    },
+    "ablation|nominal|compact|2.0|S08": {
+      "unresolved": 6
+    },
+    "ablation|nominal|compact|0.1|S01": {
+      "unresolved": 12
+    },
+    "ablation|nominal|auto|2.0|S09": {
+      "correct": 12
+    },
+    "ablation|nominal|compact|0.5|S06": {
+      "unresolved": 6
+    },
+    "ablation|nominal|auto|0.1|S07": {
+      "unresolved": 12
+    },
+    "ablation|nominal|auto|0.5|S04": {
+      "unresolved": 6
+    },
+    "ablation|nominal|auto|0.1|S08": {
+      "unresolved": 6
+    },
+    "ablation|nominal|auto|2.0|S07": {
+      "correct": 12
+    },
+    "ablation|nominal|full|0.1|S09": {
+      "unresolved": 12
+    },
+    "ablation|nominal|compact|0.5|S09": {
+      "unresolved": 12
+    },
+    "ablation|nominal|full|2.0|S10": {
+      "correct": 9
+    },
+    "ablation|nominal|full|0.1|S07": {
+      "unresolved": 12
+    },
+    "ablation|nominal|auto|0.5|S12": {
+      "unresolved": 3
+    },
+    "ablation|nominal|full|2.0|S09": {
+      "unresolved": 12
+    },
+    "ablation|nominal|auto|0.1|S03": {
+      "unresolved": 12
+    },
+    "ablation|nominal|auto|2.0|S11": {
+      "unresolved": 9
+    },
+    "ablation|nominal|auto|2.0|S06": {
+      "correct": 3,
+      "unresolved": 3
+    },
+    "ablation|nominal|full|0.1|S10": {
+      "unresolved": 7,
+      "correct": 2
+    },
+    "ablation|nominal|full|0.1|S12": {
+      "unresolved": 3
+    },
+    "ablation|nominal|auto|0.5|S09": {
+      "unresolved": 12
+    },
+    "ablation|nominal|full|0.5|S08": {
+      "unresolved": 6
+    },
+    "ablation|nominal|full|0.5|S12": {
+      "unresolved": 3
+    },
+    "ablation|nominal|auto|2.0|S01": {
+      "correct": 12
+    }
+  },
+  "job_status_counts": {
+    "coverage|nominal|auto|0.5": {
+      "CHECKED": 360
+    },
+    "coverage|delayed|auto|0.5": {
+      "CHECKED": 360
+    },
+    "coverage|fault|auto|0.5": {
+      "CHECKED": 355
+    },
+    "coverage|stop_unknown_c1|auto|0.5": {
+      "CHECKED": 5
+    },
+    "ablation|nominal|auto|2.0": {
+      "CHECKED": 72
+    },
+    "ablation|nominal|full|0.5": {
+      "CHECKED": 72
+    },
+    "ablation|nominal|full|2.0": {
+      "CHECKED": 72
+    },
+    "ablation|nominal|compact|2.0": {
+      "CHECKED": 72
+    },
+    "ablation|nominal|auto|0.5": {
+      "CHECKED": 72
+    },
+    "ablation|nominal|full|0.1": {
+      "CHECKED": 72
+    },
+    "ablation|nominal|auto|0.1": {
+      "CHECKED": 72
+    },
+    "ablation|nominal|compact|0.5": {
+      "CHECKED": 72
+    },
+    "ablation|nominal|compact|0.1": {
+      "CHECKED": 72
+    }
+  },
+  "conflicts": [],
+  "v3_admission_matrix": {
+    "UNRESOLVED": 26311,
+    "CERTIFIED": 659,
+    "NOT_APPLICABLE": 525
+  },
+  "undecided_property_records": 14824,
+  "remaining_obligations": [
+    "whole_line_timed_refinement",
+    "concurrent_external_event_timed_oracle",
+    "additional_property_and_profile_gold",
+    "solver_budget_or_algorithm_unknowns"
+  ],
+  "interpretation": "All run records and evidence integrity are distinct from complete reference truth and decided queries."
+}

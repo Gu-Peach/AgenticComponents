@@ -1,0 +1,49 @@
+{
+  "review_type": "AI technical review, not independent human review",
+  "date": "2026-11-02",
+  "checked_core_queries": 606,
+  "core_cases": 303,
+  "evidence_basis_counts": {
+    "recomputed independent logical certificate": 400,
+    "independent_sequential_timed_witness": 115,
+    "independent_sequential_false_success_witness": 44,
+    "unique_successful_sequential_goal_projection": 47
+  },
+  "source_input_evidence_consistency_errors": [],
+  "recomputed_scores": {
+    "full-V09": {
+      "total": 303,
+      "unresolved": 218,
+      "correct": 85
+    },
+    "full-V10a": {
+      "total": 303,
+      "unresolved": 219,
+      "correct": 84
+    },
+    "auto-V09": {
+      "total": 303,
+      "correct": 168,
+      "unresolved": 135
+    },
+    "auto-V10a": {
+      "total": 303,
+      "correct": 168,
+      "unresolved": 135
+    }
+  },
+  "review_verdict": "CONDITIONAL_ENGINEERING_USE",
+  "publication_gold_approved": false,
+  "scope_limitations": [
+    "Only nominal K=3000 V09/V10a core checked",
+    "Reference interpreter explicitly rejects par",
+    "Channel oracle is not an independent whole-line concurrent/fault verifier",
+    "A unique-success projection requires a general proof, not one successful trace"
+  ],
+  "remaining_engineering": [
+    "Independent concurrent/fault transition oracle and V01-V08/V10b proofs",
+    "Persist recomputed proof objects and revalidate unique-success side conditions at admission",
+    "Increase budgets/optimize unresolved core cases; preserve abstentions",
+    "Multiple-budget/repeated/ablation experiments for publication-level efficiency claims"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "tests_run": 33,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "successful": true,
+  "package_manifest_sha256": "7edcb27fcd11396adc51297afc971257c82ece01a6d3546d28a9dd478ec8c740",
+  "tests_log_sha256": "1c8dbbadadeec58f05e29a6bec57c50eafb5f91874a6ba8abcdbe74ea41163c6",
+  "test_sources": {
+    "test_admission.py": "e22cb709d6227f7203c7573e22186b842d8ee0d5590d507946b560df2c0c339e",
+    "test_extensions.py": "55e50a0f8ef5d4da3fc80d34b26ab44a01d90474043c81fa2b3041d3fd43965f",
+    "test_package.py": "23cbad5afe08ef765a3e3fde4756efb97f20abece126ebf9ff3f8edeaf4e7679"
+  }
+}

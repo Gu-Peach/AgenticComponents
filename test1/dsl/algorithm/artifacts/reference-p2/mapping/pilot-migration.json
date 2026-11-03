@@ -1,0 +1,3209 @@
+{
+  "schema": "p2-pilot-migration/0.1",
+  "records": [
+    {
+      "source_query_id": "1c009b7def0d9585e5691bd2b55f6954fc58b3bab337f23f3e82f5a584695f6e",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "42d1bbb5127f56b5518937ec80196fb7c6ed55042eeedba465e1946714635151",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V01",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "1b081c9e719954685a26f8ca50313dc56d66268da865e8b5325085e082891f30",
+        "input_digest": "91a42bbf52d2725644c4065a6547b74f75c6946c8b8d8875e829c9994f5d2277"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "4039ff189096bffb05796cedb45a08011c23adb20c2526d885c802bd86e99ae8",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "f6561ec8ad4895ec4f9bbfd244a9ce9224ff379123b1e2af62ed58e98e84a2b1",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V04",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "1b081c9e719954685a26f8ca50313dc56d66268da865e8b5325085e082891f30",
+        "input_digest": "91a42bbf52d2725644c4065a6547b74f75c6946c8b8d8875e829c9994f5d2277"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "9a3e1385c9611aff7bb2ea703b04af9ecf91f025f400172e815df831d6a8ae85",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "6408e0b6af1acff5912e0415a3c2d89d86fb1b3f248e8893ce23669308e1e105",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V05",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "1b081c9e719954685a26f8ca50313dc56d66268da865e8b5325085e082891f30",
+        "input_digest": "91a42bbf52d2725644c4065a6547b74f75c6946c8b8d8875e829c9994f5d2277"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "9618fa6e7a21f72672764bec2dbccc7b82ed39c2e7137d683784c5ff93ce3db4",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "2c8f05eeee6f5c85f5fdb16dbc258910678d9bb2a75489e2bfc1f34d74fc8e5a",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V06",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "1b081c9e719954685a26f8ca50313dc56d66268da865e8b5325085e082891f30",
+        "input_digest": "91a42bbf52d2725644c4065a6547b74f75c6946c8b8d8875e829c9994f5d2277"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "171ca2b0d06f21c347146ca1e7bd542a32f716f4c927feb82ccc378e425ed5ab",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "37d125b6f8cdc2187ea6545523c33c59f6580e54f86fe097be1214393e080f64",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V07",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "1b081c9e719954685a26f8ca50313dc56d66268da865e8b5325085e082891f30",
+        "input_digest": "91a42bbf52d2725644c4065a6547b74f75c6946c8b8d8875e829c9994f5d2277"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "cb4f605b0cedb5559f867dd85c97b4e077f22455a67a7509a8cdf7894467b0b0",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "a944c8f4b3a53a8ecc96fe152d1f450916b30a0280fb748e758f96465ecd21d7",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V08",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "1b081c9e719954685a26f8ca50313dc56d66268da865e8b5325085e082891f30",
+        "input_digest": "91a42bbf52d2725644c4065a6547b74f75c6946c8b8d8875e829c9994f5d2277"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "ac73d21b153b5aaa21b64d523a3a231af548c3460bd3227b5c9e0f4eff9e661c",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "cacbaca20d23a1b793451410f17347cda3af9a465fa5fad3349b45f80b9cf1af",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V09",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "1b081c9e719954685a26f8ca50313dc56d66268da865e8b5325085e082891f30",
+        "input_digest": "91a42bbf52d2725644c4065a6547b74f75c6946c8b8d8875e829c9994f5d2277"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "eb0dc74f1d531f5dc445cec60b2c57dd4453c2f3ef565116af1b4362a54137c4",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "21e9554fd80e3b3f64daf0b5e2b42cf6a9a381acfaec175b0971fe29b51d2ea7",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V10a",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "1b081c9e719954685a26f8ca50313dc56d66268da865e8b5325085e082891f30",
+        "input_digest": "91a42bbf52d2725644c4065a6547b74f75c6946c8b8d8875e829c9994f5d2277"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "b875276d78080734071da3374c5c7a28e46303448cf80d5d19ba3824734775b5",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "947e272ddde6a5cf40c492f4dcad03efcad11c3f2f51db7b70baaca66f1a666c",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V01",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "f3e41b1912440b8ecadb27e6d4e137e094f9dde591a76ea34566ae568de1df48",
+        "input_digest": "bab1fdb0a57b91e0cd8f116f0d22f77a3bbaedfbe04c6d0fb3fa59f860fec981"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "a0c17a4a6c6ae313855b426a5a26f19723fb03ccc5bd25dbd566cf4fd96c68d7",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "8c5a8681cb16335cc894fa3a7b718fa50be089ae0480166b5a38ddceb5ec95df",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V04",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "f3e41b1912440b8ecadb27e6d4e137e094f9dde591a76ea34566ae568de1df48",
+        "input_digest": "bab1fdb0a57b91e0cd8f116f0d22f77a3bbaedfbe04c6d0fb3fa59f860fec981"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "25d83511506cbd0148e6f92514239f455ca16194fc4679d54aa11912b2ebeef1",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "4cdd84ace4038218f7b0344a920e52ddbcd6c388a4a77e9587cbdf8d7d4e9ba3",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V05",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "f3e41b1912440b8ecadb27e6d4e137e094f9dde591a76ea34566ae568de1df48",
+        "input_digest": "bab1fdb0a57b91e0cd8f116f0d22f77a3bbaedfbe04c6d0fb3fa59f860fec981"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "4fd2b0e0ac13853617dc28adcc37da7549bf96c00b8aa0d85b671a5fddd37624",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "cf097d104faf6f6b1b1b20e3ce39d45f7d853c2680bb9416535e9f480e24523a",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V06",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "f3e41b1912440b8ecadb27e6d4e137e094f9dde591a76ea34566ae568de1df48",
+        "input_digest": "bab1fdb0a57b91e0cd8f116f0d22f77a3bbaedfbe04c6d0fb3fa59f860fec981"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "07f28680fb797f7be2c1b88368820b54f8a72c69463091e3c7776e76af810b86",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "f30820d7ed04e75879106de84c3f7f799ca5bb37659dd11fbc10ec5221c48131",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V07",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "f3e41b1912440b8ecadb27e6d4e137e094f9dde591a76ea34566ae568de1df48",
+        "input_digest": "bab1fdb0a57b91e0cd8f116f0d22f77a3bbaedfbe04c6d0fb3fa59f860fec981"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "582a49f85943b08685d5186af7e3468394e4346bded3da6aeeba4cbca2992837",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "1d8a1cfec86afa98f5813e2e3172139f790efde6ee4672b5b953dc1eccdcedf7",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V08",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "f3e41b1912440b8ecadb27e6d4e137e094f9dde591a76ea34566ae568de1df48",
+        "input_digest": "bab1fdb0a57b91e0cd8f116f0d22f77a3bbaedfbe04c6d0fb3fa59f860fec981"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "56d5f20824940f66ae61985fcf5aa36802f5806304281e1f5b2653eae2f88b06",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "1e07bdf92b7588586491e0f50c2031ec7702cdd1aee5bf27ec5611ff850f0e01",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V09",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "f3e41b1912440b8ecadb27e6d4e137e094f9dde591a76ea34566ae568de1df48",
+        "input_digest": "bab1fdb0a57b91e0cd8f116f0d22f77a3bbaedfbe04c6d0fb3fa59f860fec981"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "4ea2b6ac20c97fcd88bbe481e37dd43bf14dae07435723161dd7c97cd7df189a",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "fbf4cafc1e90615543b3b9f475b568ad3523cca1e5fbdd1b45dbe7bbf3087571",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V10a",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "f3e41b1912440b8ecadb27e6d4e137e094f9dde591a76ea34566ae568de1df48",
+        "input_digest": "bab1fdb0a57b91e0cd8f116f0d22f77a3bbaedfbe04c6d0fb3fa59f860fec981"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "2358c45e9770683552ea7fad246ac5f5f163bba5bdc777fd67a712a878c97edb",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "86ac8bb69be7f90a9ff1f99dcb7b36f7340d2e799993151d32df4753a8cb4655",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V01",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "3686f59bc4efe4756cb0cd423e06097ddf8a02823595ecf3599c5fb609e1a6fc",
+        "input_digest": "9bf6578eb2d107d010931290285cc873a93c2210929d9695274b866c79e56867"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "343f911137c6a3ad9e7ef120d5dbc85e22766cc48b5fb1bceef55d003d854252",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "989073553884f819fd5a3ee541d4d30d040dd9dfa5a91cf9fcd1c6d88c1af88c",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V04",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "3686f59bc4efe4756cb0cd423e06097ddf8a02823595ecf3599c5fb609e1a6fc",
+        "input_digest": "9bf6578eb2d107d010931290285cc873a93c2210929d9695274b866c79e56867"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "553d7385aed17570cd8bf2dc546cca268a7b26b759464d7194f1a93706b00135",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "719104d9d2287bf966acfdfe016bb1131afd201166f59496fd90ebf22c869ffd",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V05",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "3686f59bc4efe4756cb0cd423e06097ddf8a02823595ecf3599c5fb609e1a6fc",
+        "input_digest": "9bf6578eb2d107d010931290285cc873a93c2210929d9695274b866c79e56867"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "5dbac5f803f761f5e4887807067bd00ac6623be50ee55a86f9cbe8da1882b86e",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "3988f7d74602f2d7ed15035feb7d9188e339a97c3e1699d0a9c8cb5dc1cad44e",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V06",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "3686f59bc4efe4756cb0cd423e06097ddf8a02823595ecf3599c5fb609e1a6fc",
+        "input_digest": "9bf6578eb2d107d010931290285cc873a93c2210929d9695274b866c79e56867"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "f01565e37abe63ecadc2ed28607550d903258994859f7b46578f46eb0c47d3a9",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "77b44ddb31de2e33cc0c2341b49c328ca799ccbd497771173e311e5f032784b2",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V07",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "3686f59bc4efe4756cb0cd423e06097ddf8a02823595ecf3599c5fb609e1a6fc",
+        "input_digest": "9bf6578eb2d107d010931290285cc873a93c2210929d9695274b866c79e56867"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "52c1e1cc28cb3cc26cdb0e26db98f2683d9fc962a2effaede186ebf20e0dc6df",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "ac41f253b57f30c7dba9f1461954178dd5556ff1fbf44bb7988d4cba9f487536",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V08",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "3686f59bc4efe4756cb0cd423e06097ddf8a02823595ecf3599c5fb609e1a6fc",
+        "input_digest": "9bf6578eb2d107d010931290285cc873a93c2210929d9695274b866c79e56867"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "9f96cc8e702b35a34660af3b332c1a05d4abfc2778b54f0391b9164e26128be5",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "855b4bfd5f33399d40ff22956849917f7014839784ab855bc5d8d6475e5916cf",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V09",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "3686f59bc4efe4756cb0cd423e06097ddf8a02823595ecf3599c5fb609e1a6fc",
+        "input_digest": "9bf6578eb2d107d010931290285cc873a93c2210929d9695274b866c79e56867"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "952934f401f856ddce217ff7776fcfad94d214c54bce2b4086d011e3a9f4c93b",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "4564eb98636504ff8c01ac3a410f7b2a1f29b14869926f8ac6b978b6d27b4b62",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V10a",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "3686f59bc4efe4756cb0cd423e06097ddf8a02823595ecf3599c5fb609e1a6fc",
+        "input_digest": "9bf6578eb2d107d010931290285cc873a93c2210929d9695274b866c79e56867"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "37ed1b6d0e47c070529e47549a02fe949e7a2f6be4075744ce5248d6b8d18cb5",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "66d38784bf04e7df5ed56daa588e1ff05454e5bbb543079661869176a9090c5c",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V01",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "1b081c9e719954685a26f8ca50313dc56d66268da865e8b5325085e082891f30",
+        "input_digest": "91a42bbf52d2725644c4065a6547b74f75c6946c8b8d8875e829c9994f5d2277"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "6a8ad90966f0ef482b3a0bc1c0ec9ad50d863b159862b22c1fdca7ea05c5a618",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "ebaed7e946f80d28b557e4a94b6986560b690618736f3a72c4d23cd7bb4582e0",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V04",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "1b081c9e719954685a26f8ca50313dc56d66268da865e8b5325085e082891f30",
+        "input_digest": "91a42bbf52d2725644c4065a6547b74f75c6946c8b8d8875e829c9994f5d2277"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "189c3f6b1b2a7dcebe310df72663f5d644731f8f7a07664f6cc7938ec95996b1",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "264ee066616ce0075c7f8f78fc0b02df8175fdcbf80e0c95eeca596b5384a838",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V05",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "1b081c9e719954685a26f8ca50313dc56d66268da865e8b5325085e082891f30",
+        "input_digest": "91a42bbf52d2725644c4065a6547b74f75c6946c8b8d8875e829c9994f5d2277"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "ace4180d5a69a546b90bc3e6912f3c9ca886e6345aed74987a77b12d83efd24f",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "d6aef96b73a95153ef685146527ec26ca774d0406d0742499f9eef4a2171ee93",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V06",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "1b081c9e719954685a26f8ca50313dc56d66268da865e8b5325085e082891f30",
+        "input_digest": "91a42bbf52d2725644c4065a6547b74f75c6946c8b8d8875e829c9994f5d2277"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "9514df49d1a0697288e52e9bf74b90984b77b0c75b8f1aead8fd2f0ec00171ca",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "f26f7dead57cb86f86e1d3c5f6dc4bbaa91253d7ad3a96b5514f689e5743489b",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V07",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "1b081c9e719954685a26f8ca50313dc56d66268da865e8b5325085e082891f30",
+        "input_digest": "91a42bbf52d2725644c4065a6547b74f75c6946c8b8d8875e829c9994f5d2277"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "e844f2f711646be360ec9d10bb5391dad11cdc93b26e4c029735ee9db94cf453",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "a6d0384d373c18840e48052f12aa5313e726af859c62c12511c65d67747663d1",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V08",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "1b081c9e719954685a26f8ca50313dc56d66268da865e8b5325085e082891f30",
+        "input_digest": "91a42bbf52d2725644c4065a6547b74f75c6946c8b8d8875e829c9994f5d2277"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "4a9001e5c6c153689e9704bf302efe55e9c98a393aa0747183c5b572d6661f60",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "77a1f221cf0c09738542057f0be9ec62a22de39d45a20621bff1f2fcd6265ae1",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V09",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "1b081c9e719954685a26f8ca50313dc56d66268da865e8b5325085e082891f30",
+        "input_digest": "91a42bbf52d2725644c4065a6547b74f75c6946c8b8d8875e829c9994f5d2277"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "8ec6f6a76b13337eaf2a06ff94ff4caea4a499e7a850cc3d9a8be1cdb0a32cf1",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "a960ee37dc7eccd0a5c4b30fc88685877468a8b430ec97c7b9dd8ab44c9fc783",
+      "target": {
+        "case_id": "S04-P01",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V10a",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "1b081c9e719954685a26f8ca50313dc56d66268da865e8b5325085e082891f30",
+        "input_digest": "91a42bbf52d2725644c4065a6547b74f75c6946c8b8d8875e829c9994f5d2277"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "8248dc4627c9f47c5c2ad1962d9e5636a0cb3e52369ede877b87b99ee9d068c9",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "674aad51f88a628ac1b82c020771212e7e0716c5b1f5cf8c94475197b9c4ca36",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V01",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "9c46dd01c6f07145577424a88f0eaeb053f9cb388c06b7b2a6439354a7d67369",
+        "input_digest": "8210b4eb5a66665a2b527e19187c509f7de36578a3f602d12b8cfeff33c49d70"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "552660a093e1be0b73e3e85661fc1af70bfb182d2f75ef9d27812c25329ddf5b",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "7bce7b14b3579666e11c7519d69fbcc84840a88fadd3dd4fc14c3de61b4d066b",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V04",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "9c46dd01c6f07145577424a88f0eaeb053f9cb388c06b7b2a6439354a7d67369",
+        "input_digest": "8210b4eb5a66665a2b527e19187c509f7de36578a3f602d12b8cfeff33c49d70"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "8cea0ae710e3c41205779ec245fb330a5180217772bc312c87eb47f6b2ab1cfb",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "176d3d02fc401da1fbfd6a030c6e31c26aca199bbb00c0a8c42564bc93b6b9bb",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V05",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "9c46dd01c6f07145577424a88f0eaeb053f9cb388c06b7b2a6439354a7d67369",
+        "input_digest": "8210b4eb5a66665a2b527e19187c509f7de36578a3f602d12b8cfeff33c49d70"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "794776300b1daac2966d812a52021df97aa0926ab10687c057ae5fa2b29cf62a",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "1e095a07a6a4291fc9e0c22a9c857bd069d78370ad6f1483b72c5112fa21dce7",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V06",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "9c46dd01c6f07145577424a88f0eaeb053f9cb388c06b7b2a6439354a7d67369",
+        "input_digest": "8210b4eb5a66665a2b527e19187c509f7de36578a3f602d12b8cfeff33c49d70"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "1c071980218c3cadf37469181969bdc24e3e46310d1be04ba6c31f0480190bc0",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "774bdbdb413445addd1095df2bf82774b4388a3c60c76ec7e377eb83f80e0572",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V07",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "9c46dd01c6f07145577424a88f0eaeb053f9cb388c06b7b2a6439354a7d67369",
+        "input_digest": "8210b4eb5a66665a2b527e19187c509f7de36578a3f602d12b8cfeff33c49d70"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "b2c3fa94dea3f2b3186c67bc644e3a5731054a9ee790ffd78676f4ccc0733851",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "c3da4b78d3da28ada8389cf0f5c0b5ed3f37a95258c2bfe8682ddc706470d0c2",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V08",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "9c46dd01c6f07145577424a88f0eaeb053f9cb388c06b7b2a6439354a7d67369",
+        "input_digest": "8210b4eb5a66665a2b527e19187c509f7de36578a3f602d12b8cfeff33c49d70"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "68126fce3ab521c1127b25dcbc63ad50ccb0479d2d794c5335e1aab785b0a480",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "78a5d27ed115140ac29214eced5b2888ca8f148109edeab4e1121f3ee6245998",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V09",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "9c46dd01c6f07145577424a88f0eaeb053f9cb388c06b7b2a6439354a7d67369",
+        "input_digest": "8210b4eb5a66665a2b527e19187c509f7de36578a3f602d12b8cfeff33c49d70"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "7ec433c3a474bcd327d657231d28b690c00f3244f5994a80e3a305ca8ae34156",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "b3925f6e5a31366a533dbe9a9de6931d4a793874ca537c2aca577b26b2e58ca7",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V10a",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "9c46dd01c6f07145577424a88f0eaeb053f9cb388c06b7b2a6439354a7d67369",
+        "input_digest": "8210b4eb5a66665a2b527e19187c509f7de36578a3f602d12b8cfeff33c49d70"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "bb502b7855bddcd07ed6d1819764eb4f013bdb40d0df0e945cc653aa6d770d69",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "bbfc4c01879fa2c3d4a791827e4f53ff5f6cd28e4bc8c020266af538b32ea6fe",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V01",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "58d148980ace1cb2f522b8487f0174e5cb5fee78d0a988d06198917220bfaa7b",
+        "input_digest": "856260bf91160fee0e565bc660b5bb5b3d926af8b0c16ad4e9e2bef627df0977"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "840749b101ce4d90057d4f0e1b714139d3f55a129956b3fa8dda2a0cc5bfa7f4",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "579162ba1225fd3037fce404fcfb31006853276b161e9ac38c86e4016d4e24d2",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V04",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "58d148980ace1cb2f522b8487f0174e5cb5fee78d0a988d06198917220bfaa7b",
+        "input_digest": "856260bf91160fee0e565bc660b5bb5b3d926af8b0c16ad4e9e2bef627df0977"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "678133dbfc710b1e39a63455eebbd3435ac7bcc4a0334c91be4e06343006a0f2",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "5f5a40bc5235dc301736b0d79f0e9a2de386fc95d84b68bdc5dfb0f7b1e212bd",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V05",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "58d148980ace1cb2f522b8487f0174e5cb5fee78d0a988d06198917220bfaa7b",
+        "input_digest": "856260bf91160fee0e565bc660b5bb5b3d926af8b0c16ad4e9e2bef627df0977"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "fce530a138136ae8f5d45e14843d8e1b3fddeb42e1edc81692c6e194d0bdc9d9",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "98caee75c5a1b8d3c9924a9124745b8a793a9d73942d2629ecb44e14dad27484",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V06",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "58d148980ace1cb2f522b8487f0174e5cb5fee78d0a988d06198917220bfaa7b",
+        "input_digest": "856260bf91160fee0e565bc660b5bb5b3d926af8b0c16ad4e9e2bef627df0977"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "524a74aa66a6aa36a18d7242fa6a1cf3a27164ea009dcf4311e9abbae688d1b4",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "dd14b747ca70ac402ca413183afc4d1262c439f44ed1b425a486b80ae49e8e79",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V07",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "58d148980ace1cb2f522b8487f0174e5cb5fee78d0a988d06198917220bfaa7b",
+        "input_digest": "856260bf91160fee0e565bc660b5bb5b3d926af8b0c16ad4e9e2bef627df0977"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "9956d8e8a24c59f23c52f0f337a615ad243072318b2eb6b38a727577fbe316bc",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "7d9db9d5170f62296368610d133b7a3b2b8bed94a18eb938907af772571f31ad",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V08",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "58d148980ace1cb2f522b8487f0174e5cb5fee78d0a988d06198917220bfaa7b",
+        "input_digest": "856260bf91160fee0e565bc660b5bb5b3d926af8b0c16ad4e9e2bef627df0977"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "5addd124e5fa09ca85c200b404996af4f7de5484507fb949454dea5d7f2590d9",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "8cf2cc5694410e00713c38f1d34c0b73c6c94e0233018a84a6aa3f241ea43c2a",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V09",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "58d148980ace1cb2f522b8487f0174e5cb5fee78d0a988d06198917220bfaa7b",
+        "input_digest": "856260bf91160fee0e565bc660b5bb5b3d926af8b0c16ad4e9e2bef627df0977"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "51d8e31b2884331cd7f41956106b4e8d2e5cd811d371509ff55357b005ad6e9e",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "e8132bb2bc9fec3b55c9af34048962caa65036fb3eef2e692770c5ea3a820381",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V10a",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "58d148980ace1cb2f522b8487f0174e5cb5fee78d0a988d06198917220bfaa7b",
+        "input_digest": "856260bf91160fee0e565bc660b5bb5b3d926af8b0c16ad4e9e2bef627df0977"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "6146dd2145245a2655736d86119c9b76566923d76cdaaa9263b8b104c392dcd1",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "3230769496ba8e9e9e181cbab45c5689e9f31e164ac0febdf1ce33baeba96f06",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V01",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "1ac16f24d51c40090154cea23d4ba8b68fc2dd9eae2dd1586f9532da69e02bee",
+        "input_digest": "5962687fc59415b45a2c80dd2ea0dbad6b42657835fd91adc933f635ddf03d77"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "706bf32c9b8acbca99e8be1e8aea26d028eade1c4c956c74e92d0741be6674c9",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "77bfe82c8af40a95a87626cb0ff45d465fdaba3552a312d696436570a7ea1008",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V04",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "1ac16f24d51c40090154cea23d4ba8b68fc2dd9eae2dd1586f9532da69e02bee",
+        "input_digest": "5962687fc59415b45a2c80dd2ea0dbad6b42657835fd91adc933f635ddf03d77"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "a135eb8523b17a63f034aa832a75aef63dfb88ec5b6cb6cf105a4852e61fc175",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "c98bf3b96665a3ad5b0eb41552c416fc6dc83a623074675bdd11ee79fd7e9455",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V05",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "1ac16f24d51c40090154cea23d4ba8b68fc2dd9eae2dd1586f9532da69e02bee",
+        "input_digest": "5962687fc59415b45a2c80dd2ea0dbad6b42657835fd91adc933f635ddf03d77"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "27635f11f71036ba0549fcbafbf6329b02f58967191b31f59628201af0b7e691",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "1ee4fa00b8fdd46cd261b69465e34c46925edb276957230ae5a77bad359cd3e3",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V06",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "1ac16f24d51c40090154cea23d4ba8b68fc2dd9eae2dd1586f9532da69e02bee",
+        "input_digest": "5962687fc59415b45a2c80dd2ea0dbad6b42657835fd91adc933f635ddf03d77"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "9630f5fcb16e222c43bd1f42f4a0ef6795db21fca1d026a6fd42728b57742693",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "2904d0eeb1e61d0348531bbd0e2ebf2479c179de573dcb2b3627f63dcf234e09",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V07",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "1ac16f24d51c40090154cea23d4ba8b68fc2dd9eae2dd1586f9532da69e02bee",
+        "input_digest": "5962687fc59415b45a2c80dd2ea0dbad6b42657835fd91adc933f635ddf03d77"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "526c6c72f3ad72d9a0cfedc1d1e13bde7c867b8cf71c2eb2f3b03ba0be507fc5",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "426963537e7ee55ff343557372f811368bf5f26c3d847983c5b76d117a9fdd64",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V08",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "1ac16f24d51c40090154cea23d4ba8b68fc2dd9eae2dd1586f9532da69e02bee",
+        "input_digest": "5962687fc59415b45a2c80dd2ea0dbad6b42657835fd91adc933f635ddf03d77"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "7af1b7475ab6e3514b4acaebb6ba0c99d58302f90ee07acc3eeb49ca6685b240",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "7833bdf72d64e93e601d2c836ca171fc1c3201060077c389220ca30e619020ef",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V09",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "1ac16f24d51c40090154cea23d4ba8b68fc2dd9eae2dd1586f9532da69e02bee",
+        "input_digest": "5962687fc59415b45a2c80dd2ea0dbad6b42657835fd91adc933f635ddf03d77"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "bbc8fb1dccc39650f0ffdd38e1715bfab9ebc3d31e0297fc0ba21b2a7f9f0e69",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "658f3655a539380bb2c5d299cd57130d0531c4ce81bd1dddaf90371d572ede98",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V10a",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "1ac16f24d51c40090154cea23d4ba8b68fc2dd9eae2dd1586f9532da69e02bee",
+        "input_digest": "5962687fc59415b45a2c80dd2ea0dbad6b42657835fd91adc933f635ddf03d77"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "7548c731dd01784d28b8c194abc2b086f40edf2cf570e76fae476e01c6c0a2dd",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "92fb4970b699ecc2690007a0145cb7b7a4eb60258d23471e8d9ddb3e3d8404ac",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V01",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "9c46dd01c6f07145577424a88f0eaeb053f9cb388c06b7b2a6439354a7d67369",
+        "input_digest": "8210b4eb5a66665a2b527e19187c509f7de36578a3f602d12b8cfeff33c49d70"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "6202d885040880b431a6109e376f45738804ff31266ee64c6f5696be8ad3d657",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "ec4cbf8ba4fdf8fd7b1c4a330459548db0c3b8348decee6a9628634d56c0191b",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V04",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "9c46dd01c6f07145577424a88f0eaeb053f9cb388c06b7b2a6439354a7d67369",
+        "input_digest": "8210b4eb5a66665a2b527e19187c509f7de36578a3f602d12b8cfeff33c49d70"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "4e058da71fd0f1117073347399a6f1a900a7239f119d46c6dbdd3c42f590c461",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "c655c2bc01f7335d28851bf4d15a4eb077c96531a83e404393ae9f39f85124ab",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V05",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "9c46dd01c6f07145577424a88f0eaeb053f9cb388c06b7b2a6439354a7d67369",
+        "input_digest": "8210b4eb5a66665a2b527e19187c509f7de36578a3f602d12b8cfeff33c49d70"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "fc8f2ab7a5613cc3681666c36f86eece4c9fb88b32b55b1017b10ecd25b3f6fd",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "05cd77e4e466426d32493a1ae87ed043014e35037f65b8782e1850431c5d61a3",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V06",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "9c46dd01c6f07145577424a88f0eaeb053f9cb388c06b7b2a6439354a7d67369",
+        "input_digest": "8210b4eb5a66665a2b527e19187c509f7de36578a3f602d12b8cfeff33c49d70"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "682586f733df8b610dc0dec7a1a83a8466bc36c7d4593450c784ceb8a2235d14",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "8343faf8e2cf7b5d352fc55b276c5b22e37c53407d5622a59e6bdbefb2370028",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V07",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "9c46dd01c6f07145577424a88f0eaeb053f9cb388c06b7b2a6439354a7d67369",
+        "input_digest": "8210b4eb5a66665a2b527e19187c509f7de36578a3f602d12b8cfeff33c49d70"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "25722a56c05a4aa6c036342c4a9bf738b7e2156734e0ac70f3bd838b8aaa5004",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "5ebedb0d63231ac295a9ac9414b871a88a79d07f662cf2474c3b5364be752877",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V08",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "9c46dd01c6f07145577424a88f0eaeb053f9cb388c06b7b2a6439354a7d67369",
+        "input_digest": "8210b4eb5a66665a2b527e19187c509f7de36578a3f602d12b8cfeff33c49d70"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "339d389ef15e3dace6e05c73c2c6143e7fc40f2b65877e73c1082f78697b13d8",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "722c60ec15307296c32bf3c1f7d29d7a5c80565d4e163afbc29a4cc6e1ab7022",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V09",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "9c46dd01c6f07145577424a88f0eaeb053f9cb388c06b7b2a6439354a7d67369",
+        "input_digest": "8210b4eb5a66665a2b527e19187c509f7de36578a3f602d12b8cfeff33c49d70"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "182b6de98be4b98f8ae85888d5e17703604742d7db4445fce8dd63c5aa6003bf",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "f2d778ccd46acdb536429af3f12204f8f3d6a8956721330f182700e4d7f93fa5",
+      "target": {
+        "case_id": "S04-P01-DV01",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V10a",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "9c46dd01c6f07145577424a88f0eaeb053f9cb388c06b7b2a6439354a7d67369",
+        "input_digest": "8210b4eb5a66665a2b527e19187c509f7de36578a3f602d12b8cfeff33c49d70"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "1c028321b04d6ffd7c28901fbb6b400922e00ced04ec1930b59f127fee3346d8",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "5564d9f5d4cfd8df91a6587da9f49be0b13132dc537d421c6ce0c782ab9ca28b",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V01",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "8f001504a5dc80f5648932a69b6d2b766d6f5a921493b4b61d0ae7705438fcea",
+        "input_digest": "a97473e314581548b270fa992f7e1c11acb0ee49ccdad5127592799da82f93dc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "c116de5f81ba862c57683629f18d9dc3be994dcfa75ad1e1e6316406ea300738",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "30f50c72f1f8aaa5b59ae094347983f97bde7fc7c9f825721dd2d345240c347f",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V04",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "8f001504a5dc80f5648932a69b6d2b766d6f5a921493b4b61d0ae7705438fcea",
+        "input_digest": "a97473e314581548b270fa992f7e1c11acb0ee49ccdad5127592799da82f93dc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "65b2b78139891d20c5ede070489ae0931a875d7f6c3381ae26dabec7609229d5",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "2f3ab30ed9c8fe4209d9213e83615fd7eba528d0b7b46168d891893ba2e3947d",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V05",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "8f001504a5dc80f5648932a69b6d2b766d6f5a921493b4b61d0ae7705438fcea",
+        "input_digest": "a97473e314581548b270fa992f7e1c11acb0ee49ccdad5127592799da82f93dc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "1da488d2333c2367a54d180ad505e74fa18f4ab70251079fda2d2a3d04d7c765",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "3e1ced57da8313150ed7e04d1bd880804df515ddcfc43a47ed6fe7566d8397a9",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V06",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "8f001504a5dc80f5648932a69b6d2b766d6f5a921493b4b61d0ae7705438fcea",
+        "input_digest": "a97473e314581548b270fa992f7e1c11acb0ee49ccdad5127592799da82f93dc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "15484b022b56ec782e41e9b4775fe0beb0f8753cd7000647df46694e2b72d578",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "9befe09e041c51b3add947f8f9b4ebd52d251e1d4e1b82ba5a0b4032ad6c2a87",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V07",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "8f001504a5dc80f5648932a69b6d2b766d6f5a921493b4b61d0ae7705438fcea",
+        "input_digest": "a97473e314581548b270fa992f7e1c11acb0ee49ccdad5127592799da82f93dc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "a63a281a7f329079b9dac7b5785a6e7cf86c3c4de653daaaf3e7b70931da03c0",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "b6a408e53d9bc9385fa13e783a8a28b85b8a15a9a051416910b883375e54ecce",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V08",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "8f001504a5dc80f5648932a69b6d2b766d6f5a921493b4b61d0ae7705438fcea",
+        "input_digest": "a97473e314581548b270fa992f7e1c11acb0ee49ccdad5127592799da82f93dc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "03415ca03e40b62450238aaf5be3f2224ab4dc9af596c3520d92ca327552b994",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "b93c00f043b601cb3c52dac36a4d66572e5f05c767d02d69561fd276a066e7f0",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V09",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "8f001504a5dc80f5648932a69b6d2b766d6f5a921493b4b61d0ae7705438fcea",
+        "input_digest": "a97473e314581548b270fa992f7e1c11acb0ee49ccdad5127592799da82f93dc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "4942a9996b06497a40b983f6e71b70b7c97f748c1fc9be8fd1be7eda038a042a",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "bc1666926e4a3dc7e2617cb90a2526715e26b669e6b040d1204239dc7ff9431c",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V10a",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "8f001504a5dc80f5648932a69b6d2b766d6f5a921493b4b61d0ae7705438fcea",
+        "input_digest": "a97473e314581548b270fa992f7e1c11acb0ee49ccdad5127592799da82f93dc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "d15f44a9b377a0f818b90acafb9513e4a9ae463288cdfcd9c4a0f6c3a907568d",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "4370aa7ec480bbc0661bfb3d0f2803a0a41e8b707c8281df358ccc225e383caf",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V01",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "30fc9eb887701d89262807196c51391675c61e2db5092760842ae484b5b95a6f",
+        "input_digest": "ad44e1904271319d762b758cf06d7fe7066eb7636473e7f2687025d3550a7f10"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "484377f7f43175e58e2bb91a9bfa81368e46ad06108726c1cf5d69a657ce5d75",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "fadc659d5770fdcb7eacf64ef1f7de0e32d2f9087b3508836e9290904756349f",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V04",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "30fc9eb887701d89262807196c51391675c61e2db5092760842ae484b5b95a6f",
+        "input_digest": "ad44e1904271319d762b758cf06d7fe7066eb7636473e7f2687025d3550a7f10"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "db195332c8172e07d4b863aac6c213ce5d9de486f325d1a8066a10266b887218",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "a9ffa167ded8ab7aaa5a433767532bebf699f962b138a65586c4d5439b89120b",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V05",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "30fc9eb887701d89262807196c51391675c61e2db5092760842ae484b5b95a6f",
+        "input_digest": "ad44e1904271319d762b758cf06d7fe7066eb7636473e7f2687025d3550a7f10"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "76664484dcc963ba67597bc1206b89e6ea154380a885043f98a81164cc1a8b52",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "bbc360bedd575729bad0d134c7eb324300f2351f936895ccefd7e714359a9866",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V06",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "30fc9eb887701d89262807196c51391675c61e2db5092760842ae484b5b95a6f",
+        "input_digest": "ad44e1904271319d762b758cf06d7fe7066eb7636473e7f2687025d3550a7f10"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "4f6ebd5ac15dc1d8c51b140b1eb5ad4deb370cb59478df884a8604b58a5a78c7",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "6dcd35d1c57e4801e078e98cab148d9c1c917cf3546598653d10c70060d7732b",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V07",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "30fc9eb887701d89262807196c51391675c61e2db5092760842ae484b5b95a6f",
+        "input_digest": "ad44e1904271319d762b758cf06d7fe7066eb7636473e7f2687025d3550a7f10"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "56413aed2c2d9b6c39df61cc24049ccdd242d4b7b5d6b0e27c813b416d02ea8e",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "9d566208e34466493486c51f561f40a6c4f49a01e9738f9befbbe039d70752be",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V08",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "30fc9eb887701d89262807196c51391675c61e2db5092760842ae484b5b95a6f",
+        "input_digest": "ad44e1904271319d762b758cf06d7fe7066eb7636473e7f2687025d3550a7f10"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "e7a3e9a90d692cd3c2597ce8fb4a5c0337001641f6464e2ebef050c837c31f03",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "7b3445afc0775fd40eb4d2c69bddf64825a1ae31f21e19b5fce48088db18ac66",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V09",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "30fc9eb887701d89262807196c51391675c61e2db5092760842ae484b5b95a6f",
+        "input_digest": "ad44e1904271319d762b758cf06d7fe7066eb7636473e7f2687025d3550a7f10"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "5d2ee4bb7242702f11a1adeaf708faaa1ddad8367e23366394a623dce37ee18e",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "df971536958362695f006905033f983ff5461baa356a5b11b338521787ac25b3",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V10a",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "30fc9eb887701d89262807196c51391675c61e2db5092760842ae484b5b95a6f",
+        "input_digest": "ad44e1904271319d762b758cf06d7fe7066eb7636473e7f2687025d3550a7f10"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "6cbf5bb0593eefc8913d45eab48ae9425d7670fecc8f6a36dc99c54adbc0e78f",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "c6c147fb36be5a8910384e3a5088608621991d0f0fd75d71f6da09fbefdeaa04",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V01",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "663f317d132d65ac0db8fe3cf0713c8b9479a22023dce09bdb1d0c31b0fd2857",
+        "input_digest": "fdf632116db70de676c01ffc43aef23909e68b6a78e6ba4488849f809d811aa1"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "addde75e775ba2f8a3df5b367a6cebdb264e1625026de8ee78436243454c5450",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "8f3dd036ac9abec973906d2ae8ccbb2b453a61f1ad4de68afd518d7e99b338b1",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V04",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "663f317d132d65ac0db8fe3cf0713c8b9479a22023dce09bdb1d0c31b0fd2857",
+        "input_digest": "fdf632116db70de676c01ffc43aef23909e68b6a78e6ba4488849f809d811aa1"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "21cbf4a5e9f88daf5871fd8229a18c0d679ea01e74127c61a95dbcda3b369fbd",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "bdcfbc44a905a92e97b7baf1fd0ae264c0c1601ca68aba07078b86b0917b62d3",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V05",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "663f317d132d65ac0db8fe3cf0713c8b9479a22023dce09bdb1d0c31b0fd2857",
+        "input_digest": "fdf632116db70de676c01ffc43aef23909e68b6a78e6ba4488849f809d811aa1"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "65464ad9dc9b8a12e6f3cc544d0f51e2f0b42b32ad077137504c869bd3d49e53",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "cc9473214ef76f95907f9fec5a9f8523dbbd67bb75918ece9fed287dd6d5ca09",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V06",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "663f317d132d65ac0db8fe3cf0713c8b9479a22023dce09bdb1d0c31b0fd2857",
+        "input_digest": "fdf632116db70de676c01ffc43aef23909e68b6a78e6ba4488849f809d811aa1"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "23dc94e5dd7df1a8547a619be0bfbb25cb1e19165b0c53fc38da910134649fb3",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "b248649cf8bcbc036f3d949c52fcc4b871ef4a1850d58618a5165f900b020d44",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V07",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "663f317d132d65ac0db8fe3cf0713c8b9479a22023dce09bdb1d0c31b0fd2857",
+        "input_digest": "fdf632116db70de676c01ffc43aef23909e68b6a78e6ba4488849f809d811aa1"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "afab146668e8d799fc198d887e281c78bfd243f35fcd53b61bae6ad9fb5c8a76",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "3490ee3ca3f9295b9b94d2848c99730c37ca10730ac8136cdd9d4f1b1d9f0125",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V08",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "663f317d132d65ac0db8fe3cf0713c8b9479a22023dce09bdb1d0c31b0fd2857",
+        "input_digest": "fdf632116db70de676c01ffc43aef23909e68b6a78e6ba4488849f809d811aa1"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "1219466576b7b9f86b6dadd3bc9376a9177f82fe30590aa51b05f3f54f6396b7",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "d5521d67439a6b5418d3ff65241059d1598d1a4253af2a489d8d2aff9c6c8e7b",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V09",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "663f317d132d65ac0db8fe3cf0713c8b9479a22023dce09bdb1d0c31b0fd2857",
+        "input_digest": "fdf632116db70de676c01ffc43aef23909e68b6a78e6ba4488849f809d811aa1"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "7a0ea37cbdb6bc337b2eadffe0764a3cfbf17d1658ac105b797268af308d6ca8",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "26096df674673d3c471ae9f69cb245ddb8bf8b5ee08ab6091d583793eaeb139c",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V10a",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "663f317d132d65ac0db8fe3cf0713c8b9479a22023dce09bdb1d0c31b0fd2857",
+        "input_digest": "fdf632116db70de676c01ffc43aef23909e68b6a78e6ba4488849f809d811aa1"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "f7e2f4b9773dff2242e41646d93d6e2db7efe29663e1f4fbe2574fef4c41b5ea",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "d32f08ecf1d9719632007742e06b4c96e5aba6664d5829b4a2aa75a767afde1c",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V01",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "8f001504a5dc80f5648932a69b6d2b766d6f5a921493b4b61d0ae7705438fcea",
+        "input_digest": "a97473e314581548b270fa992f7e1c11acb0ee49ccdad5127592799da82f93dc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "1fc1fed11244b3b782ac4dede9763eaf50a8b3c1a6fcf4c2b1b172e3a4fe3815",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "67e36821ef9a0a5b4bc8f3b4763e65958a2f297e533e18c5890b57a76ef78430",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V04",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "8f001504a5dc80f5648932a69b6d2b766d6f5a921493b4b61d0ae7705438fcea",
+        "input_digest": "a97473e314581548b270fa992f7e1c11acb0ee49ccdad5127592799da82f93dc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "f197927aae776d00ab1dedb7ec4673456b908b2fa8759d4ee06c42ea2aeb24f3",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "55a5e3a04dc428c36dc8fcae2867c907814a691c0e9995cfadbe653a29007e05",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V05",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "8f001504a5dc80f5648932a69b6d2b766d6f5a921493b4b61d0ae7705438fcea",
+        "input_digest": "a97473e314581548b270fa992f7e1c11acb0ee49ccdad5127592799da82f93dc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "4f743ef032ed67ce137229fc039a05b302cae9b142fcb902fabf776c7fc357fa",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "8cf6050e16227cb0208d552c1a985e077b401b47f173af3858dc5f9c3c4a6db6",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V06",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "8f001504a5dc80f5648932a69b6d2b766d6f5a921493b4b61d0ae7705438fcea",
+        "input_digest": "a97473e314581548b270fa992f7e1c11acb0ee49ccdad5127592799da82f93dc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "41f9523c2075b0852c719926a934ab027551b4a36b71d076eec59c54e14d684e",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "35a5efbd6c1e5cb3eaa08d85d86342cd35497059c43aee51b426b9e5fce7e791",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V07",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "8f001504a5dc80f5648932a69b6d2b766d6f5a921493b4b61d0ae7705438fcea",
+        "input_digest": "a97473e314581548b270fa992f7e1c11acb0ee49ccdad5127592799da82f93dc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "5134e23a1dad3b7b93b0479ec4cf365f17eebf768a795ba770d2ee97c1c93847",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "0819cb9bfd92046b2c6ab02febc6373197b58996933c900e001cc64887e3c832",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V08",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "8f001504a5dc80f5648932a69b6d2b766d6f5a921493b4b61d0ae7705438fcea",
+        "input_digest": "a97473e314581548b270fa992f7e1c11acb0ee49ccdad5127592799da82f93dc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "0339fee8ae8cf97134f7b35af5b6c3ffce37ca949195b1e3a378c3c988d561d2",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "dc7caf7fd461ae331965e0d100cd9d30e94dc14edd3aa595d0edb8405a244ea9",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V09",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "8f001504a5dc80f5648932a69b6d2b766d6f5a921493b4b61d0ae7705438fcea",
+        "input_digest": "a97473e314581548b270fa992f7e1c11acb0ee49ccdad5127592799da82f93dc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "84a855038b8a0f269c9503e2f08c0dde971d4d05368e5c2586ac64b7af0397a2",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "931c33851e65a84d9871818398fe8cec7fc947e3c5511a3893cdf8508febbdf7",
+      "target": {
+        "case_id": "S04-P01-DV02",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V10a",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "8f001504a5dc80f5648932a69b6d2b766d6f5a921493b4b61d0ae7705438fcea",
+        "input_digest": "a97473e314581548b270fa992f7e1c11acb0ee49ccdad5127592799da82f93dc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "b67a5f64c5ecc52377b1b7f483be99f89a035aa05d66d3b535babce89f9e7b37",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "afdfb1ceb5e2a847fae02b973f45b70ed601e4175b00b31ecd18b1efe1538c93",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V01",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "5eeacecf55fc1341855f336826886d6718630e8970812cdd00172eb772807506",
+        "input_digest": "2cc7813338abf161c1756af241c747fffc1adc54957706985b696758c4b6f652"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "f0a92f86df19e364e93d372400479bd913ea03b746735d85a926692b61eaffdb",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "ba862cae894cbb169e1aaf18645a68e067a9e53a008c9ccbb48cb5dbbcba4f57",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V04",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "5eeacecf55fc1341855f336826886d6718630e8970812cdd00172eb772807506",
+        "input_digest": "2cc7813338abf161c1756af241c747fffc1adc54957706985b696758c4b6f652"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "99a9a4bbc79f77e13d2e7252357d56ccd558688bae0a9440890920baf07e39fd",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "ef31aa35d5a3abc9418ac3d6c3ee94100c9a4372ad14c4005aba69f3566a4061",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V05",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "5eeacecf55fc1341855f336826886d6718630e8970812cdd00172eb772807506",
+        "input_digest": "2cc7813338abf161c1756af241c747fffc1adc54957706985b696758c4b6f652"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "72d852a64b7f63bb3617be9143d4ce970221fb1f78af190d7070157b44383cfa",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "58301ccc00c9380ac8687ff664735a4154c9e797b1a109a1d0900f29549c2e02",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V06",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "5eeacecf55fc1341855f336826886d6718630e8970812cdd00172eb772807506",
+        "input_digest": "2cc7813338abf161c1756af241c747fffc1adc54957706985b696758c4b6f652"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "749c6ecb6514f53f74d0a8ee99f59aeb9060e18bb4dafd3f1ad2c2d41454a1e7",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "4eb8466f4d4d2d04bee4fcca98a58ffcc36ff953f125af5c7566ef4112383297",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V07",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "5eeacecf55fc1341855f336826886d6718630e8970812cdd00172eb772807506",
+        "input_digest": "2cc7813338abf161c1756af241c747fffc1adc54957706985b696758c4b6f652"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "31876124da05645b0d5f4129abf9200b14378ea8f4ec29fe2aa1477875b633a2",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "67fb81e8e6cbb77a26590ef76e70b00f03898a20da82aba784e160d4a195012a",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V08",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "5eeacecf55fc1341855f336826886d6718630e8970812cdd00172eb772807506",
+        "input_digest": "2cc7813338abf161c1756af241c747fffc1adc54957706985b696758c4b6f652"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "a1bc39d9f137685962bfb878619d399b7cad572b3da55477e4d758754872cb0d",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "582e788d1150cb93d3013ffc191579873774b038732f24585a624b0109317270",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V09",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "5eeacecf55fc1341855f336826886d6718630e8970812cdd00172eb772807506",
+        "input_digest": "2cc7813338abf161c1756af241c747fffc1adc54957706985b696758c4b6f652"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "c8b273f253cb96ee2ba7f5e7ffae44247ec1eb612c40e4fe76856cf8304175e1",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "5c80e3d2e4c7765c5a90d28e2fb190daab5c2290f1a0de21602dc28bb7e66eaf",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V10a",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "5eeacecf55fc1341855f336826886d6718630e8970812cdd00172eb772807506",
+        "input_digest": "2cc7813338abf161c1756af241c747fffc1adc54957706985b696758c4b6f652"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "f4882b8890fe496a66f3099bc0dad7934856a725b81335ed19d8331ccec82947",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "e89ff270fc510a31ef64a7cb9d032fbe7c62f23d62d634fbae02141201940e6d",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V01",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "ead281e5430758a1399b17b6963dab6ce61b13ac7d400d458325c75ea7305a0e",
+        "input_digest": "5d9f0eeecf3b00c08229b6b52646662780d152e0c8569042f708d1a66f7ebfa3"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "7637167c1fa9b9b633b670b9ceabee87b5f07a3c89efcc84d654864946444409",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "e02092e2c0284da5c6a6cac76123143c673ef313bc8196fc440201d591a7410b",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V04",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "ead281e5430758a1399b17b6963dab6ce61b13ac7d400d458325c75ea7305a0e",
+        "input_digest": "5d9f0eeecf3b00c08229b6b52646662780d152e0c8569042f708d1a66f7ebfa3"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "327b68faa4886ea23a035afb189c3eedbdb9961753bb328139c4e03083911a7d",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "8e26190c0d5b8edb3ab44b0b9d98600bd84ad2a9a7876609bc3329b95f6e8723",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V05",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "ead281e5430758a1399b17b6963dab6ce61b13ac7d400d458325c75ea7305a0e",
+        "input_digest": "5d9f0eeecf3b00c08229b6b52646662780d152e0c8569042f708d1a66f7ebfa3"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "25436954fc978fae8066f34f842c26707ee50c326c8a3693c322edcc8c5eb2b5",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "397855ea37e1c5c50ae331a962c9d28286178b8b0a3f22a660c783848690409c",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V06",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "ead281e5430758a1399b17b6963dab6ce61b13ac7d400d458325c75ea7305a0e",
+        "input_digest": "5d9f0eeecf3b00c08229b6b52646662780d152e0c8569042f708d1a66f7ebfa3"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "e7f0b8a3bc8a13fabb3ad87c929bd51e2e72c92a5400ad2ddb6b23f5e664c744",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "979ebf2f884d126f1e19e451837c7f16af447ed3cd3935823d0d70416e1a89fc",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V07",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "ead281e5430758a1399b17b6963dab6ce61b13ac7d400d458325c75ea7305a0e",
+        "input_digest": "5d9f0eeecf3b00c08229b6b52646662780d152e0c8569042f708d1a66f7ebfa3"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "d2ad7b0227279efa1a6e43f5cb1d699ffd2118db6e5adb9b250e4a311a4f95fe",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "ca62bf7332b8a85e430ac0df4185be2934eb8100ba7e7c92481c40165314e5d4",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V08",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "ead281e5430758a1399b17b6963dab6ce61b13ac7d400d458325c75ea7305a0e",
+        "input_digest": "5d9f0eeecf3b00c08229b6b52646662780d152e0c8569042f708d1a66f7ebfa3"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "5775336e2566973d996ce44400087775da2c369a63a53ec21d4b5855ea663ece",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "cad790146e3a3d9558122fba2b5761fe8c9357c508abe9a25e01fc812bc771a9",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V09",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "ead281e5430758a1399b17b6963dab6ce61b13ac7d400d458325c75ea7305a0e",
+        "input_digest": "5d9f0eeecf3b00c08229b6b52646662780d152e0c8569042f708d1a66f7ebfa3"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "64dac61b4308928e792bc982cbbe018dd26b43d2eab3c2047c71ebebcaf759a9",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "29de85dc0990d26434c907c0f2bd55d584b33e51c05ed714c43ce03cc5ab86fb",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V10a",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "ead281e5430758a1399b17b6963dab6ce61b13ac7d400d458325c75ea7305a0e",
+        "input_digest": "5d9f0eeecf3b00c08229b6b52646662780d152e0c8569042f708d1a66f7ebfa3"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "a12c2ec14d534a7d598c681845c1299d2fa35f5afc7f165fe396689c98edfe62",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "083018fdacb2329697c1eda396d5fecf30111997e69224e9a67192822c947b67",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V01",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "6ec82f3a5b3074c2cec6d717e9314a62df0603ec008aca134be206e3fb243a51",
+        "input_digest": "45055fc1bc18faa5dc6254ab45554f9ae75e3b05662a924f4d948e2e7ba378bb"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "971101325d4439588593637ac654096dae0c94abbc149d6b1bd3ba0c5fb054fe",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "875446216c4ae251e06dbcf21ac7072f936eaee51c6b6dcc16ae73f3404d1cac",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V04",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "6ec82f3a5b3074c2cec6d717e9314a62df0603ec008aca134be206e3fb243a51",
+        "input_digest": "45055fc1bc18faa5dc6254ab45554f9ae75e3b05662a924f4d948e2e7ba378bb"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "6de8d77aa7439fea8d0cc1e65d5c0bbd6093a8e70e8907e70441666695dfaf24",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "48260844aae5f5c2a73d985ee6cb4d3f4dca17c5d6f3c3697e66bdf2b8f67a0e",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V05",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "6ec82f3a5b3074c2cec6d717e9314a62df0603ec008aca134be206e3fb243a51",
+        "input_digest": "45055fc1bc18faa5dc6254ab45554f9ae75e3b05662a924f4d948e2e7ba378bb"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "efc20a746f5a814fbf5db2eed77391e0dc229c9aa1e6ea8339c108bdc2b45b81",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "add4b9ae4387b73c560bf7a46c352a7d0944ba0b1e1f8866ba53b9600e51f00f",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V06",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "6ec82f3a5b3074c2cec6d717e9314a62df0603ec008aca134be206e3fb243a51",
+        "input_digest": "45055fc1bc18faa5dc6254ab45554f9ae75e3b05662a924f4d948e2e7ba378bb"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "8b47030d94ceca58e208b3ce9d0ec2de3ccda1fe403320bf84f4614c49e70899",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "52b871ebe18887eb20c40aeeed2702af60a6f4dec99b05777030305819552682",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V07",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "6ec82f3a5b3074c2cec6d717e9314a62df0603ec008aca134be206e3fb243a51",
+        "input_digest": "45055fc1bc18faa5dc6254ab45554f9ae75e3b05662a924f4d948e2e7ba378bb"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "9a0695144017cd998c14b1c5afed481cf720e275d9bbeb6a016b2af51887a751",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "da6e0bc8accc00dd2c9467110a445a958e3670ca75727ce50451c943c0ca90ee",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V08",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "6ec82f3a5b3074c2cec6d717e9314a62df0603ec008aca134be206e3fb243a51",
+        "input_digest": "45055fc1bc18faa5dc6254ab45554f9ae75e3b05662a924f4d948e2e7ba378bb"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "9e9f05e45dd3761e117027e1fbf71785a7af5a7df107b451e15c52b844687111",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "1125fb7b902668c7db91313f3bc285687e376f6a608063c98f3e29b844378a72",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V09",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "6ec82f3a5b3074c2cec6d717e9314a62df0603ec008aca134be206e3fb243a51",
+        "input_digest": "45055fc1bc18faa5dc6254ab45554f9ae75e3b05662a924f4d948e2e7ba378bb"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "108c1f8fb2ccbf2b67ae05f9fa549f098f7328683ec0b8413781410e8e95f0bd",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "e6f673a4ea585051dcab390598f3c0697dd50b8e186f1cb358d575944c031708",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V10a",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "6ec82f3a5b3074c2cec6d717e9314a62df0603ec008aca134be206e3fb243a51",
+        "input_digest": "45055fc1bc18faa5dc6254ab45554f9ae75e3b05662a924f4d948e2e7ba378bb"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "df8d784417d10ba99dc238687c7be35fa86ad3e4441d427549681fa7775593cd",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "49a1ceb7f88a4dc1040ca47331ee27c08ee41a4f5af5bacd0f4e722d7cb1c551",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V01",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "5eeacecf55fc1341855f336826886d6718630e8970812cdd00172eb772807506",
+        "input_digest": "2cc7813338abf161c1756af241c747fffc1adc54957706985b696758c4b6f652"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "9aeba20edf0474b913b5a4750495734eb32122926f4e59140b8e465fbe7c9ee4",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "4829ab9ddb526f0434b6a0aeeb8f5c62d8175d1235e11ea3fbda065e0833594f",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V04",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "5eeacecf55fc1341855f336826886d6718630e8970812cdd00172eb772807506",
+        "input_digest": "2cc7813338abf161c1756af241c747fffc1adc54957706985b696758c4b6f652"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "6cbf8c91f159e5f4b31bd1141848345d6c3589735ae1c05ededb021b1fe3587c",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "d911935dd81ab4ed56f031547c4b576e4c9a8e02cb3c3bdc638ee13ce7657666",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V05",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "5eeacecf55fc1341855f336826886d6718630e8970812cdd00172eb772807506",
+        "input_digest": "2cc7813338abf161c1756af241c747fffc1adc54957706985b696758c4b6f652"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "10646632b168cb82e04b6bfe15c881c58989667a3a9ebd1aaad42a7d3a5a8ea0",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "04b096780228e146bfa19f1d1cb0abe89afe50eb7f09f56a8d3757d1827c1173",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V06",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "5eeacecf55fc1341855f336826886d6718630e8970812cdd00172eb772807506",
+        "input_digest": "2cc7813338abf161c1756af241c747fffc1adc54957706985b696758c4b6f652"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "55ebdcb63d54eaecc86c70ab6870b568019614ffd9f4bee7b33d2d35adde8005",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "e657f4e5c21322176089dc630109ba461b71496feb60a5c9549cc1df151a9914",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V07",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "5eeacecf55fc1341855f336826886d6718630e8970812cdd00172eb772807506",
+        "input_digest": "2cc7813338abf161c1756af241c747fffc1adc54957706985b696758c4b6f652"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "4ce0663429fbc5057419c94f3b883d9db162a9491443158e2e967738edc97d6e",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "e260a85e38c09827141f0f99fa4964109433bc8517d9c7ba3763330f9a6cd849",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V08",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "5eeacecf55fc1341855f336826886d6718630e8970812cdd00172eb772807506",
+        "input_digest": "2cc7813338abf161c1756af241c747fffc1adc54957706985b696758c4b6f652"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "c0be9f9c377db2374873851e1bad893ee404a282d96e8fb4b5d5cda7f7ed8bd9",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "ad84b723ee993c2d0b9acdb70b63c4148fc804ca6d1ea38d9cb827b892183e7f",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V09",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "5eeacecf55fc1341855f336826886d6718630e8970812cdd00172eb772807506",
+        "input_digest": "2cc7813338abf161c1756af241c747fffc1adc54957706985b696758c4b6f652"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "f1ae62c95201f5cd106df21fea7a7b35fce5b9c302065debfa20d9ea7baeca85",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "ad406b9a94e3b14778e628f3b3ad714970ee96a7ac166f1c30611780ce91407a",
+      "target": {
+        "case_id": "S04-P01-DV03",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V10a",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "5eeacecf55fc1341855f336826886d6718630e8970812cdd00172eb772807506",
+        "input_digest": "2cc7813338abf161c1756af241c747fffc1adc54957706985b696758c4b6f652"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "e66d284aa6a3341490e67508c7ed007ffcf7284f838e92fea1af45e4602cfc10",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "8d739082107da5ab112da29972ab6933d0f7f403bec197a7b6cdc939b12f77ec",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V01",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "e1fb7288b08879d29754a22307ced84bbd6e223df65100b8748e414e552129a0",
+        "input_digest": "e0480247c27d4cc76471eb189c7672a9d043c4502106b8ce5642b8d8459094cc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "a4213fa60525786efb814beab9595f51f984bf6e3246e37e037a81194f7f13ab",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "fb39ff52cc04c0cbb6d723774bcb4e4e2b3bca3aad0fc24c4f3563e29b0084cd",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V04",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "e1fb7288b08879d29754a22307ced84bbd6e223df65100b8748e414e552129a0",
+        "input_digest": "e0480247c27d4cc76471eb189c7672a9d043c4502106b8ce5642b8d8459094cc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "9b1bb5303378fc2da8af735d4bef165753cabcc47dd80ac3ea1cc1445c813332",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "2fc6c961f7dad51f3b95a9587581e30cddfc47f6acbffaf50060d07017e54f28",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V05",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "e1fb7288b08879d29754a22307ced84bbd6e223df65100b8748e414e552129a0",
+        "input_digest": "e0480247c27d4cc76471eb189c7672a9d043c4502106b8ce5642b8d8459094cc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "6a46b359f1823dd6709d9b97f558123efb3232ac106f5ab7e03da06ac25173cd",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "3ee40ef8be6aace685a496c6e4fbd157a2eadfde6ec73e453653913ce7836535",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V06",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "e1fb7288b08879d29754a22307ced84bbd6e223df65100b8748e414e552129a0",
+        "input_digest": "e0480247c27d4cc76471eb189c7672a9d043c4502106b8ce5642b8d8459094cc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "b108cdee047c86eaca29a1a1b404d30ba206a374ad447863ec7d11fd2e80c427",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "7b40839339d71dc2c56986302d85420cf83397cd8aaa6aa0a9ae2e0201ca3ff7",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V07",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "e1fb7288b08879d29754a22307ced84bbd6e223df65100b8748e414e552129a0",
+        "input_digest": "e0480247c27d4cc76471eb189c7672a9d043c4502106b8ce5642b8d8459094cc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "91ceb12503be7e8bcdb46758e43eb1e309a5009069b00511bd9c4dd86dd18abd",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "db0f0252c9e68ff112a1599bc6c741ec41e5a5e39c68e158d1bd754683462df7",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V08",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "e1fb7288b08879d29754a22307ced84bbd6e223df65100b8748e414e552129a0",
+        "input_digest": "e0480247c27d4cc76471eb189c7672a9d043c4502106b8ce5642b8d8459094cc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "279b21ff406fa719fe2d2b0f1ee735c7c8c2b02d5267e5c24f8bb56534810397",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "05b6389f47c6cfabb28e2dc9a2915816a2ce764888597e355c75865efb114d72",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V09",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "e1fb7288b08879d29754a22307ced84bbd6e223df65100b8748e414e552129a0",
+        "input_digest": "e0480247c27d4cc76471eb189c7672a9d043c4502106b8ce5642b8d8459094cc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "43eaef4b2611a03f5bb49ec0ef6f0198838219783f0f84fc2fa4d029c6a38815",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "223eaed04ccc3cf15f282570d1d1ec5ed85ac351d275652bd6d15389caf165c3",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "nominal",
+        "bound_ticks": 256,
+        "property_id": "V10a",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "e1fb7288b08879d29754a22307ced84bbd6e223df65100b8748e414e552129a0",
+        "input_digest": "e0480247c27d4cc76471eb189c7672a9d043c4502106b8ce5642b8d8459094cc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "afe7f87c52c3c0e1f703ef8c7a94aa03b27cfec56727a8aefc5df1021f2e9c20",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "65956405f6a269c6098d844c95cbe4bc98fe7fa28841cc105fdcf71e9e0ec9f5",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V01",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "d8fe3985f22326fef08fcb57599b67762392d47ac77b413a8f3135e859f5727f",
+        "input_digest": "d1634d506c9952dde4f18ba8a000c306a04fa69edc1f1150d45641474f1bcba1"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "860c79eea5c71b09e74cd244429b317f7e7528ee88d0212a69b77e8c0bc17ff3",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "d8e6fb076bdedc1bf5f43c7de1615b71144974a92ae96d495ddf342ecd03bc54",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V04",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "d8fe3985f22326fef08fcb57599b67762392d47ac77b413a8f3135e859f5727f",
+        "input_digest": "d1634d506c9952dde4f18ba8a000c306a04fa69edc1f1150d45641474f1bcba1"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "94d65df33ea4c89f5285de0f9a9180ec9171f98c66042075138f9b29036f22ef",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "75c8ed298c36c73675388a4572dd51bc962bce87a2901764f2a68dbe232ef89e",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V05",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "d8fe3985f22326fef08fcb57599b67762392d47ac77b413a8f3135e859f5727f",
+        "input_digest": "d1634d506c9952dde4f18ba8a000c306a04fa69edc1f1150d45641474f1bcba1"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "11b69f9428fe445e3eb7705106482eb2dc2b071758513f0535548087b179a1e6",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "20e416022cc0576777a69a9c45c1c8287a6e2954b7b36fab89a244e844bdf414",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V06",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "d8fe3985f22326fef08fcb57599b67762392d47ac77b413a8f3135e859f5727f",
+        "input_digest": "d1634d506c9952dde4f18ba8a000c306a04fa69edc1f1150d45641474f1bcba1"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "485e9916321730110f23cbf36fa684ac57d13fa41ab1fce207156b0397f7743e",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "159f1657a695da2bbee8045fcc8ecd194d850f3303c95d2ed09c72225a097a6e",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V07",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "d8fe3985f22326fef08fcb57599b67762392d47ac77b413a8f3135e859f5727f",
+        "input_digest": "d1634d506c9952dde4f18ba8a000c306a04fa69edc1f1150d45641474f1bcba1"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "5888404f892573f3107424c20851d010261b5601df092801368e96c90e01e571",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "be3483bd342f4a0e92470594dc7e33b0822c22bd17bfb945102407fb8bda7931",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V08",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "d8fe3985f22326fef08fcb57599b67762392d47ac77b413a8f3135e859f5727f",
+        "input_digest": "d1634d506c9952dde4f18ba8a000c306a04fa69edc1f1150d45641474f1bcba1"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "a890187ee6a1278da2bc3f066cc3c35b654dc81505863410512cf4acd8665152",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "d40c6d6b374d7944c63991645ad2fdae939b2d96d03b8f480b97f6a914cc459b",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V09",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "d8fe3985f22326fef08fcb57599b67762392d47ac77b413a8f3135e859f5727f",
+        "input_digest": "d1634d506c9952dde4f18ba8a000c306a04fa69edc1f1150d45641474f1bcba1"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "48b858b9a9833e0a5fb4d94ffdedcf5fc99baa134e645060543b383398e4bb60",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "6f4ee6a3f0aeebdde9d350ed74c7caa3cff8d4630f22bd799de0ff324bc9c534",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "delayed",
+        "bound_ticks": 256,
+        "property_id": "V10a",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "d8fe3985f22326fef08fcb57599b67762392d47ac77b413a8f3135e859f5727f",
+        "input_digest": "d1634d506c9952dde4f18ba8a000c306a04fa69edc1f1150d45641474f1bcba1"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "fdcddefe9c86b959bb66392c7709b978bdb2dbaf75518cd43d67770bc15cb154",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "49e6b947e88e9c2ccb411f44e1a7b3b1c8ff7207d7db56ebcdb3e1e0575cdf65",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V01",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "d041ea8492a4139350bdb8a98bf0f55f5e63695910267bf0026157644ed6fc60",
+        "input_digest": "46fc22ce1c44a40909bf1974ca8e4acc73e6de5f09b936d651d7c98c8e6c5d9f"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "4ed36ba6e7b19b0019e9e8c76d0b38f0aaf7dad74fea55f7de0e3cda2e5904a4",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "e1494b5c9d47c2a0e1b3237f697fca1195475a7a40ae0d3f3d199af0e1676ffb",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V04",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "d041ea8492a4139350bdb8a98bf0f55f5e63695910267bf0026157644ed6fc60",
+        "input_digest": "46fc22ce1c44a40909bf1974ca8e4acc73e6de5f09b936d651d7c98c8e6c5d9f"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "625cb5e56d6d8154bae70588596d12fedacace67b6e76f399f4f235e796776e0",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "a3489eea79b5975501392e0838646dbf712059bd2588c8ab52e64fcbe1ed83f3",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V05",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "d041ea8492a4139350bdb8a98bf0f55f5e63695910267bf0026157644ed6fc60",
+        "input_digest": "46fc22ce1c44a40909bf1974ca8e4acc73e6de5f09b936d651d7c98c8e6c5d9f"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "e85588cf4a17c6bc1b4688506fcd33ccdd64b5e1e1192de4fc1d86e496a4685d",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "2484dd3d343a2059883e12063aac78da5427002509f0218836685dd8ac67d0fa",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V06",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "d041ea8492a4139350bdb8a98bf0f55f5e63695910267bf0026157644ed6fc60",
+        "input_digest": "46fc22ce1c44a40909bf1974ca8e4acc73e6de5f09b936d651d7c98c8e6c5d9f"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "dd9605e46786db17d171d09d0aab7ba2ecdd8f81064ba6bc4e89a6b965e9d924",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "7df5b50aa5599c286f9ae5097313c8b9dca1b05e3ebab1339cdbbb271b557cda",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V07",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "d041ea8492a4139350bdb8a98bf0f55f5e63695910267bf0026157644ed6fc60",
+        "input_digest": "46fc22ce1c44a40909bf1974ca8e4acc73e6de5f09b936d651d7c98c8e6c5d9f"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "50c55ca974fe1bea1e8fe75dc675dd505637e9869c78cac754b454295bca5660",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "238023111b97dec2ab7f8fd6782450f8a0c0976311afd6cffba96ceebb419b72",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V08",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "d041ea8492a4139350bdb8a98bf0f55f5e63695910267bf0026157644ed6fc60",
+        "input_digest": "46fc22ce1c44a40909bf1974ca8e4acc73e6de5f09b936d651d7c98c8e6c5d9f"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "b64ed5220c8d5a2fd8289949937be46ffff3be9905275915d5e5f66647b12dfd",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "988c246533cc32b3b957a5b2207960c637327bb3de02afc692ccc44ddf41c2f1",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V09",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "d041ea8492a4139350bdb8a98bf0f55f5e63695910267bf0026157644ed6fc60",
+        "input_digest": "46fc22ce1c44a40909bf1974ca8e4acc73e6de5f09b936d651d7c98c8e6c5d9f"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "8c7c9e1a3e7c3f0a9c7c17992d2a263f67c1503999eeb1d4012d108b313a032b",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "1e7d786410bf438a05ed5ef7cdd1e6911adab68938f5c42b59963383c430106c",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "stop_unknown_c1",
+        "bound_ticks": 256,
+        "property_id": "V10a",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "d041ea8492a4139350bdb8a98bf0f55f5e63695910267bf0026157644ed6fc60",
+        "input_digest": "46fc22ce1c44a40909bf1974ca8e4acc73e6de5f09b936d651d7c98c8e6c5d9f"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "3d6d4e8942944028bee69dede3d498d5ed041863f6845649a96394d104e8caa7",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "e97441f7d5e60e03bd74242e041c78c8c2d50392ce142de870043f8c49a611cd",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V01",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "e1fb7288b08879d29754a22307ced84bbd6e223df65100b8748e414e552129a0",
+        "input_digest": "e0480247c27d4cc76471eb189c7672a9d043c4502106b8ce5642b8d8459094cc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "b1e89ce5909ba7404a1014cec8632a35ee13c246c252972190f55432bcbd8554",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "601bec0611651fe4e5047a6f3bf3410958f12aede23522c4f5b3a1dd0d90a75a",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V04",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "e1fb7288b08879d29754a22307ced84bbd6e223df65100b8748e414e552129a0",
+        "input_digest": "e0480247c27d4cc76471eb189c7672a9d043c4502106b8ce5642b8d8459094cc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "d3ebc08c86a84127ce78366fba9349d9de08c9ab8a3095fcd04b0510fc47075b",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "fde74019853d356b7e2d656b4ac6450d7de5d185a4513b2766ca5f3a75133f83",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V05",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "e1fb7288b08879d29754a22307ced84bbd6e223df65100b8748e414e552129a0",
+        "input_digest": "e0480247c27d4cc76471eb189c7672a9d043c4502106b8ce5642b8d8459094cc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "0307cd3512dd5f0d02b0878e04ae53aa2e6b7d59d8ecd07a307f9130a30240b0",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "407d1578d41facbf70a4f673e95667f1139847518acbc688f5f0170044b6e628",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V06",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "e1fb7288b08879d29754a22307ced84bbd6e223df65100b8748e414e552129a0",
+        "input_digest": "e0480247c27d4cc76471eb189c7672a9d043c4502106b8ce5642b8d8459094cc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "6778f70b42749735db2e8b39ba84066cfc0247ff2b2b0a9d307014db82941331",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "60832134a6efaca9b03148a257185d88044c0e1352aeff806bdd054cbc63573e",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V07",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "e1fb7288b08879d29754a22307ced84bbd6e223df65100b8748e414e552129a0",
+        "input_digest": "e0480247c27d4cc76471eb189c7672a9d043c4502106b8ce5642b8d8459094cc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "a17e6bb26d0559265c3e3f6c635cf2d298a3208f8968212b76b7a1e3b2080c24",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "f0b5c3ee5458d1caf603564371498a590a8cb65c8b56d7a328f7c87ba86b8cb9",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V08",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "e1fb7288b08879d29754a22307ced84bbd6e223df65100b8748e414e552129a0",
+        "input_digest": "e0480247c27d4cc76471eb189c7672a9d043c4502106b8ce5642b8d8459094cc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "9e8930f9578bbb405bf3635a74fedbc23e8623693d161a7fa2915b037e4f684b",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "b6256947d26caf4208cbd10cfb7c7b8cb29ef2278a1d9c31a6dd860f019d58b1",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V09",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "e1fb7288b08879d29754a22307ced84bbd6e223df65100b8748e414e552129a0",
+        "input_digest": "e0480247c27d4cc76471eb189c7672a9d043c4502106b8ce5642b8d8459094cc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    },
+    {
+      "source_query_id": "efe2da0683e9312da7d2357ae5073961f1648535d1025eb55e98657992ab280e",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "target_query_id": "bdb4279fcbdddea2c86dc38cfcde9522bd3818f8982ed3a0481ea4c0e71f571a",
+      "target": {
+        "case_id": "S04-P01-DV04",
+        "profile": "nominal",
+        "bound_ticks": 3000,
+        "property_id": "V10a",
+        "timing_scope": "reference-six-phase/0.1",
+        "property_version": "whole-line-properties/0.1",
+        "model_digest": "e1fb7288b08879d29754a22307ced84bbd6e223df65100b8748e414e552129a0",
+        "input_digest": "e0480247c27d4cc76471eb189c7672a9d043c4502106b8ce5642b8d8459094cc"
+      },
+      "equivalence_claimed": false,
+      "scope_change": "legacy synchronous microsteps -> explicit physical dates and periodic FIFO feedback; full property clauses",
+      "legacy_status": "retained; no original bounded answer certified by this migration",
+      "target_status": "P2_MODEL_BOUND_P3_EVIDENCE_PENDING",
+      "verdict": null
+    }
+  ],
+  "source_queries": 160,
+  "target_queries": 160,
+  "old_inventory_changed": false,
+  "decision": "Create distinct reference queries. Historical timing is not silently reinterpreted."
+}

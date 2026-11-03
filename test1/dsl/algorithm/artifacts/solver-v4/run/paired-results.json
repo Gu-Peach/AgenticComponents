@@ -1,0 +1,1722 @@
+[
+  {
+    "case": "S07-P06-DV04",
+    "repeat": 0,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.4863663110980154,
+    "baseline_states": 281,
+    "optimized_states": 281
+  },
+  {
+    "case": "S07-P06-DV04",
+    "repeat": 0,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 0.636201124619558,
+    "baseline_states": 281,
+    "optimized_states": 281
+  },
+  {
+    "case": "S02-P06",
+    "repeat": 1,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.1932556446866882,
+    "baseline_states": 301,
+    "optimized_states": 301
+  },
+  {
+    "case": "S02-P06",
+    "repeat": 1,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 0.6523941266074583,
+    "baseline_states": 301,
+    "optimized_states": 301
+  },
+  {
+    "case": "S07-P08-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.296481682358821,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S09-P02-DV04",
+    "repeat": 1,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.4843184951559254,
+    "baseline_states": 984,
+    "optimized_states": 984
+  },
+  {
+    "case": "S09-P02-DV04",
+    "repeat": 1,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 1.0714970723641817,
+    "baseline_states": 984,
+    "optimized_states": 984
+  },
+  {
+    "case": "S02-P07-DV03",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 0.9924828837111019,
+    "baseline_states": 307,
+    "optimized_states": 307
+  },
+  {
+    "case": "S10-P04-DV04",
+    "repeat": 2,
+    "group": "ablation / storage / 0.5",
+    "ratio": 1.3921894044546632,
+    "baseline_states": 129,
+    "optimized_states": 129
+  },
+  {
+    "case": "S10-P04-DV04",
+    "repeat": 2,
+    "group": "ablation / portfolio / 0.5",
+    "ratio": 0.7528928767538804,
+    "baseline_states": 129,
+    "optimized_states": 129
+  },
+  {
+    "case": "S01-P01-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 0.9840852112859914,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S02-P06",
+    "repeat": 2,
+    "group": "ablation / storage / 0.5",
+    "ratio": 1.132339072123222,
+    "baseline_states": 301,
+    "optimized_states": 301
+  },
+  {
+    "case": "S02-P06",
+    "repeat": 2,
+    "group": "ablation / portfolio / 0.5",
+    "ratio": 0.9818761597144735,
+    "baseline_states": 301,
+    "optimized_states": 301
+  },
+  {
+    "case": "S07-P06-DV04",
+    "repeat": 0,
+    "group": "ablation / storage / 0.5",
+    "ratio": 1.442793791598657,
+    "baseline_states": 281,
+    "optimized_states": 281
+  },
+  {
+    "case": "S07-P06-DV04",
+    "repeat": 0,
+    "group": "ablation / portfolio / 0.5",
+    "ratio": 1.0043648663654359,
+    "baseline_states": 281,
+    "optimized_states": 281
+  },
+  {
+    "case": "S06-P08",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.431017145523003,
+    "baseline_states": 301,
+    "optimized_states": 301
+  },
+  {
+    "case": "S02-P06",
+    "repeat": 1,
+    "group": "ablation / storage / 0.5",
+    "ratio": 1.1843709423578719,
+    "baseline_states": 301,
+    "optimized_states": 301
+  },
+  {
+    "case": "S02-P06",
+    "repeat": 1,
+    "group": "ablation / portfolio / 0.5",
+    "ratio": 1.0368273068163967,
+    "baseline_states": 301,
+    "optimized_states": 301
+  },
+  {
+    "case": "S10-P03-DV04",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.1003208800775692,
+    "baseline_states": 9,
+    "optimized_states": 9
+  },
+  {
+    "case": "S10-P04-DV04",
+    "repeat": 2,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.5077239959692914,
+    "baseline_states": 129,
+    "optimized_states": 129
+  },
+  {
+    "case": "S10-P04-DV04",
+    "repeat": 2,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 0.7358486945943004,
+    "baseline_states": 129,
+    "optimized_states": 129
+  },
+  {
+    "case": "S07-P06-DV04",
+    "repeat": 1,
+    "group": "ablation / storage / 0.5",
+    "ratio": 1.28327424742819,
+    "baseline_states": 281,
+    "optimized_states": 281
+  },
+  {
+    "case": "S07-P06-DV04",
+    "repeat": 1,
+    "group": "ablation / portfolio / 0.5",
+    "ratio": 0.9063584315068446,
+    "baseline_states": 281,
+    "optimized_states": 281
+  },
+  {
+    "case": "S06-P04-DV04",
+    "repeat": 0,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.1514043444080875,
+    "baseline_states": 864,
+    "optimized_states": 864
+  },
+  {
+    "case": "S06-P04-DV04",
+    "repeat": 0,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 1.0336549758918396,
+    "baseline_states": 864,
+    "optimized_states": 864
+  },
+  {
+    "case": "S02-P06",
+    "repeat": 0,
+    "group": "ablation / storage / 0.5",
+    "ratio": 1.4210326972094252,
+    "baseline_states": 301,
+    "optimized_states": 301
+  },
+  {
+    "case": "S02-P06",
+    "repeat": 0,
+    "group": "ablation / portfolio / 0.5",
+    "ratio": 1.1251144486204212,
+    "baseline_states": 301,
+    "optimized_states": 301
+  },
+  {
+    "case": "S10-P01-DV03",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.3055310763215666,
+    "baseline_states": 216,
+    "optimized_states": 216
+  },
+  {
+    "case": "S10-P04-DV04",
+    "repeat": 0,
+    "group": "stress / storage / 0.5",
+    "ratio": 1.0689645331861515,
+    "baseline_states": 129,
+    "optimized_states": 129
+  },
+  {
+    "case": "S06-P04-DV04",
+    "repeat": 2,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.2847339765114418,
+    "baseline_states": 864,
+    "optimized_states": 864
+  },
+  {
+    "case": "S06-P04-DV04",
+    "repeat": 2,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 1.0208108748626477,
+    "baseline_states": 864,
+    "optimized_states": 864
+  },
+  {
+    "case": "S03-P02-DV04",
+    "repeat": 0,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.3250538591590828,
+    "baseline_states": 640,
+    "optimized_states": 640
+  },
+  {
+    "case": "S03-P02-DV04",
+    "repeat": 0,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 0.8379999692419898,
+    "baseline_states": 640,
+    "optimized_states": 640
+  },
+  {
+    "case": "S02-P06-DV04",
+    "repeat": 0,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.3211493461682071,
+    "baseline_states": 219,
+    "optimized_states": 219
+  },
+  {
+    "case": "S02-P06-DV04",
+    "repeat": 0,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 0.4905379371140905,
+    "baseline_states": 219,
+    "optimized_states": 219
+  },
+  {
+    "case": "S07-P07",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.0851806636164476,
+    "baseline_states": 218,
+    "optimized_states": 218
+  },
+  {
+    "case": "S10-P04",
+    "repeat": 2,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.1733701879100782,
+    "baseline_states": 952,
+    "optimized_states": 952
+  },
+  {
+    "case": "S10-P04",
+    "repeat": 2,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 0.8735706250239684,
+    "baseline_states": 952,
+    "optimized_states": 952
+  },
+  {
+    "case": "S10-P04",
+    "repeat": 0,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.1817348526642204,
+    "baseline_states": 952,
+    "optimized_states": 952
+  },
+  {
+    "case": "S10-P04",
+    "repeat": 0,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 0.9169926147017663,
+    "baseline_states": 952,
+    "optimized_states": 952
+  },
+  {
+    "case": "S05-P01-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 0.8182517263158614,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S09-P02-DV04",
+    "repeat": 0,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.2552615879926707,
+    "baseline_states": 984,
+    "optimized_states": 984
+  },
+  {
+    "case": "S09-P02-DV04",
+    "repeat": 0,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 0.9671885969369458,
+    "baseline_states": 984,
+    "optimized_states": 984
+  },
+  {
+    "case": "S02-P06",
+    "repeat": 2,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.2202986810606011,
+    "baseline_states": 301,
+    "optimized_states": 301
+  },
+  {
+    "case": "S02-P06",
+    "repeat": 2,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 0.5938846283482587,
+    "baseline_states": 301,
+    "optimized_states": 301
+  },
+  {
+    "case": "S08-P04-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.1428955538008718,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S09-P02",
+    "repeat": 0,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.3329779908306476,
+    "baseline_states": 1066,
+    "optimized_states": 1066
+  },
+  {
+    "case": "S09-P02",
+    "repeat": 0,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 1.0267488968811727,
+    "baseline_states": 1066,
+    "optimized_states": 1066
+  },
+  {
+    "case": "S02-P05",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.19819059458615,
+    "baseline_states": 305,
+    "optimized_states": 305
+  },
+  {
+    "case": "S06-P03-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.2343266316483343,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S07-P05-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.498433338899219,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S07-P07-DV04",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.2491749169256705,
+    "baseline_states": 8,
+    "optimized_states": 8
+  },
+  {
+    "case": "S02-P08-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.1262781128036918,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S10-P01-DV04",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.5873465199273176,
+    "baseline_states": 8,
+    "optimized_states": 8
+  },
+  {
+    "case": "S07-P06-DV04",
+    "repeat": 1,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.2434317768648395,
+    "baseline_states": 281,
+    "optimized_states": 281
+  },
+  {
+    "case": "S07-P06-DV04",
+    "repeat": 1,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 0.7015127218267363,
+    "baseline_states": 281,
+    "optimized_states": 281
+  },
+  {
+    "case": "S06-P04-DV04",
+    "repeat": 1,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.3611918670832532,
+    "baseline_states": 864,
+    "optimized_states": 864
+  },
+  {
+    "case": "S06-P04-DV04",
+    "repeat": 1,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 1.0656712166844444,
+    "baseline_states": 864,
+    "optimized_states": 864
+  },
+  {
+    "case": "S08-P05-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.9793033012622956,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S03-P03-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.0735704644081583,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S01-P03-DV04",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.380715874925141,
+    "baseline_states": 219,
+    "optimized_states": 219
+  },
+  {
+    "case": "S10-P02-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.3286585965041346,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S08-P01-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.263054441815696,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S01-P02",
+    "repeat": 2,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.2295745778752993,
+    "baseline_states": 599,
+    "optimized_states": 599
+  },
+  {
+    "case": "S01-P02",
+    "repeat": 2,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 0.874307421526282,
+    "baseline_states": 599,
+    "optimized_states": 599
+  },
+  {
+    "case": "S03-P02-DV04",
+    "repeat": 1,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.5907470573178049,
+    "baseline_states": 640,
+    "optimized_states": 640
+  },
+  {
+    "case": "S03-P02-DV04",
+    "repeat": 1,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 1.0464824628000386,
+    "baseline_states": 640,
+    "optimized_states": 640
+  },
+  {
+    "case": "S05-P04-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 0.9067366852186359,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S09-P06-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.2354372390794308,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S11-P04-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.3284499434890598,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S07-P06-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.3354973666821786,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S02-P06-DV04",
+    "repeat": 1,
+    "group": "ablation / storage / 0.5",
+    "ratio": 1.251368654578847,
+    "baseline_states": 219,
+    "optimized_states": 219
+  },
+  {
+    "case": "S02-P06-DV04",
+    "repeat": 1,
+    "group": "ablation / portfolio / 0.5",
+    "ratio": 1.023979942668072,
+    "baseline_states": 219,
+    "optimized_states": 219
+  },
+  {
+    "case": "S04-P01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.3467768842655414,
+    "baseline_states": 438,
+    "optimized_states": 438
+  },
+  {
+    "case": "S10-P04-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.2844482407374782,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S11-P02-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.6234352157418979,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S02-P06-DV04",
+    "repeat": 1,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.2291202169221433,
+    "baseline_states": 219,
+    "optimized_states": 219
+  },
+  {
+    "case": "S02-P06-DV04",
+    "repeat": 1,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 0.5124399109053638,
+    "baseline_states": 219,
+    "optimized_states": 219
+  },
+  {
+    "case": "S06-P01-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.22981168228398,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S02-P06-DV04",
+    "repeat": 2,
+    "group": "ablation / storage / 0.5",
+    "ratio": 0.9591112943456273,
+    "baseline_states": 219,
+    "optimized_states": 219
+  },
+  {
+    "case": "S02-P06-DV04",
+    "repeat": 2,
+    "group": "ablation / portfolio / 0.5",
+    "ratio": 0.8781744882894177,
+    "baseline_states": 219,
+    "optimized_states": 219
+  },
+  {
+    "case": "S10-P04-DV04",
+    "repeat": 1,
+    "group": "ablation / storage / 0.5",
+    "ratio": 1.7993840885960697,
+    "baseline_states": 129,
+    "optimized_states": 129
+  },
+  {
+    "case": "S10-P04-DV04",
+    "repeat": 1,
+    "group": "ablation / portfolio / 0.5",
+    "ratio": 0.9518922618357528,
+    "baseline_states": 129,
+    "optimized_states": 129
+  },
+  {
+    "case": "S02-P05-DV03",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.5262794365890793,
+    "baseline_states": 303,
+    "optimized_states": 303
+  },
+  {
+    "case": "S07-P01-DV04",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.3908736103681312,
+    "baseline_states": 282,
+    "optimized_states": 282
+  },
+  {
+    "case": "S10-P04-DV04",
+    "repeat": 0,
+    "group": "ablation / storage / 0.5",
+    "ratio": 1.5910078965065806,
+    "baseline_states": 129,
+    "optimized_states": 129
+  },
+  {
+    "case": "S10-P04-DV04",
+    "repeat": 0,
+    "group": "ablation / portfolio / 0.5",
+    "ratio": 0.7790002574309023,
+    "baseline_states": 129,
+    "optimized_states": 129
+  },
+  {
+    "case": "S02-P04-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.1340740957744784,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S07-P07-DV03",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.2397130458743368,
+    "baseline_states": 216,
+    "optimized_states": 216
+  },
+  {
+    "case": "S06-P04-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.633627051619736,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S01-P04-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.2694192019317139,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S12-P03-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.1722874989286507,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S09-P02",
+    "repeat": 1,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.3354145278814533,
+    "baseline_states": 1066,
+    "optimized_states": 1066
+  },
+  {
+    "case": "S09-P02",
+    "repeat": 1,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 1.0465580948743647,
+    "baseline_states": 1066,
+    "optimized_states": 1066
+  },
+  {
+    "case": "S02-P06-DV04",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.1530761308954887,
+    "baseline_states": 219,
+    "optimized_states": 219
+  },
+  {
+    "case": "S12-P02-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.2580532275432355,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S10-P04-DV04",
+    "repeat": 1,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.3421700948224031,
+    "baseline_states": 129,
+    "optimized_states": 129
+  },
+  {
+    "case": "S10-P04-DV04",
+    "repeat": 1,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 0.6115389431802892,
+    "baseline_states": 129,
+    "optimized_states": 129
+  },
+  {
+    "case": "S03-P02",
+    "repeat": 2,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.1564945699205018,
+    "baseline_states": 722,
+    "optimized_states": 722
+  },
+  {
+    "case": "S03-P02",
+    "repeat": 2,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 0.8219222746618638,
+    "baseline_states": 722,
+    "optimized_states": 722
+  },
+  {
+    "case": "S03-P06-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 0.9617348163454792,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S02-P01-DV03",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.5068101279503059,
+    "baseline_states": 302,
+    "optimized_states": 302
+  },
+  {
+    "case": "S02-P01-DV04",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.1694051606960787,
+    "baseline_states": 222,
+    "optimized_states": 222
+  },
+  {
+    "case": "S02-P07",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.1180812514830287,
+    "baseline_states": 309,
+    "optimized_states": 309
+  },
+  {
+    "case": "S09-P02-DV04",
+    "repeat": 2,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.344879863503332,
+    "baseline_states": 984,
+    "optimized_states": 984
+  },
+  {
+    "case": "S09-P02-DV04",
+    "repeat": 2,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 1.0819863035239037,
+    "baseline_states": 984,
+    "optimized_states": 984
+  },
+  {
+    "case": "S08-P06-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.2461687679905846,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S02-P07-DV04",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.4158735321096168,
+    "baseline_states": 309,
+    "optimized_states": 309
+  },
+  {
+    "case": "S01-P03",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.3176514315974124,
+    "baseline_states": 301,
+    "optimized_states": 301
+  },
+  {
+    "case": "S02-P06-DV04",
+    "repeat": 2,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.2334836639186602,
+    "baseline_states": 219,
+    "optimized_states": 219
+  },
+  {
+    "case": "S02-P06-DV04",
+    "repeat": 2,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 0.4887170875203596,
+    "baseline_states": 219,
+    "optimized_states": 219
+  },
+  {
+    "case": "S01-P06-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.404732795075847,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S01-P02-DV04",
+    "repeat": 1,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.344978545542529,
+    "baseline_states": 517,
+    "optimized_states": 517
+  },
+  {
+    "case": "S01-P02-DV04",
+    "repeat": 1,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 0.7717442916039394,
+    "baseline_states": 517,
+    "optimized_states": 517
+  },
+  {
+    "case": "S01-P05-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.2910117142180286,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S10-P04-DV04",
+    "repeat": 0,
+    "group": "ablation / storage / 2.0",
+    "ratio": 0.7988148309406138,
+    "baseline_states": 129,
+    "optimized_states": 129
+  },
+  {
+    "case": "S10-P04-DV04",
+    "repeat": 0,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 0.6470891588916087,
+    "baseline_states": 129,
+    "optimized_states": 129
+  },
+  {
+    "case": "S10-P03-DV03",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.2390384299190529,
+    "baseline_states": 217,
+    "optimized_states": 217
+  },
+  {
+    "case": "S11-P02-DV03",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 0.9895624867131609,
+    "baseline_states": 138,
+    "optimized_states": 138
+  },
+  {
+    "case": "S07-P06",
+    "repeat": 2,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.0377754374830253,
+    "baseline_states": 491,
+    "optimized_states": 491
+  },
+  {
+    "case": "S07-P06",
+    "repeat": 2,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 0.8234578610172667,
+    "baseline_states": 491,
+    "optimized_states": 491
+  },
+  {
+    "case": "S02-P06",
+    "repeat": 0,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.3563445560888812,
+    "baseline_states": 301,
+    "optimized_states": 301
+  },
+  {
+    "case": "S02-P06",
+    "repeat": 0,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 0.6629310491325003,
+    "baseline_states": 301,
+    "optimized_states": 301
+  },
+  {
+    "case": "S05-P03-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.437860281802086,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S04-P01-DV02",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.288246418548859,
+    "baseline_states": 557,
+    "optimized_states": 557
+  },
+  {
+    "case": "S07-P01-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 2.203369479551384,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S07-P06",
+    "repeat": 0,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.154129879679141,
+    "baseline_states": 491,
+    "optimized_states": 491
+  },
+  {
+    "case": "S07-P06",
+    "repeat": 0,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 0.6680904601700381,
+    "baseline_states": 491,
+    "optimized_states": 491
+  },
+  {
+    "case": "S02-P06-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.235220300563384,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S08-P03-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.3302180592174324,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S12-P04-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.221561926208226,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S12-P01-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.2835272978724703,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S08-P02-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.7269520223639898,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S04-P04-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.21122999191648,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S09-P05-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 0.9280241840097746,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S05-P02-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.1890058660415268,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S03-P02-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.2646839936934804,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S01-P02",
+    "repeat": 1,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.2786823043275732,
+    "baseline_states": 599,
+    "optimized_states": 599
+  },
+  {
+    "case": "S01-P02",
+    "repeat": 1,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 0.899628107773104,
+    "baseline_states": 599,
+    "optimized_states": 599
+  },
+  {
+    "case": "S10-P03-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.5848362864689534,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S07-P06-DV04",
+    "repeat": 2,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.4397431510217715,
+    "baseline_states": 281,
+    "optimized_states": 281
+  },
+  {
+    "case": "S07-P06-DV04",
+    "repeat": 2,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 0.6439940605845486,
+    "baseline_states": 281,
+    "optimized_states": 281
+  },
+  {
+    "case": "S07-P06-DV04",
+    "repeat": 2,
+    "group": "ablation / storage / 0.5",
+    "ratio": 1.3723931293226748,
+    "baseline_states": 281,
+    "optimized_states": 281
+  },
+  {
+    "case": "S07-P06-DV04",
+    "repeat": 2,
+    "group": "ablation / portfolio / 0.5",
+    "ratio": 1.0106271534781892,
+    "baseline_states": 281,
+    "optimized_states": 281
+  },
+  {
+    "case": "S01-P03-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.6103777630660243,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S06-P08-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.0660761143557667,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S04-P01-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.299338855352926,
+    "baseline_states": 177,
+    "optimized_states": 177
+  },
+  {
+    "case": "S09-P01-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 0.8953765512200459,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S06-P08-DV03",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.164237619350775,
+    "baseline_states": 301,
+    "optimized_states": 301
+  },
+  {
+    "case": "S07-P07-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.2568466032934569,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S11-P06-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.1505450009096252,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S02-P05-DV04",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.4724347287387285,
+    "baseline_states": 305,
+    "optimized_states": 305
+  },
+  {
+    "case": "S10-P04-DV04",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.197967701306873,
+    "baseline_states": 129,
+    "optimized_states": 129
+  },
+  {
+    "case": "S03-P02",
+    "repeat": 1,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.3861230225468395,
+    "baseline_states": 722,
+    "optimized_states": 722
+  },
+  {
+    "case": "S03-P02",
+    "repeat": 1,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 0.8534766122167634,
+    "baseline_states": 722,
+    "optimized_states": 722
+  },
+  {
+    "case": "S02-P01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.578489384279033,
+    "baseline_states": 304,
+    "optimized_states": 304
+  },
+  {
+    "case": "S01-P02-DV04",
+    "repeat": 0,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.3292581309215594,
+    "baseline_states": 517,
+    "optimized_states": 517
+  },
+  {
+    "case": "S01-P02-DV04",
+    "repeat": 0,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 0.7932863688031802,
+    "baseline_states": 517,
+    "optimized_states": 517
+  },
+  {
+    "case": "S11-P03-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.6765608570871926,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S10-P01-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.2514285917123544,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S02-P07-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.409444687904798,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S03-P02",
+    "repeat": 0,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.3638965719405851,
+    "baseline_states": 722,
+    "optimized_states": 722
+  },
+  {
+    "case": "S03-P02",
+    "repeat": 0,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 0.9864989792300023,
+    "baseline_states": 722,
+    "optimized_states": 722
+  },
+  {
+    "case": "S11-P01-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.159357254910389,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S08-P03-DV04",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.423383842557113,
+    "baseline_states": 397,
+    "optimized_states": 397
+  },
+  {
+    "case": "S02-P06-DV04",
+    "repeat": 0,
+    "group": "ablation / storage / 0.5",
+    "ratio": 1.25988300776943,
+    "baseline_states": 219,
+    "optimized_states": 219
+  },
+  {
+    "case": "S02-P06-DV04",
+    "repeat": 0,
+    "group": "ablation / portfolio / 0.5",
+    "ratio": 0.9515097803228747,
+    "baseline_states": 219,
+    "optimized_states": 219
+  },
+  {
+    "case": "S03-P04-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.1509420116306748,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S06-P07-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.4005924018161313,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S07-P06-DV04",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.3041101821823582,
+    "baseline_states": 281,
+    "optimized_states": 281
+  },
+  {
+    "case": "S07-P02-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.024487620393179,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S04-P01-DV04",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.1090420113532156,
+    "baseline_states": 388,
+    "optimized_states": 388
+  },
+  {
+    "case": "S02-P06",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.2265623006711175,
+    "baseline_states": 301,
+    "optimized_states": 301
+  },
+  {
+    "case": "S10-P02-DV04",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.248708219042598,
+    "baseline_states": 430,
+    "optimized_states": 430
+  },
+  {
+    "case": "S11-P02",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.3516160587239812,
+    "baseline_states": 140,
+    "optimized_states": 140
+  },
+  {
+    "case": "S01-P02-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.095885431895882,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S12-P05-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.2935355652681444,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S01-P02",
+    "repeat": 0,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.4974031719705692,
+    "baseline_states": 599,
+    "optimized_states": 599
+  },
+  {
+    "case": "S01-P02",
+    "repeat": 0,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 1.0166957926704567,
+    "baseline_states": 599,
+    "optimized_states": 599
+  },
+  {
+    "case": "S01-P03-DV03",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.3205668348534456,
+    "baseline_states": 301,
+    "optimized_states": 301
+  },
+  {
+    "case": "S11-P02-DV04",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.2958600553952937,
+    "baseline_states": 100,
+    "optimized_states": 100
+  },
+  {
+    "case": "S01-P02-DV04",
+    "repeat": 2,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.1633616651478331,
+    "baseline_states": 517,
+    "optimized_states": 517
+  },
+  {
+    "case": "S01-P02-DV04",
+    "repeat": 2,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 0.7416932759563658,
+    "baseline_states": 517,
+    "optimized_states": 517
+  },
+  {
+    "case": "S10-P04",
+    "repeat": 1,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.4696053814793881,
+    "baseline_states": 952,
+    "optimized_states": 952
+  },
+  {
+    "case": "S10-P04",
+    "repeat": 1,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 0.9087497263701815,
+    "baseline_states": 952,
+    "optimized_states": 952
+  },
+  {
+    "case": "S02-P02-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.2637308124288296,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S09-P02",
+    "repeat": 2,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.186672129497325,
+    "baseline_states": 1066,
+    "optimized_states": 1066
+  },
+  {
+    "case": "S09-P02",
+    "repeat": 2,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 1.0176644656163674,
+    "baseline_states": 1066,
+    "optimized_states": 1066
+  },
+  {
+    "case": "S10-P04-DV04",
+    "repeat": 0,
+    "group": "stress / storage / 0.5",
+    "ratio": 1.237640890828791,
+    "baseline_states": 129,
+    "optimized_states": 129
+  },
+  {
+    "case": "S07-P04-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.1600033446190425,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S06-P08-DV04",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.7061419848749684,
+    "baseline_states": 219,
+    "optimized_states": 219
+  },
+  {
+    "case": "S02-P01-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.20736314430405,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S04-P01-DV03",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.0247515389129485,
+    "baseline_states": 436,
+    "optimized_states": 436
+  },
+  {
+    "case": "S06-P05-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.6655113127395622,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S02-P05-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.2317144921995298,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S03-P02-DV04",
+    "repeat": 2,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.266227278410725,
+    "baseline_states": 640,
+    "optimized_states": 640
+  },
+  {
+    "case": "S03-P02-DV04",
+    "repeat": 2,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 0.8340411447356544,
+    "baseline_states": 640,
+    "optimized_states": 640
+  },
+  {
+    "case": "S07-P03-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.2991704745497736,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S11-P05-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.289934048627921,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S09-P02-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.3029029158332444,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S09-P03-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.2638032479594012,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S10-P01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.4537618157907168,
+    "baseline_states": 218,
+    "optimized_states": 218
+  },
+  {
+    "case": "S02-P03-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.4322021755148648,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S09-P04-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 2.423985197540094,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S03-P01-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.5110161271290974,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S06-P02-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 0.5180509428484121,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S12-P06-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 2.142987664953763,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S04-P02-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.2802917938078704,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S07-P06",
+    "repeat": 1,
+    "group": "ablation / storage / 2.0",
+    "ratio": 1.344003734302079,
+    "baseline_states": 491,
+    "optimized_states": 491
+  },
+  {
+    "case": "S07-P06",
+    "repeat": 1,
+    "group": "ablation / portfolio / 2.0",
+    "ratio": 0.8357801759835894,
+    "baseline_states": 491,
+    "optimized_states": 491
+  },
+  {
+    "case": "S03-P05-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.3142951591943672,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S10-P03",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.1047803539206986,
+    "baseline_states": 217,
+    "optimized_states": 217
+  },
+  {
+    "case": "S02-P06-DV03",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.2672264263445394,
+    "baseline_states": 301,
+    "optimized_states": 301
+  },
+  {
+    "case": "S04-P03-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.185916317336641,
+    "baseline_states": 123,
+    "optimized_states": 123
+  },
+  {
+    "case": "S06-P06-DV01",
+    "repeat": 0,
+    "group": "full_nominal / storage / 0.5",
+    "ratio": 1.0880852218555757,
+    "baseline_states": 123,
+    "optimized_states": 123
+  }
+]

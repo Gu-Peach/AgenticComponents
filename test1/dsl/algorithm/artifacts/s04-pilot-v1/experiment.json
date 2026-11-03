@@ -1,0 +1,25 @@
+{
+  "id": "s04-pilot-v1",
+  "started_utc": "2026-11-01T13:43:05.737882+00:00",
+  "python": "3.10.8",
+  "jsonschema": "4.23.0",
+  "platform": "Windows-10-10.0.22631-SP0",
+  "model": "s04-pilot-timed-microsteps/0.1",
+  "case_ids": [
+    "S04-P01",
+    "S04-P01-DS01",
+    "S04-P01-DS02",
+    "S04-P01-DS03",
+    "S04-P01-DV01",
+    "S04-P01-DV02",
+    "S04-P01-DV03",
+    "S04-P01-DV04"
+  ],
+  "method": "BFS exhaustive over declared finite timed microstep model",
+  "independent_oracle_used_by_solver": false,
+  "tools": {
+    "pilot_frontend.py": "81600e8237335a4b352eb4e3df23597bb95a3ded7d11db9cc924d8a27c8288a8",
+    "pilot_model.py": "52b24bf88382440f601038e1c28b7fc73a8b69045ee56ae1a55c27febbb718d8",
+    "pilot_verify.py": "e80d65551f66f526447fb3a453f5779e594e5ac2d69fea5b66e8db64a11155cb"
+  }
+}

@@ -1,0 +1,965 @@
+[
+  {
+    "fixture": "single",
+    "summary": {
+      "reference_version": "reference-event-agenda/0.1",
+      "model_digest": "ffc8feab7b37b2d1a46c58dc192ff13015dd3a02a949ffa361efca400ccda9b9",
+      "case_id": "diagnostic:single",
+      "profile": {
+        "accept": [
+          1,
+          1
+        ],
+        "phase": [
+          1,
+          2
+        ],
+        "stop": [
+          1,
+          1
+        ],
+        "feedback": [
+          0,
+          0
+        ],
+        "faults": [],
+        "max_faults": 0,
+        "forced_stop_loss": null,
+        "max_age": 2,
+        "events": [],
+        "response_window": 40,
+        "name": "nominal",
+        "timing_scope": "reference-six-phase/0.1",
+        "source_scope": "hand-authored-P2-fixture/0.1",
+        "pilot_migration": false,
+        "visibility": 1,
+        "fault_packet_selection": "any_queued_packet"
+      },
+      "bound": 128,
+      "search": "complete",
+      "states": 79,
+      "edges": 99,
+      "frontier_exhausted": true,
+      "finite_model_closed": true,
+      "horizon_reached": false,
+      "limit": null,
+      "elapsed_seconds": 0.16273360000923276,
+      "serialized_state_bytes": 209088,
+      "peak_sampled_rss_bytes": 30154752,
+      "all_edges_retained": true,
+      "memory_tracking": "sampled RSS and serialized keys",
+      "terminal_counts": {
+        "succeeded": 8
+      },
+      "violations_seen": [],
+      "goal_witness_found": true,
+      "uncovered_obligations": [],
+      "monitor_coverage_complete": true,
+      "edge_digest": "6a81856a3a4f93fb853b9358cdbd65f53ef7d036b566a9483012ea4808ff0820",
+      "reference_queries_admitted": false,
+      "note": "P2 model validation output; P3 must independently check evidence before truth admission."
+    },
+    "expected_violations": [],
+    "passed": true,
+    "graph": {
+      "path": "graphs/single.json",
+      "sha256": "2ef248b235fe129466e0a82f15ce700ed9265b222474a65f69a772276fe79f3a"
+    },
+    "replays": [
+      {
+        "valid": true,
+        "tick": 9,
+        "outcome": "succeeded",
+        "boundary": "self-model replay; not P3 independent evidence certification"
+      },
+      {
+        "valid": true,
+        "tick": 16,
+        "outcome": "succeeded",
+        "boundary": "self-model replay; not P3 independent evidence certification"
+      }
+    ]
+  },
+  {
+    "fixture": "disjoint",
+    "summary": {
+      "reference_version": "reference-event-agenda/0.1",
+      "model_digest": "c8a1d7f613c19a390ced0734b2a6a97508e7cd7e5def9ec433bc4b4882d661c9",
+      "case_id": "diagnostic:disjoint",
+      "profile": {
+        "accept": [
+          1,
+          1
+        ],
+        "phase": [
+          1,
+          1
+        ],
+        "stop": [
+          1,
+          1
+        ],
+        "feedback": [
+          0,
+          0
+        ],
+        "faults": [],
+        "max_faults": 0,
+        "forced_stop_loss": null,
+        "max_age": 2,
+        "events": [],
+        "response_window": 40,
+        "name": "nominal",
+        "timing_scope": "reference-six-phase/0.1",
+        "source_scope": "hand-authored-P2-fixture/0.1",
+        "pilot_migration": false,
+        "visibility": 1,
+        "fault_packet_selection": "any_queued_packet"
+      },
+      "bound": 128,
+      "search": "complete",
+      "states": 12,
+      "edges": 11,
+      "frontier_exhausted": true,
+      "finite_model_closed": true,
+      "horizon_reached": false,
+      "limit": null,
+      "elapsed_seconds": 0.010920699991402216,
+      "serialized_state_bytes": 45297,
+      "peak_sampled_rss_bytes": 30355456,
+      "all_edges_retained": true,
+      "memory_tracking": "sampled RSS and serialized keys",
+      "terminal_counts": {
+        "succeeded": 1
+      },
+      "violations_seen": [],
+      "goal_witness_found": true,
+      "uncovered_obligations": [],
+      "monitor_coverage_complete": true,
+      "edge_digest": "f79e89989762e6d62a1876fd9991eb89bce551524ff8e6fb4aba79f55ab15fb9",
+      "reference_queries_admitted": false,
+      "note": "P2 model validation output; P3 must independently check evidence before truth admission."
+    },
+    "expected_violations": [],
+    "passed": true,
+    "graph": {
+      "path": "graphs/disjoint.json",
+      "sha256": "60e96ed041299f784aef09f88aba2b71a9c8360ca5700a893c43b9134ee3e5d5"
+    },
+    "replays": [
+      {
+        "valid": true,
+        "tick": 11,
+        "outcome": "succeeded",
+        "boundary": "self-model replay; not P3 independent evidence certification"
+      }
+    ]
+  },
+  {
+    "fixture": "shared-material",
+    "summary": {
+      "reference_version": "reference-event-agenda/0.1",
+      "model_digest": "f8b660c635c016be95a47a86e732db075aa81095065261ef5e46837b15a8e128",
+      "case_id": "diagnostic:shared-material",
+      "profile": {
+        "accept": [
+          1,
+          1
+        ],
+        "phase": [
+          1,
+          1
+        ],
+        "stop": [
+          1,
+          1
+        ],
+        "feedback": [
+          0,
+          0
+        ],
+        "faults": [],
+        "max_faults": 0,
+        "forced_stop_loss": null,
+        "max_age": 2,
+        "events": [],
+        "response_window": 40,
+        "name": "nominal",
+        "timing_scope": "reference-six-phase/0.1",
+        "source_scope": "hand-authored-P2-fixture/0.1",
+        "pilot_migration": false,
+        "visibility": 1,
+        "fault_packet_selection": "any_queued_packet"
+      },
+      "bound": 128,
+      "search": "complete",
+      "states": 27,
+      "edges": 26,
+      "frontier_exhausted": true,
+      "finite_model_closed": true,
+      "horizon_reached": false,
+      "limit": null,
+      "elapsed_seconds": 0.013531000004149973,
+      "serialized_state_bytes": 73191,
+      "peak_sampled_rss_bytes": 30318592,
+      "all_edges_retained": true,
+      "memory_tracking": "sampled RSS and serialized keys",
+      "terminal_counts": {
+        "failed": 1
+      },
+      "violations_seen": [],
+      "goal_witness_found": false,
+      "uncovered_obligations": [],
+      "monitor_coverage_complete": true,
+      "edge_digest": "4d61205e9afbaff8b05a4a505c82a5a0d4a5fa26f3e7e4a36ee43fa076a667ba",
+      "reference_queries_admitted": false,
+      "note": "P2 model validation output; P3 must independently check evidence before truth admission."
+    },
+    "expected_violations": [],
+    "passed": true,
+    "graph": {
+      "path": "graphs/shared-material.json",
+      "sha256": "9d750bbe7163876dd745da1817910079262af0ce749e475fbef935630b245cd2"
+    },
+    "replays": [
+      {
+        "valid": true,
+        "tick": 26,
+        "outcome": "failed",
+        "boundary": "self-model replay; not P3 independent evidence certification"
+      }
+    ]
+  },
+  {
+    "fixture": "capacity",
+    "summary": {
+      "reference_version": "reference-event-agenda/0.1",
+      "model_digest": "c949717fffa27a0a063ac2613bcc99604b2deaae1116ebd7fdb90a891153d3e2",
+      "case_id": "diagnostic:capacity",
+      "profile": {
+        "accept": [
+          1,
+          1
+        ],
+        "phase": [
+          1,
+          1
+        ],
+        "stop": [
+          1,
+          1
+        ],
+        "feedback": [
+          0,
+          0
+        ],
+        "faults": [],
+        "max_faults": 0,
+        "forced_stop_loss": null,
+        "max_age": 2,
+        "events": [],
+        "response_window": 40,
+        "name": "nominal",
+        "timing_scope": "reference-six-phase/0.1",
+        "source_scope": "hand-authored-P2-fixture/0.1",
+        "pilot_migration": false,
+        "visibility": 1,
+        "fault_packet_selection": "any_queued_packet"
+      },
+      "bound": 128,
+      "search": "complete",
+      "states": 27,
+      "edges": 26,
+      "frontier_exhausted": true,
+      "finite_model_closed": true,
+      "horizon_reached": false,
+      "limit": null,
+      "elapsed_seconds": 0.014001599993207492,
+      "serialized_state_bytes": 76658,
+      "peak_sampled_rss_bytes": 30642176,
+      "all_edges_retained": true,
+      "memory_tracking": "sampled RSS and serialized keys",
+      "terminal_counts": {
+        "failed": 1
+      },
+      "violations_seen": [],
+      "goal_witness_found": false,
+      "uncovered_obligations": [],
+      "monitor_coverage_complete": true,
+      "edge_digest": "4d61205e9afbaff8b05a4a505c82a5a0d4a5fa26f3e7e4a36ee43fa076a667ba",
+      "reference_queries_admitted": false,
+      "note": "P2 model validation output; P3 must independently check evidence before truth admission."
+    },
+    "expected_violations": [],
+    "passed": true,
+    "graph": {
+      "path": "graphs/capacity.json",
+      "sha256": "7ea334a0f1f69f9c0964180c0c155cbeb928bae5431a373e3b26f9c6a1b5bc13"
+    },
+    "replays": [
+      {
+        "valid": true,
+        "tick": 26,
+        "outcome": "failed",
+        "boundary": "self-model replay; not P3 independent evidence certification"
+      }
+    ]
+  },
+  {
+    "fixture": "parallel-failure",
+    "summary": {
+      "reference_version": "reference-event-agenda/0.1",
+      "model_digest": "5dbbc332c93cc79709b974e38d4c07885d47c3adbc01687e0dbcfde3bb4ce249",
+      "case_id": "diagnostic:parallel-failure",
+      "profile": {
+        "accept": [
+          1,
+          1
+        ],
+        "phase": [
+          1,
+          1
+        ],
+        "stop": [
+          1,
+          1
+        ],
+        "feedback": [
+          0,
+          0
+        ],
+        "faults": [],
+        "max_faults": 0,
+        "forced_stop_loss": null,
+        "max_age": 2,
+        "events": [],
+        "response_window": 40,
+        "name": "nominal",
+        "timing_scope": "reference-six-phase/0.1",
+        "source_scope": "hand-authored-P2-fixture/0.1",
+        "pilot_migration": false,
+        "visibility": 1,
+        "fault_packet_selection": "any_queued_packet"
+      },
+      "bound": 128,
+      "search": "complete",
+      "states": 8,
+      "edges": 7,
+      "frontier_exhausted": true,
+      "finite_model_closed": true,
+      "horizon_reached": false,
+      "limit": null,
+      "elapsed_seconds": 0.004560200002742931,
+      "serialized_state_bytes": 22645,
+      "peak_sampled_rss_bytes": 30658560,
+      "all_edges_retained": true,
+      "memory_tracking": "sampled RSS and serialized keys",
+      "terminal_counts": {
+        "attention_required": 1
+      },
+      "violations_seen": [],
+      "goal_witness_found": false,
+      "uncovered_obligations": [],
+      "monitor_coverage_complete": true,
+      "edge_digest": "108a5ea26e3dfd54f09b3bfc6f7a40d266285db803b733351f49dfbf547c85a3",
+      "reference_queries_admitted": false,
+      "note": "P2 model validation output; P3 must independently check evidence before truth admission."
+    },
+    "expected_violations": [],
+    "passed": true,
+    "graph": {
+      "path": "graphs/parallel-failure.json",
+      "sha256": "238619424a7424f055dd3c70d47cc38ed8a06cb35216f6447a8a96b6b58c5b81"
+    },
+    "replays": [
+      {
+        "valid": true,
+        "tick": 7,
+        "outcome": "attention_required",
+        "boundary": "self-model replay; not P3 independent evidence certification"
+      }
+    ]
+  },
+  {
+    "fixture": "provider_restart",
+    "summary": {
+      "reference_version": "reference-event-agenda/0.1",
+      "model_digest": "7b4bc739c6e02a8e59e64773ea68f9b76d7fb74b2dc4a5b1782f72ba140c2a57",
+      "case_id": "diagnostic:provider_restart",
+      "profile": {
+        "accept": [
+          1,
+          1
+        ],
+        "phase": [
+          1,
+          1
+        ],
+        "stop": [
+          1,
+          1
+        ],
+        "feedback": [
+          0,
+          0
+        ],
+        "faults": [
+          "provider_restart"
+        ],
+        "max_faults": 1,
+        "forced_stop_loss": null,
+        "max_age": 2,
+        "events": [],
+        "response_window": 40,
+        "name": "nominal",
+        "timing_scope": "reference-six-phase/0.1",
+        "source_scope": "hand-authored-P2-fixture/0.1",
+        "pilot_migration": false,
+        "visibility": 1,
+        "fault_packet_selection": "any_queued_packet"
+      },
+      "bound": 128,
+      "search": "complete",
+      "states": 50,
+      "edges": 49,
+      "frontier_exhausted": true,
+      "finite_model_closed": true,
+      "horizon_reached": false,
+      "limit": null,
+      "elapsed_seconds": 0.023942300002090633,
+      "serialized_state_bytes": 126607,
+      "peak_sampled_rss_bytes": 30519296,
+      "all_edges_retained": true,
+      "memory_tracking": "sampled RSS and serialized keys",
+      "terminal_counts": {
+        "attention_required": 8,
+        "succeeded": 1
+      },
+      "violations_seen": [],
+      "goal_witness_found": true,
+      "uncovered_obligations": [],
+      "monitor_coverage_complete": true,
+      "edge_digest": "a32cbd0c2f531049445f1cb69a0becf91070d896adc75f88b54108b8fc719ec9",
+      "reference_queries_admitted": false,
+      "note": "P2 model validation output; P3 must independently check evidence before truth admission."
+    },
+    "expected_violations": [],
+    "passed": true,
+    "graph": {
+      "path": "graphs/provider_restart.json",
+      "sha256": "2ec3aa8a039ac70c3a55fa46d7e058ea8fd3b3672ea177dd4c487e5a6f17a43f"
+    },
+    "replays": [
+      {
+        "valid": true,
+        "tick": 9,
+        "outcome": "succeeded",
+        "boundary": "self-model replay; not P3 independent evidence certification"
+      },
+      {
+        "valid": true,
+        "tick": 13,
+        "outcome": "attention_required",
+        "boundary": "self-model replay; not P3 independent evidence certification"
+      }
+    ]
+  },
+  {
+    "fixture": "hold_permission_loss",
+    "summary": {
+      "reference_version": "reference-event-agenda/0.1",
+      "model_digest": "c070d5e75ae25c65187e7e4ca2b021aecb5ae6c364eee0c867a8c1a052d523f9",
+      "case_id": "diagnostic:hold_permission_loss",
+      "profile": {
+        "accept": [
+          1,
+          1
+        ],
+        "phase": [
+          1,
+          1
+        ],
+        "stop": [
+          1,
+          1
+        ],
+        "feedback": [
+          0,
+          0
+        ],
+        "faults": [
+          "hold_permission_loss"
+        ],
+        "max_faults": 1,
+        "forced_stop_loss": null,
+        "max_age": 2,
+        "events": [],
+        "response_window": 40,
+        "name": "nominal",
+        "timing_scope": "reference-six-phase/0.1",
+        "source_scope": "hand-authored-P2-fixture/0.1",
+        "pilot_migration": false,
+        "visibility": 1,
+        "fault_packet_selection": "any_queued_packet"
+      },
+      "bound": 128,
+      "search": "complete",
+      "states": 26,
+      "edges": 25,
+      "frontier_exhausted": true,
+      "finite_model_closed": true,
+      "horizon_reached": false,
+      "limit": null,
+      "elapsed_seconds": 0.013161599999875762,
+      "serialized_state_bytes": 66036,
+      "peak_sampled_rss_bytes": 30687232,
+      "all_edges_retained": true,
+      "memory_tracking": "sampled RSS and serialized keys",
+      "terminal_counts": {
+        "failed": 4,
+        "attention_required": 4,
+        "succeeded": 1
+      },
+      "violations_seen": [],
+      "goal_witness_found": true,
+      "uncovered_obligations": [],
+      "monitor_coverage_complete": true,
+      "edge_digest": "490a281c3956fdb0f433790294d61649dc86eceed19a49adc45e7f2402c87691",
+      "reference_queries_admitted": false,
+      "note": "P2 model validation output; P3 must independently check evidence before truth admission."
+    },
+    "expected_violations": [],
+    "passed": true,
+    "graph": {
+      "path": "graphs/hold_permission_loss.json",
+      "sha256": "4bfc6ddf316a8dc272dd0882ae09b1f528e10d83af1730739ebadbf5b8f626ae"
+    },
+    "replays": [
+      {
+        "valid": true,
+        "tick": 9,
+        "outcome": "succeeded",
+        "boundary": "self-model replay; not P3 independent evidence certification"
+      },
+      {
+        "valid": true,
+        "tick": 10,
+        "outcome": "failed",
+        "boundary": "self-model replay; not P3 independent evidence certification"
+      }
+    ]
+  },
+  {
+    "fixture": "duplicate_same_request",
+    "summary": {
+      "reference_version": "reference-event-agenda/0.1",
+      "model_digest": "dff9802771fd505c9e89496cefa9f0f4704f39e3496b4f7ad0369cb4b9e8c6a3",
+      "case_id": "diagnostic:duplicate_same_request",
+      "profile": {
+        "accept": [
+          1,
+          1
+        ],
+        "phase": [
+          1,
+          1
+        ],
+        "stop": [
+          1,
+          1
+        ],
+        "feedback": [
+          0,
+          0
+        ],
+        "faults": [
+          "duplicate_same_request"
+        ],
+        "max_faults": 1,
+        "forced_stop_loss": null,
+        "max_age": 2,
+        "events": [],
+        "response_window": 40,
+        "name": "nominal",
+        "timing_scope": "reference-six-phase/0.1",
+        "source_scope": "hand-authored-P2-fixture/0.1",
+        "pilot_migration": false,
+        "visibility": 1,
+        "fault_packet_selection": "any_queued_packet"
+      },
+      "bound": 128,
+      "search": "complete",
+      "states": 18,
+      "edges": 18,
+      "frontier_exhausted": true,
+      "finite_model_closed": true,
+      "horizon_reached": false,
+      "limit": null,
+      "elapsed_seconds": 0.011427200006437488,
+      "serialized_state_bytes": 46376,
+      "peak_sampled_rss_bytes": 30478336,
+      "all_edges_retained": true,
+      "memory_tracking": "sampled RSS and serialized keys",
+      "terminal_counts": {
+        "succeeded": 2
+      },
+      "violations_seen": [],
+      "goal_witness_found": true,
+      "uncovered_obligations": [],
+      "monitor_coverage_complete": true,
+      "edge_digest": "7dc3e1bc4145938d58508a904ebb9464f301fa5f9424ad46f33587d180fa875a",
+      "reference_queries_admitted": false,
+      "note": "P2 model validation output; P3 must independently check evidence before truth admission."
+    },
+    "expected_violations": [],
+    "passed": true,
+    "graph": {
+      "path": "graphs/duplicate_same_request.json",
+      "sha256": "6ad308b43f100d942919b223e5c472b994483d3defba879e08aca3bc02182f47"
+    },
+    "replays": [
+      {
+        "valid": true,
+        "tick": 9,
+        "outcome": "succeeded",
+        "boundary": "self-model replay; not P3 independent evidence certification"
+      },
+      {
+        "valid": true,
+        "tick": 9,
+        "outcome": "succeeded",
+        "boundary": "self-model replay; not P3 independent evidence certification"
+      }
+    ]
+  },
+  {
+    "fixture": "old_request_feedback",
+    "summary": {
+      "reference_version": "reference-event-agenda/0.1",
+      "model_digest": "a2b4fc6a87512165a1873d13a4c3bb544755f07b30447387c0c235445a2269e4",
+      "case_id": "diagnostic:old_request_feedback",
+      "profile": {
+        "accept": [
+          1,
+          1
+        ],
+        "phase": [
+          1,
+          1
+        ],
+        "stop": [
+          1,
+          1
+        ],
+        "feedback": [
+          0,
+          0
+        ],
+        "faults": [
+          "old_request_feedback"
+        ],
+        "max_faults": 1,
+        "forced_stop_loss": null,
+        "max_age": 2,
+        "events": [],
+        "response_window": 40,
+        "name": "nominal",
+        "timing_scope": "reference-six-phase/0.1",
+        "source_scope": "hand-authored-P2-fixture/0.1",
+        "pilot_migration": false,
+        "visibility": 1,
+        "fault_packet_selection": "any_queued_packet"
+      },
+      "bound": 128,
+      "search": "complete",
+      "states": 18,
+      "edges": 18,
+      "frontier_exhausted": true,
+      "finite_model_closed": true,
+      "horizon_reached": false,
+      "limit": null,
+      "elapsed_seconds": 0.016012600011890754,
+      "serialized_state_bytes": 46376,
+      "peak_sampled_rss_bytes": 30531584,
+      "all_edges_retained": true,
+      "memory_tracking": "sampled RSS and serialized keys",
+      "terminal_counts": {
+        "succeeded": 2
+      },
+      "violations_seen": [],
+      "goal_witness_found": true,
+      "uncovered_obligations": [],
+      "monitor_coverage_complete": true,
+      "edge_digest": "e27922e1c8d6ed62873efded58bcf14fed8921987b43414f72a1a531e71dfba2",
+      "reference_queries_admitted": false,
+      "note": "P2 model validation output; P3 must independently check evidence before truth admission."
+    },
+    "expected_violations": [],
+    "passed": true,
+    "graph": {
+      "path": "graphs/old_request_feedback.json",
+      "sha256": "a3d551bf2f8ce1b953de67487bd800bd91fd848aeb5cc7a74548e69b68bf28a6"
+    },
+    "replays": [
+      {
+        "valid": true,
+        "tick": 9,
+        "outcome": "succeeded",
+        "boundary": "self-model replay; not P3 independent evidence certification"
+      },
+      {
+        "valid": true,
+        "tick": 9,
+        "outcome": "succeeded",
+        "boundary": "self-model replay; not P3 independent evidence certification"
+      }
+    ]
+  },
+  {
+    "fixture": "lost-stop",
+    "summary": {
+      "reference_version": "reference-event-agenda/0.1",
+      "model_digest": "98023960e91c6b937a9a1a48d88cacfde52d3a32be99496038b9aa22f840fbc5",
+      "case_id": "diagnostic:lost-stop",
+      "profile": {
+        "accept": [
+          2,
+          2
+        ],
+        "phase": [
+          1,
+          1
+        ],
+        "stop": [
+          1,
+          1
+        ],
+        "feedback": [
+          0,
+          0
+        ],
+        "faults": [
+          "missing_stop_confirmation"
+        ],
+        "max_faults": 1,
+        "forced_stop_loss": null,
+        "max_age": 2,
+        "events": [],
+        "response_window": 40,
+        "name": "nominal",
+        "timing_scope": "reference-six-phase/0.1",
+        "source_scope": "hand-authored-P2-fixture/0.1",
+        "pilot_migration": false,
+        "visibility": 1,
+        "fault_packet_selection": "any_queued_packet"
+      },
+      "bound": 128,
+      "search": "complete",
+      "states": 8,
+      "edges": 7,
+      "frontier_exhausted": true,
+      "finite_model_closed": true,
+      "horizon_reached": false,
+      "limit": null,
+      "elapsed_seconds": 0.0028215999918757007,
+      "serialized_state_bytes": 17231,
+      "peak_sampled_rss_bytes": 30486528,
+      "all_edges_retained": true,
+      "memory_tracking": "sampled RSS and serialized keys",
+      "terminal_counts": {
+        "failed": 1,
+        "attention_required": 1
+      },
+      "violations_seen": [],
+      "goal_witness_found": false,
+      "uncovered_obligations": [],
+      "monitor_coverage_complete": true,
+      "edge_digest": "53241e313dad86ee5d8dde83b9e400c771a11c1b51a1bd766444f3c2c1700b49",
+      "reference_queries_admitted": false,
+      "note": "P2 model validation output; P3 must independently check evidence before truth admission."
+    },
+    "expected_violations": [],
+    "passed": true,
+    "graph": {
+      "path": "graphs/lost-stop.json",
+      "sha256": "112dda280ec0643c4e98e455bca3c4493897fd8e317f9f77e2a2c4621fde1e01"
+    },
+    "replays": [
+      {
+        "valid": true,
+        "tick": 6,
+        "outcome": "attention_required",
+        "boundary": "self-model replay; not P3 independent evidence certification"
+      }
+    ]
+  },
+  {
+    "fixture": "late-stop",
+    "summary": {
+      "reference_version": "reference-event-agenda/0.1",
+      "model_digest": "ebe5539351f1109534e7bb4b66d43caa7af2185c9a678fe26828dc5026f0dc29",
+      "case_id": "diagnostic:late-stop",
+      "profile": {
+        "accept": [
+          1,
+          1
+        ],
+        "phase": [
+          1,
+          1
+        ],
+        "stop": [
+          4,
+          4
+        ],
+        "feedback": [
+          0,
+          0
+        ],
+        "faults": [
+          "provider_restart"
+        ],
+        "max_faults": 1,
+        "forced_stop_loss": null,
+        "max_age": 2,
+        "events": [],
+        "response_window": 40,
+        "name": "nominal",
+        "timing_scope": "reference-six-phase/0.1",
+        "source_scope": "hand-authored-P2-fixture/0.1",
+        "pilot_migration": false,
+        "visibility": 1,
+        "fault_packet_selection": "any_queued_packet"
+      },
+      "bound": 128,
+      "search": "complete",
+      "states": 50,
+      "edges": 49,
+      "frontier_exhausted": true,
+      "finite_model_closed": true,
+      "horizon_reached": false,
+      "limit": null,
+      "elapsed_seconds": 0.027019100001780316,
+      "serialized_state_bytes": 114250,
+      "peak_sampled_rss_bytes": 30433280,
+      "all_edges_retained": true,
+      "memory_tracking": "sampled RSS and serialized keys",
+      "terminal_counts": {
+        "attention_required": 8,
+        "succeeded": 1
+      },
+      "violations_seen": [],
+      "goal_witness_found": true,
+      "uncovered_obligations": [],
+      "monitor_coverage_complete": true,
+      "edge_digest": "dfea022e35d4c74745efff09c03fc855d21e485d0c1809298333eace278904ce",
+      "reference_queries_admitted": false,
+      "note": "P2 model validation output; P3 must independently check evidence before truth admission."
+    },
+    "expected_violations": [],
+    "passed": true,
+    "graph": {
+      "path": "graphs/late-stop.json",
+      "sha256": "1cc4b8b4ca1a45478bb36b1c7c67c0887d74d862e29818d5a744b31fa797232b"
+    },
+    "replays": [
+      {
+        "valid": true,
+        "tick": 9,
+        "outcome": "succeeded",
+        "boundary": "self-model replay; not P3 independent evidence certification"
+      },
+      {
+        "valid": true,
+        "tick": 13,
+        "outcome": "attention_required",
+        "boundary": "self-model replay; not P3 independent evidence certification"
+      }
+    ]
+  },
+  {
+    "fixture": "deadline-negative",
+    "summary": {
+      "reference_version": "reference-event-agenda/0.1",
+      "model_digest": "dc673f28ee988ccbc46b66edd8d93f87606290fc25129aa2c39f9819a736115b",
+      "case_id": "diagnostic:deadline-negative",
+      "profile": {
+        "accept": [
+          1,
+          1
+        ],
+        "phase": [
+          1,
+          1
+        ],
+        "stop": [
+          1,
+          1
+        ],
+        "feedback": [
+          0,
+          0
+        ],
+        "faults": [],
+        "max_faults": 0,
+        "forced_stop_loss": null,
+        "max_age": 2,
+        "events": [],
+        "response_window": 2,
+        "name": "nominal",
+        "timing_scope": "reference-six-phase/0.1",
+        "source_scope": "hand-authored-P2-fixture/0.1",
+        "pilot_migration": false,
+        "visibility": 1,
+        "fault_packet_selection": "any_queued_packet"
+      },
+      "bound": 128,
+      "search": "complete",
+      "states": 10,
+      "edges": 9,
+      "frontier_exhausted": true,
+      "finite_model_closed": true,
+      "horizon_reached": false,
+      "limit": null,
+      "elapsed_seconds": 0.005176699996809475,
+      "serialized_state_bytes": 25415,
+      "peak_sampled_rss_bytes": 30474240,
+      "all_edges_retained": true,
+      "memory_tracking": "sampled RSS and serialized keys",
+      "terminal_counts": {
+        "succeeded": 1
+      },
+      "violations_seen": [
+        "V10b"
+      ],
+      "goal_witness_found": true,
+      "uncovered_obligations": [],
+      "monitor_coverage_complete": true,
+      "edge_digest": "1acad08260d71bbbf1dabbabc744b715cedea9dba168ed647219bc714b58e132",
+      "reference_queries_admitted": false,
+      "note": "P2 model validation output; P3 must independently check evidence before truth admission."
+    },
+    "expected_violations": [
+      "V10b"
+    ],
+    "passed": true,
+    "graph": {
+      "path": "graphs/deadline-negative.json",
+      "sha256": "790fc8af07324902646621b183683a459a55f0fd41571029e3994506eef680f6"
+    },
+    "replays": [
+      {
+        "valid": true,
+        "tick": 4,
+        "outcome": "running",
+        "boundary": "self-model replay; not P3 independent evidence certification"
+      },
+      {
+        "valid": true,
+        "tick": 9,
+        "outcome": "succeeded",
+        "boundary": "self-model replay; not P3 independent evidence certification"
+      }
+    ]
+  }
+]

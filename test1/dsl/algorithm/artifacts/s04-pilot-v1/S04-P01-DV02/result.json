@@ -1,0 +1,231 @@
+{
+  "case_id": "S04-P01-DV02",
+  "frontend": "VALID",
+  "profiles": [
+    {
+      "profile": "nominal",
+      "model_version": "s04-pilot-timed-microsteps/0.1",
+      "bound_ticks": 256,
+      "state_budget": 200000,
+      "states": 9013,
+      "transitions": 10314,
+      "closed_pilot_exhausted": true,
+      "horizon_reached": false,
+      "resource_limit": false,
+      "terminal_states": {
+        "failed": 53
+      },
+      "physical_goal_seen": true,
+      "properties": {
+        "V01": {
+          "verdict": "PROVED_ON_CLOSED_PILOT",
+          "trigger_states_or_edges": 102,
+          "vacuous": false
+        },
+        "V04": {
+          "verdict": "PROVED_ON_CLOSED_PILOT",
+          "trigger_states_or_edges": 3788,
+          "vacuous": false
+        },
+        "V05": {
+          "verdict": "PROVED_ON_CLOSED_PILOT",
+          "trigger_states_or_edges": 10314,
+          "vacuous": false
+        },
+        "V06": {
+          "verdict": "PROVED_ON_CLOSED_PILOT",
+          "trigger_states_or_edges": 10314,
+          "vacuous": false
+        },
+        "V07": {
+          "verdict": "PROVED_ON_CLOSED_PILOT",
+          "trigger_states_or_edges": 80,
+          "vacuous": false
+        },
+        "V08": {
+          "verdict": "PROVED_ON_CLOSED_PILOT",
+          "trigger_states_or_edges": 0,
+          "vacuous": true
+        },
+        "V09": {
+          "verdict": "PROVED_ON_CLOSED_PILOT",
+          "trigger_states_or_edges": 0,
+          "vacuous": true
+        },
+        "V10a": {
+          "verdict": "GOAL_UNREACHABLE_ON_CLOSED_PILOT",
+          "trigger_states_or_edges": 0,
+          "vacuous": false
+        }
+      },
+      "replay": {
+        "terminal_failed": {
+          "replayed": true,
+          "steps": 166,
+          "terminal": "failed",
+          "goal": true,
+          "scope": "same full pilot transition relation; not an independent semantics oracle"
+        }
+      },
+      "elapsed_seconds": 0.33730130000185454,
+      "not_claimed": [
+        "V02 全协议错序/重发一致性",
+        "V03 任意 provider epoch 和事实新鲜度",
+        "V10b 通用有界响应性质",
+        "并行/循环/暂停/IK/连续运动",
+        "任意 ac-process 程序或原生运行器语义等价"
+      ],
+      "assumptions": "每个阶段响应时间在整数区间内独立非确定选择；反馈与实际观测同步、许可固定、无旧反馈注入。故障只覆盖 C1 停止确认持续丢失。 到达出口后物料位置保持至下一次搬运；不模拟减速滑移或出口掉落。"
+    },
+    {
+      "profile": "delayed",
+      "model_version": "s04-pilot-timed-microsteps/0.1",
+      "bound_ticks": 256,
+      "state_budget": 200000,
+      "states": 9735,
+      "transitions": 11036,
+      "closed_pilot_exhausted": true,
+      "horizon_reached": false,
+      "resource_limit": false,
+      "terminal_states": {
+        "failed": 53
+      },
+      "physical_goal_seen": true,
+      "properties": {
+        "V01": {
+          "verdict": "PROVED_ON_CLOSED_PILOT",
+          "trigger_states_or_edges": 102,
+          "vacuous": false
+        },
+        "V04": {
+          "verdict": "PROVED_ON_CLOSED_PILOT",
+          "trigger_states_or_edges": 4510,
+          "vacuous": false
+        },
+        "V05": {
+          "verdict": "PROVED_ON_CLOSED_PILOT",
+          "trigger_states_or_edges": 11036,
+          "vacuous": false
+        },
+        "V06": {
+          "verdict": "PROVED_ON_CLOSED_PILOT",
+          "trigger_states_or_edges": 11036,
+          "vacuous": false
+        },
+        "V07": {
+          "verdict": "PROVED_ON_CLOSED_PILOT",
+          "trigger_states_or_edges": 80,
+          "vacuous": false
+        },
+        "V08": {
+          "verdict": "PROVED_ON_CLOSED_PILOT",
+          "trigger_states_or_edges": 0,
+          "vacuous": true
+        },
+        "V09": {
+          "verdict": "PROVED_ON_CLOSED_PILOT",
+          "trigger_states_or_edges": 0,
+          "vacuous": true
+        },
+        "V10a": {
+          "verdict": "GOAL_UNREACHABLE_ON_CLOSED_PILOT",
+          "trigger_states_or_edges": 0,
+          "vacuous": false
+        }
+      },
+      "replay": {
+        "terminal_failed": {
+          "replayed": true,
+          "steps": 194,
+          "terminal": "failed",
+          "goal": true,
+          "scope": "same full pilot transition relation; not an independent semantics oracle"
+        }
+      },
+      "elapsed_seconds": 0.31365740000182996,
+      "not_claimed": [
+        "V02 全协议错序/重发一致性",
+        "V03 任意 provider epoch 和事实新鲜度",
+        "V10b 通用有界响应性质",
+        "并行/循环/暂停/IK/连续运动",
+        "任意 ac-process 程序或原生运行器语义等价"
+      ],
+      "assumptions": "每个阶段响应时间在整数区间内独立非确定选择；反馈与实际观测同步、许可固定、无旧反馈注入。故障只覆盖 C1 停止确认持续丢失。 到达出口后物料位置保持至下一次搬运；不模拟减速滑移或出口掉落。"
+    },
+    {
+      "profile": "stop_unknown_c1",
+      "model_version": "s04-pilot-timed-microsteps/0.1",
+      "bound_ticks": 256,
+      "state_budget": 200000,
+      "states": 361,
+      "transitions": 452,
+      "closed_pilot_exhausted": true,
+      "horizon_reached": false,
+      "resource_limit": false,
+      "terminal_states": {
+        "attention_required": 14
+      },
+      "physical_goal_seen": false,
+      "properties": {
+        "V01": {
+          "verdict": "PROVED_ON_CLOSED_PILOT",
+          "trigger_states_or_edges": 6,
+          "vacuous": false
+        },
+        "V04": {
+          "verdict": "PROVED_ON_CLOSED_PILOT",
+          "trigger_states_or_edges": 442,
+          "vacuous": false
+        },
+        "V05": {
+          "verdict": "PROVED_ON_CLOSED_PILOT",
+          "trigger_states_or_edges": 452,
+          "vacuous": false
+        },
+        "V06": {
+          "verdict": "PROVED_ON_CLOSED_PILOT",
+          "trigger_states_or_edges": 452,
+          "vacuous": false
+        },
+        "V07": {
+          "verdict": "PROVED_ON_CLOSED_PILOT",
+          "trigger_states_or_edges": 0,
+          "vacuous": true
+        },
+        "V08": {
+          "verdict": "PROVED_ON_CLOSED_PILOT",
+          "trigger_states_or_edges": 14,
+          "vacuous": false
+        },
+        "V09": {
+          "verdict": "PROVED_ON_CLOSED_PILOT",
+          "trigger_states_or_edges": 0,
+          "vacuous": true
+        },
+        "V10a": {
+          "verdict": "GOAL_UNREACHABLE_ON_CLOSED_PILOT",
+          "trigger_states_or_edges": 0,
+          "vacuous": false
+        }
+      },
+      "replay": {
+        "terminal_attention_required": {
+          "replayed": true,
+          "steps": 27,
+          "terminal": "attention_required",
+          "goal": false,
+          "scope": "same full pilot transition relation; not an independent semantics oracle"
+        }
+      },
+      "elapsed_seconds": 0.007045199999993201,
+      "not_claimed": [
+        "V02 全协议错序/重发一致性",
+        "V03 任意 provider epoch 和事实新鲜度",
+        "V10b 通用有界响应性质",
+        "并行/循环/暂停/IK/连续运动",
+        "任意 ac-process 程序或原生运行器语义等价"
+      ],
+      "assumptions": "每个阶段响应时间在整数区间内独立非确定选择；反馈与实际观测同步、许可固定、无旧反馈注入。故障只覆盖 C1 停止确认持续丢失。 到达出口后物料位置保持至下一次搬运；不模拟减速滑移或出口掉落。"
+    }
+  ]
+}

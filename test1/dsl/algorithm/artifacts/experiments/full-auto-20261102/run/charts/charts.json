@@ -1,0 +1,38 @@
+[
+  {
+    "id": "01_coverage",
+    "title": "全量覆盖与未决结果",
+    "png": "01_coverage.png",
+    "svg": "01_coverage.svg"
+  },
+  {
+    "id": "02_properties",
+    "title": "安全性与目标可达性分别统计",
+    "png": "02_properties.png",
+    "svg": "02_properties.svg"
+  },
+  {
+    "id": "03_efficiency",
+    "title": "配对效率与预算截断",
+    "png": "03_efficiency.png",
+    "svg": "03_efficiency.svg"
+  },
+  {
+    "id": "04_cactus",
+    "title": "求解覆盖随时间的变化",
+    "png": "04_cactus.png",
+    "svg": "04_cactus.svg"
+  },
+  {
+    "id": "05_scenes",
+    "title": "各场景的完成覆盖",
+    "png": "05_scenes.png",
+    "svg": "05_scenes.svg"
+  },
+  {
+    "id": "06_state_memory",
+    "title": "状态空间与内存",
+    "png": "06_state_memory.png",
+    "svg": "06_state_memory.svg"
+  }
+]

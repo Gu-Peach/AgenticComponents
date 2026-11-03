@@ -325,6 +325,75 @@ def validate_ir(ir):
             if key in node:
                 value = node[key]
                 duration([Token(value['value'], 0, 0), Token(value['unit'], 0, 0)], key == 'timeout')
+    # A request may only be read after its invocation has succeeded on this path.
+    def scope(key, available):
+        node = nodes[key]
+        used = []
+        if node['kind'] == 'await': used.append(node['condition'])
+        if node['kind'] == 'branch': used.extend(c['condition'] for c in node['cases'])
+        for condition in used:
+            for leaf in leaves(condition, ir['conditions']):
+                request = leaf['read'].get('request_node_ref')
+                require(request is None or request in available, f'request not dominated on this activation path: {request}')
+        kind = node['kind']
+        if kind == 'seq':
+            result = set(available)
+            for child in node['children']: result = scope(child, result)
+            return result
+        if kind == 'par':
+            results = [scope(child, set(available)) for child in node['children']]
+            return set.union(set(available), *results)
+        if kind == 'branch':
+            results = [scope(child, set(available)) for child in edges(node)]
+            return set.intersection(*results)
+        if kind == 'with-control': return scope(node['child'], set(available))
+        if kind == 'repeat':
+            scope(node['child'], set(available))
+            return set(available)  # Iteration-local identities do not escape the loop.
+        return set(available) | ({key} if kind == 'invoke' else set())
+    scope(ir['entry'], set())
+
+def project_file(example_dir, relative, project_root):
+    require(not Path(relative).is_absolute(), 'absolute contract/adapter path forbidden')
+    candidates = [(example_dir / relative).resolve()]
+    if example_dir.is_relative_to(ROOT):
+        tail = example_dir.relative_to(ROOT)
+        candidates.extend((base / tail / relative).resolve() for base in
+                          [project_root / 'test1' / 'dsl', project_root / 'dsl'])
+    for path in candidates:
+        if path.is_file():
+            require(path.is_relative_to(ROOT) or path.is_relative_to(project_root), 'contract outside project')
+            return path
+    raise DesignError(f'contract/adapter not found: {relative}')
+
+def adapter_for(owner, behavior_id, contracts, env, example_dir, project_root):
+    relative = env.get('capability_adapters', {}).get(owner, {}).get(behavior_id)
+    if relative is None: return None
+    adapter = read_json(project_file(example_dir, relative, project_root))
+    schema = read_json(ROOT / 'capability-adapter.schema.json')
+    Draft202012Validator.check_schema(schema)
+    errors = list(Draft202012Validator(schema).iter_errors(adapter))
+    require(not errors, 'adapter schema: ' + (errors[0].message if errors else ''))
+    require(adapter['behavior_id'] == behavior_id and owner in contracts, 'adapter target mismatch')
+    base, native = contracts[owner], adapter['native']
+    for wanted, actual in [('spec_id', 'device_spec_id'), ('contract_version', 'contract_version'), ('definition_version', 'version')]:
+        require(native[wanted] == base.get(actual), f'adapter native version mismatch: {wanted}')
+    execution = base['runtime_execution_contract']
+    for key in ('template_ref', 'payload_contract_ref'):
+        require(native[key] == execution.get(key), f'adapter native backend mismatch: {key}')
+    matches = [b for b in base['transport_behaviors'] if b['behavior_id'] == native['behavior_id']]
+    require(len(matches) == 1 and matches[0]['completion_contract']['mode'] == 'observed', 'adapter native behavior missing')
+    # Adapter conditions add requirements; inherited native conditions remain separate.
+    for condition in adapter['condition_contract']['preconditions'] + adapter['condition_contract']['sustaining_conditions'] + adapter['completion_contract']['checks']:
+        provider = env['providers'].get(condition['owner_ref'], {})
+        require(condition['source'] == 'observation' and condition['key'] in provider.get('observations', {}), 'adapter fact provider missing')
+        require(provider['observations'][condition['key']]['type'] == 'boolean', 'adapter fact type mismatch')
+    steps = adapter['payload_recipe']['steps']
+    grips = [i for i, step in enumerate(steps) if step['kind'] == 'grip']
+    releases = [i for i, step in enumerate(steps) if step['kind'] == 'release']
+    require(len(grips) == len(releases) == 1 and 0 < grips[0] < releases[0] < len(steps)-1, 'adapter grip/release order invalid')
+    require(all(not s.get('support_clearance') or s.get('subject') == 'held_material' for s in steps), 'support clearance requires held material')
+    return adapter
 
 def resolve_argument(value, env):
     kind = value['kind']
@@ -347,11 +416,9 @@ def check_environment(ir, example_dir, project_root):
     contracts = {}
     for name, binding in env['bindings'].items():
         if 'contract' not in binding: continue
-        path = (example_dir / binding['contract']).resolve()
-        if not path.is_file():
-            path = (project_root / 'dsl' / example_dir.relative_to(ROOT) / binding['contract']).resolve()
-        require(path.is_relative_to(ROOT) or path.is_relative_to(project_root), 'contract outside project')
-        contracts[name] = read_json(path)
+        contracts[name] = read_json(project_file(example_dir, binding['contract'], project_root))
+    if env.get('capability_adapters'):
+        check_t0_controls(ir, contracts, env)
     for registry in env['registries'].values():
         values = list(registry['entries'].values())
         require(len(values) == len(set(values)) and all(type(v) is int and 0 < v <= 2147483647 for v in values), 'invalid registry indices')
@@ -384,7 +451,8 @@ def check_environment(ir, example_dir, project_root):
         if node['kind'] != 'invoke': continue
         contract = contracts.get(node['target_ref'])
         require(contract is not None, 'invoke target is not a device contract')
-        matches = [b for b in contract['transport_behaviors'] if b['behavior_id'] == node['behavior_id']]
+        adapter = adapter_for(node['target_ref'], node['behavior_id'], contracts, env, example_dir, project_root)
+        matches = [adapter] if adapter else [b for b in contract['transport_behaviors'] if b['behavior_id'] == node['behavior_id']]
         require(len(matches) == 1, 'unknown/duplicate behavior')
         behavior = matches[0]
         require(behavior['schedulable'] and behavior['behavior_type'] in ('action', 'composite', 'service') and
@@ -396,30 +464,100 @@ def check_environment(ir, example_dir, project_root):
                 require(not spec.get('required') or 'default' in spec, f'missing argument: {name}')
                 continue
             actual = resolve_argument(node['arguments'][name], env)
+            if spec['type'] == 'reference':
+                require(actual['kind'] == spec['reference_type'], f'argument reference type mismatch: {name}')
+                if actual['kind'] == 'location':
+                    binding = env['bindings'][node['arguments'][name]['binding_ref']]
+                    require(all(k in binding for k in adapter['binding_rules']['locations_require']), 'location metadata missing')
+                    require(binding['owner_ref'] in env['bindings'], 'location owner missing')
+                    owner_contract = contracts.get(binding['owner_ref'])
+                    if owner_contract:
+                        regions = owner_contract['type_specific_contract'].get('observation_regions', [])
+                        require(binding['geometry_ref'] in {r['region_id'] for r in regions}, 'location geometry missing')
+                continue
             wanted = 'quantity' if 'unit' in spec else spec['type']
             require(actual['kind'] == wanted, f'argument type mismatch: {name}')
             if wanted == 'quantity': require(actual['unit'] == spec['unit'], 'unit mismatch')
             v = actual['value']
             if 'min' in spec: require(v >= spec['min'], 'argument below minimum')
             if 'max' in spec: require(v <= spec['max'], 'argument above maximum')
+        if adapter:
+            references = {k: resolve_argument(v, env)['value'] for k, v in node['arguments'].items()}
+            require(references['source'] != references['target'], 'transfer source equals target')
+            rule = env['invocation_adapters'][node['node_id']]
+            for argument, key in [('source', 'source_ref'), ('target', 'target_location_ref')]:
+                require(env['bindings'][rule[key]]['id'] == references[argument], 'transfer location mapping mismatch')
     return env
+
+def check_t0_controls(ir, contracts, env):
+    node_map = {n['node_id']: n for n in ir['nodes']}
+    parents = {child: n['node_id'] for n in ir['nodes'] for child in edges(n)}
+    resources = env['resources']
+    for left, right in env.get('resource_conflicts', []):
+        require(left in resources and right in resources and left != right, 'invalid resource conflict')
+    for control in env['controls'].values():
+        owner = control['target_ref']
+        require(owner in contracts and control['writer_resource'] in resources, 'control owner/resource missing')
+        contract = contracts[owner]
+        ports = {p['port_id']: p for p in contract['signal_ports']}
+        for writes in (control['enter'], control['exit']):
+            for key, value in writes.items():
+                require(key in ports and ports[key]['direction'] == 'input', 'control writes unknown/output port')
+                port = ports[key]
+                require(port['signal_role'] in ('level_permission', 'setpoint'), 'control cannot write protocol identity/trigger')
+                expected = 'quantity' if port.get('unit') else port['value_type']
+                require(value['kind'] == expected, 'control value type mismatch')
+                if expected == 'quantity':
+                    require(value['unit'] == port['unit'], 'control unit mismatch')
+                    require(isinstance(value['value'], (int, float)) and not isinstance(value['value'], bool) and math.isfinite(value['value']), 'non-finite control value')
+                    drive = contract['type_specific_contract']['conveying_surface']['drive']
+                    if key == drive['speed_signal']:
+                        spec = contract['params_schema'][drive['speed_param']]
+                        require(spec['min'] <= value['value'] <= spec['max'], 'control setpoint out of range')
+                elif expected == 'boolean': require(type(value['value']) is bool, 'control value must be boolean')
+        exit_condition = control['exit_condition']
+        require(exit_condition['read']['owner_ref'] == owner and exit_condition['read']['key'] == 'surface_stopped' and exit_condition['equals'] == {'kind': 'boolean', 'value': True}, 'control missing actual stop confirmation')
+        run_port = contract['type_specific_contract']['conveying_surface']['drive']['run_signal']
+        require(control['exit'].get(run_port) == {'kind': 'boolean', 'value': False}, 'control must withdraw run on exit')
+    for node in ir['nodes']:
+        if node['kind'] != 'invoke': continue
+        rule = env.get('invocation_adapters', {}).get(node['node_id'])
+        require(rule is not None and rule['target_ref'] == node['target_ref'] and rule['behavior_id'] == node['behavior_id'], 'invocation adapter missing/mismatched')
+        require(rule['writes_material_pose'] is False and all(r in resources for r in rule['claims']), 'invalid invocation claims/pose ownership')
+        if 'drive_dependency' in rule:
+            ancestor, found = parents.get(node['node_id']), False
+            while ancestor:
+                p = node_map[ancestor]
+                found |= p['kind'] == 'with-control' and p['control_ref'] == rule['drive_dependency']
+                ancestor = parents.get(ancestor)
+            require(found and env['controls'][rule['drive_dependency']]['target_ref'] == node['target_ref'], 'transport requires matching enclosing drive scope')
 
 def main():
     cli = argparse.ArgumentParser(description=__doc__)
     cli.add_argument('--write', action='store_true', help='regenerate golden IR and source map')
-    cli.add_argument('--project-root', type=Path, default=ROOT.parent)
+    cli.add_argument('--project-root', type=Path, default=ROOT.parents[1])
+    cli.add_argument('--example', default='pick-place', help='example directory name, or all')
     args = cli.parse_args()
-    example = ROOT / 'examples' / 'pick-place'
-    source = example / 'process.acp'
-    ir, mapping = lower(read_source(source), 'examples/pick-place/process.acp')
-    env = check_environment(ir, example, args.project_root.resolve())
-    outputs = [('process.ir.json', ir), ('process.map.json', mapping)]
-    for name, data in outputs:
-        path = example / name
-        if args.write: path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-        else: require(read_json(path) == data, f'{name} differs from source; regenerate explicitly')
-    print(f'Design checks passed: {len(ir["nodes"])} nodes; text/IR/source map agree.')
-    print(f'Executable: false; {len(env["execution_blockers"])} declared integration blockers remain.')
+    choices = [p.name for p in (ROOT / 'examples').iterdir() if (p / 'process.acp').is_file()]
+    require(args.example == 'all' or args.example in choices, 'unknown example')
+    for selected in sorted(choices) if args.example == 'all' else [args.example]:
+        example = ROOT / 'examples' / selected
+        source = example / 'process.acp'
+        ir, mapping = lower(read_source(source), f'examples/{selected}/process.acp')
+        env = check_environment(ir, example, args.project_root.resolve())
+        outputs = [('process.ir.json', ir), ('process.map.json', mapping)]
+        for name, data in outputs:
+            path = example / name
+            if args.write: path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+            else: require(read_json(path) == data, f'{name} differs from source; regenerate explicitly')
+        if env.get('capability_adapters'):
+            from binding_report import build_report
+            report = build_report(ir, env, source, example, args.project_root.resolve())
+            path = example / 'process.binding.json'
+            if args.write: path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+            else: require(read_json(path) == report, 'binding report stale; regenerate explicitly')
+        print(f'{selected}: Design checks passed: {len(ir["nodes"])} nodes; text/IR/source map agree.')
+        print(f'Executable: false; {len(env["execution_blockers"])} declared integration blockers remain.')
 
 if __name__ == '__main__':
     main()

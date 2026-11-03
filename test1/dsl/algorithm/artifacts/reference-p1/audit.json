@@ -1,0 +1,24 @@
+{
+  "stage": "P1",
+  "reviewer_type": "AI_technical_review",
+  "errors": [],
+  "tests_passed": 41,
+  "inventory_queries": 27495,
+  "semantic_cases": 360,
+  "not_applicable": 525,
+  "ready_for_p2": 26810,
+  "mapping_blocked": 160,
+  "vacuity_risk_queries": 217,
+  "short_response_window_queries": 1065,
+  "proposed_extensions": 2485,
+  "truth_labels_created": 0,
+  "gates": {
+    "p1_artifacts_checked": true,
+    "all_queries_have_identity_and_scope": true,
+    "all_queries_ready_for_p2": false,
+    "whole_line_reference_implemented": false,
+    "whole_line_truth_complete": false
+  },
+  "test_log_sha256": "ff2094968f2734a641416697fb3980fa6e1f8200135b3ab139fa6b03d85d5908",
+  "inventory_manifest_sha256": "f618fe25310369a79dd696c92e7f070d4ddf6f7e76bd540ea1b2a334ffc9576d"
+}

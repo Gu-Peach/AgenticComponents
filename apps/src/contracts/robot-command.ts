@@ -12,6 +12,7 @@ export const robotStepSchema = z.discriminatedUnion("kind", [
   }),
   z.object({
     kind: z.literal("move_to_pose"),
+    label: z.string().min(1).max(80).optional(),
     ...target,
     subject: z.enum(["tcp", "held_material"]).optional(),
     support_clearance: z.boolean().optional(),

@@ -1,0 +1,6 @@
+{
+  "case_id": "S04-P01-DS02",
+  "frontend": "INVALID_TYPE",
+  "diagnostic": "load.source requires location",
+  "profiles": []
+}

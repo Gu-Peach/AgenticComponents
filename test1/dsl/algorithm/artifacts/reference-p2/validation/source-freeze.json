@@ -1,0 +1,24 @@
+{
+  "reference_sources": {
+    "reference/channel.py": "4516d2c83a0a0837350643f19e28a467a7a53c7596a4dcb0e001d0786dfbc160",
+    "reference/common.py": "a93c0e3b3c706c0237a0aef3226795f27556c0026390fa6b25b038c7cc63cefd",
+    "reference/control.py": "4da001c382cd1ff84474e9d738a3c5d6bc94922f92367fc3cda9d9721529b207",
+    "reference/enumerate.py": "2b01ab699703070e21de561f0dcb9b6d72b63d490b1634c0cb63e09ad8b3f2ca",
+    "reference/environment.py": "894801de8345db65928ea16fdde42f27e11f71bddfc2607a87857b175387ef99",
+    "reference/fixtures.py": "b510be1313ca6f950e6f89e4ffba8304136bec4b25d7e73333988af13d2f1c86",
+    "reference/frontend.py": "c04d024993f86c988b257f9486f0c0680b3d99672a366f4623c4004efbc50d06",
+    "reference/monitors.py": "c56d3ee69b60acf5481233cfc8df458bfc16d0fbb94290c8adfa21635e0165c1",
+    "reference/observations.py": "90f214152d9b0e4c7d5c14f5711e6269a405bfad8f28b9fa2615073275ed2f58",
+    "reference/plant.py": "ae9f81431695571eacfcbc9d5aa24f5e74741f55c52f4d41e0f78bb9fc9a6f3b",
+    "reference/properties.py": "ffdc1c49b8a056c2167deac6d5b79effc5559cda1ae7e3f0c67872d10fc72d58",
+    "reference/state.py": "25559fd69e414b2bc843e780de9d67a6a43b5fe0836766752aaca252fa89f232",
+    "reference/transition.py": "c33bdd728b53d922068aaf483ba09b7add749d210b7747b42b71d60ad3b5f049",
+    "reference/__init__.py": "431259b3881248126edeb065733b7d5c9f693d95109591ca0e28cf182841627f",
+    "reference/specs/property-spec.json": "fb9d50ce763b99fe3ecd3b98e7584cb04fbdc68de75625aca350fdb37f1b7071",
+    "reference/specs/reference-semantics.json": "4595e03aed6abc9e685717ceb497d1cc32f52a6bf4ce99ccaa28aaa96d69cc4c",
+    "reference/specs/semantics-clarifications.md": "8c01e94d8f271c66816b64d4cd9700c8c05cb9aa0693fac1c21ec3bd25a74d3b"
+  },
+  "runner_sha256": "acf122f5099afde4010f2b82d596c7cb8137d9e2b0cdbfe096c640b12fa90c9f",
+  "P1_manifest_sha256": "f618fe25310369a79dd696c92e7f070d4ddf6f7e76bd540ea1b2a334ffc9576d",
+  "reference_parser_sha256": "537cf195d51d22f98c1ef80315a53952a7b12c8227044aa9a1ea014ec308e675"
+}

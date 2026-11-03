@@ -1,0 +1,436 @@
+{
+  "schema_type": "DesignEnvironment",
+  "version": "0.1",
+  "mode": "design_only",
+  "scene": {
+    "id": "t0_two_robot_cell",
+    "revision": "design-1",
+    "status": "pending_calibration",
+    "assumptions": "S 是被动支承；单物料；无自动生成；图片不提供精确几何/可达性证据"
+  },
+  "profiles": {
+    "fixed_60hz": {
+      "id": "fixed_60hz_v1",
+      "step_seconds": {
+        "numerator": 1,
+        "denominator": 60
+      },
+      "max_transitions_per_tick": 1024,
+      "successor_submission": "next_tick",
+      "pause": "freeze_global_tick",
+      "on_failure": "stop_process"
+    }
+  },
+  "bindings": {
+    "c1": {
+      "type": "device",
+      "id": "C1",
+      "contract": "../../../modles/Conveyor_aankws/schema.json"
+    },
+    "c2": {
+      "type": "device",
+      "id": "C2",
+      "contract": "../../../modles/Conveyor_aankws/schema.json"
+    },
+    "r1": {
+      "type": "device",
+      "id": "R1",
+      "contract": "../../../../apps/public/modles/robot_UR10/schema.json"
+    },
+    "r2": {
+      "type": "device",
+      "id": "R2",
+      "contract": "../../../../apps/public/modles/robot_UR10/schema.json"
+    },
+    "material": {
+      "type": "material",
+      "id": "M",
+      "contract": "../../../../apps/public/modles/engine_block/schema.json"
+    },
+    "source_fixture": {
+      "type": "fixture",
+      "id": "S",
+      "geometry_status": "pending_calibration"
+    },
+    "source_station": {
+      "type": "location",
+      "id": "S/source_pick_zone",
+      "owner_ref": "source_fixture",
+      "geometry_ref": "source_pick_zone",
+      "frame_ref": "source_fixture/device_local",
+      "calibration_status": "pending_scene_calibration"
+    },
+    "c1_entry": {
+      "type": "location",
+      "id": "C1/entry_zone",
+      "owner_ref": "c1",
+      "geometry_ref": "entry_zone",
+      "frame_ref": "c1/device_local",
+      "calibration_status": "pending_scene_calibration",
+      "drive_control_ref": "c1_drive"
+    },
+    "c1_exit": {
+      "type": "location",
+      "id": "C1/exit_zone",
+      "owner_ref": "c1",
+      "geometry_ref": "exit_zone",
+      "frame_ref": "c1/device_local",
+      "calibration_status": "pending_scene_calibration",
+      "drive_control_ref": "c1_drive"
+    },
+    "c2_entry": {
+      "type": "location",
+      "id": "C2/entry_zone",
+      "owner_ref": "c2",
+      "geometry_ref": "entry_zone",
+      "frame_ref": "c2/device_local",
+      "calibration_status": "pending_scene_calibration",
+      "drive_control_ref": "c2_drive"
+    },
+    "c2_exit": {
+      "type": "location",
+      "id": "C2/exit_zone",
+      "owner_ref": "c2",
+      "geometry_ref": "exit_zone",
+      "frame_ref": "c2/device_local",
+      "calibration_status": "pending_scene_calibration",
+      "drive_control_ref": "c2_drive"
+    }
+  },
+  "registries": {
+    "subjects": {
+      "version": "1",
+      "key_type": "material",
+      "entries": {
+        "M": 1
+      }
+    }
+  },
+  "policies": {
+    "normal": {
+      "gate_ticks": 1800,
+      "accept_ticks": 120,
+      "execute_ticks": 1800,
+      "stop_ticks": 300,
+      "paused_execution_clock": "freeze"
+    }
+  },
+  "controls": {
+    "c1_drive": {
+      "target_ref": "c1",
+      "status": "pending_adapter",
+      "writer_resource": "c1_writer",
+      "enter": {
+        "runTag": {
+          "kind": "boolean",
+          "value": true
+        },
+        "speedTag": {
+          "kind": "quantity",
+          "value": 0.2,
+          "unit": "m/s"
+        }
+      },
+      "exit": {
+        "runTag": {
+          "kind": "boolean",
+          "value": false
+        }
+      },
+      "entry_confirmation": "writer_ack_with_control_epoch",
+      "sustaining_conditions": [
+        "run_permission",
+        "speed_setpoint_valid"
+      ],
+      "exit_condition": {
+        "kind": "is",
+        "read": {
+          "source": "observation",
+          "owner_ref": "c1",
+          "key": "surface_stopped"
+        },
+        "equals": {
+          "kind": "boolean",
+          "value": true
+        }
+      },
+      "release": "exit_write_ack_and_actual_surface_stopped",
+      "delegation": "child transport observes shared drive; no second writer or independent per-load motion"
+    },
+    "c2_drive": {
+      "target_ref": "c2",
+      "status": "pending_adapter",
+      "writer_resource": "c2_writer",
+      "enter": {
+        "runTag": {
+          "kind": "boolean",
+          "value": true
+        },
+        "speedTag": {
+          "kind": "quantity",
+          "value": 0.2,
+          "unit": "m/s"
+        }
+      },
+      "exit": {
+        "runTag": {
+          "kind": "boolean",
+          "value": false
+        }
+      },
+      "entry_confirmation": "writer_ack_with_control_epoch",
+      "sustaining_conditions": [
+        "run_permission",
+        "speed_setpoint_valid"
+      ],
+      "exit_condition": {
+        "kind": "is",
+        "read": {
+          "source": "observation",
+          "owner_ref": "c2",
+          "key": "surface_stopped"
+        },
+        "equals": {
+          "kind": "boolean",
+          "value": true
+        }
+      },
+      "release": "exit_write_ack_and_actual_surface_stopped",
+      "delegation": "child transport observes shared drive; no second writer or independent per-load motion"
+    }
+  },
+  "providers": {
+    "c1": {
+      "contract_ref": "c1",
+      "max_age_ticks": 1,
+      "status": "partial_single_device_runtime"
+    },
+    "c2": {
+      "contract_ref": "c2",
+      "max_age_ticks": 1,
+      "status": "partial_single_device_runtime"
+    },
+    "r1": {
+      "contract_ref": "r1",
+      "max_age_ticks": 1,
+      "status": "partial_single_device_runtime"
+    },
+    "r2": {
+      "contract_ref": "r2",
+      "max_age_ticks": 1,
+      "status": "partial_single_device_runtime"
+    },
+    "handoff": {
+      "status": "pending_service",
+      "contract_version": "cell.handoff/0.1",
+      "max_age_ticks": 1,
+      "observations": {
+        "source_ready": {
+          "type": "boolean",
+          "subject": true,
+          "request": true,
+          "description": "本请求源位置包含指定主体，且其支承/归属/抓取条件有效"
+        },
+        "target_accepting": {
+          "type": "boolean",
+          "subject": true,
+          "request": true,
+          "description": "本请求目标可接收，类型兼容且预留有效"
+        },
+        "transfer_interlock_valid": {
+          "type": "boolean",
+          "subject": true,
+          "request": true,
+          "description": "本请求资源授权有效，相关输送机实际停稳且所有控制源受互锁"
+        },
+        "transfer_committed": {
+          "type": "boolean",
+          "subject": true,
+          "request": true,
+          "description": "本请求两次交接均已按实际证据提交"
+        },
+        "holder_matches_target": {
+          "type": "boolean",
+          "subject": true,
+          "request": true,
+          "description": "按关联请求的实际目标，重新核对当前业务 holder；不是历史 done 的副本"
+        },
+        "supported_at_target": {
+          "type": "boolean",
+          "subject": true,
+          "request": true,
+          "description": "按关联请求目标或输送出口，重新采样当前实际接触/支承"
+        },
+        "both_tools_empty": {
+          "type": "boolean",
+          "subject": false,
+          "request": false,
+          "description": "两台机器人当前均未实际持有任何物料，来源代次/时间有效"
+        }
+      }
+    }
+  },
+  "resources": {
+    "c1_writer": {
+      "kind": "exclusive",
+      "capacity": 1,
+      "owner": "resource_manager",
+      "status": "pending_service"
+    },
+    "c2_writer": {
+      "kind": "exclusive",
+      "capacity": 1,
+      "owner": "resource_manager",
+      "status": "pending_service"
+    },
+    "r1_motion": {
+      "kind": "exclusive",
+      "capacity": 1,
+      "owner": "resource_manager",
+      "status": "pending_service"
+    },
+    "r2_motion": {
+      "kind": "exclusive",
+      "capacity": 1,
+      "owner": "resource_manager",
+      "status": "pending_service"
+    },
+    "material_claim": {
+      "kind": "exclusive",
+      "capacity": 1,
+      "owner": "resource_manager",
+      "status": "pending_service",
+      "binding_ref": "material"
+    },
+    "c1_entry_reservation": {
+      "kind": "exclusive",
+      "capacity": 1,
+      "owner": "resource_manager",
+      "status": "pending_service",
+      "binding_ref": "c1_entry"
+    },
+    "c2_entry_reservation": {
+      "kind": "exclusive",
+      "capacity": 1,
+      "owner": "resource_manager",
+      "status": "pending_service",
+      "binding_ref": "c2_entry"
+    },
+    "r1_transfer_zone": {
+      "kind": "exclusive",
+      "capacity": 1,
+      "owner": "resource_manager",
+      "status": "pending_service"
+    },
+    "r2_transfer_zone": {
+      "kind": "exclusive",
+      "capacity": 1,
+      "owner": "resource_manager",
+      "status": "pending_service"
+    }
+  },
+  "resource_conflicts": [
+    [
+      "c1_writer",
+      "r1_transfer_zone"
+    ],
+    [
+      "c1_writer",
+      "r2_transfer_zone"
+    ],
+    [
+      "c2_writer",
+      "r2_transfer_zone"
+    ]
+  ],
+  "capability_adapters": {
+    "r1": {
+      "transfer_material": "transfer.adapter.json"
+    },
+    "r2": {
+      "transfer_material": "transfer.adapter.json"
+    }
+  },
+  "invocation_adapters": {
+    "load": {
+      "target_ref": "r1",
+      "behavior_id": "transfer_material",
+      "source_ref": "source_station",
+      "target_location_ref": "c1_entry",
+      "claims": [
+        "r1_motion",
+        "material_claim",
+        "c1_entry_reservation",
+        "r1_transfer_zone"
+      ],
+      "status": "pending_adapter",
+      "writes_material_pose": false,
+      "release": "controlled_stop_confirmed_and_handoff_resolved; destination_occupancy_persists"
+    },
+    "bridge": {
+      "target_ref": "r2",
+      "behavior_id": "transfer_material",
+      "source_ref": "c1_exit",
+      "target_location_ref": "c2_entry",
+      "claims": [
+        "r2_motion",
+        "material_claim",
+        "c2_entry_reservation",
+        "r2_transfer_zone"
+      ],
+      "status": "pending_adapter",
+      "writes_material_pose": false,
+      "release": "controlled_stop_confirmed_and_handoff_resolved; destination_occupancy_persists"
+    },
+    "arrive_1": {
+      "target_ref": "c1",
+      "behavior_id": "transport_to_exit",
+      "status": "pending_full_protocol",
+      "claims": [
+        "material_claim"
+      ],
+      "drive_dependency": "c1_drive",
+      "writes_material_pose": false,
+      "identity_arguments": {
+        "subject_id": "subjects"
+      },
+      "release": "tracking_terminal; material_occupancy_remains"
+    },
+    "arrive_2": {
+      "target_ref": "c2",
+      "behavior_id": "transport_to_exit",
+      "status": "pending_full_protocol",
+      "claims": [
+        "material_claim"
+      ],
+      "drive_dependency": "c2_drive",
+      "writes_material_pose": false,
+      "identity_arguments": {
+        "subject_id": "subjects"
+      },
+      "release": "tracking_terminal; material_occupancy_remains"
+    }
+  },
+  "acceptance": [
+    "M_is_at_C2_out",
+    "actual_support_is_C2",
+    "holder_is_C2",
+    "both_tools_empty",
+    "both_conveyors_stopped",
+    "no_active_requests",
+    "no_leaked_execution_grants",
+    "unique_holder"
+  ],
+  "execution_blockers": [
+    "shared_two_robot_two_conveyor_world",
+    "source_and_location_calibration",
+    "transfer_payload_assembler",
+    "production_hold_stop_bridge",
+    "continuous_control_gateway",
+    "request_correlated_fresh_observations",
+    "central_resource_and_handoff_services",
+    "process_runner",
+    "independent_acceptance_monitor",
+    "native_robot_fact_type_and_scope_bridge"
+  ]
+}

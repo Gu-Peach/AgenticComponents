@@ -1,0 +1,1887 @@
+{
+  "schema_type": "TransitionIR",
+  "version": "acverify-tick/0.1",
+  "language": "ac-process/0.1",
+  "process": {
+    "ir_version": "0.1",
+    "language": "ac-process/0.1",
+    "process_id": "s12_p03",
+    "environment_ref": "environment.json",
+    "execution_profile_ref": "fixed_60hz",
+    "entry": "seq_14",
+    "conditions": {
+      "source_recheck_fact_6": {
+        "kind": "is",
+        "read": {
+          "source": "observation",
+          "owner_ref": "world",
+          "key": "source_recheck_fact_6"
+        },
+        "equals": {
+          "kind": "boolean",
+          "value": true
+        }
+      },
+      "task_goal": {
+        "kind": "is",
+        "read": {
+          "source": "observation",
+          "owner_ref": "world",
+          "key": "task_goal"
+        },
+        "equals": {
+          "kind": "boolean",
+          "value": true
+        }
+      },
+      "weak_finish": {
+        "kind": "is",
+        "read": {
+          "source": "observation",
+          "owner_ref": "world",
+          "key": "weak_finish"
+        },
+        "equals": {
+          "kind": "boolean",
+          "value": true
+        }
+      },
+      "wrong_evidence": {
+        "kind": "is",
+        "read": {
+          "source": "observation",
+          "owner_ref": "world",
+          "key": "wrong_evidence"
+        },
+        "equals": {
+          "kind": "boolean",
+          "value": true
+        }
+      }
+    },
+    "nodes": [
+      {
+        "node_id": "seq_14",
+        "kind": "seq",
+        "children": [
+          "seq_13",
+          "verify"
+        ]
+      },
+      {
+        "node_id": "seq_13",
+        "kind": "seq",
+        "children": [
+          "par_9",
+          "transfer_material_10",
+          "feed_12"
+        ]
+      },
+      {
+        "node_id": "par_9",
+        "kind": "par",
+        "children": [
+          "seq_4",
+          "seq_8"
+        ]
+      },
+      {
+        "node_id": "seq_4",
+        "kind": "seq",
+        "children": [
+          "clamp_workpiece_1",
+          "machine_material_2",
+          "unclamp_workpiece_3"
+        ]
+      },
+      {
+        "node_id": "clamp_workpiece_1",
+        "kind": "invoke",
+        "target_ref": "ps1",
+        "behavior_id": "clamp_workpiece",
+        "arguments": {
+          "material": {
+            "kind": "binding",
+            "binding_ref": "m1"
+          },
+          "location": {
+            "kind": "binding",
+            "binding_ref": "ps1_work"
+          }
+        },
+        "policy_ref": "normal"
+      },
+      {
+        "node_id": "machine_material_2",
+        "kind": "invoke",
+        "target_ref": "ps1",
+        "behavior_id": "machine_material",
+        "arguments": {
+          "material": {
+            "kind": "binding",
+            "binding_ref": "m1"
+          },
+          "location": {
+            "kind": "binding",
+            "binding_ref": "ps1_work"
+          }
+        },
+        "policy_ref": "normal"
+      },
+      {
+        "node_id": "unclamp_workpiece_3",
+        "kind": "invoke",
+        "target_ref": "ps1",
+        "behavior_id": "unclamp_workpiece",
+        "arguments": {
+          "material": {
+            "kind": "binding",
+            "binding_ref": "m1"
+          }
+        },
+        "policy_ref": "normal"
+      },
+      {
+        "node_id": "seq_8",
+        "kind": "seq",
+        "children": [
+          "source_recheck_7",
+          "transfer_material_5"
+        ]
+      },
+      {
+        "node_id": "source_recheck_7",
+        "kind": "await",
+        "condition": {
+          "kind": "ref",
+          "condition_ref": "source_recheck_fact_6"
+        },
+        "timeout": {
+          "value": "30",
+          "unit": "s"
+        }
+      },
+      {
+        "node_id": "transfer_material_5",
+        "kind": "invoke",
+        "target_ref": "r1",
+        "behavior_id": "transfer_material",
+        "arguments": {
+          "material": {
+            "kind": "binding",
+            "binding_ref": "m2"
+          },
+          "source": {
+            "kind": "binding",
+            "binding_ref": "c1_exit"
+          },
+          "target": {
+            "kind": "binding",
+            "binding_ref": "t1_slot2"
+          }
+        },
+        "policy_ref": "normal"
+      },
+      {
+        "node_id": "transfer_material_10",
+        "kind": "invoke",
+        "target_ref": "r2",
+        "behavior_id": "transfer_material",
+        "arguments": {
+          "material": {
+            "kind": "binding",
+            "binding_ref": "m1"
+          },
+          "source": {
+            "kind": "binding",
+            "binding_ref": "ps1_work"
+          },
+          "target": {
+            "kind": "binding",
+            "binding_ref": "c2_entry"
+          }
+        },
+        "policy_ref": "normal"
+      },
+      {
+        "node_id": "feed_12",
+        "kind": "with-control",
+        "control_ref": "c2_drive",
+        "policy_ref": "normal",
+        "child": "transport_to_exit_11"
+      },
+      {
+        "node_id": "transport_to_exit_11",
+        "kind": "invoke",
+        "target_ref": "c2",
+        "behavior_id": "transport_to_exit",
+        "arguments": {
+          "material": {
+            "kind": "binding",
+            "binding_ref": "m1"
+          }
+        },
+        "policy_ref": "normal"
+      },
+      {
+        "node_id": "verify",
+        "kind": "await",
+        "condition": {
+          "kind": "ref",
+          "condition_ref": "task_goal"
+        },
+        "timeout": {
+          "value": "30",
+          "unit": "s"
+        }
+      }
+    ]
+  },
+  "bindings": {
+    "clamp_workpiece_1": {
+      "device": "PS1",
+      "behavior": "clamp_workpiece",
+      "arguments": {
+        "material": "M1",
+        "location": "PS1.work"
+      },
+      "model_ref": "clamp@0.1"
+    },
+    "machine_material_2": {
+      "device": "PS1",
+      "behavior": "machine_material",
+      "arguments": {
+        "material": "M1",
+        "location": "PS1.work"
+      },
+      "model_ref": "process@0.1"
+    },
+    "unclamp_workpiece_3": {
+      "device": "PS1",
+      "behavior": "unclamp_workpiece",
+      "arguments": {
+        "material": "M1"
+      },
+      "model_ref": "unclamp@0.1"
+    },
+    "transfer_material_5": {
+      "device": "R1",
+      "behavior": "transfer_material",
+      "arguments": {
+        "material": "M2",
+        "source": "C1.exit",
+        "target": "T1.slot2"
+      },
+      "model_ref": "transfer@0.1"
+    },
+    "transfer_material_10": {
+      "device": "R2",
+      "behavior": "transfer_material",
+      "arguments": {
+        "material": "M1",
+        "source": "PS1.work",
+        "target": "C2.entry"
+      },
+      "model_ref": "transfer@0.1"
+    },
+    "transport_to_exit_11": {
+      "device": "C2",
+      "behavior": "transport_to_exit",
+      "arguments": {
+        "material": "M1"
+      },
+      "model_ref": "transport@0.1"
+    }
+  },
+  "device_instances": {
+    "R1": {
+      "id": "R1",
+      "type": "device",
+      "device_type": "robot_arm",
+      "contract_ref": "robot_arm@0.1",
+      "parameters": {
+        "capacity": 1
+      },
+      "role_status": "proposed_symbolic_role_not_verified_asset_mapping"
+    },
+    "R2": {
+      "id": "R2",
+      "type": "device",
+      "device_type": "robot_arm",
+      "contract_ref": "robot_arm@0.1",
+      "parameters": {
+        "capacity": 1
+      },
+      "role_status": "proposed_symbolic_role_not_verified_asset_mapping"
+    },
+    "T1": {
+      "id": "T1",
+      "type": "device",
+      "device_type": "turntable",
+      "contract_ref": "turntable@0.1",
+      "parameters": {
+        "capacity": 2,
+        "index_count": 2
+      },
+      "role_status": "proposed_symbolic_role_not_verified_asset_mapping"
+    },
+    "C1": {
+      "id": "C1",
+      "type": "device",
+      "device_type": "conveyor",
+      "contract_ref": "conveyor@0.1",
+      "parameters": {
+        "capacity": 2
+      },
+      "role_status": "proposed_symbolic_role_not_verified_asset_mapping"
+    },
+    "C2": {
+      "id": "C2",
+      "type": "device",
+      "device_type": "conveyor",
+      "contract_ref": "conveyor@0.1",
+      "parameters": {
+        "capacity": 2
+      },
+      "role_status": "proposed_symbolic_role_not_verified_asset_mapping"
+    },
+    "PS1": {
+      "id": "PS1",
+      "type": "device",
+      "device_type": "machining_station",
+      "contract_ref": "machining_station@0.1",
+      "parameters": {
+        "capacity": 1
+      },
+      "role_status": "added_abstract_processing_role_not_asserted_in_glb"
+    },
+    "PS2": {
+      "id": "PS2",
+      "type": "device",
+      "device_type": "machining_station",
+      "contract_ref": "machining_station@0.1",
+      "parameters": {
+        "capacity": 1
+      },
+      "role_status": "added_abstract_processing_role_not_asserted_in_glb"
+    }
+  },
+  "locations": {
+    "R1.tool": {
+      "id": "R1.tool",
+      "type": "location",
+      "owner": "R1",
+      "slot": null,
+      "capacity": 1,
+      "accepts": [
+        "workpiece"
+      ],
+      "zone_ref": "R1.zone"
+    },
+    "R2.tool": {
+      "id": "R2.tool",
+      "type": "location",
+      "owner": "R2",
+      "slot": null,
+      "capacity": 1,
+      "accepts": [
+        "workpiece"
+      ],
+      "zone_ref": "R2.zone"
+    },
+    "T1.slot1": {
+      "id": "T1.slot1",
+      "type": "location",
+      "owner": "T1",
+      "slot": "slot1",
+      "capacity": 1,
+      "accepts": [
+        "workpiece"
+      ],
+      "zone_ref": "T1.zone"
+    },
+    "T1.slot2": {
+      "id": "T1.slot2",
+      "type": "location",
+      "owner": "T1",
+      "slot": "slot2",
+      "capacity": 1,
+      "accepts": [
+        "workpiece"
+      ],
+      "zone_ref": "T1.zone"
+    },
+    "C1.entry": {
+      "id": "C1.entry",
+      "type": "location",
+      "owner": "C1",
+      "slot": null,
+      "capacity": 2,
+      "accepts": [
+        "workpiece"
+      ],
+      "zone_ref": "C1.zone"
+    },
+    "C1.exit": {
+      "id": "C1.exit",
+      "type": "location",
+      "owner": "C1",
+      "slot": null,
+      "capacity": 2,
+      "accepts": [
+        "workpiece"
+      ],
+      "zone_ref": "C1.zone"
+    },
+    "C2.entry": {
+      "id": "C2.entry",
+      "type": "location",
+      "owner": "C2",
+      "slot": null,
+      "capacity": 2,
+      "accepts": [
+        "workpiece"
+      ],
+      "zone_ref": "C2.zone"
+    },
+    "C2.exit": {
+      "id": "C2.exit",
+      "type": "location",
+      "owner": "C2",
+      "slot": null,
+      "capacity": 2,
+      "accepts": [
+        "workpiece"
+      ],
+      "zone_ref": "C2.zone"
+    },
+    "PS1.work": {
+      "id": "PS1.work",
+      "type": "location",
+      "owner": "PS1",
+      "slot": null,
+      "capacity": 1,
+      "accepts": [
+        "workpiece"
+      ],
+      "zone_ref": "PS1.zone"
+    },
+    "PS2.work": {
+      "id": "PS2.work",
+      "type": "location",
+      "owner": "PS2",
+      "slot": null,
+      "capacity": 1,
+      "accepts": [
+        "workpiece"
+      ],
+      "zone_ref": "PS2.zone"
+    }
+  },
+  "contracts": {
+    "clamp@0.1": {
+      "schema_type": "VerificationContract",
+      "schema_version": "0.1",
+      "id": "clamp@0.1",
+      "mode": "abstract_only",
+      "runtime_adapter": "pending",
+      "parameters": {
+        "material": "material",
+        "location": "location"
+      },
+      "behavior_kind": "action",
+      "preconditions": [
+        {
+          "predicate": "at_location",
+          "args": [
+            "$material",
+            "$location"
+          ]
+        },
+        {
+          "predicate": "location_owned_by",
+          "args": [
+            "$location",
+            "$device"
+          ]
+        },
+        {
+          "predicate": "no_processing",
+          "args": [
+            "$device"
+          ]
+        }
+      ],
+      "sustaining_conditions": [
+        {
+          "predicate": "interlock_valid",
+          "args": [
+            "$device"
+          ]
+        },
+        {
+          "predicate": "all_grants_valid",
+          "args": [
+            "$request"
+          ]
+        }
+      ],
+      "phases": [
+        {
+          "id": "clamping",
+          "successor": "report",
+          "advance_when": "environment_phase_response_within_profile",
+          "effects": [
+            {
+              "effect": "clamp_workpiece",
+              "args": [
+                "$material",
+                "$device"
+              ]
+            }
+          ],
+          "fault_successor": "stopping",
+          "request_identity_preserved": true
+        },
+        {
+          "id": "report",
+          "successor": "completed",
+          "advance_when": "environment_phase_response_within_profile",
+          "effects": [
+            {
+              "effect": "publish_success",
+              "args": [
+                "$request"
+              ]
+            }
+          ],
+          "fault_successor": "stopping",
+          "request_identity_preserved": true
+        }
+      ],
+      "completion_conditions": [
+        {
+          "predicate": "result_matches",
+          "args": [
+            "$request"
+          ]
+        },
+        {
+          "predicate": "clamped",
+          "args": [
+            "$material",
+            "$device"
+          ]
+        }
+      ],
+      "resource_claims": [
+        "device.operation",
+        "material.claim",
+        "device.zone"
+      ],
+      "protocol_ref": "request-protocol@0.1",
+      "failure_outcomes": [
+        {
+          "kind": "confirmed_stop",
+          "preserve_effects": true,
+          "release_requires": "handoff consistency + stop evidence"
+        },
+        {
+          "kind": "unknown_stop",
+          "preserve_effects": true,
+          "attention_required": true,
+          "retain_isolation": true
+        }
+      ],
+      "footprint": {
+        "read_predicates": [
+          "all_grants_valid",
+          "at_location",
+          "clamped",
+          "interlock_valid",
+          "location_owned_by",
+          "no_processing",
+          "result_matches"
+        ],
+        "write_effects": [
+          "clamp_workpiece",
+          "publish_success"
+        ],
+        "resource_dependencies": [
+          "device.operation",
+          "material.claim",
+          "device.zone"
+        ],
+        "scope": "设备/物料/位置由参数实例化；具体状态字段依 vocabulary 解释，不用设备 ID 不同推断独立。"
+      },
+      "limitations": [
+        "无几何/碰撞证明",
+        "阶段耗时由实验环境显式配置",
+        "尚未接入路径求解器"
+      ]
+    },
+    "process@0.1": {
+      "schema_type": "VerificationContract",
+      "schema_version": "0.1",
+      "id": "process@0.1",
+      "mode": "abstract_only",
+      "runtime_adapter": "pending",
+      "parameters": {
+        "material": "material",
+        "location": "location"
+      },
+      "behavior_kind": "action",
+      "preconditions": [
+        {
+          "predicate": "at_location",
+          "args": [
+            "$material",
+            "$location"
+          ]
+        },
+        {
+          "predicate": "location_owned_by",
+          "args": [
+            "$location",
+            "$device"
+          ]
+        },
+        {
+          "predicate": "clamped",
+          "args": [
+            "$material",
+            "$device"
+          ]
+        },
+        {
+          "predicate": "access_closed",
+          "args": [
+            "$device"
+          ]
+        }
+      ],
+      "sustaining_conditions": [
+        {
+          "predicate": "clamped",
+          "args": [
+            "$material",
+            "$device"
+          ]
+        },
+        {
+          "predicate": "access_closed",
+          "args": [
+            "$device"
+          ]
+        },
+        {
+          "predicate": "interlock_valid",
+          "args": [
+            "$device"
+          ]
+        },
+        {
+          "predicate": "all_grants_valid",
+          "args": [
+            "$request"
+          ]
+        }
+      ],
+      "phases": [
+        {
+          "id": "accepted",
+          "successor": "processing",
+          "advance_when": "environment_phase_response_within_profile",
+          "effects": [],
+          "fault_successor": "stopping",
+          "request_identity_preserved": true
+        },
+        {
+          "id": "processing",
+          "successor": "record",
+          "advance_when": "environment_phase_response_within_profile",
+          "effects": [],
+          "fault_successor": "stopping",
+          "request_identity_preserved": true
+        },
+        {
+          "id": "record",
+          "successor": "report",
+          "advance_when": "environment_phase_response_within_profile",
+          "effects": [
+            {
+              "effect": "record_operation",
+              "args": [
+                "$material",
+                "$device",
+                "$request"
+              ]
+            }
+          ],
+          "fault_successor": "stopping",
+          "request_identity_preserved": true
+        },
+        {
+          "id": "report",
+          "successor": "completed",
+          "advance_when": "environment_phase_response_within_profile",
+          "effects": [
+            {
+              "effect": "publish_success",
+              "args": [
+                "$request"
+              ]
+            }
+          ],
+          "fault_successor": "stopping",
+          "request_identity_preserved": true
+        }
+      ],
+      "completion_conditions": [
+        {
+          "predicate": "result_matches",
+          "args": [
+            "$request"
+          ]
+        },
+        {
+          "predicate": "operation_recorded",
+          "args": [
+            "$material",
+            "$device",
+            "$request"
+          ]
+        }
+      ],
+      "resource_claims": [
+        "device.operation",
+        "material.claim",
+        "device.zone"
+      ],
+      "protocol_ref": "request-protocol@0.1",
+      "failure_outcomes": [
+        {
+          "kind": "confirmed_stop",
+          "preserve_effects": true,
+          "release_requires": "handoff consistency + stop evidence"
+        },
+        {
+          "kind": "unknown_stop",
+          "preserve_effects": true,
+          "attention_required": true,
+          "retain_isolation": true
+        }
+      ],
+      "footprint": {
+        "read_predicates": [
+          "access_closed",
+          "all_grants_valid",
+          "at_location",
+          "clamped",
+          "interlock_valid",
+          "location_owned_by",
+          "operation_recorded",
+          "result_matches"
+        ],
+        "write_effects": [
+          "publish_success",
+          "record_operation"
+        ],
+        "resource_dependencies": [
+          "device.operation",
+          "material.claim",
+          "device.zone"
+        ],
+        "scope": "设备/物料/位置由参数实例化；具体状态字段依 vocabulary 解释，不用设备 ID 不同推断独立。"
+      },
+      "limitations": [
+        "无几何/碰撞证明",
+        "阶段耗时由实验环境显式配置",
+        "尚未接入路径求解器"
+      ]
+    },
+    "unclamp@0.1": {
+      "schema_type": "VerificationContract",
+      "schema_version": "0.1",
+      "id": "unclamp@0.1",
+      "mode": "abstract_only",
+      "runtime_adapter": "pending",
+      "parameters": {
+        "material": "material"
+      },
+      "behavior_kind": "action",
+      "preconditions": [
+        {
+          "predicate": "clamped",
+          "args": [
+            "$material",
+            "$device"
+          ]
+        },
+        {
+          "predicate": "no_processing",
+          "args": [
+            "$device"
+          ]
+        }
+      ],
+      "sustaining_conditions": [
+        {
+          "predicate": "interlock_valid",
+          "args": [
+            "$device"
+          ]
+        },
+        {
+          "predicate": "all_grants_valid",
+          "args": [
+            "$request"
+          ]
+        }
+      ],
+      "phases": [
+        {
+          "id": "unclamping",
+          "successor": "report",
+          "advance_when": "environment_phase_response_within_profile",
+          "effects": [
+            {
+              "effect": "unclamp_workpiece",
+              "args": [
+                "$material",
+                "$device"
+              ]
+            }
+          ],
+          "fault_successor": "stopping",
+          "request_identity_preserved": true
+        },
+        {
+          "id": "report",
+          "successor": "completed",
+          "advance_when": "environment_phase_response_within_profile",
+          "effects": [
+            {
+              "effect": "publish_success",
+              "args": [
+                "$request"
+              ]
+            }
+          ],
+          "fault_successor": "stopping",
+          "request_identity_preserved": true
+        }
+      ],
+      "completion_conditions": [
+        {
+          "predicate": "result_matches",
+          "args": [
+            "$request"
+          ]
+        },
+        {
+          "predicate": "unclamped",
+          "args": [
+            "$material",
+            "$device"
+          ]
+        }
+      ],
+      "resource_claims": [
+        "device.operation",
+        "material.claim",
+        "device.zone"
+      ],
+      "protocol_ref": "request-protocol@0.1",
+      "failure_outcomes": [
+        {
+          "kind": "confirmed_stop",
+          "preserve_effects": true,
+          "release_requires": "handoff consistency + stop evidence"
+        },
+        {
+          "kind": "unknown_stop",
+          "preserve_effects": true,
+          "attention_required": true,
+          "retain_isolation": true
+        }
+      ],
+      "footprint": {
+        "read_predicates": [
+          "all_grants_valid",
+          "clamped",
+          "interlock_valid",
+          "no_processing",
+          "result_matches",
+          "unclamped"
+        ],
+        "write_effects": [
+          "publish_success",
+          "unclamp_workpiece"
+        ],
+        "resource_dependencies": [
+          "device.operation",
+          "material.claim",
+          "device.zone"
+        ],
+        "scope": "设备/物料/位置由参数实例化；具体状态字段依 vocabulary 解释，不用设备 ID 不同推断独立。"
+      },
+      "limitations": [
+        "无几何/碰撞证明",
+        "阶段耗时由实验环境显式配置",
+        "尚未接入路径求解器"
+      ]
+    },
+    "transfer@0.1": {
+      "schema_type": "VerificationContract",
+      "schema_version": "0.1",
+      "id": "transfer@0.1",
+      "mode": "abstract_only",
+      "runtime_adapter": "pending",
+      "parameters": {
+        "material": "material",
+        "source": "location",
+        "target": "location"
+      },
+      "behavior_kind": "action",
+      "preconditions": [
+        {
+          "predicate": "source_contains",
+          "args": [
+            "$material",
+            "$source"
+          ]
+        },
+        {
+          "predicate": "source_unclamped",
+          "args": [
+            "$material",
+            "$source"
+          ]
+        },
+        {
+          "predicate": "target_compatible",
+          "args": [
+            "$material",
+            "$target"
+          ]
+        },
+        {
+          "predicate": "target_capacity",
+          "args": [
+            "$target"
+          ]
+        },
+        {
+          "predicate": "tool_empty",
+          "args": [
+            "$device"
+          ]
+        },
+        {
+          "predicate": "source_stationary",
+          "args": [
+            "$source"
+          ]
+        },
+        {
+          "predicate": "target_stationary",
+          "args": [
+            "$target"
+          ]
+        }
+      ],
+      "sustaining_conditions": [
+        {
+          "predicate": "interlock_valid",
+          "args": [
+            "$device"
+          ]
+        },
+        {
+          "predicate": "all_grants_valid",
+          "args": [
+            "$request"
+          ]
+        }
+      ],
+      "phases": [
+        {
+          "id": "accepted",
+          "successor": "capture",
+          "advance_when": "environment_phase_response_within_profile",
+          "effects": [
+            {
+              "effect": "reserve_target",
+              "args": [
+                "$material",
+                "$target",
+                "$request"
+              ]
+            }
+          ],
+          "fault_successor": "stopping",
+          "request_identity_preserved": true
+        },
+        {
+          "id": "capture",
+          "successor": "clear_source",
+          "advance_when": "environment_phase_response_within_profile",
+          "effects": [
+            {
+              "effect": "capture",
+              "args": [
+                "$material",
+                "$device"
+              ]
+            }
+          ],
+          "fault_successor": "stopping",
+          "request_identity_preserved": true
+        },
+        {
+          "id": "clear_source",
+          "successor": "place",
+          "advance_when": "environment_phase_response_within_profile",
+          "effects": [
+            {
+              "effect": "clear_source",
+              "args": [
+                "$material",
+                "$source",
+                "$device"
+              ]
+            }
+          ],
+          "fault_successor": "stopping",
+          "request_identity_preserved": true
+        },
+        {
+          "id": "place",
+          "successor": "release",
+          "advance_when": "environment_phase_response_within_profile",
+          "effects": [
+            {
+              "effect": "place_supported",
+              "args": [
+                "$material",
+                "$target"
+              ]
+            }
+          ],
+          "fault_successor": "stopping",
+          "request_identity_preserved": true
+        },
+        {
+          "id": "release",
+          "successor": "commit",
+          "advance_when": "environment_phase_response_within_profile",
+          "effects": [
+            {
+              "effect": "release_tool",
+              "args": [
+                "$material",
+                "$device"
+              ]
+            }
+          ],
+          "fault_successor": "stopping",
+          "request_identity_preserved": true
+        },
+        {
+          "id": "commit",
+          "successor": "report",
+          "advance_when": "environment_phase_response_within_profile",
+          "effects": [
+            {
+              "effect": "commit_transfer",
+              "args": [
+                "$material",
+                "$target",
+                "$request"
+              ]
+            }
+          ],
+          "fault_successor": "stopping",
+          "request_identity_preserved": true
+        },
+        {
+          "id": "report",
+          "successor": "completed",
+          "advance_when": "environment_phase_response_within_profile",
+          "effects": [
+            {
+              "effect": "publish_success",
+              "args": [
+                "$request"
+              ]
+            }
+          ],
+          "fault_successor": "stopping",
+          "request_identity_preserved": true
+        }
+      ],
+      "completion_conditions": [
+        {
+          "predicate": "result_matches",
+          "args": [
+            "$request"
+          ]
+        },
+        {
+          "predicate": "transfer_committed",
+          "args": [
+            "$material",
+            "$target",
+            "$request"
+          ]
+        },
+        {
+          "predicate": "supported_at",
+          "args": [
+            "$material",
+            "$target"
+          ]
+        },
+        {
+          "predicate": "tool_empty",
+          "args": [
+            "$device"
+          ]
+        }
+      ],
+      "resource_claims": [
+        "device.motion",
+        "material.claim",
+        "source.zone",
+        "target.zone",
+        "target.capacity"
+      ],
+      "protocol_ref": "request-protocol@0.1",
+      "failure_outcomes": [
+        {
+          "kind": "confirmed_stop",
+          "preserve_effects": true,
+          "release_requires": "handoff consistency + stop evidence"
+        },
+        {
+          "kind": "unknown_stop",
+          "preserve_effects": true,
+          "attention_required": true,
+          "retain_isolation": true
+        }
+      ],
+      "footprint": {
+        "read_predicates": [
+          "all_grants_valid",
+          "interlock_valid",
+          "result_matches",
+          "source_contains",
+          "source_stationary",
+          "source_unclamped",
+          "supported_at",
+          "target_capacity",
+          "target_compatible",
+          "target_stationary",
+          "tool_empty",
+          "transfer_committed"
+        ],
+        "write_effects": [
+          "capture",
+          "clear_source",
+          "commit_transfer",
+          "place_supported",
+          "publish_success",
+          "release_tool",
+          "reserve_target"
+        ],
+        "resource_dependencies": [
+          "device.motion",
+          "material.claim",
+          "source.zone",
+          "target.zone",
+          "target.capacity"
+        ],
+        "scope": "设备/物料/位置由参数实例化；具体状态字段依 vocabulary 解释，不用设备 ID 不同推断独立。"
+      },
+      "limitations": [
+        "无几何/碰撞证明",
+        "阶段耗时由实验环境显式配置",
+        "尚未接入路径求解器"
+      ]
+    },
+    "transport@0.1": {
+      "schema_type": "VerificationContract",
+      "schema_version": "0.1",
+      "id": "transport@0.1",
+      "mode": "abstract_only",
+      "runtime_adapter": "pending",
+      "parameters": {
+        "material": "material"
+      },
+      "behavior_kind": "action",
+      "preconditions": [
+        {
+          "predicate": "drive_authorized",
+          "args": [
+            "$device",
+            "$request"
+          ]
+        },
+        {
+          "predicate": "subject_on_device",
+          "args": [
+            "$material",
+            "$device"
+          ]
+        }
+      ],
+      "sustaining_conditions": [
+        {
+          "predicate": "drive_authorized",
+          "args": [
+            "$device",
+            "$request"
+          ]
+        },
+        {
+          "predicate": "all_grants_valid",
+          "args": [
+            "$request"
+          ]
+        }
+      ],
+      "phases": [
+        {
+          "id": "track",
+          "successor": "arrive",
+          "advance_when": "environment_phase_response_within_profile",
+          "effects": [],
+          "fault_successor": "stopping",
+          "request_identity_preserved": true
+        },
+        {
+          "id": "arrive",
+          "successor": "report",
+          "advance_when": "environment_phase_response_within_profile",
+          "effects": [
+            {
+              "effect": "advance_to_exit",
+              "args": [
+                "$material",
+                "$device"
+              ]
+            }
+          ],
+          "fault_successor": "stopping",
+          "request_identity_preserved": true
+        },
+        {
+          "id": "report",
+          "successor": "completed",
+          "advance_when": "environment_phase_response_within_profile",
+          "effects": [
+            {
+              "effect": "publish_success",
+              "args": [
+                "$request"
+              ]
+            }
+          ],
+          "fault_successor": "stopping",
+          "request_identity_preserved": true
+        }
+      ],
+      "completion_conditions": [
+        {
+          "predicate": "result_matches",
+          "args": [
+            "$request"
+          ]
+        },
+        {
+          "predicate": "subject_at_exit",
+          "args": [
+            "$material",
+            "$device"
+          ]
+        }
+      ],
+      "resource_claims": [
+        "material.claim",
+        "delegate:device.writer"
+      ],
+      "protocol_ref": "request-protocol@0.1",
+      "failure_outcomes": [
+        {
+          "kind": "confirmed_stop",
+          "preserve_effects": true,
+          "release_requires": "handoff consistency + stop evidence"
+        },
+        {
+          "kind": "unknown_stop",
+          "preserve_effects": true,
+          "attention_required": true,
+          "retain_isolation": true
+        }
+      ],
+      "footprint": {
+        "read_predicates": [
+          "all_grants_valid",
+          "drive_authorized",
+          "result_matches",
+          "subject_at_exit",
+          "subject_on_device"
+        ],
+        "write_effects": [
+          "advance_to_exit",
+          "publish_success"
+        ],
+        "resource_dependencies": [
+          "material.claim",
+          "delegate:device.writer"
+        ],
+        "scope": "设备/物料/位置由参数实例化；具体状态字段依 vocabulary 解释，不用设备 ID 不同推断独立。"
+      },
+      "limitations": [
+        "无几何/碰撞证明",
+        "阶段耗时由实验环境显式配置",
+        "尚未接入路径求解器"
+      ]
+    }
+  },
+  "environment": {
+    "id": "nominal@0.1",
+    "accept": [
+      1,
+      2
+    ],
+    "phase": [
+      1,
+      3
+    ],
+    "stop": [
+      1,
+      3
+    ],
+    "feedback": [
+      0,
+      1
+    ],
+    "events": [],
+    "faults": [],
+    "max_faults": 0,
+    "forced_stop_loss": null,
+    "max_age": 2
+  },
+  "initial": {
+    "tick": 0,
+    "world": {
+      "materials": {
+        "M1": {
+          "id": "M1",
+          "type": "workpiece",
+          "subject_index": 1,
+          "region": "PS1.work",
+          "support": "PS1.work",
+          "holder": "PS1",
+          "held_by": null,
+          "attributes": {}
+        },
+        "M2": {
+          "id": "M2",
+          "type": "workpiece",
+          "subject_index": 2,
+          "region": "C1.exit",
+          "support": "C1.exit",
+          "holder": "C1",
+          "held_by": null,
+          "attributes": {}
+        }
+      },
+      "devices": {
+        "R1": {
+          "drive": "stopped",
+          "run_command": false,
+          "held_material": null,
+          "clamped_material": null,
+          "access_closed": true,
+          "permit": true,
+          "actual_index": 0,
+          "actual_level": 0,
+          "operation_history": [],
+          "cycle_counts": {},
+          "epoch": 0
+        },
+        "R2": {
+          "drive": "stopped",
+          "run_command": false,
+          "held_material": null,
+          "clamped_material": null,
+          "access_closed": true,
+          "permit": true,
+          "actual_index": 0,
+          "actual_level": 0,
+          "operation_history": [],
+          "cycle_counts": {},
+          "epoch": 0
+        },
+        "T1": {
+          "drive": "stopped",
+          "run_command": false,
+          "held_material": null,
+          "clamped_material": null,
+          "access_closed": true,
+          "permit": true,
+          "actual_index": 0,
+          "actual_level": 0,
+          "operation_history": [],
+          "cycle_counts": {},
+          "epoch": 0
+        },
+        "C1": {
+          "drive": "stopped",
+          "run_command": false,
+          "held_material": null,
+          "clamped_material": null,
+          "access_closed": true,
+          "permit": true,
+          "actual_index": 0,
+          "actual_level": 0,
+          "operation_history": [],
+          "cycle_counts": {},
+          "epoch": 0
+        },
+        "C2": {
+          "drive": "stopped",
+          "run_command": false,
+          "held_material": null,
+          "clamped_material": null,
+          "access_closed": true,
+          "permit": true,
+          "actual_index": 0,
+          "actual_level": 0,
+          "operation_history": [],
+          "cycle_counts": {},
+          "epoch": 0
+        },
+        "PS1": {
+          "drive": "stopped",
+          "run_command": false,
+          "held_material": null,
+          "clamped_material": null,
+          "access_closed": true,
+          "permit": true,
+          "actual_index": 0,
+          "actual_level": 0,
+          "operation_history": [],
+          "cycle_counts": {},
+          "epoch": 0
+        },
+        "PS2": {
+          "drive": "stopped",
+          "run_command": false,
+          "held_material": null,
+          "clamped_material": null,
+          "access_closed": true,
+          "permit": true,
+          "actual_index": 0,
+          "actual_level": 0,
+          "operation_history": [],
+          "cycle_counts": {},
+          "epoch": 0
+        }
+      },
+      "occupancy": {
+        "R1.tool": [],
+        "R2.tool": [],
+        "T1.slot1": [],
+        "T1.slot2": [],
+        "C1.entry": [],
+        "C1.exit": [
+          "M2"
+        ],
+        "C2.entry": [],
+        "C2.exit": [],
+        "PS1.work": [
+          "M1"
+        ],
+        "PS2.work": []
+      },
+      "reservations": {},
+      "grants": {},
+      "committed": [],
+      "external": {}
+    },
+    "tasks": {
+      "seq_14@": {
+        "key": "seq_14@",
+        "node": "seq_14",
+        "path": [],
+        "parent": null,
+        "scope": null,
+        "kind": "seq",
+        "phase": "new",
+        "created": 0,
+        "eligible": 1,
+        "children": [],
+        "cancel": false,
+        "claims": []
+      }
+    },
+    "completed": {},
+    "inbox": [],
+    "applied_events": [],
+    "fault_count": 0,
+    "lost_stop": [],
+    "abort": false,
+    "reason": "",
+    "outcome": "running",
+    "violations": []
+  },
+  "task_specification": {
+    "schema_type": "CorpusTaskSpecification",
+    "schema_version": "0.1",
+    "task_id": "S12-P03-task",
+    "title": "加工与装卸并发",
+    "goal": {
+      "op": "all",
+      "args": [
+        {
+          "op": "operation_count",
+          "material": "M1",
+          "device": "PS1",
+          "count": 1
+        },
+        {
+          "op": "unclamped",
+          "device": "PS1"
+        },
+        {
+          "op": "at",
+          "material": "M1",
+          "location": "C2.exit"
+        },
+        {
+          "op": "holder",
+          "material": "M1",
+          "device": "C2"
+        },
+        {
+          "op": "supported",
+          "material": "M1",
+          "location": "C2.exit"
+        },
+        {
+          "op": "at",
+          "material": "M2",
+          "location": "T1.slot2"
+        },
+        {
+          "op": "holder",
+          "material": "M2",
+          "device": "T1"
+        },
+        {
+          "op": "supported",
+          "material": "M2",
+          "location": "T1.slot2"
+        },
+        {
+          "op": "tools_empty"
+        },
+        {
+          "op": "drives_stopped"
+        },
+        {
+          "op": "no_active_requests"
+        },
+        {
+          "op": "no_grants"
+        }
+      ]
+    },
+    "required_environment_gates": [],
+    "completion": "root success AND independent goal; controlled fault isolation is a separate result",
+    "goal_source": "authored task specification, frozen across all mutations",
+    "spatial_scope": "declared symbolic edges only; no geometric feasibility claim"
+  },
+  "property_requests": {
+    "schema_type": "CorpusPropertySet",
+    "schema_version": "0.1",
+    "properties": [
+      {
+        "id": "V01",
+        "kind": "safety",
+        "applicable": true,
+        "requirement": "取料阶段开始时来源实际静止、物料仍在源区且交接授权有效。",
+        "formula_status": "template_instantiation_required"
+      },
+      {
+        "id": "V02",
+        "kind": "safety",
+        "applicable": true,
+        "requirement": "成功反馈属于同一已接受请求和当前激活。",
+        "formula_status": "template_instantiation_required"
+      },
+      {
+        "id": "V03",
+        "kind": "safety",
+        "applicable": true,
+        "requirement": "每次消费证据时主体、请求、epoch、age 与有效性符合契约。",
+        "formula_status": "template_instantiation_required"
+      },
+      {
+        "id": "V04",
+        "kind": "safety",
+        "applicable": true,
+        "requirement": "冲突资源不同时授权给不同 owner。",
+        "formula_status": "template_instantiation_required"
+      },
+      {
+        "id": "V05",
+        "kind": "safety",
+        "applicable": true,
+        "requirement": "中心 holder 与源/目标局部账本满足交接阶段的一致性要求。",
+        "formula_status": "template_instantiation_required"
+      },
+      {
+        "id": "V06",
+        "kind": "safety",
+        "applicable": true,
+        "requirement": "占用加预留不超容量，同事务提交不重复计数。",
+        "formula_status": "template_instantiation_required"
+      },
+      {
+        "id": "V07",
+        "kind": "safety",
+        "applicable": true,
+        "requirement": "scope 成功退出蕴含退出写确认和实际停稳。",
+        "formula_status": "template_instantiation_required"
+      },
+      {
+        "id": "V08",
+        "kind": "safety",
+        "applicable": true,
+        "requirement": "停止结果未知时不虚报终态、资源释放或物料回滚。",
+        "formula_status": "template_instantiation_required"
+      },
+      {
+        "id": "V09",
+        "kind": "safety",
+        "applicable": true,
+        "requirement": "根成功蕴含案例独立 TaskSpec 目标和清理义务。",
+        "formula_status": "template_instantiation_required"
+      },
+      {
+        "id": "V10a",
+        "kind": "reachability",
+        "applicable": true,
+        "requirement": "存在达到案例独立业务目标与完成条件的路径。",
+        "formula_status": "template_instantiation_required"
+      },
+      {
+        "id": "V10b",
+        "kind": "bounded_response",
+        "applicable": true,
+        "requirement": "触发后在声明完整时间窗内到达允许响应或异常处理状态。",
+        "formula_status": "template_instantiation_required"
+      }
+    ],
+    "goal_file": "task-spec.json",
+    "unsupported_is_not_failure": true
+  },
+  "controls": {
+    "C1.drive": {
+      "id": "C1.drive",
+      "owner": "C1",
+      "contract_ref": "drive@0.1",
+      "writer": "C1.writer",
+      "speed_m_s": 0.2
+    },
+    "C2.drive": {
+      "id": "C2.drive",
+      "owner": "C2",
+      "contract_ref": "drive@0.1",
+      "writer": "C2.writer",
+      "speed_m_s": 0.2
+    }
+  },
+  "resource_conflicts": [
+    [
+      "C1.writer",
+      "C1.zone"
+    ],
+    [
+      "C2.writer",
+      "C2.zone"
+    ],
+    [
+      "PS1.operation",
+      "PS1.zone"
+    ],
+    [
+      "PS2.operation",
+      "PS2.zone"
+    ],
+    [
+      "T1.motion",
+      "T1.zone"
+    ]
+  ],
+  "policies": {
+    "normal": {
+      "gate_ticks": 1800,
+      "accept_ticks": 120,
+      "execute_ticks": 1800,
+      "stop_ticks": 300
+    }
+  },
+  "observations": {
+    "source_recheck_fact_6": {
+      "op": "all",
+      "args": [
+        {
+          "op": "at",
+          "material": "M2",
+          "location": "C1.exit"
+        },
+        {
+          "op": "drive_stopped",
+          "device": "C1"
+        }
+      ]
+    },
+    "task_goal": {
+      "op": "all",
+      "args": [
+        {
+          "op": "operation_count",
+          "material": "M1",
+          "device": "PS1",
+          "count": 1
+        },
+        {
+          "op": "unclamped",
+          "device": "PS1"
+        },
+        {
+          "op": "at",
+          "material": "M1",
+          "location": "C2.exit"
+        },
+        {
+          "op": "holder",
+          "material": "M1",
+          "device": "C2"
+        },
+        {
+          "op": "supported",
+          "material": "M1",
+          "location": "C2.exit"
+        },
+        {
+          "op": "at",
+          "material": "M2",
+          "location": "T1.slot2"
+        },
+        {
+          "op": "holder",
+          "material": "M2",
+          "device": "T1"
+        },
+        {
+          "op": "supported",
+          "material": "M2",
+          "location": "T1.slot2"
+        },
+        {
+          "op": "tools_empty"
+        },
+        {
+          "op": "drives_stopped"
+        },
+        {
+          "op": "no_active_requests"
+        },
+        {
+          "op": "no_grants"
+        }
+      ]
+    },
+    "weak_finish": {
+      "op": "no_active_requests"
+    },
+    "wrong_evidence": {
+      "op": "all",
+      "args": [
+        {
+          "op": "all",
+          "args": [
+            {
+              "op": "operation_count",
+              "material": "M1",
+              "device": "PS1",
+              "count": 1
+            },
+            {
+              "op": "unclamped",
+              "device": "PS1"
+            },
+            {
+              "op": "at",
+              "material": "M1",
+              "location": "C2.exit"
+            },
+            {
+              "op": "holder",
+              "material": "M1",
+              "device": "C2"
+            },
+            {
+              "op": "supported",
+              "material": "M1",
+              "location": "C2.exit"
+            },
+            {
+              "op": "at",
+              "material": "M2",
+              "location": "T1.slot2"
+            },
+            {
+              "op": "holder",
+              "material": "M2",
+              "device": "T1"
+            },
+            {
+              "op": "supported",
+              "material": "M2",
+              "location": "T1.slot2"
+            },
+            {
+              "op": "tools_empty"
+            },
+            {
+              "op": "drives_stopped"
+            },
+            {
+              "op": "no_active_requests"
+            },
+            {
+              "op": "no_grants"
+            }
+          ]
+        },
+        {
+          "op": "at",
+          "material": "M1",
+          "location": "R1.tool"
+        }
+      ]
+    }
+  },
+  "input_digest": "4083711a6485384e0ae44935eb027d28f3bf6499185a3348e5b051371bba9fb8",
+  "observation_semantics": "fresh synchronous world snapshot; protocol delivery is nondeterministic; no geometry",
+  "execution_semantics": "integer ticks; immutable condition snapshot; atomic ordered arbitration; plant publication after controller",
+  "note": "Controller protocol is trusted generated semantics; properties of its guards are construction checks, not arbitrary implementation verification."
+}

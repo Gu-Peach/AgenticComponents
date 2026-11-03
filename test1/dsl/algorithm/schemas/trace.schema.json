@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "acverify TraceIR 0.1",
+  "type": "object",
+  "required": [
+    "model_version",
+    "model_digest",
+    "input_digest",
+    "environment",
+    "reduction",
+    "initial",
+    "steps"
+  ],
+  "properties": {
+    "model_version": {
+      "enum": [
+        "acverify-tick/0.1",
+        "acverify-tick/0.2"
+      ]
+    },
+    "reduction": {
+      "enum": [
+        "full",
+        "compact",
+        "clock"
+      ]
+    },
+    "model_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "input_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "initial": {
+      "type": "object"
+    },
+    "environment": {
+      "type": "object"
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "events",
+          "state"
+        ],
+        "properties": {
+          "events": {
+            "type": "array"
+          },
+          "state": {
+            "type": "object",
+            "required": [
+              "tick",
+              "world",
+              "tasks",
+              "outcome"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "main": {
+    "file": "examples/t0-two-robot/process.acp",
+    "start_byte": 3198,
+    "end_byte": 6729,
+    "line": 56,
+    "column": 5
+  },
+  "load": {
+    "file": "examples/t0-two-robot/process.acp",
+    "start_byte": 3557,
+    "end_byte": 4130,
+    "line": 62,
+    "column": 7
+  },
+  "feed_1": {
+    "file": "examples/t0-two-robot/process.acp",
+    "start_byte": 4484,
+    "end_byte": 5017,
+    "line": 77,
+    "column": 7
+  },
+  "arrive_1": {
+    "file": "examples/t0-two-robot/process.acp",
+    "start_byte": 4708,
+    "end_byte": 5016,
+    "line": 81,
+    "column": 9
+  },
+  "recheck_1": {
+    "file": "examples/t0-two-robot/process.acp",
+    "start_byte": 5332,
+    "end_byte": 5389,
+    "line": 90,
+    "column": 7
+  },
+  "bridge": {
+    "file": "examples/t0-two-robot/process.acp",
+    "start_byte": 5764,
+    "end_byte": 5954,
+    "line": 96,
+    "column": 7
+  },
+  "feed_2": {
+    "file": "examples/t0-two-robot/process.acp",
+    "start_byte": 6161,
+    "end_byte": 6336,
+    "line": 105,
+    "column": 7
+  },
+  "arrive_2": {
+    "file": "examples/t0-two-robot/process.acp",
+    "start_byte": 6215,
+    "end_byte": 6335,
+    "line": 106,
+    "column": 9
+  },
+  "verify": {
+    "file": "examples/t0-two-robot/process.acp",
+    "start_byte": 6677,
+    "end_byte": 6728,
+    "line": 113,
+    "column": 7
+  }
+}

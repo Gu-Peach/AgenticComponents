@@ -1,0 +1,89 @@
+{
+  "reason": "chart synthetic QA overlapped early timings; rerun whole affected pairs regardless of results",
+  "window_utc": [
+    "2026-11-02T05:13:20Z",
+    "2026-11-02T05:13:35Z"
+  ],
+  "cases": [
+    "S02-P02-DV03",
+    "S02-P05",
+    "S05-P03-DV04",
+    "S06-P05-DV04",
+    "S07-P05",
+    "S11-P01-DV01"
+  ],
+  "evidence": [
+    {
+      "case_id": "S02-P02-DV03",
+      "method": "auto",
+      "estimated_start_utc": "2026-11-02T05:13:26.893795+00:00",
+      "end_utc": "2026-11-02T05:13:28.383356+00:00"
+    },
+    {
+      "case_id": "S02-P02-DV03",
+      "method": "full",
+      "estimated_start_utc": "2026-11-02T05:13:28.385539+00:00",
+      "end_utc": "2026-11-02T05:13:29.815714+00:00"
+    },
+    {
+      "case_id": "S02-P05",
+      "method": "auto",
+      "estimated_start_utc": "2026-11-02T05:13:31.314898+00:00",
+      "end_utc": "2026-11-02T05:13:32.136313+00:00"
+    },
+    {
+      "case_id": "S02-P05",
+      "method": "full",
+      "estimated_start_utc": "2026-11-02T05:13:29.818292+00:00",
+      "end_utc": "2026-11-02T05:13:31.311510+00:00"
+    },
+    {
+      "case_id": "S05-P03-DV04",
+      "method": "auto",
+      "estimated_start_utc": "2026-11-02T05:13:32.138957+00:00",
+      "end_utc": "2026-11-02T05:13:33.625955+00:00"
+    },
+    {
+      "case_id": "S05-P03-DV04",
+      "method": "full",
+      "estimated_start_utc": "2026-11-02T05:13:33.629816+00:00",
+      "end_utc": "2026-11-02T05:13:35.147223+00:00"
+    },
+    {
+      "case_id": "S06-P05-DV04",
+      "method": "auto",
+      "estimated_start_utc": "2026-11-02T05:13:25.444782+00:00",
+      "end_utc": "2026-11-02T05:13:26.892479+00:00"
+    },
+    {
+      "case_id": "S06-P05-DV04",
+      "method": "full",
+      "estimated_start_utc": "2026-11-02T05:13:23.888931+00:00",
+      "end_utc": "2026-11-02T05:13:25.442420+00:00"
+    },
+    {
+      "case_id": "S07-P05",
+      "method": "auto",
+      "estimated_start_utc": "2026-11-02T05:13:20.783385+00:00",
+      "end_utc": "2026-11-02T05:13:22.340017+00:00"
+    },
+    {
+      "case_id": "S07-P05",
+      "method": "full",
+      "estimated_start_utc": "2026-11-02T05:13:22.342892+00:00",
+      "end_utc": "2026-11-02T05:13:23.886464+00:00"
+    },
+    {
+      "case_id": "S11-P01-DV01",
+      "method": "auto",
+      "estimated_start_utc": "2026-11-02T05:13:20.259060+00:00",
+      "end_utc": "2026-11-02T05:13:20.779876+00:00"
+    },
+    {
+      "case_id": "S11-P01-DV01",
+      "method": "full",
+      "estimated_start_utc": "2026-11-02T05:13:19.723173+00:00",
+      "end_utc": "2026-11-02T05:13:20.256114+00:00"
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "main": {
+    "file": "cases/S04-P01/process.acp",
+    "start_byte": 993,
+    "end_byte": 2153,
+    "line": 21,
+    "column": 5
+  },
+  "load": {
+    "file": "cases/S04-P01/process.acp",
+    "start_byte": 1083,
+    "end_byte": 1239,
+    "line": 23,
+    "column": 7
+  },
+  "feed_1": {
+    "file": "cases/S04-P01/process.acp",
+    "start_byte": 1340,
+    "end_byte": 1494,
+    "line": 27,
+    "column": 7
+  },
+  "arrive_1": {
+    "file": "cases/S04-P01/process.acp",
+    "start_byte": 1393,
+    "end_byte": 1493,
+    "line": 28,
+    "column": 9
+  },
+  "recheck_1": {
+    "file": "cases/S04-P01/process.acp",
+    "start_byte": 1546,
+    "end_byte": 1600,
+    "line": 31,
+    "column": 7
+  },
+  "bridge": {
+    "file": "cases/S04-P01/process.acp",
+    "start_byte": 1679,
+    "end_byte": 1838,
+    "line": 33,
+    "column": 7
+  },
+  "feed_2": {
+    "file": "cases/S04-P01/process.acp",
+    "start_byte": 1845,
+    "end_byte": 1999,
+    "line": 36,
+    "column": 7
+  },
+  "arrive_2": {
+    "file": "cases/S04-P01/process.acp",
+    "start_byte": 1898,
+    "end_byte": 1998,
+    "line": 37,
+    "column": 9
+  },
+  "verify": {
+    "file": "cases/S04-P01/process.acp",
+    "start_byte": 2102,
+    "end_byte": 2147,
+    "line": 40,
+    "column": 7
+  }
+}

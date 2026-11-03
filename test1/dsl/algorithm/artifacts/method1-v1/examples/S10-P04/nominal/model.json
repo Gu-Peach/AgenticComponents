@@ -1,0 +1,1041 @@
+{
+  "schema_type": "TransitionIR",
+  "version": "acverify-tick/0.1",
+  "language": "ac-process/0.1",
+  "process": {
+    "ir_version": "0.1",
+    "language": "ac-process/0.1",
+    "process_id": "s10_p04",
+    "environment_ref": "environment.json",
+    "execution_profile_ref": "fixed_60hz",
+    "entry": "seq_8",
+    "conditions": {
+      "await_replacement_fact_1": {
+        "kind": "is",
+        "read": {
+          "source": "observation",
+          "owner_ref": "world",
+          "key": "await_replacement_fact_1"
+        },
+        "equals": {
+          "kind": "boolean",
+          "value": true
+        }
+      },
+      "source_recheck_fact_4": {
+        "kind": "is",
+        "read": {
+          "source": "observation",
+          "owner_ref": "world",
+          "key": "source_recheck_fact_4"
+        },
+        "equals": {
+          "kind": "boolean",
+          "value": true
+        }
+      },
+      "task_goal": {
+        "kind": "is",
+        "read": {
+          "source": "observation",
+          "owner_ref": "world",
+          "key": "task_goal"
+        },
+        "equals": {
+          "kind": "boolean",
+          "value": true
+        }
+      },
+      "weak_finish": {
+        "kind": "is",
+        "read": {
+          "source": "observation",
+          "owner_ref": "world",
+          "key": "weak_finish"
+        },
+        "equals": {
+          "kind": "boolean",
+          "value": true
+        }
+      },
+      "wrong_evidence": {
+        "kind": "is",
+        "read": {
+          "source": "observation",
+          "owner_ref": "world",
+          "key": "wrong_evidence"
+        },
+        "equals": {
+          "kind": "boolean",
+          "value": true
+        }
+      }
+    },
+    "nodes": [
+      {
+        "node_id": "seq_8",
+        "kind": "seq",
+        "children": [
+          "seq_7",
+          "verify"
+        ]
+      },
+      {
+        "node_id": "seq_7",
+        "kind": "seq",
+        "children": [
+          "await_replacement_2",
+          "seq_6"
+        ]
+      },
+      {
+        "node_id": "await_replacement_2",
+        "kind": "await",
+        "condition": {
+          "kind": "ref",
+          "condition_ref": "await_replacement_fact_1"
+        },
+        "timeout": {
+          "value": "30",
+          "unit": "s"
+        }
+      },
+      {
+        "node_id": "seq_6",
+        "kind": "seq",
+        "children": [
+          "source_recheck_5",
+          "transfer_material_3"
+        ]
+      },
+      {
+        "node_id": "source_recheck_5",
+        "kind": "await",
+        "condition": {
+          "kind": "ref",
+          "condition_ref": "source_recheck_fact_4"
+        },
+        "timeout": {
+          "value": "30",
+          "unit": "s"
+        }
+      },
+      {
+        "node_id": "transfer_material_3",
+        "kind": "invoke",
+        "target_ref": "r1",
+        "behavior_id": "transfer_material",
+        "arguments": {
+          "material": {
+            "kind": "binding",
+            "binding_ref": "m1"
+          },
+          "source": {
+            "kind": "binding",
+            "binding_ref": "c1_exit"
+          },
+          "target": {
+            "kind": "binding",
+            "binding_ref": "p1_slot1"
+          }
+        },
+        "policy_ref": "normal"
+      },
+      {
+        "node_id": "verify",
+        "kind": "await",
+        "condition": {
+          "kind": "ref",
+          "condition_ref": "task_goal"
+        },
+        "timeout": {
+          "value": "30",
+          "unit": "s"
+        }
+      }
+    ]
+  },
+  "bindings": {
+    "transfer_material_3": {
+      "device": "R1",
+      "behavior": "transfer_material",
+      "arguments": {
+        "material": "M1",
+        "source": "C1.exit",
+        "target": "P1.slot1"
+      },
+      "model_ref": "transfer@0.1"
+    }
+  },
+  "device_instances": {
+    "R1": {
+      "id": "R1",
+      "type": "device",
+      "device_type": "robot_arm",
+      "contract_ref": "robot_arm@0.1",
+      "parameters": {
+        "capacity": 1
+      },
+      "role_status": "proposed_symbolic_role_not_verified_asset_mapping"
+    },
+    "C1": {
+      "id": "C1",
+      "type": "device",
+      "device_type": "conveyor",
+      "contract_ref": "conveyor@0.1",
+      "parameters": {
+        "capacity": 5
+      },
+      "role_status": "proposed_symbolic_role_not_verified_asset_mapping"
+    },
+    "P1": {
+      "id": "P1",
+      "type": "device",
+      "device_type": "carrier",
+      "contract_ref": "carrier@0.1",
+      "parameters": {
+        "capacity": 4
+      },
+      "role_status": "proposed_symbolic_role_not_verified_asset_mapping"
+    },
+    "EXT": {
+      "id": "EXT",
+      "type": "device",
+      "device_type": "fixture",
+      "contract_ref": "fixture@0.1",
+      "parameters": {
+        "capacity": 64
+      }
+    }
+  },
+  "locations": {
+    "R1.tool": {
+      "id": "R1.tool",
+      "type": "location",
+      "owner": "R1",
+      "slot": null,
+      "capacity": 1,
+      "accepts": [
+        "workpiece"
+      ],
+      "zone_ref": "R1.zone"
+    },
+    "C1.entry": {
+      "id": "C1.entry",
+      "type": "location",
+      "owner": "C1",
+      "slot": null,
+      "capacity": 5,
+      "accepts": [
+        "workpiece"
+      ],
+      "zone_ref": "C1.zone"
+    },
+    "C1.exit": {
+      "id": "C1.exit",
+      "type": "location",
+      "owner": "C1",
+      "slot": null,
+      "capacity": 5,
+      "accepts": [
+        "workpiece"
+      ],
+      "zone_ref": "C1.zone"
+    },
+    "P1.slot1": {
+      "id": "P1.slot1",
+      "type": "location",
+      "owner": "P1",
+      "slot": "slot1",
+      "capacity": 1,
+      "accepts": [
+        "workpiece"
+      ],
+      "zone_ref": "P1.zone"
+    },
+    "P1.slot2": {
+      "id": "P1.slot2",
+      "type": "location",
+      "owner": "P1",
+      "slot": "slot2",
+      "capacity": 1,
+      "accepts": [
+        "workpiece"
+      ],
+      "zone_ref": "P1.zone"
+    },
+    "P1.slot3": {
+      "id": "P1.slot3",
+      "type": "location",
+      "owner": "P1",
+      "slot": "slot3",
+      "capacity": 1,
+      "accepts": [
+        "workpiece"
+      ],
+      "zone_ref": "P1.zone"
+    },
+    "P1.slot4": {
+      "id": "P1.slot4",
+      "type": "location",
+      "owner": "P1",
+      "slot": "slot4",
+      "capacity": 1,
+      "accepts": [
+        "workpiece"
+      ],
+      "zone_ref": "P1.zone"
+    },
+    "EXT.buffer": {
+      "id": "EXT.buffer",
+      "type": "location",
+      "owner": "EXT",
+      "capacity": 64,
+      "accepts": [
+        "workpiece"
+      ],
+      "zone_ref": "EXT.zone"
+    }
+  },
+  "contracts": {
+    "transfer@0.1": {
+      "schema_type": "VerificationContract",
+      "schema_version": "0.1",
+      "id": "transfer@0.1",
+      "mode": "abstract_only",
+      "runtime_adapter": "pending",
+      "parameters": {
+        "material": "material",
+        "source": "location",
+        "target": "location"
+      },
+      "behavior_kind": "action",
+      "preconditions": [
+        {
+          "predicate": "source_contains",
+          "args": [
+            "$material",
+            "$source"
+          ]
+        },
+        {
+          "predicate": "source_unclamped",
+          "args": [
+            "$material",
+            "$source"
+          ]
+        },
+        {
+          "predicate": "target_compatible",
+          "args": [
+            "$material",
+            "$target"
+          ]
+        },
+        {
+          "predicate": "target_capacity",
+          "args": [
+            "$target"
+          ]
+        },
+        {
+          "predicate": "tool_empty",
+          "args": [
+            "$device"
+          ]
+        },
+        {
+          "predicate": "source_stationary",
+          "args": [
+            "$source"
+          ]
+        },
+        {
+          "predicate": "target_stationary",
+          "args": [
+            "$target"
+          ]
+        }
+      ],
+      "sustaining_conditions": [
+        {
+          "predicate": "interlock_valid",
+          "args": [
+            "$device"
+          ]
+        },
+        {
+          "predicate": "all_grants_valid",
+          "args": [
+            "$request"
+          ]
+        }
+      ],
+      "phases": [
+        {
+          "id": "accepted",
+          "successor": "capture",
+          "advance_when": "environment_phase_response_within_profile",
+          "effects": [
+            {
+              "effect": "reserve_target",
+              "args": [
+                "$material",
+                "$target",
+                "$request"
+              ]
+            }
+          ],
+          "fault_successor": "stopping",
+          "request_identity_preserved": true
+        },
+        {
+          "id": "capture",
+          "successor": "clear_source",
+          "advance_when": "environment_phase_response_within_profile",
+          "effects": [
+            {
+              "effect": "capture",
+              "args": [
+                "$material",
+                "$device"
+              ]
+            }
+          ],
+          "fault_successor": "stopping",
+          "request_identity_preserved": true
+        },
+        {
+          "id": "clear_source",
+          "successor": "place",
+          "advance_when": "environment_phase_response_within_profile",
+          "effects": [
+            {
+              "effect": "clear_source",
+              "args": [
+                "$material",
+                "$source",
+                "$device"
+              ]
+            }
+          ],
+          "fault_successor": "stopping",
+          "request_identity_preserved": true
+        },
+        {
+          "id": "place",
+          "successor": "release",
+          "advance_when": "environment_phase_response_within_profile",
+          "effects": [
+            {
+              "effect": "place_supported",
+              "args": [
+                "$material",
+                "$target"
+              ]
+            }
+          ],
+          "fault_successor": "stopping",
+          "request_identity_preserved": true
+        },
+        {
+          "id": "release",
+          "successor": "commit",
+          "advance_when": "environment_phase_response_within_profile",
+          "effects": [
+            {
+              "effect": "release_tool",
+              "args": [
+                "$material",
+                "$device"
+              ]
+            }
+          ],
+          "fault_successor": "stopping",
+          "request_identity_preserved": true
+        },
+        {
+          "id": "commit",
+          "successor": "report",
+          "advance_when": "environment_phase_response_within_profile",
+          "effects": [
+            {
+              "effect": "commit_transfer",
+              "args": [
+                "$material",
+                "$target",
+                "$request"
+              ]
+            }
+          ],
+          "fault_successor": "stopping",
+          "request_identity_preserved": true
+        },
+        {
+          "id": "report",
+          "successor": "completed",
+          "advance_when": "environment_phase_response_within_profile",
+          "effects": [
+            {
+              "effect": "publish_success",
+              "args": [
+                "$request"
+              ]
+            }
+          ],
+          "fault_successor": "stopping",
+          "request_identity_preserved": true
+        }
+      ],
+      "completion_conditions": [
+        {
+          "predicate": "result_matches",
+          "args": [
+            "$request"
+          ]
+        },
+        {
+          "predicate": "transfer_committed",
+          "args": [
+            "$material",
+            "$target",
+            "$request"
+          ]
+        },
+        {
+          "predicate": "supported_at",
+          "args": [
+            "$material",
+            "$target"
+          ]
+        },
+        {
+          "predicate": "tool_empty",
+          "args": [
+            "$device"
+          ]
+        }
+      ],
+      "resource_claims": [
+        "device.motion",
+        "material.claim",
+        "source.zone",
+        "target.zone",
+        "target.capacity"
+      ],
+      "protocol_ref": "request-protocol@0.1",
+      "failure_outcomes": [
+        {
+          "kind": "confirmed_stop",
+          "preserve_effects": true,
+          "release_requires": "handoff consistency + stop evidence"
+        },
+        {
+          "kind": "unknown_stop",
+          "preserve_effects": true,
+          "attention_required": true,
+          "retain_isolation": true
+        }
+      ],
+      "footprint": {
+        "read_predicates": [
+          "all_grants_valid",
+          "interlock_valid",
+          "result_matches",
+          "source_contains",
+          "source_stationary",
+          "source_unclamped",
+          "supported_at",
+          "target_capacity",
+          "target_compatible",
+          "target_stationary",
+          "tool_empty",
+          "transfer_committed"
+        ],
+        "write_effects": [
+          "capture",
+          "clear_source",
+          "commit_transfer",
+          "place_supported",
+          "publish_success",
+          "release_tool",
+          "reserve_target"
+        ],
+        "resource_dependencies": [
+          "device.motion",
+          "material.claim",
+          "source.zone",
+          "target.zone",
+          "target.capacity"
+        ],
+        "scope": "设备/物料/位置由参数实例化；具体状态字段依 vocabulary 解释，不用设备 ID 不同推断独立。"
+      },
+      "limitations": [
+        "无几何/碰撞证明",
+        "阶段耗时由实验环境显式配置",
+        "尚未接入路径求解器"
+      ]
+    }
+  },
+  "environment": {
+    "id": "nominal@0.1",
+    "accept": [
+      1,
+      2
+    ],
+    "phase": [
+      1,
+      3
+    ],
+    "stop": [
+      1,
+      3
+    ],
+    "feedback": [
+      0,
+      1
+    ],
+    "events": [
+      {
+        "tick": 120,
+        "kind": "replace_carrier",
+        "carrier": "P1",
+        "materials": [
+          "MB1",
+          "MB2",
+          "MB3",
+          "MB4"
+        ],
+        "destination": "EXT.buffer",
+        "new_epoch": 1,
+        "set_fact": "carrier_replaced",
+        "requires": "carrier_quiescent"
+      }
+    ],
+    "faults": [],
+    "max_faults": 0,
+    "forced_stop_loss": null,
+    "max_age": 2
+  },
+  "initial": {
+    "tick": 0,
+    "world": {
+      "materials": {
+        "M1": {
+          "id": "M1",
+          "type": "workpiece",
+          "subject_index": 1,
+          "region": "C1.exit",
+          "support": "C1.exit",
+          "holder": "C1",
+          "held_by": null,
+          "attributes": {}
+        },
+        "MB1": {
+          "id": "MB1",
+          "type": "workpiece",
+          "subject_index": 2,
+          "region": "P1.slot1",
+          "support": "P1.slot1",
+          "holder": "P1",
+          "held_by": null,
+          "attributes": {}
+        },
+        "MB2": {
+          "id": "MB2",
+          "type": "workpiece",
+          "subject_index": 3,
+          "region": "P1.slot2",
+          "support": "P1.slot2",
+          "holder": "P1",
+          "held_by": null,
+          "attributes": {}
+        },
+        "MB3": {
+          "id": "MB3",
+          "type": "workpiece",
+          "subject_index": 4,
+          "region": "P1.slot3",
+          "support": "P1.slot3",
+          "holder": "P1",
+          "held_by": null,
+          "attributes": {}
+        },
+        "MB4": {
+          "id": "MB4",
+          "type": "workpiece",
+          "subject_index": 5,
+          "region": "P1.slot4",
+          "support": "P1.slot4",
+          "holder": "P1",
+          "held_by": null,
+          "attributes": {}
+        }
+      },
+      "devices": {
+        "R1": {
+          "drive": "stopped",
+          "run_command": false,
+          "held_material": null,
+          "clamped_material": null,
+          "access_closed": true,
+          "permit": true,
+          "actual_index": 0,
+          "actual_level": 0,
+          "operation_history": [],
+          "cycle_counts": {},
+          "epoch": 0
+        },
+        "C1": {
+          "drive": "stopped",
+          "run_command": false,
+          "held_material": null,
+          "clamped_material": null,
+          "access_closed": true,
+          "permit": true,
+          "actual_index": 0,
+          "actual_level": 0,
+          "operation_history": [],
+          "cycle_counts": {},
+          "epoch": 0
+        },
+        "P1": {
+          "drive": "stopped",
+          "run_command": false,
+          "held_material": null,
+          "clamped_material": null,
+          "access_closed": true,
+          "permit": true,
+          "actual_index": 0,
+          "actual_level": 0,
+          "operation_history": [],
+          "cycle_counts": {},
+          "epoch": 0
+        },
+        "EXT": {
+          "drive": "stopped",
+          "run_command": false,
+          "held_material": null,
+          "clamped_material": null,
+          "access_closed": true,
+          "permit": true,
+          "actual_index": 0,
+          "actual_level": 0,
+          "operation_history": [],
+          "cycle_counts": {},
+          "epoch": 0
+        }
+      },
+      "occupancy": {
+        "R1.tool": [],
+        "C1.entry": [],
+        "C1.exit": [
+          "M1"
+        ],
+        "P1.slot1": [
+          "MB1"
+        ],
+        "P1.slot2": [
+          "MB2"
+        ],
+        "P1.slot3": [
+          "MB3"
+        ],
+        "P1.slot4": [
+          "MB4"
+        ],
+        "EXT.buffer": []
+      },
+      "reservations": {},
+      "grants": {},
+      "committed": [],
+      "external": {
+        "carrier_replaced": {
+          "type": "boolean",
+          "value": false,
+          "valid": true,
+          "provider_epoch": 0,
+          "sample_tick": 0
+        }
+      }
+    },
+    "tasks": {
+      "seq_8@": {
+        "key": "seq_8@",
+        "node": "seq_8",
+        "path": [],
+        "parent": null,
+        "scope": null,
+        "kind": "seq",
+        "phase": "new",
+        "created": 0,
+        "eligible": 1,
+        "children": [],
+        "cancel": false,
+        "claims": []
+      }
+    },
+    "completed": {},
+    "inbox": [],
+    "applied_events": [],
+    "fault_count": 0,
+    "lost_stop": [],
+    "abort": false,
+    "reason": "",
+    "outcome": "running",
+    "violations": []
+  },
+  "task_specification": {
+    "schema_type": "CorpusTaskSpecification",
+    "schema_version": "0.1",
+    "task_id": "S10-P04-task",
+    "title": "满盘等待外部换盘",
+    "goal": {
+      "op": "all",
+      "args": [
+        {
+          "op": "at",
+          "material": "M1",
+          "location": "P1.slot1"
+        },
+        {
+          "op": "holder",
+          "material": "M1",
+          "device": "P1"
+        },
+        {
+          "op": "supported",
+          "material": "M1",
+          "location": "P1.slot1"
+        },
+        {
+          "op": "tools_empty"
+        },
+        {
+          "op": "drives_stopped"
+        },
+        {
+          "op": "no_active_requests"
+        },
+        {
+          "op": "no_grants"
+        }
+      ]
+    },
+    "required_environment_gates": [
+      "carrier_replaced"
+    ],
+    "completion": "root success AND independent goal; controlled fault isolation is a separate result",
+    "goal_source": "authored task specification, frozen across all mutations",
+    "spatial_scope": "declared symbolic edges only; no geometric feasibility claim"
+  },
+  "property_requests": {
+    "schema_type": "CorpusPropertySet",
+    "schema_version": "0.1",
+    "properties": [
+      {
+        "id": "V01",
+        "kind": "safety",
+        "applicable": true,
+        "requirement": "取料阶段开始时来源实际静止、物料仍在源区且交接授权有效。",
+        "formula_status": "template_instantiation_required"
+      },
+      {
+        "id": "V02",
+        "kind": "safety",
+        "applicable": true,
+        "requirement": "成功反馈属于同一已接受请求和当前激活。",
+        "formula_status": "template_instantiation_required"
+      },
+      {
+        "id": "V03",
+        "kind": "safety",
+        "applicable": true,
+        "requirement": "每次消费证据时主体、请求、epoch、age 与有效性符合契约。",
+        "formula_status": "template_instantiation_required"
+      },
+      {
+        "id": "V04",
+        "kind": "safety",
+        "applicable": true,
+        "requirement": "冲突资源不同时授权给不同 owner。",
+        "formula_status": "template_instantiation_required"
+      },
+      {
+        "id": "V05",
+        "kind": "safety",
+        "applicable": true,
+        "requirement": "中心 holder 与源/目标局部账本满足交接阶段的一致性要求。",
+        "formula_status": "template_instantiation_required"
+      },
+      {
+        "id": "V06",
+        "kind": "safety",
+        "applicable": true,
+        "requirement": "占用加预留不超容量，同事务提交不重复计数。",
+        "formula_status": "template_instantiation_required"
+      },
+      {
+        "id": "V07",
+        "kind": "safety",
+        "applicable": false,
+        "requirement": "scope 成功退出蕴含退出写确认和实际停稳。",
+        "formula_status": "template_instantiation_required"
+      },
+      {
+        "id": "V08",
+        "kind": "safety",
+        "applicable": true,
+        "requirement": "停止结果未知时不虚报终态、资源释放或物料回滚。",
+        "formula_status": "template_instantiation_required"
+      },
+      {
+        "id": "V09",
+        "kind": "safety",
+        "applicable": true,
+        "requirement": "根成功蕴含案例独立 TaskSpec 目标和清理义务。",
+        "formula_status": "template_instantiation_required"
+      },
+      {
+        "id": "V10a",
+        "kind": "reachability",
+        "applicable": true,
+        "requirement": "存在达到案例独立业务目标与完成条件的路径。",
+        "formula_status": "template_instantiation_required"
+      },
+      {
+        "id": "V10b",
+        "kind": "bounded_response",
+        "applicable": true,
+        "requirement": "触发后在声明完整时间窗内到达允许响应或异常处理状态。",
+        "formula_status": "template_instantiation_required"
+      }
+    ],
+    "goal_file": "task-spec.json",
+    "unsupported_is_not_failure": true
+  },
+  "controls": {
+    "C1.drive": {
+      "id": "C1.drive",
+      "owner": "C1",
+      "contract_ref": "drive@0.1",
+      "writer": "C1.writer",
+      "speed_m_s": 0.2
+    }
+  },
+  "resource_conflicts": [
+    [
+      "C1.writer",
+      "C1.zone"
+    ]
+  ],
+  "policies": {
+    "normal": {
+      "gate_ticks": 1800,
+      "accept_ticks": 120,
+      "execute_ticks": 1800,
+      "stop_ticks": 300
+    }
+  },
+  "observations": {
+    "await_replacement_fact_1": {
+      "op": "external",
+      "key": "carrier_replaced"
+    },
+    "source_recheck_fact_4": {
+      "op": "all",
+      "args": [
+        {
+          "op": "at",
+          "material": "M1",
+          "location": "C1.exit"
+        },
+        {
+          "op": "drive_stopped",
+          "device": "C1"
+        }
+      ]
+    },
+    "task_goal": {
+      "op": "all",
+      "args": [
+        {
+          "op": "at",
+          "material": "M1",
+          "location": "P1.slot1"
+        },
+        {
+          "op": "holder",
+          "material": "M1",
+          "device": "P1"
+        },
+        {
+          "op": "supported",
+          "material": "M1",
+          "location": "P1.slot1"
+        },
+        {
+          "op": "tools_empty"
+        },
+        {
+          "op": "drives_stopped"
+        },
+        {
+          "op": "no_active_requests"
+        },
+        {
+          "op": "no_grants"
+        }
+      ]
+    },
+    "weak_finish": {
+      "op": "no_active_requests"
+    },
+    "wrong_evidence": {
+      "op": "all",
+      "args": [
+        {
+          "op": "all",
+          "args": [
+            {
+              "op": "at",
+              "material": "M1",
+              "location": "P1.slot1"
+            },
+            {
+              "op": "holder",
+              "material": "M1",
+              "device": "P1"
+            },
+            {
+              "op": "supported",
+              "material": "M1",
+              "location": "P1.slot1"
+            },
+            {
+              "op": "tools_empty"
+            },
+            {
+              "op": "drives_stopped"
+            },
+            {
+              "op": "no_active_requests"
+            },
+            {
+              "op": "no_grants"
+            }
+          ]
+        },
+        {
+          "op": "at",
+          "material": "M1",
+          "location": "R1.tool"
+        }
+      ]
+    }
+  },
+  "input_digest": "e0a2fa649d8a2e10108ed74b3fcc3ec55d0f5672414785350be5ab890ce03999",
+  "observation_semantics": "fresh synchronous world snapshot; protocol delivery is nondeterministic; no geometry",
+  "execution_semantics": "integer ticks; immutable condition snapshot; atomic ordered arbitration; plant publication after controller",
+  "note": "Controller protocol is trusted generated semantics; properties of its guards are construction checks, not arbitrary implementation verification."
+}

@@ -1,0 +1,1156 @@
+{
+  "initial": {
+    "pc": 0,
+    "tick": 0,
+    "elapsed": 0,
+    "region": "S.work",
+    "support": "S.work",
+    "holder": "S",
+    "held": "",
+    "occupied": [
+      "S.work"
+    ],
+    "reserved": "",
+    "drives": [
+      "stopped",
+      "stopped"
+    ],
+    "commands": [
+      false,
+      false
+    ],
+    "grants": [],
+    "active": "",
+    "accepted": false,
+    "completed": [],
+    "terminal": "",
+    "reason": "",
+    "attention": false,
+    "exit_ack": []
+  },
+  "steps": [
+    {
+      "event": "activate_seq",
+      "state": {
+        "pc": 1,
+        "tick": 1,
+        "elapsed": 0,
+        "region": "S.work",
+        "support": "S.work",
+        "holder": "S",
+        "held": "",
+        "occupied": [
+          "S.work"
+        ],
+        "reserved": "",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [],
+        "active": "",
+        "accepted": false,
+        "completed": [],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "boundary",
+        "node": "main"
+      },
+      "source": {
+        "file": "cases/S04-P01-DV01/process.acp",
+        "start_byte": 993,
+        "end_byte": 2153,
+        "line": 21,
+        "column": 5
+      }
+    },
+    {
+      "event": "submit_request",
+      "state": {
+        "pc": 2,
+        "tick": 2,
+        "elapsed": 0,
+        "region": "S.work",
+        "support": "S.work",
+        "holder": "S",
+        "held": "",
+        "occupied": [
+          "S.work"
+        ],
+        "reserved": "",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [
+          [
+            "C1.zone",
+            "load"
+          ],
+          [
+            "M1.claim",
+            "load"
+          ],
+          [
+            "R1.motion",
+            "load"
+          ],
+          [
+            "S.zone",
+            "load"
+          ]
+        ],
+        "active": "load",
+        "accepted": false,
+        "completed": [],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "gate",
+        "node": "load",
+        "control": null
+      },
+      "source": {
+        "file": "cases/S04-P01-DV01/process.acp",
+        "start_byte": 1083,
+        "end_byte": 1239,
+        "line": 23,
+        "column": 7
+      },
+      "capability_model": "transfer@0.1"
+    },
+    {
+      "event": "response",
+      "state": {
+        "pc": 3,
+        "tick": 3,
+        "elapsed": 0,
+        "region": "S.work",
+        "support": "S.work",
+        "holder": "S",
+        "held": "",
+        "occupied": [
+          "S.work"
+        ],
+        "reserved": "",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [
+          [
+            "C1.zone",
+            "load"
+          ],
+          [
+            "M1.claim",
+            "load"
+          ],
+          [
+            "R1.motion",
+            "load"
+          ],
+          [
+            "S.zone",
+            "load"
+          ]
+        ],
+        "active": "load",
+        "accepted": true,
+        "completed": [],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "accept",
+        "node": "load",
+        "control": null
+      },
+      "source": {
+        "file": "cases/S04-P01-DV01/process.acp",
+        "start_byte": 1083,
+        "end_byte": 1239,
+        "line": 23,
+        "column": 7
+      },
+      "capability_model": "transfer@0.1"
+    },
+    {
+      "event": "response",
+      "state": {
+        "pc": 4,
+        "tick": 4,
+        "elapsed": 0,
+        "region": "S.work",
+        "support": "S.work",
+        "holder": "S",
+        "held": "",
+        "occupied": [
+          "S.work"
+        ],
+        "reserved": "C1.entry",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [
+          [
+            "C1.zone",
+            "load"
+          ],
+          [
+            "M1.claim",
+            "load"
+          ],
+          [
+            "R1.motion",
+            "load"
+          ],
+          [
+            "S.zone",
+            "load"
+          ]
+        ],
+        "active": "load",
+        "accepted": true,
+        "completed": [],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "phase",
+        "node": "load",
+        "phase": "accepted",
+        "effects": [
+          {
+            "effect": "reserve_target",
+            "args": [
+              "$material",
+              "$target",
+              "$request"
+            ]
+          }
+        ],
+        "control": null
+      },
+      "source": {
+        "file": "cases/S04-P01-DV01/process.acp",
+        "start_byte": 1083,
+        "end_byte": 1239,
+        "line": 23,
+        "column": 7
+      },
+      "capability_model": "transfer@0.1"
+    },
+    {
+      "event": "response",
+      "state": {
+        "pc": 5,
+        "tick": 5,
+        "elapsed": 0,
+        "region": "S.work",
+        "support": "S.work",
+        "holder": "S",
+        "held": "R1",
+        "occupied": [
+          "S.work"
+        ],
+        "reserved": "C1.entry",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [
+          [
+            "C1.zone",
+            "load"
+          ],
+          [
+            "M1.claim",
+            "load"
+          ],
+          [
+            "R1.motion",
+            "load"
+          ],
+          [
+            "S.zone",
+            "load"
+          ]
+        ],
+        "active": "load",
+        "accepted": true,
+        "completed": [],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "phase",
+        "node": "load",
+        "phase": "capture",
+        "effects": [
+          {
+            "effect": "capture",
+            "args": [
+              "$material",
+              "$device"
+            ]
+          }
+        ],
+        "control": null
+      },
+      "source": {
+        "file": "cases/S04-P01-DV01/process.acp",
+        "start_byte": 1083,
+        "end_byte": 1239,
+        "line": 23,
+        "column": 7
+      },
+      "capability_model": "transfer@0.1"
+    },
+    {
+      "event": "response",
+      "state": {
+        "pc": 6,
+        "tick": 6,
+        "elapsed": 0,
+        "region": "R1.tool",
+        "support": "R1.tool",
+        "holder": "R1",
+        "held": "R1",
+        "occupied": [
+          "R1.tool"
+        ],
+        "reserved": "C1.entry",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [
+          [
+            "C1.zone",
+            "load"
+          ],
+          [
+            "M1.claim",
+            "load"
+          ],
+          [
+            "R1.motion",
+            "load"
+          ],
+          [
+            "S.zone",
+            "load"
+          ]
+        ],
+        "active": "load",
+        "accepted": true,
+        "completed": [],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "phase",
+        "node": "load",
+        "phase": "clear_source",
+        "effects": [
+          {
+            "effect": "clear_source",
+            "args": [
+              "$material",
+              "$source",
+              "$device"
+            ]
+          }
+        ],
+        "control": null
+      },
+      "source": {
+        "file": "cases/S04-P01-DV01/process.acp",
+        "start_byte": 1083,
+        "end_byte": 1239,
+        "line": 23,
+        "column": 7
+      },
+      "capability_model": "transfer@0.1"
+    },
+    {
+      "event": "response",
+      "state": {
+        "pc": 7,
+        "tick": 7,
+        "elapsed": 0,
+        "region": "C1.entry",
+        "support": "C1.entry",
+        "holder": "R1",
+        "held": "R1",
+        "occupied": [
+          "R1.tool"
+        ],
+        "reserved": "C1.entry",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [
+          [
+            "C1.zone",
+            "load"
+          ],
+          [
+            "M1.claim",
+            "load"
+          ],
+          [
+            "R1.motion",
+            "load"
+          ],
+          [
+            "S.zone",
+            "load"
+          ]
+        ],
+        "active": "load",
+        "accepted": true,
+        "completed": [],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "phase",
+        "node": "load",
+        "phase": "place",
+        "effects": [
+          {
+            "effect": "place_supported",
+            "args": [
+              "$material",
+              "$target"
+            ]
+          }
+        ],
+        "control": null
+      },
+      "source": {
+        "file": "cases/S04-P01-DV01/process.acp",
+        "start_byte": 1083,
+        "end_byte": 1239,
+        "line": 23,
+        "column": 7
+      },
+      "capability_model": "transfer@0.1"
+    },
+    {
+      "event": "response",
+      "state": {
+        "pc": 8,
+        "tick": 8,
+        "elapsed": 0,
+        "region": "C1.entry",
+        "support": "C1.entry",
+        "holder": "R1",
+        "held": "",
+        "occupied": [
+          "R1.tool"
+        ],
+        "reserved": "C1.entry",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [
+          [
+            "C1.zone",
+            "load"
+          ],
+          [
+            "M1.claim",
+            "load"
+          ],
+          [
+            "R1.motion",
+            "load"
+          ],
+          [
+            "S.zone",
+            "load"
+          ]
+        ],
+        "active": "load",
+        "accepted": true,
+        "completed": [],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "phase",
+        "node": "load",
+        "phase": "release",
+        "effects": [
+          {
+            "effect": "release_tool",
+            "args": [
+              "$material",
+              "$device"
+            ]
+          }
+        ],
+        "control": null
+      },
+      "source": {
+        "file": "cases/S04-P01-DV01/process.acp",
+        "start_byte": 1083,
+        "end_byte": 1239,
+        "line": 23,
+        "column": 7
+      },
+      "capability_model": "transfer@0.1"
+    },
+    {
+      "event": "response",
+      "state": {
+        "pc": 9,
+        "tick": 9,
+        "elapsed": 0,
+        "region": "C1.entry",
+        "support": "C1.entry",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.entry"
+        ],
+        "reserved": "",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [
+          [
+            "C1.zone",
+            "load"
+          ],
+          [
+            "M1.claim",
+            "load"
+          ],
+          [
+            "R1.motion",
+            "load"
+          ],
+          [
+            "S.zone",
+            "load"
+          ]
+        ],
+        "active": "load",
+        "accepted": true,
+        "completed": [],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "phase",
+        "node": "load",
+        "phase": "commit",
+        "effects": [
+          {
+            "effect": "commit_transfer",
+            "args": [
+              "$material",
+              "$target",
+              "$request"
+            ]
+          }
+        ],
+        "control": null
+      },
+      "source": {
+        "file": "cases/S04-P01-DV01/process.acp",
+        "start_byte": 1083,
+        "end_byte": 1239,
+        "line": 23,
+        "column": 7
+      },
+      "capability_model": "transfer@0.1"
+    },
+    {
+      "event": "response",
+      "state": {
+        "pc": 10,
+        "tick": 10,
+        "elapsed": 0,
+        "region": "C1.entry",
+        "support": "C1.entry",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.entry"
+        ],
+        "reserved": "",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [
+          [
+            "C1.zone",
+            "load"
+          ],
+          [
+            "M1.claim",
+            "load"
+          ],
+          [
+            "R1.motion",
+            "load"
+          ],
+          [
+            "S.zone",
+            "load"
+          ]
+        ],
+        "active": "load",
+        "accepted": true,
+        "completed": [],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "phase",
+        "node": "load",
+        "phase": "report",
+        "effects": [
+          {
+            "effect": "publish_success",
+            "args": [
+              "$request"
+            ]
+          }
+        ],
+        "control": null
+      },
+      "source": {
+        "file": "cases/S04-P01-DV01/process.acp",
+        "start_byte": 1083,
+        "end_byte": 1239,
+        "line": 23,
+        "column": 7
+      },
+      "capability_model": "transfer@0.1"
+    },
+    {
+      "event": "complete_request",
+      "state": {
+        "pc": 11,
+        "tick": 11,
+        "elapsed": 0,
+        "region": "C1.entry",
+        "support": "C1.entry",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.entry"
+        ],
+        "reserved": "",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [],
+        "active": "",
+        "accepted": false,
+        "completed": [
+          [
+            "load",
+            "C1.entry"
+          ]
+        ],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "complete",
+        "node": "load",
+        "control": null
+      },
+      "source": {
+        "file": "cases/S04-P01-DV01/process.acp",
+        "start_byte": 1083,
+        "end_byte": 1239,
+        "line": 23,
+        "column": 7
+      },
+      "capability_model": "transfer@0.1"
+    },
+    {
+      "event": "gate_wait",
+      "state": {
+        "pc": 11,
+        "tick": 12,
+        "elapsed": 1,
+        "region": "C1.entry",
+        "support": "C1.entry",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.entry"
+        ],
+        "reserved": "",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [],
+        "active": "",
+        "accepted": false,
+        "completed": [
+          [
+            "load",
+            "C1.entry"
+          ]
+        ],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "gate",
+        "node": "bridge",
+        "control": null
+      },
+      "source": {
+        "file": "cases/S04-P01-DV01/process.acp",
+        "start_byte": 1318,
+        "end_byte": 1477,
+        "line": 27,
+        "column": 7
+      },
+      "capability_model": "transfer@0.1"
+    },
+    {
+      "event": "gate_wait",
+      "state": {
+        "pc": 11,
+        "tick": 13,
+        "elapsed": 2,
+        "region": "C1.entry",
+        "support": "C1.entry",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.entry"
+        ],
+        "reserved": "",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [],
+        "active": "",
+        "accepted": false,
+        "completed": [
+          [
+            "load",
+            "C1.entry"
+          ]
+        ],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "gate",
+        "node": "bridge",
+        "control": null
+      },
+      "source": {
+        "file": "cases/S04-P01-DV01/process.acp",
+        "start_byte": 1318,
+        "end_byte": 1477,
+        "line": 27,
+        "column": 7
+      },
+      "capability_model": "transfer@0.1"
+    },
+    {
+      "event": "gate_wait",
+      "state": {
+        "pc": 11,
+        "tick": 14,
+        "elapsed": 3,
+        "region": "C1.entry",
+        "support": "C1.entry",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.entry"
+        ],
+        "reserved": "",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [],
+        "active": "",
+        "accepted": false,
+        "completed": [
+          [
+            "load",
+            "C1.entry"
+          ]
+        ],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "gate",
+        "node": "bridge",
+        "control": null
+      },
+      "source": {
+        "file": "cases/S04-P01-DV01/process.acp",
+        "start_byte": 1318,
+        "end_byte": 1477,
+        "line": 27,
+        "column": 7
+      },
+      "capability_model": "transfer@0.1"
+    },
+    {
+      "event": "gate_wait",
+      "state": {
+        "pc": 11,
+        "tick": 15,
+        "elapsed": 4,
+        "region": "C1.entry",
+        "support": "C1.entry",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.entry"
+        ],
+        "reserved": "",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [],
+        "active": "",
+        "accepted": false,
+        "completed": [
+          [
+            "load",
+            "C1.entry"
+          ]
+        ],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "gate",
+        "node": "bridge",
+        "control": null
+      },
+      "source": {
+        "file": "cases/S04-P01-DV01/process.acp",
+        "start_byte": 1318,
+        "end_byte": 1477,
+        "line": 27,
+        "column": 7
+      },
+      "capability_model": "transfer@0.1"
+    },
+    {
+      "event": "gate_wait",
+      "state": {
+        "pc": 11,
+        "tick": 16,
+        "elapsed": 5,
+        "region": "C1.entry",
+        "support": "C1.entry",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.entry"
+        ],
+        "reserved": "",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [],
+        "active": "",
+        "accepted": false,
+        "completed": [
+          [
+            "load",
+            "C1.entry"
+          ]
+        ],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "gate",
+        "node": "bridge",
+        "control": null
+      },
+      "source": {
+        "file": "cases/S04-P01-DV01/process.acp",
+        "start_byte": 1318,
+        "end_byte": 1477,
+        "line": 27,
+        "column": 7
+      },
+      "capability_model": "transfer@0.1"
+    },
+    {
+      "event": "gate_wait",
+      "state": {
+        "pc": 11,
+        "tick": 17,
+        "elapsed": 6,
+        "region": "C1.entry",
+        "support": "C1.entry",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.entry"
+        ],
+        "reserved": "",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [],
+        "active": "",
+        "accepted": false,
+        "completed": [
+          [
+            "load",
+            "C1.entry"
+          ]
+        ],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "gate",
+        "node": "bridge",
+        "control": null
+      },
+      "source": {
+        "file": "cases/S04-P01-DV01/process.acp",
+        "start_byte": 1318,
+        "end_byte": 1477,
+        "line": 27,
+        "column": 7
+      },
+      "capability_model": "transfer@0.1"
+    },
+    {
+      "event": "gate_wait",
+      "state": {
+        "pc": 11,
+        "tick": 18,
+        "elapsed": 7,
+        "region": "C1.entry",
+        "support": "C1.entry",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.entry"
+        ],
+        "reserved": "",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [],
+        "active": "",
+        "accepted": false,
+        "completed": [
+          [
+            "load",
+            "C1.entry"
+          ]
+        ],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "gate",
+        "node": "bridge",
+        "control": null
+      },
+      "source": {
+        "file": "cases/S04-P01-DV01/process.acp",
+        "start_byte": 1318,
+        "end_byte": 1477,
+        "line": 27,
+        "column": 7
+      },
+      "capability_model": "transfer@0.1"
+    },
+    {
+      "event": "gate_timeout",
+      "state": {
+        "pc": 11,
+        "tick": 19,
+        "elapsed": 0,
+        "region": "C1.entry",
+        "support": "C1.entry",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.entry"
+        ],
+        "reserved": "",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [],
+        "active": "",
+        "accepted": false,
+        "completed": [
+          [
+            "load",
+            "C1.entry"
+          ]
+        ],
+        "terminal": "failed",
+        "reason": "gate_timeout:bridge",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "gate",
+        "node": "bridge",
+        "control": null
+      },
+      "source": {
+        "file": "cases/S04-P01-DV01/process.acp",
+        "start_byte": 1318,
+        "end_byte": 1477,
+        "line": 27,
+        "column": 7
+      },
+      "capability_model": "transfer@0.1"
+    }
+  ]
+}

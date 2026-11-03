@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "acverify TransitionIR 0.1",
+  "type": "object",
+  "required": [
+    "schema_type",
+    "version",
+    "process",
+    "bindings",
+    "contracts",
+    "initial",
+    "environment",
+    "task_specification",
+    "resource_conflicts",
+    "input_digest"
+  ],
+  "properties": {
+    "schema_type": {
+      "const": "TransitionIR"
+    },
+    "version": {
+      "enum": [
+        "acverify-tick/0.1",
+        "acverify-tick/0.2"
+      ]
+    },
+    "process": {
+      "type": "object"
+    },
+    "bindings": {
+      "type": "object"
+    },
+    "contracts": {
+      "type": "object"
+    },
+    "initial": {
+      "type": "object",
+      "required": [
+        "tick",
+        "world",
+        "tasks",
+        "outcome"
+      ]
+    },
+    "environment": {
+      "type": "object"
+    },
+    "task_specification": {
+      "type": "object",
+      "required": [
+        "goal"
+      ]
+    },
+    "resource_conflicts": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 2,
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "input_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  }
+}

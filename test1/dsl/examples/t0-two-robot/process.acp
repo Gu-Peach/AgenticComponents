@@ -1,0 +1,112 @@
+; T0：固定一件物料，S → R1 → C1 → R2 → C2.out。
+; 本文件使用 Lisp 风格的 ac-process/0.1；分号到行末均为注释。
+; r1/r2/c1/c2/material 是环境中的别名，不能按显示名称猜测设备。
+; 当前为 design_only：源码可解析和静态检查，完整运行服务尚待接入。
+
+; process 声明语言版本和工艺 ID；不是启动某台设备的命令。
+(process "0.1" t0_two_robot
+
+  ; 环境定义设备/物料/位置绑定、能力适配器、条件来源、资源和策略。
+  ; 该相对路径从当前工艺文件所在目录解析。
+  (environment "cell.design.json")
+
+  ; 选择环境中的执行配置：固定逻辑步长 1/60 秒。
+  ; 时间按仿真 tick 推进，不能由浏览器渲染帧率决定。
+  (profile fixed_60hz)
+
+  ; conditions 只声明可复用条件，不会在这里立刻等待或驱动设备。
+  ; 条件在 await 等使用点读取当前快照；缺失/过期/身份不符为未知。
+  ; is 表示类型化相等；all 只有全部子条件满足时才满足。
+  (conditions
+
+    ; R2 抓取前复查：指定物料仍在 C1 出口，而且 C1 已实际停稳。
+    (condition c1_pick_ready
+      (all
+        ; observation 读取 c1 提供者登记的 subject_at_exit 事实。
+        ; subject 限定为当前物料 M；request 限定 arrive_1 的本次已接受请求。
+        ; arrive_1 是静态节点 ID，运行器据此解析具体激活/请求，避免旧 done 串号。
+        (is (observation c1 "subject_at_exit"
+              (subject material) (request arrive_1)) true)
+        ; 读取实际静止观测。发送 run=false 不直接等于 surface_stopped=true。
+        (is (observation c1 "surface_stopped") true)))
+
+    ; 最终业务目标。下方 verify 节点使用它，而不是仅检查设备空闲或动画进度。
+    (condition final_goal
+      (all
+        ; M 经第二次运输真正到达 C2 出口，事实关联 arrive_2 请求。
+        (is (observation c2 "subject_at_exit"
+              (subject material) (request arrive_2)) true)
+        ; 两条带均已实际停止，不能在工艺结束后继续无意驱动物料。
+        (is (observation c1 "surface_stopped") true)
+        (is (observation c2 "surface_stopped") true)
+        ; handoff 是待接入的交接/状态服务。它须核实两夹具当前确实空闲。
+        (is (observation handoff "both_tools_empty") true)
+        ; 依据 bridge 冻结的目标位置，核对 M 当前业务归属为接收设备 C2。
+        ; 归属确认与物理支承分开检查，不能只把机器人 done 当作交接成功。
+        (is (observation handoff "holder_matches_target"
+              (subject material) (request bridge)) true)
+        ; 核对 M 在 arrive_2 对应的目标出口仍有实际有效支承。
+        ; 提供者须重新采样，不能给旧结果换时间戳后冒充最新证据。
+        (is (observation handoff "supported_at_target"
+              (subject material) (request arrive_2)) true))))
+
+  ; body 是工艺入口。seq 的 main 是节点 ID，不是设备 ID。
+  ; 子节点成功后才推进；失败/取消按全局停止和清理协议处理。
+  (body
+    (seq main
+      ; 1. 上料：R1 将 M 从被动台座 S 搬到 C1 入口。
+      ; invoke 的参数顺序为：节点 ID、设备别名、能力 ID、实参、策略。
+      ; transfer_material 由业务适配定义映射为正式机器人 pick_and_place 载荷。
+      ; 接近、抓取、移离、放置及交接确认由该复合能力负责。
+      (invoke load r1 transfer_material
+        (args
+          ; 左侧 material 是能力参数名；binding material 解析环境中的物料引用 M。
+          (material (binding material))
+          ; source/target 接收 location 名义引用，不是坐标数组或托盘载位。
+          (source (binding source_station))
+          (target (binding c1_entry)))
+        ; normal 是环境中的超时/暂停策略：gate 30s、accept 2s、execute 30s、stop 5s。
+        ; 这些是设计测试预算；动作成功仍需有效完成证据。
+        (policy normal))
+
+      ; 2. 第一段输送：feed_1 管理整个持续驱动作用域。
+      ; c1_drive 规定取得 writer、进入时 run=true/speed=0.2m/s、持续监控，
+      ; 以及所有退出路径上的 run=false、退出写入确认和实际停稳确认。
+      ; 因此 arrive_1 成功不等于 feed_1 已结束，不能直接提前启动 R2。
+      (with-control feed_1 c1_drive (policy normal)
+
+        ; arrive_1 只跟踪指定 M 到出口；物料位姿由接触物理求解产生。
+        ; 它使用父驱动授权，不另建一个独立带速写入者。
+        (invoke arrive_1 c1 transport_to_exit
+          ; 设备原生参数 subject_id 是正整数。subjects 登记表把 M 映射为 1。
+          ; index 做有类型的身份映射，不把物料字符串 ID 强转为数字。
+          (args (subject_id (index subjects material)))
+          (policy normal)))
+
+      ; 3. 停带后再检查：减速期间 M 可能继续移动，不能沿用先前到达结果。
+      ; await 没有运动副作用。F/未知均等待；激活后 2 秒未满足则失败并停止工艺。
+      ; 该复查不替代 bridge 接受时再次执行的前置条件与资源授权检查。
+      (await recheck_1 (condition c1_pick_ready) (timeout 2 s))
+
+      ; 4. 跨带搬运：R2 将 M 从 C1 出口搬到 C2 入口。
+      ; 适配器在启动前取得运动、物料、目标预留和交接区许可，冻结本次参数。
+      ; 交接区与两条带的 writer 互斥，防止其他控制源在取放期间重启输送。
+      ; 失败后保留真实 holder/支承/隔离，不自动回滚到抓取前位置。
+      (invoke bridge r2 transfer_material
+        (args
+          (material (binding material))
+          (source (binding c1_exit))
+          (target (binding c2_entry)))
+        (policy normal))
+
+      ; 5. 第二段输送：同样先取得 C2 驱动权，子任务跟踪 M，退出时确认停稳。
+      ; arrive_2 与 arrive_1 是不同节点/请求，尽管它们操作的是同一件 M。
+      (with-control feed_2 c2_drive (policy normal)
+        (invoke arrive_2 c2 transport_to_exit
+          (args (subject_id (index subjects material)))
+          (policy normal)))
+
+      ; 6. 最终核验：出口、实际支承、业务归属、夹具和停带事实须共同满足。
+      ; verify 成功后还须完成运行器的无活动请求/无泄漏许可验收，才能发布工艺成功。
+      ; 此时 M 保持在 C2 出口；恢复作者初始姿态是独立的预览 reset，不是任务结果。
+      (await verify (condition final_goal) (timeout 2 s)))))

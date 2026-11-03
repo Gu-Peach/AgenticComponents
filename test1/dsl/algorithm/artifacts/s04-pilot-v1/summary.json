@@ -1,0 +1,197 @@
+[
+  {
+    "case_id": "S04-P01",
+    "frontend": "VALID",
+    "profiles": [
+      {
+        "id": "nominal",
+        "states": 2759,
+        "closed": true,
+        "goal": "GOAL_REACHABLE_IN_PILOT",
+        "goal_soundness": "PROVED_ON_CLOSED_PILOT",
+        "terminals": {
+          "succeeded": 53
+        }
+      },
+      {
+        "id": "delayed",
+        "states": 3481,
+        "closed": true,
+        "goal": "GOAL_REACHABLE_IN_PILOT",
+        "goal_soundness": "PROVED_ON_CLOSED_PILOT",
+        "terminals": {
+          "succeeded": 53
+        }
+      },
+      {
+        "id": "stop_unknown_c1",
+        "states": 361,
+        "closed": true,
+        "goal": "GOAL_UNREACHABLE_ON_CLOSED_PILOT",
+        "goal_soundness": "PROVED_ON_CLOSED_PILOT",
+        "terminals": {
+          "attention_required": 14
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "S04-P01-DS01",
+    "frontend": "INVALID_SYNTAX",
+    "profiles": []
+  },
+  {
+    "case_id": "S04-P01-DS02",
+    "frontend": "INVALID_TYPE",
+    "profiles": []
+  },
+  {
+    "case_id": "S04-P01-DS03",
+    "frontend": "UNKNOWN_CAPABILITY",
+    "profiles": []
+  },
+  {
+    "case_id": "S04-P01-DV01",
+    "frontend": "VALID",
+    "profiles": [
+      {
+        "id": "nominal",
+        "states": 332,
+        "closed": true,
+        "goal": "GOAL_UNREACHABLE_ON_CLOSED_PILOT",
+        "goal_soundness": "PROVED_ON_CLOSED_PILOT",
+        "terminals": {
+          "failed": 16
+        }
+      },
+      {
+        "id": "delayed",
+        "states": 389,
+        "closed": true,
+        "goal": "GOAL_UNREACHABLE_ON_CLOSED_PILOT",
+        "goal_soundness": "PROVED_ON_CLOSED_PILOT",
+        "terminals": {
+          "failed": 16
+        }
+      },
+      {
+        "id": "stop_unknown_c1",
+        "states": 164,
+        "closed": true,
+        "goal": "GOAL_UNREACHABLE_ON_CLOSED_PILOT",
+        "goal_soundness": "PROVED_ON_CLOSED_PILOT",
+        "terminals": {
+          "failed": 9
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "S04-P01-DV02",
+    "frontend": "VALID",
+    "profiles": [
+      {
+        "id": "nominal",
+        "states": 9013,
+        "closed": true,
+        "goal": "GOAL_UNREACHABLE_ON_CLOSED_PILOT",
+        "goal_soundness": "PROVED_ON_CLOSED_PILOT",
+        "terminals": {
+          "failed": 53
+        }
+      },
+      {
+        "id": "delayed",
+        "states": 9735,
+        "closed": true,
+        "goal": "GOAL_UNREACHABLE_ON_CLOSED_PILOT",
+        "goal_soundness": "PROVED_ON_CLOSED_PILOT",
+        "terminals": {
+          "failed": 53
+        }
+      },
+      {
+        "id": "stop_unknown_c1",
+        "states": 361,
+        "closed": true,
+        "goal": "GOAL_UNREACHABLE_ON_CLOSED_PILOT",
+        "goal_soundness": "PROVED_ON_CLOSED_PILOT",
+        "terminals": {
+          "attention_required": 14
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "S04-P01-DV03",
+    "frontend": "VALID",
+    "profiles": [
+      {
+        "id": "nominal",
+        "states": 2732,
+        "closed": true,
+        "goal": "GOAL_REACHABLE_IN_PILOT",
+        "goal_soundness": "PROVED_ON_CLOSED_PILOT",
+        "terminals": {
+          "succeeded": 53
+        }
+      },
+      {
+        "id": "delayed",
+        "states": 3454,
+        "closed": true,
+        "goal": "GOAL_REACHABLE_IN_PILOT",
+        "goal_soundness": "PROVED_ON_CLOSED_PILOT",
+        "terminals": {
+          "succeeded": 53
+        }
+      },
+      {
+        "id": "stop_unknown_c1",
+        "states": 361,
+        "closed": true,
+        "goal": "GOAL_UNREACHABLE_ON_CLOSED_PILOT",
+        "goal_soundness": "PROVED_ON_CLOSED_PILOT",
+        "terminals": {
+          "attention_required": 14
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "S04-P01-DV04",
+    "frontend": "VALID",
+    "profiles": [
+      {
+        "id": "nominal",
+        "states": 1653,
+        "closed": true,
+        "goal": "GOAL_UNREACHABLE_ON_CLOSED_PILOT",
+        "goal_soundness": "VIOLATED_IN_PILOT",
+        "terminals": {
+          "succeeded": 42
+        }
+      },
+      {
+        "id": "delayed",
+        "states": 2097,
+        "closed": true,
+        "goal": "GOAL_UNREACHABLE_ON_CLOSED_PILOT",
+        "goal_soundness": "VIOLATED_IN_PILOT",
+        "terminals": {
+          "succeeded": 42
+        }
+      },
+      {
+        "id": "stop_unknown_c1",
+        "states": 361,
+        "closed": true,
+        "goal": "GOAL_UNREACHABLE_ON_CLOSED_PILOT",
+        "goal_soundness": "PROVED_ON_CLOSED_PILOT",
+        "terminals": {
+          "attention_required": 14
+        }
+      }
+    ]
+  }
+]

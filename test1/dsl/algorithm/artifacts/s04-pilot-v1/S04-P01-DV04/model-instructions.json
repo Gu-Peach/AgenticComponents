@@ -1,0 +1,351 @@
+[
+  {
+    "op": "boundary",
+    "node": "main"
+  },
+  {
+    "op": "gate",
+    "node": "load",
+    "control": null
+  },
+  {
+    "op": "accept",
+    "node": "load",
+    "control": null
+  },
+  {
+    "op": "phase",
+    "node": "load",
+    "phase": "accepted",
+    "effects": [
+      {
+        "effect": "reserve_target",
+        "args": [
+          "$material",
+          "$target",
+          "$request"
+        ]
+      }
+    ],
+    "control": null
+  },
+  {
+    "op": "phase",
+    "node": "load",
+    "phase": "capture",
+    "effects": [
+      {
+        "effect": "capture",
+        "args": [
+          "$material",
+          "$device"
+        ]
+      }
+    ],
+    "control": null
+  },
+  {
+    "op": "phase",
+    "node": "load",
+    "phase": "clear_source",
+    "effects": [
+      {
+        "effect": "clear_source",
+        "args": [
+          "$material",
+          "$source",
+          "$device"
+        ]
+      }
+    ],
+    "control": null
+  },
+  {
+    "op": "phase",
+    "node": "load",
+    "phase": "place",
+    "effects": [
+      {
+        "effect": "place_supported",
+        "args": [
+          "$material",
+          "$target"
+        ]
+      }
+    ],
+    "control": null
+  },
+  {
+    "op": "phase",
+    "node": "load",
+    "phase": "release",
+    "effects": [
+      {
+        "effect": "release_tool",
+        "args": [
+          "$material",
+          "$device"
+        ]
+      }
+    ],
+    "control": null
+  },
+  {
+    "op": "phase",
+    "node": "load",
+    "phase": "commit",
+    "effects": [
+      {
+        "effect": "commit_transfer",
+        "args": [
+          "$material",
+          "$target",
+          "$request"
+        ]
+      }
+    ],
+    "control": null
+  },
+  {
+    "op": "phase",
+    "node": "load",
+    "phase": "report",
+    "effects": [
+      {
+        "effect": "publish_success",
+        "args": [
+          "$request"
+        ]
+      }
+    ],
+    "control": null
+  },
+  {
+    "op": "complete",
+    "node": "load",
+    "control": null
+  },
+  {
+    "op": "control_gate",
+    "node": "feed_1",
+    "control": "C1.drive"
+  },
+  {
+    "op": "write_start",
+    "node": "feed_1",
+    "control": "C1.drive"
+  },
+  {
+    "op": "start_response",
+    "node": "feed_1",
+    "control": "C1.drive"
+  },
+  {
+    "op": "gate",
+    "node": "arrive_1",
+    "control": "C1.drive"
+  },
+  {
+    "op": "accept",
+    "node": "arrive_1",
+    "control": "C1.drive"
+  },
+  {
+    "op": "phase",
+    "node": "arrive_1",
+    "phase": "track",
+    "effects": [],
+    "control": "C1.drive"
+  },
+  {
+    "op": "phase",
+    "node": "arrive_1",
+    "phase": "arrive",
+    "effects": [
+      {
+        "effect": "advance_to_exit",
+        "args": [
+          "$material",
+          "$device"
+        ]
+      }
+    ],
+    "control": "C1.drive"
+  },
+  {
+    "op": "phase",
+    "node": "arrive_1",
+    "phase": "report",
+    "effects": [
+      {
+        "effect": "publish_success",
+        "args": [
+          "$request"
+        ]
+      }
+    ],
+    "control": "C1.drive"
+  },
+  {
+    "op": "complete",
+    "node": "arrive_1",
+    "control": "C1.drive"
+  },
+  {
+    "op": "write_stop",
+    "node": "feed_1",
+    "control": "C1.drive"
+  },
+  {
+    "op": "stop_response",
+    "node": "feed_1",
+    "control": "C1.drive"
+  },
+  {
+    "op": "control_release",
+    "node": "feed_1",
+    "control": "C1.drive"
+  },
+  {
+    "op": "await",
+    "node": "recheck_1",
+    "condition": {
+      "kind": "ref",
+      "condition_ref": "pick_ready"
+    }
+  },
+  {
+    "op": "gate",
+    "node": "bridge",
+    "control": null
+  },
+  {
+    "op": "accept",
+    "node": "bridge",
+    "control": null
+  },
+  {
+    "op": "phase",
+    "node": "bridge",
+    "phase": "accepted",
+    "effects": [
+      {
+        "effect": "reserve_target",
+        "args": [
+          "$material",
+          "$target",
+          "$request"
+        ]
+      }
+    ],
+    "control": null
+  },
+  {
+    "op": "phase",
+    "node": "bridge",
+    "phase": "capture",
+    "effects": [
+      {
+        "effect": "capture",
+        "args": [
+          "$material",
+          "$device"
+        ]
+      }
+    ],
+    "control": null
+  },
+  {
+    "op": "phase",
+    "node": "bridge",
+    "phase": "clear_source",
+    "effects": [
+      {
+        "effect": "clear_source",
+        "args": [
+          "$material",
+          "$source",
+          "$device"
+        ]
+      }
+    ],
+    "control": null
+  },
+  {
+    "op": "phase",
+    "node": "bridge",
+    "phase": "place",
+    "effects": [
+      {
+        "effect": "place_supported",
+        "args": [
+          "$material",
+          "$target"
+        ]
+      }
+    ],
+    "control": null
+  },
+  {
+    "op": "phase",
+    "node": "bridge",
+    "phase": "release",
+    "effects": [
+      {
+        "effect": "release_tool",
+        "args": [
+          "$material",
+          "$device"
+        ]
+      }
+    ],
+    "control": null
+  },
+  {
+    "op": "phase",
+    "node": "bridge",
+    "phase": "commit",
+    "effects": [
+      {
+        "effect": "commit_transfer",
+        "args": [
+          "$material",
+          "$target",
+          "$request"
+        ]
+      }
+    ],
+    "control": null
+  },
+  {
+    "op": "phase",
+    "node": "bridge",
+    "phase": "report",
+    "effects": [
+      {
+        "effect": "publish_success",
+        "args": [
+          "$request"
+        ]
+      }
+    ],
+    "control": null
+  },
+  {
+    "op": "complete",
+    "node": "bridge",
+    "control": null
+  },
+  {
+    "op": "await",
+    "node": "verify",
+    "condition": {
+      "kind": "ref",
+      "condition_ref": "goal"
+    }
+  },
+  {
+    "op": "root_success",
+    "node": "main"
+  }
+]

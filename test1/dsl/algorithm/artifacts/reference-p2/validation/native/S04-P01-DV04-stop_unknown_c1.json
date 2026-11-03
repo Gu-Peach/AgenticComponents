@@ -1,0 +1,72 @@
+{
+  "summary": {
+    "reference_version": "reference-event-agenda/0.1",
+    "model_digest": "d041ea8492a4139350bdb8a98bf0f55f5e63695910267bf0026157644ed6fc60",
+    "case_id": "S04-P01-DV04",
+    "profile": {
+      "accept": [
+        1,
+        2
+      ],
+      "phase": [
+        1,
+        2
+      ],
+      "stop": [
+        1,
+        2
+      ],
+      "feedback": [
+        0,
+        0
+      ],
+      "faults": [],
+      "max_faults": 0,
+      "forced_stop_loss": "C1",
+      "max_age": 2,
+      "events": [],
+      "response_window": null,
+      "name": "stop_unknown_c1",
+      "timing_scope": "reference-six-phase/0.1",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "pilot_migration": true,
+      "visibility": 1,
+      "fault_packet_selection": "any_queued_packet"
+    },
+    "bound": 256,
+    "search": "complete",
+    "states": 1620,
+    "edges": 1996,
+    "frontier_exhausted": true,
+    "finite_model_closed": true,
+    "horizon_reached": false,
+    "limit": null,
+    "elapsed_seconds": 1.258270899998024,
+    "serialized_state_bytes": 5529463,
+    "peak_sampled_rss_bytes": 52326400,
+    "all_edges_retained": false,
+    "memory_tracking": "sampled RSS and serialized keys",
+    "terminal_counts": {
+      "attention_required": 14
+    },
+    "violations_seen": [],
+    "goal_witness_found": false,
+    "uncovered_obligations": [],
+    "monitor_coverage_complete": true,
+    "edge_digest": "0e56b4e89650062d4d321b19352df1fdd800ac811b83927cfd6e973667f11fed",
+    "reference_queries_admitted": false,
+    "note": "P2 model validation output; P3 must independently check evidence before truth admission."
+  },
+  "witnesses": {
+    "terminal_attention_required": {
+      "path": "native-traces/S04-P01-DV04-stop_unknown_c1/terminal_attention_required.json",
+      "sha256": "9d9c3af2f08f2305d94ccbabba2b759ecad418fe78b5727e7f58d649d19c3b63",
+      "replay": {
+        "valid": true,
+        "tick": 26,
+        "outcome": "attention_required",
+        "boundary": "self-model replay; not P3 independent evidence certification"
+      }
+    }
+  }
+}

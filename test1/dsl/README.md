@@ -8,15 +8,17 @@ DSL 面向工业仿真中的设备能力调用和多设备工艺编排。核心�
 
 ## 阅读与验证入口
 
-先看 [现有实现边界](implementation.md)，再按三个阶段阅读：
+先看 [现有实现边界](implementation.md)，再按以下入口阅读：
 
 1. **语法与语义**：[01-language.md](01-language.md) 和 [language.ebnf](language.ebnf)，固定词法、类型、三态条件、九种组合节点、时钟、请求和取消规则。
 2. **IR 与绑定**：[02-ir.md](02-ir.md) 和 [process-ir.schema.json](process-ir.schema.json)，区分工艺结构、环境、可执行计划与运行记录，定义引用、来源、资源、交接及验证义务。
 3. **完整工艺示例**：[03-example.md](03-example.md)，包含输送→停带确认→抓放→载位确认的文本、派生 IR、环境与能力草稿。
 
+4. **T0 正式工艺**：[双机械臂双输送带](examples/t0-two-robot/README.md)，包含正式 Lisp 源码、环境、引用机器人 1.4 的业务适配定义、9 节点 IR 和带依赖哈希的绑定设计报告。
+
 本目录提供可运行的参考静态检查工具，不包含接入 apps 的生产编译器或工艺运行器。示例固定 design_only；未接入的执行器、观测和交接服务仍阻止真实执行。具体字段和本版取舍以以上三份细则为准；本页描述架构和目标。
 
-在本目录执行 `python tools/check_design.py` 和 `python -m unittest discover -s tools -p "test_*.py"`（Python 3.10+，依赖 jsonschema）。默认只检查；有意修改文本后使用 `--write` 更新派生 IR 与 source map。
+在本目录执行 `python tools/check_design.py` 和 `python -m unittest discover -s tools -p "test_*.py"`（Python 3.10+，依赖 jsonschema）。默认检查 pick-place；使用 `--example t0-two-robot` 检查 T0、`--example all` 检查全部。默认只比较；有意修改后使用对应 `--example ... --write` 更新派生 IR、source map 和适用的绑定报告。
 
 ## 1 开发目标与采用 DSL 的理由
 

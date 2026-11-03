@@ -1,0 +1,83 @@
+{
+  "static_matches": 576,
+  "static_total": 576,
+  "jobs": 1383,
+  "core_cases": 303,
+  "core_query_count": 606,
+  "scores": {
+    "full-V09": {
+      "counts": {
+        "total": 303,
+        "unresolved": 218,
+        "correct": 85
+      },
+      "matrix": {
+        "HOLDS -> None": 182,
+        "HOLDS -> HOLDS": 77,
+        "VIOLATED -> None": 36,
+        "VIOLATED -> VIOLATED": 8
+      },
+      "coverage": 0.28052805280528054,
+      "accuracy_on_answered": 1.0,
+      "correct_fraction_of_all_core": 0.28052805280528054
+    },
+    "full-V10a": {
+      "counts": {
+        "total": 303,
+        "unresolved": 219,
+        "correct": 84
+      },
+      "matrix": {
+        "REACHABLE -> None": 107,
+        "UNREACHABLE -> UNREACHABLE": 76,
+        "UNREACHABLE -> None": 112,
+        "REACHABLE -> REACHABLE": 8
+      },
+      "coverage": 0.27722772277227725,
+      "accuracy_on_answered": 1.0,
+      "correct_fraction_of_all_core": 0.27722772277227725
+    },
+    "auto-V09": {
+      "counts": {
+        "total": 303,
+        "correct": 168,
+        "unresolved": 135
+      },
+      "matrix": {
+        "HOLDS -> HOLDS": 138,
+        "HOLDS -> None": 121,
+        "VIOLATED -> VIOLATED": 30,
+        "VIOLATED -> None": 14
+      },
+      "coverage": 0.5544554455445545,
+      "accuracy_on_answered": 1.0,
+      "correct_fraction_of_all_core": 0.5544554455445545
+    },
+    "auto-V10a": {
+      "counts": {
+        "total": 303,
+        "correct": 168,
+        "unresolved": 135
+      },
+      "matrix": {
+        "REACHABLE -> REACHABLE": 65,
+        "UNREACHABLE -> UNREACHABLE": 103,
+        "UNREACHABLE -> None": 85,
+        "REACHABLE -> None": 50
+      },
+      "coverage": 0.5544554455445545,
+      "accuracy_on_answered": 1.0,
+      "correct_fraction_of_all_core": 0.5544554455445545
+    }
+  },
+  "contradictions": [],
+  "status_counts": {
+    "CHECKED": 1383
+  },
+  "pressure_limit_counts": {
+    "TIMEOUT": 620,
+    "None": 157
+  },
+  "algorithm_unchanged": true,
+  "publication_gold_review": "pending; this is an independently recertified engineering core"
+}

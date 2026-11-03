@@ -1,0 +1,17 @@
+{
+  "date": "2026-11-02",
+  "tested_method": "method1 only",
+  "schema_validated_documents": 683,
+  "corpus_cases": 576,
+  "input_errors": 216,
+  "entered_model_check": 360,
+  "tiny_budget_seconds_per_case": 0.3,
+  "tiny_budget_bound_ticks": 256,
+  "tiny_budget_limit_counts": {
+    "TIMEOUT": 259,
+    "None": 101
+  },
+  "parent_goal_witnesses": 72,
+  "unit_tests": 28,
+  "note": "Witnesses and algorithm outputs are not independent ground truth; smoke timings are not controlled performance measurements."
+}

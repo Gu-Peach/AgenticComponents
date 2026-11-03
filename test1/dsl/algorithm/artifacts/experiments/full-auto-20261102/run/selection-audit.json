@@ -1,0 +1,16 @@
+{
+  "raw_jobs": 1152,
+  "rerun_jobs": 12,
+  "final_jobs": 1152,
+  "affected_pairs": [
+    "S02-P02-DV03",
+    "S02-P05",
+    "S05-P03-DV04",
+    "S06-P05-DV04",
+    "S07-P05",
+    "S11-P01-DV01"
+  ],
+  "source_hashes_match_frozen_config": true,
+  "selection": "replace both methods only for predeclared overlap; never choose fastest result",
+  "final_jsonl_sha256": "80977c28df293544361821d15126306a429f2a639b04cfc75c2097a8c68392c5"
+}

@@ -1,0 +1,13 @@
+{
+  "id": "acverify-six-phase/0.3",
+  "target_contract": "reference-six-phase/0.1",
+  "phase_order": ["external_events", "fault_injection", "packet_delivery", "controller_snapshot", "physical_events", "source_sampling"],
+  "physical_due": "start + chosen_duration - 1; next stage starts on the next tick",
+  "packet_due": "sample_tick + 1 + chosen_latency; each stream is FIFO",
+  "device_hold": "Check sustaining conditions before each physical phase, including before accepted is observed",
+  "terminal": "All tasks settled and no scheduled physical event remains",
+  "query_time": "Separate observation horizon, accepted-trigger cutoff and checked-until tail; no fault budget reset",
+  "optimizations": ["none", "storage", "portfolio"],
+  "unadmitted_reductions": ["clock", "POR"],
+  "scope": "Versioned finite symbolic contract engine; no oracle or reference-engine imports; alignment claims require separate evidence"
+}

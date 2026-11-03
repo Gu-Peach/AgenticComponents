@@ -130,7 +130,13 @@ export class RobotProgram implements RuntimeProgram {
       pick = new Vector3(...p.position).add(
         offset.clone().applyQuaternion(new Quaternion(...p.rotation)),
       );
-    const move = (v: Vector3, held = false, clearance = false): RobotStep => ({
+    const move = (
+      v: Vector3,
+      label: string,
+      held = false,
+      clearance = false,
+    ): RobotStep => ({
+      label,
       kind: "move_to_pose",
       position: v.toArray(),
       frame: "world",
@@ -144,14 +150,25 @@ export class RobotProgram implements RuntimeProgram {
       instanceId: s.instanceId,
       behaviorId: "pick_and_place",
       steps: [
-        move(pick.clone().add(new Vector3(0, s.liftHeight, 0))),
-        move(pick),
+        move(pick.clone().add(new Vector3(0, s.liftHeight, 0)), "取料接近"),
+        move(pick, "下降取料"),
         { kind: "grip", materialId: s.materialInstanceId },
-        move(center.clone().add(new Vector3(0, s.liftHeight, 0)), true),
-        move(place.clone().add(new Vector3(0, s.liftHeight, 0)), true),
-        move(place, true, true),
+        move(
+          center.clone().add(new Vector3(0, s.liftHeight, 0)),
+          "抓取后抬升",
+          true,
+        ),
+        move(
+          place.clone().add(new Vector3(0, s.liftHeight, 0)),
+          "转运至放料上方",
+          true,
+        ),
+        move(place, "下降放料", true, true),
         { kind: "release", materialId: s.materialInstanceId },
-        move(pick.clone().add(new Vector3(0, s.liftHeight * 2, 0))),
+        move(
+          pick.clone().add(new Vector3(0, s.liftHeight * 2, 0)),
+          "释放后退回",
+        ),
       ],
     };
   }
@@ -255,6 +272,13 @@ export class RobotProgram implements RuntimeProgram {
         constraintErrorM: this.script.runner.grasp?.error(tcp) ?? 0,
         mode: this.physics ? "fixed_grasp" : "kinematic_preview",
         calibrationSource: this.scene.model.calibration.source,
+        targets:
+          capture && this.scene.placementCenter
+            ? {
+                pickTCP: capture.toArray(),
+                placeCenter: [...this.scene.placementCenter],
+              }
+            : undefined,
         authorizations: {
           source_authorized: authorization ? true : null,
           target_reserved: authorization ? true : null,

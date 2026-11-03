@@ -1,0 +1,910 @@
+{
+  "schema_type": "ProcessBindingReport",
+  "version": "0.1",
+  "process_id": "t0_two_robot",
+  "status": "reference_design_checked",
+  "mode": "design_only",
+  "executable": false,
+  "is_bound_process": false,
+  "checks": [
+    "text_and_ir_structure",
+    "conservative_request_dominance",
+    "registered_conditions",
+    "nominal_arguments_and_indices",
+    "adapter_native_version",
+    "control_inputs_units_and_stop_rule",
+    "matching_drive_scope",
+    "adapter_payload_recipe_order"
+  ],
+  "unverified": [
+    "provider freshness and actual state",
+    "request/subject scope metadata at the native robot boundary",
+    "complete environment/service schema",
+    "geometric reachability and collisions",
+    "actual payload validation and resource arbitration",
+    "protocol/physical execution"
+  ],
+  "node_count": 9,
+  "entry": "main",
+  "invocations": [
+    {
+      "node_id": "load",
+      "instance_id": "R1",
+      "capability": "transfer_material",
+      "native_behavior": "pick_and_place",
+      "device_spec_id": "robot_UR10",
+      "definition_version": "0.1.0",
+      "device_contract_ref": "project:apps/public/modles/robot_UR10/schema.json",
+      "capability_adapter_ref": "dsl:examples/t0-two-robot/transfer.adapter.json",
+      "resolved_arguments": {
+        "material": {
+          "kind": "material",
+          "value": "M"
+        },
+        "source": {
+          "kind": "location",
+          "value": "S/source_pick_zone"
+        },
+        "target": {
+          "kind": "location",
+          "value": "C1/entry_zone"
+        }
+      },
+      "backend": {
+        "template_ref": "robot.articulated@1",
+        "payload_contract_ref": "robot-command@1",
+        "payload_status": "not_assembled_requires_calibration"
+      },
+      "native_obligations": {
+        "preconditions": [
+          {
+            "id": "kinematics_ready",
+            "label": "运动学与参数已验证",
+            "source": "observation",
+            "key": "kinematics_ready",
+            "equals": true
+          },
+          {
+            "id": "device_idle",
+            "label": "没有在途任务",
+            "source": "observation",
+            "key": "device_idle",
+            "equals": true
+          },
+          {
+            "id": "tool_empty",
+            "label": "没有实际持有关系",
+            "source": "observation",
+            "key": "tool_empty",
+            "equals": true
+          },
+          {
+            "id": "source_authorized",
+            "label": "显式准备的单物料会话拥有源/目标操作权；不是自动调度器授权",
+            "source": "authorization",
+            "key": "source_authorized",
+            "equals": true
+          },
+          {
+            "id": "target_reserved",
+            "label": "显式准备的单物料会话拥有源/目标操作权；不是自动调度器授权",
+            "source": "authorization",
+            "key": "target_reserved",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [],
+        "completion": {
+          "mode": "observed",
+          "description": "执行器按实际FK/约束/支承观测确认；请求参数及授权有效，详见005方案逐行为表",
+          "checks": [
+            {
+              "id": "pick_and_place.succeeded",
+              "label": "执行器实际完成观测",
+              "source": "observation",
+              "key": "pick_and_place.succeeded",
+              "equals": true
+            }
+          ],
+          "timer_or_progress_is_success": false
+        }
+      },
+      "additional_obligations": {
+        "condition_contract": {
+          "inherit_native_preconditions": true,
+          "inherit_native_sustaining_conditions": true,
+          "preconditions": [
+            {
+              "id": "source_ready",
+              "source": "observation",
+              "owner_ref": "handoff",
+              "key": "source_ready",
+              "equals": true
+            },
+            {
+              "id": "target_accepting",
+              "source": "observation",
+              "owner_ref": "handoff",
+              "key": "target_accepting",
+              "equals": true
+            }
+          ],
+          "sustaining_conditions": [
+            {
+              "id": "transfer_interlock_valid",
+              "source": "observation",
+              "owner_ref": "handoff",
+              "key": "transfer_interlock_valid",
+              "equals": true
+            }
+          ],
+          "unknown_policy": "block_or_controlled_stop"
+        },
+        "completion_contract": {
+          "mode": "observed",
+          "inherit_native_checks": true,
+          "checks": [
+            {
+              "id": "transfer_committed",
+              "source": "observation",
+              "owner_ref": "handoff",
+              "key": "transfer_committed",
+              "equals": true
+            },
+            {
+              "id": "holder_matches_target",
+              "source": "observation",
+              "owner_ref": "handoff",
+              "key": "holder_matches_target",
+              "equals": true
+            },
+            {
+              "id": "supported_at_target",
+              "source": "observation",
+              "owner_ref": "handoff",
+              "key": "supported_at_target",
+              "equals": true
+            }
+          ],
+          "timer_or_progress_is_success": false
+        },
+        "payload_recipe": {
+          "status": "pending_pose_assembler",
+          "behaviorId": "pick_and_place",
+          "instanceId": "bound target device instance",
+          "requestId": "positive DINT allocated from frozen process/native identity map",
+          "pose_source": "calibrated source/target location frames, robot TCP and actual held offset",
+          "steps": [
+            {
+              "kind": "move_to_pose",
+              "target_role": "source.approach",
+              "subject": "tcp"
+            },
+            {
+              "kind": "move_to_pose",
+              "target_role": "source.capture",
+              "subject": "tcp"
+            },
+            {
+              "kind": "grip",
+              "material_argument": "material"
+            },
+            {
+              "kind": "move_to_pose",
+              "target_role": "source.clearance",
+              "subject": "held_material"
+            },
+            {
+              "kind": "move_to_pose",
+              "target_role": "target.approach",
+              "subject": "held_material"
+            },
+            {
+              "kind": "move_to_pose",
+              "target_role": "target.support",
+              "subject": "held_material",
+              "support_clearance": true
+            },
+            {
+              "kind": "release",
+              "material_argument": "material"
+            },
+            {
+              "kind": "move_to_pose",
+              "target_role": "target.retreat",
+              "subject": "tcp"
+            }
+          ]
+        },
+        "stop_contract": {
+          "policy": "controlled_hold_preserve_actual_material",
+          "release": "native stop evidence plus no unconfirmed handoff",
+          "incompatible_current_behavior": "experiment stop/reset restores authored baseline; requires production hold bridge",
+          "status": "pending_stop_bridge"
+        }
+      },
+      "claims": [
+        "r1_motion",
+        "material_claim",
+        "c1_entry_reservation",
+        "r1_transfer_zone"
+      ],
+      "drive_dependency": null,
+      "request_identity": {
+        "process": "generated per activation at runtime",
+        "native": "positive DINT mapping retained with the same process request"
+      },
+      "protocol_recipe": [
+        "wait_gate",
+        "atomic_resource_grant",
+        "recheck_snapshot",
+        "submit_request",
+        "confirm_accept",
+        "observe_completion",
+        "confirm_release"
+      ],
+      "failure_recipe": [
+        "request_controlled_stop",
+        "confirm_stop_and_handoff_state",
+        "release_only_confirmed_grants",
+        "quarantine_if_unknown"
+      ]
+    },
+    {
+      "node_id": "arrive_1",
+      "instance_id": "C1",
+      "capability": "transport_to_exit",
+      "native_behavior": "transport_to_exit",
+      "device_spec_id": "Conveyor_aankws",
+      "definition_version": "0.6.0",
+      "device_contract_ref": "project:test1/modles/Conveyor_aankws/schema.json",
+      "capability_adapter_ref": null,
+      "resolved_arguments": {
+        "subject_id": {
+          "kind": "integer",
+          "value": 1
+        }
+      },
+      "backend": {
+        "template_ref": "conveyor.continuous-contact@1",
+        "payload_contract_ref": null,
+        "payload_status": "native_request_bridge_pending"
+      },
+      "native_obligations": {
+        "preconditions": [
+          {
+            "id": "device_ready",
+            "label": "设备配置已解析、执行器已接入且无阻止动作的故障",
+            "source": "observation",
+            "key": "device_ready",
+            "equals": true
+          },
+          {
+            "id": "subject_on_conveyor",
+            "label": "指定物料已经有效交接给本设备",
+            "source": "observation",
+            "key": "subject_on_conveyor",
+            "equals": true
+          },
+          {
+            "id": "transport_path_valid",
+            "label": "指定物料的整带运输路径有效",
+            "source": "observation",
+            "key": "transport_path_valid",
+            "equals": true
+          },
+          {
+            "id": "speed_setpoint_valid",
+            "label": "目标速度有限且符合单向与软件范围约束",
+            "source": "observation",
+            "key": "speed_setpoint_valid",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "run_permission",
+            "label": "持续运行许可有效",
+            "source": "observation",
+            "key": "run_permission",
+            "equals": true
+          }
+        ],
+        "completion": {
+          "mode": "observed",
+          "description": "指定物料到达出口交接区，发布本次到达结果和 part_ready；出口交接由 release_material 负责。",
+          "checks": [
+            {
+              "id": "exit_arrival_confirmed",
+              "label": "本次运输的指定物料真实到达出口",
+              "source": "observation",
+              "key": "exit_arrival_confirmed",
+              "equals": true
+            }
+          ],
+          "timer_or_progress_is_success": false,
+          "request_correlation_required": true
+        }
+      },
+      "additional_obligations": null,
+      "claims": [
+        "material_claim"
+      ],
+      "drive_dependency": "c1_drive",
+      "request_identity": {
+        "process": "generated per activation at runtime",
+        "native": "positive DINT mapping retained with the same process request"
+      },
+      "protocol_recipe": [
+        "wait_gate",
+        "atomic_resource_grant",
+        "recheck_snapshot",
+        "submit_request",
+        "confirm_accept",
+        "observe_completion",
+        "confirm_release"
+      ],
+      "failure_recipe": [
+        "request_controlled_stop",
+        "confirm_stop_and_handoff_state",
+        "release_only_confirmed_grants",
+        "quarantine_if_unknown"
+      ]
+    },
+    {
+      "node_id": "bridge",
+      "instance_id": "R2",
+      "capability": "transfer_material",
+      "native_behavior": "pick_and_place",
+      "device_spec_id": "robot_UR10",
+      "definition_version": "0.1.0",
+      "device_contract_ref": "project:apps/public/modles/robot_UR10/schema.json",
+      "capability_adapter_ref": "dsl:examples/t0-two-robot/transfer.adapter.json",
+      "resolved_arguments": {
+        "material": {
+          "kind": "material",
+          "value": "M"
+        },
+        "source": {
+          "kind": "location",
+          "value": "C1/exit_zone"
+        },
+        "target": {
+          "kind": "location",
+          "value": "C2/entry_zone"
+        }
+      },
+      "backend": {
+        "template_ref": "robot.articulated@1",
+        "payload_contract_ref": "robot-command@1",
+        "payload_status": "not_assembled_requires_calibration"
+      },
+      "native_obligations": {
+        "preconditions": [
+          {
+            "id": "kinematics_ready",
+            "label": "运动学与参数已验证",
+            "source": "observation",
+            "key": "kinematics_ready",
+            "equals": true
+          },
+          {
+            "id": "device_idle",
+            "label": "没有在途任务",
+            "source": "observation",
+            "key": "device_idle",
+            "equals": true
+          },
+          {
+            "id": "tool_empty",
+            "label": "没有实际持有关系",
+            "source": "observation",
+            "key": "tool_empty",
+            "equals": true
+          },
+          {
+            "id": "source_authorized",
+            "label": "显式准备的单物料会话拥有源/目标操作权；不是自动调度器授权",
+            "source": "authorization",
+            "key": "source_authorized",
+            "equals": true
+          },
+          {
+            "id": "target_reserved",
+            "label": "显式准备的单物料会话拥有源/目标操作权；不是自动调度器授权",
+            "source": "authorization",
+            "key": "target_reserved",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [],
+        "completion": {
+          "mode": "observed",
+          "description": "执行器按实际FK/约束/支承观测确认；请求参数及授权有效，详见005方案逐行为表",
+          "checks": [
+            {
+              "id": "pick_and_place.succeeded",
+              "label": "执行器实际完成观测",
+              "source": "observation",
+              "key": "pick_and_place.succeeded",
+              "equals": true
+            }
+          ],
+          "timer_or_progress_is_success": false
+        }
+      },
+      "additional_obligations": {
+        "condition_contract": {
+          "inherit_native_preconditions": true,
+          "inherit_native_sustaining_conditions": true,
+          "preconditions": [
+            {
+              "id": "source_ready",
+              "source": "observation",
+              "owner_ref": "handoff",
+              "key": "source_ready",
+              "equals": true
+            },
+            {
+              "id": "target_accepting",
+              "source": "observation",
+              "owner_ref": "handoff",
+              "key": "target_accepting",
+              "equals": true
+            }
+          ],
+          "sustaining_conditions": [
+            {
+              "id": "transfer_interlock_valid",
+              "source": "observation",
+              "owner_ref": "handoff",
+              "key": "transfer_interlock_valid",
+              "equals": true
+            }
+          ],
+          "unknown_policy": "block_or_controlled_stop"
+        },
+        "completion_contract": {
+          "mode": "observed",
+          "inherit_native_checks": true,
+          "checks": [
+            {
+              "id": "transfer_committed",
+              "source": "observation",
+              "owner_ref": "handoff",
+              "key": "transfer_committed",
+              "equals": true
+            },
+            {
+              "id": "holder_matches_target",
+              "source": "observation",
+              "owner_ref": "handoff",
+              "key": "holder_matches_target",
+              "equals": true
+            },
+            {
+              "id": "supported_at_target",
+              "source": "observation",
+              "owner_ref": "handoff",
+              "key": "supported_at_target",
+              "equals": true
+            }
+          ],
+          "timer_or_progress_is_success": false
+        },
+        "payload_recipe": {
+          "status": "pending_pose_assembler",
+          "behaviorId": "pick_and_place",
+          "instanceId": "bound target device instance",
+          "requestId": "positive DINT allocated from frozen process/native identity map",
+          "pose_source": "calibrated source/target location frames, robot TCP and actual held offset",
+          "steps": [
+            {
+              "kind": "move_to_pose",
+              "target_role": "source.approach",
+              "subject": "tcp"
+            },
+            {
+              "kind": "move_to_pose",
+              "target_role": "source.capture",
+              "subject": "tcp"
+            },
+            {
+              "kind": "grip",
+              "material_argument": "material"
+            },
+            {
+              "kind": "move_to_pose",
+              "target_role": "source.clearance",
+              "subject": "held_material"
+            },
+            {
+              "kind": "move_to_pose",
+              "target_role": "target.approach",
+              "subject": "held_material"
+            },
+            {
+              "kind": "move_to_pose",
+              "target_role": "target.support",
+              "subject": "held_material",
+              "support_clearance": true
+            },
+            {
+              "kind": "release",
+              "material_argument": "material"
+            },
+            {
+              "kind": "move_to_pose",
+              "target_role": "target.retreat",
+              "subject": "tcp"
+            }
+          ]
+        },
+        "stop_contract": {
+          "policy": "controlled_hold_preserve_actual_material",
+          "release": "native stop evidence plus no unconfirmed handoff",
+          "incompatible_current_behavior": "experiment stop/reset restores authored baseline; requires production hold bridge",
+          "status": "pending_stop_bridge"
+        }
+      },
+      "claims": [
+        "r2_motion",
+        "material_claim",
+        "c2_entry_reservation",
+        "r2_transfer_zone"
+      ],
+      "drive_dependency": null,
+      "request_identity": {
+        "process": "generated per activation at runtime",
+        "native": "positive DINT mapping retained with the same process request"
+      },
+      "protocol_recipe": [
+        "wait_gate",
+        "atomic_resource_grant",
+        "recheck_snapshot",
+        "submit_request",
+        "confirm_accept",
+        "observe_completion",
+        "confirm_release"
+      ],
+      "failure_recipe": [
+        "request_controlled_stop",
+        "confirm_stop_and_handoff_state",
+        "release_only_confirmed_grants",
+        "quarantine_if_unknown"
+      ]
+    },
+    {
+      "node_id": "arrive_2",
+      "instance_id": "C2",
+      "capability": "transport_to_exit",
+      "native_behavior": "transport_to_exit",
+      "device_spec_id": "Conveyor_aankws",
+      "definition_version": "0.6.0",
+      "device_contract_ref": "project:test1/modles/Conveyor_aankws/schema.json",
+      "capability_adapter_ref": null,
+      "resolved_arguments": {
+        "subject_id": {
+          "kind": "integer",
+          "value": 1
+        }
+      },
+      "backend": {
+        "template_ref": "conveyor.continuous-contact@1",
+        "payload_contract_ref": null,
+        "payload_status": "native_request_bridge_pending"
+      },
+      "native_obligations": {
+        "preconditions": [
+          {
+            "id": "device_ready",
+            "label": "设备配置已解析、执行器已接入且无阻止动作的故障",
+            "source": "observation",
+            "key": "device_ready",
+            "equals": true
+          },
+          {
+            "id": "subject_on_conveyor",
+            "label": "指定物料已经有效交接给本设备",
+            "source": "observation",
+            "key": "subject_on_conveyor",
+            "equals": true
+          },
+          {
+            "id": "transport_path_valid",
+            "label": "指定物料的整带运输路径有效",
+            "source": "observation",
+            "key": "transport_path_valid",
+            "equals": true
+          },
+          {
+            "id": "speed_setpoint_valid",
+            "label": "目标速度有限且符合单向与软件范围约束",
+            "source": "observation",
+            "key": "speed_setpoint_valid",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "run_permission",
+            "label": "持续运行许可有效",
+            "source": "observation",
+            "key": "run_permission",
+            "equals": true
+          }
+        ],
+        "completion": {
+          "mode": "observed",
+          "description": "指定物料到达出口交接区，发布本次到达结果和 part_ready；出口交接由 release_material 负责。",
+          "checks": [
+            {
+              "id": "exit_arrival_confirmed",
+              "label": "本次运输的指定物料真实到达出口",
+              "source": "observation",
+              "key": "exit_arrival_confirmed",
+              "equals": true
+            }
+          ],
+          "timer_or_progress_is_success": false,
+          "request_correlation_required": true
+        }
+      },
+      "additional_obligations": null,
+      "claims": [
+        "material_claim"
+      ],
+      "drive_dependency": "c2_drive",
+      "request_identity": {
+        "process": "generated per activation at runtime",
+        "native": "positive DINT mapping retained with the same process request"
+      },
+      "protocol_recipe": [
+        "wait_gate",
+        "atomic_resource_grant",
+        "recheck_snapshot",
+        "submit_request",
+        "confirm_accept",
+        "observe_completion",
+        "confirm_release"
+      ],
+      "failure_recipe": [
+        "request_controlled_stop",
+        "confirm_stop_and_handoff_state",
+        "release_only_confirmed_grants",
+        "quarantine_if_unknown"
+      ]
+    }
+  ],
+  "controls": {
+    "c1_drive": {
+      "target_ref": "c1",
+      "status": "pending_adapter",
+      "writer_resource": "c1_writer",
+      "enter": {
+        "runTag": {
+          "kind": "boolean",
+          "value": true
+        },
+        "speedTag": {
+          "kind": "quantity",
+          "value": 0.2,
+          "unit": "m/s"
+        }
+      },
+      "exit": {
+        "runTag": {
+          "kind": "boolean",
+          "value": false
+        }
+      },
+      "entry_confirmation": "writer_ack_with_control_epoch",
+      "sustaining_conditions": [
+        "run_permission",
+        "speed_setpoint_valid"
+      ],
+      "exit_condition": {
+        "kind": "is",
+        "read": {
+          "source": "observation",
+          "owner_ref": "c1",
+          "key": "surface_stopped"
+        },
+        "equals": {
+          "kind": "boolean",
+          "value": true
+        }
+      },
+      "release": "exit_write_ack_and_actual_surface_stopped",
+      "delegation": "child transport observes shared drive; no second writer or independent per-load motion"
+    },
+    "c2_drive": {
+      "target_ref": "c2",
+      "status": "pending_adapter",
+      "writer_resource": "c2_writer",
+      "enter": {
+        "runTag": {
+          "kind": "boolean",
+          "value": true
+        },
+        "speedTag": {
+          "kind": "quantity",
+          "value": 0.2,
+          "unit": "m/s"
+        }
+      },
+      "exit": {
+        "runTag": {
+          "kind": "boolean",
+          "value": false
+        }
+      },
+      "entry_confirmation": "writer_ack_with_control_epoch",
+      "sustaining_conditions": [
+        "run_permission",
+        "speed_setpoint_valid"
+      ],
+      "exit_condition": {
+        "kind": "is",
+        "read": {
+          "source": "observation",
+          "owner_ref": "c2",
+          "key": "surface_stopped"
+        },
+        "equals": {
+          "kind": "boolean",
+          "value": true
+        }
+      },
+      "release": "exit_write_ack_and_actual_surface_stopped",
+      "delegation": "child transport observes shared drive; no second writer or independent per-load motion"
+    }
+  },
+  "resources": {
+    "c1_writer": {
+      "kind": "exclusive",
+      "capacity": 1,
+      "owner": "resource_manager",
+      "status": "pending_service"
+    },
+    "c2_writer": {
+      "kind": "exclusive",
+      "capacity": 1,
+      "owner": "resource_manager",
+      "status": "pending_service"
+    },
+    "r1_motion": {
+      "kind": "exclusive",
+      "capacity": 1,
+      "owner": "resource_manager",
+      "status": "pending_service"
+    },
+    "r2_motion": {
+      "kind": "exclusive",
+      "capacity": 1,
+      "owner": "resource_manager",
+      "status": "pending_service"
+    },
+    "material_claim": {
+      "kind": "exclusive",
+      "capacity": 1,
+      "owner": "resource_manager",
+      "status": "pending_service",
+      "binding_ref": "material"
+    },
+    "c1_entry_reservation": {
+      "kind": "exclusive",
+      "capacity": 1,
+      "owner": "resource_manager",
+      "status": "pending_service",
+      "binding_ref": "c1_entry"
+    },
+    "c2_entry_reservation": {
+      "kind": "exclusive",
+      "capacity": 1,
+      "owner": "resource_manager",
+      "status": "pending_service",
+      "binding_ref": "c2_entry"
+    },
+    "r1_transfer_zone": {
+      "kind": "exclusive",
+      "capacity": 1,
+      "owner": "resource_manager",
+      "status": "pending_service"
+    },
+    "r2_transfer_zone": {
+      "kind": "exclusive",
+      "capacity": 1,
+      "owner": "resource_manager",
+      "status": "pending_service"
+    }
+  },
+  "resource_conflicts": [
+    [
+      "c1_writer",
+      "r1_transfer_zone"
+    ],
+    [
+      "c1_writer",
+      "r2_transfer_zone"
+    ],
+    [
+      "c2_writer",
+      "r2_transfer_zone"
+    ]
+  ],
+  "acceptance": [
+    "M_is_at_C2_out",
+    "actual_support_is_C2",
+    "holder_is_C2",
+    "both_tools_empty",
+    "both_conveyors_stopped",
+    "no_active_requests",
+    "no_leaked_execution_grants",
+    "unique_holder"
+  ],
+  "execution_blockers": [
+    "capability_adapter_pending:r1/transfer_material",
+    "capability_adapter_pending:r2/transfer_material",
+    "central_resource_and_handoff_services",
+    "continuous_control_gateway",
+    "independent_acceptance_monitor",
+    "location_pending:c1_entry",
+    "location_pending:c1_exit",
+    "location_pending:c2_entry",
+    "location_pending:c2_exit",
+    "location_pending:source_station",
+    "native_action_pending:c1/transport_to_exit",
+    "native_action_pending:c2/transport_to_exit",
+    "native_robot_fact_type_and_scope_bridge",
+    "process_runner",
+    "production_hold_stop_bridge",
+    "request_correlated_fresh_observations",
+    "shared_two_robot_two_conveyor_world",
+    "source_and_location_calibration",
+    "transfer_payload_assembler"
+  ],
+  "dependencies": [
+    {
+      "ref": "dsl:capability-adapter.schema.json",
+      "sha256": "c0196125118379ec34264341082240b41528820dcd893a956ba555998593a3ef"
+    },
+    {
+      "ref": "dsl:examples/t0-two-robot/cell.design.json",
+      "sha256": "ee71fc9934ad3a9c4e0cd13698131fe4d0f6d1aafb37e1455bb6c8bf7afe2c59"
+    },
+    {
+      "ref": "dsl:examples/t0-two-robot/process.acp",
+      "sha256": "71ace0abeecb51bc2af0d8327ed33f2e18345fa1e98b2d869c252770c7d908c4"
+    },
+    {
+      "ref": "dsl:examples/t0-two-robot/transfer.adapter.json",
+      "sha256": "310a26b53312c7f045bae0efa27f0be6df66417b908815943250e777447b57f2"
+    },
+    {
+      "ref": "dsl:process-ir.schema.json",
+      "sha256": "f3c7414093d6054bf50441917607d94b9da2bb9416b5c3247486d737f5a4f015"
+    },
+    {
+      "ref": "dsl:tools/binding_report.py",
+      "sha256": "9cada0c586407bf185170a7216ac786d06a3098ca932ffa04788b5c1fa5bc178"
+    },
+    {
+      "ref": "dsl:tools/check_design.py",
+      "sha256": "0b55eea2ddde158d4d1506efb0fd4ae6cd4323da04d1e0869c91cddd77d6a4ee"
+    },
+    {
+      "ref": "project:apps/public/modles/engine_block/schema.json",
+      "sha256": "33d84efa0d83ebb03d84c3be3fb40bc1e3e9e5a5fb1473942e296a45659ed19b"
+    },
+    {
+      "ref": "project:apps/public/modles/robot_UR10/schema.json",
+      "sha256": "7a864a5f864002afab28032594267908989bd920eec6757d53d135af709907f1"
+    },
+    {
+      "ref": "project:test1/modles/Conveyor_aankws/schema.json",
+      "sha256": "e353ca4a3687901c8325c0ccf8acf7eecaae233bea9f8a4fb6789a93a764b5ad"
+    }
+  ],
+  "dependency_digest": "e6e9a80b7a067d76edaa43ab3fd20333e3ac1782842a5715596ed18cd37c17b8"
+}

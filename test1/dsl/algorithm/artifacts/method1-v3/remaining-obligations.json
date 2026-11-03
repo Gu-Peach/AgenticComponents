@@ -1,0 +1,10 @@
+{
+  "obligations": [
+    "whole_line_timed_refinement",
+    "concurrent_external_event_timed_oracle",
+    "additional_property_and_profile_gold",
+    "solver_budget_or_algorithm_unknowns"
+  ],
+  "gold_matrix_path": "experiments/method1-v3/coverage.json",
+  "unresolved_query_records": 14824
+}

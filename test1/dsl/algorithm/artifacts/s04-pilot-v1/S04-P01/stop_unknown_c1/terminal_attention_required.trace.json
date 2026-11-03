@@ -1,0 +1,1713 @@
+{
+  "initial": {
+    "pc": 0,
+    "tick": 0,
+    "elapsed": 0,
+    "region": "S.work",
+    "support": "S.work",
+    "holder": "S",
+    "held": "",
+    "occupied": [
+      "S.work"
+    ],
+    "reserved": "",
+    "drives": [
+      "stopped",
+      "stopped"
+    ],
+    "commands": [
+      false,
+      false
+    ],
+    "grants": [],
+    "active": "",
+    "accepted": false,
+    "completed": [],
+    "terminal": "",
+    "reason": "",
+    "attention": false,
+    "exit_ack": []
+  },
+  "steps": [
+    {
+      "event": "activate_seq",
+      "state": {
+        "pc": 1,
+        "tick": 1,
+        "elapsed": 0,
+        "region": "S.work",
+        "support": "S.work",
+        "holder": "S",
+        "held": "",
+        "occupied": [
+          "S.work"
+        ],
+        "reserved": "",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [],
+        "active": "",
+        "accepted": false,
+        "completed": [],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "boundary",
+        "node": "main"
+      },
+      "source": {
+        "file": "cases/S04-P01/process.acp",
+        "start_byte": 993,
+        "end_byte": 2153,
+        "line": 21,
+        "column": 5
+      }
+    },
+    {
+      "event": "submit_request",
+      "state": {
+        "pc": 2,
+        "tick": 2,
+        "elapsed": 0,
+        "region": "S.work",
+        "support": "S.work",
+        "holder": "S",
+        "held": "",
+        "occupied": [
+          "S.work"
+        ],
+        "reserved": "",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [
+          [
+            "C1.zone",
+            "load"
+          ],
+          [
+            "M1.claim",
+            "load"
+          ],
+          [
+            "R1.motion",
+            "load"
+          ],
+          [
+            "S.zone",
+            "load"
+          ]
+        ],
+        "active": "load",
+        "accepted": false,
+        "completed": [],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "gate",
+        "node": "load",
+        "control": null
+      },
+      "source": {
+        "file": "cases/S04-P01/process.acp",
+        "start_byte": 1083,
+        "end_byte": 1239,
+        "line": 23,
+        "column": 7
+      },
+      "capability_model": "transfer@0.1"
+    },
+    {
+      "event": "response",
+      "state": {
+        "pc": 3,
+        "tick": 3,
+        "elapsed": 0,
+        "region": "S.work",
+        "support": "S.work",
+        "holder": "S",
+        "held": "",
+        "occupied": [
+          "S.work"
+        ],
+        "reserved": "",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [
+          [
+            "C1.zone",
+            "load"
+          ],
+          [
+            "M1.claim",
+            "load"
+          ],
+          [
+            "R1.motion",
+            "load"
+          ],
+          [
+            "S.zone",
+            "load"
+          ]
+        ],
+        "active": "load",
+        "accepted": true,
+        "completed": [],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "accept",
+        "node": "load",
+        "control": null
+      },
+      "source": {
+        "file": "cases/S04-P01/process.acp",
+        "start_byte": 1083,
+        "end_byte": 1239,
+        "line": 23,
+        "column": 7
+      },
+      "capability_model": "transfer@0.1"
+    },
+    {
+      "event": "response",
+      "state": {
+        "pc": 4,
+        "tick": 4,
+        "elapsed": 0,
+        "region": "S.work",
+        "support": "S.work",
+        "holder": "S",
+        "held": "",
+        "occupied": [
+          "S.work"
+        ],
+        "reserved": "C1.entry",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [
+          [
+            "C1.zone",
+            "load"
+          ],
+          [
+            "M1.claim",
+            "load"
+          ],
+          [
+            "R1.motion",
+            "load"
+          ],
+          [
+            "S.zone",
+            "load"
+          ]
+        ],
+        "active": "load",
+        "accepted": true,
+        "completed": [],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "phase",
+        "node": "load",
+        "phase": "accepted",
+        "effects": [
+          {
+            "effect": "reserve_target",
+            "args": [
+              "$material",
+              "$target",
+              "$request"
+            ]
+          }
+        ],
+        "control": null
+      },
+      "source": {
+        "file": "cases/S04-P01/process.acp",
+        "start_byte": 1083,
+        "end_byte": 1239,
+        "line": 23,
+        "column": 7
+      },
+      "capability_model": "transfer@0.1"
+    },
+    {
+      "event": "response",
+      "state": {
+        "pc": 5,
+        "tick": 5,
+        "elapsed": 0,
+        "region": "S.work",
+        "support": "S.work",
+        "holder": "S",
+        "held": "R1",
+        "occupied": [
+          "S.work"
+        ],
+        "reserved": "C1.entry",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [
+          [
+            "C1.zone",
+            "load"
+          ],
+          [
+            "M1.claim",
+            "load"
+          ],
+          [
+            "R1.motion",
+            "load"
+          ],
+          [
+            "S.zone",
+            "load"
+          ]
+        ],
+        "active": "load",
+        "accepted": true,
+        "completed": [],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "phase",
+        "node": "load",
+        "phase": "capture",
+        "effects": [
+          {
+            "effect": "capture",
+            "args": [
+              "$material",
+              "$device"
+            ]
+          }
+        ],
+        "control": null
+      },
+      "source": {
+        "file": "cases/S04-P01/process.acp",
+        "start_byte": 1083,
+        "end_byte": 1239,
+        "line": 23,
+        "column": 7
+      },
+      "capability_model": "transfer@0.1"
+    },
+    {
+      "event": "response",
+      "state": {
+        "pc": 6,
+        "tick": 6,
+        "elapsed": 0,
+        "region": "R1.tool",
+        "support": "R1.tool",
+        "holder": "R1",
+        "held": "R1",
+        "occupied": [
+          "R1.tool"
+        ],
+        "reserved": "C1.entry",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [
+          [
+            "C1.zone",
+            "load"
+          ],
+          [
+            "M1.claim",
+            "load"
+          ],
+          [
+            "R1.motion",
+            "load"
+          ],
+          [
+            "S.zone",
+            "load"
+          ]
+        ],
+        "active": "load",
+        "accepted": true,
+        "completed": [],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "phase",
+        "node": "load",
+        "phase": "clear_source",
+        "effects": [
+          {
+            "effect": "clear_source",
+            "args": [
+              "$material",
+              "$source",
+              "$device"
+            ]
+          }
+        ],
+        "control": null
+      },
+      "source": {
+        "file": "cases/S04-P01/process.acp",
+        "start_byte": 1083,
+        "end_byte": 1239,
+        "line": 23,
+        "column": 7
+      },
+      "capability_model": "transfer@0.1"
+    },
+    {
+      "event": "response",
+      "state": {
+        "pc": 7,
+        "tick": 7,
+        "elapsed": 0,
+        "region": "C1.entry",
+        "support": "C1.entry",
+        "holder": "R1",
+        "held": "R1",
+        "occupied": [
+          "R1.tool"
+        ],
+        "reserved": "C1.entry",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [
+          [
+            "C1.zone",
+            "load"
+          ],
+          [
+            "M1.claim",
+            "load"
+          ],
+          [
+            "R1.motion",
+            "load"
+          ],
+          [
+            "S.zone",
+            "load"
+          ]
+        ],
+        "active": "load",
+        "accepted": true,
+        "completed": [],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "phase",
+        "node": "load",
+        "phase": "place",
+        "effects": [
+          {
+            "effect": "place_supported",
+            "args": [
+              "$material",
+              "$target"
+            ]
+          }
+        ],
+        "control": null
+      },
+      "source": {
+        "file": "cases/S04-P01/process.acp",
+        "start_byte": 1083,
+        "end_byte": 1239,
+        "line": 23,
+        "column": 7
+      },
+      "capability_model": "transfer@0.1"
+    },
+    {
+      "event": "response",
+      "state": {
+        "pc": 8,
+        "tick": 8,
+        "elapsed": 0,
+        "region": "C1.entry",
+        "support": "C1.entry",
+        "holder": "R1",
+        "held": "",
+        "occupied": [
+          "R1.tool"
+        ],
+        "reserved": "C1.entry",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [
+          [
+            "C1.zone",
+            "load"
+          ],
+          [
+            "M1.claim",
+            "load"
+          ],
+          [
+            "R1.motion",
+            "load"
+          ],
+          [
+            "S.zone",
+            "load"
+          ]
+        ],
+        "active": "load",
+        "accepted": true,
+        "completed": [],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "phase",
+        "node": "load",
+        "phase": "release",
+        "effects": [
+          {
+            "effect": "release_tool",
+            "args": [
+              "$material",
+              "$device"
+            ]
+          }
+        ],
+        "control": null
+      },
+      "source": {
+        "file": "cases/S04-P01/process.acp",
+        "start_byte": 1083,
+        "end_byte": 1239,
+        "line": 23,
+        "column": 7
+      },
+      "capability_model": "transfer@0.1"
+    },
+    {
+      "event": "response",
+      "state": {
+        "pc": 9,
+        "tick": 9,
+        "elapsed": 0,
+        "region": "C1.entry",
+        "support": "C1.entry",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.entry"
+        ],
+        "reserved": "",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [
+          [
+            "C1.zone",
+            "load"
+          ],
+          [
+            "M1.claim",
+            "load"
+          ],
+          [
+            "R1.motion",
+            "load"
+          ],
+          [
+            "S.zone",
+            "load"
+          ]
+        ],
+        "active": "load",
+        "accepted": true,
+        "completed": [],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "phase",
+        "node": "load",
+        "phase": "commit",
+        "effects": [
+          {
+            "effect": "commit_transfer",
+            "args": [
+              "$material",
+              "$target",
+              "$request"
+            ]
+          }
+        ],
+        "control": null
+      },
+      "source": {
+        "file": "cases/S04-P01/process.acp",
+        "start_byte": 1083,
+        "end_byte": 1239,
+        "line": 23,
+        "column": 7
+      },
+      "capability_model": "transfer@0.1"
+    },
+    {
+      "event": "response",
+      "state": {
+        "pc": 10,
+        "tick": 10,
+        "elapsed": 0,
+        "region": "C1.entry",
+        "support": "C1.entry",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.entry"
+        ],
+        "reserved": "",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [
+          [
+            "C1.zone",
+            "load"
+          ],
+          [
+            "M1.claim",
+            "load"
+          ],
+          [
+            "R1.motion",
+            "load"
+          ],
+          [
+            "S.zone",
+            "load"
+          ]
+        ],
+        "active": "load",
+        "accepted": true,
+        "completed": [],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "phase",
+        "node": "load",
+        "phase": "report",
+        "effects": [
+          {
+            "effect": "publish_success",
+            "args": [
+              "$request"
+            ]
+          }
+        ],
+        "control": null
+      },
+      "source": {
+        "file": "cases/S04-P01/process.acp",
+        "start_byte": 1083,
+        "end_byte": 1239,
+        "line": 23,
+        "column": 7
+      },
+      "capability_model": "transfer@0.1"
+    },
+    {
+      "event": "complete_request",
+      "state": {
+        "pc": 11,
+        "tick": 11,
+        "elapsed": 0,
+        "region": "C1.entry",
+        "support": "C1.entry",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.entry"
+        ],
+        "reserved": "",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [],
+        "active": "",
+        "accepted": false,
+        "completed": [
+          [
+            "load",
+            "C1.entry"
+          ]
+        ],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "complete",
+        "node": "load",
+        "control": null
+      },
+      "source": {
+        "file": "cases/S04-P01/process.acp",
+        "start_byte": 1083,
+        "end_byte": 1239,
+        "line": 23,
+        "column": 7
+      },
+      "capability_model": "transfer@0.1"
+    },
+    {
+      "event": "acquire_writer",
+      "state": {
+        "pc": 12,
+        "tick": 12,
+        "elapsed": 0,
+        "region": "C1.entry",
+        "support": "C1.entry",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.entry"
+        ],
+        "reserved": "",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [
+          [
+            "C1.writer",
+            "C1.drive"
+          ]
+        ],
+        "active": "",
+        "accepted": false,
+        "completed": [
+          [
+            "load",
+            "C1.entry"
+          ]
+        ],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "control_gate",
+        "node": "feed_1",
+        "control": "C1.drive"
+      },
+      "source": {
+        "file": "cases/S04-P01/process.acp",
+        "start_byte": 1340,
+        "end_byte": 1494,
+        "line": 27,
+        "column": 7
+      }
+    },
+    {
+      "event": "write_start",
+      "state": {
+        "pc": 13,
+        "tick": 13,
+        "elapsed": 0,
+        "region": "C1.entry",
+        "support": "C1.entry",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.entry"
+        ],
+        "reserved": "",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          true,
+          false
+        ],
+        "grants": [
+          [
+            "C1.writer",
+            "C1.drive"
+          ]
+        ],
+        "active": "",
+        "accepted": false,
+        "completed": [
+          [
+            "load",
+            "C1.entry"
+          ]
+        ],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "write_start",
+        "node": "feed_1",
+        "control": "C1.drive"
+      },
+      "source": {
+        "file": "cases/S04-P01/process.acp",
+        "start_byte": 1340,
+        "end_byte": 1494,
+        "line": 27,
+        "column": 7
+      }
+    },
+    {
+      "event": "response",
+      "state": {
+        "pc": 14,
+        "tick": 14,
+        "elapsed": 0,
+        "region": "C1.entry",
+        "support": "C1.entry",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.entry"
+        ],
+        "reserved": "",
+        "drives": [
+          "moving",
+          "stopped"
+        ],
+        "commands": [
+          true,
+          false
+        ],
+        "grants": [
+          [
+            "C1.writer",
+            "C1.drive"
+          ]
+        ],
+        "active": "",
+        "accepted": false,
+        "completed": [
+          [
+            "load",
+            "C1.entry"
+          ]
+        ],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "start_response",
+        "node": "feed_1",
+        "control": "C1.drive"
+      },
+      "source": {
+        "file": "cases/S04-P01/process.acp",
+        "start_byte": 1340,
+        "end_byte": 1494,
+        "line": 27,
+        "column": 7
+      }
+    },
+    {
+      "event": "submit_request",
+      "state": {
+        "pc": 15,
+        "tick": 15,
+        "elapsed": 0,
+        "region": "C1.entry",
+        "support": "C1.entry",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.entry"
+        ],
+        "reserved": "",
+        "drives": [
+          "moving",
+          "stopped"
+        ],
+        "commands": [
+          true,
+          false
+        ],
+        "grants": [
+          [
+            "C1.writer",
+            "C1.drive"
+          ],
+          [
+            "M1.claim",
+            "arrive_1"
+          ]
+        ],
+        "active": "arrive_1",
+        "accepted": false,
+        "completed": [
+          [
+            "load",
+            "C1.entry"
+          ]
+        ],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "gate",
+        "node": "arrive_1",
+        "control": "C1.drive"
+      },
+      "source": {
+        "file": "cases/S04-P01/process.acp",
+        "start_byte": 1393,
+        "end_byte": 1493,
+        "line": 28,
+        "column": 9
+      },
+      "capability_model": "transport@0.1"
+    },
+    {
+      "event": "response",
+      "state": {
+        "pc": 16,
+        "tick": 16,
+        "elapsed": 0,
+        "region": "C1.entry",
+        "support": "C1.entry",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.entry"
+        ],
+        "reserved": "",
+        "drives": [
+          "moving",
+          "stopped"
+        ],
+        "commands": [
+          true,
+          false
+        ],
+        "grants": [
+          [
+            "C1.writer",
+            "C1.drive"
+          ],
+          [
+            "M1.claim",
+            "arrive_1"
+          ]
+        ],
+        "active": "arrive_1",
+        "accepted": true,
+        "completed": [
+          [
+            "load",
+            "C1.entry"
+          ]
+        ],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "accept",
+        "node": "arrive_1",
+        "control": "C1.drive"
+      },
+      "source": {
+        "file": "cases/S04-P01/process.acp",
+        "start_byte": 1393,
+        "end_byte": 1493,
+        "line": 28,
+        "column": 9
+      },
+      "capability_model": "transport@0.1"
+    },
+    {
+      "event": "response",
+      "state": {
+        "pc": 17,
+        "tick": 17,
+        "elapsed": 0,
+        "region": "C1.entry",
+        "support": "C1.entry",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.entry"
+        ],
+        "reserved": "",
+        "drives": [
+          "moving",
+          "stopped"
+        ],
+        "commands": [
+          true,
+          false
+        ],
+        "grants": [
+          [
+            "C1.writer",
+            "C1.drive"
+          ],
+          [
+            "M1.claim",
+            "arrive_1"
+          ]
+        ],
+        "active": "arrive_1",
+        "accepted": true,
+        "completed": [
+          [
+            "load",
+            "C1.entry"
+          ]
+        ],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "phase",
+        "node": "arrive_1",
+        "phase": "track",
+        "effects": [],
+        "control": "C1.drive"
+      },
+      "source": {
+        "file": "cases/S04-P01/process.acp",
+        "start_byte": 1393,
+        "end_byte": 1493,
+        "line": 28,
+        "column": 9
+      },
+      "capability_model": "transport@0.1"
+    },
+    {
+      "event": "response",
+      "state": {
+        "pc": 18,
+        "tick": 18,
+        "elapsed": 0,
+        "region": "C1.exit",
+        "support": "C1.exit",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.exit"
+        ],
+        "reserved": "",
+        "drives": [
+          "moving",
+          "stopped"
+        ],
+        "commands": [
+          true,
+          false
+        ],
+        "grants": [
+          [
+            "C1.writer",
+            "C1.drive"
+          ],
+          [
+            "M1.claim",
+            "arrive_1"
+          ]
+        ],
+        "active": "arrive_1",
+        "accepted": true,
+        "completed": [
+          [
+            "load",
+            "C1.entry"
+          ]
+        ],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "phase",
+        "node": "arrive_1",
+        "phase": "arrive",
+        "effects": [
+          {
+            "effect": "advance_to_exit",
+            "args": [
+              "$material",
+              "$device"
+            ]
+          }
+        ],
+        "control": "C1.drive"
+      },
+      "source": {
+        "file": "cases/S04-P01/process.acp",
+        "start_byte": 1393,
+        "end_byte": 1493,
+        "line": 28,
+        "column": 9
+      },
+      "capability_model": "transport@0.1"
+    },
+    {
+      "event": "response",
+      "state": {
+        "pc": 19,
+        "tick": 19,
+        "elapsed": 0,
+        "region": "C1.exit",
+        "support": "C1.exit",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.exit"
+        ],
+        "reserved": "",
+        "drives": [
+          "moving",
+          "stopped"
+        ],
+        "commands": [
+          true,
+          false
+        ],
+        "grants": [
+          [
+            "C1.writer",
+            "C1.drive"
+          ],
+          [
+            "M1.claim",
+            "arrive_1"
+          ]
+        ],
+        "active": "arrive_1",
+        "accepted": true,
+        "completed": [
+          [
+            "load",
+            "C1.entry"
+          ]
+        ],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "phase",
+        "node": "arrive_1",
+        "phase": "report",
+        "effects": [
+          {
+            "effect": "publish_success",
+            "args": [
+              "$request"
+            ]
+          }
+        ],
+        "control": "C1.drive"
+      },
+      "source": {
+        "file": "cases/S04-P01/process.acp",
+        "start_byte": 1393,
+        "end_byte": 1493,
+        "line": 28,
+        "column": 9
+      },
+      "capability_model": "transport@0.1"
+    },
+    {
+      "event": "complete_request",
+      "state": {
+        "pc": 20,
+        "tick": 20,
+        "elapsed": 0,
+        "region": "C1.exit",
+        "support": "C1.exit",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.exit"
+        ],
+        "reserved": "",
+        "drives": [
+          "moving",
+          "stopped"
+        ],
+        "commands": [
+          true,
+          false
+        ],
+        "grants": [
+          [
+            "C1.writer",
+            "C1.drive"
+          ]
+        ],
+        "active": "",
+        "accepted": false,
+        "completed": [
+          [
+            "arrive_1",
+            "C1.exit"
+          ],
+          [
+            "load",
+            "C1.entry"
+          ]
+        ],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": []
+      },
+      "instruction": {
+        "op": "complete",
+        "node": "arrive_1",
+        "control": "C1.drive"
+      },
+      "source": {
+        "file": "cases/S04-P01/process.acp",
+        "start_byte": 1393,
+        "end_byte": 1493,
+        "line": 28,
+        "column": 9
+      },
+      "capability_model": "transport@0.1"
+    },
+    {
+      "event": "write_stop",
+      "state": {
+        "pc": 21,
+        "tick": 21,
+        "elapsed": 0,
+        "region": "C1.exit",
+        "support": "C1.exit",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.exit"
+        ],
+        "reserved": "",
+        "drives": [
+          "decelerating",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [
+          [
+            "C1.writer",
+            "C1.drive"
+          ]
+        ],
+        "active": "",
+        "accepted": false,
+        "completed": [
+          [
+            "arrive_1",
+            "C1.exit"
+          ],
+          [
+            "load",
+            "C1.entry"
+          ]
+        ],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": [
+          "C1.drive"
+        ]
+      },
+      "instruction": {
+        "op": "write_stop",
+        "node": "feed_1",
+        "control": "C1.drive"
+      },
+      "source": {
+        "file": "cases/S04-P01/process.acp",
+        "start_byte": 1340,
+        "end_byte": 1494,
+        "line": 27,
+        "column": 7
+      }
+    },
+    {
+      "event": "physical_stop_without_evidence",
+      "state": {
+        "pc": 21,
+        "tick": 22,
+        "elapsed": 1,
+        "region": "C1.exit",
+        "support": "C1.exit",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.exit"
+        ],
+        "reserved": "",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [
+          [
+            "C1.writer",
+            "C1.drive"
+          ]
+        ],
+        "active": "",
+        "accepted": false,
+        "completed": [
+          [
+            "arrive_1",
+            "C1.exit"
+          ],
+          [
+            "load",
+            "C1.entry"
+          ]
+        ],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": [
+          "C1.drive"
+        ]
+      },
+      "instruction": {
+        "op": "stop_response",
+        "node": "feed_1",
+        "control": "C1.drive"
+      },
+      "source": {
+        "file": "cases/S04-P01/process.acp",
+        "start_byte": 1340,
+        "end_byte": 1494,
+        "line": 27,
+        "column": 7
+      }
+    },
+    {
+      "event": "missing_stop_evidence",
+      "state": {
+        "pc": 21,
+        "tick": 23,
+        "elapsed": 2,
+        "region": "C1.exit",
+        "support": "C1.exit",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.exit"
+        ],
+        "reserved": "",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [
+          [
+            "C1.writer",
+            "C1.drive"
+          ]
+        ],
+        "active": "",
+        "accepted": false,
+        "completed": [
+          [
+            "arrive_1",
+            "C1.exit"
+          ],
+          [
+            "load",
+            "C1.entry"
+          ]
+        ],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": [
+          "C1.drive"
+        ]
+      },
+      "instruction": {
+        "op": "stop_response",
+        "node": "feed_1",
+        "control": "C1.drive"
+      },
+      "source": {
+        "file": "cases/S04-P01/process.acp",
+        "start_byte": 1340,
+        "end_byte": 1494,
+        "line": 27,
+        "column": 7
+      }
+    },
+    {
+      "event": "missing_stop_evidence",
+      "state": {
+        "pc": 21,
+        "tick": 24,
+        "elapsed": 3,
+        "region": "C1.exit",
+        "support": "C1.exit",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.exit"
+        ],
+        "reserved": "",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [
+          [
+            "C1.writer",
+            "C1.drive"
+          ]
+        ],
+        "active": "",
+        "accepted": false,
+        "completed": [
+          [
+            "arrive_1",
+            "C1.exit"
+          ],
+          [
+            "load",
+            "C1.entry"
+          ]
+        ],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": [
+          "C1.drive"
+        ]
+      },
+      "instruction": {
+        "op": "stop_response",
+        "node": "feed_1",
+        "control": "C1.drive"
+      },
+      "source": {
+        "file": "cases/S04-P01/process.acp",
+        "start_byte": 1340,
+        "end_byte": 1494,
+        "line": 27,
+        "column": 7
+      }
+    },
+    {
+      "event": "missing_stop_evidence",
+      "state": {
+        "pc": 21,
+        "tick": 25,
+        "elapsed": 4,
+        "region": "C1.exit",
+        "support": "C1.exit",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.exit"
+        ],
+        "reserved": "",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [
+          [
+            "C1.writer",
+            "C1.drive"
+          ]
+        ],
+        "active": "",
+        "accepted": false,
+        "completed": [
+          [
+            "arrive_1",
+            "C1.exit"
+          ],
+          [
+            "load",
+            "C1.entry"
+          ]
+        ],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": [
+          "C1.drive"
+        ]
+      },
+      "instruction": {
+        "op": "stop_response",
+        "node": "feed_1",
+        "control": "C1.drive"
+      },
+      "source": {
+        "file": "cases/S04-P01/process.acp",
+        "start_byte": 1340,
+        "end_byte": 1494,
+        "line": 27,
+        "column": 7
+      }
+    },
+    {
+      "event": "missing_stop_evidence",
+      "state": {
+        "pc": 21,
+        "tick": 26,
+        "elapsed": 5,
+        "region": "C1.exit",
+        "support": "C1.exit",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.exit"
+        ],
+        "reserved": "",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [
+          [
+            "C1.writer",
+            "C1.drive"
+          ]
+        ],
+        "active": "",
+        "accepted": false,
+        "completed": [
+          [
+            "arrive_1",
+            "C1.exit"
+          ],
+          [
+            "load",
+            "C1.entry"
+          ]
+        ],
+        "terminal": "",
+        "reason": "",
+        "attention": false,
+        "exit_ack": [
+          "C1.drive"
+        ]
+      },
+      "instruction": {
+        "op": "stop_response",
+        "node": "feed_1",
+        "control": "C1.drive"
+      },
+      "source": {
+        "file": "cases/S04-P01/process.acp",
+        "start_byte": 1340,
+        "end_byte": 1494,
+        "line": 27,
+        "column": 7
+      }
+    },
+    {
+      "event": "retain_isolation",
+      "state": {
+        "pc": 21,
+        "tick": 27,
+        "elapsed": 5,
+        "region": "C1.exit",
+        "support": "C1.exit",
+        "holder": "C1",
+        "held": "",
+        "occupied": [
+          "C1.exit"
+        ],
+        "reserved": "",
+        "drives": [
+          "stopped",
+          "stopped"
+        ],
+        "commands": [
+          false,
+          false
+        ],
+        "grants": [
+          [
+            "C1.writer",
+            "C1.drive"
+          ]
+        ],
+        "active": "",
+        "accepted": false,
+        "completed": [
+          [
+            "arrive_1",
+            "C1.exit"
+          ],
+          [
+            "load",
+            "C1.entry"
+          ]
+        ],
+        "terminal": "attention_required",
+        "reason": "stop_unknown:C1",
+        "attention": true,
+        "exit_ack": [
+          "C1.drive"
+        ]
+      },
+      "instruction": {
+        "op": "stop_response",
+        "node": "feed_1",
+        "control": "C1.drive"
+      },
+      "source": {
+        "file": "cases/S04-P01/process.acp",
+        "start_byte": 1340,
+        "end_byte": 1494,
+        "line": 27,
+        "column": 7
+      }
+    }
+  ]
+}

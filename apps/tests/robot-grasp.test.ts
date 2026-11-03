@@ -156,3 +156,43 @@ it("runs actual robot FK/IK and engine_block fixed-grasp job through support con
     k.stop();
   }
 });
+
+it("rejects default distant belt center with the failing phase before accepting a grip", async () => {
+  const { project, instance } = robotSetup();
+  instance.transform.position = [-3, 0, -2];
+  const load = (name: string) =>
+      normalizeDeviceSpec(
+        JSON.parse(readFileSync(`public/modles/${name}/schema.json`, "utf8")),
+      ),
+    belt = load("Conveyor_aankws"),
+    material = load("engine_block"),
+    a = instantiate(belt, 1),
+    b = instantiate(material, 2);
+  a.instanceId = "belt";
+  b.instanceId = "block";
+  b.transform.position = [-2.8, 0, -2.3];
+  b.paramOverrides.mass_kg = 1;
+  project.definitions.push(belt, material);
+  project.instances.push(a, b);
+  const scene = compileRobotExperiment(project, "robot", {
+      materialId: "block",
+      supportId: "belt",
+    }),
+    p = await createJoltBackend(scene.physics!),
+    k = new RuntimeKernel(scene, p),
+    source = JSON.stringify(project);
+  try {
+    for (let i = 0; i < 30; i++) k.step(1 / 60);
+    const before = k.snapshot().robot!.q;
+    expect(() => k.submitAction(k.pickPlaceCommand(1))).toThrow(
+      /第5步「转运至放料上方」.*世界坐标.*相对机械臂基座.*传送带中心.*任务未启动/,
+    );
+    expect(k.snapshot().request).toBeNull();
+    expect(k.snapshot().robot!.q).toEqual(before);
+    expect(k.snapshot().robot!.holdingMaterialId).toBeNull();
+    expect(p.hasGrasp!("robot/grasp")).toBe(false);
+    expect(JSON.stringify(project)).toBe(source);
+  } finally {
+    k.stop();
+  }
+});

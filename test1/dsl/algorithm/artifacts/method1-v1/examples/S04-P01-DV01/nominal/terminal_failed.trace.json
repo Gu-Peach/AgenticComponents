@@ -1,0 +1,3928 @@
+{
+  "model_version": "acverify-tick/0.1",
+  "reduction": "clock",
+  "initial": {
+    "tick": 0,
+    "world": {
+      "materials": {
+        "M1": {
+          "id": "M1",
+          "type": "workpiece",
+          "subject_index": 1,
+          "region": "S.work",
+          "support": "S.work",
+          "holder": "S",
+          "held_by": null
+        }
+      },
+      "devices": {
+        "R1": {
+          "drive": "stopped",
+          "run_command": false,
+          "held_material": null,
+          "clamped_material": null,
+          "access_closed": true,
+          "permit": true,
+          "actual_index": 0,
+          "actual_level": 0,
+          "operation_history": [],
+          "cycle_counts": {},
+          "epoch": 0
+        },
+        "R2": {
+          "drive": "stopped",
+          "run_command": false,
+          "held_material": null,
+          "clamped_material": null,
+          "access_closed": true,
+          "permit": true,
+          "actual_index": 0,
+          "actual_level": 0,
+          "operation_history": [],
+          "cycle_counts": {},
+          "epoch": 0
+        },
+        "C1": {
+          "drive": "stopped",
+          "run_command": false,
+          "held_material": null,
+          "clamped_material": null,
+          "access_closed": true,
+          "permit": true,
+          "actual_index": 0,
+          "actual_level": 0,
+          "operation_history": [],
+          "cycle_counts": {},
+          "epoch": 0
+        },
+        "C2": {
+          "drive": "stopped",
+          "run_command": false,
+          "held_material": null,
+          "clamped_material": null,
+          "access_closed": true,
+          "permit": true,
+          "actual_index": 0,
+          "actual_level": 0,
+          "operation_history": [],
+          "cycle_counts": {},
+          "epoch": 0
+        },
+        "S": {
+          "drive": "stopped",
+          "run_command": false,
+          "held_material": null,
+          "clamped_material": null,
+          "access_closed": true,
+          "permit": true,
+          "actual_index": 0,
+          "actual_level": 0,
+          "operation_history": [],
+          "cycle_counts": {},
+          "epoch": 0
+        }
+      },
+      "occupancy": {
+        "R1.tool": [],
+        "R2.tool": [],
+        "C1.entry": [],
+        "C1.exit": [],
+        "C2.entry": [],
+        "C2.exit": [],
+        "S.work": [
+          "M1"
+        ]
+      },
+      "reservations": {},
+      "grants": {},
+      "committed": [],
+      "external": {}
+    },
+    "tasks": {
+      "main@": {
+        "key": "main@",
+        "node": "main",
+        "path": [],
+        "parent": null,
+        "scope": null,
+        "kind": "seq",
+        "phase": "new",
+        "created": 0,
+        "eligible": 1,
+        "children": [],
+        "cancel": false,
+        "claims": []
+      }
+    },
+    "completed": {},
+    "inbox": [],
+    "applied_events": [],
+    "fault_count": 0,
+    "lost_stop": [],
+    "abort": false,
+    "reason": "",
+    "outcome": "running",
+    "violations": []
+  },
+  "steps": [
+    {
+      "events": [],
+      "state": {
+        "tick": 1,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "S.work",
+              "support": "S.work",
+              "holder": "S",
+              "held_by": null
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "S": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "S.work": [
+              "M1"
+            ]
+          },
+          "reservations": {},
+          "grants": {},
+          "committed": [],
+          "external": {}
+        },
+        "tasks": {
+          "main@": {
+            "key": "main@",
+            "node": "main",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "load@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0
+          },
+          "load@": {
+            "key": "load@",
+            "node": "load",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "new",
+            "created": 1,
+            "eligible": 2,
+            "children": [],
+            "cancel": false,
+            "claims": [],
+            "device": "R1",
+            "args": {
+              "material": "M1",
+              "source": "S.work",
+              "target": "C1.entry"
+            },
+            "model": "transfer@0.1",
+            "accepted": false,
+            "result_valid": false,
+            "stage": 0,
+            "plant_active": false,
+            "plant_done": false,
+            "pending_result": null,
+            "epoch": 0
+          }
+        },
+        "completed": {},
+        "inbox": [],
+        "applied_events": [],
+        "fault_count": 0,
+        "lost_stop": [],
+        "abort": false,
+        "reason": "",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [
+        {
+          "kind": "gate_read",
+          "node": "load",
+          "activation": "load@",
+          "value": true,
+          "source": {
+            "file": "cases/S04-P01-DV01/process.acp",
+            "start_byte": 1083,
+            "end_byte": 1239,
+            "line": 23,
+            "column": 7
+          }
+        },
+        {
+          "kind": "submit",
+          "node": "load",
+          "activation": "load@",
+          "source": {
+            "file": "cases/S04-P01-DV01/process.acp",
+            "start_byte": 1083,
+            "end_byte": 1239,
+            "line": 23,
+            "column": 7
+          }
+        }
+      ],
+      "state": {
+        "tick": 2,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "S.work",
+              "support": "S.work",
+              "holder": "S",
+              "held_by": null
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "S": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "S.work": [
+              "M1"
+            ]
+          },
+          "reservations": {
+            "load@": {
+              "target": "C1.entry",
+              "material": "M1"
+            }
+          },
+          "grants": {
+            "C1.zone": "load@",
+            "M1.claim": "load@",
+            "R1.motion": "load@",
+            "S.zone": "load@"
+          },
+          "committed": [],
+          "external": {}
+        },
+        "tasks": {
+          "main@": {
+            "key": "main@",
+            "node": "main",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "load@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0
+          },
+          "load@": {
+            "key": "load@",
+            "node": "load",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "requesting",
+            "created": 1,
+            "eligible": 2,
+            "children": [],
+            "cancel": false,
+            "claims": [
+              "C1.zone",
+              "M1.claim",
+              "R1.motion",
+              "S.zone"
+            ],
+            "device": "R1",
+            "args": {
+              "material": "M1",
+              "source": "S.work",
+              "target": "C1.entry"
+            },
+            "model": "transfer@0.1",
+            "accepted": false,
+            "result_valid": false,
+            "stage": 0,
+            "plant_active": true,
+            "plant_done": false,
+            "pending_result": null,
+            "epoch": 0,
+            "submit": 2,
+            "accept_sent": true,
+            "stage_start": 3
+          }
+        },
+        "completed": {},
+        "inbox": [
+          {
+            "request": "load@",
+            "kind": "accepted",
+            "device": "R1",
+            "subject": "M1",
+            "epoch": 0,
+            "sample_tick": 2,
+            "min_due": 3,
+            "max_due": 3
+          }
+        ],
+        "applied_events": [],
+        "fault_count": 0,
+        "lost_stop": [],
+        "abort": false,
+        "reason": "",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [
+        {
+          "kind": "feedback",
+          "node": "load",
+          "activation": "load@",
+          "event": "accepted",
+          "valid": true,
+          "source": {
+            "file": "cases/S04-P01-DV01/process.acp",
+            "start_byte": 1083,
+            "end_byte": 1239,
+            "line": 23,
+            "column": 7
+          }
+        },
+        {
+          "kind": "plant_phase",
+          "node": "load",
+          "activation": "load@",
+          "phase": "accepted",
+          "model": "transfer@0.1",
+          "source": {
+            "file": "cases/S04-P01-DV01/process.acp",
+            "start_byte": 1083,
+            "end_byte": 1239,
+            "line": 23,
+            "column": 7
+          }
+        }
+      ],
+      "state": {
+        "tick": 3,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "S.work",
+              "support": "S.work",
+              "holder": "S",
+              "held_by": null
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "S": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "S.work": [
+              "M1"
+            ]
+          },
+          "reservations": {
+            "load@": {
+              "target": "C1.entry",
+              "material": "M1"
+            }
+          },
+          "grants": {
+            "C1.zone": "load@",
+            "M1.claim": "load@",
+            "R1.motion": "load@",
+            "S.zone": "load@"
+          },
+          "committed": [],
+          "external": {}
+        },
+        "tasks": {
+          "main@": {
+            "key": "main@",
+            "node": "main",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "load@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0
+          },
+          "load@": {
+            "key": "load@",
+            "node": "load",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "running",
+            "created": 1,
+            "eligible": 2,
+            "children": [],
+            "cancel": false,
+            "claims": [
+              "C1.zone",
+              "M1.claim",
+              "R1.motion",
+              "S.zone"
+            ],
+            "device": "R1",
+            "args": {
+              "material": "M1",
+              "source": "S.work",
+              "target": "C1.entry"
+            },
+            "model": "transfer@0.1",
+            "accepted": true,
+            "result_valid": false,
+            "stage": 1,
+            "plant_active": true,
+            "plant_done": false,
+            "pending_result": null,
+            "epoch": 0,
+            "submit": 2,
+            "accept_sent": true,
+            "stage_start": 4,
+            "accepted_tick": 3,
+            "execute_start": 3
+          }
+        },
+        "completed": {},
+        "inbox": [],
+        "applied_events": [],
+        "fault_count": 0,
+        "lost_stop": [],
+        "abort": false,
+        "reason": "",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [
+        {
+          "kind": "capture",
+          "node": "load",
+          "activation": "load@",
+          "valid": true,
+          "source": {
+            "file": "cases/S04-P01-DV01/process.acp",
+            "start_byte": 1083,
+            "end_byte": 1239,
+            "line": 23,
+            "column": 7
+          }
+        },
+        {
+          "kind": "plant_phase",
+          "node": "load",
+          "activation": "load@",
+          "phase": "capture",
+          "model": "transfer@0.1",
+          "source": {
+            "file": "cases/S04-P01-DV01/process.acp",
+            "start_byte": 1083,
+            "end_byte": 1239,
+            "line": 23,
+            "column": 7
+          }
+        }
+      ],
+      "state": {
+        "tick": 4,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "S.work",
+              "support": "S.work",
+              "holder": "S",
+              "held_by": "R1"
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": "M1",
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "S": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "S.work": [
+              "M1"
+            ]
+          },
+          "reservations": {
+            "load@": {
+              "target": "C1.entry",
+              "material": "M1"
+            }
+          },
+          "grants": {
+            "C1.zone": "load@",
+            "M1.claim": "load@",
+            "R1.motion": "load@",
+            "S.zone": "load@"
+          },
+          "committed": [],
+          "external": {}
+        },
+        "tasks": {
+          "main@": {
+            "key": "main@",
+            "node": "main",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "load@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0
+          },
+          "load@": {
+            "key": "load@",
+            "node": "load",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "running",
+            "created": 1,
+            "eligible": 2,
+            "children": [],
+            "cancel": false,
+            "claims": [
+              "C1.zone",
+              "M1.claim",
+              "R1.motion",
+              "S.zone"
+            ],
+            "device": "R1",
+            "args": {
+              "material": "M1",
+              "source": "S.work",
+              "target": "C1.entry"
+            },
+            "model": "transfer@0.1",
+            "accepted": true,
+            "result_valid": false,
+            "stage": 2,
+            "plant_active": true,
+            "plant_done": false,
+            "pending_result": null,
+            "epoch": 0,
+            "submit": 2,
+            "accept_sent": true,
+            "stage_start": 5,
+            "accepted_tick": 3,
+            "execute_start": 3
+          }
+        },
+        "completed": {},
+        "inbox": [],
+        "applied_events": [],
+        "fault_count": 0,
+        "lost_stop": [],
+        "abort": false,
+        "reason": "",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [
+        {
+          "kind": "plant_phase",
+          "node": "load",
+          "activation": "load@",
+          "phase": "clear_source",
+          "model": "transfer@0.1",
+          "source": {
+            "file": "cases/S04-P01-DV01/process.acp",
+            "start_byte": 1083,
+            "end_byte": 1239,
+            "line": 23,
+            "column": 7
+          }
+        }
+      ],
+      "state": {
+        "tick": 5,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "R1.tool",
+              "support": "R1.tool",
+              "holder": "R1",
+              "held_by": "R1"
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": "M1",
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "S": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [
+              "M1"
+            ],
+            "R2.tool": [],
+            "C1.entry": [],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "S.work": []
+          },
+          "reservations": {
+            "load@": {
+              "target": "C1.entry",
+              "material": "M1"
+            }
+          },
+          "grants": {
+            "C1.zone": "load@",
+            "M1.claim": "load@",
+            "R1.motion": "load@",
+            "S.zone": "load@"
+          },
+          "committed": [],
+          "external": {}
+        },
+        "tasks": {
+          "main@": {
+            "key": "main@",
+            "node": "main",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "load@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0
+          },
+          "load@": {
+            "key": "load@",
+            "node": "load",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "running",
+            "created": 1,
+            "eligible": 2,
+            "children": [],
+            "cancel": false,
+            "claims": [
+              "C1.zone",
+              "M1.claim",
+              "R1.motion",
+              "S.zone"
+            ],
+            "device": "R1",
+            "args": {
+              "material": "M1",
+              "source": "S.work",
+              "target": "C1.entry"
+            },
+            "model": "transfer@0.1",
+            "accepted": true,
+            "result_valid": false,
+            "stage": 3,
+            "plant_active": true,
+            "plant_done": false,
+            "pending_result": null,
+            "epoch": 0,
+            "submit": 2,
+            "accept_sent": true,
+            "stage_start": 6,
+            "accepted_tick": 3,
+            "execute_start": 3
+          }
+        },
+        "completed": {},
+        "inbox": [],
+        "applied_events": [],
+        "fault_count": 0,
+        "lost_stop": [],
+        "abort": false,
+        "reason": "",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [
+        {
+          "kind": "plant_phase",
+          "node": "load",
+          "activation": "load@",
+          "phase": "place",
+          "model": "transfer@0.1",
+          "source": {
+            "file": "cases/S04-P01-DV01/process.acp",
+            "start_byte": 1083,
+            "end_byte": 1239,
+            "line": 23,
+            "column": 7
+          }
+        }
+      ],
+      "state": {
+        "tick": 6,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "C1.entry",
+              "support": "C1.entry",
+              "holder": "R1",
+              "held_by": "R1"
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": "M1",
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "S": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [
+              "M1"
+            ],
+            "R2.tool": [],
+            "C1.entry": [],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "S.work": []
+          },
+          "reservations": {
+            "load@": {
+              "target": "C1.entry",
+              "material": "M1"
+            }
+          },
+          "grants": {
+            "C1.zone": "load@",
+            "M1.claim": "load@",
+            "R1.motion": "load@",
+            "S.zone": "load@"
+          },
+          "committed": [],
+          "external": {}
+        },
+        "tasks": {
+          "main@": {
+            "key": "main@",
+            "node": "main",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "load@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0
+          },
+          "load@": {
+            "key": "load@",
+            "node": "load",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "running",
+            "created": 1,
+            "eligible": 2,
+            "children": [],
+            "cancel": false,
+            "claims": [
+              "C1.zone",
+              "M1.claim",
+              "R1.motion",
+              "S.zone"
+            ],
+            "device": "R1",
+            "args": {
+              "material": "M1",
+              "source": "S.work",
+              "target": "C1.entry"
+            },
+            "model": "transfer@0.1",
+            "accepted": true,
+            "result_valid": false,
+            "stage": 4,
+            "plant_active": true,
+            "plant_done": false,
+            "pending_result": null,
+            "epoch": 0,
+            "submit": 2,
+            "accept_sent": true,
+            "stage_start": 7,
+            "accepted_tick": 3,
+            "execute_start": 3
+          }
+        },
+        "completed": {},
+        "inbox": [],
+        "applied_events": [],
+        "fault_count": 0,
+        "lost_stop": [],
+        "abort": false,
+        "reason": "",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [
+        {
+          "kind": "plant_phase",
+          "node": "load",
+          "activation": "load@",
+          "phase": "release",
+          "model": "transfer@0.1",
+          "source": {
+            "file": "cases/S04-P01-DV01/process.acp",
+            "start_byte": 1083,
+            "end_byte": 1239,
+            "line": 23,
+            "column": 7
+          }
+        }
+      ],
+      "state": {
+        "tick": 7,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "C1.entry",
+              "support": "C1.entry",
+              "holder": "R1",
+              "held_by": null
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "S": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [
+              "M1"
+            ],
+            "R2.tool": [],
+            "C1.entry": [],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "S.work": []
+          },
+          "reservations": {
+            "load@": {
+              "target": "C1.entry",
+              "material": "M1"
+            }
+          },
+          "grants": {
+            "C1.zone": "load@",
+            "M1.claim": "load@",
+            "R1.motion": "load@",
+            "S.zone": "load@"
+          },
+          "committed": [],
+          "external": {}
+        },
+        "tasks": {
+          "main@": {
+            "key": "main@",
+            "node": "main",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "load@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0
+          },
+          "load@": {
+            "key": "load@",
+            "node": "load",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "running",
+            "created": 1,
+            "eligible": 2,
+            "children": [],
+            "cancel": false,
+            "claims": [
+              "C1.zone",
+              "M1.claim",
+              "R1.motion",
+              "S.zone"
+            ],
+            "device": "R1",
+            "args": {
+              "material": "M1",
+              "source": "S.work",
+              "target": "C1.entry"
+            },
+            "model": "transfer@0.1",
+            "accepted": true,
+            "result_valid": false,
+            "stage": 5,
+            "plant_active": true,
+            "plant_done": false,
+            "pending_result": null,
+            "epoch": 0,
+            "submit": 2,
+            "accept_sent": true,
+            "stage_start": 8,
+            "accepted_tick": 3,
+            "execute_start": 3
+          }
+        },
+        "completed": {},
+        "inbox": [],
+        "applied_events": [],
+        "fault_count": 0,
+        "lost_stop": [],
+        "abort": false,
+        "reason": "",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [
+        {
+          "kind": "plant_phase",
+          "node": "load",
+          "activation": "load@",
+          "phase": "commit",
+          "model": "transfer@0.1",
+          "source": {
+            "file": "cases/S04-P01-DV01/process.acp",
+            "start_byte": 1083,
+            "end_byte": 1239,
+            "line": 23,
+            "column": 7
+          }
+        }
+      ],
+      "state": {
+        "tick": 8,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "C1.entry",
+              "support": "C1.entry",
+              "holder": "C1",
+              "held_by": null
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "S": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [
+              "M1"
+            ],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "S.work": []
+          },
+          "reservations": {},
+          "grants": {
+            "C1.zone": "load@",
+            "M1.claim": "load@",
+            "R1.motion": "load@",
+            "S.zone": "load@"
+          },
+          "committed": [
+            "load@"
+          ],
+          "external": {}
+        },
+        "tasks": {
+          "main@": {
+            "key": "main@",
+            "node": "main",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "load@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0
+          },
+          "load@": {
+            "key": "load@",
+            "node": "load",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "running",
+            "created": 1,
+            "eligible": 2,
+            "children": [],
+            "cancel": false,
+            "claims": [
+              "C1.zone",
+              "M1.claim",
+              "R1.motion",
+              "S.zone"
+            ],
+            "device": "R1",
+            "args": {
+              "material": "M1",
+              "source": "S.work",
+              "target": "C1.entry"
+            },
+            "model": "transfer@0.1",
+            "accepted": true,
+            "result_valid": false,
+            "stage": 6,
+            "plant_active": true,
+            "plant_done": false,
+            "pending_result": null,
+            "epoch": 0,
+            "submit": 2,
+            "accept_sent": true,
+            "stage_start": 9,
+            "accepted_tick": 3,
+            "execute_start": 3
+          }
+        },
+        "completed": {},
+        "inbox": [],
+        "applied_events": [],
+        "fault_count": 0,
+        "lost_stop": [],
+        "abort": false,
+        "reason": "",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [
+        {
+          "kind": "plant_phase",
+          "node": "load",
+          "activation": "load@",
+          "phase": "report",
+          "model": "transfer@0.1",
+          "source": {
+            "file": "cases/S04-P01-DV01/process.acp",
+            "start_byte": 1083,
+            "end_byte": 1239,
+            "line": 23,
+            "column": 7
+          }
+        }
+      ],
+      "state": {
+        "tick": 9,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "C1.entry",
+              "support": "C1.entry",
+              "holder": "C1",
+              "held_by": null
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "S": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [
+              "M1"
+            ],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "S.work": []
+          },
+          "reservations": {},
+          "grants": {
+            "C1.zone": "load@",
+            "M1.claim": "load@",
+            "R1.motion": "load@",
+            "S.zone": "load@"
+          },
+          "committed": [
+            "load@"
+          ],
+          "external": {}
+        },
+        "tasks": {
+          "main@": {
+            "key": "main@",
+            "node": "main",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "load@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0
+          },
+          "load@": {
+            "key": "load@",
+            "node": "load",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "result_wait",
+            "created": 1,
+            "eligible": 2,
+            "children": [],
+            "cancel": false,
+            "claims": [
+              "C1.zone",
+              "M1.claim",
+              "R1.motion",
+              "S.zone"
+            ],
+            "device": "R1",
+            "args": {
+              "material": "M1",
+              "source": "S.work",
+              "target": "C1.entry"
+            },
+            "model": "transfer@0.1",
+            "accepted": true,
+            "result_valid": false,
+            "stage": 6,
+            "plant_active": false,
+            "plant_done": true,
+            "pending_result": null,
+            "epoch": 0,
+            "submit": 2,
+            "accept_sent": true,
+            "stage_start": 9,
+            "accepted_tick": 3,
+            "execute_start": 3
+          }
+        },
+        "completed": {},
+        "inbox": [
+          {
+            "request": "load@",
+            "kind": "result",
+            "device": "R1",
+            "subject": "M1",
+            "epoch": 0,
+            "sample_tick": 9,
+            "min_due": 10,
+            "max_due": 10
+          }
+        ],
+        "applied_events": [],
+        "fault_count": 0,
+        "lost_stop": [],
+        "abort": false,
+        "reason": "",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [
+        {
+          "kind": "feedback",
+          "node": "load",
+          "activation": "load@",
+          "event": "result",
+          "valid": true,
+          "source": {
+            "file": "cases/S04-P01-DV01/process.acp",
+            "start_byte": 1083,
+            "end_byte": 1239,
+            "line": 23,
+            "column": 7
+          }
+        },
+        {
+          "kind": "action_succeeded",
+          "node": "load",
+          "activation": "load@",
+          "source": {
+            "file": "cases/S04-P01-DV01/process.acp",
+            "start_byte": 1083,
+            "end_byte": 1239,
+            "line": 23,
+            "column": 7
+          }
+        }
+      ],
+      "state": {
+        "tick": 10,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "C1.entry",
+              "support": "C1.entry",
+              "holder": "C1",
+              "held_by": null
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "S": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [
+              "M1"
+            ],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "S.work": []
+          },
+          "reservations": {},
+          "grants": {},
+          "committed": [
+            "load@"
+          ],
+          "external": {}
+        },
+        "tasks": {
+          "main@": {
+            "key": "main@",
+            "node": "main",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "load@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0
+          },
+          "load@": {
+            "key": "load@",
+            "node": "load",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "succeeded",
+            "children": []
+          }
+        },
+        "completed": {
+          "load@": {
+            "request": "load@",
+            "node": "load",
+            "material": "M1",
+            "target": "C1.entry",
+            "epoch": 0
+          }
+        },
+        "inbox": [],
+        "applied_events": [],
+        "fault_count": 0,
+        "lost_stop": [],
+        "abort": false,
+        "reason": "",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [],
+      "state": {
+        "tick": 11,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "C1.entry",
+              "support": "C1.entry",
+              "holder": "C1",
+              "held_by": null
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "S": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [
+              "M1"
+            ],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "S.work": []
+          },
+          "reservations": {},
+          "grants": {},
+          "committed": [
+            "load@"
+          ],
+          "external": {}
+        },
+        "tasks": {
+          "main@": {
+            "key": "main@",
+            "node": "main",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "load@",
+              "bridge@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 1
+          },
+          "load@": {
+            "key": "load@",
+            "node": "load",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "succeeded",
+            "children": []
+          },
+          "bridge@": {
+            "key": "bridge@",
+            "node": "bridge",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "new",
+            "created": 11,
+            "eligible": 12,
+            "children": [],
+            "cancel": false,
+            "claims": [],
+            "device": "R2",
+            "args": {
+              "material": "M1",
+              "source": "C1.exit",
+              "target": "C2.entry"
+            },
+            "model": "transfer@0.1",
+            "accepted": false,
+            "result_valid": false,
+            "stage": 0,
+            "plant_active": false,
+            "plant_done": false,
+            "pending_result": null,
+            "epoch": 0
+          }
+        },
+        "completed": {
+          "load@": {
+            "request": "load@",
+            "node": "load",
+            "material": "M1",
+            "target": "C1.entry",
+            "epoch": 0
+          }
+        },
+        "inbox": [],
+        "applied_events": [],
+        "fault_count": 0,
+        "lost_stop": [],
+        "abort": false,
+        "reason": "",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [
+        {
+          "kind": "gate_read",
+          "node": "bridge",
+          "activation": "bridge@",
+          "value": false,
+          "source": {
+            "file": "cases/S04-P01-DV01/process.acp",
+            "start_byte": 1318,
+            "end_byte": 1477,
+            "line": 27,
+            "column": 7
+          }
+        }
+      ],
+      "state": {
+        "tick": 12,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "C1.entry",
+              "support": "C1.entry",
+              "holder": "C1",
+              "held_by": null
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "S": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [
+              "M1"
+            ],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "S.work": []
+          },
+          "reservations": {},
+          "grants": {},
+          "committed": [
+            "load@"
+          ],
+          "external": {}
+        },
+        "tasks": {
+          "main@": {
+            "key": "main@",
+            "node": "main",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "load@",
+              "bridge@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 1
+          },
+          "load@": {
+            "key": "load@",
+            "node": "load",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "succeeded",
+            "children": []
+          },
+          "bridge@": {
+            "key": "bridge@",
+            "node": "bridge",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "gate",
+            "created": 11,
+            "eligible": 12,
+            "children": [],
+            "cancel": false,
+            "claims": [],
+            "device": "R2",
+            "args": {
+              "material": "M1",
+              "source": "C1.exit",
+              "target": "C2.entry"
+            },
+            "model": "transfer@0.1",
+            "accepted": false,
+            "result_valid": false,
+            "stage": 0,
+            "plant_active": false,
+            "plant_done": false,
+            "pending_result": null,
+            "epoch": 0
+          }
+        },
+        "completed": {
+          "load@": {
+            "request": "load@",
+            "node": "load",
+            "material": "M1",
+            "target": "C1.entry",
+            "epoch": 0
+          }
+        },
+        "inbox": [],
+        "applied_events": [],
+        "fault_count": 0,
+        "lost_stop": [],
+        "abort": false,
+        "reason": "",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [
+        {
+          "kind": "gate_read",
+          "node": "bridge",
+          "activation": "bridge@",
+          "value": false,
+          "source": {
+            "file": "cases/S04-P01-DV01/process.acp",
+            "start_byte": 1318,
+            "end_byte": 1477,
+            "line": 27,
+            "column": 7
+          }
+        }
+      ],
+      "state": {
+        "tick": 13,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "C1.entry",
+              "support": "C1.entry",
+              "holder": "C1",
+              "held_by": null
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "S": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [
+              "M1"
+            ],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "S.work": []
+          },
+          "reservations": {},
+          "grants": {},
+          "committed": [
+            "load@"
+          ],
+          "external": {}
+        },
+        "tasks": {
+          "main@": {
+            "key": "main@",
+            "node": "main",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "load@",
+              "bridge@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 1
+          },
+          "load@": {
+            "key": "load@",
+            "node": "load",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "succeeded",
+            "children": []
+          },
+          "bridge@": {
+            "key": "bridge@",
+            "node": "bridge",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "gate",
+            "created": 11,
+            "eligible": 12,
+            "children": [],
+            "cancel": false,
+            "claims": [],
+            "device": "R2",
+            "args": {
+              "material": "M1",
+              "source": "C1.exit",
+              "target": "C2.entry"
+            },
+            "model": "transfer@0.1",
+            "accepted": false,
+            "result_valid": false,
+            "stage": 0,
+            "plant_active": false,
+            "plant_done": false,
+            "pending_result": null,
+            "epoch": 0
+          }
+        },
+        "completed": {
+          "load@": {
+            "request": "load@",
+            "node": "load",
+            "material": "M1",
+            "target": "C1.entry",
+            "epoch": 0
+          }
+        },
+        "inbox": [],
+        "applied_events": [],
+        "fault_count": 0,
+        "lost_stop": [],
+        "abort": false,
+        "reason": "",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [
+        {
+          "kind": "gate_read",
+          "node": "bridge",
+          "activation": "bridge@",
+          "value": false,
+          "source": {
+            "file": "cases/S04-P01-DV01/process.acp",
+            "start_byte": 1318,
+            "end_byte": 1477,
+            "line": 27,
+            "column": 7
+          }
+        }
+      ],
+      "state": {
+        "tick": 14,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "C1.entry",
+              "support": "C1.entry",
+              "holder": "C1",
+              "held_by": null
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "S": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [
+              "M1"
+            ],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "S.work": []
+          },
+          "reservations": {},
+          "grants": {},
+          "committed": [
+            "load@"
+          ],
+          "external": {}
+        },
+        "tasks": {
+          "main@": {
+            "key": "main@",
+            "node": "main",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "load@",
+              "bridge@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 1
+          },
+          "load@": {
+            "key": "load@",
+            "node": "load",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "succeeded",
+            "children": []
+          },
+          "bridge@": {
+            "key": "bridge@",
+            "node": "bridge",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "gate",
+            "created": 11,
+            "eligible": 12,
+            "children": [],
+            "cancel": false,
+            "claims": [],
+            "device": "R2",
+            "args": {
+              "material": "M1",
+              "source": "C1.exit",
+              "target": "C2.entry"
+            },
+            "model": "transfer@0.1",
+            "accepted": false,
+            "result_valid": false,
+            "stage": 0,
+            "plant_active": false,
+            "plant_done": false,
+            "pending_result": null,
+            "epoch": 0
+          }
+        },
+        "completed": {
+          "load@": {
+            "request": "load@",
+            "node": "load",
+            "material": "M1",
+            "target": "C1.entry",
+            "epoch": 0
+          }
+        },
+        "inbox": [],
+        "applied_events": [],
+        "fault_count": 0,
+        "lost_stop": [],
+        "abort": false,
+        "reason": "",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [
+        {
+          "kind": "gate_read",
+          "node": "bridge",
+          "activation": "bridge@",
+          "value": false,
+          "source": {
+            "file": "cases/S04-P01-DV01/process.acp",
+            "start_byte": 1318,
+            "end_byte": 1477,
+            "line": 27,
+            "column": 7
+          }
+        }
+      ],
+      "state": {
+        "tick": 15,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "C1.entry",
+              "support": "C1.entry",
+              "holder": "C1",
+              "held_by": null
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "S": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [
+              "M1"
+            ],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "S.work": []
+          },
+          "reservations": {},
+          "grants": {},
+          "committed": [
+            "load@"
+          ],
+          "external": {}
+        },
+        "tasks": {
+          "main@": {
+            "key": "main@",
+            "node": "main",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "load@",
+              "bridge@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 1
+          },
+          "load@": {
+            "key": "load@",
+            "node": "load",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "succeeded",
+            "children": []
+          },
+          "bridge@": {
+            "key": "bridge@",
+            "node": "bridge",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "gate",
+            "created": 11,
+            "eligible": 12,
+            "children": [],
+            "cancel": false,
+            "claims": [],
+            "device": "R2",
+            "args": {
+              "material": "M1",
+              "source": "C1.exit",
+              "target": "C2.entry"
+            },
+            "model": "transfer@0.1",
+            "accepted": false,
+            "result_valid": false,
+            "stage": 0,
+            "plant_active": false,
+            "plant_done": false,
+            "pending_result": null,
+            "epoch": 0
+          }
+        },
+        "completed": {
+          "load@": {
+            "request": "load@",
+            "node": "load",
+            "material": "M1",
+            "target": "C1.entry",
+            "epoch": 0
+          }
+        },
+        "inbox": [],
+        "applied_events": [],
+        "fault_count": 0,
+        "lost_stop": [],
+        "abort": false,
+        "reason": "",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [
+        {
+          "kind": "gate_read",
+          "node": "bridge",
+          "activation": "bridge@",
+          "value": false,
+          "source": {
+            "file": "cases/S04-P01-DV01/process.acp",
+            "start_byte": 1318,
+            "end_byte": 1477,
+            "line": 27,
+            "column": 7
+          }
+        }
+      ],
+      "state": {
+        "tick": 16,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "C1.entry",
+              "support": "C1.entry",
+              "holder": "C1",
+              "held_by": null
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "S": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [
+              "M1"
+            ],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "S.work": []
+          },
+          "reservations": {},
+          "grants": {},
+          "committed": [
+            "load@"
+          ],
+          "external": {}
+        },
+        "tasks": {
+          "main@": {
+            "key": "main@",
+            "node": "main",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "load@",
+              "bridge@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 1
+          },
+          "load@": {
+            "key": "load@",
+            "node": "load",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "succeeded",
+            "children": []
+          },
+          "bridge@": {
+            "key": "bridge@",
+            "node": "bridge",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "gate",
+            "created": 11,
+            "eligible": 12,
+            "children": [],
+            "cancel": false,
+            "claims": [],
+            "device": "R2",
+            "args": {
+              "material": "M1",
+              "source": "C1.exit",
+              "target": "C2.entry"
+            },
+            "model": "transfer@0.1",
+            "accepted": false,
+            "result_valid": false,
+            "stage": 0,
+            "plant_active": false,
+            "plant_done": false,
+            "pending_result": null,
+            "epoch": 0
+          }
+        },
+        "completed": {
+          "load@": {
+            "request": "load@",
+            "node": "load",
+            "material": "M1",
+            "target": "C1.entry",
+            "epoch": 0
+          }
+        },
+        "inbox": [],
+        "applied_events": [],
+        "fault_count": 0,
+        "lost_stop": [],
+        "abort": false,
+        "reason": "",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [
+        {
+          "kind": "gate_read",
+          "node": "bridge",
+          "activation": "bridge@",
+          "value": false,
+          "source": {
+            "file": "cases/S04-P01-DV01/process.acp",
+            "start_byte": 1318,
+            "end_byte": 1477,
+            "line": 27,
+            "column": 7
+          }
+        }
+      ],
+      "state": {
+        "tick": 17,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "C1.entry",
+              "support": "C1.entry",
+              "holder": "C1",
+              "held_by": null
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "S": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [
+              "M1"
+            ],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "S.work": []
+          },
+          "reservations": {},
+          "grants": {},
+          "committed": [
+            "load@"
+          ],
+          "external": {}
+        },
+        "tasks": {
+          "main@": {
+            "key": "main@",
+            "node": "main",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "load@",
+              "bridge@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 1
+          },
+          "load@": {
+            "key": "load@",
+            "node": "load",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "succeeded",
+            "children": []
+          },
+          "bridge@": {
+            "key": "bridge@",
+            "node": "bridge",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "gate",
+            "created": 11,
+            "eligible": 12,
+            "children": [],
+            "cancel": false,
+            "claims": [],
+            "device": "R2",
+            "args": {
+              "material": "M1",
+              "source": "C1.exit",
+              "target": "C2.entry"
+            },
+            "model": "transfer@0.1",
+            "accepted": false,
+            "result_valid": false,
+            "stage": 0,
+            "plant_active": false,
+            "plant_done": false,
+            "pending_result": null,
+            "epoch": 0
+          }
+        },
+        "completed": {
+          "load@": {
+            "request": "load@",
+            "node": "load",
+            "material": "M1",
+            "target": "C1.entry",
+            "epoch": 0
+          }
+        },
+        "inbox": [],
+        "applied_events": [],
+        "fault_count": 0,
+        "lost_stop": [],
+        "abort": false,
+        "reason": "",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [
+        {
+          "kind": "gate_read",
+          "node": "bridge",
+          "activation": "bridge@",
+          "value": false,
+          "source": {
+            "file": "cases/S04-P01-DV01/process.acp",
+            "start_byte": 1318,
+            "end_byte": 1477,
+            "line": 27,
+            "column": 7
+          }
+        }
+      ],
+      "state": {
+        "tick": 18,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "C1.entry",
+              "support": "C1.entry",
+              "holder": "C1",
+              "held_by": null
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "S": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [
+              "M1"
+            ],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "S.work": []
+          },
+          "reservations": {},
+          "grants": {},
+          "committed": [
+            "load@"
+          ],
+          "external": {}
+        },
+        "tasks": {
+          "main@": {
+            "key": "main@",
+            "node": "main",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "load@",
+              "bridge@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 1
+          },
+          "load@": {
+            "key": "load@",
+            "node": "load",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "succeeded",
+            "children": []
+          },
+          "bridge@": {
+            "key": "bridge@",
+            "node": "bridge",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "gate",
+            "created": 11,
+            "eligible": 12,
+            "children": [],
+            "cancel": false,
+            "claims": [],
+            "device": "R2",
+            "args": {
+              "material": "M1",
+              "source": "C1.exit",
+              "target": "C2.entry"
+            },
+            "model": "transfer@0.1",
+            "accepted": false,
+            "result_valid": false,
+            "stage": 0,
+            "plant_active": false,
+            "plant_done": false,
+            "pending_result": null,
+            "epoch": 0
+          }
+        },
+        "completed": {
+          "load@": {
+            "request": "load@",
+            "node": "load",
+            "material": "M1",
+            "target": "C1.entry",
+            "epoch": 0
+          }
+        },
+        "inbox": [],
+        "applied_events": [],
+        "fault_count": 0,
+        "lost_stop": [],
+        "abort": false,
+        "reason": "",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [
+        {
+          "kind": "gate_read",
+          "node": "bridge",
+          "activation": "bridge@",
+          "value": false,
+          "source": {
+            "file": "cases/S04-P01-DV01/process.acp",
+            "start_byte": 1318,
+            "end_byte": 1477,
+            "line": 27,
+            "column": 7
+          }
+        }
+      ],
+      "state": {
+        "tick": 19,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "C1.entry",
+              "support": "C1.entry",
+              "holder": "C1",
+              "held_by": null
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "S": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [
+              "M1"
+            ],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "S.work": []
+          },
+          "reservations": {},
+          "grants": {},
+          "committed": [
+            "load@"
+          ],
+          "external": {}
+        },
+        "tasks": {
+          "main@": {
+            "key": "main@",
+            "node": "main",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "cancelling",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "load@",
+              "bridge@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 1,
+            "reason": "gate_timeout:bridge"
+          },
+          "load@": {
+            "key": "load@",
+            "node": "load",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "succeeded",
+            "children": []
+          },
+          "bridge@": {
+            "key": "bridge@",
+            "node": "bridge",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "cancelled",
+            "children": []
+          }
+        },
+        "completed": {
+          "load@": {
+            "request": "load@",
+            "node": "load",
+            "material": "M1",
+            "target": "C1.entry",
+            "epoch": 0
+          }
+        },
+        "inbox": [],
+        "applied_events": [],
+        "fault_count": 0,
+        "lost_stop": [],
+        "abort": true,
+        "reason": "gate_timeout:bridge",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [],
+      "state": {
+        "tick": 20,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "C1.entry",
+              "support": "C1.entry",
+              "holder": "C1",
+              "held_by": null
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "S": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [
+              "M1"
+            ],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "S.work": []
+          },
+          "reservations": {},
+          "grants": {},
+          "committed": [
+            "load@"
+          ],
+          "external": {}
+        },
+        "tasks": {
+          "main@": {
+            "key": "main@",
+            "node": "main",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "failed",
+            "children": [
+              "load@",
+              "bridge@"
+            ]
+          },
+          "load@": {
+            "key": "load@",
+            "node": "load",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "succeeded",
+            "children": []
+          },
+          "bridge@": {
+            "key": "bridge@",
+            "node": "bridge",
+            "path": [],
+            "parent": "main@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "cancelled",
+            "children": []
+          }
+        },
+        "completed": {
+          "load@": {
+            "request": "load@",
+            "node": "load",
+            "material": "M1",
+            "target": "C1.entry",
+            "epoch": 0
+          }
+        },
+        "inbox": [],
+        "applied_events": [],
+        "fault_count": 0,
+        "lost_stop": [],
+        "abort": true,
+        "reason": "gate_timeout:bridge",
+        "outcome": "failed",
+        "violations": []
+      }
+    }
+  ],
+  "input_digest": "52fdcf1892fd47ffcc2d996c063dbd4f910f2499cfd935e0f97055ffa6438613",
+  "model_digest": "9b42421691d27aca42b4e39553185e413f80fc3c5873752c040e5c058618ba64",
+  "environment": {
+    "id": "nominal",
+    "accept": [
+      1,
+      2
+    ],
+    "phase": [
+      1,
+      3
+    ],
+    "stop": [
+      1,
+      3
+    ],
+    "feedback": [
+      0,
+      0
+    ],
+    "events": [],
+    "faults": [],
+    "max_faults": 0,
+    "forced_stop_loss": null,
+    "max_age": 2
+  }
+}

@@ -1,3 +1,4 @@
+import { RobotPlanError } from "../src/runtime/kinematics/RobotPlanError";
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { Matrix4, Vector3, Quaternion } from "three";
@@ -131,4 +132,27 @@ it("matches full source GLB hierarchy after nonzero joint rotations", () => {
       new Vector3(...new RobotKinematics(scene).forward(q).tcp.position),
     ),
   ).toBeLessThan(1e-5);
+});
+
+it("distinguishes solver nonconvergence inside the outer reach bound from proven outside targets", () => {
+  const { scene } = robotSetup(),
+    fk = new RobotKinematics(scene),
+    target = new Vector3(...fk.forward([0.3, 0.1, -0.2, 0, 0, 0]).tcp.position);
+  scene.iterations = 1;
+  const result = new CcdPositionIK(fk).solve(target, [0, 0, 0, 0, 0, 0]);
+  const d = new RobotPlanError(fk, target, result, 2, "下降取料", "tcp");
+  expect(d.diagnostic.outsideReachBound).toBe(false);
+  expect(d.message).toContain("不能据此断定不可达");
+  expect(d.message).toContain("下降取料");
+  expect(d.diagnostic.targetWorld).toEqual(target.toArray());
+  const far = new RobotPlanError(
+    fk,
+    new Vector3(100, 0, 0),
+    { q: [0, 0, 0, 0, 0, 0], converged: false, error: 99, iterations: 1 },
+    5,
+    "转运至放料上方",
+    "held_material",
+  );
+  expect(far.diagnostic.outsideReachBound).toBe(true);
+  expect(far.message).toContain("超出保守最大伸展范围");
 });

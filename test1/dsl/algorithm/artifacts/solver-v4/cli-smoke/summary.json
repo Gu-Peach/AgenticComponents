@@ -1,0 +1,22 @@
+[
+  {
+    "case_id": "S04-P01",
+    "status": "CHECKED",
+    "states": 438,
+    "finite_model_exhausted": true,
+    "limit": null,
+    "properties": {
+      "V01": "PROVED_ON_FINITE_MODEL",
+      "V02": "PROVED_ON_FINITE_MODEL",
+      "V03": "PROVED_ON_FINITE_MODEL",
+      "V04": "PROVED_ON_FINITE_MODEL",
+      "V05": "PROVED_ON_FINITE_MODEL",
+      "V06": "PROVED_ON_FINITE_MODEL",
+      "V07": "PROVED_ON_FINITE_MODEL",
+      "V08": "PROVED_ON_FINITE_MODEL",
+      "V09": "PROVED_ON_FINITE_MODEL",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "PROVED_ON_FINITE_MODEL"
+    }
+  }
+]

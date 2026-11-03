@@ -1,0 +1,11 @@
+{
+  "jobs": 1152,
+  "expected": 1152,
+  "algorithm_unchanged": true,
+  "changed_files": [],
+  "manifest_unchanged": true,
+  "status_counts": {
+    "CHECKED": 720,
+    "INVALID_INPUT": 432
+  }
+}

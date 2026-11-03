@@ -1,0 +1,738 @@
+{
+  "schema_id": "ac-scene-inventory/0.1",
+  "inspection_date": "2026-11-01",
+  "path_base": "algorithm_directory",
+  "scope": "Read-only GLB JSON/header inspection and original screenshot review; no geometric reachability or behavior inference was validated.",
+  "observed_scene_count": 12,
+  "proposed_counts": {
+    "status": "construction_targets_not_generated_cases",
+    "parents": 72,
+    "DS_candidates": 288,
+    "DV_candidates": 360,
+    "distinct_candidates_union": 576,
+    "DE_pair_target": 12,
+    "DR_change_pair_target": 36,
+    "DX_count": null,
+    "splits": {
+      "development": {
+        "scenes": 4,
+        "parents": 24,
+        "DS_candidates": 96,
+        "DV_candidates": 120,
+        "distinct_candidates_union": 192
+      },
+      "validation": {
+        "scenes": 3,
+        "parents": 18,
+        "DS_candidates": 72,
+        "DV_candidates": 90,
+        "distinct_candidates_union": 144
+      },
+      "test": {
+        "scenes": 5,
+        "parents": 30,
+        "DS_candidates": 120,
+        "DV_candidates": 150,
+        "distinct_candidates_union": 240
+      }
+    }
+  },
+  "scenes": [
+    {
+      "scene_id": "S01",
+      "source_folder": "assembly_order_index",
+      "observed": {
+        "model": {
+          "path": "scene/assembly_order_index/assembly_order_index.glb",
+          "bytes": 2197948,
+          "sha256": "c68cc1ea4219a6616e13b9c036da871ac0886be3e76f8ec3202c22faffda0249"
+        },
+        "image": {
+          "path": "scene/assembly_order_index/image.png",
+          "bytes": 129101,
+          "sha256": "086c3b4bf207ae5dbe797ff9decd3d56b6bbbdf006b195b3d695ed50f4e2e384",
+          "width": 867,
+          "height": 665
+        },
+        "glb_version": 2,
+        "gltf_asset": {
+          "generator": "Khronos glTF Blender I/O v4.5.48",
+          "version": "2.0"
+        },
+        "node_count": 488,
+        "mesh_count": 285,
+        "animation_count": 0,
+        "skin_count": 0,
+        "scene_root_indices": [
+          487
+        ],
+        "scene_root_names": [
+          "Scene Collection"
+        ],
+        "node_name_sample": [
+          "Mesh [05ag]",
+          "Mesh [05bg]",
+          "Mesh [05cg]",
+          "Mesh [05dg]",
+          "Mesh [05eg]",
+          "Mesh [05Fg]",
+          "Mesh [05fg]",
+          "Mesh [05Gg]",
+          "Mesh [05gg]",
+          "Mesh [05Hg]",
+          "Mesh [05hg]",
+          "Mesh [05Ig]"
+        ],
+        "screenshot_reviewed": true
+      },
+      "proposed": {
+        "family_id": "G1",
+        "split": "validation",
+        "normal_parent_candidates": 6,
+        "structure_mutants_per_parent": 3,
+        "semantic_mutants_per_parent": 4,
+        "semantic_annotation_status": "not_authored_by_this_task",
+        "near_duplicate_review_status": "pending",
+        "known_grouping_note": null
+      }
+    },
+    {
+      "scene_id": "S02",
+      "source_folder": "assmbly_depalletizing",
+      "observed": {
+        "model": {
+          "path": "scene/assmbly_depalletizing/assmbly_depalletizing.glb",
+          "bytes": 3377624,
+          "sha256": "49188df3b54eefa3e0472c92f71f46c1a801875b082c581dc9c61a354cb3c19d"
+        },
+        "image": {
+          "path": "scene/assmbly_depalletizing/image.png",
+          "bytes": 126749,
+          "sha256": "9cf2738eefd5fe63a5fd9f3afb194802c7c847130a12f86ed41ea2eab044af14",
+          "width": 809,
+          "height": 531
+        },
+        "glb_version": 2,
+        "gltf_asset": {
+          "generator": "Khronos glTF Blender I/O v4.5.48",
+          "version": "2.0"
+        },
+        "node_count": 995,
+        "mesh_count": 486,
+        "animation_count": 0,
+        "skin_count": 0,
+        "scene_root_indices": [
+          994
+        ],
+        "scene_root_names": [
+          "Scene Collection"
+        ],
+        "node_name_sample": [
+          "Mesh [0Aig]",
+          "Mesh [0Ajg]",
+          "Mesh [0Akg]",
+          "Mesh [0Alg]",
+          "Mesh [0Amg]",
+          "Mesh [0Ang]",
+          "Mesh [0Aog]",
+          "Mesh [0Apg]",
+          "Mesh [0Aqg]",
+          "Mesh [0Arg]",
+          "Mesh [0Asg]",
+          "Mesh [0Atg]"
+        ],
+        "screenshot_reviewed": true
+      },
+      "proposed": {
+        "family_id": "G1",
+        "split": "validation",
+        "normal_parent_candidates": 8,
+        "structure_mutants_per_parent": 3,
+        "semantic_mutants_per_parent": 4,
+        "semantic_annotation_status": "not_authored_by_this_task",
+        "near_duplicate_review_status": "pending",
+        "known_grouping_note": null
+      }
+    },
+    {
+      "scene_id": "S03",
+      "source_folder": "Closed Conveyor Loop",
+      "observed": {
+        "model": {
+          "path": "scene/Closed Conveyor Loop/Closed Conveyor Loop.glb",
+          "bytes": 1591448,
+          "sha256": "11aeab283c378c1ec8bf7d2709db74d4e8ff70b640a4b7a62f686307223501b0"
+        },
+        "image": {
+          "path": "scene/Closed Conveyor Loop/image.png",
+          "bytes": 53001,
+          "sha256": "de9510a42ad0aa63233a7e0d674326db6c0babfaa612dc7302260441fafe1adc",
+          "width": 922,
+          "height": 456
+        },
+        "glb_version": 2,
+        "gltf_asset": {
+          "generator": "Khronos glTF Blender I/O v4.5.48",
+          "version": "2.0"
+        },
+        "node_count": 656,
+        "mesh_count": 202,
+        "animation_count": 0,
+        "skin_count": 0,
+        "scene_root_indices": [
+          655
+        ],
+        "scene_root_names": [
+          "Scene Collection"
+        ],
+        "node_name_sample": [
+          "Mesh [06ag]",
+          "Mesh [06bg]",
+          "Mesh [06cg]",
+          "Mesh [06dg]",
+          "Mesh [06eg]",
+          "Mesh [06fg]",
+          "Mesh [06gg]",
+          "Mesh [06hg]",
+          "Mesh [06ig]",
+          "Mesh [06jg]",
+          "Mesh [06kg]",
+          "Mesh [06lg]"
+        ],
+        "screenshot_reviewed": true
+      },
+      "proposed": {
+        "family_id": "G2",
+        "split": "development",
+        "normal_parent_candidates": 6,
+        "structure_mutants_per_parent": 3,
+        "semantic_mutants_per_parent": 4,
+        "semantic_annotation_status": "not_authored_by_this_task",
+        "near_duplicate_review_status": "pending",
+        "known_grouping_note": null
+      }
+    },
+    {
+      "scene_id": "S04",
+      "source_folder": "Coordinated Robotic Transfer Unit",
+      "observed": {
+        "model": {
+          "path": "scene/Coordinated Robotic Transfer Unit/Coordinated Robotic Transfer Unit.glb",
+          "bytes": 4341948,
+          "sha256": "30370e9a08f95df30feac2f6fc92cfce6fa6ec291f3a015d244580135845738e"
+        },
+        "image": {
+          "path": "scene/Coordinated Robotic Transfer Unit/image.png",
+          "bytes": 60859,
+          "sha256": "ca52af0f9f7492cfbd25a452bf1686a09b5e371cd710aa58a2382438f4780683",
+          "width": 855,
+          "height": 409
+        },
+        "glb_version": 2,
+        "gltf_asset": {
+          "generator": "Khronos glTF Blender I/O v4.5.48",
+          "version": "2.0"
+        },
+        "node_count": 208,
+        "mesh_count": 123,
+        "animation_count": 0,
+        "skin_count": 0,
+        "scene_root_indices": [
+          207
+        ],
+        "scene_root_names": [
+          "Scene Collection"
+        ],
+        "node_name_sample": [
+          "Mesh [00ag]",
+          "Mesh [00bg]",
+          "Mesh [00cg]",
+          "Mesh [00dg]",
+          "Mesh [00eg]",
+          "Mesh [00fg]",
+          "Mesh [00gg]",
+          "Mesh [00hg]",
+          "Mesh [00ig]",
+          "Mesh [00jg]",
+          "Mesh [00kg]",
+          "Mesh [00lg]"
+        ],
+        "screenshot_reviewed": true
+      },
+      "proposed": {
+        "family_id": "G2",
+        "split": "development",
+        "normal_parent_candidates": 4,
+        "structure_mutants_per_parent": 3,
+        "semantic_mutants_per_parent": 4,
+        "semantic_annotation_status": "not_authored_by_this_task",
+        "near_duplicate_review_status": "pending",
+        "known_grouping_note": "Group existing t0-two-robot with S04; not a new independent scene."
+      }
+    },
+    {
+      "scene_id": "S05",
+      "source_folder": "Deburring with Two Robots",
+      "observed": {
+        "model": {
+          "path": "scene/Deburring with Two Robots/Deburring with Two Robots.glb",
+          "bytes": 11381860,
+          "sha256": "e93dc7eb336f59953e6c84e46d75bc33b7507c2c03a80e08e3584b24c7c8430a"
+        },
+        "image": {
+          "path": "scene/Deburring with Two Robots/image.png",
+          "bytes": 90413,
+          "sha256": "f9ffac5910436499c7a75ba609faf626524e3da39a505254a32b97df3dc2f7e5",
+          "width": 647,
+          "height": 592
+        },
+        "glb_version": 2,
+        "gltf_asset": {
+          "generator": "Khronos glTF Blender I/O v4.5.48",
+          "version": "2.0"
+        },
+        "node_count": 423,
+        "mesh_count": 333,
+        "animation_count": 0,
+        "skin_count": 0,
+        "scene_root_indices": [
+          422
+        ],
+        "scene_root_names": [
+          "Scene Collection"
+        ],
+        "node_name_sample": [
+          "Mesh [00vg]",
+          "Mesh [00wg]",
+          "Mesh [00xg]",
+          "Mesh [00yg]",
+          "Mesh [00zg]",
+          "Mesh [010g]",
+          "Mesh [011g]",
+          "Mesh [012g]",
+          "Mesh [013g]",
+          "Mesh [014g]",
+          "Mesh [015g]",
+          "Mesh [016g]"
+        ],
+        "screenshot_reviewed": true
+      },
+      "proposed": {
+        "family_id": "G3",
+        "split": "test",
+        "normal_parent_candidates": 4,
+        "structure_mutants_per_parent": 3,
+        "semantic_mutants_per_parent": 4,
+        "semantic_annotation_status": "not_authored_by_this_task",
+        "near_duplicate_review_status": "pending",
+        "known_grouping_note": null
+      }
+    },
+    {
+      "scene_id": "S06",
+      "source_folder": "Indexing Table layout",
+      "observed": {
+        "model": {
+          "path": "scene/Indexing Table layout/Indexing Table layout.glb",
+          "bytes": 8493800,
+          "sha256": "e9261378cb7dca9bd8180cea8dd87debb9abec484b27afad7ce7d92957fecd2c"
+        },
+        "image": {
+          "path": "scene/Indexing Table layout/image.png",
+          "bytes": 110328,
+          "sha256": "4c47cca2829d67ce66bd670f41ea876561a4fb3ec083f2948d93a7a4ce3e7edd",
+          "width": 690,
+          "height": 754
+        },
+        "glb_version": 2,
+        "gltf_asset": {
+          "generator": "Khronos glTF Blender I/O v4.5.48",
+          "version": "2.0"
+        },
+        "node_count": 928,
+        "mesh_count": 618,
+        "animation_count": 0,
+        "skin_count": 0,
+        "scene_root_indices": [
+          927
+        ],
+        "scene_root_names": [
+          "Scene Collection"
+        ],
+        "node_name_sample": [
+          "Mesh [08ag]",
+          "Mesh [08bg]",
+          "Mesh [08cg]",
+          "Mesh [08dg]",
+          "Mesh [08eg]",
+          "Mesh [08fg]",
+          "Mesh [08gg]",
+          "Mesh [08hg]",
+          "Mesh [08ig]",
+          "Mesh [08jg]",
+          "Mesh [08kg]",
+          "Mesh [08lg]"
+        ],
+        "screenshot_reviewed": true
+      },
+      "proposed": {
+        "family_id": "G4",
+        "split": "development",
+        "normal_parent_candidates": 8,
+        "structure_mutants_per_parent": 3,
+        "semantic_mutants_per_parent": 4,
+        "semantic_annotation_status": "not_authored_by_this_task",
+        "near_duplicate_review_status": "pending",
+        "known_grouping_note": null
+      }
+    },
+    {
+      "scene_id": "S07",
+      "source_folder": "Intelligent Storage and Logistics Line",
+      "observed": {
+        "model": {
+          "path": "scene/Intelligent Storage and Logistics Line/Intelligent Storage and Logistics Line.glb",
+          "bytes": 682052,
+          "sha256": "8ec621bde391457832926e56d4ec9516ba36d8e9ffa43b4fa9f550e9250c12fa"
+        },
+        "image": {
+          "path": "scene/Intelligent Storage and Logistics Line/image.png",
+          "bytes": 48560,
+          "sha256": "d17e9586689e53389e3d96beafc972f41dee09caec85d75c3d39df0240fedb8b",
+          "width": 874,
+          "height": 615
+        },
+        "glb_version": 2,
+        "gltf_asset": {
+          "generator": "Khronos glTF Blender I/O v4.5.48",
+          "version": "2.0"
+        },
+        "node_count": 385,
+        "mesh_count": 330,
+        "animation_count": 0,
+        "skin_count": 0,
+        "scene_root_indices": [
+          384
+        ],
+        "scene_root_names": [
+          "Scene Collection"
+        ],
+        "node_name_sample": [
+          "Mesh [04jg]",
+          "__Geometry__ [00Jc]",
+          "__Model__ [007v]",
+          "Box [00Ln]",
+          "Mesh [013g]",
+          "Mesh [014g]",
+          "Mesh [015g]",
+          "Mesh [016g]",
+          "Mesh [017g]",
+          "Mesh [018g]",
+          "Mesh [019g]",
+          "Mesh [01Ag]"
+        ],
+        "screenshot_reviewed": true
+      },
+      "proposed": {
+        "family_id": "G5",
+        "split": "test",
+        "normal_parent_candidates": 8,
+        "structure_mutants_per_parent": 3,
+        "semantic_mutants_per_parent": 4,
+        "semantic_annotation_status": "not_authored_by_this_task",
+        "near_duplicate_review_status": "pending",
+        "known_grouping_note": null
+      }
+    },
+    {
+      "scene_id": "S08",
+      "source_folder": "L-shaped Automated Machining Cell",
+      "observed": {
+        "model": {
+          "path": "scene/L-shaped Automated Machining Cell/L-shaped Automated Machining Cell.glb",
+          "bytes": 1957984,
+          "sha256": "1849f8414051bb2da442c632674133311db24ce63ef888bf7bb88418c413b4c7"
+        },
+        "image": {
+          "path": "scene/L-shaped Automated Machining Cell/image.png",
+          "bytes": 106763,
+          "sha256": "1879a7a5435a6cfdc45d15c675f139ca8f540d336cdd8ac74ff9bd376ca746fd",
+          "width": 745,
+          "height": 677
+        },
+        "glb_version": 2,
+        "gltf_asset": {
+          "generator": "Khronos glTF Blender I/O v4.5.48",
+          "version": "2.0"
+        },
+        "node_count": 429,
+        "mesh_count": 275,
+        "animation_count": 0,
+        "skin_count": 0,
+        "scene_root_indices": [
+          428
+        ],
+        "scene_root_names": [
+          "Scene Collection"
+        ],
+        "node_name_sample": [
+          "Mesh [02qg]",
+          "Mesh [02rg]",
+          "Mesh [02sg]",
+          "Mesh [02tg]",
+          "Mesh [02ug]",
+          "Mesh [02vg]",
+          "Mesh [02wg]",
+          "Mesh [02xg]",
+          "Mesh [02yg]",
+          "Mesh [02zg]",
+          "Mesh [030g]",
+          "Mesh [031g]"
+        ],
+        "screenshot_reviewed": true
+      },
+      "proposed": {
+        "family_id": "G3",
+        "split": "test",
+        "normal_parent_candidates": 6,
+        "structure_mutants_per_parent": 3,
+        "semantic_mutants_per_parent": 4,
+        "semantic_annotation_status": "not_authored_by_this_task",
+        "near_duplicate_review_status": "pending",
+        "known_grouping_note": null
+      }
+    },
+    {
+      "scene_id": "S09",
+      "source_folder": "Machine tending",
+      "observed": {
+        "model": {
+          "path": "scene/Machine tending/Machine tending.glb",
+          "bytes": 4094640,
+          "sha256": "25ce1c6d1f47b176bedb89c51c447681499a54ce2e9ba88903897c8a06714667"
+        },
+        "image": {
+          "path": "scene/Machine tending/image.png",
+          "bytes": 135362,
+          "sha256": "b405c03e3abbc2efe0a2b6be18c33dd10912046269cd3136c2ee44f0757d7069",
+          "width": 766,
+          "height": 711
+        },
+        "glb_version": 2,
+        "gltf_asset": {
+          "generator": "Khronos glTF Blender I/O v4.5.48",
+          "version": "2.0"
+        },
+        "node_count": 655,
+        "mesh_count": 530,
+        "animation_count": 0,
+        "skin_count": 0,
+        "scene_root_indices": [
+          654
+        ],
+        "scene_root_names": [
+          "Scene Collection"
+        ],
+        "node_name_sample": [
+          "Mesh [05ag]",
+          "Mesh [05bg]",
+          "Mesh [05cg]",
+          "Mesh [05dg]",
+          "Mesh [05eg]",
+          "Mesh [05fg]",
+          "Mesh [05gg]",
+          "Mesh [05hg]",
+          "Mesh [05ig]",
+          "Mesh [05jg]",
+          "Mesh [05kg]",
+          "Mesh [05Sg]"
+        ],
+        "screenshot_reviewed": true
+      },
+      "proposed": {
+        "family_id": "G3",
+        "split": "test",
+        "normal_parent_candidates": 6,
+        "structure_mutants_per_parent": 3,
+        "semantic_mutants_per_parent": 4,
+        "semantic_annotation_status": "not_authored_by_this_task",
+        "near_duplicate_review_status": "pending",
+        "known_grouping_note": null
+      }
+    },
+    {
+      "scene_id": "S10",
+      "source_folder": "Robot Palletizing Workstation",
+      "observed": {
+        "model": {
+          "path": "scene/Robot Palletizing Workstation/Robot Palletizing Workstation.glb",
+          "bytes": 1531140,
+          "sha256": "29c4798f4385f29a5ca10c576ec2897f8d549ded504472f35dcd9d1bb9766f9f"
+        },
+        "image": {
+          "path": "scene/Robot Palletizing Workstation/image.png",
+          "bytes": 125242,
+          "sha256": "0e32853310cc20513c6e8201a9a1fca59440a89ae4825c2828486d2666d405d0",
+          "width": 762,
+          "height": 443
+        },
+        "glb_version": 2,
+        "gltf_asset": {
+          "generator": "Khronos glTF Blender I/O v4.5.48",
+          "version": "2.0"
+        },
+        "node_count": 385,
+        "mesh_count": 255,
+        "animation_count": 0,
+        "skin_count": 0,
+        "scene_root_indices": [
+          384
+        ],
+        "scene_root_names": [
+          "Scene Collection"
+        ],
+        "node_name_sample": [
+          "Mesh [01og]",
+          "__Geometry__ [003c]",
+          "__Model__ [003v]",
+          "Block",
+          "Mesh [029g]",
+          "Mesh [02Ag]",
+          "Mesh [02ag]",
+          "Mesh [02Bg]",
+          "Mesh [02bg]",
+          "Mesh [02Cg]",
+          "Mesh [02cg]",
+          "Mesh [02Dg]"
+        ],
+        "screenshot_reviewed": true
+      },
+      "proposed": {
+        "family_id": "G1",
+        "split": "validation",
+        "normal_parent_candidates": 4,
+        "structure_mutants_per_parent": 3,
+        "semantic_mutants_per_parent": 4,
+        "semantic_annotation_status": "not_authored_by_this_task",
+        "near_duplicate_review_status": "pending",
+        "known_grouping_note": null
+      }
+    },
+    {
+      "scene_id": "S11",
+      "source_folder": "Robot Welding cell",
+      "observed": {
+        "model": {
+          "path": "scene/Robot Welding cell/Robot Welding cell.glb",
+          "bytes": 12349336,
+          "sha256": "527ddb9592f311dda119b1a3006fffff540999a5bec21fee1b3ee3b5dc0bba11"
+        },
+        "image": {
+          "path": "scene/Robot Welding cell/image.png",
+          "bytes": 173167,
+          "sha256": "9f4c5a6a7849526da33c8544f091043e1210ffbb8c96ed2d22ed08dcb1d7fe2c",
+          "width": 889,
+          "height": 535
+        },
+        "glb_version": 2,
+        "gltf_asset": {
+          "generator": "Khronos glTF Blender I/O v4.5.48",
+          "version": "2.0"
+        },
+        "node_count": 991,
+        "mesh_count": 868,
+        "animation_count": 0,
+        "skin_count": 0,
+        "scene_root_indices": [
+          990
+        ],
+        "scene_root_names": [
+          "Scene Collection"
+        ],
+        "node_name_sample": [
+          "Mesh [0Dtg]",
+          "Mesh [0Dug]",
+          "Mesh [0Dvg]",
+          "Mesh [0Dwg]",
+          "Mesh [0Dxg]",
+          "Mesh [0Dyg]",
+          "Mesh [0Dzg]",
+          "__Geometry__ [00kc]",
+          "__Model__ [00Ev]",
+          "Arc Welding Wire Drum",
+          "Mesh [021g]",
+          "Mesh [022g]"
+        ],
+        "screenshot_reviewed": true
+      },
+      "proposed": {
+        "family_id": "G3",
+        "split": "test",
+        "normal_parent_candidates": 6,
+        "structure_mutants_per_parent": 3,
+        "semantic_mutants_per_parent": 4,
+        "semantic_annotation_status": "not_authored_by_this_task",
+        "near_duplicate_review_status": "pending",
+        "known_grouping_note": null
+      }
+    },
+    {
+      "scene_id": "S12",
+      "source_folder": "Turntable Work Cell",
+      "observed": {
+        "model": {
+          "path": "scene/Turntable Work Cell/Turntable Work Cell.glb",
+          "bytes": 9143740,
+          "sha256": "bfa7b07a4d5a4aec46ea92b18c54e10951b5677f6a451946c462846045653ea4"
+        },
+        "image": {
+          "path": "scene/Turntable Work Cell/image.png",
+          "bytes": 113894,
+          "sha256": "2bcc4148cbddd712fba37e55d85c0b64ef31bab3141a58fe3f73acc5c40d7d4c",
+          "width": 1210,
+          "height": 768
+        },
+        "glb_version": 2,
+        "gltf_asset": {
+          "generator": "Khronos glTF Blender I/O v4.5.48",
+          "version": "2.0"
+        },
+        "node_count": 809,
+        "mesh_count": 446,
+        "animation_count": 0,
+        "skin_count": 0,
+        "scene_root_indices": [
+          808
+        ],
+        "scene_root_names": [
+          "Scene Collection"
+        ],
+        "node_name_sample": [
+          "Lines [000l].005",
+          "Mesh [06ag]",
+          "Mesh [06bg]",
+          "Mesh [06cg]",
+          "Mesh [06dg]",
+          "Mesh [06eg]",
+          "Mesh [06fg]",
+          "Mesh [06gg]",
+          "Mesh [06hg]",
+          "Mesh [06ig]",
+          "Mesh [06jg]",
+          "Mesh [06kg]"
+        ],
+        "screenshot_reviewed": true
+      },
+      "proposed": {
+        "family_id": "G4",
+        "split": "development",
+        "normal_parent_candidates": 6,
+        "structure_mutants_per_parent": 3,
+        "semantic_mutants_per_parent": 4,
+        "semantic_annotation_status": "not_authored_by_this_task",
+        "near_duplicate_review_status": "pending",
+        "known_grouping_note": null
+      }
+    }
+  ]
+}

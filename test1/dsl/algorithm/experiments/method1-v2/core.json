@@ -1,0 +1,5372 @@
+{
+  "id": "method1-core/0.2",
+  "semantics_id": "method1-semantics/0.2",
+  "semantics_hash": "13a8afe0189165a2f85db8ec00ef5b37ed49c1770eb8285051deaef5f7bbc92f",
+  "property_scope": [
+    "V09",
+    "V10a"
+  ],
+  "case_count": 303,
+  "query_count": 606,
+  "cases": [
+    {
+      "case_id": "S01-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 57
+        }
+      ]
+    },
+    {
+      "case_id": "S01-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S01-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S01-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 55
+        }
+      ]
+    },
+    {
+      "case_id": "S01-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 44
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 44
+        }
+      ]
+    },
+    {
+      "case_id": "S01-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 60
+        }
+      ]
+    },
+    {
+      "case_id": "S01-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S01-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S01-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 58
+        }
+      ]
+    },
+    {
+      "case_id": "S01-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 47
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 47
+        }
+      ]
+    },
+    {
+      "case_id": "S01-P03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 30
+        }
+      ]
+    },
+    {
+      "case_id": "S01-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S01-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S01-P03-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 30
+        }
+      ]
+    },
+    {
+      "case_id": "S01-P03-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 17
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 17
+        }
+      ]
+    },
+    {
+      "case_id": "S01-P04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 109
+        }
+      ]
+    },
+    {
+      "case_id": "S01-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S01-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S01-P04-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 107
+        }
+      ]
+    },
+    {
+      "case_id": "S01-P04-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 96
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 96
+        }
+      ]
+    },
+    {
+      "case_id": "S01-P05-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S01-P05-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S01-P06",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 159
+        }
+      ]
+    },
+    {
+      "case_id": "S01-P06-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S01-P06-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S01-P06-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 157
+        }
+      ]
+    },
+    {
+      "case_id": "S01-P06-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 146
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 146
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 35
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 33
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 22
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 22
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 87
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 85
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 74
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 74
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P05",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 34
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P05-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P05-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P05-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 32
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P05-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 34
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 34
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P06",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 30
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P06-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P06-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P06-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 30
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P06-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 17
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 17
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P07",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 38
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P07-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P07-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P07-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 36
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P07-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 38
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 38
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P08",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 61
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P08-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P08-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P08-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 59
+        }
+      ]
+    },
+    {
+      "case_id": "S02-P08-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 48
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 48
+        }
+      ]
+    },
+    {
+      "case_id": "S03-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 57
+        }
+      ]
+    },
+    {
+      "case_id": "S03-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S03-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S03-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 55
+        }
+      ]
+    },
+    {
+      "case_id": "S03-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 44
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 44
+        }
+      ]
+    },
+    {
+      "case_id": "S03-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 75
+        }
+      ]
+    },
+    {
+      "case_id": "S03-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S03-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S03-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 73
+        }
+      ]
+    },
+    {
+      "case_id": "S03-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 62
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 62
+        }
+      ]
+    },
+    {
+      "case_id": "S03-P03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 109
+        }
+      ]
+    },
+    {
+      "case_id": "S03-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S03-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S03-P03-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 107
+        }
+      ]
+    },
+    {
+      "case_id": "S03-P03-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 96
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 96
+        }
+      ]
+    },
+    {
+      "case_id": "S03-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S03-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S03-P05",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 88
+        }
+      ]
+    },
+    {
+      "case_id": "S03-P05-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S03-P05-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S03-P05-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 88
+        }
+      ]
+    },
+    {
+      "case_id": "S03-P06",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 136
+        }
+      ]
+    },
+    {
+      "case_id": "S03-P06-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S03-P06-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S03-P06-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 134
+        }
+      ]
+    },
+    {
+      "case_id": "S03-P06-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 123
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 123
+        }
+      ]
+    },
+    {
+      "case_id": "S04-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 53
+        }
+      ]
+    },
+    {
+      "case_id": "S04-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S04-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S04-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 51
+        }
+      ]
+    },
+    {
+      "case_id": "S04-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 40
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 40
+        }
+      ]
+    },
+    {
+      "case_id": "S04-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 113
+        }
+      ]
+    },
+    {
+      "case_id": "S04-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S04-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S04-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 111
+        }
+      ]
+    },
+    {
+      "case_id": "S04-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 100
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 100
+        }
+      ]
+    },
+    {
+      "case_id": "S04-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S04-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S04-P04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 148
+        }
+      ]
+    },
+    {
+      "case_id": "S04-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S04-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S04-P04-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 148
+        }
+      ]
+    },
+    {
+      "case_id": "S05-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 89
+        }
+      ]
+    },
+    {
+      "case_id": "S05-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S05-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S05-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 87
+        }
+      ]
+    },
+    {
+      "case_id": "S05-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 76
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 76
+        }
+      ]
+    },
+    {
+      "case_id": "S05-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 79
+        }
+      ]
+    },
+    {
+      "case_id": "S05-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S05-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S05-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 77
+        }
+      ]
+    },
+    {
+      "case_id": "S05-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 66
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 66
+        }
+      ]
+    },
+    {
+      "case_id": "S05-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S05-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S05-P04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 104
+        }
+      ]
+    },
+    {
+      "case_id": "S05-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S05-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S05-P04-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 102
+        }
+      ]
+    },
+    {
+      "case_id": "S05-P04-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 91
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 91
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 53
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 51
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 40
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 40
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 62
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 60
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 49
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 49
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 54
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P03-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 52
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P03-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 54
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 54
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P05-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P05-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P06",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 89
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P06-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P06-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P06-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 89
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P07-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P07-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P08",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 30
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P08-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P08-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P08-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 30
+        }
+      ]
+    },
+    {
+      "case_id": "S06-P08-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 17
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 17
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 38
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 36
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 27
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 27
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 51
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 49
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 38
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 38
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 71
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P03-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 69
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P03-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 60
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 60
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P05-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P05-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P06",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 35
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P06-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P06-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P06-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 35
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P06-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 24
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 24
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P07",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 18
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P07-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P07-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P07-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 16
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P07-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 7
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 7
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P08-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S07-P08-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S08-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 66
+        }
+      ]
+    },
+    {
+      "case_id": "S08-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S08-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S08-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 64
+        }
+      ]
+    },
+    {
+      "case_id": "S08-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 53
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 53
+        }
+      ]
+    },
+    {
+      "case_id": "S08-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S08-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S08-P03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 54
+        }
+      ]
+    },
+    {
+      "case_id": "S08-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S08-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S08-P03-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 52
+        }
+      ]
+    },
+    {
+      "case_id": "S08-P03-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 45
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 45
+        }
+      ]
+    },
+    {
+      "case_id": "S08-P04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 76
+        }
+      ]
+    },
+    {
+      "case_id": "S08-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S08-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S08-P04-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 74
+        }
+      ]
+    },
+    {
+      "case_id": "S08-P04-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 63
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 63
+        }
+      ]
+    },
+    {
+      "case_id": "S08-P05",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 127
+        }
+      ]
+    },
+    {
+      "case_id": "S08-P05-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S08-P05-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S08-P05-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 125
+        }
+      ]
+    },
+    {
+      "case_id": "S08-P06",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 127
+        }
+      ]
+    },
+    {
+      "case_id": "S08-P06-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S08-P06-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S08-P06-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 125
+        }
+      ]
+    },
+    {
+      "case_id": "S08-P06-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 114
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 114
+        }
+      ]
+    },
+    {
+      "case_id": "S09-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 66
+        }
+      ]
+    },
+    {
+      "case_id": "S09-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S09-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S09-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 64
+        }
+      ]
+    },
+    {
+      "case_id": "S09-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 53
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 53
+        }
+      ]
+    },
+    {
+      "case_id": "S09-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 99
+        }
+      ]
+    },
+    {
+      "case_id": "S09-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S09-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S09-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 97
+        }
+      ]
+    },
+    {
+      "case_id": "S09-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 86
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 86
+        }
+      ]
+    },
+    {
+      "case_id": "S09-P03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 63
+        }
+      ]
+    },
+    {
+      "case_id": "S09-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S09-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S09-P03-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 63
+        }
+      ]
+    },
+    {
+      "case_id": "S09-P03-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 50
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 50
+        }
+      ]
+    },
+    {
+      "case_id": "S09-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S09-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S09-P05",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 92
+        }
+      ]
+    },
+    {
+      "case_id": "S09-P05-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S09-P05-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S09-P05-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 90
+        }
+      ]
+    },
+    {
+      "case_id": "S09-P05-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 79
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 79
+        }
+      ]
+    },
+    {
+      "case_id": "S09-P06",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 247
+        }
+      ]
+    },
+    {
+      "case_id": "S09-P06-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S09-P06-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S09-P06-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 245
+        }
+      ]
+    },
+    {
+      "case_id": "S10-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 18
+        }
+      ]
+    },
+    {
+      "case_id": "S10-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S10-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S10-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 16
+        }
+      ]
+    },
+    {
+      "case_id": "S10-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 7
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 7
+        }
+      ]
+    },
+    {
+      "case_id": "S10-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 42
+        }
+      ]
+    },
+    {
+      "case_id": "S10-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S10-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S10-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 40
+        }
+      ]
+    },
+    {
+      "case_id": "S10-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 31
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 31
+        }
+      ]
+    },
+    {
+      "case_id": "S10-P03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 15
+        }
+      ]
+    },
+    {
+      "case_id": "S10-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S10-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S10-P03-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 15
+        }
+      ]
+    },
+    {
+      "case_id": "S10-P03-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 6
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 6
+        }
+      ]
+    },
+    {
+      "case_id": "S10-P04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 139
+        }
+      ]
+    },
+    {
+      "case_id": "S10-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S10-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S10-P04-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 137
+        }
+      ]
+    },
+    {
+      "case_id": "S11-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 71
+        }
+      ]
+    },
+    {
+      "case_id": "S11-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S11-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S11-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 69
+        }
+      ]
+    },
+    {
+      "case_id": "S11-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 60
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 60
+        }
+      ]
+    },
+    {
+      "case_id": "S11-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 23
+        }
+      ]
+    },
+    {
+      "case_id": "S11-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S11-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S11-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 21
+        }
+      ]
+    },
+    {
+      "case_id": "S11-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 17
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 17
+        }
+      ]
+    },
+    {
+      "case_id": "S11-P03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 132
+        }
+      ]
+    },
+    {
+      "case_id": "S11-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S11-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S11-P03-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 130
+        }
+      ]
+    },
+    {
+      "case_id": "S11-P04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 137
+        }
+      ]
+    },
+    {
+      "case_id": "S11-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S11-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S11-P04-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 135
+        }
+      ]
+    },
+    {
+      "case_id": "S11-P04-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 126
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 126
+        }
+      ]
+    },
+    {
+      "case_id": "S11-P05",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 81
+        }
+      ]
+    },
+    {
+      "case_id": "S11-P05-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S11-P05-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S11-P05-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 79
+        }
+      ]
+    },
+    {
+      "case_id": "S11-P05-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 70
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 70
+        }
+      ]
+    },
+    {
+      "case_id": "S11-P06",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 312
+        }
+      ]
+    },
+    {
+      "case_id": "S11-P06-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S11-P06-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S11-P06-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 310
+        }
+      ]
+    },
+    {
+      "case_id": "S12-P01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 51
+        }
+      ]
+    },
+    {
+      "case_id": "S12-P01-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S12-P01-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S12-P01-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 49
+        }
+      ]
+    },
+    {
+      "case_id": "S12-P01-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 38
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 38
+        }
+      ]
+    },
+    {
+      "case_id": "S12-P02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 167
+        }
+      ]
+    },
+    {
+      "case_id": "S12-P02-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S12-P02-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S12-P02-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 165
+        }
+      ]
+    },
+    {
+      "case_id": "S12-P02-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 154
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 154
+        }
+      ]
+    },
+    {
+      "case_id": "S12-P03-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S12-P03-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S12-P04-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S12-P04-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S12-P05",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 88
+        }
+      ]
+    },
+    {
+      "case_id": "S12-P05-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S12-P05-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S12-P05-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 88
+        }
+      ]
+    },
+    {
+      "case_id": "S12-P06",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 97
+        }
+      ]
+    },
+    {
+      "case_id": "S12-P06-DV01",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S12-P06-DV02",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "recomputed independent logical certificate"
+        }
+      ]
+    },
+    {
+      "case_id": "S12-P06-DV03",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "HOLDS",
+          "basis": "recomputed independent logical certificate"
+        },
+        {
+          "property": "V10a",
+          "expected": "REACHABLE",
+          "basis": "independent_sequential_timed_witness",
+          "completion_tick": 95
+        }
+      ]
+    },
+    {
+      "case_id": "S12-P06-DV04",
+      "profile": "nominal",
+      "bound": 3000,
+      "properties": [
+        {
+          "property": "V09",
+          "expected": "VIOLATED",
+          "basis": "independent_sequential_false_success_witness",
+          "completion_tick": 84
+        },
+        {
+          "property": "V10a",
+          "expected": "UNREACHABLE",
+          "basis": "unique_successful_sequential_goal_projection",
+          "completion_tick": 84
+        }
+      ]
+    }
+  ],
+  "admission": "Both selected query labels independently recertified before algorithm evaluation; no solver-outcome filtering.",
+  "not_claimed": "Does not make all V01-V10 properties gold for these cases; no parallel/fault-case accuracy claims; human review pending."
+}

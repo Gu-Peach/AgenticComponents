@@ -1,3 +1,4 @@
+import { RobotPlanError } from "@/runtime/kinematics/RobotPlanError";
 import { Matrix4, Quaternion, Vector3 } from "three";
 import type { CompiledRobotScene } from "@/contracts/robot";
 import type { RobotStep } from "@/contracts/robot-command";
@@ -38,7 +39,7 @@ export class RobotJobRunner {
     let seed = [...this.state.q];
     let carrying = this.grasp?.relative;
     const visited = new Map<string, number[]>();
-    const planned = steps.map((step) => {
+    const planned = steps.map((step, index) => {
       if (step.kind === "move_to_pose") {
         const target = this.fk.targetToWorld(step.position, step.frame);
         let fk = this.fk;
@@ -91,7 +92,14 @@ export class RobotJobRunner {
         }
         this.state.ik = solved;
         if (!solved.converged)
-          throw new Error(`IK未收敛，误差${solved.error.toFixed(4)}m`);
+          throw new RobotPlanError(
+            fk,
+            target,
+            solved,
+            index + 1,
+            step.label ?? "位置移动",
+            step.subject ?? "tcp",
+          );
         seed = [...solved.q];
         visited.set(key, seed);
         return { step, q: seed, target, fk };

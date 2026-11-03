@@ -1,0 +1,41 @@
+{
+  "id": "reference-six-phase/0.1",
+  "base": "method1-semantics/0.2",
+  "implementation": "independent-event-agenda",
+  "scope": "finite symbolic devices, materials, resources and declared environment; no geometry or real equipment",
+  "tick_seconds": "1/60",
+  "phase_order": ["external_events", "fault_injection", "due_packet_delivery", "controller_snapshot_and_atomic_arbitration", "physical_phase", "periodic_source_sampling"],
+  "controller": {
+    "order": "activation eligible tick, static node ID, numeric loop path",
+    "activation": "new tokens become eligible at current_tick+1",
+    "reads": "conditions/preconditions/holds read the controller snapshot; atomic grants recheck live capacity and conflicts",
+    "failure": "global failure prevents subsequent submissions and reconciles all already activated children",
+    "scope_exit": "normal scope exits only after its child succeeded, actual stop, and matching stop evidence"
+  },
+  "device_hold": "Check capability sustaining conditions before every physical action phase, even before acceptance is observed; on failure halt progress, publish a held fault and schedule physical stop. Controller reconciles on fault receipt or its own hold/timeout check.",
+  "timing": {
+    "physical_interval": "choose delta in [min,max] on stage entry; due=start+delta-1 (inclusive start tick)",
+    "next_physical_stage": "start=current_tick+1, independent of when the controller observes acceptance",
+    "sampling": "source publishes a held phase value after its physical event and samples each tick while receiver is interested",
+    "delivery": "choose latency in profile interval at each sample; due=sample_tick+1+latency; per-stream FIFO blocks later packets behind earlier ones",
+    "deadline": "delivery/controller confirmation at the deadline tick precedes expiry evaluation",
+    "no_fairness": "no guaranteed eventual fresh arrival if allowed latency can exceed freshness"
+  },
+  "faults": {
+    "budget": "at most max_faults; no-fault successor remains available; latency choices do not spend fault budget",
+    "packet_fault_choices": "any currently queued packet, not only the queue head; preserve its sampling time and payload except the declared old identity replacement",
+    "duplicate": "copy is immediately eligible on injection tick, still respects FIFO",
+    "restart": "increment actor epoch, clear actor latches and pending receipts, abort and reconcile; preserve material effects",
+    "permission_loss": "only changes actor permit; controller reacts through declared hold rules",
+    "stop_ack_loss": "suppresses stop confirmation but not the bounded physical stop"
+  },
+  "external_events": {
+    "set_external": "updates declared exogenous state; current world snapshots may resample the state without rewriting an old packet",
+    "replace_carrier": "wait for no active request involving carrier/slots, no conflicting grants, no reservations or held material, and free destination capacity"
+  },
+  "terminal_closure": "all children settled and no outstanding physical event; attention retains required isolation; no automatic physical rollback or recovery",
+  "response_obligation": "first valid acceptance time is retained; confirmed protocol outcome or qualified isolation is a response; packet freshness is checked at ingestion and does not get a fabricated new sample time",
+  "property_scope": "P1 predicates plus explicit state-based V10b lifetime monitoring; whole-model answers require P3 evidence checks",
+  "pilot_mapping": "versioned migration: embedded accept/phase/stop ranges become physical-stage durations, feedback latency [0,0], visibility 1; not asserted equivalent to old synchronous microsteps",
+  "not_claimed": ["legacy pilot bounded-time equivalence", "all corpus graphs exhausted", "independent P3 proof certification", "deployment readiness"]
+}

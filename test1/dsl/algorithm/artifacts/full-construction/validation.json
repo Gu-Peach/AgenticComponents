@@ -1,0 +1,4053 @@
+{
+  "case_count": 576,
+  "parent_count": 72,
+  "structural_counts": {
+    "VALID": 360,
+    "INVALID_SYNTAX": 72,
+    "INVALID_TYPE": 72,
+    "UNKNOWN_CAPABILITY": 72
+  },
+  "unexpected_count": 0,
+  "unexpected": [],
+  "exact_canonical_parent_duplicates": [],
+  "D-S": 288,
+  "D-V": 360,
+  "D-E": 12,
+  "D-R": 36,
+  "D-X": 7,
+  "path_truth_not_established": true,
+  "cases": [
+    {
+      "case_id": "S01-P01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P01-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P01-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P01-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P01-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P01-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P01-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P01-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P02-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P02-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P02-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P02-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P02-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P02-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P02-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P03-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P03-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P03-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P03-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P03-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P03-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P03-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P04-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P04-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P04-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P04-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P04-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P04-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P04-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P05",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P05-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P05-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P05-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P05-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P05-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P05-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P05-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P06",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P06-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P06-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P06-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P06-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P06-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P06-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S01-P06-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P01-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P01-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P01-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P01-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P01-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P01-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P01-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P02-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P02-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P02-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P02-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P02-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P02-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P02-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P03-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P03-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P03-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P03-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P03-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P03-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P03-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P04-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P04-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P04-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R2.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P04-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P04-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P04-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P04-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P05",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P05-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P05-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P05-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P05-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P05-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P05-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P05-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P06",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P06-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P06-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P06-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P06-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P06-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P06-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P06-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P07",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P07-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P07-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P07-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P07-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P07-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P07-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P07-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P08",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P08-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P08-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P08-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P08-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P08-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P08-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S02-P08-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P01-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P01-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P01-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P01-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P01-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P01-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P01-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P02-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P02-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P02-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P02-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P02-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P02-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P02-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P03-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P03-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P03-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P03-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P03-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P03-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P03-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P04-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P04-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P04-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P04-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P04-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P04-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P04-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P05",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P05-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P05-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P05-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P05-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P05-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P05-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P05-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P06",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P06-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P06-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P06-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P06-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P06-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P06-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S03-P06-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P01-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P01-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "load.source",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P01-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.teleport_material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P01-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P01-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P01-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P01-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P02-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P02-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P02-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P02-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P02-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P02-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P02-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P03-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P03-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P03-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P03-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P03-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P03-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P03-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P04-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P04-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P04-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P04-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P04-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P04-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S04-P04-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P01-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P01-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P01-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P01-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P01-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P01-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P01-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P02-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P02-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P02-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P02-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P02-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P02-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P02-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P03-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P03-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P03-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P03-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P03-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P03-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P03-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P04-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P04-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P04-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P04-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P04-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P04-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S05-P04-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P01-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P01-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P01-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P01-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P01-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P01-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P01-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P02-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P02-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P02-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P02-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P02-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P02-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P02-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P03-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P03-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P03-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P03-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P03-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P03-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P03-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P04-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P04-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P04-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P04-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P04-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P04-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P04-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P05",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P05-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P05-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P05-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P05-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P05-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P05-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P05-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P06",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P06-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P06-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P06-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P06-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P06-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P06-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P06-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P07",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P07-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P07-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P07-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R2.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P07-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P07-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P07-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P07-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P08",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P08-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P08-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P08-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P08-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P08-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P08-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S06-P08-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P01-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P01-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P01-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "X1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P01-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P01-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P01-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P01-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P02-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P02-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P02-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "X1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P02-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P02-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P02-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P02-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P03-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P03-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P03-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "X1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P03-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P03-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P03-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P03-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P04-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P04-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P04-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "X1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P04-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P04-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P04-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P04-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P05",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P05-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P05-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P05-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "X1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P05-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P05-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P05-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P05-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P06",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P06-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P06-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P06-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "X1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P06-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P06-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P06-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P06-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P07",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P07-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P07-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P07-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "X1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P07-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P07-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P07-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P07-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P08",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P08-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P08-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P08-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "X1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P08-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P08-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P08-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S07-P08-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P01-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P01-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P01-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P01-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P01-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P01-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P01-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P02-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P02-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P02-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P02-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P02-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P02-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P02-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P03-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P03-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P03-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P03-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P03-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P03-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P03-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P04-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P04-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P04-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P04-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P04-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P04-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P04-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P05",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P05-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P05-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_3.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P05-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P05-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P05-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P05-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P05-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P06",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P06-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P06-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P06-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P06-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P06-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P06-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S08-P06-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P01-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P01-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P01-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P01-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P01-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P01-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P01-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P02-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P02-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P02-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P02-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P02-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P02-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P02-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P03-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P03-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P03-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P03-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P03-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P03-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P03-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P04-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P04-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "clamp_workpiece_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P04-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "MC1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P04-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P04-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P04-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P04-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P05",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P05-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P05-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P05-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P05-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P05-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P05-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P05-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P06",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P06-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P06-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_3.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P06-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P06-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P06-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P06-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S09-P06-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P01-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P01-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P01-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P01-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P01-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P01-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P01-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P02-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P02-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P02-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P02-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P02-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P02-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P02-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P03-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P03-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P03-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P03-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P03-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P03-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P03-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P04-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P04-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_3.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P04-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P04-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P04-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P04-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S10-P04-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P01-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P01-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P01-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P01-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P01-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P01-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P01-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P02-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P02-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "weld_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P02-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "W1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P02-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P02-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P02-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P02-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P03-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P03-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_3.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P03-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P03-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P03-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P03-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P03-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P04-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P04-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P04-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P04-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P04-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P04-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P04-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P05",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P05-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P05-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P05-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P05-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P05-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P05-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P05-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P06",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P06-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P06-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_3.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P06-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P06-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P06-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P06-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S11-P06-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P01-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P01-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_5.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P01-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P01-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P01-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P01-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P01-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P02-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P02-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_11.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P02-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P02-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P02-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P02-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P02-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P03-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P03-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "clamp_workpiece_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P03-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "PS1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P03-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P03-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P03-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P03-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P04-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P04-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_5.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P04-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P04-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P04-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P04-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P04-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P05",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P05-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P05-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_1.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P05-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P05-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P05-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P05-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P05-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P06",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P06-DS01",
+      "structural_status": "INVALID_SYNTAX",
+      "matches_construction_intent": true,
+      "diagnostic": "unclosed parenthesis",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P06-DS02",
+      "structural_status": "INVALID_TYPE",
+      "matches_construction_intent": true,
+      "diagnostic": "transfer_material_5.material",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P06-DS03",
+      "structural_status": "UNKNOWN_CAPABILITY",
+      "matches_construction_intent": true,
+      "diagnostic": "R1.missing_capability",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P06-DV01",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P06-DV02",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P06-DV03",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    },
+    {
+      "case_id": "S12-P06-DV04",
+      "structural_status": "VALID",
+      "matches_construction_intent": true,
+      "diagnostic": "",
+      "path_result": "not_inferred_from_structure"
+    }
+  ]
+}

@@ -1,0 +1,240 @@
+{
+  "records": [
+    {
+      "case_id": "S01-P01-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S01-P02-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S01-P03-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S01-P04-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S01-P06-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S02-P01-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S02-P02-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S02-P05-DV04",
+      "property": "V09",
+      "proved": true
+    },
+    {
+      "case_id": "S02-P06-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S02-P07-DV04",
+      "property": "V09",
+      "proved": true
+    },
+    {
+      "case_id": "S02-P08-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S03-P01-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S03-P02-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S03-P03-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S03-P06-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S04-P01-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S04-P02-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S05-P01-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S05-P02-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S05-P04-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S06-P01-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S06-P02-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S06-P03-DV04",
+      "property": "V09",
+      "proved": true
+    },
+    {
+      "case_id": "S06-P08-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S07-P01-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S07-P02-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S07-P03-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S07-P06-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S07-P07-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S08-P01-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S08-P03-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S08-P04-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S08-P06-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S09-P01-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S09-P02-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S09-P03-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S09-P05-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S10-P01-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S10-P02-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S10-P03-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S11-P01-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S11-P02-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S11-P04-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S11-P05-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S12-P01-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S12-P02-DV04",
+      "property": "V10a",
+      "proved": true
+    },
+    {
+      "case_id": "S12-P06-DV04",
+      "property": "V10a",
+      "proved": true
+    }
+  ],
+  "all_47_reproved": true
+}

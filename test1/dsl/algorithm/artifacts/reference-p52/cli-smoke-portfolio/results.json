@@ -1,0 +1,369 @@
+{
+  "status": "CHECKED",
+  "model_version": "acverify-tick/0.3",
+  "semantics_id": "acverify-six-phase/0.3",
+  "model_digest": "2a43a562ff12451e3f8b6e99f2070362f7ce396b3bb9e9ba670ca5e7034082cd",
+  "input_hashes": {
+    "case": "e906ed6055038c327c96c4843b6e4df61a8546d50c8d62650814e3f76dbd07d3",
+    "process": "a29e4477bc1e8e3ca6b958f52f904b9d101b9b485ba87cf2e50c9c247462ab3e",
+    "environment": "5edf1f388976920ff9a7e07971dcea1c573aa279200bcf618f3ed099ee58886c",
+    "initial": "337b5d21a9ed72db6d85032495404f97de2abb5071496d220245c07763ac2cbe",
+    "task": "47253f0ec053ccf1335a361dc4dcd7ec79c5f299c02a86ac10be9730cdbb0bc7",
+    "properties": "c96396d94e97756ebd0ee2fc667036878cf2f8e1c111394fe1f1f78de0886138",
+    "queries": "3994965004d7c8047467ffc13cf0af05023efe03c9724a09e375549a631a70f7",
+    "legacy_binder": "b4cc77d0540c7d7b195bb4c9f727484bee908807d6dc6a272c8a12263d3410a8",
+    "legacy_parser": "0b55eea2ddde158d4d1506efb0fd4ae6cd4323da04d1e0869c91cddd77d6a4ee",
+    "language_schema": "f3c7414093d6054bf50441917607d94b9da2bb9416b5c3247486d737f5a4f015",
+    "scene": "c9cae761e6a9883dd07ae69c62ae90a60b93669733bc4544e42873db8b03b807",
+    "relations": "136e47374e424a4a9d900d72506f7c12cde591dc183752478be72700e2077602",
+    "assumptions": "fe251e537813a78cd211e13a5b2f39223ebf24c9b81f37a88218bdb5eeb46d73",
+    "model:circulate@0.1": "abf46a48d8b3644159668144e9c3aa7fae3426046589ef9825595fec41a90b8c",
+    "model:clamp@0.1": "61854f4cd05f64d2f70f3fdfb055fa36b69823138010762e2b24eaafd309d775",
+    "model:drive@0.1": "5b02e579d0846c1c9982078265abb5c3c0ea36e68adb4d4372319dc5ec2ae5a8",
+    "model:emit@0.1": "6b6f008cdba052755d529f6fca355a75b59f888600694894d9d4b4c1095fa431",
+    "model:index@0.1": "73481fee809a01ab69eea8ed54f56ee141037a4cacb203afc286d933552376c3",
+    "model:lift@0.1": "a52947310e7427610bf8713d28234d0892bb1eb06a68d0ef20c664ecef0fd19b",
+    "model:process@0.1": "0a31d4a2c1997c260ba0e810299d1b858af3f5cd25c91d4ac656b42eae87faaa",
+    "model:transfer@0.1": "c27b9f854d4ccf727236ba4d221838738ff090bf8424f9d7da67754c5449af1d",
+    "model:transport@0.1": "d5287283423b2786e96cd97903c188ca5c35b0301fe5bf3f9b7f2f5e6a83f0bd",
+    "model:unclamp@0.1": "f2d883d71a81b7a8235f76f9a1a526f3a725ac94ebb7d0fffeb081d524ea9ee1",
+    "contract:carrier@0.1": "5c66310520e168634525d5114bcab97cd8043d258301c97df1979e23c99714fc",
+    "contract:conveyor@0.1": "03c9b8e306c0935bde3c4e7d5a5131eee9553bf578ce11c195d9d1f4471a8fba",
+    "contract:deburring_station@0.1": "cbe74c060504a347921039017cc77d6189cd3979563954b33ae85d5c0643d7ee",
+    "contract:fixture@0.1": "4cf4ccec99b2d8f7587fe9017503717e8de229f0bafcfff226a1f5dfdaa8ad2f",
+    "contract:lift_table@0.1": "f06ed8dac97835df122c0aa392f9db55f27c5a53f1852030108a467e0e0cb7c4",
+    "contract:loop_conveyor@0.1": "b2838274687f78b7a1728a50199e869f078f945d8e9ea966ed7343f86fb05b37",
+    "contract:machining_station@0.1": "3cbf429cf75f264ae8c8b81b03468269a540a63487eb1965089dfc5e7ec72b4b",
+    "contract:material@0.1": "779eab526eca684c40ea2a6df7996aef3da26cb88a68ddd717bc02ac3fa9de5c",
+    "contract:robot_arm@0.1": "4051ddc544d85c68911b2895b1b362c5743856ac8579338d16d030c4e22a4c9c",
+    "contract:source@0.1": "b07ce0bf6ffcda8607de0cab8e72f5a89a32a52c7a9c3d98858644b4b591f96c",
+    "contract:storage@0.1": "fd0db9d436c0a2671e87dcfea0aa82607cd3eb344ac6b4bb21cee5d83278cbac",
+    "contract:storage_transfer@0.1": "1467c576fa9c5d9a1534231c50855ee67b4b65091dc1a3e740bd3beb8106cd0a",
+    "contract:turntable@0.1": "c98f5bc92ccc5dde6ce4f7dbca657dcc12d9ff96bfc0babae64750a5d5c72e38",
+    "contract:welding_station@0.1": "17f6a3da981ebfa6ca2283ab672fef954b47cb5a0df0378c1e8b9df181d1c4a4",
+    "service:external-events.json": "a22367781fc02cd570c8c94b42e58772834775f251470400c87abedd8a0d00ea",
+    "service:handoff.json": "fd1e4ac93a6949c01a993e1f3ee2ddf8edcccc93eb16ff13a9c69271bad37473",
+    "service:registry.json": "c4d5306d7603dc44d0986c76bf5ec8d71aff24de530c12814b1a314f5d7426e2",
+    "service:request-protocol.json": "54c8d1fecbf9c614e4e79d00758b854089385814078db9eb405b909aabd32f42",
+    "service:resources.json": "0e2d341d0f5c219f9d216b954499cfc6636ac16111d7dc897f59f5ea5aa266f5",
+    "service:world.json": "e9aa2999ae8ddf148b3687e0f96bc8dfdf33cfad556a1d4bc111977a207fe517",
+    "execution_profile": "e6dee1a7ed4d92410fd055227c54031e8d8faeaa3ad80785be7d0033d59bcb80",
+    "environment_profile": "172421fb8b9b160c124af0ada8b923099cd9b5f7110ae4ca9f1c44fe3a11c1f2"
+  },
+  "implementation_hashes": {
+    "budgets.py": "d3cdd311e5e597b365ef012939e358eef880deac3d5e23302b5924dc1df14af9",
+    "channel.py": "c9897a731237c9befd6b97dcdfa7bdebd91df946279bf37ca3736e9b1f0d6a8b",
+    "cli.py": "50894ff880cf9d42cc153d2f954cacdf7016c7b21a4eb69aeebd783eae4b1bdf",
+    "core.py": "c937bd7e410b5118f057b2bce68812816b31c84b627ba93bd38421028bc204cd",
+    "events.py": "33aa60c869d06011c13e8d9a9d35a861cca83d47e1f52dc9e1860b558d9184f4",
+    "expressions.py": "333487e8ce364f1941b6db61c313d828ffde9a5a12915e74b4ac7dbbd0c4eaa2",
+    "frontend.py": "d081814f69917bff9a4fd2c99cc231626b8d9ae8fa9fc8dbe54db5d995e61b6e",
+    "model.py": "c8053d5a078aa25859efe2ba269328770225a543b51cb2cb407192bb0e9b1ce0",
+    "monitor.py": "de53e9f3930c8ed54339e3503ca5f0da762e4858926b8ace4748a5362656ad11",
+    "pipeline.py": "2d7a8958e839193abe0be5fd1c57f1fc744e894a16643e8f6fc07625bb8b8701",
+    "plant.py": "69858ef305084eeec1fea4c95b0e34be13a1ba0549236a813bf243ea51db6841",
+    "properties.py": "33c73bac198f334ea1d08ac3f1c961a873dac593a63c258f82a7c65aad096d85",
+    "query.py": "0f7d354efa964d71ec2541d09140e7c080a092d1a07df511591afb81578d3dae",
+    "search.py": "6b9810312882e814f530c47dcdc4882003701007ed4a8a7dbdfddfb34585cdf5",
+    "semantics.json": "76b9e24026c37346a4698833f85d0be8a666e5509879184081442c96425b0b91",
+    "state_store.py": "3d7e564fc14fd45747721facbd6dff2df4cdf557ceb5e20774b52e75548850a2",
+    "__init__.py": "64b18e4470ab2d134241c03a1ae369a61f18e9ef2812a3008bc3816b44cf215f"
+  },
+  "optimization": "portfolio",
+  "results": [
+    {
+      "query_id": "20de08aa48c84d45a1ee97463277f3da2f08b86fe1f02a88cdbaab69c513357e",
+      "property_id": "V01",
+      "verdict": "HOLDS",
+      "vacuous": true,
+      "trigger_reachability": "UNREACHABLE"
+    },
+    {
+      "query_id": "689b5e7c693a5b109e2b186acd78d8a9d80060ddcc68027fc76e352d0e1b77ab",
+      "property_id": "V02",
+      "verdict": "HOLDS",
+      "vacuous": true,
+      "trigger_reachability": "UNREACHABLE"
+    },
+    {
+      "query_id": "465565933e6b387145bc8de2e37165fbd8ee30e42ee60ea84033ef944c3a9489",
+      "property_id": "V03",
+      "verdict": "HOLDS",
+      "vacuous": false,
+      "trigger_reachability": "REACHABLE"
+    },
+    {
+      "query_id": "500cda0ffd2ef59d2b21652bd319f1e766bec8ee57359b5a747d8d0af1bf2835",
+      "property_id": "V04",
+      "verdict": "HOLDS",
+      "vacuous": true,
+      "trigger_reachability": "UNREACHABLE"
+    },
+    {
+      "query_id": "e9c1a7ad8cff9170fc1d3f1ee8c70629ac4db74e43dba70830b08ced5c722714",
+      "property_id": "V05",
+      "verdict": "HOLDS",
+      "vacuous": false,
+      "trigger_reachability": "REACHABLE"
+    },
+    {
+      "query_id": "7e80a609cf6c5df1ee8eb12fd854d4a3c389e6953e9518eee36f8af973c10c2c",
+      "property_id": "V06",
+      "verdict": "HOLDS",
+      "vacuous": false,
+      "trigger_reachability": "REACHABLE"
+    },
+    {
+      "query_id": "18bed02faaabb3c1b9b56d1437d6d89b9d20c4d28344457d4f6a06589d836bfb",
+      "property_id": "V07",
+      "verdict": "NOT_APPLICABLE",
+      "vacuous": null,
+      "trigger_reachability": "UNKNOWN"
+    },
+    {
+      "query_id": "b3a40816a56ece62d3736519747e47cc133014987745b5da92dd56ff439e5488",
+      "property_id": "V08",
+      "verdict": "HOLDS",
+      "vacuous": true,
+      "trigger_reachability": "UNREACHABLE"
+    },
+    {
+      "query_id": "fe85942ce7a784e1a0ef1aa3b1eae1b9d7a1b13cd793647e44baf26d471f0be3",
+      "property_id": "V09",
+      "verdict": "VIOLATED",
+      "vacuous": false,
+      "trigger_reachability": "REACHABLE",
+      "witness_tick": 8
+    },
+    {
+      "query_id": "e2af5c4e26ab275ce059c25e3c4224528d96885ab267a0079fa904ec2fcbc5ca",
+      "property_id": "V10a",
+      "verdict": "UNREACHABLE",
+      "vacuous": false,
+      "trigger_reachability": "UNREACHABLE"
+    },
+    {
+      "query_id": "c18cb4e43bb677e4c5619e57fdadc12b22b1cfc467c4987c7bc6b458921022ca",
+      "property_id": "V10b",
+      "verdict": "HOLDS",
+      "vacuous": true,
+      "trigger_reachability": "UNREACHABLE"
+    },
+    {
+      "query_id": "dee21aacb8490ea8ea1588610e9efe023ca4d36615b1ec8b0cf6d4383d011f69",
+      "property_id": "V01",
+      "verdict": "HOLDS",
+      "vacuous": true,
+      "trigger_reachability": "UNREACHABLE"
+    },
+    {
+      "query_id": "3f4a9e09cc7f31d1e9bd9ec507b9edc0f75e414949d2642fa42f849aca3e7514",
+      "property_id": "V02",
+      "verdict": "HOLDS",
+      "vacuous": true,
+      "trigger_reachability": "UNREACHABLE"
+    },
+    {
+      "query_id": "aed8e1106d46af1aa42e2fa880a13504cd77f2a23b550309a51560d1c2268c41",
+      "property_id": "V03",
+      "verdict": "HOLDS",
+      "vacuous": false,
+      "trigger_reachability": "REACHABLE"
+    },
+    {
+      "query_id": "7317d991cb0635c3cedb54ff78bfd57ce9905c9971506e2e0d0fa6f444b61ce9",
+      "property_id": "V04",
+      "verdict": "HOLDS",
+      "vacuous": true,
+      "trigger_reachability": "UNREACHABLE"
+    },
+    {
+      "query_id": "ef36881cfb96f4343de58359407410b423d32b090e2bee1c2aad57f9961c6d72",
+      "property_id": "V05",
+      "verdict": "HOLDS",
+      "vacuous": false,
+      "trigger_reachability": "REACHABLE"
+    },
+    {
+      "query_id": "33b99ec2b89c2a277ac1be981e7c6fc8c2651ae7a483a9e0c04374091358b993",
+      "property_id": "V06",
+      "verdict": "HOLDS",
+      "vacuous": false,
+      "trigger_reachability": "REACHABLE"
+    },
+    {
+      "query_id": "89b4c732ff309a08fddc2686d5863f83f4f02085ca1550fce41ce3f64ce7339b",
+      "property_id": "V07",
+      "verdict": "NOT_APPLICABLE",
+      "vacuous": null,
+      "trigger_reachability": "UNKNOWN"
+    },
+    {
+      "query_id": "4f8a310107da0e102d436a3575af370c68fd46148dd71734fd5772116c9d5728",
+      "property_id": "V08",
+      "verdict": "HOLDS",
+      "vacuous": true,
+      "trigger_reachability": "UNREACHABLE"
+    },
+    {
+      "query_id": "bed48baa437d81fabb1703c4fed230bda9fd35d40e1cba2104e7b215c58ef28f",
+      "property_id": "V09",
+      "verdict": "VIOLATED",
+      "vacuous": false,
+      "trigger_reachability": "REACHABLE",
+      "witness_tick": 8
+    },
+    {
+      "query_id": "95c118236275f1355bf96ee78fe9e15392bba1c86f5e82af0c36f9268ea869e8",
+      "property_id": "V10a",
+      "verdict": "UNREACHABLE",
+      "vacuous": false,
+      "trigger_reachability": "UNREACHABLE"
+    },
+    {
+      "query_id": "d68927f21b08794d9c47cfdc95d71976e24621e8e70288274fa8eaf8f8389f81",
+      "property_id": "V10b",
+      "verdict": "HOLDS",
+      "vacuous": true,
+      "trigger_reachability": "UNREACHABLE"
+    },
+    {
+      "query_id": "2be4df5e2eae091c8f224b3fcd1e316959d1b071c9d14b0d5b60e30cd377601a",
+      "property_id": "V01",
+      "verdict": "HOLDS",
+      "vacuous": true,
+      "trigger_reachability": "UNREACHABLE"
+    },
+    {
+      "query_id": "1c2f92ee3c3c645ae5d421bb58a93dab42a34d72493f1ba5069b522f757a304a",
+      "property_id": "V02",
+      "verdict": "HOLDS",
+      "vacuous": true,
+      "trigger_reachability": "UNREACHABLE"
+    },
+    {
+      "query_id": "2fc052ef7a6d1e0559f7b5f3e11d34aa5d35fe21fdfc07a185742548e019e54d",
+      "property_id": "V03",
+      "verdict": "HOLDS",
+      "vacuous": false,
+      "trigger_reachability": "REACHABLE"
+    },
+    {
+      "query_id": "ed9acb3ef2f95976331bf2fb2ac54f30ff1bbd3b236c6753a7edd8982182d57d",
+      "property_id": "V04",
+      "verdict": "HOLDS",
+      "vacuous": true,
+      "trigger_reachability": "UNREACHABLE"
+    },
+    {
+      "query_id": "7933cb1b8fc4f8be0b8fb1f02a2f1b7a3309b3f0083cc46f5564abdd1989e459",
+      "property_id": "V05",
+      "verdict": "HOLDS",
+      "vacuous": false,
+      "trigger_reachability": "REACHABLE"
+    },
+    {
+      "query_id": "9d95615fdd1d77ebe4e828e5fec961c5362830ff7703ceaaae0626b94e33709b",
+      "property_id": "V06",
+      "verdict": "HOLDS",
+      "vacuous": false,
+      "trigger_reachability": "REACHABLE"
+    },
+    {
+      "query_id": "5a0bf744c464917bdf8cced30d9a6576f5601aea90ab3320bcd7dcef39540b32",
+      "property_id": "V07",
+      "verdict": "NOT_APPLICABLE",
+      "vacuous": null,
+      "trigger_reachability": "UNKNOWN"
+    },
+    {
+      "query_id": "627cf12553ecf5d87ce2456e3770dacc1cfbc1ce5468193303e2701c25d03afe",
+      "property_id": "V08",
+      "verdict": "HOLDS",
+      "vacuous": true,
+      "trigger_reachability": "UNREACHABLE"
+    },
+    {
+      "query_id": "99aa98f7721f5219610eb3917373b75d0d2e0eca9d96a7dfd0394123388eff43",
+      "property_id": "V09",
+      "verdict": "VIOLATED",
+      "vacuous": false,
+      "trigger_reachability": "REACHABLE",
+      "witness_tick": 8
+    },
+    {
+      "query_id": "163eb6dcfbc2f6314e3887d402684e54e85b2a02e1b3f0330478a706c70e7e07",
+      "property_id": "V10a",
+      "verdict": "UNREACHABLE",
+      "vacuous": false,
+      "trigger_reachability": "UNREACHABLE"
+    },
+    {
+      "query_id": "beab62bef147c34ef8003a0f4ff243e814c1d50532f9855928049a3524f760c0",
+      "property_id": "V10b",
+      "verdict": "HOLDS",
+      "vacuous": true,
+      "trigger_reachability": "UNREACHABLE"
+    }
+  ],
+  "statistics": {
+    "states": 9,
+    "edges": 8,
+    "stored_edges": 0,
+    "serialized_bytes": 17816,
+    "limit": null,
+    "explored_all_prefixes": true,
+    "finite_model_closed": true,
+    "horizon": 10000,
+    "horizon_reached": false,
+    "elapsed_seconds": 0.002482000010786578,
+    "peak_sampled_rss_bytes": 86462464
+  },
+  "search_phases": [
+    {
+      "states": 9,
+      "edges": 8,
+      "stored_edges": 0,
+      "serialized_bytes": 17816,
+      "limit": "EARLY_WITNESS",
+      "explored_all_prefixes": false,
+      "finite_model_closed": false,
+      "horizon": 10000,
+      "horizon_reached": false,
+      "elapsed_seconds": 0.0026607999752741307,
+      "peak_sampled_rss_bytes": 86462464
+    },
+    {
+      "states": 9,
+      "edges": 8,
+      "stored_edges": 0,
+      "serialized_bytes": 17816,
+      "limit": null,
+      "explored_all_prefixes": true,
+      "finite_model_closed": true,
+      "horizon": 10000,
+      "horizon_reached": false,
+      "elapsed_seconds": 0.002482000010786578,
+      "peak_sampled_rss_bytes": 86462464
+    }
+  ],
+  "frontend_seconds": 0.29155829999945126,
+  "search_and_packaging_seconds": 0.008894900005543604,
+  "replay_seconds": 0.0057468999875709414,
+  "replays": {
+    "fe85942ce7a784e1a0ef1aa3b1eae1b9d7a1b13cd793647e44baf26d471f0be3": {
+      "checked_steps": 8,
+      "last_tick": 8
+    },
+    "bed48baa437d81fabb1703c4fed230bda9fd35d40e1cba2104e7b215c58ef28f": {
+      "checked_steps": 8,
+      "last_tick": 8
+    },
+    "99aa98f7721f5219610eb3917373b75d0d2e0eca9d96a7dfd0394123388eff43": {
+      "checked_steps": 8,
+      "last_tick": 8
+    }
+  },
+  "truth_source": "algorithm_output_not_oracle",
+  "comparison_admission": "REQUIRES_SEPARATE_P5_GATE"
+}

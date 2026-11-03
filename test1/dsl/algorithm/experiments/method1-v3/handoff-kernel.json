@@ -1,0 +1,945 @@
+{
+  "fixtures": [
+    {
+      "schema": "independent-handoff-kernel/0.3",
+      "config": {
+        "id": "disjoint-healthy",
+        "mode": "disjoint",
+        "faults": false,
+        "capacity": 1,
+        "max_faults": 0
+      },
+      "mutation": null,
+      "closed": true,
+      "states": 90,
+      "edges": 156,
+      "terminal_counts": {
+        "all_succeeded": 2
+      },
+      "violations": [],
+      "counterexamples": {},
+      "graph_sha256": "5d6ffc25efb4f4ed755c9e4d9ed9a876de7a2f1850d9401fa95bf4e086e30c00",
+      "scope": "Untimed two-request kernel; no whole-line timing/refinement claim",
+      "assumptions": [
+        "atomic grant and reserve",
+        "one ledger location per material",
+        "linear exactly-once phases",
+        "global failure propagation",
+        "controller cancellation allowed in fault fixtures",
+        "unknown stop can retain isolation indefinitely"
+      ]
+    },
+    {
+      "schema": "independent-handoff-kernel/0.3",
+      "config": {
+        "id": "disjoint-fault",
+        "mode": "disjoint",
+        "faults": true,
+        "capacity": 1,
+        "max_faults": 1
+      },
+      "mutation": null,
+      "closed": true,
+      "states": 2277,
+      "edges": 4409,
+      "terminal_counts": {
+        "isolated": 693,
+        "failed": 59,
+        "all_succeeded": 2
+      },
+      "violations": [],
+      "counterexamples": {},
+      "graph_sha256": "4821968e2c53cdc2c52e4c5de0e1fc905fabba22e8ce6ae4c2d82b6351de609c",
+      "scope": "Untimed two-request kernel; no whole-line timing/refinement claim",
+      "assumptions": [
+        "atomic grant and reserve",
+        "one ledger location per material",
+        "linear exactly-once phases",
+        "global failure propagation",
+        "controller cancellation allowed in fault fixtures",
+        "unknown stop can retain isolation indefinitely"
+      ]
+    },
+    {
+      "schema": "independent-handoff-kernel/0.3",
+      "config": {
+        "id": "shared_destination-healthy",
+        "mode": "shared_destination",
+        "faults": false,
+        "capacity": 1,
+        "max_faults": 0
+      },
+      "mutation": null,
+      "closed": true,
+      "states": 17,
+      "edges": 16,
+      "terminal_counts": {
+        "blocked": 2
+      },
+      "violations": [],
+      "counterexamples": {},
+      "graph_sha256": "c9f2445d27bc4794e0e195a55fe0ad10f30bf028bae3cae5ccd232dd61349238",
+      "scope": "Untimed two-request kernel; no whole-line timing/refinement claim",
+      "assumptions": [
+        "atomic grant and reserve",
+        "one ledger location per material",
+        "linear exactly-once phases",
+        "global failure propagation",
+        "controller cancellation allowed in fault fixtures",
+        "unknown stop can retain isolation indefinitely"
+      ]
+    },
+    {
+      "schema": "independent-handoff-kernel/0.3",
+      "config": {
+        "id": "shared_destination-fault",
+        "mode": "shared_destination",
+        "faults": true,
+        "capacity": 1,
+        "max_faults": 1
+      },
+      "mutation": null,
+      "closed": true,
+      "states": 140,
+      "edges": 184,
+      "terminal_counts": {
+        "isolated": 56,
+        "failed": 11,
+        "blocked": 2
+      },
+      "violations": [],
+      "counterexamples": {},
+      "graph_sha256": "1847ed7d9bbe12b712f3fbf201922afa0bd2677710a587737bec75933587d1a1",
+      "scope": "Untimed two-request kernel; no whole-line timing/refinement claim",
+      "assumptions": [
+        "atomic grant and reserve",
+        "one ledger location per material",
+        "linear exactly-once phases",
+        "global failure propagation",
+        "controller cancellation allowed in fault fixtures",
+        "unknown stop can retain isolation indefinitely"
+      ]
+    },
+    {
+      "schema": "independent-handoff-kernel/0.3",
+      "config": {
+        "id": "shared_actor-healthy",
+        "mode": "shared_actor",
+        "faults": false,
+        "capacity": 1,
+        "max_faults": 0
+      },
+      "mutation": null,
+      "closed": true,
+      "states": 33,
+      "edges": 32,
+      "terminal_counts": {
+        "all_succeeded": 2
+      },
+      "violations": [],
+      "counterexamples": {},
+      "graph_sha256": "96c6a2233a0980cdd9c94853449c55c9827e9b7ab940b639beac19b6a536d88d",
+      "scope": "Untimed two-request kernel; no whole-line timing/refinement claim",
+      "assumptions": [
+        "atomic grant and reserve",
+        "one ledger location per material",
+        "linear exactly-once phases",
+        "global failure propagation",
+        "controller cancellation allowed in fault fixtures",
+        "unknown stop can retain isolation indefinitely"
+      ]
+    },
+    {
+      "schema": "independent-handoff-kernel/0.3",
+      "config": {
+        "id": "shared_actor-fault",
+        "mode": "shared_actor",
+        "faults": true,
+        "capacity": 1,
+        "max_faults": 1
+      },
+      "mutation": null,
+      "closed": true,
+      "states": 280,
+      "edges": 368,
+      "terminal_counts": {
+        "isolated": 112,
+        "failed": 23,
+        "all_succeeded": 2
+      },
+      "violations": [],
+      "counterexamples": {},
+      "graph_sha256": "1d49f40ff912907bca4e213ecbd38b804f52971ac364e27309efe795e765908a",
+      "scope": "Untimed two-request kernel; no whole-line timing/refinement claim",
+      "assumptions": [
+        "atomic grant and reserve",
+        "one ledger location per material",
+        "linear exactly-once phases",
+        "global failure propagation",
+        "controller cancellation allowed in fault fixtures",
+        "unknown stop can retain isolation indefinitely"
+      ]
+    },
+    {
+      "schema": "independent-handoff-kernel/0.3",
+      "config": {
+        "id": "shared_material-healthy",
+        "mode": "shared_material",
+        "faults": false,
+        "capacity": 1,
+        "max_faults": 0
+      },
+      "mutation": null,
+      "closed": true,
+      "states": 17,
+      "edges": 16,
+      "terminal_counts": {
+        "blocked": 2
+      },
+      "violations": [],
+      "counterexamples": {},
+      "graph_sha256": "ace247f1a0e002cfe3ed7ffb80b7544c92f2d1595b90d98290a04a2a0ee928a1",
+      "scope": "Untimed two-request kernel; no whole-line timing/refinement claim",
+      "assumptions": [
+        "atomic grant and reserve",
+        "one ledger location per material",
+        "linear exactly-once phases",
+        "global failure propagation",
+        "controller cancellation allowed in fault fixtures",
+        "unknown stop can retain isolation indefinitely"
+      ]
+    },
+    {
+      "schema": "independent-handoff-kernel/0.3",
+      "config": {
+        "id": "shared_material-fault",
+        "mode": "shared_material",
+        "faults": true,
+        "capacity": 1,
+        "max_faults": 1
+      },
+      "mutation": null,
+      "closed": true,
+      "states": 140,
+      "edges": 184,
+      "terminal_counts": {
+        "isolated": 56,
+        "failed": 11,
+        "blocked": 2
+      },
+      "violations": [],
+      "counterexamples": {},
+      "graph_sha256": "9642af455af812809315d34b778d805376af23b4e1bb99bb671c711d48f75009",
+      "scope": "Untimed two-request kernel; no whole-line timing/refinement claim",
+      "assumptions": [
+        "atomic grant and reserve",
+        "one ledger location per material",
+        "linear exactly-once phases",
+        "global failure propagation",
+        "controller cancellation allowed in fault fixtures",
+        "unknown stop can retain isolation indefinitely"
+      ]
+    },
+    {
+      "schema": "independent-handoff-kernel/0.3",
+      "config": {
+        "id": "shared-capacity-two",
+        "mode": "shared_destination",
+        "faults": true,
+        "capacity": 2,
+        "max_faults": 1
+      },
+      "mutation": null,
+      "closed": true,
+      "states": 280,
+      "edges": 368,
+      "terminal_counts": {
+        "isolated": 112,
+        "failed": 23,
+        "all_succeeded": 2
+      },
+      "violations": [],
+      "counterexamples": {},
+      "graph_sha256": "b4e7a6648235b8f0bbe6809029789fc31be6c4be2ecd259e08efd5717ce5c54d",
+      "scope": "Untimed two-request kernel; no whole-line timing/refinement claim",
+      "assumptions": [
+        "atomic grant and reserve",
+        "one ledger location per material",
+        "linear exactly-once phases",
+        "global failure propagation",
+        "controller cancellation allowed in fault fixtures",
+        "unknown stop can retain isolation indefinitely"
+      ]
+    }
+  ],
+  "mutations": [
+    {
+      "schema": "independent-handoff-kernel/0.3",
+      "config": {
+        "id": "disjoint-fault",
+        "mode": "disjoint",
+        "faults": true,
+        "capacity": 1,
+        "max_faults": 1
+      },
+      "mutation": "release_held",
+      "closed": true,
+      "states": 2277,
+      "edges": 4409,
+      "terminal_counts": {
+        "isolated": 693,
+        "failed": 59,
+        "all_succeeded": 2
+      },
+      "violations": [
+        "active_or_isolated_request_lost_grant"
+      ],
+      "counterexamples": {
+        "active_or_isolated_request_lost_grant": [
+          {
+            "event": {
+              "kind": "request_step",
+              "request": 0,
+              "from": 0,
+              "to": 1
+            },
+            "state": {
+              "phase": [
+                1,
+                0
+              ],
+              "stage": [
+                0,
+                0
+              ],
+              "materials": {
+                "M0": {
+                  "physical": "SM0",
+                  "support": "SM0",
+                  "ledger": "SM0",
+                  "held": null
+                },
+                "M1": {
+                  "physical": "SM1",
+                  "support": "SM1",
+                  "ledger": "SM1",
+                  "held": null
+                }
+              },
+              "grants": {
+                "D0:zone": "0",
+                "M0:claim": "0",
+                "R0:motion": "0",
+                "SM0:zone": "0"
+              },
+              "reservations": {
+                "0": "D0"
+              },
+              "commits": [],
+              "abort": false,
+              "fault": null,
+              "epoch": [
+                0,
+                0
+              ],
+              "fault_count": 0,
+              "capture_error": false,
+              "erased_partial_effect": false
+            }
+          },
+          {
+            "event": {
+              "kind": "request_step",
+              "request": 0,
+              "from": 1,
+              "to": 2
+            },
+            "state": {
+              "phase": [
+                2,
+                0
+              ],
+              "stage": [
+                1,
+                0
+              ],
+              "materials": {
+                "M0": {
+                  "physical": "SM0",
+                  "support": "SM0",
+                  "ledger": "SM0",
+                  "held": "R0"
+                },
+                "M1": {
+                  "physical": "SM1",
+                  "support": "SM1",
+                  "ledger": "SM1",
+                  "held": null
+                }
+              },
+              "grants": {},
+              "reservations": {},
+              "commits": [],
+              "abort": false,
+              "fault": null,
+              "epoch": [
+                0,
+                0
+              ],
+              "fault_count": 0,
+              "capture_error": false,
+              "erased_partial_effect": false
+            }
+          }
+        ]
+      },
+      "graph_sha256": "38cb3689c1afd6009ecd98e5aa44a5966e4c2422ccc5d872c10b707e3078e1e6",
+      "scope": "Untimed two-request kernel; no whole-line timing/refinement claim",
+      "assumptions": [
+        "atomic grant and reserve",
+        "one ledger location per material",
+        "linear exactly-once phases",
+        "global failure propagation",
+        "controller cancellation allowed in fault fixtures",
+        "unknown stop can retain isolation indefinitely"
+      ]
+    },
+    {
+      "schema": "independent-handoff-kernel/0.3",
+      "config": {
+        "id": "disjoint-fault",
+        "mode": "disjoint",
+        "faults": true,
+        "capacity": 1,
+        "max_faults": 1
+      },
+      "mutation": "rollback",
+      "closed": true,
+      "states": 2421,
+      "edges": 4521,
+      "terminal_counts": {
+        "isolated": 749,
+        "failed": 91,
+        "all_succeeded": 2
+      },
+      "violations": [
+        "failure_rolled_back_physical_effect"
+      ],
+      "counterexamples": {
+        "failure_rolled_back_physical_effect": [
+          {
+            "event": {
+              "kind": "request_step",
+              "request": 0,
+              "from": 0,
+              "to": 1
+            },
+            "state": {
+              "phase": [
+                1,
+                0
+              ],
+              "stage": [
+                0,
+                0
+              ],
+              "materials": {
+                "M0": {
+                  "physical": "SM0",
+                  "support": "SM0",
+                  "ledger": "SM0",
+                  "held": null
+                },
+                "M1": {
+                  "physical": "SM1",
+                  "support": "SM1",
+                  "ledger": "SM1",
+                  "held": null
+                }
+              },
+              "grants": {
+                "D0:zone": "0",
+                "M0:claim": "0",
+                "R0:motion": "0",
+                "SM0:zone": "0"
+              },
+              "reservations": {
+                "0": "D0"
+              },
+              "commits": [],
+              "abort": false,
+              "fault": null,
+              "epoch": [
+                0,
+                0
+              ],
+              "fault_count": 0,
+              "capture_error": false,
+              "erased_partial_effect": false
+            }
+          },
+          {
+            "event": {
+              "kind": "request_step",
+              "request": 0,
+              "from": 1,
+              "to": 2
+            },
+            "state": {
+              "phase": [
+                2,
+                0
+              ],
+              "stage": [
+                1,
+                0
+              ],
+              "materials": {
+                "M0": {
+                  "physical": "SM0",
+                  "support": "SM0",
+                  "ledger": "SM0",
+                  "held": "R0"
+                },
+                "M1": {
+                  "physical": "SM1",
+                  "support": "SM1",
+                  "ledger": "SM1",
+                  "held": null
+                }
+              },
+              "grants": {
+                "D0:zone": "0",
+                "M0:claim": "0",
+                "R0:motion": "0",
+                "SM0:zone": "0"
+              },
+              "reservations": {
+                "0": "D0"
+              },
+              "commits": [],
+              "abort": false,
+              "fault": null,
+              "epoch": [
+                0,
+                0
+              ],
+              "fault_count": 0,
+              "capture_error": false,
+              "erased_partial_effect": false
+            }
+          },
+          {
+            "event": {
+              "kind": "permission_loss",
+              "request": 0
+            },
+            "state": {
+              "phase": [
+                8,
+                9
+              ],
+              "stage": [
+                1,
+                0
+              ],
+              "materials": {
+                "M0": {
+                  "physical": "SM0",
+                  "support": "SM0",
+                  "ledger": "SM0",
+                  "held": null
+                },
+                "M1": {
+                  "physical": "SM1",
+                  "support": "SM1",
+                  "ledger": "SM1",
+                  "held": null
+                }
+              },
+              "grants": {
+                "D0:zone": "0",
+                "M0:claim": "0",
+                "R0:motion": "0",
+                "SM0:zone": "0"
+              },
+              "reservations": {
+                "0": "D0"
+              },
+              "commits": [],
+              "abort": true,
+              "fault": {
+                "kind": "permission_loss",
+                "request": 0
+              },
+              "epoch": [
+                0,
+                0
+              ],
+              "fault_count": 1,
+              "capture_error": false,
+              "erased_partial_effect": true
+            }
+          }
+        ]
+      },
+      "graph_sha256": "48bff5c2ae9c39df1bf4b432983821b182d47481ebd4ab602d4cb144e8fb3061",
+      "scope": "Untimed two-request kernel; no whole-line timing/refinement claim",
+      "assumptions": [
+        "atomic grant and reserve",
+        "one ledger location per material",
+        "linear exactly-once phases",
+        "global failure propagation",
+        "controller cancellation allowed in fault fixtures",
+        "unknown stop can retain isolation indefinitely"
+      ]
+    },
+    {
+      "schema": "independent-handoff-kernel/0.3",
+      "config": {
+        "id": "disjoint-fault",
+        "mode": "disjoint",
+        "faults": true,
+        "capacity": 1,
+        "max_faults": 1
+      },
+      "mutation": "duplicate_commit",
+      "closed": true,
+      "states": 2277,
+      "edges": 4409,
+      "terminal_counts": {
+        "isolated": 693,
+        "failed": 59,
+        "all_succeeded": 2
+      },
+      "violations": [
+        "duplicate_commit"
+      ],
+      "counterexamples": {
+        "duplicate_commit": [
+          {
+            "event": {
+              "kind": "request_step",
+              "request": 0,
+              "from": 0,
+              "to": 1
+            },
+            "state": {
+              "phase": [
+                1,
+                0
+              ],
+              "stage": [
+                0,
+                0
+              ],
+              "materials": {
+                "M0": {
+                  "physical": "SM0",
+                  "support": "SM0",
+                  "ledger": "SM0",
+                  "held": null
+                },
+                "M1": {
+                  "physical": "SM1",
+                  "support": "SM1",
+                  "ledger": "SM1",
+                  "held": null
+                }
+              },
+              "grants": {
+                "D0:zone": "0",
+                "M0:claim": "0",
+                "R0:motion": "0",
+                "SM0:zone": "0"
+              },
+              "reservations": {
+                "0": "D0"
+              },
+              "commits": [],
+              "abort": false,
+              "fault": null,
+              "epoch": [
+                0,
+                0
+              ],
+              "fault_count": 0,
+              "capture_error": false,
+              "erased_partial_effect": false
+            }
+          },
+          {
+            "event": {
+              "kind": "request_step",
+              "request": 0,
+              "from": 1,
+              "to": 2
+            },
+            "state": {
+              "phase": [
+                2,
+                0
+              ],
+              "stage": [
+                1,
+                0
+              ],
+              "materials": {
+                "M0": {
+                  "physical": "SM0",
+                  "support": "SM0",
+                  "ledger": "SM0",
+                  "held": "R0"
+                },
+                "M1": {
+                  "physical": "SM1",
+                  "support": "SM1",
+                  "ledger": "SM1",
+                  "held": null
+                }
+              },
+              "grants": {
+                "D0:zone": "0",
+                "M0:claim": "0",
+                "R0:motion": "0",
+                "SM0:zone": "0"
+              },
+              "reservations": {
+                "0": "D0"
+              },
+              "commits": [],
+              "abort": false,
+              "fault": null,
+              "epoch": [
+                0,
+                0
+              ],
+              "fault_count": 0,
+              "capture_error": false,
+              "erased_partial_effect": false
+            }
+          },
+          {
+            "event": {
+              "kind": "request_step",
+              "request": 0,
+              "from": 2,
+              "to": 3
+            },
+            "state": {
+              "phase": [
+                3,
+                0
+              ],
+              "stage": [
+                2,
+                0
+              ],
+              "materials": {
+                "M0": {
+                  "physical": "R0.tool",
+                  "support": "R0.tool",
+                  "ledger": "R0.tool",
+                  "held": "R0"
+                },
+                "M1": {
+                  "physical": "SM1",
+                  "support": "SM1",
+                  "ledger": "SM1",
+                  "held": null
+                }
+              },
+              "grants": {
+                "D0:zone": "0",
+                "M0:claim": "0",
+                "R0:motion": "0",
+                "SM0:zone": "0"
+              },
+              "reservations": {
+                "0": "D0"
+              },
+              "commits": [],
+              "abort": false,
+              "fault": null,
+              "epoch": [
+                0,
+                0
+              ],
+              "fault_count": 0,
+              "capture_error": false,
+              "erased_partial_effect": false
+            }
+          },
+          {
+            "event": {
+              "kind": "request_step",
+              "request": 0,
+              "from": 3,
+              "to": 4
+            },
+            "state": {
+              "phase": [
+                4,
+                0
+              ],
+              "stage": [
+                3,
+                0
+              ],
+              "materials": {
+                "M0": {
+                  "physical": "D0",
+                  "support": "D0",
+                  "ledger": "R0.tool",
+                  "held": "R0"
+                },
+                "M1": {
+                  "physical": "SM1",
+                  "support": "SM1",
+                  "ledger": "SM1",
+                  "held": null
+                }
+              },
+              "grants": {
+                "D0:zone": "0",
+                "M0:claim": "0",
+                "R0:motion": "0",
+                "SM0:zone": "0"
+              },
+              "reservations": {
+                "0": "D0"
+              },
+              "commits": [],
+              "abort": false,
+              "fault": null,
+              "epoch": [
+                0,
+                0
+              ],
+              "fault_count": 0,
+              "capture_error": false,
+              "erased_partial_effect": false
+            }
+          },
+          {
+            "event": {
+              "kind": "request_step",
+              "request": 0,
+              "from": 4,
+              "to": 5
+            },
+            "state": {
+              "phase": [
+                5,
+                0
+              ],
+              "stage": [
+                4,
+                0
+              ],
+              "materials": {
+                "M0": {
+                  "physical": "D0",
+                  "support": "D0",
+                  "ledger": "R0.tool",
+                  "held": null
+                },
+                "M1": {
+                  "physical": "SM1",
+                  "support": "SM1",
+                  "ledger": "SM1",
+                  "held": null
+                }
+              },
+              "grants": {
+                "D0:zone": "0",
+                "M0:claim": "0",
+                "R0:motion": "0",
+                "SM0:zone": "0"
+              },
+              "reservations": {
+                "0": "D0"
+              },
+              "commits": [],
+              "abort": false,
+              "fault": null,
+              "epoch": [
+                0,
+                0
+              ],
+              "fault_count": 0,
+              "capture_error": false,
+              "erased_partial_effect": false
+            }
+          },
+          {
+            "event": {
+              "kind": "request_step",
+              "request": 0,
+              "from": 5,
+              "to": 6
+            },
+            "state": {
+              "phase": [
+                6,
+                0
+              ],
+              "stage": [
+                5,
+                0
+              ],
+              "materials": {
+                "M0": {
+                  "physical": "D0",
+                  "support": "D0",
+                  "ledger": "D0",
+                  "held": null
+                },
+                "M1": {
+                  "physical": "SM1",
+                  "support": "SM1",
+                  "ledger": "SM1",
+                  "held": null
+                }
+              },
+              "grants": {
+                "D0:zone": "0",
+                "M0:claim": "0",
+                "R0:motion": "0",
+                "SM0:zone": "0"
+              },
+              "reservations": {},
+              "commits": [
+                "0",
+                "0"
+              ],
+              "abort": false,
+              "fault": null,
+              "epoch": [
+                0,
+                0
+              ],
+              "fault_count": 0,
+              "capture_error": false,
+              "erased_partial_effect": false
+            }
+          }
+        ]
+      },
+      "graph_sha256": "e7f11567d7df960e4d78fdccf2e627bb322920f5ea560432814bbe2ed2818337",
+      "scope": "Untimed two-request kernel; no whole-line timing/refinement claim",
+      "assumptions": [
+        "atomic grant and reserve",
+        "one ledger location per material",
+        "linear exactly-once phases",
+        "global failure propagation",
+        "controller cancellation allowed in fault fixtures",
+        "unknown stop can retain isolation indefinitely"
+      ]
+    }
+  ],
+  "complete": true,
+  "invariants_hold": true,
+  "all_mutations_detected": true,
+  "whole_line_truth_complete": false
+}

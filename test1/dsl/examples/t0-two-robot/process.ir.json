@@ -1,0 +1,246 @@
+{
+  "ir_version": "0.1",
+  "language": "ac-process/0.1",
+  "process_id": "t0_two_robot",
+  "environment_ref": "cell.design.json",
+  "execution_profile_ref": "fixed_60hz",
+  "entry": "main",
+  "conditions": {
+    "c1_pick_ready": {
+      "kind": "all",
+      "operands": [
+        {
+          "kind": "is",
+          "read": {
+            "source": "observation",
+            "owner_ref": "c1",
+            "key": "subject_at_exit",
+            "subject_ref": "material",
+            "request_node_ref": "arrive_1"
+          },
+          "equals": {
+            "kind": "boolean",
+            "value": true
+          }
+        },
+        {
+          "kind": "is",
+          "read": {
+            "source": "observation",
+            "owner_ref": "c1",
+            "key": "surface_stopped"
+          },
+          "equals": {
+            "kind": "boolean",
+            "value": true
+          }
+        }
+      ]
+    },
+    "final_goal": {
+      "kind": "all",
+      "operands": [
+        {
+          "kind": "is",
+          "read": {
+            "source": "observation",
+            "owner_ref": "c2",
+            "key": "subject_at_exit",
+            "subject_ref": "material",
+            "request_node_ref": "arrive_2"
+          },
+          "equals": {
+            "kind": "boolean",
+            "value": true
+          }
+        },
+        {
+          "kind": "is",
+          "read": {
+            "source": "observation",
+            "owner_ref": "c1",
+            "key": "surface_stopped"
+          },
+          "equals": {
+            "kind": "boolean",
+            "value": true
+          }
+        },
+        {
+          "kind": "is",
+          "read": {
+            "source": "observation",
+            "owner_ref": "c2",
+            "key": "surface_stopped"
+          },
+          "equals": {
+            "kind": "boolean",
+            "value": true
+          }
+        },
+        {
+          "kind": "is",
+          "read": {
+            "source": "observation",
+            "owner_ref": "handoff",
+            "key": "both_tools_empty"
+          },
+          "equals": {
+            "kind": "boolean",
+            "value": true
+          }
+        },
+        {
+          "kind": "is",
+          "read": {
+            "source": "observation",
+            "owner_ref": "handoff",
+            "key": "holder_matches_target",
+            "subject_ref": "material",
+            "request_node_ref": "bridge"
+          },
+          "equals": {
+            "kind": "boolean",
+            "value": true
+          }
+        },
+        {
+          "kind": "is",
+          "read": {
+            "source": "observation",
+            "owner_ref": "handoff",
+            "key": "supported_at_target",
+            "subject_ref": "material",
+            "request_node_ref": "arrive_2"
+          },
+          "equals": {
+            "kind": "boolean",
+            "value": true
+          }
+        }
+      ]
+    }
+  },
+  "nodes": [
+    {
+      "node_id": "main",
+      "kind": "seq",
+      "children": [
+        "load",
+        "feed_1",
+        "recheck_1",
+        "bridge",
+        "feed_2",
+        "verify"
+      ]
+    },
+    {
+      "node_id": "load",
+      "kind": "invoke",
+      "target_ref": "r1",
+      "behavior_id": "transfer_material",
+      "arguments": {
+        "material": {
+          "kind": "binding",
+          "binding_ref": "material"
+        },
+        "source": {
+          "kind": "binding",
+          "binding_ref": "source_station"
+        },
+        "target": {
+          "kind": "binding",
+          "binding_ref": "c1_entry"
+        }
+      },
+      "policy_ref": "normal"
+    },
+    {
+      "node_id": "feed_1",
+      "kind": "with-control",
+      "control_ref": "c1_drive",
+      "policy_ref": "normal",
+      "child": "arrive_1"
+    },
+    {
+      "node_id": "arrive_1",
+      "kind": "invoke",
+      "target_ref": "c1",
+      "behavior_id": "transport_to_exit",
+      "arguments": {
+        "subject_id": {
+          "kind": "index",
+          "registry_ref": "subjects",
+          "binding_ref": "material"
+        }
+      },
+      "policy_ref": "normal"
+    },
+    {
+      "node_id": "recheck_1",
+      "kind": "await",
+      "condition": {
+        "kind": "ref",
+        "condition_ref": "c1_pick_ready"
+      },
+      "timeout": {
+        "value": "2",
+        "unit": "s"
+      }
+    },
+    {
+      "node_id": "bridge",
+      "kind": "invoke",
+      "target_ref": "r2",
+      "behavior_id": "transfer_material",
+      "arguments": {
+        "material": {
+          "kind": "binding",
+          "binding_ref": "material"
+        },
+        "source": {
+          "kind": "binding",
+          "binding_ref": "c1_exit"
+        },
+        "target": {
+          "kind": "binding",
+          "binding_ref": "c2_entry"
+        }
+      },
+      "policy_ref": "normal"
+    },
+    {
+      "node_id": "feed_2",
+      "kind": "with-control",
+      "control_ref": "c2_drive",
+      "policy_ref": "normal",
+      "child": "arrive_2"
+    },
+    {
+      "node_id": "arrive_2",
+      "kind": "invoke",
+      "target_ref": "c2",
+      "behavior_id": "transport_to_exit",
+      "arguments": {
+        "subject_id": {
+          "kind": "index",
+          "registry_ref": "subjects",
+          "binding_ref": "material"
+        }
+      },
+      "policy_ref": "normal"
+    },
+    {
+      "node_id": "verify",
+      "kind": "await",
+      "condition": {
+        "kind": "ref",
+        "condition_ref": "final_goal"
+      },
+      "timeout": {
+        "value": "2",
+        "unit": "s"
+      }
+    }
+  ]
+}

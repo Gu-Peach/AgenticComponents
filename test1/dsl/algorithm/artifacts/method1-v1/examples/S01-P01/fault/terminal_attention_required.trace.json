@@ -1,0 +1,3255 @@
+{
+  "model_version": "acverify-tick/0.1",
+  "reduction": "clock",
+  "initial": {
+    "tick": 0,
+    "world": {
+      "materials": {
+        "M1": {
+          "id": "M1",
+          "type": "workpiece",
+          "subject_index": 1,
+          "region": "P1.slot1",
+          "support": "P1.slot1",
+          "holder": "P1",
+          "held_by": null,
+          "attributes": {
+            "product_class": "A"
+          }
+        }
+      },
+      "devices": {
+        "R1": {
+          "drive": "stopped",
+          "run_command": false,
+          "held_material": null,
+          "clamped_material": null,
+          "access_closed": true,
+          "permit": true,
+          "actual_index": 0,
+          "actual_level": 0,
+          "operation_history": [],
+          "cycle_counts": {},
+          "epoch": 0
+        },
+        "R2": {
+          "drive": "stopped",
+          "run_command": false,
+          "held_material": null,
+          "clamped_material": null,
+          "access_closed": true,
+          "permit": true,
+          "actual_index": 0,
+          "actual_level": 0,
+          "operation_history": [],
+          "cycle_counts": {},
+          "epoch": 0
+        },
+        "C1": {
+          "drive": "stopped",
+          "run_command": false,
+          "held_material": null,
+          "clamped_material": null,
+          "access_closed": true,
+          "permit": true,
+          "actual_index": 0,
+          "actual_level": 0,
+          "operation_history": [],
+          "cycle_counts": {},
+          "epoch": 0
+        },
+        "C2": {
+          "drive": "stopped",
+          "run_command": false,
+          "held_material": null,
+          "clamped_material": null,
+          "access_closed": true,
+          "permit": true,
+          "actual_index": 0,
+          "actual_level": 0,
+          "operation_history": [],
+          "cycle_counts": {},
+          "epoch": 0
+        },
+        "C3": {
+          "drive": "stopped",
+          "run_command": false,
+          "held_material": null,
+          "clamped_material": null,
+          "access_closed": true,
+          "permit": true,
+          "actual_index": 0,
+          "actual_level": 0,
+          "operation_history": [],
+          "cycle_counts": {},
+          "epoch": 0
+        },
+        "P1": {
+          "drive": "stopped",
+          "run_command": false,
+          "held_material": null,
+          "clamped_material": null,
+          "access_closed": true,
+          "permit": true,
+          "actual_index": 0,
+          "actual_level": 0,
+          "operation_history": [],
+          "cycle_counts": {},
+          "epoch": 0
+        }
+      },
+      "occupancy": {
+        "R1.tool": [],
+        "R2.tool": [],
+        "C1.entry": [],
+        "C1.exit": [],
+        "C2.entry": [],
+        "C2.exit": [],
+        "C3.entry": [],
+        "C3.exit": [],
+        "P1.slot1": [
+          "M1"
+        ],
+        "P1.slot2": [],
+        "P1.slot3": [],
+        "P1.slot4": []
+      },
+      "reservations": {},
+      "grants": {},
+      "committed": [],
+      "external": {}
+    },
+    "tasks": {
+      "seq_11@": {
+        "key": "seq_11@",
+        "node": "seq_11",
+        "path": [],
+        "parent": null,
+        "scope": null,
+        "kind": "seq",
+        "phase": "new",
+        "created": 0,
+        "eligible": 1,
+        "children": [],
+        "cancel": false,
+        "claims": []
+      }
+    },
+    "completed": {},
+    "inbox": [],
+    "applied_events": [],
+    "fault_count": 0,
+    "lost_stop": [],
+    "abort": false,
+    "reason": "",
+    "outcome": "running",
+    "violations": []
+  },
+  "steps": [
+    {
+      "events": [],
+      "state": {
+        "tick": 1,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "P1.slot1",
+              "support": "P1.slot1",
+              "holder": "P1",
+              "held_by": null,
+              "attributes": {
+                "product_class": "A"
+              }
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C3": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "P1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "C3.entry": [],
+            "C3.exit": [],
+            "P1.slot1": [
+              "M1"
+            ],
+            "P1.slot2": [],
+            "P1.slot3": [],
+            "P1.slot4": []
+          },
+          "reservations": {},
+          "grants": {},
+          "committed": [],
+          "external": {}
+        },
+        "tasks": {
+          "seq_11@": {
+            "key": "seq_11@",
+            "node": "seq_11",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "seq_10@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0
+          },
+          "seq_10@": {
+            "key": "seq_10@",
+            "node": "seq_10",
+            "path": [],
+            "parent": "seq_11@",
+            "scope": null,
+            "kind": "seq",
+            "phase": "new",
+            "created": 1,
+            "eligible": 2,
+            "children": [],
+            "cancel": false,
+            "claims": []
+          }
+        },
+        "completed": {},
+        "inbox": [],
+        "applied_events": [],
+        "fault_count": 0,
+        "lost_stop": [],
+        "abort": false,
+        "reason": "",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [],
+      "state": {
+        "tick": 2,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "P1.slot1",
+              "support": "P1.slot1",
+              "holder": "P1",
+              "held_by": null,
+              "attributes": {
+                "product_class": "A"
+              }
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C3": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "P1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "C3.entry": [],
+            "C3.exit": [],
+            "P1.slot1": [
+              "M1"
+            ],
+            "P1.slot2": [],
+            "P1.slot3": [],
+            "P1.slot4": []
+          },
+          "reservations": {},
+          "grants": {},
+          "committed": [],
+          "external": {}
+        },
+        "tasks": {
+          "seq_11@": {
+            "key": "seq_11@",
+            "node": "seq_11",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "seq_10@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0
+          },
+          "seq_10@": {
+            "key": "seq_10@",
+            "node": "seq_10",
+            "path": [],
+            "parent": "seq_11@",
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 1,
+            "eligible": 2,
+            "children": [
+              "seq_4@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0
+          },
+          "seq_4@": {
+            "key": "seq_4@",
+            "node": "seq_4",
+            "path": [],
+            "parent": "seq_10@",
+            "scope": null,
+            "kind": "seq",
+            "phase": "new",
+            "created": 2,
+            "eligible": 3,
+            "children": [],
+            "cancel": false,
+            "claims": []
+          }
+        },
+        "completed": {},
+        "inbox": [],
+        "applied_events": [],
+        "fault_count": 0,
+        "lost_stop": [],
+        "abort": false,
+        "reason": "",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [],
+      "state": {
+        "tick": 3,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "P1.slot1",
+              "support": "P1.slot1",
+              "holder": "P1",
+              "held_by": null,
+              "attributes": {
+                "product_class": "A"
+              }
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C3": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "P1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "C3.entry": [],
+            "C3.exit": [],
+            "P1.slot1": [
+              "M1"
+            ],
+            "P1.slot2": [],
+            "P1.slot3": [],
+            "P1.slot4": []
+          },
+          "reservations": {},
+          "grants": {},
+          "committed": [],
+          "external": {}
+        },
+        "tasks": {
+          "seq_11@": {
+            "key": "seq_11@",
+            "node": "seq_11",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "seq_10@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0
+          },
+          "seq_10@": {
+            "key": "seq_10@",
+            "node": "seq_10",
+            "path": [],
+            "parent": "seq_11@",
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 1,
+            "eligible": 2,
+            "children": [
+              "seq_4@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0
+          },
+          "seq_4@": {
+            "key": "seq_4@",
+            "node": "seq_4",
+            "path": [],
+            "parent": "seq_10@",
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 2,
+            "eligible": 3,
+            "children": [
+              "source_recheck_3@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0
+          },
+          "source_recheck_3@": {
+            "key": "source_recheck_3@",
+            "node": "source_recheck_3",
+            "path": [],
+            "parent": "seq_4@",
+            "scope": null,
+            "kind": "await",
+            "phase": "new",
+            "created": 3,
+            "eligible": 4,
+            "children": [],
+            "cancel": false,
+            "claims": []
+          }
+        },
+        "completed": {},
+        "inbox": [],
+        "applied_events": [],
+        "fault_count": 0,
+        "lost_stop": [],
+        "abort": false,
+        "reason": "",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [
+        {
+          "kind": "condition_read",
+          "node": "source_recheck_3",
+          "activation": "source_recheck_3@",
+          "value": true,
+          "sample_tick": 4,
+          "source": {
+            "file": "cases/S01-P01/process.acp",
+            "start_byte": 617,
+            "end_byte": 690,
+            "line": 16,
+            "column": 11
+          }
+        }
+      ],
+      "state": {
+        "tick": 4,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "P1.slot1",
+              "support": "P1.slot1",
+              "holder": "P1",
+              "held_by": null,
+              "attributes": {
+                "product_class": "A"
+              }
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C3": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "P1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "C3.entry": [],
+            "C3.exit": [],
+            "P1.slot1": [
+              "M1"
+            ],
+            "P1.slot2": [],
+            "P1.slot3": [],
+            "P1.slot4": []
+          },
+          "reservations": {},
+          "grants": {},
+          "committed": [],
+          "external": {}
+        },
+        "tasks": {
+          "seq_11@": {
+            "key": "seq_11@",
+            "node": "seq_11",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "seq_10@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0
+          },
+          "seq_10@": {
+            "key": "seq_10@",
+            "node": "seq_10",
+            "path": [],
+            "parent": "seq_11@",
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 1,
+            "eligible": 2,
+            "children": [
+              "seq_4@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0
+          },
+          "seq_4@": {
+            "key": "seq_4@",
+            "node": "seq_4",
+            "path": [],
+            "parent": "seq_10@",
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 2,
+            "eligible": 3,
+            "children": [
+              "source_recheck_3@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0
+          },
+          "source_recheck_3@": {
+            "key": "source_recheck_3@",
+            "node": "source_recheck_3",
+            "path": [],
+            "parent": "seq_4@",
+            "scope": null,
+            "kind": "await",
+            "phase": "succeeded",
+            "children": []
+          }
+        },
+        "completed": {},
+        "inbox": [],
+        "applied_events": [],
+        "fault_count": 0,
+        "lost_stop": [],
+        "abort": false,
+        "reason": "",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [],
+      "state": {
+        "tick": 5,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "P1.slot1",
+              "support": "P1.slot1",
+              "holder": "P1",
+              "held_by": null,
+              "attributes": {
+                "product_class": "A"
+              }
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C3": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "P1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "C3.entry": [],
+            "C3.exit": [],
+            "P1.slot1": [
+              "M1"
+            ],
+            "P1.slot2": [],
+            "P1.slot3": [],
+            "P1.slot4": []
+          },
+          "reservations": {},
+          "grants": {},
+          "committed": [],
+          "external": {}
+        },
+        "tasks": {
+          "seq_11@": {
+            "key": "seq_11@",
+            "node": "seq_11",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "seq_10@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0
+          },
+          "seq_10@": {
+            "key": "seq_10@",
+            "node": "seq_10",
+            "path": [],
+            "parent": "seq_11@",
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 1,
+            "eligible": 2,
+            "children": [
+              "seq_4@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0
+          },
+          "seq_4@": {
+            "key": "seq_4@",
+            "node": "seq_4",
+            "path": [],
+            "parent": "seq_10@",
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 2,
+            "eligible": 3,
+            "children": [
+              "source_recheck_3@",
+              "transfer_material_1@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 1
+          },
+          "source_recheck_3@": {
+            "key": "source_recheck_3@",
+            "node": "source_recheck_3",
+            "path": [],
+            "parent": "seq_4@",
+            "scope": null,
+            "kind": "await",
+            "phase": "succeeded",
+            "children": []
+          },
+          "transfer_material_1@": {
+            "key": "transfer_material_1@",
+            "node": "transfer_material_1",
+            "path": [],
+            "parent": "seq_4@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "new",
+            "created": 5,
+            "eligible": 6,
+            "children": [],
+            "cancel": false,
+            "claims": [],
+            "device": "R1",
+            "args": {
+              "material": "M1",
+              "source": "P1.slot1",
+              "target": "C1.entry"
+            },
+            "model": "transfer@0.1",
+            "accepted": false,
+            "result_valid": false,
+            "stage": 0,
+            "plant_active": false,
+            "plant_done": false,
+            "pending_result": null,
+            "epoch": 0
+          }
+        },
+        "completed": {},
+        "inbox": [],
+        "applied_events": [],
+        "fault_count": 0,
+        "lost_stop": [],
+        "abort": false,
+        "reason": "",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [
+        {
+          "kind": "gate_read",
+          "node": "transfer_material_1",
+          "activation": "transfer_material_1@",
+          "value": true,
+          "source": {
+            "file": "cases/S01-P01/process.acp",
+            "start_byte": 701,
+            "end_byte": 853,
+            "line": 17,
+            "column": 11
+          }
+        },
+        {
+          "kind": "submit",
+          "node": "transfer_material_1",
+          "activation": "transfer_material_1@",
+          "source": {
+            "file": "cases/S01-P01/process.acp",
+            "start_byte": 701,
+            "end_byte": 853,
+            "line": 17,
+            "column": 11
+          }
+        }
+      ],
+      "state": {
+        "tick": 6,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "P1.slot1",
+              "support": "P1.slot1",
+              "holder": "P1",
+              "held_by": null,
+              "attributes": {
+                "product_class": "A"
+              }
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C3": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "P1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "C3.entry": [],
+            "C3.exit": [],
+            "P1.slot1": [
+              "M1"
+            ],
+            "P1.slot2": [],
+            "P1.slot3": [],
+            "P1.slot4": []
+          },
+          "reservations": {
+            "transfer_material_1@": {
+              "target": "C1.entry",
+              "material": "M1"
+            }
+          },
+          "grants": {
+            "C1.zone": "transfer_material_1@",
+            "M1.claim": "transfer_material_1@",
+            "P1.zone": "transfer_material_1@",
+            "R1.motion": "transfer_material_1@"
+          },
+          "committed": [],
+          "external": {}
+        },
+        "tasks": {
+          "seq_11@": {
+            "key": "seq_11@",
+            "node": "seq_11",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "seq_10@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0
+          },
+          "seq_10@": {
+            "key": "seq_10@",
+            "node": "seq_10",
+            "path": [],
+            "parent": "seq_11@",
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 1,
+            "eligible": 2,
+            "children": [
+              "seq_4@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0
+          },
+          "seq_4@": {
+            "key": "seq_4@",
+            "node": "seq_4",
+            "path": [],
+            "parent": "seq_10@",
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 2,
+            "eligible": 3,
+            "children": [
+              "source_recheck_3@",
+              "transfer_material_1@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 1
+          },
+          "source_recheck_3@": {
+            "key": "source_recheck_3@",
+            "node": "source_recheck_3",
+            "path": [],
+            "parent": "seq_4@",
+            "scope": null,
+            "kind": "await",
+            "phase": "succeeded",
+            "children": []
+          },
+          "transfer_material_1@": {
+            "key": "transfer_material_1@",
+            "node": "transfer_material_1",
+            "path": [],
+            "parent": "seq_4@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "requesting",
+            "created": 5,
+            "eligible": 6,
+            "children": [],
+            "cancel": false,
+            "claims": [
+              "C1.zone",
+              "M1.claim",
+              "P1.zone",
+              "R1.motion"
+            ],
+            "device": "R1",
+            "args": {
+              "material": "M1",
+              "source": "P1.slot1",
+              "target": "C1.entry"
+            },
+            "model": "transfer@0.1",
+            "accepted": false,
+            "result_valid": false,
+            "stage": 0,
+            "plant_active": true,
+            "plant_done": false,
+            "pending_result": null,
+            "epoch": 0,
+            "submit": 6,
+            "accept_sent": true,
+            "stage_start": 7
+          }
+        },
+        "completed": {},
+        "inbox": [
+          {
+            "request": "transfer_material_1@",
+            "kind": "accepted",
+            "device": "R1",
+            "subject": "M1",
+            "epoch": 0,
+            "sample_tick": 6,
+            "min_due": 7,
+            "max_due": 11
+          }
+        ],
+        "applied_events": [],
+        "fault_count": 0,
+        "lost_stop": [],
+        "abort": false,
+        "reason": "",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [
+        {
+          "kind": "plant_phase",
+          "node": "transfer_material_1",
+          "activation": "transfer_material_1@",
+          "phase": "accepted",
+          "model": "transfer@0.1",
+          "source": {
+            "file": "cases/S01-P01/process.acp",
+            "start_byte": 701,
+            "end_byte": 853,
+            "line": 17,
+            "column": 11
+          }
+        }
+      ],
+      "state": {
+        "tick": 7,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "P1.slot1",
+              "support": "P1.slot1",
+              "holder": "P1",
+              "held_by": null,
+              "attributes": {
+                "product_class": "A"
+              }
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C3": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "P1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "C3.entry": [],
+            "C3.exit": [],
+            "P1.slot1": [
+              "M1"
+            ],
+            "P1.slot2": [],
+            "P1.slot3": [],
+            "P1.slot4": []
+          },
+          "reservations": {
+            "transfer_material_1@": {
+              "target": "C1.entry",
+              "material": "M1"
+            }
+          },
+          "grants": {
+            "C1.zone": "transfer_material_1@",
+            "M1.claim": "transfer_material_1@",
+            "P1.zone": "transfer_material_1@",
+            "R1.motion": "transfer_material_1@"
+          },
+          "committed": [],
+          "external": {}
+        },
+        "tasks": {
+          "seq_11@": {
+            "key": "seq_11@",
+            "node": "seq_11",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "seq_10@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0
+          },
+          "seq_10@": {
+            "key": "seq_10@",
+            "node": "seq_10",
+            "path": [],
+            "parent": "seq_11@",
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 1,
+            "eligible": 2,
+            "children": [
+              "seq_4@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0
+          },
+          "seq_4@": {
+            "key": "seq_4@",
+            "node": "seq_4",
+            "path": [],
+            "parent": "seq_10@",
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 2,
+            "eligible": 3,
+            "children": [
+              "source_recheck_3@",
+              "transfer_material_1@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 1
+          },
+          "source_recheck_3@": {
+            "key": "source_recheck_3@",
+            "node": "source_recheck_3",
+            "path": [],
+            "parent": "seq_4@",
+            "scope": null,
+            "kind": "await",
+            "phase": "succeeded",
+            "children": []
+          },
+          "transfer_material_1@": {
+            "key": "transfer_material_1@",
+            "node": "transfer_material_1",
+            "path": [],
+            "parent": "seq_4@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "requesting",
+            "created": 5,
+            "eligible": 6,
+            "children": [],
+            "cancel": false,
+            "claims": [
+              "C1.zone",
+              "M1.claim",
+              "P1.zone",
+              "R1.motion"
+            ],
+            "device": "R1",
+            "args": {
+              "material": "M1",
+              "source": "P1.slot1",
+              "target": "C1.entry"
+            },
+            "model": "transfer@0.1",
+            "accepted": false,
+            "result_valid": false,
+            "stage": 1,
+            "plant_active": true,
+            "plant_done": false,
+            "pending_result": null,
+            "epoch": 0,
+            "submit": 6,
+            "accept_sent": true,
+            "stage_start": 8
+          }
+        },
+        "completed": {},
+        "inbox": [
+          {
+            "request": "transfer_material_1@",
+            "kind": "accepted",
+            "device": "R1",
+            "subject": "M1",
+            "epoch": 0,
+            "sample_tick": 6,
+            "min_due": 7,
+            "max_due": 11
+          }
+        ],
+        "applied_events": [],
+        "fault_count": 0,
+        "lost_stop": [],
+        "abort": false,
+        "reason": "",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [
+        {
+          "kind": "feedback",
+          "node": "transfer_material_1",
+          "activation": "transfer_material_1@",
+          "event": "accepted",
+          "valid": true,
+          "source": {
+            "file": "cases/S01-P01/process.acp",
+            "start_byte": 701,
+            "end_byte": 853,
+            "line": 17,
+            "column": 11
+          }
+        },
+        {
+          "kind": "capture",
+          "node": "transfer_material_1",
+          "activation": "transfer_material_1@",
+          "valid": true,
+          "source": {
+            "file": "cases/S01-P01/process.acp",
+            "start_byte": 701,
+            "end_byte": 853,
+            "line": 17,
+            "column": 11
+          }
+        },
+        {
+          "kind": "plant_phase",
+          "node": "transfer_material_1",
+          "activation": "transfer_material_1@",
+          "phase": "capture",
+          "model": "transfer@0.1",
+          "source": {
+            "file": "cases/S01-P01/process.acp",
+            "start_byte": 701,
+            "end_byte": 853,
+            "line": 17,
+            "column": 11
+          }
+        }
+      ],
+      "state": {
+        "tick": 8,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "P1.slot1",
+              "support": "P1.slot1",
+              "holder": "P1",
+              "held_by": "R1",
+              "attributes": {
+                "product_class": "A"
+              }
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": "M1",
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C3": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "P1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "C3.entry": [],
+            "C3.exit": [],
+            "P1.slot1": [
+              "M1"
+            ],
+            "P1.slot2": [],
+            "P1.slot3": [],
+            "P1.slot4": []
+          },
+          "reservations": {
+            "transfer_material_1@": {
+              "target": "C1.entry",
+              "material": "M1"
+            }
+          },
+          "grants": {
+            "C1.zone": "transfer_material_1@",
+            "M1.claim": "transfer_material_1@",
+            "P1.zone": "transfer_material_1@",
+            "R1.motion": "transfer_material_1@"
+          },
+          "committed": [],
+          "external": {}
+        },
+        "tasks": {
+          "seq_11@": {
+            "key": "seq_11@",
+            "node": "seq_11",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "seq_10@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0
+          },
+          "seq_10@": {
+            "key": "seq_10@",
+            "node": "seq_10",
+            "path": [],
+            "parent": "seq_11@",
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 1,
+            "eligible": 2,
+            "children": [
+              "seq_4@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0
+          },
+          "seq_4@": {
+            "key": "seq_4@",
+            "node": "seq_4",
+            "path": [],
+            "parent": "seq_10@",
+            "scope": null,
+            "kind": "seq",
+            "phase": "body",
+            "created": 2,
+            "eligible": 3,
+            "children": [
+              "source_recheck_3@",
+              "transfer_material_1@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 1
+          },
+          "source_recheck_3@": {
+            "key": "source_recheck_3@",
+            "node": "source_recheck_3",
+            "path": [],
+            "parent": "seq_4@",
+            "scope": null,
+            "kind": "await",
+            "phase": "succeeded",
+            "children": []
+          },
+          "transfer_material_1@": {
+            "key": "transfer_material_1@",
+            "node": "transfer_material_1",
+            "path": [],
+            "parent": "seq_4@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "running",
+            "created": 5,
+            "eligible": 6,
+            "children": [],
+            "cancel": false,
+            "claims": [
+              "C1.zone",
+              "M1.claim",
+              "P1.zone",
+              "R1.motion"
+            ],
+            "device": "R1",
+            "args": {
+              "material": "M1",
+              "source": "P1.slot1",
+              "target": "C1.entry"
+            },
+            "model": "transfer@0.1",
+            "accepted": true,
+            "result_valid": false,
+            "stage": 2,
+            "plant_active": true,
+            "plant_done": false,
+            "pending_result": null,
+            "epoch": 0,
+            "submit": 6,
+            "accept_sent": true,
+            "stage_start": 9,
+            "accepted_tick": 8,
+            "execute_start": 8
+          }
+        },
+        "completed": {},
+        "inbox": [],
+        "applied_events": [],
+        "fault_count": 0,
+        "lost_stop": [],
+        "abort": false,
+        "reason": "",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [
+        {
+          "kind": "fault",
+          "fault": "hold_permission_loss",
+          "node": "transfer_material_1",
+          "activation": "transfer_material_1@",
+          "source": {
+            "file": "cases/S01-P01/process.acp",
+            "start_byte": 701,
+            "end_byte": 853,
+            "line": 17,
+            "column": 11
+          }
+        },
+        {
+          "kind": "physical_stop",
+          "node": "transfer_material_1",
+          "activation": "transfer_material_1@",
+          "confirmation_lost": false,
+          "source": {
+            "file": "cases/S01-P01/process.acp",
+            "start_byte": 701,
+            "end_byte": 853,
+            "line": 17,
+            "column": 11
+          }
+        }
+      ],
+      "state": {
+        "tick": 9,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "P1.slot1",
+              "support": "P1.slot1",
+              "holder": "P1",
+              "held_by": "R1",
+              "attributes": {
+                "product_class": "A"
+              }
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": "M1",
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": false,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C3": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "P1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "C3.entry": [],
+            "C3.exit": [],
+            "P1.slot1": [
+              "M1"
+            ],
+            "P1.slot2": [],
+            "P1.slot3": [],
+            "P1.slot4": []
+          },
+          "reservations": {
+            "transfer_material_1@": {
+              "target": "C1.entry",
+              "material": "M1"
+            }
+          },
+          "grants": {
+            "C1.zone": "transfer_material_1@",
+            "M1.claim": "transfer_material_1@",
+            "P1.zone": "transfer_material_1@",
+            "R1.motion": "transfer_material_1@"
+          },
+          "committed": [],
+          "external": {}
+        },
+        "tasks": {
+          "seq_11@": {
+            "key": "seq_11@",
+            "node": "seq_11",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "cancelling",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "seq_10@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0,
+            "reason": "hold_failed:transfer_material_1"
+          },
+          "seq_10@": {
+            "key": "seq_10@",
+            "node": "seq_10",
+            "path": [],
+            "parent": "seq_11@",
+            "scope": null,
+            "kind": "seq",
+            "phase": "cancelling",
+            "created": 1,
+            "eligible": 2,
+            "children": [
+              "seq_4@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0,
+            "reason": "hold_failed:transfer_material_1"
+          },
+          "seq_4@": {
+            "key": "seq_4@",
+            "node": "seq_4",
+            "path": [],
+            "parent": "seq_10@",
+            "scope": null,
+            "kind": "seq",
+            "phase": "cancelling",
+            "created": 2,
+            "eligible": 3,
+            "children": [
+              "source_recheck_3@",
+              "transfer_material_1@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 1,
+            "reason": "hold_failed:transfer_material_1"
+          },
+          "source_recheck_3@": {
+            "key": "source_recheck_3@",
+            "node": "source_recheck_3",
+            "path": [],
+            "parent": "seq_4@",
+            "scope": null,
+            "kind": "await",
+            "phase": "succeeded",
+            "children": []
+          },
+          "transfer_material_1@": {
+            "key": "transfer_material_1@",
+            "node": "transfer_material_1",
+            "path": [],
+            "parent": "seq_4@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "stopping",
+            "created": 5,
+            "eligible": 6,
+            "children": [],
+            "cancel": false,
+            "claims": [
+              "C1.zone",
+              "M1.claim",
+              "P1.zone",
+              "R1.motion"
+            ],
+            "device": "R1",
+            "args": {
+              "material": "M1",
+              "source": "P1.slot1",
+              "target": "C1.entry"
+            },
+            "model": "transfer@0.1",
+            "accepted": true,
+            "result_valid": false,
+            "stage": 2,
+            "plant_active": false,
+            "plant_done": false,
+            "pending_result": null,
+            "epoch": 0,
+            "submit": 6,
+            "accept_sent": true,
+            "stage_start": 9,
+            "accepted_tick": 8,
+            "execute_start": 8,
+            "reason": "hold_failed:transfer_material_1",
+            "stop_start": 9,
+            "stop_ack": false,
+            "stop_sent": true
+          }
+        },
+        "completed": {},
+        "inbox": [
+          {
+            "request": "transfer_material_1@",
+            "kind": "stop",
+            "device": "R1",
+            "subject": "M1",
+            "epoch": 0,
+            "sample_tick": 9,
+            "min_due": 10,
+            "max_due": 14
+          }
+        ],
+        "applied_events": [],
+        "fault_count": 1,
+        "lost_stop": [],
+        "abort": true,
+        "reason": "hold_failed:transfer_material_1",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [
+        {
+          "kind": "feedback",
+          "node": "transfer_material_1",
+          "activation": "transfer_material_1@",
+          "event": "stop",
+          "valid": true,
+          "source": {
+            "file": "cases/S01-P01/process.acp",
+            "start_byte": 701,
+            "end_byte": 853,
+            "line": 17,
+            "column": 11
+          }
+        }
+      ],
+      "state": {
+        "tick": 10,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "P1.slot1",
+              "support": "P1.slot1",
+              "holder": "P1",
+              "held_by": "R1",
+              "attributes": {
+                "product_class": "A"
+              }
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": "M1",
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": false,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C3": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "P1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "C3.entry": [],
+            "C3.exit": [],
+            "P1.slot1": [
+              "M1"
+            ],
+            "P1.slot2": [],
+            "P1.slot3": [],
+            "P1.slot4": []
+          },
+          "reservations": {
+            "transfer_material_1@": {
+              "target": "C1.entry",
+              "material": "M1"
+            }
+          },
+          "grants": {
+            "C1.zone": "transfer_material_1@",
+            "M1.claim": "transfer_material_1@",
+            "P1.zone": "transfer_material_1@",
+            "R1.motion": "transfer_material_1@"
+          },
+          "committed": [],
+          "external": {}
+        },
+        "tasks": {
+          "seq_11@": {
+            "key": "seq_11@",
+            "node": "seq_11",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "cancelling",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "seq_10@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0,
+            "reason": "hold_failed:transfer_material_1"
+          },
+          "seq_10@": {
+            "key": "seq_10@",
+            "node": "seq_10",
+            "path": [],
+            "parent": "seq_11@",
+            "scope": null,
+            "kind": "seq",
+            "phase": "cancelling",
+            "created": 1,
+            "eligible": 2,
+            "children": [
+              "seq_4@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0,
+            "reason": "hold_failed:transfer_material_1"
+          },
+          "seq_4@": {
+            "key": "seq_4@",
+            "node": "seq_4",
+            "path": [],
+            "parent": "seq_10@",
+            "scope": null,
+            "kind": "seq",
+            "phase": "cancelling",
+            "created": 2,
+            "eligible": 3,
+            "children": [
+              "source_recheck_3@",
+              "transfer_material_1@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 1,
+            "reason": "hold_failed:transfer_material_1"
+          },
+          "source_recheck_3@": {
+            "key": "source_recheck_3@",
+            "node": "source_recheck_3",
+            "path": [],
+            "parent": "seq_4@",
+            "scope": null,
+            "kind": "await",
+            "phase": "succeeded",
+            "children": []
+          },
+          "transfer_material_1@": {
+            "key": "transfer_material_1@",
+            "node": "transfer_material_1",
+            "path": [],
+            "parent": "seq_4@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "attention",
+            "created": 5,
+            "eligible": 6,
+            "children": [],
+            "cancel": false,
+            "claims": [
+              "C1.zone",
+              "M1.claim",
+              "P1.zone",
+              "R1.motion"
+            ],
+            "device": "R1",
+            "args": {
+              "material": "M1",
+              "source": "P1.slot1",
+              "target": "C1.entry"
+            },
+            "model": "transfer@0.1",
+            "accepted": true,
+            "result_valid": false,
+            "stage": 2,
+            "plant_active": false,
+            "plant_done": false,
+            "pending_result": null,
+            "epoch": 0,
+            "submit": 6,
+            "accept_sent": true,
+            "stage_start": 9,
+            "accepted_tick": 8,
+            "execute_start": 8,
+            "reason": "hold_failed:transfer_material_1",
+            "stop_start": 9,
+            "stop_ack": true,
+            "stop_sent": true
+          }
+        },
+        "completed": {},
+        "inbox": [],
+        "applied_events": [],
+        "fault_count": 1,
+        "lost_stop": [],
+        "abort": true,
+        "reason": "hold_failed:transfer_material_1",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [],
+      "state": {
+        "tick": 11,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "P1.slot1",
+              "support": "P1.slot1",
+              "holder": "P1",
+              "held_by": "R1",
+              "attributes": {
+                "product_class": "A"
+              }
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": "M1",
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": false,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C3": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "P1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "C3.entry": [],
+            "C3.exit": [],
+            "P1.slot1": [
+              "M1"
+            ],
+            "P1.slot2": [],
+            "P1.slot3": [],
+            "P1.slot4": []
+          },
+          "reservations": {
+            "transfer_material_1@": {
+              "target": "C1.entry",
+              "material": "M1"
+            }
+          },
+          "grants": {
+            "C1.zone": "transfer_material_1@",
+            "M1.claim": "transfer_material_1@",
+            "P1.zone": "transfer_material_1@",
+            "R1.motion": "transfer_material_1@"
+          },
+          "committed": [],
+          "external": {}
+        },
+        "tasks": {
+          "seq_11@": {
+            "key": "seq_11@",
+            "node": "seq_11",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "cancelling",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "seq_10@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0,
+            "reason": "hold_failed:transfer_material_1"
+          },
+          "seq_10@": {
+            "key": "seq_10@",
+            "node": "seq_10",
+            "path": [],
+            "parent": "seq_11@",
+            "scope": null,
+            "kind": "seq",
+            "phase": "cancelling",
+            "created": 1,
+            "eligible": 2,
+            "children": [
+              "seq_4@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0,
+            "reason": "hold_failed:transfer_material_1"
+          },
+          "seq_4@": {
+            "key": "seq_4@",
+            "node": "seq_4",
+            "path": [],
+            "parent": "seq_10@",
+            "scope": null,
+            "kind": "seq",
+            "phase": "failed",
+            "children": [
+              "source_recheck_3@",
+              "transfer_material_1@"
+            ]
+          },
+          "source_recheck_3@": {
+            "key": "source_recheck_3@",
+            "node": "source_recheck_3",
+            "path": [],
+            "parent": "seq_4@",
+            "scope": null,
+            "kind": "await",
+            "phase": "succeeded",
+            "children": []
+          },
+          "transfer_material_1@": {
+            "key": "transfer_material_1@",
+            "node": "transfer_material_1",
+            "path": [],
+            "parent": "seq_4@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "attention",
+            "created": 5,
+            "eligible": 6,
+            "children": [],
+            "cancel": false,
+            "claims": [
+              "C1.zone",
+              "M1.claim",
+              "P1.zone",
+              "R1.motion"
+            ],
+            "device": "R1",
+            "args": {
+              "material": "M1",
+              "source": "P1.slot1",
+              "target": "C1.entry"
+            },
+            "model": "transfer@0.1",
+            "accepted": true,
+            "result_valid": false,
+            "stage": 2,
+            "plant_active": false,
+            "plant_done": false,
+            "pending_result": null,
+            "epoch": 0,
+            "submit": 6,
+            "accept_sent": true,
+            "stage_start": 9,
+            "accepted_tick": 8,
+            "execute_start": 8,
+            "reason": "hold_failed:transfer_material_1",
+            "stop_start": 9,
+            "stop_ack": true,
+            "stop_sent": true
+          }
+        },
+        "completed": {},
+        "inbox": [],
+        "applied_events": [],
+        "fault_count": 1,
+        "lost_stop": [],
+        "abort": true,
+        "reason": "hold_failed:transfer_material_1",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [],
+      "state": {
+        "tick": 12,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "P1.slot1",
+              "support": "P1.slot1",
+              "holder": "P1",
+              "held_by": "R1",
+              "attributes": {
+                "product_class": "A"
+              }
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": "M1",
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": false,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C3": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "P1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "C3.entry": [],
+            "C3.exit": [],
+            "P1.slot1": [
+              "M1"
+            ],
+            "P1.slot2": [],
+            "P1.slot3": [],
+            "P1.slot4": []
+          },
+          "reservations": {
+            "transfer_material_1@": {
+              "target": "C1.entry",
+              "material": "M1"
+            }
+          },
+          "grants": {
+            "C1.zone": "transfer_material_1@",
+            "M1.claim": "transfer_material_1@",
+            "P1.zone": "transfer_material_1@",
+            "R1.motion": "transfer_material_1@"
+          },
+          "committed": [],
+          "external": {}
+        },
+        "tasks": {
+          "seq_11@": {
+            "key": "seq_11@",
+            "node": "seq_11",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "cancelling",
+            "created": 0,
+            "eligible": 1,
+            "children": [
+              "seq_10@"
+            ],
+            "cancel": false,
+            "claims": [],
+            "position": 0,
+            "reason": "hold_failed:transfer_material_1"
+          },
+          "seq_10@": {
+            "key": "seq_10@",
+            "node": "seq_10",
+            "path": [],
+            "parent": "seq_11@",
+            "scope": null,
+            "kind": "seq",
+            "phase": "failed",
+            "children": [
+              "seq_4@"
+            ]
+          },
+          "seq_4@": {
+            "key": "seq_4@",
+            "node": "seq_4",
+            "path": [],
+            "parent": "seq_10@",
+            "scope": null,
+            "kind": "seq",
+            "phase": "failed",
+            "children": [
+              "source_recheck_3@",
+              "transfer_material_1@"
+            ]
+          },
+          "source_recheck_3@": {
+            "key": "source_recheck_3@",
+            "node": "source_recheck_3",
+            "path": [],
+            "parent": "seq_4@",
+            "scope": null,
+            "kind": "await",
+            "phase": "succeeded",
+            "children": []
+          },
+          "transfer_material_1@": {
+            "key": "transfer_material_1@",
+            "node": "transfer_material_1",
+            "path": [],
+            "parent": "seq_4@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "attention",
+            "created": 5,
+            "eligible": 6,
+            "children": [],
+            "cancel": false,
+            "claims": [
+              "C1.zone",
+              "M1.claim",
+              "P1.zone",
+              "R1.motion"
+            ],
+            "device": "R1",
+            "args": {
+              "material": "M1",
+              "source": "P1.slot1",
+              "target": "C1.entry"
+            },
+            "model": "transfer@0.1",
+            "accepted": true,
+            "result_valid": false,
+            "stage": 2,
+            "plant_active": false,
+            "plant_done": false,
+            "pending_result": null,
+            "epoch": 0,
+            "submit": 6,
+            "accept_sent": true,
+            "stage_start": 9,
+            "accepted_tick": 8,
+            "execute_start": 8,
+            "reason": "hold_failed:transfer_material_1",
+            "stop_start": 9,
+            "stop_ack": true,
+            "stop_sent": true
+          }
+        },
+        "completed": {},
+        "inbox": [],
+        "applied_events": [],
+        "fault_count": 1,
+        "lost_stop": [],
+        "abort": true,
+        "reason": "hold_failed:transfer_material_1",
+        "outcome": "running",
+        "violations": []
+      }
+    },
+    {
+      "events": [],
+      "state": {
+        "tick": 13,
+        "world": {
+          "materials": {
+            "M1": {
+              "id": "M1",
+              "type": "workpiece",
+              "subject_index": 1,
+              "region": "P1.slot1",
+              "support": "P1.slot1",
+              "holder": "P1",
+              "held_by": "R1",
+              "attributes": {
+                "product_class": "A"
+              }
+            }
+          },
+          "devices": {
+            "R1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": "M1",
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": false,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "R2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C2": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "C3": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            },
+            "P1": {
+              "drive": "stopped",
+              "run_command": false,
+              "held_material": null,
+              "clamped_material": null,
+              "access_closed": true,
+              "permit": true,
+              "actual_index": 0,
+              "actual_level": 0,
+              "operation_history": [],
+              "cycle_counts": {},
+              "epoch": 0
+            }
+          },
+          "occupancy": {
+            "R1.tool": [],
+            "R2.tool": [],
+            "C1.entry": [],
+            "C1.exit": [],
+            "C2.entry": [],
+            "C2.exit": [],
+            "C3.entry": [],
+            "C3.exit": [],
+            "P1.slot1": [
+              "M1"
+            ],
+            "P1.slot2": [],
+            "P1.slot3": [],
+            "P1.slot4": []
+          },
+          "reservations": {
+            "transfer_material_1@": {
+              "target": "C1.entry",
+              "material": "M1"
+            }
+          },
+          "grants": {
+            "C1.zone": "transfer_material_1@",
+            "M1.claim": "transfer_material_1@",
+            "P1.zone": "transfer_material_1@",
+            "R1.motion": "transfer_material_1@"
+          },
+          "committed": [],
+          "external": {}
+        },
+        "tasks": {
+          "seq_11@": {
+            "key": "seq_11@",
+            "node": "seq_11",
+            "path": [],
+            "parent": null,
+            "scope": null,
+            "kind": "seq",
+            "phase": "failed",
+            "children": [
+              "seq_10@"
+            ]
+          },
+          "seq_10@": {
+            "key": "seq_10@",
+            "node": "seq_10",
+            "path": [],
+            "parent": "seq_11@",
+            "scope": null,
+            "kind": "seq",
+            "phase": "failed",
+            "children": [
+              "seq_4@"
+            ]
+          },
+          "seq_4@": {
+            "key": "seq_4@",
+            "node": "seq_4",
+            "path": [],
+            "parent": "seq_10@",
+            "scope": null,
+            "kind": "seq",
+            "phase": "failed",
+            "children": [
+              "source_recheck_3@",
+              "transfer_material_1@"
+            ]
+          },
+          "source_recheck_3@": {
+            "key": "source_recheck_3@",
+            "node": "source_recheck_3",
+            "path": [],
+            "parent": "seq_4@",
+            "scope": null,
+            "kind": "await",
+            "phase": "succeeded",
+            "children": []
+          },
+          "transfer_material_1@": {
+            "key": "transfer_material_1@",
+            "node": "transfer_material_1",
+            "path": [],
+            "parent": "seq_4@",
+            "scope": null,
+            "kind": "invoke",
+            "phase": "attention",
+            "created": 5,
+            "eligible": 6,
+            "children": [],
+            "cancel": false,
+            "claims": [
+              "C1.zone",
+              "M1.claim",
+              "P1.zone",
+              "R1.motion"
+            ],
+            "device": "R1",
+            "args": {
+              "material": "M1",
+              "source": "P1.slot1",
+              "target": "C1.entry"
+            },
+            "model": "transfer@0.1",
+            "accepted": true,
+            "result_valid": false,
+            "stage": 2,
+            "plant_active": false,
+            "plant_done": false,
+            "pending_result": null,
+            "epoch": 0,
+            "submit": 6,
+            "accept_sent": true,
+            "stage_start": 9,
+            "accepted_tick": 8,
+            "execute_start": 8,
+            "reason": "hold_failed:transfer_material_1",
+            "stop_start": 9,
+            "stop_ack": true,
+            "stop_sent": true
+          }
+        },
+        "completed": {},
+        "inbox": [],
+        "applied_events": [],
+        "fault_count": 1,
+        "lost_stop": [],
+        "abort": true,
+        "reason": "hold_failed:transfer_material_1",
+        "outcome": "attention_required",
+        "violations": []
+      }
+    }
+  ],
+  "input_digest": "5e9d741e8d27297cfb2ff3f3d57e7cff80dba09b4c4baa14bee80eff7a96e48e",
+  "model_digest": "4f0b5f9d3b0d70c771d3baa94fa3098527fbb55b3641afca5d0e4bb2bba890f6",
+  "environment": {
+    "id": "fault@0.1",
+    "accept": [
+      1,
+      8
+    ],
+    "phase": [
+      1,
+      8
+    ],
+    "stop": [
+      1,
+      12
+    ],
+    "feedback": [
+      0,
+      4
+    ],
+    "events": [],
+    "faults": [
+      "delayed_feedback",
+      "duplicate_same_request",
+      "old_request_feedback",
+      "provider_restart",
+      "hold_permission_loss",
+      "missing_stop_confirmation"
+    ],
+    "max_faults": 1,
+    "forced_stop_loss": null,
+    "max_age": 2
+  }
+}

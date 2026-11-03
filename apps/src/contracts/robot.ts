@@ -124,6 +124,7 @@ export interface RobotObservation {
   constraintErrorM: number;
   mode: "kinematic_preview" | "fixed_grasp";
   calibrationSource: string;
+  targets?: { pickTCP: Vec3; placeCenter: Vec3 };
   observations: Record<string, boolean | number | null>;
   authorizations: Record<string, boolean | null>;
 }

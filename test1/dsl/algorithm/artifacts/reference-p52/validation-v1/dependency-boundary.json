@@ -1,0 +1,1 @@
+{"scope":"Static imports; raw case parsing still uses the frozen legacy syntax/binding helpers, not legacy transitions or oracle verdicts.","status":"PASS","violations":[]}

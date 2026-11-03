@@ -117,3 +117,34 @@ test("real engine_block fixed-constraint grasp job releases onto selected belt",
   await page.getByRole("button", { name: "重置场景", exact: true }).click();
   expect(errors).toEqual([]);
 });
+
+test("distant support preflight names the stage and keeps the material unheld", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await blank(page);
+  await add(page, "robot_UR10");
+  await transform(page, [-3, 0, -2]);
+  await add(page, "Conveyor_aankws");
+  await transform(page, [-1, 0, -2]);
+  await add(page, "Engine block");
+  await transform(page, [-2.8, 0, -2.3]);
+  const mass = page.getByLabel("mass_kg", { exact: true });
+  await mass.fill("1");
+  await mass.press("Tab");
+  await page.locator(".tree-select").filter({ hasText: "robot_UR10" }).click();
+  await page.getByText("固定约束物理抓放", { exact: true }).click();
+  await page.getByLabel("机械臂运行物料").selectOption({ index: 1 });
+  await page.getByLabel("机械臂目标支承").selectOption({ index: 1 });
+  await page.getByRole("button", { name: "准备物理抓放", exact: true }).click();
+  await expect(page.getByTestId("robot-status")).toContainText("running");
+  await expect(page.getByTestId("robot-plan-targets")).toContainText(
+    "所选传送带中心",
+  );
+  await page.getByRole("button", { name: "执行抓放任务", exact: true }).click();
+  await expect(page.getByRole("alert").first()).toContainText("转运至放料上方");
+  await expect(page.getByRole("alert").first()).toContainText("任务未启动");
+  await expect(page.getByTestId("robot-holding")).toContainText("持有：无");
+  await expect(page.getByTestId("robot-request")).toContainText("任务：无");
+  await page.getByRole("button", { name: "重置场景", exact: true }).click();
+});

@@ -1,0 +1,16 @@
+{
+  "id": "p4-reviewed-contracts/0.1",
+  "models": {
+    "circulate@0.1": "64e7e0b4b5bb29d58deac0a19015c72b35f6a44f3e517f5e8b64455801d08b92",
+    "clamp@0.1": "2a2e0ea489282a5c3a85a805a8fafe8f0d3d982b8ce07fce47c2dd764a7b36ab",
+    "drive@0.1": "7662148175576f0f248836020ad7854013f5a86f3948e146552afa7d98bc58ab",
+    "emit@0.1": "bf5f7d332b1526a35ab96011aefdc8f16cd7321006365fdf4647e53991017a00",
+    "index@0.1": "aef3f3bc9c13cc985a134ba3b7911cac9a41ace553b4c31241125ed669c6e116",
+    "lift@0.1": "97f834741bac82c4e161024b5a53ea229b06a2706bd4923c9dd9139c4661de08",
+    "process@0.1": "40036cf790eb85a839512b10f2dfe27d4c604dd0aea753b53923062a946e6372",
+    "transfer@0.1": "5b7fa3bafffa544db39dac5a1ac5cfe16559c5cd9ad8b0829ffffdcfd8932b1c",
+    "transport@0.1": "f56f167082ff9a808c4a2ffadb88ea26bbc43541d4add565fcd16b44c2667bc7",
+    "unclamp@0.1": "bd290d21f6be6307730cd8041dfca804da1af06cc5042074c27ce565a3101a9d"
+  },
+  "boundary": "Reviewed fixed templates; per-instance premises remain mandatory. Do not refresh automatically to bypass failures."
+}

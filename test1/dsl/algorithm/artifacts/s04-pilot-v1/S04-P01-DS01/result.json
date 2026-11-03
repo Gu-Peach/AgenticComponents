@@ -1,0 +1,6 @@
+{
+  "case_id": "S04-P01-DS01",
+  "frontend": "INVALID_SYNTAX",
+  "diagnostic": "unclosed parenthesis",
+  "profiles": []
+}

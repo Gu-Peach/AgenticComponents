@@ -1,0 +1,1442 @@
+[
+  {
+    "case_id": "S01-P01",
+    "status": "CHECKED",
+    "states": 94,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S01-P02",
+    "status": "CHECKED",
+    "states": 99,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S01-P03",
+    "status": "CHECKED",
+    "states": 51,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S01-P04",
+    "status": "CHECKED",
+    "states": 182,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S01-P05",
+    "status": "CHECKED",
+    "states": 86,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S01-P06",
+    "status": "CHECKED",
+    "states": 268,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S02-P01",
+    "status": "CHECKED",
+    "states": 54,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S02-P02",
+    "status": "CHECKED",
+    "states": 142,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S02-P03",
+    "status": "CHECKED",
+    "states": 90,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S02-P04",
+    "status": "CHECKED",
+    "states": 86,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S02-P05",
+    "status": "CHECKED",
+    "states": 55,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S02-P06",
+    "status": "CHECKED",
+    "states": 51,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S02-P07",
+    "status": "CHECKED",
+    "states": 59,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S02-P08",
+    "status": "CHECKED",
+    "states": 98,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S03-P01",
+    "status": "CHECKED",
+    "states": 94,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S03-P02",
+    "status": "CHECKED",
+    "states": 124,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S03-P03",
+    "status": "CHECKED",
+    "states": 182,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S03-P04",
+    "status": "CHECKED",
+    "states": 86,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S03-P05",
+    "status": "CHECKED",
+    "states": 129,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S03-P06",
+    "status": "CHECKED",
+    "states": 227,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S04-P01",
+    "status": "CHECKED",
+    "states": 74,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S04-P02",
+    "status": "CHECKED",
+    "states": 186,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S04-P03",
+    "status": "CHECKED",
+    "states": 186,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S04-P04",
+    "status": "CHECKED",
+    "states": 189,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S05-P01",
+    "status": "CHECKED",
+    "states": 152,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S05-P02",
+    "status": "CHECKED",
+    "states": 135,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S05-P03",
+    "status": "CHECKED",
+    "states": 161,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S05-P04",
+    "status": "CHECKED",
+    "states": 179,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S06-P01",
+    "status": "CHECKED",
+    "states": 88,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S06-P02",
+    "status": "CHECKED",
+    "states": 103,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S06-P03",
+    "status": "CHECKED",
+    "states": 91,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S06-P04",
+    "status": "CHECKED",
+    "states": 90,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S06-P05",
+    "status": "CHECKED",
+    "states": 136,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S06-P06",
+    "status": "CHECKED",
+    "states": 126,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S06-P07",
+    "status": "CHECKED",
+    "states": 84,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S06-P08",
+    "status": "CHECKED",
+    "states": 51,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S07-P01",
+    "status": "CHECKED",
+    "states": 65,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "NOT_APPLICABLE",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S07-P02",
+    "status": "CHECKED",
+    "states": 86,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S07-P03",
+    "status": "CHECKED",
+    "states": 124,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "NOT_APPLICABLE",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S07-P04",
+    "status": "CHECKED",
+    "states": 139,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S07-P05",
+    "status": "CHECKED",
+    "states": 268,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S07-P06",
+    "status": "CHECKED",
+    "states": 64,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "NOT_APPLICABLE",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S07-P07",
+    "status": "CHECKED",
+    "states": 29,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "NOT_APPLICABLE",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S07-P08",
+    "status": "CHECKED",
+    "states": 136,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S08-P01",
+    "status": "CHECKED",
+    "states": 112,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S08-P02",
+    "status": "CHECKED",
+    "states": 138,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S08-P03",
+    "status": "CHECKED",
+    "states": 94,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S08-P04",
+    "status": "CHECKED",
+    "states": 129,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S08-P05",
+    "status": "CHECKED",
+    "states": 173,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S08-P06",
+    "status": "CHECKED",
+    "states": 218,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S09-P01",
+    "status": "CHECKED",
+    "states": 112,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S09-P02",
+    "status": "CHECKED",
+    "states": 172,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S09-P03",
+    "status": "CHECKED",
+    "states": 111,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S09-P04",
+    "status": "CHECKED",
+    "states": 193,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S09-P05",
+    "status": "CHECKED",
+    "states": 156,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S09-P06",
+    "status": "CHECKED",
+    "states": 293,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S10-P01",
+    "status": "CHECKED",
+    "states": 29,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "NOT_APPLICABLE",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S10-P02",
+    "status": "CHECKED",
+    "states": 73,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "NOT_APPLICABLE",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S10-P03",
+    "status": "CHECKED",
+    "states": 28,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "NOT_APPLICABLE",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S10-P04",
+    "status": "CHECKED",
+    "states": 150,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "NOT_APPLICABLE",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S11-P01",
+    "status": "CHECKED",
+    "states": 125,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "NOT_APPLICABLE",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S11-P02",
+    "status": "CHECKED",
+    "states": 36,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "NOT_APPLICABLE",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "NOT_APPLICABLE",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S11-P03",
+    "status": "CHECKED",
+    "states": 186,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "NOT_APPLICABLE",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S11-P04",
+    "status": "CHECKED",
+    "states": 244,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "NOT_APPLICABLE",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S11-P05",
+    "status": "CHECKED",
+    "states": 142,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "NOT_APPLICABLE",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S11-P06",
+    "status": "CHECKED",
+    "states": 366,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "NOT_APPLICABLE",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S12-P01",
+    "status": "CHECKED",
+    "states": 86,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S12-P02",
+    "status": "CHECKED",
+    "states": 290,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S12-P03",
+    "status": "CHECKED",
+    "states": 112,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S12-P04",
+    "status": "CHECKED",
+    "states": 148,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S12-P05",
+    "status": "CHECKED",
+    "states": 125,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S12-P06",
+    "status": "CHECKED",
+    "states": 166,
+    "finite_model_exhausted": false,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  }
+]

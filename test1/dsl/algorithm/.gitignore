@@ -1,0 +1,21 @@
+/datasets/
+
+/.deps/
+
+/.venv/
+
+__pycache__/
+
+*.egg-info/
+
+# Raw job outputs; keep source, plans, summaries, reports and figures.
+/artifacts/**/job-specs/
+/artifacts/**/jobs/
+/artifacts/**/worker-output/
+/artifacts/**/attempts/
+/artifacts/**/wall-times/
+/artifacts/**/reruns/
+/artifacts/**/source-snapshot*/
+/artifacts/**/audit-source-snapshots/
+/experiments/*/evidence/
+/artifacts/**/*.log

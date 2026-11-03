@@ -1,0 +1,277 @@
+{
+  "backend": "explicit",
+  "reduction": "clock",
+  "search": "complete",
+  "bound_ticks": 3000,
+  "finite_model_exhausted": true,
+  "horizon_reached": false,
+  "limit": null,
+  "early_witness": false,
+  "states": 102,
+  "edges": 141,
+  "serialized_state_bytes": 247224,
+  "elapsed_seconds": 0.05917040000349516,
+  "peak_sampled_rss_bytes": 71966720,
+  "properties": {
+    "V01": {
+      "id": "V01",
+      "kind": "safety",
+      "applicable": true,
+      "source": {
+        "file": "shared/properties/catalog.json",
+        "property": "V01"
+      },
+      "scope": "generated controller and explicit symbolic plant/environment",
+      "construction_check": false,
+      "response_window_ticks": null,
+      "verdict": "PROVED_ON_FINITE_MODEL",
+      "vacuous": false,
+      "trigger_reachable": true,
+      "incomplete_window": false
+    },
+    "V02": {
+      "id": "V02",
+      "kind": "safety",
+      "applicable": true,
+      "source": {
+        "file": "shared/properties/catalog.json",
+        "property": "V02"
+      },
+      "scope": "generated controller and explicit symbolic plant/environment",
+      "construction_check": true,
+      "response_window_ticks": null,
+      "verdict": "PROVED_ON_FINITE_MODEL",
+      "vacuous": false,
+      "trigger_reachable": true,
+      "incomplete_window": false
+    },
+    "V03": {
+      "id": "V03",
+      "kind": "safety",
+      "applicable": true,
+      "source": {
+        "file": "shared/properties/catalog.json",
+        "property": "V03"
+      },
+      "scope": "generated controller and explicit symbolic plant/environment",
+      "construction_check": true,
+      "response_window_ticks": null,
+      "verdict": "PROVED_ON_FINITE_MODEL",
+      "vacuous": true,
+      "trigger_reachable": false,
+      "incomplete_window": false
+    },
+    "V04": {
+      "id": "V04",
+      "kind": "safety",
+      "applicable": true,
+      "source": {
+        "file": "shared/properties/catalog.json",
+        "property": "V04"
+      },
+      "scope": "generated controller and explicit symbolic plant/environment",
+      "construction_check": false,
+      "response_window_ticks": null,
+      "verdict": "PROVED_ON_FINITE_MODEL",
+      "vacuous": false,
+      "trigger_reachable": true,
+      "incomplete_window": false
+    },
+    "V05": {
+      "id": "V05",
+      "kind": "safety",
+      "applicable": true,
+      "source": {
+        "file": "shared/properties/catalog.json",
+        "property": "V05"
+      },
+      "scope": "generated controller and explicit symbolic plant/environment",
+      "construction_check": false,
+      "response_window_ticks": null,
+      "verdict": "PROVED_ON_FINITE_MODEL",
+      "vacuous": false,
+      "trigger_reachable": true,
+      "incomplete_window": false
+    },
+    "V06": {
+      "id": "V06",
+      "kind": "safety",
+      "applicable": true,
+      "source": {
+        "file": "shared/properties/catalog.json",
+        "property": "V06"
+      },
+      "scope": "generated controller and explicit symbolic plant/environment",
+      "construction_check": false,
+      "response_window_ticks": null,
+      "verdict": "PROVED_ON_FINITE_MODEL",
+      "vacuous": false,
+      "trigger_reachable": true,
+      "incomplete_window": false
+    },
+    "V07": {
+      "id": "V07",
+      "kind": "safety",
+      "applicable": true,
+      "source": {
+        "file": "shared/properties/catalog.json",
+        "property": "V07"
+      },
+      "scope": "generated controller and explicit symbolic plant/environment",
+      "construction_check": true,
+      "response_window_ticks": null,
+      "verdict": "PROVED_ON_FINITE_MODEL",
+      "vacuous": true,
+      "trigger_reachable": false,
+      "incomplete_window": false
+    },
+    "V08": {
+      "id": "V08",
+      "kind": "safety",
+      "applicable": true,
+      "source": {
+        "file": "shared/properties/catalog.json",
+        "property": "V08"
+      },
+      "scope": "generated controller and explicit symbolic plant/environment",
+      "construction_check": false,
+      "response_window_ticks": null,
+      "verdict": "PROVED_ON_FINITE_MODEL",
+      "vacuous": false,
+      "trigger_reachable": true,
+      "incomplete_window": false
+    },
+    "V09": {
+      "id": "V09",
+      "kind": "safety",
+      "applicable": true,
+      "source": {
+        "file": "shared/properties/catalog.json",
+        "property": "V09"
+      },
+      "scope": "generated controller and explicit symbolic plant/environment",
+      "construction_check": false,
+      "response_window_ticks": null,
+      "verdict": "PROVED_ON_FINITE_MODEL",
+      "vacuous": true,
+      "trigger_reachable": false,
+      "incomplete_window": false
+    },
+    "V10a": {
+      "id": "V10a",
+      "kind": "reachability",
+      "applicable": true,
+      "source": {
+        "file": "shared/properties/catalog.json",
+        "property": "V10a"
+      },
+      "scope": "generated controller and explicit symbolic plant/environment",
+      "construction_check": false,
+      "response_window_ticks": null,
+      "verdict": "GOAL_NOT_REACHED_ON_FINITE_MODEL",
+      "vacuous": false,
+      "trigger_reachable": false,
+      "incomplete_window": false
+    },
+    "V10b": {
+      "id": "V10b",
+      "kind": "bounded_response",
+      "applicable": true,
+      "source": {
+        "file": "shared/properties/catalog.json",
+        "property": "V10b"
+      },
+      "scope": "generated controller and explicit symbolic plant/environment",
+      "construction_check": false,
+      "response_window_ticks": 1800,
+      "verdict": "PROVED_ON_FINITE_MODEL",
+      "vacuous": false,
+      "trigger_reachable": true,
+      "incomplete_window": false
+    }
+  },
+  "status": "CHECKED",
+  "case_id": "S04-P01",
+  "environment": "stop_unknown_c1",
+  "model_version": "acverify-tick/0.1",
+  "input_digest": "92b11da959dc02fe210a347982076dd5aa5aa3b9f395270a2ae4fba003603098",
+  "model_digest": "4b1421e1689797c8da46d9f3e191eb3d3d6d75a03b887b7b8046021c23d92487",
+  "input_hashes": {
+    "case": "151b421ac97ae1bcd6eda1b1b1fc2965d0853f8086002520e76916a3e6a7f67e",
+    "process": "66884138247901af8d58c2cd840af42334045fc02aaf89e55bbe25a079480b42",
+    "environment": "419463b14c64606124be4e1ab628cc873e35de1867700e785120d956e1069a49",
+    "initial": "314787007ea353e0b4c3183bc8df983a5ca78f265e99939ec754b98f9ce28342",
+    "task": "dc4cd69f6d593aeed511ee564a144d134b83d2c680884d609bf48e5b546904c6",
+    "properties": "1ecf7bcb68af5d75e7be028c5c5b75c94434d4054f28cb11045b1e012a601c09",
+    "queries": "0622c93f2e7b9bd3211dff0f0c0b10d86df7ef581a423fee026c55d45a5a2366",
+    "legacy_binder": "b4cc77d0540c7d7b195bb4c9f727484bee908807d6dc6a272c8a12263d3410a8",
+    "legacy_parser": "0b55eea2ddde158d4d1506efb0fd4ae6cd4323da04d1e0869c91cddd77d6a4ee",
+    "language_schema": "f3c7414093d6054bf50441917607d94b9da2bb9416b5c3247486d737f5a4f015",
+    "scene": "bf791b091bcc1cf9d87d5bb68ef2165b864177ed281d61c8b60d8970d822ddfe",
+    "relations": "62b1c738c54615ee1f3ffa7ed9b93eb526b4500f0e167e7111d8636afdfe7a89",
+    "assumptions": "f84067d613f7b5bc1a754dbc95da98a4a94e59bd2c19a19fd1853e785fdb941b",
+    "model:circulate@0.1": "abf46a48d8b3644159668144e9c3aa7fae3426046589ef9825595fec41a90b8c",
+    "model:clamp@0.1": "61854f4cd05f64d2f70f3fdfb055fa36b69823138010762e2b24eaafd309d775",
+    "model:drive@0.1": "5b02e579d0846c1c9982078265abb5c3c0ea36e68adb4d4372319dc5ec2ae5a8",
+    "model:emit@0.1": "6b6f008cdba052755d529f6fca355a75b59f888600694894d9d4b4c1095fa431",
+    "model:index@0.1": "73481fee809a01ab69eea8ed54f56ee141037a4cacb203afc286d933552376c3",
+    "model:lift@0.1": "a52947310e7427610bf8713d28234d0892bb1eb06a68d0ef20c664ecef0fd19b",
+    "model:process@0.1": "0a31d4a2c1997c260ba0e810299d1b858af3f5cd25c91d4ac656b42eae87faaa",
+    "model:transfer@0.1": "c27b9f854d4ccf727236ba4d221838738ff090bf8424f9d7da67754c5449af1d",
+    "model:transport@0.1": "d5287283423b2786e96cd97903c188ca5c35b0301fe5bf3f9b7f2f5e6a83f0bd",
+    "model:unclamp@0.1": "f2d883d71a81b7a8235f76f9a1a526f3a725ac94ebb7d0fffeb081d524ea9ee1",
+    "contract:carrier@0.1": "5c66310520e168634525d5114bcab97cd8043d258301c97df1979e23c99714fc",
+    "contract:conveyor@0.1": "03c9b8e306c0935bde3c4e7d5a5131eee9553bf578ce11c195d9d1f4471a8fba",
+    "contract:deburring_station@0.1": "cbe74c060504a347921039017cc77d6189cd3979563954b33ae85d5c0643d7ee",
+    "contract:fixture@0.1": "4cf4ccec99b2d8f7587fe9017503717e8de229f0bafcfff226a1f5dfdaa8ad2f",
+    "contract:lift_table@0.1": "f06ed8dac97835df122c0aa392f9db55f27c5a53f1852030108a467e0e0cb7c4",
+    "contract:loop_conveyor@0.1": "b2838274687f78b7a1728a50199e869f078f945d8e9ea966ed7343f86fb05b37",
+    "contract:machining_station@0.1": "3cbf429cf75f264ae8c8b81b03468269a540a63487eb1965089dfc5e7ec72b4b",
+    "contract:material@0.1": "779eab526eca684c40ea2a6df7996aef3da26cb88a68ddd717bc02ac3fa9de5c",
+    "contract:robot_arm@0.1": "4051ddc544d85c68911b2895b1b362c5743856ac8579338d16d030c4e22a4c9c",
+    "contract:source@0.1": "b07ce0bf6ffcda8607de0cab8e72f5a89a32a52c7a9c3d98858644b4b591f96c",
+    "contract:storage@0.1": "fd0db9d436c0a2671e87dcfea0aa82607cd3eb344ac6b4bb21cee5d83278cbac",
+    "contract:storage_transfer@0.1": "1467c576fa9c5d9a1534231c50855ee67b4b65091dc1a3e740bd3beb8106cd0a",
+    "contract:turntable@0.1": "c98f5bc92ccc5dde6ce4f7dbca657dcc12d9ff96bfc0babae64750a5d5c72e38",
+    "contract:welding_station@0.1": "17f6a3da981ebfa6ca2283ab672fef954b47cb5a0df0378c1e8b9df181d1c4a4",
+    "service:external-events.json": "a22367781fc02cd570c8c94b42e58772834775f251470400c87abedd8a0d00ea",
+    "service:handoff.json": "fd1e4ac93a6949c01a993e1f3ee2ddf8edcccc93eb16ff13a9c69271bad37473",
+    "service:registry.json": "c4d5306d7603dc44d0986c76bf5ec8d71aff24de530c12814b1a314f5d7426e2",
+    "service:request-protocol.json": "54c8d1fecbf9c614e4e79d00758b854089385814078db9eb405b909aabd32f42",
+    "service:resources.json": "0e2d341d0f5c219f9d216b954499cfc6636ac16111d7dc897f59f5ea5aa266f5",
+    "service:world.json": "e9aa2999ae8ddf148b3687e0f96bc8dfdf33cfad556a1d4bc111977a207fe517",
+    "execution_profile": "e6dee1a7ed4d92410fd055227c54031e8d8faeaa3ad80785be7d0033d59bcb80"
+  },
+  "assumptions": "fresh synchronous world snapshot; protocol delivery is nondeterministic; no geometry",
+  "deployment_ready": false,
+  "truth_source": "algorithm_output_not_independent_oracle",
+  "frontend_and_model_seconds": 0.09336139999504667,
+  "requested_reduction": "clock",
+  "algorithm_hashes": {
+    "backends.py": "c5a2c34c79604022c998f0a3e9fa9a05803ab4803cd603cd81d98c6a52422bfa",
+    "budgets.py": "d3cdd311e5e597b365ef012939e358eef880deac3d5e23302b5924dc1df14af9",
+    "cli.py": "17d29cc144bb93277c589538ab92b7778723cda7d720c287458f315d2b9dd898",
+    "core.py": "c937bd7e410b5118f057b2bce68812816b31c84b627ba93bd38421028bc204cd",
+    "diagnostics.py": "1495a6db205a4ac5734d1704be886b8f95c5ae7dc660fcdb5a9678b5613d8d14",
+    "expressions.py": "27161bfce6fa4f6b900e3075d44af85ce15fed4aa59a76fce1a76c0e69f37326",
+    "frontend.py": "d081814f69917bff9a4fd2c99cc231626b8d9ae8fa9fc8dbe54db5d995e61b6e",
+    "model.py": "a334e3f55caa2bdd38d9765e7e962ee67206622e026bca314e9989bc38b025e9",
+    "pipeline.py": "993f3987bd073c8d1b193025bd49b9d388ecf77f6a4cee50785c06cb356eec7c",
+    "plant.py": "f08aac7ad50a9a87cfa878f0c6e8941326a5f95c88cc2397d68d9a88c4220826",
+    "properties.py": "7de16e3dbdde628fab490eed05d55da8b2b713179ba7603aa9eff0b51a44a39f",
+    "reduction.py": "2b1f7e2270533cfc8d38dc71541d51c385877bb72ced0ed9acc2298ea0f9ccd4",
+    "__init__.py": "3a3b23a9adb602533a9261de0f153979c678dfa0a389e7abd30af23781cfead3"
+  },
+  "replays": {
+    "terminal_attention_required": {
+      "valid": true,
+      "ticks": 26,
+      "outcome": "attention_required",
+      "scope": "Full transition-model replay, not an independent physical or semantic oracle."
+    }
+  },
+  "diagnostics": [],
+  "terminal_reasons": {
+    "attention_required": ""
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "id": "method1-semantics/0.2",
+  "date": "2026-11-02",
+  "clock": {"tick_seconds": "1/60", "deadline_inclusive": true, "visibility_ticks": 1},
+  "scan_order": ["apply_external_events", "inject_declared_fault", "deliver_due_samples", "controller_snapshot_and_arbitration", "plant_progress", "sample_latched_status"],
+  "feedback": {
+    "mode": "latched_periodically_resampled",
+    "sample_every_ticks": 1,
+    "identity": ["activation", "request", "device", "subject", "provider_epoch"],
+    "delivery": "Per-stream FIFO; each sample delay is chosen in the input profile range, plus one-tick visibility.",
+    "freshness": "Only source resampling creates a new sample_tick. Delivery never refreshes an old timestamp.",
+    "retention": "Hold each phase result until that activation is retired; never relabel an old outcome into a new epoch/request.",
+    "receiver_interest_projection": "Suppress samples only after the receiver has consumed that stream or retired the activation; omitted samples cannot change control state or the node-transition budget.",
+    "fairness": "No assumption that some future delay is small. If maximum latency exceeds max_age, repeated stale delivery remains possible."
+  },
+  "faults": {
+    "budget": "At most max_faults explicit injections; interval delivery choices do not consume this budget.",
+    "delayed_feedback": "Represented by delivery intervals; does not rewrite sampling time.",
+    "duplicate_same_request": "Duplicate a stored packet without changing identity, epoch or sample_tick.",
+    "old_request_feedback": "Inject a packet for a different activation; it cannot satisfy the current request.",
+    "provider_restart": "Increment communication epoch, clear provider latches, invalidate outstanding evidence, abort the run and reconcile; no physical reset or automatic retry.",
+    "hold_permission_loss": "Set device permit false; no direct material motion or ledger update.",
+    "missing_stop_confirmation": "Suppress stop evidence for the selected activation; physical stop may still occur."
+  },
+  "parallel_failure": "Close new submissions, stop all active branches, preserve physical effects, retain unsafe or unknown ownership until explicit isolation/cleanup.",
+  "V10b": {
+    "trigger": "first valid observed acceptance; repeated accepted samples do not reset the clock",
+    "response": ["confirmed_success", "confirmed_failure", "confirmed_cancellation", "attention_with_required_isolation"],
+    "not_response": ["stopping", "stop_command_sent", "bare_fault_flag"],
+    "window": "Use response_window_ticks; finite searches must flag any uncovered tail. A stronger independently proved result may cover beyond the explored horizon."
+  },
+  "bounds": "All state domains, repeat counts, environment events and search limits must be explicit.",
+  "not_claimed": ["physical geometry", "real equipment", "PLC translation equivalence", "optimal dispatch"]
+}

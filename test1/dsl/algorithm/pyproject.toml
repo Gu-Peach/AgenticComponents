@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "acverify"
+version = "0.2.0"
+description = "Contract-driven process execution-path verification"
+requires-python = ">=3.10"
+dependencies = ["jsonschema>=4.23,<5"]
+
+[project.optional-dependencies]
+smt = ["z3-solver>=4.13,<5"]
+
+[project.scripts]
+acverify = "acverify.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

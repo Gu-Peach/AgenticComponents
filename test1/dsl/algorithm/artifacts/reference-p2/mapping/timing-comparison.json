@@ -1,0 +1,74 @@
+{
+  "comparisons": [
+    {
+      "case_id": "S04-P01",
+      "scope": "singleton diagnostic, not original-range equivalence proof",
+      "legacy_terminal_tick": 48,
+      "legacy_terminal": "succeeded",
+      "legacy_task_goal": true,
+      "legacy_completed_goal": true,
+      "reference_terminal_tick": 45,
+      "reference_terminal": "succeeded",
+      "reference_task_goal": true,
+      "reference_completed_goal": true,
+      "reference_closed": true
+    },
+    {
+      "case_id": "S04-P01-DV01",
+      "scope": "singleton diagnostic, not original-range equivalence proof",
+      "legacy_terminal_tick": 19,
+      "legacy_terminal": "failed",
+      "legacy_task_goal": false,
+      "legacy_completed_goal": false,
+      "reference_terminal_tick": 20,
+      "reference_terminal": "failed",
+      "reference_task_goal": false,
+      "reference_completed_goal": false,
+      "reference_closed": true
+    },
+    {
+      "case_id": "S04-P01-DV02",
+      "scope": "singleton diagnostic, not original-range equivalence proof",
+      "legacy_terminal_tick": 166,
+      "legacy_terminal": "failed",
+      "legacy_task_goal": true,
+      "legacy_completed_goal": false,
+      "reference_terminal_tick": 164,
+      "reference_terminal": "failed",
+      "reference_task_goal": true,
+      "reference_completed_goal": false,
+      "reference_closed": true
+    },
+    {
+      "case_id": "S04-P01-DV03",
+      "scope": "singleton diagnostic, not original-range equivalence proof",
+      "legacy_terminal_tick": 47,
+      "legacy_terminal": "succeeded",
+      "legacy_task_goal": true,
+      "legacy_completed_goal": true,
+      "reference_terminal_tick": 43,
+      "reference_terminal": "succeeded",
+      "reference_task_goal": true,
+      "reference_completed_goal": true,
+      "reference_closed": true
+    },
+    {
+      "case_id": "S04-P01-DV04",
+      "scope": "singleton diagnostic, not original-range equivalence proof",
+      "legacy_terminal_tick": 36,
+      "legacy_terminal": "succeeded",
+      "legacy_task_goal": false,
+      "legacy_completed_goal": false,
+      "reference_terminal_tick": 35,
+      "reference_terminal": "succeeded",
+      "reference_task_goal": false,
+      "reference_completed_goal": false,
+      "reference_closed": true
+    }
+  ],
+  "historical_sources": {
+    "pilot_model.py": "355e97be196ff01402c7838fe320d6783693c8b126bd9a395167743a89e0943e",
+    "pilot_frontend.py": "4d6aeea7e5e23fd0a5d4072e963bfbaa2280a32882ee4543aa69d20ca9e93195"
+  },
+  "conclusion": "Identical interval numbers do not establish identical timed traces. Keep scope identities separate."
+}

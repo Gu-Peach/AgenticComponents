@@ -1,0 +1,3462 @@
+{
+  "total": 576,
+  "matches": 576,
+  "records": [
+    {
+      "case": "S01-P01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S01-P01-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S01-P01-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S01-P01-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S01-P01-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S01-P01-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S01-P01-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S01-P01-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S01-P02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S01-P02-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S01-P02-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S01-P02-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S01-P02-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S01-P02-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S01-P02-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S01-P02-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S01-P03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S01-P03-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S01-P03-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S01-P03-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S01-P03-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S01-P03-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S01-P03-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S01-P03-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S01-P04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S01-P04-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S01-P04-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S01-P04-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S01-P04-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S01-P04-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S01-P04-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S01-P04-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S01-P05",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S01-P05-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S01-P05-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S01-P05-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S01-P05-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S01-P05-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S01-P05-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S01-P05-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S01-P06",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S01-P06-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S01-P06-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S01-P06-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S01-P06-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S01-P06-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S01-P06-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S01-P06-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P01-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S02-P01-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S02-P01-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S02-P01-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P01-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P01-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P01-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P02-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S02-P02-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S02-P02-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S02-P02-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P02-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P02-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P02-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P03-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S02-P03-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S02-P03-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S02-P03-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P03-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P03-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P03-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P04-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S02-P04-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S02-P04-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S02-P04-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P04-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P04-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P04-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P05",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P05-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S02-P05-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S02-P05-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S02-P05-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P05-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P05-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P05-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P06",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P06-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S02-P06-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S02-P06-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S02-P06-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P06-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P06-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P06-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P07",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P07-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S02-P07-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S02-P07-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S02-P07-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P07-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P07-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P07-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P08",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P08-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S02-P08-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S02-P08-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S02-P08-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P08-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P08-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S02-P08-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P01-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S03-P01-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S03-P01-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S03-P01-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P01-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P01-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P01-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P02-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S03-P02-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S03-P02-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S03-P02-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P02-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P02-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P02-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P03-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S03-P03-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S03-P03-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S03-P03-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P03-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P03-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P03-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P04-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S03-P04-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S03-P04-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S03-P04-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P04-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P04-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P04-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P05",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P05-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S03-P05-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S03-P05-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S03-P05-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P05-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P05-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P05-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P06",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P06-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S03-P06-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S03-P06-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S03-P06-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P06-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P06-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S03-P06-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S04-P01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S04-P01-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S04-P01-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S04-P01-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S04-P01-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S04-P01-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S04-P01-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S04-P01-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S04-P02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S04-P02-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S04-P02-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S04-P02-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S04-P02-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S04-P02-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S04-P02-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S04-P02-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S04-P03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S04-P03-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S04-P03-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S04-P03-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S04-P03-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S04-P03-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S04-P03-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S04-P03-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S04-P04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S04-P04-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S04-P04-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S04-P04-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S04-P04-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S04-P04-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S04-P04-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S04-P04-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S05-P01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S05-P01-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S05-P01-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S05-P01-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S05-P01-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S05-P01-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S05-P01-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S05-P01-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S05-P02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S05-P02-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S05-P02-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S05-P02-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S05-P02-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S05-P02-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S05-P02-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S05-P02-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S05-P03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S05-P03-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S05-P03-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S05-P03-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S05-P03-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S05-P03-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S05-P03-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S05-P03-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S05-P04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S05-P04-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S05-P04-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S05-P04-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S05-P04-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S05-P04-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S05-P04-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S05-P04-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P01-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S06-P01-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S06-P01-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S06-P01-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P01-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P01-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P01-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P02-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S06-P02-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S06-P02-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S06-P02-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P02-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P02-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P02-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P03-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S06-P03-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S06-P03-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S06-P03-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P03-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P03-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P03-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P04-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S06-P04-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S06-P04-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S06-P04-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P04-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P04-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P04-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P05",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P05-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S06-P05-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S06-P05-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S06-P05-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P05-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P05-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P05-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P06",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P06-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S06-P06-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S06-P06-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S06-P06-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P06-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P06-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P06-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P07",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P07-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S06-P07-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S06-P07-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S06-P07-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P07-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P07-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P07-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P08",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P08-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S06-P08-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S06-P08-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S06-P08-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P08-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P08-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S06-P08-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P01-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S07-P01-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S07-P01-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S07-P01-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P01-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P01-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P01-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P02-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S07-P02-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S07-P02-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S07-P02-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P02-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P02-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P02-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P03-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S07-P03-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S07-P03-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S07-P03-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P03-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P03-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P03-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P04-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S07-P04-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S07-P04-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S07-P04-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P04-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P04-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P04-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P05",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P05-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S07-P05-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S07-P05-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S07-P05-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P05-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P05-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P05-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P06",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P06-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S07-P06-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S07-P06-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S07-P06-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P06-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P06-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P06-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P07",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P07-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S07-P07-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S07-P07-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S07-P07-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P07-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P07-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P07-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P08",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P08-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S07-P08-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S07-P08-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S07-P08-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P08-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P08-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S07-P08-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P01-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S08-P01-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S08-P01-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S08-P01-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P01-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P01-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P01-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P02-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S08-P02-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S08-P02-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S08-P02-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P02-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P02-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P02-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P03-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S08-P03-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S08-P03-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S08-P03-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P03-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P03-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P03-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P04-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S08-P04-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S08-P04-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S08-P04-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P04-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P04-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P04-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P05",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P05-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S08-P05-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S08-P05-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S08-P05-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P05-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P05-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P05-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P06",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P06-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S08-P06-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S08-P06-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S08-P06-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P06-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P06-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S08-P06-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P01-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S09-P01-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S09-P01-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S09-P01-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P01-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P01-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P01-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P02-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S09-P02-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S09-P02-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S09-P02-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P02-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P02-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P02-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P03-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S09-P03-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S09-P03-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S09-P03-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P03-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P03-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P03-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P04-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S09-P04-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S09-P04-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S09-P04-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P04-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P04-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P04-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P05",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P05-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S09-P05-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S09-P05-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S09-P05-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P05-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P05-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P05-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P06",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P06-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S09-P06-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S09-P06-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S09-P06-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P06-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P06-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S09-P06-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S10-P01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S10-P01-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S10-P01-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S10-P01-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S10-P01-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S10-P01-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S10-P01-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S10-P01-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S10-P02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S10-P02-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S10-P02-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S10-P02-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S10-P02-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S10-P02-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S10-P02-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S10-P02-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S10-P03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S10-P03-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S10-P03-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S10-P03-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S10-P03-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S10-P03-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S10-P03-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S10-P03-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S10-P04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S10-P04-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S10-P04-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S10-P04-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S10-P04-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S10-P04-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S10-P04-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S10-P04-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P01-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S11-P01-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S11-P01-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S11-P01-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P01-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P01-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P01-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P02-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S11-P02-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S11-P02-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S11-P02-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P02-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P02-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P02-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P03-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S11-P03-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S11-P03-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S11-P03-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P03-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P03-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P03-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P04-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S11-P04-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S11-P04-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S11-P04-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P04-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P04-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P04-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P05",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P05-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S11-P05-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S11-P05-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S11-P05-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P05-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P05-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P05-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P06",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P06-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S11-P06-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S11-P06-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S11-P06-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P06-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P06-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S11-P06-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P01-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S12-P01-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S12-P01-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S12-P01-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P01-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P01-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P01-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P02-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S12-P02-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S12-P02-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S12-P02-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P02-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P02-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P02-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P03-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S12-P03-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S12-P03-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S12-P03-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P03-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P03-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P03-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P04-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S12-P04-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S12-P04-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S12-P04-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P04-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P04-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P04-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P05",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P05-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S12-P05-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S12-P05-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S12-P05-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P05-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P05-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P05-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P06",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P06-DS01",
+      "expected": "INVALID_SYNTAX",
+      "actual": "INVALID_SYNTAX",
+      "match": true
+    },
+    {
+      "case": "S12-P06-DS02",
+      "expected": "INVALID_TYPE",
+      "actual": "INVALID_TYPE",
+      "match": true
+    },
+    {
+      "case": "S12-P06-DS03",
+      "expected": "UNKNOWN_CAPABILITY",
+      "actual": "UNKNOWN_CAPABILITY",
+      "match": true
+    },
+    {
+      "case": "S12-P06-DV01",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P06-DV02",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P06-DV03",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    },
+    {
+      "case": "S12-P06-DV04",
+      "expected": "VALID",
+      "actual": "VALID",
+      "match": true
+    }
+  ]
+}

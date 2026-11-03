@@ -1,0 +1,1581 @@
+{
+  "id": "independent-channel-core/0.2",
+  "semantics_hash": "13a8afe0189165a2f85db8ec00ef5b37ed49c1770eb8285051deaef5f7bbc92f",
+  "fixtures": [
+    {
+      "input": {
+        "id": "accepted-0-0-age1-id0",
+        "kind": "accepted",
+        "delay": [
+          0,
+          0
+        ],
+        "max_age": 1,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "accepted-0-0-age1-id1",
+        "kind": "accepted",
+        "delay": [
+          0,
+          0
+        ],
+        "max_age": 1,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          2
+        ],
+        "can_observe": true,
+        "must_observe_by_horizon": true,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "accepted-0-0-age2-id0",
+        "kind": "accepted",
+        "delay": [
+          0,
+          0
+        ],
+        "max_age": 2,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "accepted-0-0-age2-id1",
+        "kind": "accepted",
+        "delay": [
+          0,
+          0
+        ],
+        "max_age": 2,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          2
+        ],
+        "can_observe": true,
+        "must_observe_by_horizon": true,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "accepted-0-1-age1-id0",
+        "kind": "accepted",
+        "delay": [
+          0,
+          1
+        ],
+        "max_age": 1,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 23,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "accepted-0-1-age1-id1",
+        "kind": "accepted",
+        "delay": [
+          0,
+          1
+        ],
+        "max_age": 1,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "can_observe": true,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 28,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "accepted-0-1-age2-id0",
+        "kind": "accepted",
+        "delay": [
+          0,
+          1
+        ],
+        "max_age": 2,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 23,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "accepted-0-1-age2-id1",
+        "kind": "accepted",
+        "delay": [
+          0,
+          1
+        ],
+        "max_age": 2,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          2,
+          3
+        ],
+        "can_observe": true,
+        "must_observe_by_horizon": true,
+        "exhausted": true,
+        "enumerated_states": 14,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "accepted-1-1-age1-id0",
+        "kind": "accepted",
+        "delay": [
+          1,
+          1
+        ],
+        "max_age": 1,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "accepted-1-1-age1-id1",
+        "kind": "accepted",
+        "delay": [
+          1,
+          1
+        ],
+        "max_age": 1,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "accepted-1-1-age2-id0",
+        "kind": "accepted",
+        "delay": [
+          1,
+          1
+        ],
+        "max_age": 2,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "accepted-1-1-age2-id1",
+        "kind": "accepted",
+        "delay": [
+          1,
+          1
+        ],
+        "max_age": 2,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          3
+        ],
+        "can_observe": true,
+        "must_observe_by_horizon": true,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "accepted-0-3-age1-id0",
+        "kind": "accepted",
+        "delay": [
+          0,
+          3
+        ],
+        "max_age": 1,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 168,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "accepted-0-3-age1-id1",
+        "kind": "accepted",
+        "delay": [
+          0,
+          3
+        ],
+        "max_age": 1,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "can_observe": true,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 163,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "accepted-0-3-age2-id0",
+        "kind": "accepted",
+        "delay": [
+          0,
+          3
+        ],
+        "max_age": 2,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 168,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "accepted-0-3-age2-id1",
+        "kind": "accepted",
+        "delay": [
+          0,
+          3
+        ],
+        "max_age": 2,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "can_observe": true,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 127,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "accepted-3-3-age1-id0",
+        "kind": "accepted",
+        "delay": [
+          3,
+          3
+        ],
+        "max_age": 1,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "accepted-3-3-age1-id1",
+        "kind": "accepted",
+        "delay": [
+          3,
+          3
+        ],
+        "max_age": 1,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "accepted-3-3-age2-id0",
+        "kind": "accepted",
+        "delay": [
+          3,
+          3
+        ],
+        "max_age": 2,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "accepted-3-3-age2-id1",
+        "kind": "accepted",
+        "delay": [
+          3,
+          3
+        ],
+        "max_age": 2,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "result-0-0-age1-id0",
+        "kind": "result",
+        "delay": [
+          0,
+          0
+        ],
+        "max_age": 1,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "result-0-0-age1-id1",
+        "kind": "result",
+        "delay": [
+          0,
+          0
+        ],
+        "max_age": 1,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          2
+        ],
+        "can_observe": true,
+        "must_observe_by_horizon": true,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "result-0-0-age2-id0",
+        "kind": "result",
+        "delay": [
+          0,
+          0
+        ],
+        "max_age": 2,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "result-0-0-age2-id1",
+        "kind": "result",
+        "delay": [
+          0,
+          0
+        ],
+        "max_age": 2,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          2
+        ],
+        "can_observe": true,
+        "must_observe_by_horizon": true,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "result-0-1-age1-id0",
+        "kind": "result",
+        "delay": [
+          0,
+          1
+        ],
+        "max_age": 1,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 23,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "result-0-1-age1-id1",
+        "kind": "result",
+        "delay": [
+          0,
+          1
+        ],
+        "max_age": 1,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "can_observe": true,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 28,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "result-0-1-age2-id0",
+        "kind": "result",
+        "delay": [
+          0,
+          1
+        ],
+        "max_age": 2,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 23,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "result-0-1-age2-id1",
+        "kind": "result",
+        "delay": [
+          0,
+          1
+        ],
+        "max_age": 2,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          2,
+          3
+        ],
+        "can_observe": true,
+        "must_observe_by_horizon": true,
+        "exhausted": true,
+        "enumerated_states": 14,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "result-1-1-age1-id0",
+        "kind": "result",
+        "delay": [
+          1,
+          1
+        ],
+        "max_age": 1,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "result-1-1-age1-id1",
+        "kind": "result",
+        "delay": [
+          1,
+          1
+        ],
+        "max_age": 1,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "result-1-1-age2-id0",
+        "kind": "result",
+        "delay": [
+          1,
+          1
+        ],
+        "max_age": 2,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "result-1-1-age2-id1",
+        "kind": "result",
+        "delay": [
+          1,
+          1
+        ],
+        "max_age": 2,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          3
+        ],
+        "can_observe": true,
+        "must_observe_by_horizon": true,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "result-0-3-age1-id0",
+        "kind": "result",
+        "delay": [
+          0,
+          3
+        ],
+        "max_age": 1,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 168,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "result-0-3-age1-id1",
+        "kind": "result",
+        "delay": [
+          0,
+          3
+        ],
+        "max_age": 1,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "can_observe": true,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 163,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "result-0-3-age2-id0",
+        "kind": "result",
+        "delay": [
+          0,
+          3
+        ],
+        "max_age": 2,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 168,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "result-0-3-age2-id1",
+        "kind": "result",
+        "delay": [
+          0,
+          3
+        ],
+        "max_age": 2,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "can_observe": true,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 127,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "result-3-3-age1-id0",
+        "kind": "result",
+        "delay": [
+          3,
+          3
+        ],
+        "max_age": 1,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "result-3-3-age1-id1",
+        "kind": "result",
+        "delay": [
+          3,
+          3
+        ],
+        "max_age": 1,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "result-3-3-age2-id0",
+        "kind": "result",
+        "delay": [
+          3,
+          3
+        ],
+        "max_age": 2,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "result-3-3-age2-id1",
+        "kind": "result",
+        "delay": [
+          3,
+          3
+        ],
+        "max_age": 2,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "stop-0-0-age1-id0",
+        "kind": "stop",
+        "delay": [
+          0,
+          0
+        ],
+        "max_age": 1,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "stop-0-0-age1-id1",
+        "kind": "stop",
+        "delay": [
+          0,
+          0
+        ],
+        "max_age": 1,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          2
+        ],
+        "can_observe": true,
+        "must_observe_by_horizon": true,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "stop-0-0-age2-id0",
+        "kind": "stop",
+        "delay": [
+          0,
+          0
+        ],
+        "max_age": 2,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "stop-0-0-age2-id1",
+        "kind": "stop",
+        "delay": [
+          0,
+          0
+        ],
+        "max_age": 2,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          2
+        ],
+        "can_observe": true,
+        "must_observe_by_horizon": true,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "stop-0-1-age1-id0",
+        "kind": "stop",
+        "delay": [
+          0,
+          1
+        ],
+        "max_age": 1,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 23,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "stop-0-1-age1-id1",
+        "kind": "stop",
+        "delay": [
+          0,
+          1
+        ],
+        "max_age": 1,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "can_observe": true,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 28,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "stop-0-1-age2-id0",
+        "kind": "stop",
+        "delay": [
+          0,
+          1
+        ],
+        "max_age": 2,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 23,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "stop-0-1-age2-id1",
+        "kind": "stop",
+        "delay": [
+          0,
+          1
+        ],
+        "max_age": 2,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          2,
+          3
+        ],
+        "can_observe": true,
+        "must_observe_by_horizon": true,
+        "exhausted": true,
+        "enumerated_states": 14,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "stop-1-1-age1-id0",
+        "kind": "stop",
+        "delay": [
+          1,
+          1
+        ],
+        "max_age": 1,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "stop-1-1-age1-id1",
+        "kind": "stop",
+        "delay": [
+          1,
+          1
+        ],
+        "max_age": 1,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "stop-1-1-age2-id0",
+        "kind": "stop",
+        "delay": [
+          1,
+          1
+        ],
+        "max_age": 2,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "stop-1-1-age2-id1",
+        "kind": "stop",
+        "delay": [
+          1,
+          1
+        ],
+        "max_age": 2,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          3
+        ],
+        "can_observe": true,
+        "must_observe_by_horizon": true,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "stop-0-3-age1-id0",
+        "kind": "stop",
+        "delay": [
+          0,
+          3
+        ],
+        "max_age": 1,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 168,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "stop-0-3-age1-id1",
+        "kind": "stop",
+        "delay": [
+          0,
+          3
+        ],
+        "max_age": 1,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "can_observe": true,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 163,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "stop-0-3-age2-id0",
+        "kind": "stop",
+        "delay": [
+          0,
+          3
+        ],
+        "max_age": 2,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 168,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "stop-0-3-age2-id1",
+        "kind": "stop",
+        "delay": [
+          0,
+          3
+        ],
+        "max_age": 2,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "can_observe": true,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 127,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "stop-3-3-age1-id0",
+        "kind": "stop",
+        "delay": [
+          3,
+          3
+        ],
+        "max_age": 1,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "stop-3-3-age1-id1",
+        "kind": "stop",
+        "delay": [
+          3,
+          3
+        ],
+        "max_age": 1,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "stop-3-3-age2-id0",
+        "kind": "stop",
+        "delay": [
+          3,
+          3
+        ],
+        "max_age": 2,
+        "identity_valid": false,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "stop-3-3-age2-id1",
+        "kind": "stop",
+        "delay": [
+          3,
+          3
+        ],
+        "max_age": 2,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": false
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    },
+    {
+      "input": {
+        "id": "missing-stop-confirmation",
+        "kind": "stop",
+        "delay": [
+          0,
+          1
+        ],
+        "max_age": 2,
+        "identity_valid": true,
+        "ready_tick": 1,
+        "horizon": 6,
+        "suppress": true
+      },
+      "expected": {
+        "observed_ticks": [
+          0
+        ],
+        "can_observe": false,
+        "must_observe_by_horizon": false,
+        "exhausted": true,
+        "enumerated_states": 7,
+        "scope": "finite feedback-channel fixture, not complete production-line truth"
+      }
+    }
+  ],
+  "query": "which ticks can first valid observation occur by the finite horizon?",
+  "source": "reference_channel_v2.py; no acverify imports"
+}

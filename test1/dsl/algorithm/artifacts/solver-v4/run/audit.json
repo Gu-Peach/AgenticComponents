@@ -1,0 +1,575 @@
+{
+  "id": "solver-optimization-report/0.4",
+  "planned": 1248,
+  "recorded": 1248,
+  "static_matches": 576,
+  "reporter_sha256": "316a21114eb237b9f5b03d0966ef859c3245c4c262d901d1aba883ea62c28e99",
+  "errors": [],
+  "missing": [],
+  "reference_conflicts": [],
+  "traces_digest_and_replay_records_checked": 781,
+  "cross_method_agreement": {
+    "jointly_decided": 2311
+  },
+  "groups": {
+    "full_nominal / nominal / baseline / 0.5": {
+      "jobs": 360,
+      "status_counts": {
+        "CHECKED": 360
+      },
+      "limits": {
+        "TIMEOUT": 249,
+        "None": 111
+      },
+      "closed_jobs": 111,
+      "score": {
+        "total": 659,
+        "unresolved": 430,
+        "correct": 229
+      },
+      "coverage": 0.34749620637329287,
+      "accuracy_answered": 1.0,
+      "search_seconds": {
+        "n": 360,
+        "median": 0.5001538500000606,
+        "q1": 0.30522349999228027,
+        "q3": 0.5003300500029582
+      },
+      "worker_seconds": {
+        "n": 360,
+        "median": 0.7607984999995097,
+        "q1": 0.6696786499996961,
+        "q3": 0.7922457499989832
+      },
+      "states": {
+        "n": 360,
+        "median": 397.0,
+        "q1": 276.5,
+        "q3": 457.75
+      },
+      "rss_mib": {
+        "n": 360,
+        "median": 36.919921875,
+        "q1": 33.6826171875,
+        "q3": 37.912109375
+      }
+    },
+    "ablation / nominal / storage / 2.0": {
+      "jobs": 72,
+      "status_counts": {
+        "CHECKED": 72
+      },
+      "limits": {
+        "None": 39,
+        "TIMEOUT": 33
+      },
+      "closed_jobs": 39,
+      "score": {
+        "total": 105,
+        "correct": 72,
+        "unresolved": 33
+      },
+      "coverage": 0.6857142857142857,
+      "accuracy_answered": 1.0,
+      "search_seconds": {
+        "n": 72,
+        "median": 1.1596248999994714,
+        "q1": 0.5812591499961854,
+        "q3": 2.0002054250035144
+      },
+      "worker_seconds": {
+        "n": 72,
+        "median": 1.752190450009948,
+        "q1": 1.023791199993866,
+        "q3": 2.2715758249942155
+      },
+      "states": {
+        "n": 72,
+        "median": 1025.0,
+        "q1": 578.5,
+        "q3": 1446.0
+      },
+      "rss_mib": {
+        "n": 72,
+        "median": 52.76171875,
+        "q1": 41.6904296875,
+        "q3": 65.6015625
+      }
+    },
+    "ablation / nominal / portfolio / 2.0": {
+      "jobs": 72,
+      "status_counts": {
+        "CHECKED": 72
+      },
+      "limits": {
+        "None": 39,
+        "TIMEOUT": 33
+      },
+      "closed_jobs": 39,
+      "score": {
+        "total": 105,
+        "correct": 78,
+        "unresolved": 27
+      },
+      "coverage": 0.7428571428571429,
+      "accuracy_answered": 1.0,
+      "search_seconds": {
+        "n": 72,
+        "median": 1.4297368499974255,
+        "q1": 0.863717699994595,
+        "q3": 2.0010153750008612
+      },
+      "worker_seconds": {
+        "n": 72,
+        "median": 2.00978970000142,
+        "q1": 1.288045975004934,
+        "q3": 2.4151094500048202
+      },
+      "states": {
+        "n": 72,
+        "median": 1025.0,
+        "q1": 578.5,
+        "q3": 1299.25
+      },
+      "rss_mib": {
+        "n": 72,
+        "median": 53.814453125,
+        "q1": 42.619140625,
+        "q3": 63.9375
+      }
+    },
+    "full_nominal / nominal / storage / 0.5": {
+      "jobs": 360,
+      "status_counts": {
+        "CHECKED": 360
+      },
+      "limits": {
+        "TIMEOUT": 238,
+        "None": 122
+      },
+      "closed_jobs": 122,
+      "score": {
+        "total": 659,
+        "unresolved": 407,
+        "correct": 252
+      },
+      "coverage": 0.38239757207890746,
+      "accuracy_answered": 1.0,
+      "search_seconds": {
+        "n": 360,
+        "median": 0.5001082500020857,
+        "q1": 0.2513768250028079,
+        "q3": 0.5002323000044271
+      },
+      "worker_seconds": {
+        "n": 360,
+        "median": 0.7581296999996994,
+        "q1": 0.5978914750012336,
+        "q3": 0.7869168499928492
+      },
+      "states": {
+        "n": 360,
+        "median": 499.0,
+        "q1": 281.75,
+        "q3": 574.25
+      },
+      "rss_mib": {
+        "n": 360,
+        "median": 39.59765625,
+        "q1": 33.947265625,
+        "q3": 40.77734375
+      }
+    },
+    "stress / delayed / storage / 0.5": {
+      "jobs": 24,
+      "status_counts": {
+        "CHECKED": 24
+      },
+      "limits": {
+        "TIMEOUT": 23,
+        "None": 1
+      },
+      "closed_jobs": 1,
+      "score": {},
+      "coverage": null,
+      "accuracy_answered": null,
+      "search_seconds": {
+        "n": 24,
+        "median": 0.5001792499970179,
+        "q1": 0.5000908750007511,
+        "q3": 0.5003346999983478
+      },
+      "worker_seconds": {
+        "n": 24,
+        "median": 0.7782022499959567,
+        "q1": 0.7568273750039225,
+        "q3": 0.7923494999995455
+      },
+      "states": {
+        "n": 24,
+        "median": 349.5,
+        "q1": 323.0,
+        "q3": 366.75
+      },
+      "rss_mib": {
+        "n": 24,
+        "median": 35.4375,
+        "q1": 34.9716796875,
+        "q3": 37.0673828125
+      }
+    },
+    "ablation / nominal / baseline / 0.5": {
+      "jobs": 72,
+      "status_counts": {
+        "CHECKED": 72
+      },
+      "limits": {
+        "TIMEOUT": 60,
+        "None": 12
+      },
+      "closed_jobs": 12,
+      "score": {
+        "total": 105,
+        "unresolved": 79,
+        "correct": 26
+      },
+      "coverage": 0.24761904761904763,
+      "accuracy_answered": 1.0,
+      "search_seconds": {
+        "n": 72,
+        "median": 0.5002273999998579,
+        "q1": 0.5000698750081938,
+        "q3": 0.5003940999959013
+      },
+      "worker_seconds": {
+        "n": 72,
+        "median": 0.7690711499963072,
+        "q1": 0.746394074998534,
+        "q3": 0.8114775000030932
+      },
+      "states": {
+        "n": 72,
+        "median": 418.5,
+        "q1": 370.0,
+        "q3": 458.0
+      },
+      "rss_mib": {
+        "n": 72,
+        "median": 37.390625,
+        "q1": 36.4677734375,
+        "q3": 38.2470703125
+      }
+    },
+    "ablation / nominal / storage / 0.5": {
+      "jobs": 72,
+      "status_counts": {
+        "CHECKED": 72
+      },
+      "limits": {
+        "TIMEOUT": 55,
+        "None": 17
+      },
+      "closed_jobs": 17,
+      "score": {
+        "total": 105,
+        "correct": 35,
+        "unresolved": 70
+      },
+      "coverage": 0.3333333333333333,
+      "accuracy_answered": 1.0,
+      "search_seconds": {
+        "n": 72,
+        "median": 0.5001570499953232,
+        "q1": 0.50003907500286,
+        "q3": 0.5003180999956385
+      },
+      "worker_seconds": {
+        "n": 72,
+        "median": 0.7799019500016584,
+        "q1": 0.7520327750062279,
+        "q3": 0.8148377000070468
+      },
+      "states": {
+        "n": 72,
+        "median": 526.5,
+        "q1": 474.75,
+        "q3": 575.0
+      },
+      "rss_mib": {
+        "n": 72,
+        "median": 40.12890625,
+        "q1": 38.7275390625,
+        "q3": 41.6337890625
+      }
+    },
+    "ablation / nominal / portfolio / 0.5": {
+      "jobs": 72,
+      "status_counts": {
+        "CHECKED": 72
+      },
+      "limits": {
+        "None": 12,
+        "TIMEOUT": 60
+      },
+      "closed_jobs": 12,
+      "score": {
+        "total": 105,
+        "correct": 50,
+        "unresolved": 55
+      },
+      "coverage": 0.47619047619047616,
+      "accuracy_answered": 1.0,
+      "search_seconds": {
+        "n": 72,
+        "median": 0.5007381000032183,
+        "q1": 0.5005479999999807,
+        "q3": 0.5008959000042523
+      },
+      "worker_seconds": {
+        "n": 72,
+        "median": 0.8752244999923278,
+        "q1": 0.7784359249999397,
+        "q3": 0.9127761000017927
+      },
+      "states": {
+        "n": 72,
+        "median": 456.0,
+        "q1": 402.5,
+        "q3": 493.0
+      },
+      "rss_mib": {
+        "n": 72,
+        "median": 39.30078125,
+        "q1": 37.865234375,
+        "q3": 40.828125
+      }
+    },
+    "stress / fault / baseline / 0.5": {
+      "jobs": 24,
+      "status_counts": {
+        "CHECKED": 24
+      },
+      "limits": {
+        "TIMEOUT": 23,
+        "None": 1
+      },
+      "closed_jobs": 1,
+      "score": {},
+      "coverage": null,
+      "accuracy_answered": null,
+      "search_seconds": {
+        "n": 24,
+        "median": 0.5002003500048886,
+        "q1": 0.5001510750007583,
+        "q3": 0.500300600004266
+      },
+      "worker_seconds": {
+        "n": 24,
+        "median": 0.7628356999994139,
+        "q1": 0.757064100002026,
+        "q3": 0.7837637749980786
+      },
+      "states": {
+        "n": 24,
+        "median": 398.0,
+        "q1": 352.0,
+        "q3": 433.0
+      },
+      "rss_mib": {
+        "n": 24,
+        "median": 36.5078125,
+        "q1": 35.8955078125,
+        "q3": 36.935546875
+      }
+    },
+    "stress / fault / storage / 0.5": {
+      "jobs": 24,
+      "status_counts": {
+        "CHECKED": 24
+      },
+      "limits": {
+        "TIMEOUT": 23,
+        "None": 1
+      },
+      "closed_jobs": 1,
+      "score": {},
+      "coverage": null,
+      "accuracy_answered": null,
+      "search_seconds": {
+        "n": 24,
+        "median": 0.5001928999990923,
+        "q1": 0.5000971999943431,
+        "q3": 0.5002647250003065
+      },
+      "worker_seconds": {
+        "n": 24,
+        "median": 0.7639014000014868,
+        "q1": 0.7457211750042916,
+        "q3": 0.8033741249928426
+      },
+      "states": {
+        "n": 24,
+        "median": 473.5,
+        "q1": 441.25,
+        "q3": 494.25
+      },
+      "rss_mib": {
+        "n": 24,
+        "median": 37.873046875,
+        "q1": 37.513671875,
+        "q3": 38.5322265625
+      }
+    },
+    "ablation / nominal / baseline / 2.0": {
+      "jobs": 72,
+      "status_counts": {
+        "CHECKED": 72
+      },
+      "limits": {
+        "TIMEOUT": 33,
+        "None": 39
+      },
+      "closed_jobs": 39,
+      "score": {
+        "total": 105,
+        "unresolved": 33,
+        "correct": 72
+      },
+      "coverage": 0.6857142857142857,
+      "accuracy_answered": 1.0,
+      "search_seconds": {
+        "n": 72,
+        "median": 1.4839253000100143,
+        "q1": 0.7330809500126634,
+        "q3": 2.000368425000488
+      },
+      "worker_seconds": {
+        "n": 72,
+        "median": 2.1200393500039354,
+        "q1": 1.1998657250078395,
+        "q3": 2.274654249999003
+      },
+      "states": {
+        "n": 72,
+        "median": 984.0,
+        "q1": 578.5,
+        "q3": 1218.25
+      },
+      "rss_mib": {
+        "n": 72,
+        "median": 51.248046875,
+        "q1": 41.458984375,
+        "q3": 61.0966796875
+      }
+    },
+    "stress / delayed / baseline / 0.5": {
+      "jobs": 24,
+      "status_counts": {
+        "CHECKED": 24
+      },
+      "limits": {
+        "TIMEOUT": 23,
+        "None": 1
+      },
+      "closed_jobs": 1,
+      "score": {},
+      "coverage": null,
+      "accuracy_answered": null,
+      "search_seconds": {
+        "n": 24,
+        "median": 0.5002240499961772,
+        "q1": 0.5000809499942989,
+        "q3": 0.5003501249921101
+      },
+      "worker_seconds": {
+        "n": 24,
+        "median": 0.7583219499938423,
+        "q1": 0.7496753499981423,
+        "q3": 0.7717292749985063
+      },
+      "states": {
+        "n": 24,
+        "median": 275.0,
+        "q1": 266.75,
+        "q3": 296.25
+      },
+      "rss_mib": {
+        "n": 24,
+        "median": 34.181640625,
+        "q1": 33.818359375,
+        "q3": 35.916015625
+      }
+    }
+  },
+  "stable_queries": {
+    "storage / 2.0": {
+      "total": 35,
+      "stable_answered": 24
+    },
+    "portfolio / 2.0": {
+      "total": 35,
+      "stable_answered": 26
+    },
+    "baseline / 0.5": {
+      "total": 35,
+      "stable_answered": 8
+    },
+    "storage / 0.5": {
+      "total": 35,
+      "stable_answered": 11
+    },
+    "portfolio / 0.5": {
+      "total": 35,
+      "stable_answered": 16
+    },
+    "baseline / 2.0": {
+      "total": 35,
+      "stable_answered": 24
+    }
+  },
+  "paired_closed_search_speedup": {
+    "ablation / storage / 2.0": {
+      "n": 39,
+      "median": 1.3211493461682071,
+      "q1": 1.2067771628736446,
+      "q3": 1.3587682115860673
+    },
+    "ablation / portfolio / 2.0": {
+      "n": 39,
+      "median": 0.8357801759835894,
+      "q1": 0.6655107546512693,
+      "q3": 1.0015973859502294
+    },
+    "full_nominal / storage / 0.5": {
+      "n": 111,
+      "median": 1.2646839936934804,
+      "q1": 1.1621204819849087,
+      "q3": 1.3957330060921311
+    },
+    "ablation / storage / 0.5": {
+      "n": 12,
+      "median": 1.3278336883754323,
+      "q1": 1.2346192265236031,
+      "q3": 1.4264729708067332
+    },
+    "ablation / portfolio / 0.5": {
+      "n": 12,
+      "median": 0.9668842107751132,
+      "q1": 0.8993124457024879,
+      "q3": 1.0139653507756599
+    },
+    "stress / storage / 0.5": {
+      "n": 2,
+      "median": 1.1533027120074713,
+      "q1": 1.1111336225968114,
+      "q3": 1.1954718014181311
+    }
+  },
+  "gates": {
+    "execution_complete": true,
+    "integrity": true,
+    "reference_consistent": true,
+    "whole_line_truth_complete": false
+  },
+  "scope": "Same v3 semantic model and frozen query labels. No new truth labels, semantic reductions, or PLC baseline."
+}

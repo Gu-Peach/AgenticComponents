@@ -1,0 +1,35 @@
+{
+  "id": "p3-trusted-reference/0.1",
+  "reference_version": "reference-event-agenda/0.1",
+  "reference_files": {
+    "channel.py": "4516d2c83a0a0837350643f19e28a467a7a53c7596a4dcb0e001d0786dfbc160",
+    "common.py": "a93c0e3b3c706c0237a0aef3226795f27556c0026390fa6b25b038c7cc63cefd",
+    "control.py": "4da001c382cd1ff84474e9d738a3c5d6bc94922f92367fc3cda9d9721529b207",
+    "enumerate.py": "2b01ab699703070e21de561f0dcb9b6d72b63d490b1634c0cb63e09ad8b3f2ca",
+    "environment.py": "894801de8345db65928ea16fdde42f27e11f71bddfc2607a87857b175387ef99",
+    "fixtures.py": "b510be1313ca6f950e6f89e4ffba8304136bec4b25d7e73333988af13d2f1c86",
+    "frontend.py": "c04d024993f86c988b257f9486f0c0680b3d99672a366f4623c4004efbc50d06",
+    "monitors.py": "c56d3ee69b60acf5481233cfc8df458bfc16d0fbb94290c8adfa21635e0165c1",
+    "observations.py": "90f214152d9b0e4c7d5c14f5711e6269a405bfad8f28b9fa2615073275ed2f58",
+    "plant.py": "ae9f81431695571eacfcbc9d5aa24f5e74741f55c52f4d41e0f78bb9fc9a6f3b",
+    "properties.py": "ffdc1c49b8a056c2167deac6d5b79effc5559cda1ae7e3f0c67872d10fc72d58",
+    "state.py": "25559fd69e414b2bc843e780de9d67a6a43b5fe0836766752aaca252fa89f232",
+    "transition.py": "c33bdd728b53d922068aaf483ba09b7add749d210b7747b42b71d60ad3b5f049",
+    "__init__.py": "431259b3881248126edeb065733b7d5c9f693d95109591ca0e28cf182841627f",
+    "specs/property-spec.json": "fb9d50ce763b99fe3ecd3b98e7584cb04fbdc68de75625aca350fdb37f1b7071",
+    "specs/reference-semantics.json": "4595e03aed6abc9e685717ceb497d1cc32f52a6bf4ce99ccaa28aaa96d69cc4c"
+  },
+  "boundary": "Trusted symbolic reference kernel, not a real-device or tested-verifier refinement theorem.",
+  "proof_assumptions": [
+    "root success requires successful activated subtrees",
+    "confirmed invocation success follows all linear physical phases",
+    "global abort is never cleared",
+    "no autonomous material changes outside declared effects/events",
+    "root-success goal projection does not read permit/communication metadata"
+  ],
+  "change_policy": "Do not regenerate automatically to bypass a failed check; review the affected proof rules and version the policy.",
+  "workspace_files": {
+    "tools/build_standard_answers.py": "537cf195d51d22f98c1ef80315a53952a7b12c8227044aa9a1ea014ec308e675",
+    "specs/method1-semantics-v2.json": "2705930b896502ae2541bed3d46d4aa672b2b216b501391d0902aab84ef94909"
+  }
+}

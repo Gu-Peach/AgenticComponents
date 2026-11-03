@@ -1,0 +1,67 @@
+{
+  "ok": true,
+  "files": 12,
+  "errors": 0,
+  "results": [
+    {
+      "path": "C:/Users/gt_20/.codex/visualizations/2026/10/27/01a17d2f-5af1-7791-b36d-9aea0e499e2f/full-corpus/artifacts/full-construction/st-input/E01.st",
+      "ok": true,
+      "diagnostics": []
+    },
+    {
+      "path": "C:/Users/gt_20/.codex/visualizations/2026/10/27/01a17d2f-5af1-7791-b36d-9aea0e499e2f/full-corpus/artifacts/full-construction/st-input/E02.st",
+      "ok": true,
+      "diagnostics": []
+    },
+    {
+      "path": "C:/Users/gt_20/.codex/visualizations/2026/10/27/01a17d2f-5af1-7791-b36d-9aea0e499e2f/full-corpus/artifacts/full-construction/st-input/E03.st",
+      "ok": true,
+      "diagnostics": []
+    },
+    {
+      "path": "C:/Users/gt_20/.codex/visualizations/2026/10/27/01a17d2f-5af1-7791-b36d-9aea0e499e2f/full-corpus/artifacts/full-construction/st-input/E04.st",
+      "ok": true,
+      "diagnostics": []
+    },
+    {
+      "path": "C:/Users/gt_20/.codex/visualizations/2026/10/27/01a17d2f-5af1-7791-b36d-9aea0e499e2f/full-corpus/artifacts/full-construction/st-input/E05.st",
+      "ok": true,
+      "diagnostics": []
+    },
+    {
+      "path": "C:/Users/gt_20/.codex/visualizations/2026/10/27/01a17d2f-5af1-7791-b36d-9aea0e499e2f/full-corpus/artifacts/full-construction/st-input/E06.st",
+      "ok": true,
+      "diagnostics": []
+    },
+    {
+      "path": "C:/Users/gt_20/.codex/visualizations/2026/10/27/01a17d2f-5af1-7791-b36d-9aea0e499e2f/full-corpus/artifacts/full-construction/st-input/E07.st",
+      "ok": true,
+      "diagnostics": []
+    },
+    {
+      "path": "C:/Users/gt_20/.codex/visualizations/2026/10/27/01a17d2f-5af1-7791-b36d-9aea0e499e2f/full-corpus/artifacts/full-construction/st-input/E08.st",
+      "ok": true,
+      "diagnostics": []
+    },
+    {
+      "path": "C:/Users/gt_20/.codex/visualizations/2026/10/27/01a17d2f-5af1-7791-b36d-9aea0e499e2f/full-corpus/artifacts/full-construction/st-input/E09.st",
+      "ok": true,
+      "diagnostics": []
+    },
+    {
+      "path": "C:/Users/gt_20/.codex/visualizations/2026/10/27/01a17d2f-5af1-7791-b36d-9aea0e499e2f/full-corpus/artifacts/full-construction/st-input/E10.st",
+      "ok": true,
+      "diagnostics": []
+    },
+    {
+      "path": "C:/Users/gt_20/.codex/visualizations/2026/10/27/01a17d2f-5af1-7791-b36d-9aea0e499e2f/full-corpus/artifacts/full-construction/st-input/E11.st",
+      "ok": true,
+      "diagnostics": []
+    },
+    {
+      "path": "C:/Users/gt_20/.codex/visualizations/2026/10/27/01a17d2f-5af1-7791-b36d-9aea0e499e2f/full-corpus/artifacts/full-construction/st-input/E12.st",
+      "ok": true,
+      "diagnostics": []
+    }
+  ]
+}

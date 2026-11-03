@@ -1,0 +1,30 @@
+{
+  "stage": "P2",
+  "model_admitted": 360,
+  "corpus_cases": 360,
+  "greedy_walks": 360,
+  "greedy_outcomes": {
+    "succeeded": 216,
+    "failed": 144
+  },
+  "greedy_violation_counts": {
+    "V09": 69
+  },
+  "greedy_unknown_monitor_cases": [],
+  "small_models": 12,
+  "small_closed": 12,
+  "small_checks_pass": true,
+  "small_states": 333,
+  "native_runs": 15,
+  "native_closed": 7,
+  "native_limits": {
+    "TIMEOUT": 8,
+    "None": 7
+  },
+  "errors": [],
+  "forbidden_imports": [],
+  "source_unchanged": true,
+  "truth_labels_created": 0,
+  "whole_line_truth_complete": false,
+  "scope": "Model construction and diagnostic coverage; no universal conclusion from greedy walks or incomplete graphs."
+}

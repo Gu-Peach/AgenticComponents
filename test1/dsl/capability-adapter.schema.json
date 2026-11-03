@@ -1,0 +1,475 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AC process reference transfer capability adapter 0.1",
+  "type": "object",
+  "properties": {
+    "schema_type": {
+      "const": "CapabilityAdapter"
+    },
+    "version": {
+      "const": "0.1"
+    },
+    "adapter_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "behavior_id": {
+      "const": "transfer_material"
+    },
+    "behavior_type": {
+      "const": "composite"
+    },
+    "schedulable": {
+      "const": true
+    },
+    "implementation_status": {
+      "const": "pending_adapter"
+    },
+    "native": {
+      "type": "object",
+      "properties": {
+        "spec_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "contract_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "definition_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "behavior_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "template_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "payload_contract_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "spec_id",
+        "contract_version",
+        "definition_version",
+        "behavior_id",
+        "template_ref",
+        "payload_contract_ref"
+      ],
+      "additionalProperties": false
+    },
+    "arguments_schema": {
+      "type": "object",
+      "properties": {
+        "material": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "reference"
+            },
+            "reference_type": {
+              "enum": [
+                "material",
+                "location"
+              ]
+            },
+            "required": {
+              "const": true
+            }
+          },
+          "required": [
+            "type",
+            "reference_type",
+            "required"
+          ],
+          "additionalProperties": false
+        },
+        "source": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "reference"
+            },
+            "reference_type": {
+              "enum": [
+                "material",
+                "location"
+              ]
+            },
+            "required": {
+              "const": true
+            }
+          },
+          "required": [
+            "type",
+            "reference_type",
+            "required"
+          ],
+          "additionalProperties": false
+        },
+        "target": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "reference"
+            },
+            "reference_type": {
+              "enum": [
+                "material",
+                "location"
+              ]
+            },
+            "required": {
+              "const": true
+            }
+          },
+          "required": [
+            "type",
+            "reference_type",
+            "required"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "material",
+        "source",
+        "target"
+      ],
+      "additionalProperties": false
+    },
+    "binding_rules": {
+      "type": "object",
+      "properties": {
+        "source_must_differ_from_target": {
+          "const": true
+        },
+        "material_pose_writer": {
+          "const": "shared_physics_world"
+        },
+        "locations_require": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "parameter_freeze": {
+          "type": "string",
+          "minLength": 1
+        },
+        "identity_mapping": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "source_must_differ_from_target",
+        "material_pose_writer",
+        "locations_require",
+        "parameter_freeze",
+        "identity_mapping"
+      ],
+      "additionalProperties": false
+    },
+    "condition_contract": {
+      "type": "object",
+      "properties": {
+        "inherit_native_preconditions": {
+          "const": true
+        },
+        "inherit_native_sustaining_conditions": {
+          "const": true
+        },
+        "preconditions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source": {
+                "enum": [
+                  "observation",
+                  "authorization"
+                ]
+              },
+              "owner_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "equals": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "id",
+              "source",
+              "owner_ref",
+              "key",
+              "equals"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "sustaining_conditions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source": {
+                "enum": [
+                  "observation",
+                  "authorization"
+                ]
+              },
+              "owner_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "equals": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "id",
+              "source",
+              "owner_ref",
+              "key",
+              "equals"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "unknown_policy": {
+          "const": "block_or_controlled_stop"
+        }
+      },
+      "required": [
+        "inherit_native_preconditions",
+        "inherit_native_sustaining_conditions",
+        "preconditions",
+        "sustaining_conditions",
+        "unknown_policy"
+      ],
+      "additionalProperties": false
+    },
+    "completion_contract": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "const": "observed"
+        },
+        "inherit_native_checks": {
+          "const": true
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source": {
+                "enum": [
+                  "observation",
+                  "authorization"
+                ]
+              },
+              "owner_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "equals": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "id",
+              "source",
+              "owner_ref",
+              "key",
+              "equals"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1
+        },
+        "timer_or_progress_is_success": {
+          "const": false
+        }
+      },
+      "required": [
+        "mode",
+        "inherit_native_checks",
+        "checks",
+        "timer_or_progress_is_success"
+      ],
+      "additionalProperties": false
+    },
+    "payload_recipe": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "pending_pose_assembler"
+        },
+        "behaviorId": {
+          "const": "pick_and_place"
+        },
+        "instanceId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requestId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pose_source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "steps": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 64,
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "const": "move_to_pose"
+                  },
+                  "target_role": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "subject": {
+                    "enum": [
+                      "tcp",
+                      "held_material"
+                    ]
+                  },
+                  "support_clearance": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "target_role",
+                  "subject"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "grip",
+                      "release"
+                    ]
+                  },
+                  "material_argument": {
+                    "const": "material"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "material_argument"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        }
+      },
+      "required": [
+        "status",
+        "behaviorId",
+        "instanceId",
+        "requestId",
+        "pose_source",
+        "steps"
+      ],
+      "additionalProperties": false
+    },
+    "stop_contract": {
+      "type": "object",
+      "properties": {
+        "policy": {
+          "const": "controlled_hold_preserve_actual_material"
+        },
+        "release": {
+          "type": "string",
+          "minLength": 1
+        },
+        "incompatible_current_behavior": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "const": "pending_stop_bridge"
+        }
+      },
+      "required": [
+        "policy",
+        "release",
+        "incompatible_current_behavior",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "required": [
+    "schema_type",
+    "version",
+    "adapter_id",
+    "behavior_id",
+    "behavior_type",
+    "schedulable",
+    "implementation_status",
+    "native",
+    "arguments_schema",
+    "binding_rules",
+    "condition_contract",
+    "completion_contract",
+    "payload_recipe",
+    "stop_contract",
+    "notes"
+  ],
+  "additionalProperties": false
+}

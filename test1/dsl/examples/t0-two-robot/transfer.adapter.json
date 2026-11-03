@@ -1,0 +1,79 @@
+{
+  "schema_type": "CapabilityAdapter",
+  "version": "0.1",
+  "adapter_id": "cell.transfer_material@0.1",
+  "behavior_id": "transfer_material",
+  "behavior_type": "composite",
+  "schedulable": true,
+  "implementation_status": "pending_adapter",
+  "native": {
+    "spec_id": "robot_UR10",
+    "contract_version": "1.4",
+    "definition_version": "0.1.0",
+    "behavior_id": "pick_and_place",
+    "template_ref": "robot.articulated@1",
+    "payload_contract_ref": "robot-command@1"
+  },
+  "arguments_schema": {
+    "material": { "type": "reference", "reference_type": "material", "required": true },
+    "source": { "type": "reference", "reference_type": "location", "required": true },
+    "target": { "type": "reference", "reference_type": "location", "required": true }
+  },
+  "binding_rules": {
+    "source_must_differ_from_target": true,
+    "material_pose_writer": "shared_physics_world",
+    "locations_require": ["owner_ref", "geometry_ref", "frame_ref", "calibration_status"],
+    "parameter_freeze": "resolve named locations and precheck all poses before native acceptance",
+    "identity_mapping": "opaque process request -> distinct positive DINT native request; frozen bijection retained with result"
+  },
+  "condition_contract": {
+    "inherit_native_preconditions": true,
+    "inherit_native_sustaining_conditions": true,
+    "preconditions": [
+      { "id": "source_ready", "source": "observation", "owner_ref": "handoff", "key": "source_ready", "equals": true },
+      { "id": "target_accepting", "source": "observation", "owner_ref": "handoff", "key": "target_accepting", "equals": true }
+    ],
+    "sustaining_conditions": [
+      { "id": "transfer_interlock_valid", "source": "observation", "owner_ref": "handoff", "key": "transfer_interlock_valid", "equals": true }
+    ],
+    "unknown_policy": "block_or_controlled_stop"
+  },
+  "completion_contract": {
+    "mode": "observed",
+    "inherit_native_checks": true,
+    "checks": [
+      { "id": "transfer_committed", "source": "observation", "owner_ref": "handoff", "key": "transfer_committed", "equals": true },
+      { "id": "holder_matches_target", "source": "observation", "owner_ref": "handoff", "key": "holder_matches_target", "equals": true },
+      { "id": "supported_at_target", "source": "observation", "owner_ref": "handoff", "key": "supported_at_target", "equals": true }
+    ],
+    "timer_or_progress_is_success": false
+  },
+  "payload_recipe": {
+    "status": "pending_pose_assembler",
+    "behaviorId": "pick_and_place",
+    "instanceId": "bound target device instance",
+    "requestId": "positive DINT allocated from frozen process/native identity map",
+    "pose_source": "calibrated source/target location frames, robot TCP and actual held offset",
+    "steps": [
+      { "kind": "move_to_pose", "target_role": "source.approach", "subject": "tcp" },
+      { "kind": "move_to_pose", "target_role": "source.capture", "subject": "tcp" },
+      { "kind": "grip", "material_argument": "material" },
+      { "kind": "move_to_pose", "target_role": "source.clearance", "subject": "held_material" },
+      { "kind": "move_to_pose", "target_role": "target.approach", "subject": "held_material" },
+      { "kind": "move_to_pose", "target_role": "target.support", "subject": "held_material", "support_clearance": true },
+      { "kind": "release", "material_argument": "material" },
+      { "kind": "move_to_pose", "target_role": "target.retreat", "subject": "tcp" }
+    ]
+  },
+  "stop_contract": {
+    "policy": "controlled_hold_preserve_actual_material",
+    "release": "native stop evidence plus no unconfirmed handoff",
+    "incompatible_current_behavior": "experiment stop/reset restores authored baseline; requires production hold bridge",
+    "status": "pending_stop_bridge"
+  },
+  "notes": [
+    "该文件是版本化的业务能力适配定义，不是修改后的 DeviceSpec，也不是可提交的 RobotCommand。",
+    "payload_recipe 仅规定生成规则；真正提交前必须生成具体向量/frame/materialId 并通过 robot-command.ts 的校验和路径预检查。",
+    "公共授权必须显式衔接 native source_authorized/target_reserved，不能把实验手动会话授权冒充多设备仲裁。"
+  ]
+}

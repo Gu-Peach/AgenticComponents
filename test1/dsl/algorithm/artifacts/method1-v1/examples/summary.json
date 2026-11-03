@@ -1,0 +1,202 @@
+[
+  {
+    "case_id": "S04-P01",
+    "profile": "nominal",
+    "status": "CHECKED",
+    "states": 438,
+    "limit": null,
+    "properties": {
+      "V01": "PROVED_ON_FINITE_MODEL",
+      "V02": "PROVED_ON_FINITE_MODEL",
+      "V03": "PROVED_ON_FINITE_MODEL",
+      "V04": "PROVED_ON_FINITE_MODEL",
+      "V05": "PROVED_ON_FINITE_MODEL",
+      "V06": "PROVED_ON_FINITE_MODEL",
+      "V07": "PROVED_ON_FINITE_MODEL",
+      "V08": "PROVED_ON_FINITE_MODEL",
+      "V09": "PROVED_ON_FINITE_MODEL",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "PROVED_ON_FINITE_MODEL"
+    }
+  },
+  {
+    "case_id": "S04-P01-DV01",
+    "profile": "nominal",
+    "status": "CHECKED",
+    "states": 177,
+    "limit": null,
+    "properties": {
+      "V01": "PROVED_ON_FINITE_MODEL",
+      "V02": "PROVED_ON_FINITE_MODEL",
+      "V03": "PROVED_ON_FINITE_MODEL",
+      "V04": "PROVED_ON_FINITE_MODEL",
+      "V05": "PROVED_ON_FINITE_MODEL",
+      "V06": "PROVED_ON_FINITE_MODEL",
+      "V07": "PROVED_ON_FINITE_MODEL",
+      "V08": "PROVED_ON_FINITE_MODEL",
+      "V09": "PROVED_ON_FINITE_MODEL",
+      "V10a": "GOAL_NOT_REACHED_ON_FINITE_MODEL",
+      "V10b": "PROVED_ON_FINITE_MODEL"
+    }
+  },
+  {
+    "case_id": "S04-P01-DV02",
+    "profile": "nominal",
+    "status": "CHECKED",
+    "states": 557,
+    "limit": null,
+    "properties": {
+      "V01": "PROVED_ON_FINITE_MODEL",
+      "V02": "PROVED_ON_FINITE_MODEL",
+      "V03": "PROVED_ON_FINITE_MODEL",
+      "V04": "PROVED_ON_FINITE_MODEL",
+      "V05": "PROVED_ON_FINITE_MODEL",
+      "V06": "PROVED_ON_FINITE_MODEL",
+      "V07": "PROVED_ON_FINITE_MODEL",
+      "V08": "PROVED_ON_FINITE_MODEL",
+      "V09": "PROVED_ON_FINITE_MODEL",
+      "V10a": "GOAL_NOT_REACHED_ON_FINITE_MODEL",
+      "V10b": "PROVED_ON_FINITE_MODEL"
+    }
+  },
+  {
+    "case_id": "S04-P01-DV03",
+    "profile": "nominal",
+    "status": "CHECKED",
+    "states": 436,
+    "limit": null,
+    "properties": {
+      "V01": "PROVED_ON_FINITE_MODEL",
+      "V02": "PROVED_ON_FINITE_MODEL",
+      "V03": "PROVED_ON_FINITE_MODEL",
+      "V04": "PROVED_ON_FINITE_MODEL",
+      "V05": "PROVED_ON_FINITE_MODEL",
+      "V06": "PROVED_ON_FINITE_MODEL",
+      "V07": "PROVED_ON_FINITE_MODEL",
+      "V08": "PROVED_ON_FINITE_MODEL",
+      "V09": "PROVED_ON_FINITE_MODEL",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "PROVED_ON_FINITE_MODEL"
+    }
+  },
+  {
+    "case_id": "S04-P01-DV04",
+    "profile": "nominal",
+    "status": "CHECKED",
+    "states": 388,
+    "limit": null,
+    "properties": {
+      "V01": "PROVED_ON_FINITE_MODEL",
+      "V02": "PROVED_ON_FINITE_MODEL",
+      "V03": "PROVED_ON_FINITE_MODEL",
+      "V04": "PROVED_ON_FINITE_MODEL",
+      "V05": "PROVED_ON_FINITE_MODEL",
+      "V06": "PROVED_ON_FINITE_MODEL",
+      "V07": "PROVED_ON_FINITE_MODEL",
+      "V08": "PROVED_ON_FINITE_MODEL",
+      "V09": "VIOLATED_IN_MODEL",
+      "V10a": "GOAL_NOT_REACHED_ON_FINITE_MODEL",
+      "V10b": "PROVED_ON_FINITE_MODEL"
+    }
+  },
+  {
+    "case_id": "S04-P01",
+    "profile": "stop_unknown_c1",
+    "status": "CHECKED",
+    "states": 102,
+    "limit": null,
+    "properties": {
+      "V01": "PROVED_ON_FINITE_MODEL",
+      "V02": "PROVED_ON_FINITE_MODEL",
+      "V03": "PROVED_ON_FINITE_MODEL",
+      "V04": "PROVED_ON_FINITE_MODEL",
+      "V05": "PROVED_ON_FINITE_MODEL",
+      "V06": "PROVED_ON_FINITE_MODEL",
+      "V07": "PROVED_ON_FINITE_MODEL",
+      "V08": "PROVED_ON_FINITE_MODEL",
+      "V09": "PROVED_ON_FINITE_MODEL",
+      "V10a": "GOAL_NOT_REACHED_ON_FINITE_MODEL",
+      "V10b": "PROVED_ON_FINITE_MODEL"
+    }
+  },
+  {
+    "case_id": "S03-P02",
+    "profile": "nominal",
+    "status": "CHECKED",
+    "states": 688,
+    "limit": null,
+    "properties": {
+      "V01": "PROVED_ON_FINITE_MODEL",
+      "V02": "PROVED_ON_FINITE_MODEL",
+      "V03": "PROVED_ON_FINITE_MODEL",
+      "V04": "PROVED_ON_FINITE_MODEL",
+      "V05": "PROVED_ON_FINITE_MODEL",
+      "V06": "PROVED_ON_FINITE_MODEL",
+      "V07": "PROVED_ON_FINITE_MODEL",
+      "V08": "PROVED_ON_FINITE_MODEL",
+      "V09": "PROVED_ON_FINITE_MODEL",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "PROVED_ON_FINITE_MODEL"
+    }
+  },
+  {
+    "case_id": "S12-P03",
+    "profile": "nominal",
+    "status": "CHECKED",
+    "states": 112,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S10-P04",
+    "profile": "nominal",
+    "status": "CHECKED",
+    "states": 150,
+    "limit": null,
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "NOT_APPLICABLE",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "GOAL_REACHABLE_WITHIN_BOUND",
+      "V10b": "UNKNOWN"
+    }
+  },
+  {
+    "case_id": "S01-P01",
+    "profile": "fault",
+    "status": "CHECKED",
+    "states": 3391,
+    "limit": "TIMEOUT",
+    "properties": {
+      "V01": "UNKNOWN",
+      "V02": "UNKNOWN",
+      "V03": "UNKNOWN",
+      "V04": "UNKNOWN",
+      "V05": "UNKNOWN",
+      "V06": "UNKNOWN",
+      "V07": "UNKNOWN",
+      "V08": "UNKNOWN",
+      "V09": "UNKNOWN",
+      "V10a": "UNKNOWN",
+      "V10b": "UNKNOWN"
+    }
+  }
+]

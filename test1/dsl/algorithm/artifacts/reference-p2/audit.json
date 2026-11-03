@@ -1,0 +1,205 @@
+{
+  "stage": "P2",
+  "reviewer_type": "AI_technical_review",
+  "errors": [],
+  "tests_passed": 71,
+  "model_constructed": 360,
+  "greedy_walks": 360,
+  "greedy_outcomes": {
+    "succeeded": 216,
+    "failed": 144
+  },
+  "greedy_goal_at_end": 147,
+  "greedy_counterexample_candidates": 69,
+  "small_graph_checks": [
+    {
+      "fixture": "single",
+      "checked": true,
+      "states": 79,
+      "edges": 99,
+      "scope": "Exact closure against independent reference transition kernel; not source-to-kernel refinement proof"
+    },
+    {
+      "fixture": "disjoint",
+      "checked": true,
+      "states": 12,
+      "edges": 11,
+      "scope": "Exact closure against independent reference transition kernel; not source-to-kernel refinement proof"
+    },
+    {
+      "fixture": "shared-material",
+      "checked": true,
+      "states": 27,
+      "edges": 26,
+      "scope": "Exact closure against independent reference transition kernel; not source-to-kernel refinement proof"
+    },
+    {
+      "fixture": "capacity",
+      "checked": true,
+      "states": 27,
+      "edges": 26,
+      "scope": "Exact closure against independent reference transition kernel; not source-to-kernel refinement proof"
+    },
+    {
+      "fixture": "parallel-failure",
+      "checked": true,
+      "states": 8,
+      "edges": 7,
+      "scope": "Exact closure against independent reference transition kernel; not source-to-kernel refinement proof"
+    },
+    {
+      "fixture": "provider_restart",
+      "checked": true,
+      "states": 50,
+      "edges": 49,
+      "scope": "Exact closure against independent reference transition kernel; not source-to-kernel refinement proof"
+    },
+    {
+      "fixture": "hold_permission_loss",
+      "checked": true,
+      "states": 26,
+      "edges": 25,
+      "scope": "Exact closure against independent reference transition kernel; not source-to-kernel refinement proof"
+    },
+    {
+      "fixture": "duplicate_same_request",
+      "checked": true,
+      "states": 18,
+      "edges": 18,
+      "scope": "Exact closure against independent reference transition kernel; not source-to-kernel refinement proof"
+    },
+    {
+      "fixture": "old_request_feedback",
+      "checked": true,
+      "states": 18,
+      "edges": 18,
+      "scope": "Exact closure against independent reference transition kernel; not source-to-kernel refinement proof"
+    },
+    {
+      "fixture": "lost-stop",
+      "checked": true,
+      "states": 8,
+      "edges": 7,
+      "scope": "Exact closure against independent reference transition kernel; not source-to-kernel refinement proof"
+    },
+    {
+      "fixture": "late-stop",
+      "checked": true,
+      "states": 50,
+      "edges": 49,
+      "scope": "Exact closure against independent reference transition kernel; not source-to-kernel refinement proof"
+    },
+    {
+      "fixture": "deadline-negative",
+      "checked": true,
+      "states": 10,
+      "edges": 9,
+      "scope": "Exact closure against independent reference transition kernel; not source-to-kernel refinement proof"
+    }
+  ],
+  "replayed_traces": 11,
+  "trace_checks": [
+    {
+      "case_id": "S04-P01",
+      "valid": true,
+      "tick": 45,
+      "outcome": "succeeded",
+      "boundary": "self-model replay; not P3 independent evidence certification"
+    },
+    {
+      "case_id": "S04-P01-DV04",
+      "valid": true,
+      "tick": 35,
+      "outcome": "succeeded",
+      "boundary": "self-model replay; not P3 independent evidence certification"
+    },
+    {
+      "case_id": "S10-P04",
+      "valid": true,
+      "tick": 138,
+      "outcome": "succeeded",
+      "boundary": "self-model replay; not P3 independent evidence certification"
+    },
+    {
+      "case_id": "S12-P03",
+      "valid": true,
+      "tick": 46,
+      "outcome": "succeeded",
+      "boundary": "self-model replay; not P3 independent evidence certification"
+    },
+    {
+      "case_id": "S04-P01",
+      "profile": "stop_unknown_c1",
+      "valid": true,
+      "tick": 26,
+      "outcome": "attention_required",
+      "boundary": "self-model replay; not P3 independent evidence certification"
+    },
+    {
+      "case_id": "S04-P01-DV01",
+      "profile": "nominal",
+      "valid": true,
+      "tick": 20,
+      "outcome": "failed",
+      "boundary": "self-model replay; not P3 independent evidence certification"
+    },
+    {
+      "case_id": "S04-P01-DV01",
+      "profile": "delayed",
+      "valid": true,
+      "tick": 28,
+      "outcome": "failed",
+      "boundary": "self-model replay; not P3 independent evidence certification"
+    },
+    {
+      "case_id": "S04-P01-DV01",
+      "profile": "stop_unknown_c1",
+      "valid": true,
+      "tick": 20,
+      "outcome": "failed",
+      "boundary": "self-model replay; not P3 independent evidence certification"
+    },
+    {
+      "case_id": "S04-P01-DV02",
+      "profile": "stop_unknown_c1",
+      "valid": true,
+      "tick": 26,
+      "outcome": "attention_required",
+      "boundary": "self-model replay; not P3 independent evidence certification"
+    },
+    {
+      "case_id": "S04-P01-DV03",
+      "profile": "stop_unknown_c1",
+      "valid": true,
+      "tick": 26,
+      "outcome": "attention_required",
+      "boundary": "self-model replay; not P3 independent evidence certification"
+    },
+    {
+      "case_id": "S04-P01-DV04",
+      "profile": "stop_unknown_c1",
+      "valid": true,
+      "tick": 26,
+      "outcome": "attention_required",
+      "boundary": "self-model replay; not P3 independent evidence certification"
+    }
+  ],
+  "native_runs": 15,
+  "native_closed": 7,
+  "native_limits": {
+    "TIMEOUT": 8,
+    "None": 7
+  },
+  "pilot_migration_queries": 160,
+  "legacy_equivalence_proved": false,
+  "gates": {
+    "artifact_integrity": true,
+    "small_graphs_closed_and_checked": true,
+    "independent_reference_package": true,
+    "whole_line_truth_complete": false,
+    "P3_truth_admission_complete": false
+  },
+  "truth_labels_created": 0,
+  "test_log_sha256": "b7e1a500325367559dc1d30f6769ad5e518002eba789ec5245c76ea7bbeff80a",
+  "source_freeze_sha256": "4fd6e17462b4392a2528a7a13510e1f08b0b73ff15bb70cf7b027d0bea035725"
+}

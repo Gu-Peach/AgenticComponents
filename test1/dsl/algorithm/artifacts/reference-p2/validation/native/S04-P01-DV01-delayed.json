@@ -1,0 +1,72 @@
+{
+  "summary": {
+    "reference_version": "reference-event-agenda/0.1",
+    "model_digest": "58d148980ace1cb2f522b8487f0174e5cb5fee78d0a988d06198917220bfaa7b",
+    "case_id": "S04-P01-DV01",
+    "profile": {
+      "accept": [
+        2,
+        3
+      ],
+      "phase": [
+        2,
+        4
+      ],
+      "stop": [
+        2,
+        4
+      ],
+      "feedback": [
+        0,
+        0
+      ],
+      "faults": [],
+      "max_faults": 0,
+      "forced_stop_loss": null,
+      "max_age": 2,
+      "events": [],
+      "response_window": null,
+      "name": "delayed",
+      "timing_scope": "reference-six-phase/0.1",
+      "source_scope": "s04-pilot-timed-microsteps/0.1",
+      "pilot_migration": true,
+      "visibility": 1,
+      "fault_packet_selection": "any_queued_packet"
+    },
+    "bound": 256,
+    "search": "complete",
+    "states": 945,
+    "edges": 1126,
+    "frontier_exhausted": true,
+    "finite_model_closed": true,
+    "horizon_reached": false,
+    "limit": null,
+    "elapsed_seconds": 0.5939093000051798,
+    "serialized_state_bytes": 2623207,
+    "peak_sampled_rss_bytes": 35532800,
+    "all_edges_retained": false,
+    "memory_tracking": "sampled RSS and serialized keys",
+    "terminal_counts": {
+      "failed": 16
+    },
+    "violations_seen": [],
+    "goal_witness_found": false,
+    "uncovered_obligations": [],
+    "monitor_coverage_complete": true,
+    "edge_digest": "b6420e9724a58d1f28f3156e43170046400a4f11057381a32a306f7e30e6fd02",
+    "reference_queries_admitted": false,
+    "note": "P2 model validation output; P3 must independently check evidence before truth admission."
+  },
+  "witnesses": {
+    "terminal_failed": {
+      "path": "native-traces/S04-P01-DV01-delayed/terminal_failed.json",
+      "sha256": "182238348fc41e0ce0e4f0038f9f00aa8ceff76d9b2408b7b91f66f8cc732a3e",
+      "replay": {
+        "valid": true,
+        "tick": 28,
+        "outcome": "failed",
+        "boundary": "self-model replay; not P3 independent evidence certification"
+      }
+    }
+  }
+}
