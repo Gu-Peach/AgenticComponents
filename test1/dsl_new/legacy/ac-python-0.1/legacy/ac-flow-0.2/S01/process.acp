@@ -1,0 +1,42 @@
+; 四件顺序装配转运与双工位流水
+; 最多2件在途，R1上游与R2下游按容量和资源互锁形成流水。
+(process "ac-flow/0.2" S01
+  (sequence
+    (parallel-for jobs job 2
+      (sequence
+        (await input_present $job.material $job.input 1800 tick)
+        (with-resources
+          (C2)
+          (sequence
+            (invoke op_001 C2 transport_to_exit
+              (arg material $job.material)
+              (arg speed_mps 0.2 m/s))))
+        (await target_available C1.entry 1800 tick)
+        (with-resources
+          (R1 C1 C2)
+          (sequence
+            (sequence
+              (invoke op_002 R1 transfer_material
+                (arg material $job.material)
+                (arg source C2.exit)
+                (arg target C1.entry))
+              (invoke op_003 R1 move_to_location
+                (arg target R1.home)))))
+        (with-resources
+          (C1)
+          (sequence
+            (invoke op_004 C1 transport_to_exit
+              (arg material $job.material)
+              (arg speed_mps 0.2 m/s))))
+        (await target_available $job.target 1800 tick)
+        (with-resources
+          (R2 C1 P1)
+          (sequence
+            (sequence
+              (invoke op_005 R2 transfer_material
+                (arg material $job.material)
+                (arg source C1.exit)
+                (arg target $job.target))
+              (invoke op_006 R2 move_to_location
+                (arg target R2.home)))))))
+    (verify batch_goal)))

@@ -1,0 +1,211 @@
+{
+  "scope": "Declaration conformance, not execution",
+  "standard_assets": 8,
+  "experimental_assets": 1,
+  "assets": [
+    {
+      "asset": "conveyor",
+      "device_type": "conveyor",
+      "old_behavior_ids": [
+        "transport_to_exit",
+        "run",
+        "index_carriers",
+        "transport_carrier_to"
+      ],
+      "canonical_behavior_ids": [
+        "accept_material",
+        "advance_to_next_stop_point",
+        "transport_to_exit",
+        "release_material",
+        "start_conveying",
+        "set_speed",
+        "stop_conveying",
+        "reverse_conveying",
+        "zone_accumulation",
+        "meter_release",
+        "publish_drive_feedback"
+      ],
+      "removed_noncanonical": [
+        "index_carriers",
+        "run",
+        "transport_carrier_to"
+      ],
+      "old_structure": "asset-contract/0.1",
+      "new_structure": "DeviceSpec/1.1"
+    },
+    {
+      "asset": "lift_transport",
+      "device_type": "lift_table",
+      "old_behavior_ids": [
+        "move_to_height",
+        "move_to_location"
+      ],
+      "canonical_behavior_ids": [
+        "accept_material",
+        "lift_to_level",
+        "release_material",
+        "hold_lift",
+        "resume_lift",
+        "raise_transfer_chains",
+        "lower_transfer_chains",
+        "transfer_material"
+      ],
+      "removed_noncanonical": [
+        "move_to_height",
+        "move_to_location"
+      ],
+      "old_structure": "asset-contract/0.1",
+      "new_structure": "DeviceSpec/1.1"
+    },
+    {
+      "asset": "material_source",
+      "device_type": "material_source_station",
+      "old_behavior_ids": [
+        "present_material",
+        "observe_available_material"
+      ],
+      "canonical_behavior_ids": [
+        "produce_material",
+        "present_material",
+        "pause_production",
+        "resume_production",
+        "schedule_production_cycle",
+        "publish_source_state"
+      ],
+      "removed_noncanonical": [
+        "observe_available_material"
+      ],
+      "old_structure": "asset-contract/0.1",
+      "new_structure": "DeviceSpec/1.1"
+    },
+    {
+      "asset": "robot_arm",
+      "device_type": "robot_arm",
+      "old_behavior_ids": [
+        "move_to_location",
+        "pick",
+        "place",
+        "transfer_material"
+      ],
+      "canonical_behavior_ids": [
+        "execute_job",
+        "pick_and_place",
+        "move_to_pose",
+        "grip",
+        "release",
+        "wait_time",
+        "wait_signal",
+        "set_output",
+        "pause_pick_intake",
+        "resume_pick_intake",
+        "hold_motion",
+        "resume_motion",
+        "publish_robot_state"
+      ],
+      "removed_noncanonical": [
+        "move_to_location",
+        "pick",
+        "place",
+        "transfer_material"
+      ],
+      "old_structure": "asset-contract/0.1",
+      "new_structure": "DeviceSpec/1.1"
+    },
+    {
+      "asset": "rotary_table",
+      "device_type": "rotary_table",
+      "old_behavior_ids": [
+        "index_to_angle",
+        "observe_slot"
+      ],
+      "canonical_behavior_ids": [
+        "accept_material",
+        "rotate_to_station",
+        "release_material",
+        "hold_rotation",
+        "resume_rotation",
+        "convey_on_deck",
+        "publish_turntable_state"
+      ],
+      "removed_noncanonical": [
+        "index_to_angle",
+        "observe_slot"
+      ],
+      "old_structure": "asset-contract/0.1",
+      "new_structure": "DeviceSpec/1.1"
+    },
+    {
+      "asset": "storage_rack",
+      "device_type": "storage_rack",
+      "old_behavior_ids": [
+        "receive_in_cell",
+        "release_from_cell",
+        "observe_inventory"
+      ],
+      "canonical_behavior_ids": [
+        "reserve_cell",
+        "store_to_cell",
+        "release_from_cell",
+        "cancel_cell_reservation",
+        "query_cell_state",
+        "publish_storage_state"
+      ],
+      "removed_noncanonical": [
+        "observe_inventory",
+        "receive_in_cell"
+      ],
+      "old_structure": "asset-contract/0.1",
+      "new_structure": "DeviceSpec/1.1"
+    },
+    {
+      "asset": "material",
+      "device_type": "workpiece",
+      "old_behavior_ids": [
+        "be_picked",
+        "observe_carried",
+        "be_placed",
+        "be_conveyed_to"
+      ],
+      "canonical_behavior_ids": [
+        "be_picked",
+        "be_conveyed",
+        "be_carried",
+        "be_placed",
+        "be_released",
+        "respond_to_physics",
+        "publish_material_state"
+      ],
+      "removed_noncanonical": [
+        "be_conveyed_to",
+        "observe_carried"
+      ],
+      "old_structure": "asset-contract/0.1",
+      "new_structure": "DeviceSpec/1.1"
+    },
+    {
+      "asset": "pallet",
+      "device_type": "workpiece_carrier",
+      "old_behavior_ids": [
+        "receive_load",
+        "release_load",
+        "observe_inventory"
+      ],
+      "canonical_behavior_ids": [
+        "reserve_carrier_slot",
+        "cancel_carrier_reservation",
+        "confirm_load",
+        "carry_material",
+        "release_material",
+        "be_transported_loaded",
+        "publish_carrier_state"
+      ],
+      "removed_noncanonical": [
+        "observe_inventory",
+        "receive_load",
+        "release_load"
+      ],
+      "old_structure": "asset-contract/0.1",
+      "new_structure": "DeviceSpec/1.1"
+    }
+  ]
+}

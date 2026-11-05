@@ -1,0 +1,229 @@
+{
+  "schema_version": "ac-flow-bindings/0.2",
+  "scene_id": "S08",
+  "source_scene": "../../scene/L-shaped Automated Machining Cell",
+  "binding_status": "logical_only",
+  "instances": {
+    "R1": {
+      "contract": "robot_arm",
+      "version": "0.1.0",
+      "features": {
+        "motion": true,
+        "gripper": true
+      },
+      "parameters": {
+        "max_payload_kg": 10.0,
+        "tcp_speed_mps": 0.2,
+        "position_tolerance_m": 0.005,
+        "orientation_tolerance_rad": 0.01
+      },
+      "adapter_status": "pending",
+      "geometry_status": "pending_calibration",
+      "signal_namespace": "R1"
+    },
+    "C1": {
+      "contract": "conveyor",
+      "version": "0.3.0",
+      "features": {
+        "carrier_indexing": false
+      },
+      "parameters": {
+        "max_speed_mps": 0.5,
+        "acceleration_mps2": 0.5,
+        "stop_speed_tolerance": 0.005,
+        "speed_tolerance": 0.01,
+        "capacity": 1,
+        "max_carrier_load_kg": 100,
+        "carrier_speed_mps": 0.2
+      },
+      "adapter_status": "pending",
+      "geometry_status": "pending_calibration",
+      "signal_namespace": "C1"
+    },
+    "C2": {
+      "contract": "conveyor",
+      "version": "0.3.0",
+      "features": {
+        "carrier_indexing": false
+      },
+      "parameters": {
+        "max_speed_mps": 0.5,
+        "acceleration_mps2": 0.5,
+        "stop_speed_tolerance": 0.005,
+        "speed_tolerance": 0.01,
+        "capacity": 1,
+        "max_carrier_load_kg": 100,
+        "carrier_speed_mps": 0.2
+      },
+      "adapter_status": "pending",
+      "geometry_status": "pending_calibration",
+      "signal_namespace": "C2"
+    },
+    "MC1": {
+      "contract": "processing_station",
+      "version": "0.1.0",
+      "features": {},
+      "parameters": {
+        "max_payload_kg": 5,
+        "capacity": 1,
+        "nominal_cycle_s": 2
+      },
+      "adapter_status": "pending",
+      "geometry_status": "pending_calibration",
+      "signal_namespace": "MC1"
+    },
+    "M01": {
+      "contract": "material",
+      "version": "0.1.0",
+      "features": {},
+      "parameters": {
+        "mass_kg": 1.0,
+        "length_m": 0.1,
+        "width_m": 0.1,
+        "height_m": 0.1,
+        "graspable": true,
+        "material_class": "workpiece"
+      },
+      "adapter_status": "pending",
+      "geometry_status": "pending_calibration",
+      "signal_namespace": "M01"
+    },
+    "M02": {
+      "contract": "material",
+      "version": "0.1.0",
+      "features": {},
+      "parameters": {
+        "mass_kg": 1.0,
+        "length_m": 0.1,
+        "width_m": 0.1,
+        "height_m": 0.1,
+        "graspable": true,
+        "material_class": "workpiece"
+      },
+      "adapter_status": "pending",
+      "geometry_status": "pending_calibration",
+      "signal_namespace": "M02"
+    },
+    "M03": {
+      "contract": "material",
+      "version": "0.1.0",
+      "features": {},
+      "parameters": {
+        "mass_kg": 1.0,
+        "length_m": 0.1,
+        "width_m": 0.1,
+        "height_m": 0.1,
+        "graspable": true,
+        "material_class": "workpiece"
+      },
+      "adapter_status": "pending",
+      "geometry_status": "pending_calibration",
+      "signal_namespace": "M03"
+    },
+    "M04": {
+      "contract": "material",
+      "version": "0.1.0",
+      "features": {},
+      "parameters": {
+        "mass_kg": 1.0,
+        "length_m": 0.1,
+        "width_m": 0.1,
+        "height_m": 0.1,
+        "graspable": true,
+        "material_class": "workpiece"
+      },
+      "adapter_status": "pending",
+      "geometry_status": "pending_calibration",
+      "signal_namespace": "M04"
+    }
+  },
+  "locations": {
+    "R1.tool": {
+      "owner": "R1",
+      "geometry_status": "pending_calibration"
+    },
+    "C1.entry": {
+      "owner": "C1",
+      "geometry_status": "pending_calibration"
+    },
+    "C1.exit": {
+      "owner": "C1",
+      "geometry_status": "pending_calibration"
+    },
+    "C2.entry": {
+      "owner": "C2",
+      "geometry_status": "pending_calibration"
+    },
+    "C2.exit": {
+      "owner": "C2",
+      "geometry_status": "pending_calibration"
+    },
+    "MC1.work": {
+      "owner": "MC1",
+      "geometry_status": "pending_calibration"
+    },
+    "R1.home": {
+      "owner": "R1",
+      "geometry_status": "pending_calibration",
+      "role": "outside_all_shared_motion_zones"
+    }
+  },
+  "recipes": {
+    "machining": {
+      "station": "MC1",
+      "evidence": "request_material_recipe_matching_operation_record"
+    }
+  },
+  "initial": {
+    "materials": "registered_finite_inventory",
+    "material_origins": {
+      "M01": "external_input_buffer",
+      "M02": "external_input_buffer",
+      "M03": "external_input_buffer",
+      "M04": "external_input_buffer"
+    },
+    "carriers": {},
+    "devices": "idle_stopped_unclamped",
+    "robot_positions": {
+      "R1": "R1.home"
+    },
+    "angles": {},
+    "heights": {}
+  },
+  "execution": {
+    "tick_hz": 60,
+    "deadline_ticks": 72000,
+    "scheduler": "fair_finite_jobs_with_atomic_resource_sets",
+    "on_failure": "stop_admissions_cancel_siblings_confirm_stops_or_attention"
+  },
+  "environment_events": [
+    {
+      "kind": "external_infeed",
+      "location": "C1.entry",
+      "rule": "release_next_registered_job_only_when_entry_empty_and_owner_capacity_including_reservations_available",
+      "evidence": "subject_identity_and_actual_support",
+      "implementation_status": "pending"
+    },
+    {
+      "kind": "external_takeaway",
+      "rule": "accept_only_materials_with_matching_completed_output_handoff_then_publish_departure",
+      "implementation_status": "pending"
+    }
+  ],
+  "resources": [
+    "R1",
+    "C1",
+    "C2",
+    "MC1",
+    "M01",
+    "M02",
+    "M03",
+    "M04"
+  ],
+  "assumptions": [
+    "同类契约统一；实例几何、配方、观测和运动适配均待接入。",
+    "物料在有限外部缓冲区登记，真实入口交接证据到达后才可进入流程；await不创建或移动物料。",
+    "目标可用检查和容量预留必须在提交时原子复核；先前await不能代替当前授权。",
+    "home须在共享运动区之外，升降和转位仍需要真实运动区清空反馈。"
+  ]
+}

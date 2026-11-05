@@ -1,0 +1,13 @@
+{
+  "files": {
+    "asset_contracts/assets/conveyor.json": "0e075ca35f442b2b97fa737b79db110a34191a79ea6bc216a16e265426f05293",
+    "asset_contracts/assets/lift_transport.json": "3700331d426e5c670002fa2c91d450c2b1adaf9b22e21674eb2fa2adf5d4021d",
+    "asset_contracts/assets/material.json": "e235b023735ecfbb21b249f6ea1b794698a8d0019260e710eab7745419d864a5",
+    "asset_contracts/assets/material_source.json": "23fa27b1954ece853c2b3621d3712e98f0f8cf623bea0c254d335fd14dcb6654",
+    "asset_contracts/assets/pallet.json": "301e88d995e6b300c77a5598179d34402760e9378df5a27b053ef3a5fd5f0642",
+    "asset_contracts/assets/processing_station.json": "d7518574411434b2c9c4c97845b5e772a4008bcbe8a57cb2d1c6642f5ac690ee",
+    "asset_contracts/assets/robot_arm.json": "6c6224baf51942a90b2ee67f9b20a05983355f6b95d867d6aae9bdd8defaee8e",
+    "asset_contracts/assets/rotary_table.json": "bcbccca2ccf94dd0a74fb89fb4f9c13d04621c8bece7dcd74c10caa2738f7b6a",
+    "asset_contracts/assets/storage_rack.json": "918c1705bb7a85a6972da70d6e878903f6f95e3b149d70fa17ddf0e63276addb"
+  }
+}

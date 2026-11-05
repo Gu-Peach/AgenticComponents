@@ -1,0 +1,437 @@
+{
+  "schema_version": "ac-flow-bindings/0.2",
+  "scene_id": "S10",
+  "source_scene": "../../scene/Robot Palletizing Workstation",
+  "binding_status": "logical_only",
+  "instances": {
+    "R1": {
+      "contract": "robot_arm",
+      "version": "0.1.0",
+      "features": {
+        "motion": true,
+        "gripper": true
+      },
+      "parameters": {
+        "max_payload_kg": 10.0,
+        "tcp_speed_mps": 0.2,
+        "position_tolerance_m": 0.005,
+        "orientation_tolerance_rad": 0.01
+      },
+      "adapter_status": "pending",
+      "geometry_status": "pending_calibration",
+      "signal_namespace": "R1"
+    },
+    "C1": {
+      "contract": "conveyor",
+      "version": "0.3.0",
+      "features": {
+        "carrier_indexing": false
+      },
+      "parameters": {
+        "max_speed_mps": 0.5,
+        "acceleration_mps2": 0.5,
+        "stop_speed_tolerance": 0.005,
+        "speed_tolerance": 0.01,
+        "capacity": 1,
+        "max_carrier_load_kg": 100,
+        "carrier_speed_mps": 0.2
+      },
+      "adapter_status": "pending",
+      "geometry_status": "pending_calibration",
+      "signal_namespace": "C1"
+    },
+    "P01": {
+      "contract": "pallet",
+      "version": "0.1.0",
+      "features": {},
+      "parameters": {
+        "slot_count": 4,
+        "max_payload_kg": 20.0,
+        "empty_mass_kg": 2.0
+      },
+      "adapter_status": "pending",
+      "geometry_status": "pending_calibration",
+      "signal_namespace": "P01"
+    },
+    "P02": {
+      "contract": "pallet",
+      "version": "0.1.0",
+      "features": {},
+      "parameters": {
+        "slot_count": 4,
+        "max_payload_kg": 20.0,
+        "empty_mass_kg": 2.0
+      },
+      "adapter_status": "pending",
+      "geometry_status": "pending_calibration",
+      "signal_namespace": "P02"
+    },
+    "P03": {
+      "contract": "pallet",
+      "version": "0.1.0",
+      "features": {},
+      "parameters": {
+        "slot_count": 4,
+        "max_payload_kg": 20.0,
+        "empty_mass_kg": 2.0
+      },
+      "adapter_status": "pending",
+      "geometry_status": "pending_calibration",
+      "signal_namespace": "P03"
+    },
+    "M01_1": {
+      "contract": "material",
+      "version": "0.1.0",
+      "features": {},
+      "parameters": {
+        "mass_kg": 1.0,
+        "length_m": 0.1,
+        "width_m": 0.1,
+        "height_m": 0.1,
+        "graspable": true,
+        "material_class": "workpiece"
+      },
+      "adapter_status": "pending",
+      "geometry_status": "pending_calibration",
+      "signal_namespace": "M01_1"
+    },
+    "M01_2": {
+      "contract": "material",
+      "version": "0.1.0",
+      "features": {},
+      "parameters": {
+        "mass_kg": 1.0,
+        "length_m": 0.1,
+        "width_m": 0.1,
+        "height_m": 0.1,
+        "graspable": true,
+        "material_class": "workpiece"
+      },
+      "adapter_status": "pending",
+      "geometry_status": "pending_calibration",
+      "signal_namespace": "M01_2"
+    },
+    "M01_3": {
+      "contract": "material",
+      "version": "0.1.0",
+      "features": {},
+      "parameters": {
+        "mass_kg": 1.0,
+        "length_m": 0.1,
+        "width_m": 0.1,
+        "height_m": 0.1,
+        "graspable": true,
+        "material_class": "workpiece"
+      },
+      "adapter_status": "pending",
+      "geometry_status": "pending_calibration",
+      "signal_namespace": "M01_3"
+    },
+    "M01_4": {
+      "contract": "material",
+      "version": "0.1.0",
+      "features": {},
+      "parameters": {
+        "mass_kg": 1.0,
+        "length_m": 0.1,
+        "width_m": 0.1,
+        "height_m": 0.1,
+        "graspable": true,
+        "material_class": "workpiece"
+      },
+      "adapter_status": "pending",
+      "geometry_status": "pending_calibration",
+      "signal_namespace": "M01_4"
+    },
+    "M02_1": {
+      "contract": "material",
+      "version": "0.1.0",
+      "features": {},
+      "parameters": {
+        "mass_kg": 1.0,
+        "length_m": 0.1,
+        "width_m": 0.1,
+        "height_m": 0.1,
+        "graspable": true,
+        "material_class": "workpiece"
+      },
+      "adapter_status": "pending",
+      "geometry_status": "pending_calibration",
+      "signal_namespace": "M02_1"
+    },
+    "M02_2": {
+      "contract": "material",
+      "version": "0.1.0",
+      "features": {},
+      "parameters": {
+        "mass_kg": 1.0,
+        "length_m": 0.1,
+        "width_m": 0.1,
+        "height_m": 0.1,
+        "graspable": true,
+        "material_class": "workpiece"
+      },
+      "adapter_status": "pending",
+      "geometry_status": "pending_calibration",
+      "signal_namespace": "M02_2"
+    },
+    "M02_3": {
+      "contract": "material",
+      "version": "0.1.0",
+      "features": {},
+      "parameters": {
+        "mass_kg": 1.0,
+        "length_m": 0.1,
+        "width_m": 0.1,
+        "height_m": 0.1,
+        "graspable": true,
+        "material_class": "workpiece"
+      },
+      "adapter_status": "pending",
+      "geometry_status": "pending_calibration",
+      "signal_namespace": "M02_3"
+    },
+    "M02_4": {
+      "contract": "material",
+      "version": "0.1.0",
+      "features": {},
+      "parameters": {
+        "mass_kg": 1.0,
+        "length_m": 0.1,
+        "width_m": 0.1,
+        "height_m": 0.1,
+        "graspable": true,
+        "material_class": "workpiece"
+      },
+      "adapter_status": "pending",
+      "geometry_status": "pending_calibration",
+      "signal_namespace": "M02_4"
+    },
+    "M03_1": {
+      "contract": "material",
+      "version": "0.1.0",
+      "features": {},
+      "parameters": {
+        "mass_kg": 1.0,
+        "length_m": 0.1,
+        "width_m": 0.1,
+        "height_m": 0.1,
+        "graspable": true,
+        "material_class": "workpiece"
+      },
+      "adapter_status": "pending",
+      "geometry_status": "pending_calibration",
+      "signal_namespace": "M03_1"
+    },
+    "M03_2": {
+      "contract": "material",
+      "version": "0.1.0",
+      "features": {},
+      "parameters": {
+        "mass_kg": 1.0,
+        "length_m": 0.1,
+        "width_m": 0.1,
+        "height_m": 0.1,
+        "graspable": true,
+        "material_class": "workpiece"
+      },
+      "adapter_status": "pending",
+      "geometry_status": "pending_calibration",
+      "signal_namespace": "M03_2"
+    },
+    "M03_3": {
+      "contract": "material",
+      "version": "0.1.0",
+      "features": {},
+      "parameters": {
+        "mass_kg": 1.0,
+        "length_m": 0.1,
+        "width_m": 0.1,
+        "height_m": 0.1,
+        "graspable": true,
+        "material_class": "workpiece"
+      },
+      "adapter_status": "pending",
+      "geometry_status": "pending_calibration",
+      "signal_namespace": "M03_3"
+    },
+    "M03_4": {
+      "contract": "material",
+      "version": "0.1.0",
+      "features": {},
+      "parameters": {
+        "mass_kg": 1.0,
+        "length_m": 0.1,
+        "width_m": 0.1,
+        "height_m": 0.1,
+        "graspable": true,
+        "material_class": "workpiece"
+      },
+      "adapter_status": "pending",
+      "geometry_status": "pending_calibration",
+      "signal_namespace": "M03_4"
+    }
+  },
+  "locations": {
+    "R1.tool": {
+      "owner": "R1",
+      "geometry_status": "pending_calibration"
+    },
+    "C1.entry": {
+      "owner": "C1",
+      "geometry_status": "pending_calibration"
+    },
+    "C1.exit": {
+      "owner": "C1",
+      "geometry_status": "pending_calibration"
+    },
+    "R1.home": {
+      "owner": "R1",
+      "geometry_status": "pending_calibration",
+      "role": "outside_all_shared_motion_zones"
+    },
+    "P01.slot1": {
+      "owner": "P01",
+      "geometry_status": "pending_calibration",
+      "role": "moving_carrier_slot"
+    },
+    "P01.slot2": {
+      "owner": "P01",
+      "geometry_status": "pending_calibration",
+      "role": "moving_carrier_slot"
+    },
+    "P01.slot3": {
+      "owner": "P01",
+      "geometry_status": "pending_calibration",
+      "role": "moving_carrier_slot"
+    },
+    "P01.slot4": {
+      "owner": "P01",
+      "geometry_status": "pending_calibration",
+      "role": "moving_carrier_slot"
+    },
+    "P02.slot1": {
+      "owner": "P02",
+      "geometry_status": "pending_calibration",
+      "role": "moving_carrier_slot"
+    },
+    "P02.slot2": {
+      "owner": "P02",
+      "geometry_status": "pending_calibration",
+      "role": "moving_carrier_slot"
+    },
+    "P02.slot3": {
+      "owner": "P02",
+      "geometry_status": "pending_calibration",
+      "role": "moving_carrier_slot"
+    },
+    "P02.slot4": {
+      "owner": "P02",
+      "geometry_status": "pending_calibration",
+      "role": "moving_carrier_slot"
+    },
+    "P03.slot1": {
+      "owner": "P03",
+      "geometry_status": "pending_calibration",
+      "role": "moving_carrier_slot"
+    },
+    "P03.slot2": {
+      "owner": "P03",
+      "geometry_status": "pending_calibration",
+      "role": "moving_carrier_slot"
+    },
+    "P03.slot3": {
+      "owner": "P03",
+      "geometry_status": "pending_calibration",
+      "role": "moving_carrier_slot"
+    },
+    "P03.slot4": {
+      "owner": "P03",
+      "geometry_status": "pending_calibration",
+      "role": "moving_carrier_slot"
+    }
+  },
+  "recipes": {},
+  "initial": {
+    "materials": "registered_finite_inventory",
+    "material_origins": {
+      "M01_1": "external_input_buffer",
+      "M01_2": "external_input_buffer",
+      "M01_3": "external_input_buffer",
+      "M01_4": "external_input_buffer",
+      "M02_1": "external_input_buffer",
+      "M02_2": "external_input_buffer",
+      "M02_3": "external_input_buffer",
+      "M02_4": "external_input_buffer",
+      "M03_1": "external_input_buffer",
+      "M03_2": "external_input_buffer",
+      "M03_3": "external_input_buffer",
+      "M03_4": "external_input_buffer"
+    },
+    "carriers": {
+      "P01": {
+        "location": "empty_pallet_queue",
+        "contents": []
+      },
+      "P02": {
+        "location": "empty_pallet_queue",
+        "contents": []
+      },
+      "P03": {
+        "location": "empty_pallet_queue",
+        "contents": []
+      }
+    },
+    "devices": "idle_stopped_unclamped",
+    "robot_positions": {
+      "R1": "R1.home"
+    },
+    "angles": {},
+    "heights": {}
+  },
+  "execution": {
+    "tick_hz": 60,
+    "deadline_ticks": 72000,
+    "scheduler": "fair_finite_jobs_with_atomic_resource_sets",
+    "on_failure": "stop_admissions_cancel_siblings_confirm_stops_or_attention"
+  },
+  "environment_events": [
+    {
+      "kind": "external_infeed",
+      "location": "C1.entry",
+      "rule": "release_next_registered_job_only_when_entry_empty_and_owner_capacity_including_reservations_available",
+      "evidence": "subject_identity_and_actual_support",
+      "implementation_status": "pending"
+    },
+    {
+      "kind": "external_pallet_exchange",
+      "rule": "provide_registered_empty_pallet_and_remove_only_after_all_manifest_items_loaded_and_robot_clear",
+      "implementation_status": "pending"
+    }
+  ],
+  "resources": [
+    "R1",
+    "C1",
+    "P01",
+    "P02",
+    "P03",
+    "M01_1",
+    "M01_2",
+    "M01_3",
+    "M01_4",
+    "M02_1",
+    "M02_2",
+    "M02_3",
+    "M02_4",
+    "M03_1",
+    "M03_2",
+    "M03_3",
+    "M03_4"
+  ],
+  "assumptions": [
+    "同类契约统一；实例几何、配方、观测和运动适配均待接入。",
+    "物料在有限外部缓冲区登记，真实入口交接证据到达后才可进入流程；await不创建或移动物料。",
+    "目标可用检查和容量预留必须在提交时原子复核；先前await不能代替当前授权。",
+    "home须在共享运动区之外，升降和转位仍需要真实运动区清空反馈。"
+  ]
+}

@@ -1,0 +1,26 @@
+; 六托盘按空闲工位分配、并行拆垛与空盘出线
+; 整线共同启停；一波最多3盘到位后停带，三工位并行逐件拆垛，全体退位后空盘出线。
+(process "ac-flow/0.2" S02
+  (sequence
+    (dispatch-waves pallets cells
+      (line C1 index_carriers)
+      (policy fifo-first-reachable-idle)
+      (bind pallet cell)
+      (for-each $pallet.items item
+        (sequence
+          (await output_available $cell.output 1800 tick)
+          (with-resources
+            ($cell.robot $cell.output)
+            (sequence
+              (sequence
+                (invoke op_007 $cell.robot transfer_material
+                  (arg material $item.material)
+                  (arg source $item.source)
+                  (arg target $cell.output_entry))
+                (invoke op_008 $cell.robot move_to_location
+                  (arg target $cell.home)))
+              (invoke op_009 $cell.output transport_to_exit
+                (arg material $item.material)
+                (arg speed_mps 0.2 m/s))))
+          (await output_departed $item.material $cell.output 1800 tick))))
+    (verify batch_goal)))

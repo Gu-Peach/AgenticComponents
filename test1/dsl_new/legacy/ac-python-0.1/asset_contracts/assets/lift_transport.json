@@ -1,0 +1,840 @@
+{
+  "schema_version": "asset-contract/0.1",
+  "id": "lift_transport",
+  "version": "0.1.0",
+  "label": "升降台／运输机",
+  "category": "configurable",
+  "description": "用同一契约描述具有垂直定位和/或水平运输轴的承载机构；台面输送和机械抓放不隐含在此能力中。",
+  "implementation_status": "contract_only",
+  "protocol_imports": [
+    "request_v1"
+  ],
+  "features": [
+    {
+      "id": "vertical_positioning",
+      "default": true,
+      "description": "垂直轴、驱动和高度反馈已由实例适配。"
+    },
+    {
+      "id": "horizontal_transport",
+      "default": false,
+      "description": "水平轴/路径执行器和位置反馈已由实例适配。"
+    }
+  ],
+  "instance_requirements": [
+    "vertical_positioning 与 horizontal_transport 至少启用一项；禁用轴对应行为不可调用。",
+    "min_height_m 必须小于或等于 max_height_m；范围和速度为实验配置。",
+    "层号映射由场景给出，不能将任意层号直接当作米。",
+    "跨设备装卸由已登记的搬运/交接能力完成；完成定位不自动转移物料归属。"
+  ],
+  "parameters": [
+    {
+      "id": "min_height_m",
+      "type": "number",
+      "unit": "m",
+      "description": "实验垂直轴最小高度。",
+      "default": 0.0
+    },
+    {
+      "id": "max_height_m",
+      "type": "number",
+      "unit": "m",
+      "description": "实验垂直轴最大高度。",
+      "default": 3.0
+    },
+    {
+      "id": "vertical_speed_mps",
+      "type": "number",
+      "unit": "m/s",
+      "description": "垂直定位速度上限。",
+      "default": 0.2,
+      "minimum": 0.001
+    },
+    {
+      "id": "travel_speed_mps",
+      "type": "number",
+      "unit": "m/s",
+      "description": "水平运输速度上限。",
+      "default": 0.3,
+      "minimum": 0.001
+    },
+    {
+      "id": "position_tolerance_m",
+      "type": "number",
+      "unit": "m",
+      "description": "垂直与水平定位的实验误差容差。",
+      "default": 0.005,
+      "minimum": 1e-06
+    },
+    {
+      "id": "settle_speed_mps",
+      "type": "number",
+      "unit": "m/s",
+      "description": "实际线速度绝对值的停稳容差。",
+      "default": 0.001,
+      "minimum": 0.0
+    },
+    {
+      "id": "max_payload_kg",
+      "type": "number",
+      "unit": "kg",
+      "description": "总承载质量上限。",
+      "default": 100.0,
+      "minimum": 0.001
+    }
+  ],
+  "signal_ports": [
+    {
+      "id": "target_height",
+      "type": "number",
+      "unit": "m",
+      "direction": "input",
+      "retention": "state",
+      "description": "本请求目标高度；相对实例垂直基准。",
+      "writer": "controller"
+    },
+    {
+      "id": "target_location",
+      "type": "location_ref",
+      "unit": "1",
+      "direction": "input",
+      "retention": "state",
+      "description": "本请求水平对接位置。",
+      "writer": "controller"
+    },
+    {
+      "id": "motion_speed",
+      "type": "number",
+      "unit": "m/s",
+      "direction": "input",
+      "retention": "state",
+      "description": "由所选轴参数绑定的本请求线速度上限。",
+      "writer": "controller"
+    },
+    {
+      "id": "actual_height",
+      "type": "number",
+      "unit": "m",
+      "direction": "output",
+      "retention": "state",
+      "description": "相对实例垂直基准的实际高度。",
+      "writer": "adapter"
+    },
+    {
+      "id": "height_error",
+      "type": "number",
+      "unit": "m",
+      "direction": "output",
+      "retention": "state",
+      "description": "实际高度与本请求冻结目标高度的绝对误差。",
+      "writer": "adapter"
+    },
+    {
+      "id": "travel_error",
+      "type": "number",
+      "unit": "m",
+      "direction": "output",
+      "retention": "state",
+      "description": "实际运输位置与本请求目标位置的距离误差。",
+      "writer": "adapter"
+    },
+    {
+      "id": "absolute_speed",
+      "type": "number",
+      "unit": "m/s",
+      "direction": "output",
+      "retention": "state",
+      "description": "全部运动轴的最大实际线速度绝对值。",
+      "writer": "adapter"
+    },
+    {
+      "id": "load_secured",
+      "type": "boolean",
+      "unit": "1",
+      "direction": "output",
+      "retention": "state",
+      "description": "全部承载物料受支承且已按运输要求约束；空载时按明确空载规则为真。",
+      "writer": "adapter"
+    },
+    {
+      "id": "transfer_zone_clear",
+      "type": "boolean",
+      "unit": "1",
+      "direction": "output",
+      "retention": "state",
+      "description": "取放交接机构已退出本平台运动区域。",
+      "writer": "adapter"
+    }
+  ],
+  "observations": [
+    {
+      "id": "total_load_mass",
+      "type": "number",
+      "unit": "kg",
+      "provider": "world_observer",
+      "description": "当前平台和夹持机构上所有实际承载物料的总质量。",
+      "arguments": [],
+      "argument_types": {},
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "destination_valid",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "geometry_adapter",
+      "description": "目标位置已标定且可由实例的水平执行器到达；不由 GLB 名称推断。",
+      "arguments": [
+        "target"
+      ],
+      "argument_types": {
+        "target": "location_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "destination_clear",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "occupancy_service",
+      "description": "目标对接空间可接收平台或运输机构，已计入本次请求预留。",
+      "arguments": [
+        "target"
+      ],
+      "argument_types": {
+        "target": "location_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "load_pose_consistent",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "world_observer",
+      "description": "所携物料与承载面/约束的实际相对位姿一致，未在运输中丢失。",
+      "arguments": [],
+      "argument_types": {},
+      "validity": "fresh_valid_same_run"
+    }
+  ],
+  "authorizations": [
+    {
+      "id": "operation_allowed",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "resource_service",
+      "description": "当前实例、行为和请求的操作许可；仅在资源实际授予后为真。",
+      "arguments": [],
+      "argument_types": {},
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "travel_path_granted",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "resource_service",
+      "description": "本次请求获得当前位置至目标位置所需的运输通道许可。",
+      "arguments": [
+        "target"
+      ],
+      "argument_types": {
+        "target": "location_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    }
+  ],
+  "spatial_interfaces": [
+    {
+      "id": "base_frame",
+      "role": "mount",
+      "geometry_binding": "required_per_instance",
+      "requires_features": [],
+      "description": "移动或固定机构的几何参考基准。"
+    },
+    {
+      "id": "load_surface",
+      "role": "support",
+      "geometry_binding": "required_per_instance",
+      "requires_features": [],
+      "description": "载荷实际支承面。"
+    },
+    {
+      "id": "docking_frame",
+      "role": "process",
+      "geometry_binding": "required_per_instance",
+      "requires_features": [],
+      "description": "与上下游交接时的对接基准。"
+    }
+  ],
+  "behaviors": [
+    {
+      "id": "move_to_height",
+      "label": "定位到指定高度",
+      "kind": "action",
+      "invocable": true,
+      "protocol": "request_v1",
+      "executor_ref": "adapter.lift_transport.move_to_height@0.1",
+      "requires_features": [
+        "vertical_positioning"
+      ],
+      "arguments": [
+        {
+          "id": "height",
+          "type": "number",
+          "unit": "m",
+          "description": "目标高度，层号由场景映射为该值。"
+        }
+      ],
+      "command_bindings": [
+        {
+          "signal": "command_code",
+          "value": {
+            "source": "literal",
+            "value": 1
+          }
+        },
+        {
+          "signal": "target_height",
+          "value": {
+            "source": "argument",
+            "ref": "height"
+          }
+        },
+        {
+          "signal": "motion_speed",
+          "value": {
+            "source": "parameter",
+            "ref": "vertical_speed_mps"
+          }
+        }
+      ],
+      "preconditions": [
+        {
+          "id": "device_idle",
+          "left": {
+            "source": "signal",
+            "ref": "busy"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": false
+          }
+        },
+        {
+          "id": "device_healthy",
+          "left": {
+            "source": "signal",
+            "ref": "error"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": false
+          }
+        },
+        {
+          "id": "enabled",
+          "left": {
+            "source": "signal",
+            "ref": "enable"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "operation_authorized",
+          "left": {
+            "source": "authorization",
+            "ref": "operation_allowed"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "load_is_secured",
+          "left": {
+            "source": "signal",
+            "ref": "load_secured"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "handoff_zone_clear",
+          "left": {
+            "source": "signal",
+            "ref": "transfer_zone_clear"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "payload_within_limit",
+          "left": {
+            "source": "observation",
+            "ref": "total_load_mass"
+          },
+          "operator": "le",
+          "right": {
+            "source": "parameter",
+            "ref": "max_payload_kg"
+          }
+        },
+        {
+          "id": "above_lower_limit",
+          "left": {
+            "source": "argument",
+            "ref": "height"
+          },
+          "operator": "ge",
+          "right": {
+            "source": "parameter",
+            "ref": "min_height_m"
+          }
+        },
+        {
+          "id": "below_upper_limit",
+          "left": {
+            "source": "argument",
+            "ref": "height"
+          },
+          "operator": "le",
+          "right": {
+            "source": "parameter",
+            "ref": "max_height_m"
+          }
+        }
+      ],
+      "sustaining_conditions": [
+        {
+          "id": "enabled",
+          "left": {
+            "source": "signal",
+            "ref": "enable"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "operation_authorized",
+          "left": {
+            "source": "authorization",
+            "ref": "operation_allowed"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "load_remains_secured",
+          "left": {
+            "source": "signal",
+            "ref": "load_secured"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "handoff_zone_remains_clear",
+          "left": {
+            "source": "signal",
+            "ref": "transfer_zone_clear"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        }
+      ],
+      "completion": {
+        "mode": "evidence",
+        "checks": [
+          {
+            "id": "height_reached",
+            "left": {
+              "source": "signal",
+              "ref": "height_error"
+            },
+            "operator": "le",
+            "right": {
+              "source": "parameter",
+              "ref": "position_tolerance_m"
+            }
+          },
+          {
+            "id": "velocity_settled",
+            "left": {
+              "source": "signal",
+              "ref": "absolute_speed"
+            },
+            "operator": "le",
+            "right": {
+              "source": "parameter",
+              "ref": "settle_speed_mps"
+            }
+          },
+          {
+            "id": "actual_motion_stopped",
+            "left": {
+              "source": "signal",
+              "ref": "stopped"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "load_retained",
+            "left": {
+              "source": "observation",
+              "ref": "load_pose_consistent"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          }
+        ],
+        "description": "本次请求反馈、高度误差、实际停稳及载荷保持同时满足。"
+      },
+      "expected_effects": [
+        "平台与已约束载荷共同垂直定位，不自动进行装卸。"
+      ],
+      "failure_policy": "preserve_observed_state_and_report"
+    },
+    {
+      "id": "move_to_location",
+      "label": "水平运输到对接位置",
+      "kind": "action",
+      "invocable": true,
+      "protocol": "request_v1",
+      "executor_ref": "adapter.lift_transport.move_to_location@0.1",
+      "requires_features": [
+        "horizontal_transport"
+      ],
+      "arguments": [
+        {
+          "id": "target",
+          "type": "location_ref",
+          "unit": "1",
+          "description": "已登记的水平对接位置。"
+        }
+      ],
+      "command_bindings": [
+        {
+          "signal": "command_code",
+          "value": {
+            "source": "literal",
+            "value": 2
+          }
+        },
+        {
+          "signal": "target_location",
+          "value": {
+            "source": "argument",
+            "ref": "target"
+          }
+        },
+        {
+          "signal": "motion_speed",
+          "value": {
+            "source": "parameter",
+            "ref": "travel_speed_mps"
+          }
+        }
+      ],
+      "preconditions": [
+        {
+          "id": "device_idle",
+          "left": {
+            "source": "signal",
+            "ref": "busy"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": false
+          }
+        },
+        {
+          "id": "device_healthy",
+          "left": {
+            "source": "signal",
+            "ref": "error"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": false
+          }
+        },
+        {
+          "id": "enabled",
+          "left": {
+            "source": "signal",
+            "ref": "enable"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "operation_authorized",
+          "left": {
+            "source": "authorization",
+            "ref": "operation_allowed"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "load_is_secured",
+          "left": {
+            "source": "signal",
+            "ref": "load_secured"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "handoff_zone_clear",
+          "left": {
+            "source": "signal",
+            "ref": "transfer_zone_clear"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "payload_within_limit",
+          "left": {
+            "source": "observation",
+            "ref": "total_load_mass"
+          },
+          "operator": "le",
+          "right": {
+            "source": "parameter",
+            "ref": "max_payload_kg"
+          }
+        },
+        {
+          "id": "target_valid",
+          "left": {
+            "source": "observation",
+            "ref": "destination_valid",
+            "bindings": {
+              "target": "target"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "target_can_receive",
+          "left": {
+            "source": "observation",
+            "ref": "destination_clear",
+            "bindings": {
+              "target": "target"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "path_authorized",
+          "left": {
+            "source": "authorization",
+            "ref": "travel_path_granted",
+            "bindings": {
+              "target": "target"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        }
+      ],
+      "sustaining_conditions": [
+        {
+          "id": "enabled",
+          "left": {
+            "source": "signal",
+            "ref": "enable"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "operation_authorized",
+          "left": {
+            "source": "authorization",
+            "ref": "operation_allowed"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "load_remains_secured",
+          "left": {
+            "source": "signal",
+            "ref": "load_secured"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "handoff_zone_remains_clear",
+          "left": {
+            "source": "signal",
+            "ref": "transfer_zone_clear"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "path_remains_authorized",
+          "left": {
+            "source": "authorization",
+            "ref": "travel_path_granted",
+            "bindings": {
+              "target": "target"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        }
+      ],
+      "completion": {
+        "mode": "evidence",
+        "checks": [
+          {
+            "id": "destination_reached",
+            "left": {
+              "source": "signal",
+              "ref": "travel_error"
+            },
+            "operator": "le",
+            "right": {
+              "source": "parameter",
+              "ref": "position_tolerance_m"
+            }
+          },
+          {
+            "id": "velocity_settled",
+            "left": {
+              "source": "signal",
+              "ref": "absolute_speed"
+            },
+            "operator": "le",
+            "right": {
+              "source": "parameter",
+              "ref": "settle_speed_mps"
+            }
+          },
+          {
+            "id": "actual_motion_stopped",
+            "left": {
+              "source": "signal",
+              "ref": "stopped"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "load_retained",
+            "left": {
+              "source": "observation",
+              "ref": "load_pose_consistent"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          }
+        ],
+        "description": "到达对应目标并实际停稳后确认；运输完成不代表已向另一设备交接。"
+      },
+      "expected_effects": [
+        "执行器移动承载机构及实际载荷；不直接改写库位占用或宣称完成装卸。"
+      ],
+      "failure_policy": "preserve_observed_state_and_report"
+    }
+  ],
+  "configuration_constraints": [
+    {
+      "kind": "at_least_one_feature",
+      "features": [
+        "vertical_positioning",
+        "horizontal_transport"
+      ]
+    },
+    {
+      "kind": "parameter_le",
+      "left": "min_height_m",
+      "right": "max_height_m"
+    }
+  ]
+}

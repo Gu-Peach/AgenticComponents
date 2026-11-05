@@ -1,0 +1,42 @@
+{
+  "id": "asset-runtime-semantics/0.1",
+  "implementation_status": "contract_only",
+  "time": {
+    "tick_hz": 60,
+    "feedback_max_age_ticks": 3,
+    "default_accept_timeout_ticks": 120,
+    "default_execution_timeout_ticks": 1800,
+    "default_stop_timeout_ticks": 120,
+    "interpretation": "实验默认值，非测量所得；实例运行配置可显式覆写，记录后固定。"
+  },
+  "sampling": "一个 tick 读取一致的已发布快照，求值条件后提交命令，执行器推进并发布下一快照；不读取同 tick 中部分更新的状态。",
+  "fact_metadata": [
+    "valid",
+    "run_id",
+    "provider_epoch",
+    "sample_tick",
+    "subject_bindings"
+  ],
+  "metadata_rule": "控制器保留接受与事务回执；有效状态可重新采样发布，结果原发生时刻另存，不用重新采样改写原事件时刻。",
+  "unknown_rule": "缺提供者、缺字段、无效、过期、主体或代次不匹配均为 unknown；前置条件不通过，持续条件按停止规则处理。",
+  "condition_rule": "同一行为阶段的检查为 AND；left/right 按声明的类型和单位比较，只允许 eq/ne/lt/le/gt/ge。禁止 eval 描述文本。",
+  "literal_rule": "数值字面量继承被比较字段单位；非字面引用必须同单位。物料/位置/槽位/配方保持名义类型。",
+  "observation_rule": "具名派生事实的提供者必须实现 description 规定的含义，绑定精确 argument_types；字符串描述是实现义务，不是现成可执行表达式。",
+  "initial_state": "控制器不得用声明默认值充当有效反馈；资产存在、实际状态、占用及初态物料均由场景和提供者登记。",
+  "spatial_rule": "空间接口只有逻辑角色；geometry_binding 要求实例给出坐标系、锚点或区域。它不直接授予交接可达性。",
+  "activation_rule": "requires_features 为 AND。activation_rules 的 feature 为 false 时屏蔽列出的协议端口及本地信号；不得对屏蔽接口发送命令。",
+  "passive_rule": "观察和被动转换只能用于条件/证据，不作为 DSL invoke。主动设备也可带 observer 行为。",
+  "effect_rule": "expected_effects 是描述性后态义务，不授权直接写世界状态；实际结果由执行器及独立观测确认。",
+  "providers": {
+    "device_adapter": "具体运动、夹具或信号驱动适配器。",
+    "world_observer": "共享世界中的物料位置、支承、夹持与物理状态观测。",
+    "geometry_adapter": "实例坐标标定和外部几何可行性提供者；若仅作假设必须注明，不能默认为已验证。",
+    "handoff_service": "核对交接证据、唯一物料归属与事务提交。",
+    "occupancy_service": "槽位、容量和实际占用/预留的查询。",
+    "resource_service": "当前请求的操作许可、互锁和预留授权。",
+    "inventory_service": "有限预登记物料库存和供料事务。",
+    "recipe_service": "配方兼容性、工序记录及加工证据。",
+    "instance_configuration": "固定的实例参数、能力开关与绑定定义。"
+  },
+  "scope": "仅定义统一资产语义。运行器、服务、实例绑定与场景 DSL 是后续接入项；不宣称当前 JSON 已能驱动全部场景。"
+}

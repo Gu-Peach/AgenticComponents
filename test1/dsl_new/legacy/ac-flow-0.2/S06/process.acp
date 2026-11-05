@@ -1,0 +1,44 @@
+; 四件分度台批次与前后段流水
+; 进出料可与转位工位处理重叠，T1单工位周期串行。
+(process "ac-flow/0.2" S06
+  (sequence
+    (parallel-for jobs job 2
+      (sequence
+        (await input_present $job.material $job.input 1800 tick)
+        (with-resources
+          (C1)
+          (sequence
+            (invoke op_034 C1 transport_to_exit
+              (arg material $job.material)
+              (arg speed_mps 0.2 m/s))))
+        (await target_available T1.slot1 1800 tick)
+        (await target_available C3.entry 1800 tick)
+        (with-resources
+          (T1 R1 R2 C1 C3)
+          (sequence
+            (sequence
+              (invoke op_035 R1 transfer_material
+                (arg material $job.material)
+                (arg source C1.exit)
+                (arg target T1.slot1))
+              (invoke op_036 R1 move_to_location
+                (arg target R1.home)))
+            (invoke op_037 T1 index_to_angle
+              (arg angle 3.141592653589793 rad))
+            (sequence
+              (invoke op_038 R2 transfer_material
+                (arg material $job.material)
+                (arg source T1.slot1)
+                (arg target C3.entry))
+              (invoke op_039 R2 move_to_location
+                (arg target R2.home)))
+            (invoke op_040 T1 index_to_angle
+              (arg angle 0.0 rad))))
+        (with-resources
+          (C3)
+          (sequence
+            (invoke op_041 C3 transport_to_exit
+              (arg material $job.material)
+              (arg speed_mps 0.2 m/s))))
+        (await output_departed $job.material C3 1800 tick)))
+    (verify batch_goal)))

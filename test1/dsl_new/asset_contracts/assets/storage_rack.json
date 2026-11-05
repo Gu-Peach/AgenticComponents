@@ -1,0 +1,1466 @@
+{
+  "contract_version": "1.1",
+  "schema_type": "DeviceSpec",
+  "schema_id": "standard.storage_rack",
+  "device_spec_id": "standard.storage_rack",
+  "version": "1.0.0",
+  "device_type": "storage_rack",
+  "display_name": "仓储柜：库位预留与存取服务",
+  "description": "依据三份规范定义的可复用声明模板；参数为示例值，节点/几何/提供者均需适配。",
+  "asset": {
+    "model_format": "glb",
+    "model_key": "unbound/storage_rack",
+    "binding_status": "requires_instance_asset_mapping"
+  },
+  "params_schema": {
+    "rows": {
+      "type": "integer",
+      "required": true,
+      "default": 3,
+      "min": 1,
+      "max": 20,
+      "mutability": "stopped_only",
+      "description": "垂直层数"
+    },
+    "columns": {
+      "type": "integer",
+      "required": true,
+      "default": 3,
+      "min": 1,
+      "max": 50,
+      "mutability": "stopped_only",
+      "description": "水平方向列数"
+    },
+    "cell_width_m": {
+      "type": "number",
+      "required": true,
+      "default": 0.8,
+      "unit": "m",
+      "min": 0.01,
+      "max": 5,
+      "mutability": "stopped_only",
+      "description": "单库位净宽"
+    },
+    "cell_depth_m": {
+      "type": "number",
+      "required": true,
+      "default": 0.8,
+      "unit": "m",
+      "min": 0.01,
+      "max": 5,
+      "mutability": "stopped_only",
+      "description": "单库位净深"
+    },
+    "cell_height_m": {
+      "type": "number",
+      "required": true,
+      "default": 0.6,
+      "unit": "m",
+      "min": 0.01,
+      "max": 5,
+      "mutability": "stopped_only",
+      "description": "单库位净高"
+    },
+    "cell_gap_x_m": {
+      "type": "number",
+      "required": true,
+      "default": 0.05,
+      "unit": "m",
+      "min": 0,
+      "max": 1,
+      "mutability": "stopped_only",
+      "description": "相邻列之间的结构间隙"
+    },
+    "cell_gap_y_m": {
+      "type": "number",
+      "required": true,
+      "default": 0.05,
+      "unit": "m",
+      "min": 0,
+      "max": 1,
+      "mutability": "stopped_only",
+      "description": "层间结构间隙"
+    },
+    "max_payload_per_cell_kg": {
+      "type": "number",
+      "required": true,
+      "default": 20,
+      "unit": "kg",
+      "min": 0.01,
+      "max": 5000,
+      "mutability": "stopped_only",
+      "description": "每库位允许载荷"
+    },
+    "capacity_per_cell": {
+      "type": "integer",
+      "required": true,
+      "default": 1,
+      "min": 1,
+      "max": 100,
+      "mutability": "stopped_only",
+      "description": "每库位最多存放的物料／载荷单元数"
+    }
+  },
+  "interfaces": [],
+  "signal_ports": [
+    {
+      "port_id": "cell_id",
+      "direction": "input",
+      "value_type": "integer",
+      "plc_type": "INT",
+      "description": "当前操作的库位编号，通过绑定表映射到 A1 等业务 ID",
+      "signal_role": "request_parameter",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "material_id",
+      "direction": "input",
+      "value_type": "integer",
+      "plc_type": "DINT",
+      "description": "当前物料及任务身份；使用登记表映射，不把任意字符串强制转换成数字",
+      "signal_role": "request_parameter",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "owner_task_id",
+      "direction": "input",
+      "value_type": "integer",
+      "plc_type": "DINT",
+      "description": "当前物料及任务身份；使用登记表映射，不把任意字符串强制转换成数字",
+      "signal_role": "request_parameter",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "reserve_request",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "请求为指定任务预留库位",
+      "signal_role": "request_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "store_request",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "发起本次入库交接；不直接把物料位置改写为库位位置",
+      "signal_role": "request_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "release_request",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "请求出库，等待搬运设备取走与交接确认",
+      "signal_role": "request_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "cancel_reservation",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "请求取消尚未完成交接的有效预留；不能清除仍有物料的真实占用",
+      "signal_role": "request_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "request_id",
+      "direction": "input",
+      "value_type": "integer",
+      "plc_type": "DINT",
+      "description": "公共请求关联与故障复位；同一请求只允许一个操作入口",
+      "signal_role": "request_parameter",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "reset",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "公共请求关联与故障复位；同一请求只允许一个操作入口",
+      "signal_role": "request_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "reservation_granted",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "预留结果及关联标识，明确授权给哪个任务",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "reservation_id",
+      "direction": "output",
+      "value_type": "integer",
+      "plc_type": "DINT",
+      "description": "预留结果及关联标识，明确授权给哪个任务",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "cell_available",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "所选库位可供新的合法任务预留；已被其他任务预留时即不可用",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "cell_full",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "所选库位实际容量已满；“有预留”与“已放入物料”分开表示",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "free_cells",
+      "direction": "output",
+      "value_type": "integer",
+      "plc_type": "INT",
+      "description": "当前可预留库位数，排除已占用和有效预留",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "stored",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "入库／出库成功的锁存结果，关联 result_id；上层同步产生相应业务事件",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "released",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "入库／出库成功的锁存结果，关联 result_id；上层同步产生相应业务事件",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "accepted",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "当前仓储操作的公共结果；不能代替搬运设备自身的完成反馈",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "busy",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "当前仓储操作的公共结果；不能代替搬运设备自身的完成反馈",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "done",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "当前仓储操作的公共结果；不能代替搬运设备自身的完成反馈",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "error",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "当前仓储操作的公共结果；不能代替搬运设备自身的完成反馈",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "result_id",
+      "direction": "output",
+      "value_type": "integer",
+      "plc_type": "DINT",
+      "description": "当前仓储操作的公共结果；不能代替搬运设备自身的完成反馈",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "error_code",
+      "direction": "output",
+      "value_type": "integer",
+      "plc_type": "INT",
+      "description": "当前仓储操作的公共结果；不能代替搬运设备自身的完成反馈",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request"
+    }
+  ],
+  "transport_behaviors": [
+    {
+      "behavior_id": "reserve_cell",
+      "display_name": "预留库位",
+      "behavior_type": "service",
+      "schedulable": true,
+      "executor_ref": "pending.storage_rack.reserve_cell",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {
+        "cell_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "库位登记表编号。",
+          "min": 1,
+          "max": 2147483647
+        },
+        "material_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "物料登记表编号。",
+          "min": 1,
+          "max": 2147483647
+        },
+        "owner_task_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "所有者任务登记表编号。",
+          "min": 1,
+          "max": 2147483647
+        }
+      },
+      "trigger": {
+        "description": "reserve_request 与当前任务／库位参数",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "pending_model_specific_payload"
+      },
+      "input_signals": [
+        "cell_id",
+        "material_id",
+        "owner_task_id",
+        "request_id",
+        "reserve_request"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "cell_available",
+        "done",
+        "error",
+        "error_code",
+        "free_cells",
+        "reservation_granted",
+        "reservation_id",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "库位有效、实际容量及已有预留允许、物料兼容、任务身份有效",
+            "source": "observation",
+            "key": "reserve_cell.pre_1",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "reserve_cell.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "原子建立预留，返回 reservation_granted 和 reservation_id",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "原子建立预留，返回 reservation_granted 和 reservation_id",
+            "source": "observation",
+            "key": "reserve_cell.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "source": {
+        "document": "schema.md",
+        "section_start_line": 248,
+        "behavior_row": "reserve_cell"
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "description": "仅在文档要求的模块、模式、接口和执行器存在时启用；可选模块默认不授予额外能力。",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "store_to_cell",
+      "display_name": "入库交接",
+      "behavior_type": "service",
+      "schedulable": true,
+      "executor_ref": "pending.storage_rack.store_to_cell",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {
+        "cell_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "库位登记表编号。",
+          "min": 1,
+          "max": 2147483647
+        },
+        "material_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "物料登记表编号。",
+          "min": 1,
+          "max": 2147483647
+        },
+        "owner_task_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "所有者任务登记表编号。",
+          "min": 1,
+          "max": 2147483647
+        }
+      },
+      "trigger": {
+        "description": "store_request 和搬运方的交接反馈",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "pending_model_specific_payload"
+      },
+      "input_signals": [
+        "cell_id",
+        "material_id",
+        "owner_task_id",
+        "request_id",
+        "store_request"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "cell_full",
+        "done",
+        "error",
+        "error_code",
+        "free_cells",
+        "result_id",
+        "stored"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "任务持有目标预留、搬运方拥有物料、尺寸及载荷条件满足",
+            "source": "observation",
+            "key": "store_to_cell.pre_1",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "store_to_cell.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "实际放置与交接确认后，预留转为占用，发布 stored",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "实际放置与交接确认后，预留转为占用，发布 stored",
+            "source": "observation",
+            "key": "store_to_cell.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "source": {
+        "document": "schema.md",
+        "section_start_line": 248,
+        "behavior_row": "store_to_cell"
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "description": "仅在文档要求的模块、模式、接口和执行器存在时启用；可选模块默认不授予额外能力。",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "release_from_cell",
+      "display_name": "出库交接",
+      "behavior_type": "service",
+      "schedulable": true,
+      "executor_ref": "pending.storage_rack.release_from_cell",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {
+        "cell_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "库位登记表编号。",
+          "min": 1,
+          "max": 2147483647
+        },
+        "material_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "物料登记表编号。",
+          "min": 1,
+          "max": 2147483647
+        },
+        "owner_task_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "所有者任务登记表编号。",
+          "min": 1,
+          "max": 2147483647
+        }
+      },
+      "trigger": {
+        "description": "release_request 和接收方反馈",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "pending_model_specific_payload"
+      },
+      "input_signals": [
+        "cell_id",
+        "material_id",
+        "owner_task_id",
+        "release_request",
+        "request_id"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "cell_available",
+        "cell_full",
+        "done",
+        "error",
+        "error_code",
+        "free_cells",
+        "released",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "库位存在指定物料、任务获出库权限、接收方和目标可用",
+            "source": "authorization",
+            "key": "release_from_cell.pre_1",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "release_from_cell.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "物料离开并由接收方确认后释放占用，发布 released",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "物料离开并由接收方确认后释放占用，发布 released",
+            "source": "observation",
+            "key": "release_from_cell.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "source": {
+        "document": "schema.md",
+        "section_start_line": 248,
+        "behavior_row": "release_from_cell"
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "description": "仅在文档要求的模块、模式、接口和执行器存在时启用；可选模块默认不授予额外能力。",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "cancel_cell_reservation",
+      "display_name": "取消预留",
+      "behavior_type": "service",
+      "schedulable": true,
+      "executor_ref": "pending.storage_rack.cancel_cell_reservation",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {
+        "cell_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "库位登记表编号。",
+          "min": 1,
+          "max": 2147483647
+        },
+        "material_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "物料登记表编号。",
+          "min": 1,
+          "max": 2147483647
+        },
+        "owner_task_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "所有者任务登记表编号。",
+          "min": 1,
+          "max": 2147483647
+        }
+      },
+      "trigger": {
+        "description": "cancel_reservation",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "pending_model_specific_payload"
+      },
+      "input_signals": [
+        "cancel_reservation",
+        "cell_id",
+        "owner_task_id",
+        "request_id"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "cell_available",
+        "done",
+        "error",
+        "error_code",
+        "free_cells",
+        "reservation_granted",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "预留属于当前任务、无不可撤销交接、没有必须保留的真实占用",
+            "source": "observation",
+            "key": "cancel_cell_reservation.pre_1",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "cancel_cell_reservation.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "只撤销指定预留，不修改物料位置或其他任务",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "只撤销指定预留，不修改物料位置或其他任务",
+            "source": "observation",
+            "key": "cancel_cell_reservation.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "source": {
+        "document": "schema.md",
+        "section_start_line": 248,
+        "behavior_row": "cancel_cell_reservation"
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "description": "仅在文档要求的模块、模式、接口和执行器存在时启用；可选模块默认不授予额外能力。",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "query_cell_state",
+      "display_name": "查询库位",
+      "behavior_type": "service",
+      "schedulable": true,
+      "executor_ref": "pending.storage_rack.query_cell_state",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {
+        "cell_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "库位登记表编号。",
+          "min": 1,
+          "max": 2147483647
+        }
+      },
+      "trigger": {
+        "description": "查询指定 cell_id 的 API 或状态读取",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "pending_model_specific_payload"
+      },
+      "input_signals": [
+        "cell_id"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "cell_available",
+        "cell_full",
+        "done",
+        "error",
+        "error_code",
+        "free_cells",
+        "reservation_granted",
+        "reservation_id",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "查询编号与状态版本有效",
+            "source": "observation",
+            "key": "query_cell_state.pre_1",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "query_cell_state.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "返回确认过的占用、预留和任务关联信息",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "返回确认过的占用、预留和任务关联信息",
+            "source": "observation",
+            "key": "query_cell_state.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "source": {
+        "document": "schema.md",
+        "section_start_line": 248,
+        "behavior_row": "query_cell_state"
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "description": "仅在文档要求的模块、模式、接口和执行器存在时启用；可选模块默认不授予额外能力。",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "publish_storage_state",
+      "display_name": "发布仓储状态",
+      "behavior_type": "observer",
+      "schedulable": false,
+      "executor_ref": "pending.storage_rack.publish_storage_state",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "预留、交接、取消或状态变化",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "signal_or_external_event"
+      },
+      "input_signals": [],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "cell_available",
+        "cell_full",
+        "done",
+        "error",
+        "error_code",
+        "free_cells",
+        "released",
+        "reservation_granted",
+        "reservation_id",
+        "result_id",
+        "stored"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "实际占用、预留与执行反馈已对齐",
+            "source": "observation",
+            "key": "publish_storage_state.pre_1",
+            "equals": true
+          },
+          {
+            "id": "pre_2",
+            "label": "异常期间保留未知或在途状态",
+            "source": "observation",
+            "key": "publish_storage_state.pre_2",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "continuous",
+        "description": "更新 cell_available、cell_full、free_cells、结果及错误",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "更新 cell_available、cell_full、free_cells、结果及错误",
+            "source": "observation",
+            "key": "publish_storage_state.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "source": {
+        "document": "schema.md",
+        "section_start_line": 248,
+        "behavior_row": "publish_storage_state"
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "description": "仅在文档要求的模块、模式、接口和执行器存在时启用；可选模块默认不授予额外能力。",
+        "conditions": []
+      }
+    }
+  ],
+  "type_specific_contract": {
+    "coordinate_system": {
+      "up_axis": "Y",
+      "length_unit": "m",
+      "origin": "rack_lower_left_front"
+    },
+    "cells": {
+      "layout": "rectangular_grid",
+      "rows_param": "rows",
+      "columns_param": "columns",
+      "width_param": "cell_width_m",
+      "depth_param": "cell_depth_m",
+      "height_param": "cell_height_m",
+      "gap_x_param": "cell_gap_x_m",
+      "gap_y_param": "cell_gap_y_m",
+      "id_rule": "row_letter_then_1_based_column",
+      "generation_owner": "scene_compiler"
+    },
+    "capacity": {
+      "per_cell_param": "capacity_per_cell",
+      "max_payload_param": "max_payload_per_cell_kg",
+      "material_classes": [
+        "workpiece",
+        "workpiece_carrier"
+      ]
+    },
+    "reservation_policy": {
+      "allocation_owner": "scheduler_or_storage_service",
+      "fallback": "first_available",
+      "release_condition": "confirmed_material_exit"
+    },
+    "derived_values": {
+      "total_cells": "rows * columns",
+      "total_capacity": "rows * columns * capacity_per_cell",
+      "cell_ids": "generated_from_grid"
+    },
+    "geometry_binding": {
+      "storage_region": "cell_interior",
+      "ingress_role": "cell_input",
+      "egress_role": "cell_output"
+    },
+    "calibration_status": "pending",
+    "model_binding_status": "pending_instance_mapping"
+  },
+  "runtime_contract": {
+    "observation_definitions": {
+      "reserve_cell.pre_1": {
+        "value_type": "boolean",
+        "description": "库位有效、实际容量及已有预留允许、物料兼容、任务身份有效",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "cell_id",
+          "material_id",
+          "owner_task_id",
+          "request_id",
+          "reserve_request",
+          "accepted",
+          "busy",
+          "cell_available",
+          "done",
+          "error",
+          "error_code",
+          "free_cells",
+          "reservation_granted",
+          "reservation_id",
+          "result_id"
+        ],
+        "semantic_source": {
+          "document": "schema.md",
+          "section": "storage_rack",
+          "behavior": "reserve_cell"
+        },
+        "evaluation": "provider_must_implement_this_predicate; no_eval_of_description"
+      },
+      "reserve_cell.sustaining": {
+        "value_type": "boolean",
+        "description": "执行期间持续核查适用互锁、使能与身份；取料等阶段条件按阶段适用，不把已消费的前置状态持续要求为真。",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "cell_id",
+          "material_id",
+          "owner_task_id",
+          "request_id",
+          "reserve_request",
+          "accepted",
+          "busy",
+          "cell_available",
+          "done",
+          "error",
+          "error_code",
+          "free_cells",
+          "reservation_granted",
+          "reservation_id",
+          "result_id"
+        ],
+        "source_requirement": "库位有效、实际容量及已有预留允许、物料兼容、任务身份有效"
+      },
+      "reserve_cell.completion": {
+        "value_type": "boolean",
+        "description": "原子建立预留，返回 reservation_granted 和 reservation_id",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "cell_id",
+          "material_id",
+          "owner_task_id",
+          "request_id",
+          "reserve_request",
+          "accepted",
+          "busy",
+          "cell_available",
+          "done",
+          "error",
+          "error_code",
+          "free_cells",
+          "reservation_granted",
+          "reservation_id",
+          "result_id"
+        ],
+        "semantic_source": {
+          "document": "schema.md",
+          "section": "storage_rack",
+          "behavior": "reserve_cell"
+        },
+        "identity": "run/instance/subject/request as applicable; passive uses external transaction context"
+      },
+      "store_to_cell.pre_1": {
+        "value_type": "boolean",
+        "description": "任务持有目标预留、搬运方拥有物料、尺寸及载荷条件满足",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "cell_id",
+          "material_id",
+          "owner_task_id",
+          "request_id",
+          "store_request",
+          "accepted",
+          "busy",
+          "cell_full",
+          "done",
+          "error",
+          "error_code",
+          "free_cells",
+          "result_id",
+          "stored"
+        ],
+        "semantic_source": {
+          "document": "schema.md",
+          "section": "storage_rack",
+          "behavior": "store_to_cell"
+        },
+        "evaluation": "provider_must_implement_this_predicate; no_eval_of_description"
+      },
+      "store_to_cell.sustaining": {
+        "value_type": "boolean",
+        "description": "执行期间持续核查适用互锁、使能与身份；取料等阶段条件按阶段适用，不把已消费的前置状态持续要求为真。",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "cell_id",
+          "material_id",
+          "owner_task_id",
+          "request_id",
+          "store_request",
+          "accepted",
+          "busy",
+          "cell_full",
+          "done",
+          "error",
+          "error_code",
+          "free_cells",
+          "result_id",
+          "stored"
+        ],
+        "source_requirement": "任务持有目标预留、搬运方拥有物料、尺寸及载荷条件满足"
+      },
+      "store_to_cell.completion": {
+        "value_type": "boolean",
+        "description": "实际放置与交接确认后，预留转为占用，发布 stored",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "cell_id",
+          "material_id",
+          "owner_task_id",
+          "request_id",
+          "store_request",
+          "accepted",
+          "busy",
+          "cell_full",
+          "done",
+          "error",
+          "error_code",
+          "free_cells",
+          "result_id",
+          "stored"
+        ],
+        "semantic_source": {
+          "document": "schema.md",
+          "section": "storage_rack",
+          "behavior": "store_to_cell"
+        },
+        "identity": "run/instance/subject/request as applicable; passive uses external transaction context"
+      },
+      "release_from_cell.sustaining": {
+        "value_type": "boolean",
+        "description": "执行期间持续核查适用互锁、使能与身份；取料等阶段条件按阶段适用，不把已消费的前置状态持续要求为真。",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "cell_id",
+          "material_id",
+          "owner_task_id",
+          "release_request",
+          "request_id",
+          "accepted",
+          "busy",
+          "cell_available",
+          "cell_full",
+          "done",
+          "error",
+          "error_code",
+          "free_cells",
+          "released",
+          "result_id"
+        ],
+        "source_requirement": "库位存在指定物料、任务获出库权限、接收方和目标可用"
+      },
+      "release_from_cell.completion": {
+        "value_type": "boolean",
+        "description": "物料离开并由接收方确认后释放占用，发布 released",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "cell_id",
+          "material_id",
+          "owner_task_id",
+          "release_request",
+          "request_id",
+          "accepted",
+          "busy",
+          "cell_available",
+          "cell_full",
+          "done",
+          "error",
+          "error_code",
+          "free_cells",
+          "released",
+          "result_id"
+        ],
+        "semantic_source": {
+          "document": "schema.md",
+          "section": "storage_rack",
+          "behavior": "release_from_cell"
+        },
+        "identity": "run/instance/subject/request as applicable; passive uses external transaction context"
+      },
+      "cancel_cell_reservation.pre_1": {
+        "value_type": "boolean",
+        "description": "预留属于当前任务、无不可撤销交接、没有必须保留的真实占用",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "cancel_reservation",
+          "cell_id",
+          "owner_task_id",
+          "request_id",
+          "accepted",
+          "busy",
+          "cell_available",
+          "done",
+          "error",
+          "error_code",
+          "free_cells",
+          "reservation_granted",
+          "result_id"
+        ],
+        "semantic_source": {
+          "document": "schema.md",
+          "section": "storage_rack",
+          "behavior": "cancel_cell_reservation"
+        },
+        "evaluation": "provider_must_implement_this_predicate; no_eval_of_description"
+      },
+      "cancel_cell_reservation.sustaining": {
+        "value_type": "boolean",
+        "description": "执行期间持续核查适用互锁、使能与身份；取料等阶段条件按阶段适用，不把已消费的前置状态持续要求为真。",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "cancel_reservation",
+          "cell_id",
+          "owner_task_id",
+          "request_id",
+          "accepted",
+          "busy",
+          "cell_available",
+          "done",
+          "error",
+          "error_code",
+          "free_cells",
+          "reservation_granted",
+          "result_id"
+        ],
+        "source_requirement": "预留属于当前任务、无不可撤销交接、没有必须保留的真实占用"
+      },
+      "cancel_cell_reservation.completion": {
+        "value_type": "boolean",
+        "description": "只撤销指定预留，不修改物料位置或其他任务",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "cancel_reservation",
+          "cell_id",
+          "owner_task_id",
+          "request_id",
+          "accepted",
+          "busy",
+          "cell_available",
+          "done",
+          "error",
+          "error_code",
+          "free_cells",
+          "reservation_granted",
+          "result_id"
+        ],
+        "semantic_source": {
+          "document": "schema.md",
+          "section": "storage_rack",
+          "behavior": "cancel_cell_reservation"
+        },
+        "identity": "run/instance/subject/request as applicable; passive uses external transaction context"
+      },
+      "query_cell_state.pre_1": {
+        "value_type": "boolean",
+        "description": "查询编号与状态版本有效",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "cell_id",
+          "accepted",
+          "busy",
+          "cell_available",
+          "cell_full",
+          "done",
+          "error",
+          "error_code",
+          "free_cells",
+          "reservation_granted",
+          "reservation_id",
+          "result_id"
+        ],
+        "semantic_source": {
+          "document": "schema.md",
+          "section": "storage_rack",
+          "behavior": "query_cell_state"
+        },
+        "evaluation": "provider_must_implement_this_predicate; no_eval_of_description"
+      },
+      "query_cell_state.sustaining": {
+        "value_type": "boolean",
+        "description": "执行期间持续核查适用互锁、使能与身份；取料等阶段条件按阶段适用，不把已消费的前置状态持续要求为真。",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "cell_id",
+          "accepted",
+          "busy",
+          "cell_available",
+          "cell_full",
+          "done",
+          "error",
+          "error_code",
+          "free_cells",
+          "reservation_granted",
+          "reservation_id",
+          "result_id"
+        ],
+        "source_requirement": "查询编号与状态版本有效"
+      },
+      "query_cell_state.completion": {
+        "value_type": "boolean",
+        "description": "返回确认过的占用、预留和任务关联信息",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "cell_id",
+          "accepted",
+          "busy",
+          "cell_available",
+          "cell_full",
+          "done",
+          "error",
+          "error_code",
+          "free_cells",
+          "reservation_granted",
+          "reservation_id",
+          "result_id"
+        ],
+        "semantic_source": {
+          "document": "schema.md",
+          "section": "storage_rack",
+          "behavior": "query_cell_state"
+        },
+        "identity": "run/instance/subject/request as applicable; passive uses external transaction context"
+      },
+      "publish_storage_state.pre_1": {
+        "value_type": "boolean",
+        "description": "实际占用、预留与执行反馈已对齐",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "accepted",
+          "busy",
+          "cell_available",
+          "cell_full",
+          "done",
+          "error",
+          "error_code",
+          "free_cells",
+          "released",
+          "reservation_granted",
+          "reservation_id",
+          "result_id",
+          "stored"
+        ],
+        "semantic_source": {
+          "document": "schema.md",
+          "section": "storage_rack",
+          "behavior": "publish_storage_state"
+        },
+        "evaluation": "provider_must_implement_this_predicate; no_eval_of_description"
+      },
+      "publish_storage_state.pre_2": {
+        "value_type": "boolean",
+        "description": "异常期间保留未知或在途状态",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "accepted",
+          "busy",
+          "cell_available",
+          "cell_full",
+          "done",
+          "error",
+          "error_code",
+          "free_cells",
+          "released",
+          "reservation_granted",
+          "reservation_id",
+          "result_id",
+          "stored"
+        ],
+        "semantic_source": {
+          "document": "schema.md",
+          "section": "storage_rack",
+          "behavior": "publish_storage_state"
+        },
+        "evaluation": "provider_must_implement_this_predicate; no_eval_of_description"
+      },
+      "publish_storage_state.sustaining": {
+        "value_type": "boolean",
+        "description": "执行期间持续核查适用互锁、使能与身份；取料等阶段条件按阶段适用，不把已消费的前置状态持续要求为真。",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "accepted",
+          "busy",
+          "cell_available",
+          "cell_full",
+          "done",
+          "error",
+          "error_code",
+          "free_cells",
+          "released",
+          "reservation_granted",
+          "reservation_id",
+          "result_id",
+          "stored"
+        ],
+        "source_requirement": "实际占用、预留与执行反馈已对齐；异常期间保留未知或在途状态"
+      },
+      "publish_storage_state.completion": {
+        "value_type": "boolean",
+        "description": "更新 cell_available、cell_full、free_cells、结果及错误",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "accepted",
+          "busy",
+          "cell_available",
+          "cell_full",
+          "done",
+          "error",
+          "error_code",
+          "free_cells",
+          "released",
+          "reservation_granted",
+          "reservation_id",
+          "result_id",
+          "stored"
+        ],
+        "semantic_source": {
+          "document": "schema.md",
+          "section": "storage_rack",
+          "behavior": "publish_storage_state"
+        },
+        "identity": "run/instance/subject/request as applicable; passive uses external transaction context"
+      }
+    },
+    "authorization_definitions": {
+      "release_from_cell.pre_1": {
+        "value_type": "boolean",
+        "description": "库位存在指定物料、任务获出库权限、接收方和目标可用",
+        "provider": "authorization_service",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "cell_id",
+          "material_id",
+          "owner_task_id",
+          "release_request",
+          "request_id",
+          "accepted",
+          "busy",
+          "cell_available",
+          "cell_full",
+          "done",
+          "error",
+          "error_code",
+          "free_cells",
+          "released",
+          "result_id"
+        ],
+        "semantic_source": {
+          "document": "schema.md",
+          "section": "storage_rack",
+          "behavior": "release_from_cell"
+        },
+        "evaluation": "provider_must_implement_this_predicate; no_eval_of_description"
+      }
+    }
+  },
+  "runtime_execution_contract": {
+    "signal_management": {
+      "owner": "simulation_engine",
+      "status": "pending_engine",
+      "namespace": "instance_id/port_id",
+      "definition_source": "signal_ports",
+      "spatial_binding": false,
+      "write_policy": "single_writer_per_input",
+      "plc_mapping": "instance_bindings",
+      "sampling": "simulation_step_snapshot",
+      "unknown_policy": "invalid_until_provider_ready"
+    },
+    "status": "pending_adapter",
+    "protocol": {
+      "basis": "schema.md公共请求协议",
+      "acceptance": "same request identity and frozen parameters",
+      "completion": "matching result_id plus observed completion checks",
+      "single_command_entry": true
+    },
+    "payload_binding_status": "requires_explicit_model_adapter",
+    "calibration_required": true,
+    "real_execution_available": false,
+    "raw_api_and_plc_simultaneous_writers": false,
+    "signal_host": "storage_service_not_static_rack_hardware"
+  },
+  "source": {
+    "documents": {
+      "schema.md": "91d66e3538067d4fd2f4f0cceb87f120fa0198a8082b54ab4a5f30316674fe17",
+      "设备契约.md": "ad91673c7d0ae4ba6a8f164ab265fa56f6456f5d3c82da9461afed47d5d3719d",
+      "参数契约.md": "7bc1c448d93570a69748e0c5998cda1d20bb18d96fbf9d0903e82c812129c5b0"
+    },
+    "parameter_template": "参数契约.md: storage_rack",
+    "behavior_table": "schema.md: storage_rack"
+  },
+  "modeling_status": {
+    "level": "DeviceSpec_1.1_pending_template",
+    "geometry": "pending",
+    "conditions": "declared_registered_predicates_not_implemented",
+    "payload": "partly specified; unsupported payloads block execution",
+    "native_import_scope": "eight_standard_types"
+  }
+}

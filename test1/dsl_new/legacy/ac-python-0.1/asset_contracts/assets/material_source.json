@@ -1,0 +1,473 @@
+{
+  "schema_version": "asset-contract/0.1",
+  "id": "material_source",
+  "version": "0.1.0",
+  "label": "出料口／供料台",
+  "category": "configurable",
+  "description": "按主动供料器或被动源台座使用；两种角色共享物料就绪语义。不是产线末端销毁物料的出口。",
+  "implementation_status": "contract_only",
+  "protocol_imports": [
+    "passive_v1",
+    "request_v1"
+  ],
+  "features": [
+    {
+      "id": "controlled_feeding",
+      "default": true,
+      "description": "主动供料器启用；被动台座必须关闭，屏蔽请求协议和全部输入端口。"
+    }
+  ],
+  "instance_requirements": [
+    "controlled_feeding=false 时仅开放观察行为，全部输入信号及 request_v1 均不实例化。",
+    "被动台座初始物料由场景初态显式登记，不能调用 present_material。",
+    "受控供料执行器必须实现实际物料输送；几何外观不证明具有供料能力。"
+  ],
+  "parameters": [
+    {
+      "id": "capacity",
+      "type": "integer",
+      "unit": "1",
+      "description": "出口容量；首版单件出口。",
+      "default": 1,
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "id": "feed_speed_mps",
+      "type": "number",
+      "unit": "m/s",
+      "description": "主动供料模块的实验速度。",
+      "default": 0.1,
+      "minimum": 0.001
+    },
+    {
+      "id": "max_payload_kg",
+      "type": "number",
+      "unit": "kg",
+      "description": "允许输出物料质量。",
+      "default": 5,
+      "minimum": 0.001
+    }
+  ],
+  "signal_ports": [
+    {
+      "id": "material_id",
+      "type": "material_ref",
+      "unit": "1",
+      "direction": "input",
+      "retention": "state",
+      "description": "主动供料请求指定的预登记物料。",
+      "writer": "controller"
+    },
+    {
+      "id": "part_ready",
+      "type": "boolean",
+      "unit": "1",
+      "direction": "output",
+      "retention": "state",
+      "description": "出口有物料，仅为状态，物料身份另查。",
+      "writer": "adapter"
+    },
+    {
+      "id": "available_count",
+      "type": "integer",
+      "unit": "1",
+      "direction": "output",
+      "retention": "state",
+      "description": "尚未发出的预登记物料数。",
+      "writer": "adapter"
+    },
+    {
+      "id": "output_material_id",
+      "type": "material_ref",
+      "unit": "1",
+      "direction": "output",
+      "retention": "state",
+      "description": "出口当前物料；无物料时标记无效，不制造空身份。",
+      "writer": "adapter"
+    }
+  ],
+  "observations": [
+    {
+      "id": "in_supply",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "inventory_service",
+      "description": "指定预登记物料位于本供料器库存且尚未发出。",
+      "arguments": [
+        "material"
+      ],
+      "argument_types": {
+        "material": "material_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "output_empty",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "world_observer",
+      "description": "出口当前没有实际占用；不由预留位代替。",
+      "arguments": [],
+      "argument_types": {},
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "material_presented",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "world_observer",
+      "description": "指定物料已进入出口并受出口支承。",
+      "arguments": [
+        "material"
+      ],
+      "argument_types": {
+        "material": "material_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "feed_committed",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "inventory_service",
+      "description": "当前请求只提交一次库存扣减和物料交接，且有实际到位证据。",
+      "arguments": [
+        "material"
+      ],
+      "argument_types": {
+        "material": "material_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "material_ready",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "world_observer",
+      "description": "指定物料在被动台座或出口上可被外部取走。",
+      "arguments": [
+        "material"
+      ],
+      "argument_types": {
+        "material": "material_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "material_mass",
+      "type": "number",
+      "unit": "kg",
+      "provider": "world_observer",
+      "description": "指定物料的实际登记质量。",
+      "arguments": [
+        "material"
+      ],
+      "argument_types": {
+        "material": "material_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    }
+  ],
+  "authorizations": [
+    {
+      "id": "operation_allowed",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "resource_service",
+      "description": "当前实例、行为和请求的操作许可；仅在资源实际授予后为真。",
+      "arguments": [],
+      "argument_types": {},
+      "validity": "fresh_valid_same_run"
+    }
+  ],
+  "spatial_interfaces": [
+    {
+      "id": "output",
+      "role": "support",
+      "geometry_binding": "required_per_instance",
+      "requires_features": [],
+      "description": "取料支承面和检测区。"
+    },
+    {
+      "id": "supply",
+      "role": "process",
+      "geometry_binding": "required_per_instance",
+      "requires_features": [
+        "controlled_feeding"
+      ],
+      "description": "主动模式的库存入口。"
+    },
+    {
+      "id": "mount",
+      "role": "attachment",
+      "geometry_binding": "required_per_instance",
+      "requires_features": [],
+      "description": "安装参考坐标系。"
+    }
+  ],
+  "behaviors": [
+    {
+      "id": "present_material",
+      "label": "将库存物料送至出料口",
+      "kind": "action",
+      "invocable": true,
+      "protocol": "request_v1",
+      "executor_ref": "adapter.material_source.present_material@0.1",
+      "requires_features": [
+        "controlled_feeding"
+      ],
+      "arguments": [
+        {
+          "id": "material",
+          "type": "material_ref",
+          "unit": "1",
+          "description": "有限库存中已登记的物料。"
+        }
+      ],
+      "command_bindings": [
+        {
+          "signal": "command_code",
+          "value": {
+            "source": "literal",
+            "value": 1
+          }
+        },
+        {
+          "signal": "material_id",
+          "value": {
+            "source": "argument",
+            "ref": "material"
+          }
+        }
+      ],
+      "preconditions": [
+        {
+          "id": "device_idle",
+          "left": {
+            "source": "signal",
+            "ref": "busy"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": false
+          }
+        },
+        {
+          "id": "device_healthy",
+          "left": {
+            "source": "signal",
+            "ref": "error"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": false
+          }
+        },
+        {
+          "id": "enabled",
+          "left": {
+            "source": "signal",
+            "ref": "enable"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "operation_authorized",
+          "left": {
+            "source": "authorization",
+            "ref": "operation_allowed"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "stock_available",
+          "left": {
+            "source": "observation",
+            "ref": "in_supply",
+            "bindings": {
+              "material": "material"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "output_available",
+          "left": {
+            "source": "observation",
+            "ref": "output_empty"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "payload_within_limit",
+          "left": {
+            "source": "observation",
+            "ref": "material_mass",
+            "bindings": {
+              "material": "material"
+            }
+          },
+          "operator": "le",
+          "right": {
+            "source": "parameter",
+            "ref": "max_payload_kg"
+          }
+        }
+      ],
+      "sustaining_conditions": [
+        {
+          "id": "enabled",
+          "left": {
+            "source": "signal",
+            "ref": "enable"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "operation_authorized",
+          "left": {
+            "source": "authorization",
+            "ref": "operation_allowed"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        }
+      ],
+      "completion": {
+        "mode": "evidence",
+        "checks": [
+          {
+            "id": "subject_presented",
+            "left": {
+              "source": "observation",
+              "ref": "material_presented",
+              "bindings": {
+                "material": "material"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "inventory_committed",
+            "left": {
+              "source": "observation",
+              "ref": "feed_committed",
+              "bindings": {
+                "material": "material"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "feeder_stopped",
+            "left": {
+              "source": "signal",
+              "ref": "stopped"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          }
+        ],
+        "description": "指定物料实际到位、供料停止并完成一次库存提交。"
+      },
+      "expected_effects": [
+        "对预登记实例执行供料和一次交接，成功后占用 output。",
+        "不创建未登记物料，重复请求不重复扣减库存。"
+      ],
+      "failure_policy": "preserve_observed_state_and_report"
+    },
+    {
+      "id": "observe_available_material",
+      "label": "观察源台座可取物料",
+      "kind": "observer",
+      "invocable": false,
+      "protocol": "passive_v1",
+      "executor_ref": "observer.material_source.observe_available_material@0.1",
+      "requires_features": [],
+      "arguments": [
+        {
+          "id": "material",
+          "type": "material_ref",
+          "unit": "1",
+          "description": "外部流程准备取走的物料。"
+        }
+      ],
+      "command_bindings": [],
+      "preconditions": [],
+      "sustaining_conditions": [],
+      "completion": {
+        "mode": "evidence",
+        "checks": [
+          {
+            "id": "subject_ready",
+            "left": {
+              "source": "observation",
+              "ref": "material_ready",
+              "bindings": {
+                "material": "material"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          }
+        ],
+        "description": "可用状态快照，不产生设备完成结果。"
+      },
+      "expected_effects": [
+        "只返回可取状态，搬运由外部设备执行。"
+      ],
+      "failure_policy": "report_inconsistent_observation"
+    }
+  ],
+  "activation_rules": [
+    {
+      "feature": "controlled_feeding",
+      "protocols": [
+        "request_v1"
+      ],
+      "signals": [
+        "material_id"
+      ]
+    }
+  ]
+}

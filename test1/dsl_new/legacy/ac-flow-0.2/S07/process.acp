@@ -1,0 +1,71 @@
+; 四件分层入库后按订单出库
+; 先完成有限入库批次，再按订单出库；共享抓放机构X1互斥。
+(process "ac-flow/0.2" S07
+  (sequence
+    (sequence
+      (for-each jobs job
+        (sequence
+          (await input_present $job.material $job.input 1800 tick)
+          (with-resources
+            (C1)
+            (sequence
+              (invoke op_042 C1 transport_to_exit
+                (arg material $job.material)
+                (arg speed_mps 0.2 m/s))))
+          (with-resources
+            (X1 L1 C1 STORE)
+            (sequence
+              (invoke op_043 L1 move_to_height
+                (arg height 0.0 m))
+              (sequence
+                (invoke op_044 X1 transfer_material
+                  (arg material $job.material)
+                  (arg source C1.exit)
+                  (arg target L1.work))
+                (invoke op_045 X1 move_to_location
+                  (arg target X1.home)))
+              (invoke op_046 L1 move_to_height
+                (arg height $job.height m))
+              (await target_available $job.slot 1800 tick)
+              (sequence
+                (invoke op_047 X1 transfer_material
+                  (arg material $job.material)
+                  (arg source L1.work)
+                  (arg target $job.slot))
+                (invoke op_048 X1 move_to_location
+                  (arg target X1.home)))
+              (invoke op_049 L1 move_to_height
+                (arg height 0.0 m))))))
+      (checkpoint inventory_stored)
+      (for-each jobs job
+        (sequence
+          (with-resources
+            (X1 L2 STORE C2)
+            (sequence
+              (invoke op_050 L2 move_to_height
+                (arg height $job.height m))
+              (sequence
+                (invoke op_051 X1 transfer_material
+                  (arg material $job.material)
+                  (arg source $job.slot)
+                  (arg target L2.work))
+                (invoke op_052 X1 move_to_location
+                  (arg target X1.home)))
+              (invoke op_053 L2 move_to_height
+                (arg height 0.0 m))
+              (await target_available C2.entry 1800 tick)
+              (sequence
+                (invoke op_054 X1 transfer_material
+                  (arg material $job.material)
+                  (arg source L2.work)
+                  (arg target C2.entry))
+                (invoke op_055 X1 move_to_location
+                  (arg target X1.home)))))
+          (with-resources
+            (C2)
+            (sequence
+              (invoke op_056 C2 transport_to_exit
+                (arg material $job.material)
+                (arg speed_mps 0.2 m/s))))
+          (await output_departed $job.material C2 1800 tick))))
+    (verify batch_goal)))

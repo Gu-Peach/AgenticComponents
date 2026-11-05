@@ -1,0 +1,43 @@
+{
+  "schema_version": "asset-catalog/0.1",
+  "version": "0.3.0",
+  "assets": [
+    {
+      "id": "conveyor",
+      "path": "assets/conveyor.json"
+    },
+    {
+      "id": "lift_transport",
+      "path": "assets/lift_transport.json"
+    },
+    {
+      "id": "material",
+      "path": "assets/material.json"
+    },
+    {
+      "id": "material_source",
+      "path": "assets/material_source.json"
+    },
+    {
+      "id": "pallet",
+      "path": "assets/pallet.json"
+    },
+    {
+      "id": "processing_station",
+      "path": "assets/processing_station.json"
+    },
+    {
+      "id": "robot_arm",
+      "path": "assets/robot_arm.json"
+    },
+    {
+      "id": "rotary_table",
+      "path": "assets/rotary_table.json"
+    },
+    {
+      "id": "storage_rack",
+      "path": "assets/storage_rack.json"
+    }
+  ],
+  "protocols": "shared/protocols.json"
+}

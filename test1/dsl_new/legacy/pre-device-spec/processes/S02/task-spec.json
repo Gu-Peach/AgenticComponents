@@ -1,0 +1,103 @@
+{
+  "schema_version": "ac-flow-task/0.2",
+  "id": "batch_goal",
+  "scene_id": "S02",
+  "description": "六托盘按空闲工位分配、并行拆垛与空盘出线",
+  "expected": {
+    "material_ids": [
+      "M01_1",
+      "M01_2",
+      "M01_3",
+      "M01_4",
+      "M02_1",
+      "M02_2",
+      "M02_3",
+      "M02_4",
+      "M03_1",
+      "M03_2",
+      "M03_3",
+      "M03_4",
+      "M04_1",
+      "M04_2",
+      "M04_3",
+      "M04_4",
+      "M05_1",
+      "M05_2",
+      "M05_3",
+      "M05_4",
+      "M06_1",
+      "M06_2",
+      "M06_3",
+      "M06_4"
+    ],
+    "material_count": 24,
+    "pallet_ids": [
+      "P01",
+      "P02",
+      "P03",
+      "P04",
+      "P05",
+      "P06"
+    ],
+    "pallet_count": 6
+  },
+  "all": [
+    {
+      "kind": "all_pallets_empty_and_exited",
+      "ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06"
+      ],
+      "line": "C1"
+    },
+    {
+      "kind": "all_materials_delivered_once",
+      "ids": [
+        "M01_1",
+        "M01_2",
+        "M01_3",
+        "M01_4",
+        "M02_1",
+        "M02_2",
+        "M02_3",
+        "M02_4",
+        "M03_1",
+        "M03_2",
+        "M03_3",
+        "M03_4",
+        "M04_1",
+        "M04_2",
+        "M04_3",
+        "M04_4",
+        "M05_1",
+        "M05_2",
+        "M05_3",
+        "M05_4",
+        "M06_1",
+        "M06_2",
+        "M06_3",
+        "M06_4"
+      ],
+      "routing": "assigned_cell_output"
+    },
+    {
+      "kind": "tools_empty"
+    },
+    {
+      "kind": "drives_stopped"
+    },
+    {
+      "kind": "no_active_requests"
+    },
+    {
+      "kind": "no_pending_jobs"
+    },
+    {
+      "kind": "operations_released"
+    }
+  ]
+}

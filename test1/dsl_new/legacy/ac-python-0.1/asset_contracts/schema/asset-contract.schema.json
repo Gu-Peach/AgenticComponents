@@ -1,0 +1,700 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:agentic-components:asset-contract:0.1",
+  "title": "Unified asset contract 0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "version",
+    "label",
+    "category",
+    "description",
+    "implementation_status",
+    "protocol_imports",
+    "features",
+    "instance_requirements",
+    "parameters",
+    "signal_ports",
+    "observations",
+    "authorizations",
+    "spatial_interfaces",
+    "behaviors"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "asset-contract/0.1"
+    },
+    "id": {
+      "$ref": "#/$defs/id"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "label": {
+      "$ref": "#/$defs/text"
+    },
+    "category": {
+      "enum": [
+        "active",
+        "configurable",
+        "passive"
+      ]
+    },
+    "description": {
+      "$ref": "#/$defs/text"
+    },
+    "implementation_status": {
+      "const": "contract_only"
+    },
+    "protocol_imports": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "request_v1",
+          "passive_v1"
+        ]
+      }
+    },
+    "features": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/feature"
+      }
+    },
+    "instance_requirements": {
+      "$ref": "#/$defs/textList"
+    },
+    "parameters": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/field"
+      }
+    },
+    "signal_ports": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/port"
+      }
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/fact"
+      }
+    },
+    "authorizations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/fact"
+      }
+    },
+    "spatial_interfaces": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/interface"
+      }
+    },
+    "behaviors": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/behavior"
+      }
+    },
+    "activation_rules": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/activation"
+      }
+    },
+    "configuration_constraints": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/configurationConstraint"
+      }
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z_][A-Za-z0-9_.-]*$"
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "textList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/text"
+      }
+    },
+    "type": {
+      "enum": [
+        "boolean",
+        "integer",
+        "number",
+        "string",
+        "material_ref",
+        "location_ref",
+        "slot_ref",
+        "recipe_ref",
+        "transport_plan_ref",
+        "pallet_ref"
+      ]
+    },
+    "unit": {
+      "enum": [
+        "1",
+        "m",
+        "m/s",
+        "m/s2",
+        "rad",
+        "rad/s",
+        "kg",
+        "s"
+      ]
+    },
+    "scalar": {
+      "type": [
+        "boolean",
+        "integer",
+        "number",
+        "string"
+      ]
+    },
+    "field": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "unit",
+        "description"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "type": {
+          "$ref": "#/$defs/type"
+        },
+        "unit": {
+          "$ref": "#/$defs/unit"
+        },
+        "description": {
+          "$ref": "#/$defs/text"
+        },
+        "default": {
+          "$ref": "#/$defs/scalar"
+        },
+        "minimum": {
+          "type": "number"
+        },
+        "maximum": {
+          "type": "number"
+        },
+        "enum": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/scalar"
+          }
+        }
+      }
+    },
+    "port": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "unit",
+        "direction",
+        "retention",
+        "description",
+        "writer"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "type": {
+          "$ref": "#/$defs/type"
+        },
+        "unit": {
+          "$ref": "#/$defs/unit"
+        },
+        "direction": {
+          "enum": [
+            "input",
+            "output"
+          ]
+        },
+        "retention": {
+          "enum": [
+            "state",
+            "pulse",
+            "event",
+            "latched",
+            "level_command",
+            "latched_result"
+          ]
+        },
+        "description": {
+          "$ref": "#/$defs/text"
+        },
+        "writer": {
+          "enum": [
+            "controller",
+            "adapter"
+          ]
+        }
+      }
+    },
+    "fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "unit",
+        "provider",
+        "description",
+        "arguments",
+        "argument_types",
+        "validity"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "type": {
+          "$ref": "#/$defs/type"
+        },
+        "unit": {
+          "$ref": "#/$defs/unit"
+        },
+        "provider": {
+          "enum": [
+            "device_adapter",
+            "world_observer",
+            "handoff_service",
+            "resource_service",
+            "inventory_service",
+            "recipe_service",
+            "instance_configuration",
+            "geometry_adapter",
+            "occupancy_service"
+          ]
+        },
+        "description": {
+          "$ref": "#/$defs/text"
+        },
+        "validity": {
+          "const": "fresh_valid_same_run"
+        },
+        "arguments": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "argument_types": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/id"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/type"
+          }
+        }
+      }
+    },
+    "feature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "default",
+        "description"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "default": {
+          "type": "boolean"
+        },
+        "description": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "interface": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "role",
+        "geometry_binding",
+        "description"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "role": {
+          "enum": [
+            "mount",
+            "attachment",
+            "process",
+            "tool",
+            "support"
+          ]
+        },
+        "geometry_binding": {
+          "const": "required_per_instance"
+        },
+        "description": {
+          "$ref": "#/$defs/text"
+        },
+        "requires_features": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        }
+      }
+    },
+    "configurationConstraint": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "features"
+          ],
+          "properties": {
+            "kind": {
+              "const": "at_least_one_feature"
+            },
+            "features": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/id"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "left",
+            "right"
+          ],
+          "properties": {
+            "kind": {
+              "const": "parameter_le"
+            },
+            "left": {
+              "$ref": "#/$defs/id"
+            },
+            "right": {
+              "$ref": "#/$defs/id"
+            }
+          }
+        }
+      ]
+    },
+    "activation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "feature",
+        "protocols",
+        "signals"
+      ],
+      "properties": {
+        "feature": {
+          "$ref": "#/$defs/id"
+        },
+        "protocols": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "request_v1",
+              "passive_v1"
+            ]
+          }
+        },
+        "signals": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        }
+      }
+    },
+    "literal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "value"
+      ],
+      "properties": {
+        "source": {
+          "const": "literal"
+        },
+        "value": {
+          "$ref": "#/$defs/scalar"
+        }
+      }
+    },
+    "reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "ref"
+      ],
+      "properties": {
+        "source": {
+          "enum": [
+            "signal",
+            "parameter",
+            "argument",
+            "context"
+          ]
+        },
+        "ref": {
+          "$ref": "#/$defs/id"
+        }
+      }
+    },
+    "left": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "ref"
+      ],
+      "properties": {
+        "source": {
+          "enum": [
+            "signal",
+            "parameter",
+            "argument",
+            "observation",
+            "authorization"
+          ]
+        },
+        "ref": {
+          "$ref": "#/$defs/id"
+        },
+        "bindings": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/id"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/id"
+          }
+        }
+      }
+    },
+    "condition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "left",
+        "operator",
+        "right"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "left": {
+          "$ref": "#/$defs/left"
+        },
+        "operator": {
+          "enum": [
+            "eq",
+            "ne",
+            "lt",
+            "le",
+            "gt",
+            "ge"
+          ]
+        },
+        "right": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/literal"
+            },
+            {
+              "$ref": "#/$defs/reference"
+            }
+          ]
+        }
+      }
+    },
+    "command": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "signal",
+        "value"
+      ],
+      "properties": {
+        "signal": {
+          "$ref": "#/$defs/id"
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/literal"
+            },
+            {
+              "$ref": "#/$defs/reference"
+            }
+          ]
+        }
+      }
+    },
+    "behavior": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "kind",
+        "invocable",
+        "protocol",
+        "executor_ref",
+        "requires_features",
+        "arguments",
+        "command_bindings",
+        "preconditions",
+        "sustaining_conditions",
+        "completion",
+        "expected_effects",
+        "failure_policy"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "label": {
+          "$ref": "#/$defs/text"
+        },
+        "kind": {
+          "enum": [
+            "action",
+            "continuous",
+            "passive",
+            "observer"
+          ]
+        },
+        "invocable": {
+          "type": "boolean"
+        },
+        "protocol": {
+          "enum": [
+            "request_v1",
+            "passive_v1"
+          ]
+        },
+        "executor_ref": {
+          "type": "string",
+          "pattern": "^(adapter|observer)\\.[A-Za-z_][A-Za-z0-9_.-]*(@[0-9]+\\.[0-9]+(\\.[0-9]+)?)?$"
+        },
+        "requires_features": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "arguments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/field"
+          }
+        },
+        "command_bindings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/command"
+          }
+        },
+        "preconditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/condition"
+          }
+        },
+        "sustaining_conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/condition"
+          }
+        },
+        "completion": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "mode",
+            "checks",
+            "description"
+          ],
+          "properties": {
+            "mode": {
+              "enum": [
+                "scope",
+                "evidence"
+              ]
+            },
+            "checks": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/condition"
+              }
+            },
+            "description": {
+              "$ref": "#/$defs/text"
+            }
+          }
+        },
+        "expected_effects": {
+          "$ref": "#/$defs/textList"
+        },
+        "failure_policy": {
+          "enum": [
+            "preserve_observed_state_and_report",
+            "report_inconsistent_observation"
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "language": "ac-declarative/0.1",
+  "status": "declarative_frontend_and_static_interfaces",
+  "operators": [
+    {
+      "kind": "seq",
+      "python_surface": "with seq",
+      "meaning": "sequential children"
+    },
+    {
+      "kind": "par",
+      "python_surface": "with par",
+      "meaning": "concurrent candidates; join all"
+    },
+    {
+      "kind": "branch",
+      "python_surface": "with branch/case/otherwise",
+      "meaning": "snapshot-based ordered or exclusive selection"
+    },
+    {
+      "kind": "repeat",
+      "python_surface": "with repeat",
+      "meaning": "bounded count or frozen bounded collection"
+    },
+    {
+      "kind": "invoke",
+      "python_surface": "invoke",
+      "meaning": "contract-bound discrete operation"
+    },
+    {
+      "kind": "await",
+      "python_surface": "wait_for",
+      "meaning": "three-valued condition with deadline"
+    },
+    {
+      "kind": "delay",
+      "python_surface": "delay",
+      "meaning": "logical time only"
+    },
+    {
+      "kind": "with-control",
+      "python_surface": "with with_control",
+      "meaning": "enter, monitor, exit continuous control"
+    },
+    {
+      "kind": "fail",
+      "python_surface": "fail",
+      "meaning": "explicit business failure"
+    }
+  ],
+  "runtime_implemented": false
+}

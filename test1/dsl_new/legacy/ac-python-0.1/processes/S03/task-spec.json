@@ -1,0 +1,66 @@
+{
+  "schema_version": "ac-flow-task/0.2",
+  "id": "batch_goal",
+  "scene_id": "S03",
+  "description": "六件入环输送与双机械臂出环流水",
+  "expected": {
+    "material_ids": [
+      "M01",
+      "M02",
+      "M03",
+      "M04",
+      "M05",
+      "M06"
+    ],
+    "material_count": 6,
+    "pallet_ids": [],
+    "pallet_count": 0
+  },
+  "all": [
+    {
+      "kind": "all_delivered_once",
+      "items": [
+        {
+          "material": "M01",
+          "target": "OUT.exit"
+        },
+        {
+          "material": "M02",
+          "target": "OUT.exit"
+        },
+        {
+          "material": "M03",
+          "target": "OUT.exit"
+        },
+        {
+          "material": "M04",
+          "target": "OUT.exit"
+        },
+        {
+          "material": "M05",
+          "target": "OUT.exit"
+        },
+        {
+          "material": "M06",
+          "target": "OUT.exit"
+        }
+      ],
+      "evidence": "actual_target_handoff_before_external_departure"
+    },
+    {
+      "kind": "tools_empty"
+    },
+    {
+      "kind": "drives_stopped"
+    },
+    {
+      "kind": "no_active_requests"
+    },
+    {
+      "kind": "no_pending_jobs"
+    },
+    {
+      "kind": "operations_released"
+    }
+  ]
+}

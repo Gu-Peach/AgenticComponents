@@ -1,0 +1,60 @@
+{
+  "schema_version": "ac-flow-batch/0.2",
+  "scene_id": "S09",
+  "jobs": [
+    {
+      "id": "J01",
+      "material": "M01",
+      "input": "C1.entry",
+      "machine": "MC1",
+      "work": "MC1.work",
+      "recipe": "machining_a",
+      "target": "C2.exit"
+    },
+    {
+      "id": "J02",
+      "material": "M02",
+      "input": "C1.entry",
+      "machine": "MC2",
+      "work": "MC2.work",
+      "recipe": "machining_b",
+      "target": "C2.exit"
+    },
+    {
+      "id": "J03",
+      "material": "M03",
+      "input": "C1.entry",
+      "machine": "MC1",
+      "work": "MC1.work",
+      "recipe": "machining_a",
+      "target": "C2.exit"
+    },
+    {
+      "id": "J04",
+      "material": "M04",
+      "input": "C1.entry",
+      "machine": "MC2",
+      "work": "MC2.work",
+      "recipe": "machining_b",
+      "target": "C2.exit"
+    },
+    {
+      "id": "J05",
+      "material": "M05",
+      "input": "C1.entry",
+      "machine": "MC1",
+      "work": "MC1.work",
+      "recipe": "machining_a",
+      "target": "C2.exit"
+    },
+    {
+      "id": "J06",
+      "material": "M06",
+      "input": "C1.entry",
+      "machine": "MC2",
+      "work": "MC2.work",
+      "recipe": "machining_b",
+      "target": "C2.exit"
+    }
+  ]
+}

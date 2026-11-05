@@ -1,0 +1,657 @@
+{
+  "schema_version": "asset-contract/0.1",
+  "id": "storage_rack",
+  "version": "0.1.0",
+  "label": "仓储柜",
+  "category": "passive",
+  "description": "具有有限库位的被动仓储资产；物理存取由外部设备完成，库位服务提供占用、预留和交接证据。",
+  "implementation_status": "contract_only",
+  "protocol_imports": [
+    "passive_v1"
+  ],
+  "features": [],
+  "instance_requirements": [
+    "仓储服务是事实提供者；本资产不实现预留算法或搬运执行器。",
+    "库位占用必须关联物料身份，容量和预留不能由单个未具名的 full 位替代。",
+    "有主动升降或搬运机构的仓储外观应在场景中另绑定 lift_transport 实例。"
+  ],
+  "parameters": [
+    {
+      "id": "cell_count",
+      "type": "integer",
+      "unit": "1",
+      "description": "实例必须显式绑定的库位数量。",
+      "default": 6,
+      "minimum": 1
+    },
+    {
+      "id": "max_cell_load_kg",
+      "type": "number",
+      "unit": "kg",
+      "description": "单库位实验载荷上限，由兼容性事实提供者检查。",
+      "default": 20.0,
+      "minimum": 0.001
+    },
+    {
+      "id": "max_total_load_kg",
+      "type": "number",
+      "unit": "kg",
+      "description": "仓储柜实验总载荷上限。",
+      "default": 120.0,
+      "minimum": 0.001
+    }
+  ],
+  "signal_ports": [
+    {
+      "id": "occupied_cells",
+      "type": "integer",
+      "unit": "1",
+      "direction": "output",
+      "retention": "state",
+      "description": "已确认实际占用的库位数量。",
+      "writer": "adapter"
+    },
+    {
+      "id": "reserved_cells",
+      "type": "integer",
+      "unit": "1",
+      "direction": "output",
+      "retention": "state",
+      "description": "未完成交接的有效预留库位数量。",
+      "writer": "adapter"
+    },
+    {
+      "id": "available_cells",
+      "type": "integer",
+      "unit": "1",
+      "direction": "output",
+      "retention": "state",
+      "description": "扣除占用与冲突预留后的可用库位数量。",
+      "writer": "adapter"
+    },
+    {
+      "id": "actual_load_kg",
+      "type": "number",
+      "unit": "kg",
+      "direction": "output",
+      "retention": "state",
+      "description": "实际入库物料总质量。",
+      "writer": "adapter"
+    },
+    {
+      "id": "supported",
+      "type": "boolean",
+      "unit": "1",
+      "direction": "output",
+      "retention": "state",
+      "description": "柜体安装与支承状态有效。",
+      "writer": "adapter"
+    }
+  ],
+  "observations": [
+    {
+      "id": "cell_exists",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "occupancy_service",
+      "description": "指定库位属于本仓储柜且具有实例几何绑定。",
+      "arguments": [
+        "cell"
+      ],
+      "argument_types": {
+        "cell": "slot_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "cell_receive_ready",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "occupancy_service",
+      "description": "库位无实际占用且无冲突预留；本次有效预留属于当前外部交接任务。",
+      "arguments": [
+        "material",
+        "cell"
+      ],
+      "argument_types": {
+        "material": "material_ref",
+        "cell": "slot_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "cell_material_compatible",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "occupancy_service",
+      "description": "指定物料的类型、外形和质量满足指定库位要求。",
+      "arguments": [
+        "material",
+        "cell"
+      ],
+      "argument_types": {
+        "material": "material_ref",
+        "cell": "slot_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "load_after_kg",
+      "type": "number",
+      "unit": "kg",
+      "provider": "occupancy_service",
+      "description": "接收指定物料后的仓储总载荷，包含其他有效预留且不重复计算本物料。",
+      "arguments": [
+        "material"
+      ],
+      "argument_types": {
+        "material": "material_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "placed_in_cell",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "world_observer",
+      "description": "指定物料已实际到达库位并由该库位支承，证据由搬运和世界观察提供。",
+      "arguments": [
+        "material",
+        "cell"
+      ],
+      "argument_types": {
+        "material": "material_ref",
+        "cell": "slot_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "store_committed",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "handoff_service",
+      "description": "本次物料入库交接已提交，预留转占用且与实际放置一致，重复证据不会重复入账。",
+      "arguments": [
+        "material",
+        "cell"
+      ],
+      "argument_types": {
+        "material": "material_ref",
+        "cell": "slot_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "cell_holds_material",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "occupancy_service",
+      "description": "该库位当前实际存放指定物料，账本有相符的世界观测依据。",
+      "arguments": [
+        "material",
+        "cell"
+      ],
+      "argument_types": {
+        "material": "material_ref",
+        "cell": "slot_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "removed_from_cell",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "world_observer",
+      "description": "指定物料已实际离开该库位，库位支承关系不再成立。",
+      "arguments": [
+        "material",
+        "cell"
+      ],
+      "argument_types": {
+        "material": "material_ref",
+        "cell": "slot_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "receiver_confirmed",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "handoff_service",
+      "description": "指定物料已被目标接收方确认接收，证据关联当前外部出库交接。",
+      "arguments": [
+        "material",
+        "target"
+      ],
+      "argument_types": {
+        "material": "material_ref",
+        "target": "location_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "retrieve_committed",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "occupancy_service",
+      "description": "指定物料出库的交接已提交，原库位占用按实际结果释放一次。",
+      "arguments": [
+        "material",
+        "cell"
+      ],
+      "argument_types": {
+        "material": "material_ref",
+        "cell": "slot_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "inventory_consistent",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "occupancy_service",
+      "description": "已占用库位、预留、物料身份、载荷与世界观测一致；冲突或未知需要报告。",
+      "arguments": [],
+      "argument_types": {},
+      "validity": "fresh_valid_same_run"
+    }
+  ],
+  "authorizations": [
+    {
+      "id": "store_allowed",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "resource_service",
+      "description": "当前外部任务获准将指定物料放入指定库位，包含必要的存取区许可。",
+      "arguments": [
+        "material",
+        "cell"
+      ],
+      "argument_types": {
+        "material": "material_ref",
+        "cell": "slot_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "retrieve_allowed",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "resource_service",
+      "description": "当前外部任务获准从指定库位取出指定物料并交给指定目标。",
+      "arguments": [
+        "material",
+        "cell",
+        "target"
+      ],
+      "argument_types": {
+        "material": "material_ref",
+        "cell": "slot_ref",
+        "target": "location_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    }
+  ],
+  "spatial_interfaces": [
+    {
+      "id": "mount",
+      "role": "attachment",
+      "geometry_binding": "required_per_instance",
+      "requires_features": [],
+      "description": "柜体安装参考。"
+    },
+    {
+      "id": "cell_supports",
+      "role": "support",
+      "geometry_binding": "required_per_instance",
+      "requires_features": [],
+      "description": "实例为每个库位绑定支承面和存取参考。"
+    }
+  ],
+  "behaviors": [
+    {
+      "id": "receive_in_cell",
+      "label": "观察入库交接",
+      "kind": "passive",
+      "invocable": false,
+      "protocol": "passive_v1",
+      "executor_ref": "observer.storage_rack.receive_in_cell@0.1",
+      "requires_features": [],
+      "arguments": [
+        {
+          "id": "material",
+          "type": "material_ref",
+          "unit": "1",
+          "description": "物料的稳定实例身份。"
+        },
+        {
+          "id": "cell",
+          "type": "slot_ref",
+          "unit": "1",
+          "description": "本仓储柜内的稳定库位引用。"
+        }
+      ],
+      "command_bindings": [],
+      "preconditions": [
+        {
+          "id": "rack_supported",
+          "left": {
+            "source": "signal",
+            "ref": "supported"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "cell_exists",
+          "left": {
+            "source": "observation",
+            "ref": "cell_exists",
+            "bindings": {
+              "cell": "cell"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "cell_receive_ready",
+          "left": {
+            "source": "observation",
+            "ref": "cell_receive_ready",
+            "bindings": {
+              "material": "material",
+              "cell": "cell"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "cell_material_compatible",
+          "left": {
+            "source": "observation",
+            "ref": "cell_material_compatible",
+            "bindings": {
+              "material": "material",
+              "cell": "cell"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "rack_load_within_limit",
+          "left": {
+            "source": "observation",
+            "ref": "load_after_kg",
+            "bindings": {
+              "material": "material"
+            }
+          },
+          "operator": "le",
+          "right": {
+            "source": "parameter",
+            "ref": "max_total_load_kg"
+          }
+        },
+        {
+          "id": "store_allowed",
+          "left": {
+            "source": "authorization",
+            "ref": "store_allowed",
+            "bindings": {
+              "material": "material",
+              "cell": "cell"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        }
+      ],
+      "sustaining_conditions": [
+        {
+          "id": "rack_still_supported",
+          "left": {
+            "source": "signal",
+            "ref": "supported"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        }
+      ],
+      "completion": {
+        "mode": "evidence",
+        "checks": [
+          {
+            "id": "placed_in_cell",
+            "left": {
+              "source": "observation",
+              "ref": "placed_in_cell",
+              "bindings": {
+                "material": "material",
+                "cell": "cell"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "store_committed",
+            "left": {
+              "source": "observation",
+              "ref": "store_committed",
+              "bindings": {
+                "material": "material",
+                "cell": "cell"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          }
+        ],
+        "description": "仓储柜不搬运物料，入库动作由机械臂或升降运输设备完成。"
+      },
+      "expected_effects": [
+        "实际放置和交接确认后，仓储服务将该物料的库位预留转为占用。"
+      ],
+      "failure_policy": "report_inconsistent_observation"
+    },
+    {
+      "id": "release_from_cell",
+      "label": "观察出库交接",
+      "kind": "passive",
+      "invocable": false,
+      "protocol": "passive_v1",
+      "executor_ref": "observer.storage_rack.release_from_cell@0.1",
+      "requires_features": [],
+      "arguments": [
+        {
+          "id": "material",
+          "type": "material_ref",
+          "unit": "1",
+          "description": "物料的稳定实例身份。"
+        },
+        {
+          "id": "cell",
+          "type": "slot_ref",
+          "unit": "1",
+          "description": "本仓储柜内的稳定库位引用。"
+        },
+        {
+          "id": "target",
+          "type": "location_ref",
+          "unit": "1",
+          "description": "出库操作的接收位置。"
+        }
+      ],
+      "command_bindings": [],
+      "preconditions": [
+        {
+          "id": "cell_holds_material",
+          "left": {
+            "source": "observation",
+            "ref": "cell_holds_material",
+            "bindings": {
+              "material": "material",
+              "cell": "cell"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "retrieve_allowed",
+          "left": {
+            "source": "authorization",
+            "ref": "retrieve_allowed",
+            "bindings": {
+              "material": "material",
+              "cell": "cell",
+              "target": "target"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        }
+      ],
+      "sustaining_conditions": [
+        {
+          "id": "rack_still_supported",
+          "left": {
+            "source": "signal",
+            "ref": "supported"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        }
+      ],
+      "completion": {
+        "mode": "evidence",
+        "checks": [
+          {
+            "id": "removed_from_cell",
+            "left": {
+              "source": "observation",
+              "ref": "removed_from_cell",
+              "bindings": {
+                "material": "material",
+                "cell": "cell"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "receiver_confirmed",
+            "left": {
+              "source": "observation",
+              "ref": "receiver_confirmed",
+              "bindings": {
+                "material": "material",
+                "target": "target"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "retrieve_committed",
+            "left": {
+              "source": "observation",
+              "ref": "retrieve_committed",
+              "bindings": {
+                "material": "material",
+                "cell": "cell"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          }
+        ],
+        "description": "观察外部取出与交接结果，不提供货架自主运动命令。"
+      },
+      "expected_effects": [
+        "搬运方与接收方完成实际交接后释放原库位；停止或取消不抹除真实占用。"
+      ],
+      "failure_policy": "report_inconsistent_observation"
+    },
+    {
+      "id": "observe_inventory",
+      "label": "观察库位状态",
+      "kind": "observer",
+      "invocable": false,
+      "protocol": "passive_v1",
+      "executor_ref": "observer.storage_rack.observe_inventory@0.1",
+      "requires_features": [],
+      "arguments": [],
+      "command_bindings": [],
+      "preconditions": [],
+      "sustaining_conditions": [],
+      "completion": {
+        "mode": "evidence",
+        "checks": [
+          {
+            "id": "inventory_consistent",
+            "left": {
+              "source": "observation",
+              "ref": "inventory_consistent"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          }
+        ],
+        "description": "本条只观察，不选择最优库位，不发起预留或修改库存。"
+      },
+      "expected_effects": [
+        "提供仓储服务核对后的库位与库存状态。"
+      ],
+      "failure_policy": "report_inconsistent_observation"
+    }
+  ]
+}

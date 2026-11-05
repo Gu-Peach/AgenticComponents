@@ -1,0 +1,148 @@
+{
+  "schema_version": "ac-flow-batch/0.2",
+  "scene_id": "S02",
+  "pallets": [
+    {
+      "id": "P01",
+      "items": [
+        {
+          "material": "M01_1",
+          "source": "P01.slot1"
+        },
+        {
+          "material": "M01_2",
+          "source": "P01.slot2"
+        },
+        {
+          "material": "M01_3",
+          "source": "P01.slot3"
+        },
+        {
+          "material": "M01_4",
+          "source": "P01.slot4"
+        }
+      ],
+      "initial": "carrier_infeed",
+      "target": "C1.exit"
+    },
+    {
+      "id": "P02",
+      "items": [
+        {
+          "material": "M02_1",
+          "source": "P02.slot1"
+        },
+        {
+          "material": "M02_2",
+          "source": "P02.slot2"
+        },
+        {
+          "material": "M02_3",
+          "source": "P02.slot3"
+        },
+        {
+          "material": "M02_4",
+          "source": "P02.slot4"
+        }
+      ],
+      "initial": "carrier_infeed",
+      "target": "C1.exit"
+    },
+    {
+      "id": "P03",
+      "items": [
+        {
+          "material": "M03_1",
+          "source": "P03.slot1"
+        },
+        {
+          "material": "M03_2",
+          "source": "P03.slot2"
+        },
+        {
+          "material": "M03_3",
+          "source": "P03.slot3"
+        },
+        {
+          "material": "M03_4",
+          "source": "P03.slot4"
+        }
+      ],
+      "initial": "carrier_infeed",
+      "target": "C1.exit"
+    },
+    {
+      "id": "P04",
+      "items": [
+        {
+          "material": "M04_1",
+          "source": "P04.slot1"
+        },
+        {
+          "material": "M04_2",
+          "source": "P04.slot2"
+        },
+        {
+          "material": "M04_3",
+          "source": "P04.slot3"
+        },
+        {
+          "material": "M04_4",
+          "source": "P04.slot4"
+        }
+      ],
+      "initial": "carrier_infeed",
+      "target": "C1.exit"
+    },
+    {
+      "id": "P05",
+      "items": [
+        {
+          "material": "M05_1",
+          "source": "P05.slot1"
+        },
+        {
+          "material": "M05_2",
+          "source": "P05.slot2"
+        },
+        {
+          "material": "M05_3",
+          "source": "P05.slot3"
+        },
+        {
+          "material": "M05_4",
+          "source": "P05.slot4"
+        }
+      ],
+      "initial": "carrier_infeed",
+      "target": "C1.exit"
+    },
+    {
+      "id": "P06",
+      "items": [
+        {
+          "material": "M06_1",
+          "source": "P06.slot1"
+        },
+        {
+          "material": "M06_2",
+          "source": "P06.slot2"
+        },
+        {
+          "material": "M06_3",
+          "source": "P06.slot3"
+        },
+        {
+          "material": "M06_4",
+          "source": "P06.slot4"
+        }
+      ],
+      "initial": "carrier_infeed",
+      "target": "C1.exit"
+    }
+  ],
+  "material_count": 24,
+  "pallet_count": 6,
+  "max_items_per_pallet": 4,
+  "job_count": 0
+}

@@ -1,0 +1,66 @@
+{
+  "schema_version": "ac-flow-task/0.2",
+  "id": "batch_goal",
+  "scene_id": "S11",
+  "description": "四件装夹焊接与转位下料",
+  "expected": {
+    "material_ids": [
+      "M01",
+      "M02",
+      "M03",
+      "M04"
+    ],
+    "material_count": 4,
+    "pallet_ids": [],
+    "pallet_count": 0
+  },
+  "all": [
+    {
+      "kind": "all_delivered_once",
+      "items": [
+        {
+          "material": "M01",
+          "target": "F1.work"
+        },
+        {
+          "material": "M02",
+          "target": "F1.work"
+        },
+        {
+          "material": "M03",
+          "target": "F1.work"
+        },
+        {
+          "material": "M04",
+          "target": "F1.work"
+        }
+      ],
+      "evidence": "actual_target_handoff_before_external_departure"
+    },
+    {
+      "kind": "required_operations",
+      "recipes": {
+        "welding": {
+          "station": "W1",
+          "evidence": "request_material_recipe_matching_operation_record"
+        }
+      },
+      "rule": "each_job_declared_recipe_or_all_route_recipes"
+    },
+    {
+      "kind": "tools_empty"
+    },
+    {
+      "kind": "drives_stopped"
+    },
+    {
+      "kind": "no_active_requests"
+    },
+    {
+      "kind": "no_pending_jobs"
+    },
+    {
+      "kind": "operations_released"
+    }
+  ]
+}

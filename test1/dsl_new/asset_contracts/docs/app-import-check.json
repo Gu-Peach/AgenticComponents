@@ -1,0 +1,82 @@
+{
+  "checker": "apps/src/domain/normalizeUnifiedDevice.ts",
+  "standard_import_success": 8,
+  "experimental_rejected": true,
+  "results": [
+    {
+      "id": "conveyor",
+      "scope": "standard",
+      "imported": true,
+      "type": "conveyor",
+      "behaviors": 11
+    },
+    {
+      "id": "lift_transport",
+      "scope": "standard",
+      "imported": true,
+      "type": "lift_table",
+      "behaviors": 8
+    },
+    {
+      "id": "material_source",
+      "scope": "standard",
+      "imported": true,
+      "type": "material_source_station",
+      "behaviors": 6
+    },
+    {
+      "id": "robot_arm",
+      "scope": "standard",
+      "imported": true,
+      "type": "robot_arm",
+      "behaviors": 13
+    },
+    {
+      "id": "rotary_table",
+      "scope": "standard",
+      "imported": true,
+      "type": "rotary_table",
+      "behaviors": 7
+    },
+    {
+      "id": "storage_rack",
+      "scope": "standard",
+      "imported": true,
+      "type": "storage_rack",
+      "behaviors": 6
+    },
+    {
+      "id": "material",
+      "scope": "standard",
+      "imported": true,
+      "type": "workpiece",
+      "behaviors": 7
+    },
+    {
+      "id": "pallet",
+      "scope": "standard",
+      "imported": true,
+      "type": "workpiece_carrier",
+      "behaviors": 7
+    },
+    {
+      "id": "processing_station",
+      "scope": "experimental",
+      "imported": false
+    }
+  ],
+  "asset_hashes": {
+    "conveyor.json": "6114e5ead6aeff723abe89539739309e800304a86478dc8527edcc8415b052d6",
+    "lift_transport.json": "3700331d426e5c670002fa2c91d450c2b1adaf9b22e21674eb2fa2adf5d4021d",
+    "material.json": "b58d348b29ec0f1d623db467f0cd85b2609c2808fe43b0e5881d3b902286bc44",
+    "material_source.json": "23fa27b1954ece853c2b3621d3712e98f0f8cf623bea0c254d335fd14dcb6654",
+    "pallet.json": "301e88d995e6b300c77a5598179d34402760e9378df5a27b053ef3a5fd5f0642",
+    "processing_station.json": "d7518574411434b2c9c4c97845b5e772a4008bcbe8a57cb2d1c6642f5ac690ee",
+    "robot_arm.json": "b9303732bfb8cd39c02b1a67aa63d15df56d3c713d7688bfc86626db39e1e047",
+    "rotary_table.json": "bcbccca2ccf94dd0a74fb89fb4f9c13d04621c8bece7dcd74c10caa2738f7b6a",
+    "storage_rack.json": "918c1705bb7a85a6972da70d6e878903f6f95e3b149d70fa17ddf0e63276addb"
+  },
+  "scope": "declaration import only; not execution",
+  "current_validity": "SUPERSEDED_BY_MODEL_CASE_RECHECK",
+  "superseding_report": "current-app-import-check.json"
+}

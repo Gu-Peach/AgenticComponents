@@ -1,0 +1,58 @@
+{
+  "schema_version": "device-spec-catalog/1.0",
+  "assets": [
+    {
+      "id": "conveyor",
+      "path": "assets/conveyor.json",
+      "device_spec_id": "standard.conveyor",
+      "scope": "standard"
+    },
+    {
+      "id": "lift_transport",
+      "path": "assets/lift_transport.json",
+      "device_spec_id": "standard.lift_table",
+      "scope": "standard"
+    },
+    {
+      "id": "material_source",
+      "path": "assets/material_source.json",
+      "device_spec_id": "standard.material_source_station",
+      "scope": "standard"
+    },
+    {
+      "id": "robot_arm",
+      "path": "assets/robot_arm.json",
+      "device_spec_id": "standard.robot_arm",
+      "scope": "standard"
+    },
+    {
+      "id": "rotary_table",
+      "path": "assets/rotary_table.json",
+      "device_spec_id": "standard.rotary_table",
+      "scope": "standard"
+    },
+    {
+      "id": "storage_rack",
+      "path": "assets/storage_rack.json",
+      "device_spec_id": "standard.storage_rack",
+      "scope": "standard"
+    },
+    {
+      "id": "material",
+      "path": "assets/material.json",
+      "device_spec_id": "standard.workpiece",
+      "scope": "standard"
+    },
+    {
+      "id": "pallet",
+      "path": "assets/pallet.json",
+      "device_spec_id": "standard.workpiece_carrier",
+      "scope": "standard"
+    },
+    {
+      "id": "processing_station",
+      "path": "assets/processing_station.json",
+      "scope": "experimental"
+    }
+  ]
+}

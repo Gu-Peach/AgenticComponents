@@ -1,0 +1,119 @@
+{
+  "scope": "declaration and command-payload validation, not execution",
+  "results": [
+    {
+      "id": "conveyor",
+      "scope": "standard",
+      "imported": true,
+      "type": "conveyor",
+      "behaviors": 11
+    },
+    {
+      "id": "lift_transport",
+      "scope": "standard",
+      "imported": true,
+      "type": "lift_table",
+      "behaviors": 8
+    },
+    {
+      "id": "material_source",
+      "scope": "standard",
+      "imported": true,
+      "type": "material_source_station",
+      "behaviors": 6
+    },
+    {
+      "id": "robot_arm",
+      "scope": "standard",
+      "imported": true,
+      "type": "robot_arm",
+      "behaviors": 13
+    },
+    {
+      "id": "rotary_table",
+      "scope": "standard",
+      "imported": true,
+      "type": "rotary_table",
+      "behaviors": 7
+    },
+    {
+      "id": "storage_rack",
+      "scope": "standard",
+      "imported": true,
+      "type": "storage_rack",
+      "behaviors": 6
+    },
+    {
+      "id": "material",
+      "scope": "standard",
+      "imported": true,
+      "type": "workpiece",
+      "behaviors": 7
+    },
+    {
+      "id": "pallet",
+      "scope": "standard",
+      "imported": true,
+      "type": "workpiece_carrier",
+      "behaviors": 7
+    },
+    {
+      "id": "processing_station",
+      "scope": "experimental",
+      "imported": false,
+      "reason": "Experimental asset intentionally outside standard DeviceSpec"
+    },
+    {
+      "id": "robot_UR10",
+      "scope": "concrete_model",
+      "imported": true,
+      "type": "robot_arm",
+      "behaviors": 13
+    },
+    {
+      "id": "Conveyor_aankws",
+      "scope": "concrete_model",
+      "imported": true,
+      "type": "conveyor",
+      "behaviors": 7
+    },
+    {
+      "id": "engine_block",
+      "scope": "concrete_model",
+      "imported": true,
+      "type": "workpiece",
+      "behaviors": 0
+    }
+  ],
+  "payload_checks": [
+    {
+      "id": "move_pose_envelope",
+      "expected": true,
+      "accepted": true
+    },
+    {
+      "id": "wait_as_top_level",
+      "expected": false,
+      "accepted": false
+    },
+    {
+      "id": "wait_as_job_step",
+      "expected": true,
+      "accepted": true
+    },
+    {
+      "id": "invalid_request_id",
+      "expected": false,
+      "accepted": false
+    },
+    {
+      "id": "mismatched_action_step",
+      "expected": false,
+      "accepted": false
+    }
+  ],
+  "entry_point_checks": {
+    "top_level_matches_profile": true,
+    "step_kinds_match_profile": true
+  }
+}

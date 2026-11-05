@@ -1,0 +1,35 @@
+{
+  "language": "ac-declarative/0.3",
+  "example": "S01.pydsl",
+  "inputs": "../../processes/S01",
+  "runtime_ready": false,
+  "required_contract_behaviors": {
+    "robot_arm": [
+      "pick_and_place",
+      "move_to_pose"
+    ],
+    "conveyor": [
+      "move_by_distance",
+      "transport_to_exit",
+      "release_material",
+      "stop_conveying"
+    ]
+  },
+  "proposed_capability_fallback": false,
+  "required_adapters": [
+    "typed robot and conveyor payload adapters",
+    "finite distance motion and braking",
+    "contract condition providers",
+    "automatic collection admission",
+    "identity registry",
+    "automatic independent finalization"
+  ],
+  "geometry_obligations": [
+    "common pitch across entry/station1/station2/exit",
+    "verified braking distance and stop tolerance",
+    "nonconflicting robot workspaces",
+    "capacity for occupied stations and entry/exit transient support"
+  ],
+  "empty_station_policy": "known empty skips item loop; unknown blocks",
+  "note": "No explicit waits. move_by_distance is a canonical pending optional behavior in conveyor 1.1.0; native support must be implemented separately."
+}

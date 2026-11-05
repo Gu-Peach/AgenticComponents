@@ -1,0 +1,79 @@
+{
+  "scope": "control structure and typed calls; not runtime equivalence proof",
+  "records": [
+    {
+      "scene": "S01",
+      "python_sha256": "45d880f131cb134d5c8facb308f2e9cb2f2cea3b08c4ac52eadbf249a089a94b",
+      "legacy_sha256": "552a0a86c34969b173530a24083f0464806e936c56dcc6228294906f641cd0f9",
+      "normalized_control_ir_equal": true,
+      "current_status": "superseded_by_user_confirmed_logistics_correction",
+      "note": "Recorded equality describes the earlier syntax migration only. Current S01 intentionally differs."
+    },
+    {
+      "scene": "S02",
+      "python_sha256": "aa8b2e6df2d94e113458a859f411d5574e6c724288337045609581bf57cb94e4",
+      "legacy_sha256": "e00a9e3dc15d55f81080f78ab47f39f18317d5ddce73f8c0a692b9c8a14cd194",
+      "normalized_control_ir_equal": true
+    },
+    {
+      "scene": "S03",
+      "python_sha256": "ddfe230a515f344335aff9daf32774cddd2882bca5cfac305e914864bbc4d0f7",
+      "legacy_sha256": "e8c4b8449737dcfed6566bfe654201e7a156256834a60912f28719399713b283",
+      "normalized_control_ir_equal": true
+    },
+    {
+      "scene": "S04",
+      "python_sha256": "ee370826f0173e4d3a005fc4eee93c38aa05d15a8ccf9210dee142df34bc326d",
+      "legacy_sha256": "23e44eb493eb7e74aa28f5bc039948821d60f58977b382cac3601a702c87e286",
+      "normalized_control_ir_equal": true
+    },
+    {
+      "scene": "S05",
+      "python_sha256": "53632a29e2a9b3ad4285b81f0e7d7c8d4e3d6048f9be875f879f94ebfe966358",
+      "legacy_sha256": "364767f0cc66345198b48dc3563c83fbf240b8160d4054838ff34f543931f66d",
+      "normalized_control_ir_equal": true
+    },
+    {
+      "scene": "S06",
+      "python_sha256": "571d3ab64107afea71b39e1dde816a8fcb108276b20411daa4c2b63198da27f9",
+      "legacy_sha256": "175a0f9beb17bee0e5d13ac1e6fbf760769b20635e27831b85a6d08fc71fc5a3",
+      "normalized_control_ir_equal": true
+    },
+    {
+      "scene": "S07",
+      "python_sha256": "194b39833406554a8ade30aefad729027bb575e807980b85d169e16d3a64843c",
+      "legacy_sha256": "8965ad10780364c5349af501d9b1b2e892640a7f32d62a0b646d46bbf349e931",
+      "normalized_control_ir_equal": true
+    },
+    {
+      "scene": "S08",
+      "python_sha256": "53ed547f63139b4a0a5802622d6eb946d2166ace120fe6bca16c14ce2a765376",
+      "legacy_sha256": "3234025add8a2143aedfc24c7dc92c5f80d9aa3fd57390726c63c9318cdd9630",
+      "normalized_control_ir_equal": true
+    },
+    {
+      "scene": "S09",
+      "python_sha256": "a5a5df3f294f6f4fb7e258accc78cfb1ba127108ab6ef64a9194653a8efb6e39",
+      "legacy_sha256": "1a9f086a7e814dd167e975c27a520d9f94ad08b30ad673e38d1e0b7700f294cb",
+      "normalized_control_ir_equal": true
+    },
+    {
+      "scene": "S10",
+      "python_sha256": "838d31f1bcad3d3f8107367aab84433ddd20e63b9854547cf2389f775309ddc1",
+      "legacy_sha256": "386511dbc89c3ddb22a2f9dd97f0ecb1f1fed5480a29087ba90fb9c321430aba",
+      "normalized_control_ir_equal": true
+    },
+    {
+      "scene": "S11",
+      "python_sha256": "54cdb07357c0f98eec811b7bec80e221f775efd2f34a12bf88ee09e1b94b35ce",
+      "legacy_sha256": "955655e238aeb9159ffd6b45464a26f1d0973519733ae97fd9e27ae43831e402",
+      "normalized_control_ir_equal": true
+    },
+    {
+      "scene": "S12",
+      "python_sha256": "8c9fbbd953753c11d6a58b98518b67ee0df5dd484689f97b000a50ea83642bbe",
+      "legacy_sha256": "2c816897a8a4481e0b4a1f712a93e9dc4f561199776631f07480028204e20ebb",
+      "normalized_control_ir_equal": true
+    }
+  ]
+}

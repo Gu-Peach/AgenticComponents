@@ -1,0 +1,125 @@
+{
+  "schema_version": "ac-process-catalog/0.4",
+  "scenes": [
+    {
+      "id": "S01",
+      "title": "三托盘分类拆垛与双绿色线出料",
+      "path": "processes/S01",
+      "materials": 12,
+      "pallets": 3,
+      "strategy": "共同分度流水：每拍停稳后R1/R2处理不同托盘，全部退位后统一推进；3盘名义填充/排空需5拍。",
+      "source": "process.py",
+      "language": "ac-declarative/0.1"
+    },
+    {
+      "id": "S02",
+      "title": "六托盘按空闲工位分配、并行拆垛与空盘出线",
+      "path": "processes/S02",
+      "materials": 24,
+      "pallets": 6,
+      "strategy": "三工位批组并行拆垛：显式主线入站→par三个工位→空盘出站；波次间有证据屏障。",
+      "source": "process.py",
+      "language": "ac-declarative/0.1"
+    },
+    {
+      "id": "S03",
+      "title": "六件入环输送与双机械臂出环流水",
+      "path": "processes/S03",
+      "materials": 6,
+      "pallets": 0,
+      "strategy": "三个常驻有限分支并行：上料、中央输送、下料；由物料到位和容量约束衔接。",
+      "source": "process.py",
+      "language": "ac-declarative/0.1"
+    },
+    {
+      "id": "S04",
+      "title": "四件双机械臂双输送带流水交接",
+      "path": "processes/S04",
+      "materials": 4,
+      "pallets": 0,
+      "strategy": "三个常驻有限分支并行：上料、中央输送、下料；由物料到位和容量约束衔接。",
+      "source": "process.py",
+      "language": "ac-declarative/0.1"
+    },
+    {
+      "id": "S05",
+      "title": "四件双机器人去毛刺闭环",
+      "path": "processes/S05",
+      "materials": 4,
+      "pallets": 0,
+      "strategy": "共享进出料线的有界逐件循环，按订单返工标记显式分支；不把等待或额外工序隐含在脚本函数里。",
+      "source": "process.py",
+      "language": "ac-declarative/0.1"
+    },
+    {
+      "id": "S06",
+      "title": "四件分度台批次与前后段流水",
+      "path": "processes/S06",
+      "materials": 4,
+      "pallets": 0,
+      "strategy": "输入输送、转位单元和输出输送并行；转位单元内部按工步串行并确认退位。",
+      "source": "process.py",
+      "language": "ac-declarative/0.1"
+    },
+    {
+      "id": "S07",
+      "title": "四件分层入库后按订单出库",
+      "path": "processes/S07",
+      "materials": 4,
+      "pallets": 0,
+      "strategy": "入库批次形成库存屏障；随后取货与出口输送并行，共享X1的动作由契约仲裁。",
+      "source": "process.py",
+      "language": "ac-declarative/0.1"
+    },
+    {
+      "id": "S08",
+      "title": "四件L形加工工位流水",
+      "path": "processes/S08",
+      "materials": 4,
+      "pallets": 0,
+      "strategy": "入口输送、单机上下料加工、出口输送三个分支并行；单机工步内部顺序执行。",
+      "source": "process.py",
+      "language": "ac-declarative/0.1"
+    },
+    {
+      "id": "S09",
+      "title": "六件双机加工与单机器人互斥服务",
+      "path": "processes/S09",
+      "materials": 6,
+      "pallets": 0,
+      "strategy": "双机加工并行，输入/输出分支并行，R1由契约资源仲裁互斥服务。",
+      "source": "process.py",
+      "language": "ac-declarative/0.1"
+    },
+    {
+      "id": "S10",
+      "title": "三托盘各四件的批次码垛与换盘",
+      "path": "processes/S10",
+      "materials": 12,
+      "pallets": 3,
+      "strategy": "逐盘有限循环、盘内逐件码放、真实换盘确认后进入下一盘。",
+      "source": "process.py",
+      "language": "ac-declarative/0.1"
+    },
+    {
+      "id": "S11",
+      "title": "四件装夹焊接与转位下料",
+      "path": "processes/S11",
+      "materials": 4,
+      "pallets": 0,
+      "strategy": "共用装卸台和回转单元，按有限订单串行完成焊接、转位和下料。",
+      "source": "process.py",
+      "language": "ac-declarative/0.1"
+    },
+    {
+      "id": "S12",
+      "title": "四件双侧加工与转位交接流水",
+      "path": "processes/S12",
+      "materials": 4,
+      "pallets": 0,
+      "strategy": "两侧加工、转位交接、进出料分支并行；同机器人及转台互锁由契约派生。",
+      "source": "process.py",
+      "language": "ac-declarative/0.1"
+    }
+  ]
+}

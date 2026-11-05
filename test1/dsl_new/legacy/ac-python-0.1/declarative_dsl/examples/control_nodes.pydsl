@@ -1,0 +1,16 @@
+# 九种节点的声明语法示例，设备/条件/控制配置均需绑定，design_only。
+with process("control_vocabulary", version="ac-declarative/0.1"):
+    with seq("root"):
+        wait_for("start_permitted", fact("start_permission"), timeout=seconds(30))
+        with repeat("finite_batch", count=batch.item_count):
+            with branch("choose_path", mode="exclusive", timeout=seconds(30)):
+                with case(eq(fact("selected_route"), "parallel")):
+                    with par("two_devices", join="all"):
+                        invoke("left", LeftDevice, "perform_operation", material=task.left)
+                        invoke("right", RightDevice, "perform_operation", material=task.right)
+                with case(eq(fact("selected_route"), "continuous")):
+                    with with_control("drive_scope", Conveyor, control="forward_drive", setpoints={"speed": quantity(0.2, "m/s")}):
+                        wait_for("arrived", fact("material_at_exit", material=task.material), timeout=seconds(30))
+                with otherwise():
+                    fail("unsupported_route", "E_ROUTE")
+            delay("observation_interval", milliseconds(100))

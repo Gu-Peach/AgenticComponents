@@ -1,0 +1,690 @@
+{
+  "schema_version": "asset-contract/0.1",
+  "id": "pallet",
+  "version": "0.1.0",
+  "label": "托盘",
+  "category": "passive",
+  "description": "带有限槽位的被动承载资产；装卸和整体运动由外部执行器执行，容量与交接状态由服务观察。",
+  "implementation_status": "contract_only",
+  "protocol_imports": [
+    "passive_v1"
+  ],
+  "features": [],
+  "instance_requirements": [
+    "载具服务提供槽位和容量事实，但不通过服务调用直接移动物料。",
+    "整托搬运须由外部执行器计入托盘及装载物总质量，并保持选定的承载关系。",
+    "本基线只允许托盘停稳时装卸；移动装卸需要另行声明能力。"
+  ],
+  "parameters": [
+    {
+      "id": "slot_count",
+      "type": "integer",
+      "unit": "1",
+      "description": "实例必须声明同等数量的槽位绑定。",
+      "default": 4,
+      "minimum": 1
+    },
+    {
+      "id": "max_payload_kg",
+      "type": "number",
+      "unit": "kg",
+      "description": "实验总载荷上限。",
+      "default": 20.0,
+      "minimum": 0.001
+    },
+    {
+      "id": "empty_mass_kg",
+      "type": "number",
+      "unit": "kg",
+      "description": "托盘空载质量，整托搬运时计入载荷。",
+      "default": 2.0,
+      "minimum": 0.001
+    }
+  ],
+  "signal_ports": [
+    {
+      "id": "load_count",
+      "type": "integer",
+      "unit": "1",
+      "direction": "output",
+      "retention": "state",
+      "description": "已确认实际装载的物料数量，不包含预留。",
+      "writer": "adapter"
+    },
+    {
+      "id": "reserved_count",
+      "type": "integer",
+      "unit": "1",
+      "direction": "output",
+      "retention": "state",
+      "description": "尚未转为实际占用的有效槽位预留数量。",
+      "writer": "adapter"
+    },
+    {
+      "id": "available_slots",
+      "type": "integer",
+      "unit": "1",
+      "direction": "output",
+      "retention": "state",
+      "description": "扣除实际占用和冲突预留后的可用槽位数量。",
+      "writer": "adapter"
+    },
+    {
+      "id": "actual_load_kg",
+      "type": "number",
+      "unit": "kg",
+      "direction": "output",
+      "retention": "state",
+      "description": "实际装载物料质量之和。",
+      "writer": "adapter"
+    },
+    {
+      "id": "supported",
+      "type": "boolean",
+      "unit": "1",
+      "direction": "output",
+      "retention": "state",
+      "description": "托盘当前具有有效支承。",
+      "writer": "adapter"
+    },
+    {
+      "id": "moving",
+      "type": "boolean",
+      "unit": "1",
+      "direction": "output",
+      "retention": "state",
+      "description": "托盘当前实际运动状态，由世界观测投影。",
+      "writer": "adapter"
+    }
+  ],
+  "observations": [
+    {
+      "id": "slot_exists",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "occupancy_service",
+      "description": "指定槽位属于本托盘且已经登记。",
+      "arguments": [
+        "slot"
+      ],
+      "argument_types": {
+        "slot": "slot_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "load_compatible",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "occupancy_service",
+      "description": "指定物料类型及包络适合该槽位；被动载具的支承条件已经定义。",
+      "arguments": [
+        "material",
+        "slot"
+      ],
+      "argument_types": {
+        "material": "material_ref",
+        "slot": "slot_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "slot_receive_ready",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "occupancy_service",
+      "description": "该槽位没有实际占用，且无冲突预留；启用预留时预留须属于当前外部交接任务。",
+      "arguments": [
+        "material",
+        "slot"
+      ],
+      "argument_types": {
+        "material": "material_ref",
+        "slot": "slot_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "load_after_kg",
+      "type": "number",
+      "unit": "kg",
+      "provider": "occupancy_service",
+      "description": "将指定物料加入后的总载荷，包含已装载物料和其他有效载荷预留且不重复计算本物料。",
+      "arguments": [
+        "material"
+      ],
+      "argument_types": {
+        "material": "material_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "placement_confirmed",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "world_observer",
+      "description": "指定物料实际位于指定槽位并获得有效支承，不能仅由容量账本推断。",
+      "arguments": [
+        "material",
+        "slot"
+      ],
+      "argument_types": {
+        "material": "material_ref",
+        "slot": "slot_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "load_committed",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "handoff_service",
+      "description": "当前外部交接已提交，指定物料、槽位的实际支承和业务归属一致；重复确认不重复计数。",
+      "arguments": [
+        "material",
+        "slot"
+      ],
+      "argument_types": {
+        "material": "material_ref",
+        "slot": "slot_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "slot_holds_material",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "occupancy_service",
+      "description": "指定槽位当前登记指定物料，且该登记具有世界观测依据。",
+      "arguments": [
+        "material",
+        "slot"
+      ],
+      "argument_types": {
+        "material": "material_ref",
+        "slot": "slot_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "removal_confirmed",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "world_observer",
+      "description": "指定物料已实际离开指定槽位，不能通过发出取料命令提前置真。",
+      "arguments": [
+        "material",
+        "slot"
+      ],
+      "argument_types": {
+        "material": "material_ref",
+        "slot": "slot_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "receiver_confirmed",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "handoff_service",
+      "description": "指定物料已由指定目标接收方确认接收，证据属于当前外部交接。",
+      "arguments": [
+        "material",
+        "target"
+      ],
+      "argument_types": {
+        "material": "material_ref",
+        "target": "location_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "unload_committed",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "occupancy_service",
+      "description": "指定物料从指定槽位的卸载已提交，槽位与装载计数只更新一次。",
+      "arguments": [
+        "material",
+        "slot"
+      ],
+      "argument_types": {
+        "material": "material_ref",
+        "slot": "slot_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "inventory_consistent",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "occupancy_service",
+      "description": "槽位占用、预留、实际物料和载荷统计一致；未知或交接异常时不默认为真。",
+      "arguments": [],
+      "argument_types": {},
+      "validity": "fresh_valid_same_run"
+    }
+  ],
+  "authorizations": [
+    {
+      "id": "load_allowed",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "resource_service",
+      "description": "当前外部交接任务获准将指定物料放入指定槽位。",
+      "arguments": [
+        "material",
+        "slot"
+      ],
+      "argument_types": {
+        "material": "material_ref",
+        "slot": "slot_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "unload_allowed",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "resource_service",
+      "description": "当前外部交接任务获准将指定物料从该槽位交给指定目标。",
+      "arguments": [
+        "material",
+        "slot",
+        "target"
+      ],
+      "argument_types": {
+        "material": "material_ref",
+        "slot": "slot_ref",
+        "target": "location_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    }
+  ],
+  "spatial_interfaces": [
+    {
+      "id": "carrier_support",
+      "role": "support",
+      "geometry_binding": "required_per_instance",
+      "requires_features": [],
+      "description": "托盘自身与外部承载面的支承参考。"
+    },
+    {
+      "id": "slot_supports",
+      "role": "support",
+      "geometry_binding": "required_per_instance",
+      "requires_features": [],
+      "description": "槽位支承区域族，实例按 slot_count 显式绑定。"
+    }
+  ],
+  "behaviors": [
+    {
+      "id": "receive_load",
+      "label": "观察装载交接",
+      "kind": "passive",
+      "invocable": false,
+      "protocol": "passive_v1",
+      "executor_ref": "observer.pallet.receive_load@0.1",
+      "requires_features": [],
+      "arguments": [
+        {
+          "id": "material",
+          "type": "material_ref",
+          "unit": "1",
+          "description": "本次外部装卸操作的物料身份。"
+        },
+        {
+          "id": "slot",
+          "type": "slot_ref",
+          "unit": "1",
+          "description": "本托盘内的稳定槽位引用。"
+        }
+      ],
+      "command_bindings": [],
+      "preconditions": [
+        {
+          "id": "carrier_supported",
+          "left": {
+            "source": "signal",
+            "ref": "supported"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "carrier_stopped",
+          "left": {
+            "source": "signal",
+            "ref": "moving"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": false
+          }
+        },
+        {
+          "id": "slot_exists",
+          "left": {
+            "source": "observation",
+            "ref": "slot_exists",
+            "bindings": {
+              "slot": "slot"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "load_compatible",
+          "left": {
+            "source": "observation",
+            "ref": "load_compatible",
+            "bindings": {
+              "material": "material",
+              "slot": "slot"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "slot_receive_ready",
+          "left": {
+            "source": "observation",
+            "ref": "slot_receive_ready",
+            "bindings": {
+              "material": "material",
+              "slot": "slot"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "payload_within_limit",
+          "left": {
+            "source": "observation",
+            "ref": "load_after_kg",
+            "bindings": {
+              "material": "material"
+            }
+          },
+          "operator": "le",
+          "right": {
+            "source": "parameter",
+            "ref": "max_payload_kg"
+          }
+        },
+        {
+          "id": "load_allowed",
+          "left": {
+            "source": "authorization",
+            "ref": "load_allowed",
+            "bindings": {
+              "material": "material",
+              "slot": "slot"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        }
+      ],
+      "sustaining_conditions": [
+        {
+          "id": "carrier_still_stopped",
+          "left": {
+            "source": "signal",
+            "ref": "moving"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": false
+          }
+        }
+      ],
+      "completion": {
+        "mode": "evidence",
+        "checks": [
+          {
+            "id": "placement_confirmed",
+            "left": {
+              "source": "observation",
+              "ref": "placement_confirmed",
+              "bindings": {
+                "material": "material",
+                "slot": "slot"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "load_committed",
+            "left": {
+              "source": "observation",
+              "ref": "load_committed",
+              "bindings": {
+                "material": "material",
+                "slot": "slot"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          }
+        ],
+        "description": "装载由外部机器人或运输设备执行；本契约仅规定接收和完成证据。"
+      },
+      "expected_effects": [
+        "世界确认实际放置后，载具服务将该物料的预留转为占用。"
+      ],
+      "failure_policy": "report_inconsistent_observation"
+    },
+    {
+      "id": "release_load",
+      "label": "观察卸载交接",
+      "kind": "passive",
+      "invocable": false,
+      "protocol": "passive_v1",
+      "executor_ref": "observer.pallet.release_load@0.1",
+      "requires_features": [],
+      "arguments": [
+        {
+          "id": "material",
+          "type": "material_ref",
+          "unit": "1",
+          "description": "本次外部装卸操作的物料身份。"
+        },
+        {
+          "id": "slot",
+          "type": "slot_ref",
+          "unit": "1",
+          "description": "本托盘内的稳定槽位引用。"
+        },
+        {
+          "id": "target",
+          "type": "location_ref",
+          "unit": "1",
+          "description": "外部卸载操作的接收位置。"
+        }
+      ],
+      "command_bindings": [],
+      "preconditions": [
+        {
+          "id": "carrier_stopped",
+          "left": {
+            "source": "signal",
+            "ref": "moving"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": false
+          }
+        },
+        {
+          "id": "slot_holds_material",
+          "left": {
+            "source": "observation",
+            "ref": "slot_holds_material",
+            "bindings": {
+              "material": "material",
+              "slot": "slot"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "unload_allowed",
+          "left": {
+            "source": "authorization",
+            "ref": "unload_allowed",
+            "bindings": {
+              "material": "material",
+              "slot": "slot",
+              "target": "target"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        }
+      ],
+      "sustaining_conditions": [
+        {
+          "id": "carrier_still_stopped",
+          "left": {
+            "source": "signal",
+            "ref": "moving"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": false
+          }
+        }
+      ],
+      "completion": {
+        "mode": "evidence",
+        "checks": [
+          {
+            "id": "removal_confirmed",
+            "left": {
+              "source": "observation",
+              "ref": "removal_confirmed",
+              "bindings": {
+                "material": "material",
+                "slot": "slot"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "receiver_confirmed",
+            "left": {
+              "source": "observation",
+              "ref": "receiver_confirmed",
+              "bindings": {
+                "material": "material",
+                "target": "target"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "unload_committed",
+            "left": {
+              "source": "observation",
+              "ref": "unload_committed",
+              "bindings": {
+                "material": "material",
+                "slot": "slot"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          }
+        ],
+        "description": "只在实际卸载与接收方确认后成立，没有托盘自主释放运动。"
+      },
+      "expected_effects": [
+        "实际取走并完成接收后，载具服务释放槽位；不会由取消预留删除实际物料。"
+      ],
+      "failure_policy": "report_inconsistent_observation"
+    },
+    {
+      "id": "observe_inventory",
+      "label": "观察载具状态",
+      "kind": "observer",
+      "invocable": false,
+      "protocol": "passive_v1",
+      "executor_ref": "observer.pallet.observe_inventory@0.1",
+      "requires_features": [],
+      "arguments": [],
+      "command_bindings": [],
+      "preconditions": [],
+      "sustaining_conditions": [],
+      "completion": {
+        "mode": "evidence",
+        "checks": [
+          {
+            "id": "inventory_consistent",
+            "left": {
+              "source": "observation",
+              "ref": "inventory_consistent"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          }
+        ],
+        "description": "这是当前观测检查，不是装卸任务或预留命令。"
+      },
+      "expected_effects": [
+        "提供由世界与载具服务投影的当前装载状态。"
+      ],
+      "failure_policy": "report_inconsistent_observation"
+    }
+  ]
+}

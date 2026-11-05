@@ -1,0 +1,49 @@
+; 六件入环输送与双机械臂出环流水
+; 最多2件在途，入口、环线和出口分别互锁；环线单次沿允许方向到交接点。
+(process "ac-flow/0.2" S03
+  (sequence
+    (parallel-for jobs job 2
+      (sequence
+        (await input_present $job.material $job.input 1800 tick)
+        (with-resources
+          (IN)
+          (sequence
+            (invoke op_010 IN transport_to_exit
+              (arg material $job.material)
+              (arg speed_mps 0.2 m/s))))
+        (await target_available LOOP.entry 1800 tick)
+        (with-resources
+          (R1 IN LOOP)
+          (sequence
+            (sequence
+              (invoke op_011 R1 transfer_material
+                (arg material $job.material)
+                (arg source IN.exit)
+                (arg target LOOP.entry))
+              (invoke op_012 R1 move_to_location
+                (arg target R1.home)))))
+        (with-resources
+          (LOOP)
+          (sequence
+            (invoke op_013 LOOP transport_to_exit
+              (arg material $job.material)
+              (arg speed_mps 0.2 m/s))))
+        (await target_available OUT.entry 1800 tick)
+        (with-resources
+          (R2 LOOP OUT)
+          (sequence
+            (sequence
+              (invoke op_014 R2 transfer_material
+                (arg material $job.material)
+                (arg source LOOP.exit)
+                (arg target OUT.entry))
+              (invoke op_015 R2 move_to_location
+                (arg target R2.home)))))
+        (with-resources
+          (OUT)
+          (sequence
+            (invoke op_016 OUT transport_to_exit
+              (arg material $job.material)
+              (arg speed_mps 0.2 m/s))))
+        (await output_departed $job.material OUT 1800 tick)))
+    (verify batch_goal)))

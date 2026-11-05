@@ -1,0 +1,523 @@
+{
+  "schema_version": "asset-contract/0.1",
+  "id": "rotary_table",
+  "version": "0.1.0",
+  "label": "旋转台",
+  "category": "active",
+  "description": "有限角度定位与被动承载的统一转台契约；工位编号由场景绑定到标定角度。",
+  "implementation_status": "contract_only",
+  "protocol_imports": [
+    "passive_v1",
+    "request_v1"
+  ],
+  "features": [],
+  "instance_requirements": [
+    "min_angle_rad 必须小于或等于 max_angle_rad。",
+    "每个场景工位有明确的角度和槽位绑定，角度使用 rad。",
+    "转位许可与机械臂/加工占用冲突由 resource_service 统一判定。",
+    "observe_slot 使用被动观测语义，不读 request_v1 的成功结果。"
+  ],
+  "parameters": [
+    {
+      "id": "min_angle_rad",
+      "type": "number",
+      "unit": "rad",
+      "description": "有限转位区间下界，使用实例的展开角坐标。",
+      "default": 0.0
+    },
+    {
+      "id": "max_angle_rad",
+      "type": "number",
+      "unit": "rad",
+      "description": "有限转位区间上界；不默认无限旋转或跨零取最短路。",
+      "default": 6.283185307179586
+    },
+    {
+      "id": "angular_speed_rad_s",
+      "type": "number",
+      "unit": "rad/s",
+      "description": "本次定位的角速度上限。",
+      "default": 0.3,
+      "minimum": 0.001
+    },
+    {
+      "id": "angle_tolerance_rad",
+      "type": "number",
+      "unit": "rad",
+      "description": "实际展开角度与冻结目标的绝对误差容差。",
+      "default": 0.005,
+      "minimum": 1e-06
+    },
+    {
+      "id": "settle_speed_rad_s",
+      "type": "number",
+      "unit": "rad/s",
+      "description": "实际角速度绝对值的停稳容差。",
+      "default": 0.001,
+      "minimum": 0.0
+    },
+    {
+      "id": "max_payload_kg",
+      "type": "number",
+      "unit": "kg",
+      "description": "台面实际总承载质量上限。",
+      "default": 50.0,
+      "minimum": 0.001
+    }
+  ],
+  "signal_ports": [
+    {
+      "id": "target_angle",
+      "type": "number",
+      "unit": "rad",
+      "direction": "input",
+      "retention": "state",
+      "description": "本次定位目标的展开角度；接受时冻结。",
+      "writer": "controller"
+    },
+    {
+      "id": "angular_speed",
+      "type": "number",
+      "unit": "rad/s",
+      "direction": "input",
+      "retention": "state",
+      "description": "本次转位角速度上限。",
+      "writer": "controller"
+    },
+    {
+      "id": "actual_angle",
+      "type": "number",
+      "unit": "rad",
+      "direction": "output",
+      "retention": "state",
+      "description": "实例角度基准中的实际展开角度。",
+      "writer": "adapter"
+    },
+    {
+      "id": "angle_error",
+      "type": "number",
+      "unit": "rad",
+      "direction": "output",
+      "retention": "state",
+      "description": "实际展开角度与本次目标的绝对误差。",
+      "writer": "adapter"
+    },
+    {
+      "id": "absolute_angular_speed",
+      "type": "number",
+      "unit": "rad/s",
+      "direction": "output",
+      "retention": "state",
+      "description": "实际角速度绝对值。",
+      "writer": "adapter"
+    },
+    {
+      "id": "load_secured",
+      "type": "boolean",
+      "unit": "1",
+      "direction": "output",
+      "retention": "state",
+      "description": "台面所有物料受约束；空载时按明确空载规则为真。",
+      "writer": "adapter"
+    },
+    {
+      "id": "transfer_zone_clear",
+      "type": "boolean",
+      "unit": "1",
+      "direction": "output",
+      "retention": "state",
+      "description": "机械臂、输送交接和加工执行部件均已退出转位运动区。",
+      "writer": "adapter"
+    }
+  ],
+  "observations": [
+    {
+      "id": "total_load_mass",
+      "type": "number",
+      "unit": "kg",
+      "provider": "world_observer",
+      "description": "当前台面实际承载总质量。",
+      "arguments": [],
+      "argument_types": {},
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "load_pose_consistent",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "world_observer",
+      "description": "台面全部物料的实际支承/约束保持，转位过程未造成物料丢失。",
+      "arguments": [],
+      "argument_types": {},
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "slot_contains",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "occupancy_service",
+      "description": "指定槽位当前包含指定物料，来源为真实到位及交接记录。",
+      "arguments": [
+        "slot",
+        "material"
+      ],
+      "argument_types": {
+        "slot": "slot_ref",
+        "material": "material_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    }
+  ],
+  "authorizations": [
+    {
+      "id": "operation_allowed",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "resource_service",
+      "description": "当前实例、行为和请求的操作许可；仅在资源实际授予后为真。",
+      "arguments": [],
+      "argument_types": {},
+      "validity": "fresh_valid_same_run"
+    }
+  ],
+  "spatial_interfaces": [
+    {
+      "id": "base_mount",
+      "role": "mount",
+      "geometry_binding": "required_per_instance",
+      "requires_features": [],
+      "description": "固定安装基准及旋转轴参考。"
+    },
+    {
+      "id": "table_surface",
+      "role": "support",
+      "geometry_binding": "required_per_instance",
+      "requires_features": [],
+      "description": "旋转承载面及其槽位坐标系。"
+    },
+    {
+      "id": "handoff_frame",
+      "role": "process",
+      "geometry_binding": "required_per_instance",
+      "requires_features": [],
+      "description": "停稳对齐后使用的交接基准。"
+    }
+  ],
+  "behaviors": [
+    {
+      "id": "index_to_angle",
+      "label": "转位到指定角度",
+      "kind": "action",
+      "invocable": true,
+      "protocol": "request_v1",
+      "executor_ref": "adapter.rotary_table.index_to_angle@0.1",
+      "requires_features": [],
+      "arguments": [
+        {
+          "id": "angle",
+          "type": "number",
+          "unit": "rad",
+          "description": "展开角坐标下的目标角度。"
+        }
+      ],
+      "command_bindings": [
+        {
+          "signal": "command_code",
+          "value": {
+            "source": "literal",
+            "value": 1
+          }
+        },
+        {
+          "signal": "target_angle",
+          "value": {
+            "source": "argument",
+            "ref": "angle"
+          }
+        },
+        {
+          "signal": "angular_speed",
+          "value": {
+            "source": "parameter",
+            "ref": "angular_speed_rad_s"
+          }
+        }
+      ],
+      "preconditions": [
+        {
+          "id": "device_idle",
+          "left": {
+            "source": "signal",
+            "ref": "busy"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": false
+          }
+        },
+        {
+          "id": "device_healthy",
+          "left": {
+            "source": "signal",
+            "ref": "error"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": false
+          }
+        },
+        {
+          "id": "enabled",
+          "left": {
+            "source": "signal",
+            "ref": "enable"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "operation_authorized",
+          "left": {
+            "source": "authorization",
+            "ref": "operation_allowed"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "load_is_secured",
+          "left": {
+            "source": "signal",
+            "ref": "load_secured"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "handoff_zone_clear",
+          "left": {
+            "source": "signal",
+            "ref": "transfer_zone_clear"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "payload_within_limit",
+          "left": {
+            "source": "observation",
+            "ref": "total_load_mass"
+          },
+          "operator": "le",
+          "right": {
+            "source": "parameter",
+            "ref": "max_payload_kg"
+          }
+        },
+        {
+          "id": "above_lower_limit",
+          "left": {
+            "source": "argument",
+            "ref": "angle"
+          },
+          "operator": "ge",
+          "right": {
+            "source": "parameter",
+            "ref": "min_angle_rad"
+          }
+        },
+        {
+          "id": "below_upper_limit",
+          "left": {
+            "source": "argument",
+            "ref": "angle"
+          },
+          "operator": "le",
+          "right": {
+            "source": "parameter",
+            "ref": "max_angle_rad"
+          }
+        }
+      ],
+      "sustaining_conditions": [
+        {
+          "id": "enabled",
+          "left": {
+            "source": "signal",
+            "ref": "enable"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "operation_authorized",
+          "left": {
+            "source": "authorization",
+            "ref": "operation_allowed"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "load_remains_secured",
+          "left": {
+            "source": "signal",
+            "ref": "load_secured"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "handoff_zone_remains_clear",
+          "left": {
+            "source": "signal",
+            "ref": "transfer_zone_clear"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        }
+      ],
+      "completion": {
+        "mode": "evidence",
+        "checks": [
+          {
+            "id": "angle_reached",
+            "left": {
+              "source": "signal",
+              "ref": "angle_error"
+            },
+            "operator": "le",
+            "right": {
+              "source": "parameter",
+              "ref": "angle_tolerance_rad"
+            }
+          },
+          {
+            "id": "velocity_settled",
+            "left": {
+              "source": "signal",
+              "ref": "absolute_angular_speed"
+            },
+            "operator": "le",
+            "right": {
+              "source": "parameter",
+              "ref": "settle_speed_rad_s"
+            }
+          },
+          {
+            "id": "actual_motion_stopped",
+            "left": {
+              "source": "signal",
+              "ref": "stopped"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "load_retained",
+            "left": {
+              "source": "observation",
+              "ref": "load_pose_consistent"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          }
+        ],
+        "description": "本次请求的目标角度、实际角速度与载荷保持全部满足；busy=false 不是完成依据。"
+      },
+      "expected_effects": [
+        "台面与已约束物料共同转位；转位完成不更改物料业务归属或自动进行加工。"
+      ],
+      "failure_policy": "preserve_observed_state_and_report"
+    },
+    {
+      "id": "observe_slot",
+      "label": "观察台面槽位物料",
+      "kind": "observer",
+      "invocable": false,
+      "protocol": "passive_v1",
+      "executor_ref": "observer.rotary_table.observe_slot@0.1",
+      "requires_features": [],
+      "arguments": [
+        {
+          "id": "slot",
+          "type": "slot_ref",
+          "unit": "1",
+          "description": "当前转台中已登记的槽位。"
+        },
+        {
+          "id": "material",
+          "type": "material_ref",
+          "unit": "1",
+          "description": "待确认的物料。"
+        }
+      ],
+      "command_bindings": [],
+      "preconditions": [],
+      "sustaining_conditions": [],
+      "completion": {
+        "mode": "evidence",
+        "checks": [
+          {
+            "id": "requested_material_present",
+            "left": {
+              "source": "observation",
+              "ref": "slot_contains",
+              "bindings": {
+                "slot": "slot",
+                "material": "material"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          }
+        ],
+        "description": "查询指定槽位的事实，不是可调度动作；不会启动旋转、生成任务或改写占用。"
+      },
+      "expected_effects": [],
+      "failure_policy": "report_inconsistent_observation"
+    }
+  ],
+  "configuration_constraints": [
+    {
+      "kind": "parameter_le",
+      "left": "min_angle_rad",
+      "right": "max_angle_rad"
+    }
+  ]
+}

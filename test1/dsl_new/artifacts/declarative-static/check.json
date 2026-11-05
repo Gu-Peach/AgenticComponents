@@ -1,0 +1,448 @@
+{
+  "scope": "static declarations and interface checks, not execution",
+  "results": [
+    {
+      "scene": "S01",
+      "language": "ac-declarative/0.1",
+      "declaration_valid": true,
+      "interface_checks": 37,
+      "operators": [
+        "await",
+        "invoke",
+        "par",
+        "repeat",
+        "seq"
+      ],
+      "parallel_nodes": [
+        {
+          "node": "station_work_021",
+          "branches": 2,
+          "shared_devices": []
+        }
+      ],
+      "executable": false,
+      "blockers": [
+        "actual_device_feedback_pending",
+        "adapter:C1",
+        "adapter:C2",
+        "adapter:C3",
+        "adapter:R1",
+        "adapter:R2",
+        "dynamic_station_inventory_snapshot",
+        "fact_provider:batch_goal_satisfied",
+        "fact_provider:line_ready_to_index",
+        "fact_provider:output_departed",
+        "fact_provider:station_inventory_valid",
+        "proposed_capability:conveyor.advance_pitch",
+        "resource_and_capacity_services_pending",
+        "runtime_not_implemented"
+      ],
+      "scope": "static syntax/types/interfaces; not physical or all-interleaving verification"
+    },
+    {
+      "scene": "S02",
+      "language": "ac-declarative/0.1",
+      "declaration_valid": true,
+      "interface_checks": 436,
+      "operators": [
+        "await",
+        "invoke",
+        "par",
+        "repeat",
+        "seq"
+      ],
+      "parallel_nodes": [
+        {
+          "node": "unload_wave_055",
+          "branches": 3,
+          "shared_devices": []
+        },
+        {
+          "node": "unload_wave_055",
+          "branches": 3,
+          "shared_devices": []
+        }
+      ],
+      "executable": false,
+      "blockers": [
+        "actual_device_feedback_pending",
+        "adapter:C1",
+        "adapter:C2",
+        "adapter:C3",
+        "adapter:C4",
+        "adapter:R1",
+        "adapter:R2",
+        "adapter:R3",
+        "dynamic_station_inventory_snapshot",
+        "fact_provider:batch_goal_satisfied",
+        "fact_provider:carriers_departed",
+        "fact_provider:line_ready_to_index",
+        "fact_provider:output_departed",
+        "fact_provider:station_inventory_valid",
+        "fact_provider:wave_empty_and_clear",
+        "motion_plan_feasibility_and_identity_registry",
+        "resource_and_capacity_services_pending",
+        "runtime_not_implemented"
+      ],
+      "scope": "static syntax/types/interfaces; not physical or all-interleaving verification"
+    },
+    {
+      "scene": "S03",
+      "language": "ac-declarative/0.1",
+      "declaration_valid": true,
+      "interface_checks": 42,
+      "operators": [
+        "await",
+        "invoke",
+        "par",
+        "repeat",
+        "seq"
+      ],
+      "parallel_nodes": [
+        {
+          "node": "pipeline_082",
+          "branches": 3,
+          "shared_devices": []
+        }
+      ],
+      "executable": false,
+      "blockers": [
+        "actual_device_feedback_pending",
+        "adapter:IN",
+        "adapter:LOOP",
+        "adapter:OUT",
+        "adapter:R1",
+        "adapter:R2",
+        "fact_provider:batch_goal_satisfied",
+        "fact_provider:input_present",
+        "fact_provider:material_at",
+        "fact_provider:output_departed",
+        "resource_and_capacity_services_pending",
+        "runtime_not_implemented"
+      ],
+      "scope": "static syntax/types/interfaces; not physical or all-interleaving verification"
+    },
+    {
+      "scene": "S04",
+      "language": "ac-declarative/0.1",
+      "declaration_valid": true,
+      "interface_checks": 24,
+      "operators": [
+        "await",
+        "invoke",
+        "par",
+        "repeat",
+        "seq"
+      ],
+      "parallel_nodes": [
+        {
+          "node": "pipeline_103",
+          "branches": 3,
+          "shared_devices": []
+        }
+      ],
+      "executable": false,
+      "blockers": [
+        "actual_device_feedback_pending",
+        "adapter:C1",
+        "adapter:C2",
+        "adapter:R1",
+        "adapter:R2",
+        "fact_provider:batch_goal_satisfied",
+        "fact_provider:input_present",
+        "fact_provider:material_at",
+        "fact_provider:output_departed",
+        "resource_and_capacity_services_pending",
+        "runtime_not_implemented"
+      ],
+      "scope": "static syntax/types/interfaces; not physical or all-interleaving verification"
+    },
+    {
+      "scene": "S05",
+      "language": "ac-declarative/0.1",
+      "declaration_valid": true,
+      "interface_checks": 48,
+      "operators": [
+        "await",
+        "branch",
+        "delay",
+        "invoke",
+        "repeat",
+        "seq"
+      ],
+      "parallel_nodes": [],
+      "executable": false,
+      "blockers": [
+        "actual_device_feedback_pending",
+        "adapter:C1",
+        "adapter:D1",
+        "adapter:R1",
+        "adapter:R2",
+        "fact_provider:batch_goal_satisfied",
+        "fact_provider:input_present",
+        "fact_provider:output_departed",
+        "resource_and_capacity_services_pending",
+        "runtime_not_implemented"
+      ],
+      "scope": "static syntax/types/interfaces; not physical or all-interleaving verification"
+    },
+    {
+      "scene": "S06",
+      "language": "ac-declarative/0.1",
+      "declaration_valid": true,
+      "interface_checks": 32,
+      "operators": [
+        "await",
+        "invoke",
+        "par",
+        "repeat",
+        "seq"
+      ],
+      "parallel_nodes": [
+        {
+          "node": "table_pipeline_149",
+          "branches": 3,
+          "shared_devices": []
+        }
+      ],
+      "executable": false,
+      "blockers": [
+        "actual_device_feedback_pending",
+        "adapter:C1",
+        "adapter:C3",
+        "adapter:R1",
+        "adapter:R2",
+        "adapter:T1",
+        "fact_provider:batch_goal_satisfied",
+        "fact_provider:input_present",
+        "fact_provider:material_at",
+        "fact_provider:output_departed",
+        "resource_and_capacity_services_pending",
+        "runtime_not_implemented"
+      ],
+      "scope": "static syntax/types/interfaces; not physical or all-interleaving verification"
+    },
+    {
+      "scene": "S07",
+      "language": "ac-declarative/0.1",
+      "declaration_valid": true,
+      "interface_checks": 60,
+      "operators": [
+        "await",
+        "invoke",
+        "par",
+        "repeat",
+        "seq"
+      ],
+      "parallel_nodes": [
+        {
+          "node": "retrieve_and_outfeed_181",
+          "branches": 2,
+          "shared_devices": []
+        }
+      ],
+      "executable": false,
+      "blockers": [
+        "actual_device_feedback_pending",
+        "adapter:C1",
+        "adapter:C2",
+        "adapter:L1",
+        "adapter:L2",
+        "adapter:X1",
+        "fact_provider:batch_goal_satisfied",
+        "fact_provider:input_present",
+        "fact_provider:inventory_stored",
+        "fact_provider:material_at",
+        "fact_provider:output_departed",
+        "resource_and_capacity_services_pending",
+        "runtime_not_implemented"
+      ],
+      "scope": "static syntax/types/interfaces; not physical or all-interleaving verification"
+    },
+    {
+      "scene": "S08",
+      "language": "ac-declarative/0.1",
+      "declaration_valid": true,
+      "interface_checks": 36,
+      "operators": [
+        "await",
+        "invoke",
+        "par",
+        "repeat",
+        "seq"
+      ],
+      "parallel_nodes": [
+        {
+          "node": "machining_pipeline_207",
+          "branches": 3,
+          "shared_devices": []
+        }
+      ],
+      "executable": false,
+      "blockers": [
+        "actual_device_feedback_pending",
+        "adapter:C1",
+        "adapter:C2",
+        "adapter:MC1",
+        "adapter:R1",
+        "fact_provider:batch_goal_satisfied",
+        "fact_provider:input_present",
+        "fact_provider:material_at",
+        "fact_provider:output_departed",
+        "resource_and_capacity_services_pending",
+        "runtime_not_implemented"
+      ],
+      "scope": "static syntax/types/interfaces; not physical or all-interleaving verification"
+    },
+    {
+      "scene": "S09",
+      "language": "ac-declarative/0.1",
+      "declaration_valid": true,
+      "interface_checks": 54,
+      "operators": [
+        "await",
+        "invoke",
+        "par",
+        "repeat",
+        "seq"
+      ],
+      "parallel_nodes": [
+        {
+          "node": "dual_machine_244",
+          "branches": 3,
+          "shared_devices": [
+            "C2",
+            "R1"
+          ]
+        }
+      ],
+      "executable": false,
+      "blockers": [
+        "actual_device_feedback_pending",
+        "adapter:C1",
+        "adapter:C2",
+        "adapter:MC1",
+        "adapter:MC2",
+        "adapter:R1",
+        "fact_provider:batch_goal_satisfied",
+        "fact_provider:input_present",
+        "fact_provider:material_at",
+        "fact_provider:output_departed",
+        "resource_and_capacity_services_pending",
+        "runtime_not_implemented"
+      ],
+      "scope": "static syntax/types/interfaces; not physical or all-interleaving verification"
+    },
+    {
+      "scene": "S10",
+      "language": "ac-declarative/0.1",
+      "declaration_valid": true,
+      "interface_checks": 36,
+      "operators": [
+        "await",
+        "invoke",
+        "repeat",
+        "seq"
+      ],
+      "parallel_nodes": [],
+      "executable": false,
+      "blockers": [
+        "actual_device_feedback_pending",
+        "adapter:C1",
+        "adapter:R1",
+        "fact_provider:batch_goal_satisfied",
+        "fact_provider:empty_pallet_present",
+        "fact_provider:full_pallet_departed",
+        "fact_provider:input_present",
+        "resource_and_capacity_services_pending",
+        "runtime_not_implemented"
+      ],
+      "scope": "static syntax/types/interfaces; not physical or all-interleaving verification"
+    },
+    {
+      "scene": "S11",
+      "language": "ac-declarative/0.1",
+      "declaration_valid": true,
+      "interface_checks": 44,
+      "operators": [
+        "await",
+        "invoke",
+        "repeat",
+        "seq"
+      ],
+      "parallel_nodes": [],
+      "executable": false,
+      "blockers": [
+        "actual_device_feedback_pending",
+        "adapter:R1",
+        "adapter:T1",
+        "adapter:W1",
+        "fact_provider:batch_goal_satisfied",
+        "fact_provider:input_present",
+        "fact_provider:output_departed",
+        "resource_and_capacity_services_pending",
+        "runtime_not_implemented"
+      ],
+      "scope": "static syntax/types/interfaces; not physical or all-interleaving verification"
+    },
+    {
+      "scene": "S12",
+      "language": "ac-declarative/0.1",
+      "declaration_valid": true,
+      "interface_checks": 72,
+      "operators": [
+        "await",
+        "invoke",
+        "par",
+        "repeat",
+        "seq"
+      ],
+      "parallel_nodes": [
+        {
+          "node": "two_sided_pipeline_322",
+          "branches": 5,
+          "shared_devices": [
+            "R1",
+            "R2"
+          ]
+        }
+      ],
+      "executable": false,
+      "blockers": [
+        "actual_device_feedback_pending",
+        "adapter:C1",
+        "adapter:C2",
+        "adapter:PS1",
+        "adapter:PS2",
+        "adapter:R1",
+        "adapter:R2",
+        "adapter:T1",
+        "fact_provider:batch_goal_satisfied",
+        "fact_provider:input_present",
+        "fact_provider:material_at",
+        "fact_provider:operation_completed",
+        "fact_provider:output_departed",
+        "fact_provider:subject_unclamped",
+        "resource_and_capacity_services_pending",
+        "runtime_not_implemented"
+      ],
+      "scope": "static syntax/types/interfaces; not physical or all-interleaving verification"
+    }
+  ],
+  "sources": {
+    "processes\\S01\\process.py": "a8bb7b1c38f59388f1a2313fbe0b9a135f3bbba19012dc3de37759fcc62ebd27",
+    "processes\\S02\\process.py": "c13d90de2e19020d67e0eaa1c98cc4ad30ff4c19f358e935a6f2a6049bb6a39a",
+    "processes\\S03\\process.py": "919b465fd9cc2750fdfc8c226da99d7cf5c8d6929a2d7abca6c62e59a7b50b38",
+    "processes\\S04\\process.py": "6709cf3feac19b2ff1320eb13082986b7472bb39be4e15a6e9756b1d0eef4dd1",
+    "processes\\S05\\process.py": "e9427c3c8ff8a37a74417e7bc23a4258e269f10e0e06a17d754ab2154381d728",
+    "processes\\S06\\process.py": "57f1d7f86ca738c7a25ad7029a07aea4274fc50958d3fdca11eef5d389ff3d05",
+    "processes\\S07\\process.py": "5de5313d0c70a88f6aa163603d1c34960298a09c2d5d9b5049da628cdb701aa2",
+    "processes\\S08\\process.py": "e28001d313f03ff23bac277898f63d66b7babcf225ceb4e4082bc156301221c1",
+    "processes\\S09\\process.py": "e57088276e0af7519daf72c0181e73f9ec7a154ab24ec7ad6a7bc5d0f85d9d69",
+    "processes\\S10\\process.py": "eb31de2df020f2769f149e364817e53f6dfd918e5e1303a5bf31324e3e1f2c00",
+    "processes\\S11\\process.py": "286a95aa17ab79b5b6302ad7e43e4ae86a230bc8f8424d26f76bf242e418c7d2",
+    "processes\\S12\\process.py": "09dc68b83f4ade8a312e462a4c1a6c3d5f795f84122953a9f9703b4035d23ffb"
+  },
+  "current_validity": "SUPERSEDED_BY_CANONICAL_DEVICESPEC_BINDING_AUDIT",
+  "superseding_report": "../device-spec-alignment/dsl-binding-audit.json"
+}

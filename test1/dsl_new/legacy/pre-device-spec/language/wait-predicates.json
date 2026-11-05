@@ -1,0 +1,148 @@
+{
+  "schema_version": "ac-wait-predicates/0.1",
+  "namespace": "wait",
+  "common_requirements": [
+    "explicit_positive_tick_timeout",
+    "valid_current_run_epoch_and_subject_evidence",
+    "read_only_no_material_creation_or_movement"
+  ],
+  "runtime_status": "pending_event_provider_integration",
+  "predicates": [
+    {
+      "name": "input_present",
+      "parameters": [
+        {
+          "name": "material",
+          "type": "material_ref"
+        },
+        {
+          "name": "location",
+          "type": "location_ref"
+        }
+      ],
+      "providers": [
+        "world_observer",
+        "external_infeed"
+      ],
+      "description": "指定物料实际到达入口或取料位置，身份和支承有效"
+    },
+    {
+      "name": "target_available",
+      "parameters": [
+        {
+          "name": "location",
+          "type": "location_ref"
+        }
+      ],
+      "providers": [
+        "occupancy_service"
+      ],
+      "description": "目标位置当前可接收；动作提交时仍需原子预留"
+    },
+    {
+      "name": "output_available",
+      "parameters": [
+        {
+          "name": "device",
+          "type": "device_ref"
+        }
+      ],
+      "providers": [
+        "occupancy_service"
+      ],
+      "description": "出料设备当前具有接收容量和可用状态"
+    },
+    {
+      "name": "output_departed",
+      "parameters": [
+        {
+          "name": "material",
+          "type": "material_ref"
+        },
+        {
+          "name": "device",
+          "type": "device_ref"
+        }
+      ],
+      "providers": [
+        "world_observer",
+        "external_takeaway"
+      ],
+      "description": "指定物料已在对应出口完成交接并被下游移走"
+    },
+    {
+      "name": "empty_pallet_present",
+      "parameters": [
+        {
+          "name": "pallet",
+          "type": "pallet_ref"
+        }
+      ],
+      "providers": [
+        "world_observer",
+        "external_pallet_exchange"
+      ],
+      "description": "指定空托盘已换入码垛工作位并停稳"
+    },
+    {
+      "name": "full_pallet_departed",
+      "parameters": [
+        {
+          "name": "pallet",
+          "type": "pallet_ref"
+        }
+      ],
+      "providers": [
+        "occupancy_service",
+        "external_pallet_exchange"
+      ],
+      "description": "指定托盘已按清单装满且由外部换盘方移走"
+    },
+    {
+      "name": "carrier_present",
+      "parameters": [
+        {
+          "name": "pallet",
+          "type": "pallet_ref"
+        },
+        {
+          "name": "location",
+          "type": "location_ref"
+        }
+      ],
+      "providers": [
+        "world_observer",
+        "external_loaded_carrier_infeed"
+      ],
+      "description": "指定载料托盘实际到达主线入口或指定位置；不要求托盘为空"
+    },
+    {
+      "name": "carrier_empty",
+      "parameters": [
+        {
+          "name": "pallet",
+          "type": "pallet_ref"
+        }
+      ],
+      "providers": [
+        "occupancy_service",
+        "handoff_service"
+      ],
+      "description": "指定托盘没有剩余实际物料或未提交交接"
+    },
+    {
+      "name": "carrier_departed",
+      "parameters": [
+        {
+          "name": "pallet",
+          "type": "pallet_ref"
+        }
+      ],
+      "providers": [
+        "world_observer",
+        "external_empty_carrier_takeaway"
+      ],
+      "description": "指定空托盘已到达主线末端并被外部接盘方移走"
+    }
+  ]
+}

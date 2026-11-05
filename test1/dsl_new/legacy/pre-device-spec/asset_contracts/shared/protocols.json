@@ -1,0 +1,336 @@
+{
+  "schema_version": "asset-protocols/0.1",
+  "protocols": [
+    {
+      "id": "request_v1",
+      "signal_ports": [
+        {
+          "id": "enable",
+          "type": "boolean",
+          "unit": "1",
+          "direction": "input",
+          "retention": "level_command",
+          "description": "持续使能；失效触发受控停止，不自动重置状态。",
+          "writer": "controller"
+        },
+        {
+          "id": "request_id",
+          "type": "integer",
+          "unit": "1",
+          "direction": "input",
+          "retention": "level_command",
+          "description": "当前请求正整数标识；同一 run 内不复用。",
+          "writer": "controller"
+        },
+        {
+          "id": "command_code",
+          "type": "integer",
+          "unit": "1",
+          "direction": "input",
+          "retention": "level_command",
+          "description": "选择本资产的一条顶层行为。",
+          "writer": "controller"
+        },
+        {
+          "id": "execute",
+          "type": "boolean",
+          "unit": "1",
+          "direction": "input",
+          "retention": "level_command",
+          "description": "请求保持至看到匹配的接受证据，随后撤销。",
+          "writer": "controller"
+        },
+        {
+          "id": "cancel",
+          "type": "boolean",
+          "unit": "1",
+          "direction": "input",
+          "retention": "level_command",
+          "description": "对当前请求发出优先取消；不创建第二个请求。",
+          "writer": "controller"
+        },
+        {
+          "id": "accepted",
+          "type": "boolean",
+          "unit": "1",
+          "direction": "output",
+          "retention": "latched_result",
+          "description": "接受锁存；控制器保存匹配接受回执，execute 撤销后可清零。",
+          "writer": "adapter"
+        },
+        {
+          "id": "accepted_id",
+          "type": "integer",
+          "unit": "1",
+          "direction": "output",
+          "retention": "latched_result",
+          "description": "接受回执对应请求。",
+          "writer": "adapter"
+        },
+        {
+          "id": "busy",
+          "type": "boolean",
+          "unit": "1",
+          "direction": "output",
+          "retention": "state",
+          "description": "请求尚未结束，包括停止等待。",
+          "writer": "adapter"
+        },
+        {
+          "id": "done",
+          "type": "boolean",
+          "unit": "1",
+          "direction": "output",
+          "retention": "latched_result",
+          "description": "离散动作的当前请求完成；不能单独作为工艺完成。",
+          "writer": "adapter"
+        },
+        {
+          "id": "result_id",
+          "type": "integer",
+          "unit": "1",
+          "direction": "output",
+          "retention": "latched_result",
+          "description": "当前锁存结果所属请求。",
+          "writer": "adapter"
+        },
+        {
+          "id": "error",
+          "type": "boolean",
+          "unit": "1",
+          "direction": "output",
+          "retention": "state",
+          "description": "当前动作失败或设备存在故障。",
+          "writer": "adapter"
+        },
+        {
+          "id": "error_code",
+          "type": "integer",
+          "unit": "1",
+          "direction": "output",
+          "retention": "latched_result",
+          "description": "版本化诊断编号；0 表示没有故障。",
+          "writer": "adapter"
+        },
+        {
+          "id": "cancelled",
+          "type": "boolean",
+          "unit": "1",
+          "direction": "output",
+          "retention": "latched_result",
+          "description": "本次请求取消完成，需同时有停止证据。",
+          "writer": "adapter"
+        },
+        {
+          "id": "stop_ack_id",
+          "type": "integer",
+          "unit": "1",
+          "direction": "output",
+          "retention": "latched_result",
+          "description": "已确认停止的请求身份。",
+          "writer": "adapter"
+        },
+        {
+          "id": "stopped",
+          "type": "boolean",
+          "unit": "1",
+          "direction": "output",
+          "retention": "state",
+          "description": "执行器实际停止；不表示物料交接、装夹或资源清理已完成。",
+          "writer": "adapter"
+        }
+      ],
+      "context": [
+        {
+          "id": "run_id",
+          "type": "string",
+          "unit": "1",
+          "description": "一次运行的唯一代次。"
+        },
+        {
+          "id": "instance_id",
+          "type": "string",
+          "unit": "1",
+          "description": "绑定资产实例的稳定标识。"
+        },
+        {
+          "id": "request_id",
+          "type": "integer",
+          "unit": "1",
+          "description": "本次请求编号。",
+          "minimum": 1
+        }
+      ],
+      "direction_reference": "asset",
+      "concurrency": "one_active_top_level_request_per_instance",
+      "runtime_bindings": [
+        {
+          "signal": "enable",
+          "value": {
+            "source": "context",
+            "ref": "controller_enable"
+          }
+        },
+        {
+          "signal": "request_id",
+          "value": {
+            "source": "context",
+            "ref": "request_id"
+          }
+        },
+        {
+          "signal": "execute",
+          "value": {
+            "source": "context",
+            "ref": "request_pending"
+          }
+        },
+        {
+          "signal": "cancel",
+          "value": {
+            "source": "context",
+            "ref": "cancel_requested"
+          }
+        }
+      ],
+      "runtime_control_context": [
+        {
+          "id": "controller_enable",
+          "type": "boolean",
+          "unit": "1",
+          "description": "控制器使能状态。"
+        },
+        {
+          "id": "request_pending",
+          "type": "boolean",
+          "unit": "1",
+          "description": "待接受请求保持信号。"
+        },
+        {
+          "id": "cancel_requested",
+          "type": "boolean",
+          "unit": "1",
+          "description": "当前请求的取消请求。"
+        }
+      ],
+      "states": [
+        "idle",
+        "waiting_conditions",
+        "requesting",
+        "running",
+        "stopping",
+        "succeeded",
+        "failed",
+        "cancelled",
+        "attention_required"
+      ],
+      "transitions": [
+        {
+          "from": "idle",
+          "event": "invoke",
+          "to": "waiting_conditions",
+          "rule": "解析参数、能力开关和全部依赖；尚未满足的动态前置条件允许等待。"
+        },
+        {
+          "from": "waiting_conditions",
+          "event": "preconditions_satisfied",
+          "to": "requesting",
+          "rule": "统一快照检查并取得资源；提交前复核版本。"
+        },
+        {
+          "from": "requesting",
+          "event": "matching_acceptance",
+          "to": "running",
+          "rule": "保存 run/instance/request/provider_epoch 接受回执；参数冻结，execute 可撤销。"
+        },
+        {
+          "from": "running",
+          "event": "matching_discrete_result_and_all_completion_checks",
+          "to": "succeeded",
+          "rule": "仅离散动作；本次结果身份、有效业务证据和所需清理全部成立。"
+        },
+        {
+          "from": "running",
+          "event": "cancel_or_sustaining_condition_loss_or_execution_timeout",
+          "to": "stopping",
+          "rule": "发出当前请求 cancel；保留现场物料和资源隔离。"
+        },
+        {
+          "from": "running",
+          "event": "device_error_or_matching_request_failure",
+          "to": "stopping",
+          "rule": "立即记录错误原因并请求受控停止；不等待执行超时，不复用旧请求错误。"
+        },
+        {
+          "from": "requesting",
+          "event": "accept_timeout",
+          "to": "stopping",
+          "rule": "不得假定设备从未接受；以原请求身份核查并停止。"
+        },
+        {
+          "from": "stopping",
+          "event": "user_cancel_or_scope_exit_and_matching_stop_ack_and_stopped_and_scope_checks",
+          "to": "cancelled",
+          "rule": "仅用户取消或连续作用域正常退出；连续行为还需全部 scope checks。操作许可按物理占用规则释放。"
+        },
+        {
+          "from": "stopping",
+          "event": "fault_or_condition_loss_or_timeout_and_matching_stop_ack_and_stopped",
+          "to": "failed",
+          "rule": "按进入停止时保存的原因归类为失败，保留诊断和现场状态，不误报正常取消。"
+        },
+        {
+          "from": "stopping",
+          "event": "stop_timeout_or_unknown",
+          "to": "attention_required",
+          "rule": "停止未确认，保留必要隔离，禁止虚报完成或自动回滚物料。"
+        }
+      ],
+      "acceptance_checks": [
+        "valid && accepted && accepted_id == context.request_id",
+        "same run_id and instance_id",
+        "record provider_epoch"
+      ],
+      "success_checks": [
+        "saved matching acceptance receipt",
+        "fresh valid done && result_id == context.request_id",
+        "same run_id, instance_id and provider_epoch",
+        "all behavior completion checks",
+        "no conflicting error/cancel result"
+      ],
+      "continuous_rule": "接受后持续运行；done 不参与成功判定。退出作用域必须取消原请求并等待关联 stop_ack_id、stopped 及行为 scope checks。",
+      "stop_reason_rule": "进入 stopping 时冻结原因 user_cancel/scope_exit/condition_loss/execution_timeout/accept_timeout/device_error；停止期间收到故障须升级失败原因，不能由后续取消覆盖。",
+      "duplicate_rule": "相同身份和相同载荷返回已有状态，不重复执行；相同身份不同载荷拒绝。新请求前旧请求必须终止。",
+      "cancellation_rule": "cancel 使用原请求身份，不被 busy 或 enable=false 拒绝。协议定义不实现实机急停。",
+      "fault_reset_rule": "本版不自动清故障或恢复工艺。场景显式建立经确认的恢复初态后再接受新请求。"
+    },
+    {
+      "id": "passive_v1",
+      "signal_ports": [],
+      "context": [
+        {
+          "id": "run_id",
+          "type": "string",
+          "unit": "1",
+          "description": "运行代次。"
+        },
+        {
+          "id": "instance_id",
+          "type": "string",
+          "unit": "1",
+          "description": "被动资产实例。"
+        },
+        {
+          "id": "transaction_id",
+          "type": "string",
+          "unit": "1",
+          "description": "被动状态转换关联的外部事务；observer快照可不实例化该项。"
+        }
+      ],
+      "invocation": "not_a_schedulable_device_request",
+      "transition_rule": "passive 行为观察外部执行器引起的状态转换，其前态和完成证据关联同一外部事务。observer 只查询指定快照。",
+      "evidence_rule": "事实必须关联当前资产、主体及外部事务/阶段身份；不得复用上一次交接记录证明本次交接。",
+      "ownership_rule": "观测不得写物料姿态、持有关系或账本；由世界、夹持和交接服务依据证据更新。"
+    }
+  ]
+}

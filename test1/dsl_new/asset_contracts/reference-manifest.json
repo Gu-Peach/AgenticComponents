@@ -1,0 +1,16 @@
+{
+  "documents": [
+    {
+      "path": "../../docs/schema.md",
+      "sha256": "62991b507e517e61f8b38f79099fc8709bf5f0fa5e7cf6ba23bf0f37eec6f851"
+    },
+    {
+      "path": "../../docs/设备契约.md",
+      "sha256": "ad91673c7d0ae4ba6a8f164ab265fa56f6456f5d3c82da9461afed47d5d3719d"
+    },
+    {
+      "path": "../../docs/参数契约.md",
+      "sha256": "7bc1c448d93570a69748e0c5998cda1d20bb18d96fbf9d0903e82c812129c5b0"
+    }
+  ]
+}

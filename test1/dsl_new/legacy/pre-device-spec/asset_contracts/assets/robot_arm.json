@@ -1,0 +1,1606 @@
+{
+  "schema_version": "asset-contract/0.1",
+  "id": "robot_arm",
+  "version": "0.1.0",
+  "label": "机械臂",
+  "category": "active",
+  "description": "不同外观、轴数和驱动器通过实例适配提供相同搬运能力；契约不推断 GLB 的运动学或物理性能。",
+  "implementation_status": "contract_only",
+  "protocol_imports": [
+    "request_v1"
+  ],
+  "features": [
+    {
+      "id": "motion",
+      "default": true,
+      "description": "已接入可校验目标位姿与实际停稳的运动执行器。"
+    },
+    {
+      "id": "gripper",
+      "default": true,
+      "description": "已接入实际物料夹持、释放和持有观测。"
+    }
+  ],
+  "instance_requirements": [
+    "实例必须提供已标定关节链、TCP、抓取区域和位置引用解析。",
+    "空载 move_to_location 不用于绕过持料搬运检查；持料运输使用 place 或 transfer_material。",
+    "外部运动规划/碰撞检查的能力与假设由实例记录，不能由本契约宣称已获物理验证。"
+  ],
+  "parameters": [
+    {
+      "id": "max_payload_kg",
+      "type": "number",
+      "unit": "kg",
+      "description": "实验载荷上限；实例参数须匹配执行器配置。",
+      "default": 10.0,
+      "minimum": 0.001
+    },
+    {
+      "id": "tcp_speed_mps",
+      "type": "number",
+      "unit": "m/s",
+      "description": "当前动作的 TCP 速度上限，由接受时冻结。",
+      "default": 0.2,
+      "minimum": 0.001
+    },
+    {
+      "id": "position_tolerance_m",
+      "type": "number",
+      "unit": "m",
+      "description": "TCP 或抓放落点的实验位置容差。",
+      "default": 0.005,
+      "minimum": 1e-06
+    },
+    {
+      "id": "orientation_tolerance_rad",
+      "type": "number",
+      "unit": "rad",
+      "description": "TCP 到目标姿态的最短角误差容差。",
+      "default": 0.01,
+      "minimum": 1e-06
+    }
+  ],
+  "signal_ports": [
+    {
+      "id": "material_id",
+      "type": "material_ref",
+      "unit": "1",
+      "direction": "input",
+      "retention": "state",
+      "description": "本次动作涉及的唯一物料；接受时冻结。",
+      "writer": "controller"
+    },
+    {
+      "id": "source_location",
+      "type": "location_ref",
+      "unit": "1",
+      "direction": "input",
+      "retention": "state",
+      "description": "取料位置的逻辑标识；通过实例几何映射解析。",
+      "writer": "controller"
+    },
+    {
+      "id": "target_location",
+      "type": "location_ref",
+      "unit": "1",
+      "direction": "input",
+      "retention": "state",
+      "description": "放料或空载移动目标的逻辑标识。",
+      "writer": "controller"
+    },
+    {
+      "id": "tcp_speed",
+      "type": "number",
+      "unit": "m/s",
+      "direction": "input",
+      "retention": "state",
+      "description": "本次动作的 TCP 速度上限。",
+      "writer": "controller"
+    },
+    {
+      "id": "tool_empty",
+      "type": "boolean",
+      "unit": "1",
+      "direction": "output",
+      "retention": "state",
+      "description": "夹持器当前未持有任何物料；来自实际夹持关系。",
+      "writer": "adapter"
+    },
+    {
+      "id": "tcp_position_error",
+      "type": "number",
+      "unit": "m",
+      "direction": "output",
+      "retention": "state",
+      "description": "相对本次请求当前目标 TCP 位姿的实际平移误差。",
+      "writer": "adapter"
+    },
+    {
+      "id": "tcp_orientation_error",
+      "type": "number",
+      "unit": "rad",
+      "direction": "output",
+      "retention": "state",
+      "description": "相对本次请求当前目标 TCP 位姿的最短旋转误差。",
+      "writer": "adapter"
+    },
+    {
+      "id": "motion_interlock_valid",
+      "type": "boolean",
+      "unit": "1",
+      "direction": "output",
+      "retention": "state",
+      "description": "执行器根据当前阶段计算的运动互锁；取料阶段要求源停稳，离开源后不再要求无关源状态。",
+      "writer": "adapter"
+    }
+  ],
+  "observations": [
+    {
+      "id": "location_valid",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "geometry_adapter",
+      "description": "位置存在、坐标系和位姿标定有效。",
+      "arguments": [
+        "location"
+      ],
+      "argument_types": {
+        "location": "location_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "location_reachable",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "geometry_adapter",
+      "description": "当前实例的已标定运动执行器可接受该目标；缺少检查时为未知，不由契约猜测几何可达。",
+      "arguments": [
+        "location"
+      ],
+      "argument_types": {
+        "location": "location_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "material_at",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "world_observer",
+      "description": "指定物料当前位于指定位置的取料范围内。",
+      "arguments": [
+        "material",
+        "location"
+      ],
+      "argument_types": {
+        "material": "material_ref",
+        "location": "location_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "source_stopped",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "world_observer",
+      "description": "源承载设备实际静止；被动支承的适配器按其物理状态提供。",
+      "arguments": [
+        "source"
+      ],
+      "argument_types": {
+        "source": "location_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "source_released",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "handoff_service",
+      "description": "源已允许移交指定物料，夹紧和源占用锁不再阻止取料。",
+      "arguments": [
+        "material",
+        "source"
+      ],
+      "argument_types": {
+        "material": "material_ref",
+        "source": "location_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "material_mass",
+      "type": "number",
+      "unit": "kg",
+      "provider": "world_observer",
+      "description": "指定物料质量；未知质量阻止取料。",
+      "arguments": [
+        "material"
+      ],
+      "argument_types": {
+        "material": "material_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "target_accepts",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "occupancy_service",
+      "description": "目标类型、容量和物料尺寸匹配；本请求预留计入容量。",
+      "arguments": [
+        "material",
+        "target"
+      ],
+      "argument_types": {
+        "material": "material_ref",
+        "target": "location_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "material_held",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "world_observer",
+      "description": "实际夹持约束确认当前机械臂持有指定物料。",
+      "arguments": [
+        "material"
+      ],
+      "argument_types": {
+        "material": "material_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "material_clear_of_source",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "world_observer",
+      "description": "指定物料已移离源支承和交接区域。",
+      "arguments": [
+        "material",
+        "source"
+      ],
+      "argument_types": {
+        "material": "material_ref",
+        "source": "location_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "material_supported_at_target",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "world_observer",
+      "description": "指定物料在目标范围内且由目标实际支承。",
+      "arguments": [
+        "material",
+        "target"
+      ],
+      "argument_types": {
+        "material": "material_ref",
+        "target": "location_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "handoff_committed",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "handoff_service",
+      "description": "本次请求的交接已根据到位、支承与释放证据提交，物料唯一归属与目标一致。",
+      "arguments": [
+        "material",
+        "target"
+      ],
+      "argument_types": {
+        "material": "material_ref",
+        "target": "location_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    }
+  ],
+  "authorizations": [
+    {
+      "id": "operation_allowed",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "resource_service",
+      "description": "当前实例、行为和请求的操作许可；仅在资源实际授予后为真。",
+      "arguments": [],
+      "argument_types": {},
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "source_access",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "resource_service",
+      "description": "本请求获得源位置及物料的操作许可。",
+      "arguments": [
+        "material",
+        "source"
+      ],
+      "argument_types": {
+        "material": "material_ref",
+        "source": "location_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "target_reservation",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "resource_service",
+      "description": "本请求获得目标交接区与容量预留。",
+      "arguments": [
+        "material",
+        "target"
+      ],
+      "argument_types": {
+        "material": "material_ref",
+        "target": "location_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    }
+  ],
+  "spatial_interfaces": [
+    {
+      "id": "base_mount",
+      "role": "mount",
+      "geometry_binding": "required_per_instance",
+      "requires_features": [],
+      "description": "机械臂固定安装基准。"
+    },
+    {
+      "id": "tool_frame",
+      "role": "tool",
+      "geometry_binding": "required_per_instance",
+      "requires_features": [],
+      "description": "TCP 与夹具坐标系，由实例标定。"
+    }
+  ],
+  "behaviors": [
+    {
+      "id": "move_to_location",
+      "label": "空载移动到位置",
+      "kind": "action",
+      "invocable": true,
+      "protocol": "request_v1",
+      "executor_ref": "adapter.robot_arm.move_to_location@0.1",
+      "requires_features": [
+        "motion"
+      ],
+      "arguments": [
+        {
+          "id": "target",
+          "type": "location_ref",
+          "unit": "1",
+          "description": "目标位置。"
+        }
+      ],
+      "command_bindings": [
+        {
+          "signal": "command_code",
+          "value": {
+            "source": "literal",
+            "value": 1
+          }
+        },
+        {
+          "signal": "target_location",
+          "value": {
+            "source": "argument",
+            "ref": "target"
+          }
+        },
+        {
+          "signal": "tcp_speed",
+          "value": {
+            "source": "parameter",
+            "ref": "tcp_speed_mps"
+          }
+        }
+      ],
+      "preconditions": [
+        {
+          "id": "device_idle",
+          "left": {
+            "source": "signal",
+            "ref": "busy"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": false
+          }
+        },
+        {
+          "id": "device_healthy",
+          "left": {
+            "source": "signal",
+            "ref": "error"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": false
+          }
+        },
+        {
+          "id": "enabled",
+          "left": {
+            "source": "signal",
+            "ref": "enable"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "operation_authorized",
+          "left": {
+            "source": "authorization",
+            "ref": "operation_allowed"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "empty_tool",
+          "left": {
+            "source": "signal",
+            "ref": "tool_empty"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "target_geometry_valid",
+          "left": {
+            "source": "observation",
+            "ref": "location_valid",
+            "bindings": {
+              "location": "target"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "target_reachable",
+          "left": {
+            "source": "observation",
+            "ref": "location_reachable",
+            "bindings": {
+              "location": "target"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        }
+      ],
+      "sustaining_conditions": [
+        {
+          "id": "enabled",
+          "left": {
+            "source": "signal",
+            "ref": "enable"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "operation_authorized",
+          "left": {
+            "source": "authorization",
+            "ref": "operation_allowed"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "phase_interlock",
+          "left": {
+            "source": "signal",
+            "ref": "motion_interlock_valid"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        }
+      ],
+      "completion": {
+        "mode": "evidence",
+        "checks": [
+          {
+            "id": "position_reached",
+            "left": {
+              "source": "signal",
+              "ref": "tcp_position_error"
+            },
+            "operator": "le",
+            "right": {
+              "source": "parameter",
+              "ref": "position_tolerance_m"
+            }
+          },
+          {
+            "id": "orientation_reached",
+            "left": {
+              "source": "signal",
+              "ref": "tcp_orientation_error"
+            },
+            "operator": "le",
+            "right": {
+              "source": "parameter",
+              "ref": "orientation_tolerance_rad"
+            }
+          },
+          {
+            "id": "actual_motion_stopped",
+            "left": {
+              "source": "signal",
+              "ref": "stopped"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          }
+        ],
+        "description": "本次请求成功证据、实际 TCP 位置/姿态误差和停稳同时满足。"
+      },
+      "expected_effects": [
+        "TCP 到达绑定目标；不修改物料状态。"
+      ],
+      "failure_policy": "preserve_observed_state_and_report"
+    },
+    {
+      "id": "pick",
+      "label": "取料并移离源",
+      "kind": "action",
+      "invocable": true,
+      "protocol": "request_v1",
+      "executor_ref": "adapter.robot_arm.pick@0.1",
+      "requires_features": [
+        "motion",
+        "gripper"
+      ],
+      "arguments": [
+        {
+          "id": "material",
+          "type": "material_ref",
+          "unit": "1",
+          "description": "要操作的物料实例。"
+        },
+        {
+          "id": "source",
+          "type": "location_ref",
+          "unit": "1",
+          "description": "物料的源位置。"
+        }
+      ],
+      "command_bindings": [
+        {
+          "signal": "command_code",
+          "value": {
+            "source": "literal",
+            "value": 2
+          }
+        },
+        {
+          "signal": "material_id",
+          "value": {
+            "source": "argument",
+            "ref": "material"
+          }
+        },
+        {
+          "signal": "source_location",
+          "value": {
+            "source": "argument",
+            "ref": "source"
+          }
+        },
+        {
+          "signal": "tcp_speed",
+          "value": {
+            "source": "parameter",
+            "ref": "tcp_speed_mps"
+          }
+        }
+      ],
+      "preconditions": [
+        {
+          "id": "device_idle",
+          "left": {
+            "source": "signal",
+            "ref": "busy"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": false
+          }
+        },
+        {
+          "id": "device_healthy",
+          "left": {
+            "source": "signal",
+            "ref": "error"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": false
+          }
+        },
+        {
+          "id": "enabled",
+          "left": {
+            "source": "signal",
+            "ref": "enable"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "operation_authorized",
+          "left": {
+            "source": "authorization",
+            "ref": "operation_allowed"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "empty_tool",
+          "left": {
+            "source": "signal",
+            "ref": "tool_empty"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "material_at_source",
+          "left": {
+            "source": "observation",
+            "ref": "material_at",
+            "bindings": {
+              "material": "material",
+              "location": "source"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "source_stationary",
+          "left": {
+            "source": "observation",
+            "ref": "source_stopped",
+            "bindings": {
+              "source": "source"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "source_can_release",
+          "left": {
+            "source": "observation",
+            "ref": "source_released",
+            "bindings": {
+              "material": "material",
+              "source": "source"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "source_geometry_valid",
+          "left": {
+            "source": "observation",
+            "ref": "location_valid",
+            "bindings": {
+              "location": "source"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "source_reachable",
+          "left": {
+            "source": "observation",
+            "ref": "location_reachable",
+            "bindings": {
+              "location": "source"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "payload_within_limit",
+          "left": {
+            "source": "observation",
+            "ref": "material_mass",
+            "bindings": {
+              "material": "material"
+            }
+          },
+          "operator": "le",
+          "right": {
+            "source": "parameter",
+            "ref": "max_payload_kg"
+          }
+        },
+        {
+          "id": "source_permission",
+          "left": {
+            "source": "authorization",
+            "ref": "source_access",
+            "bindings": {
+              "material": "material",
+              "source": "source"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        }
+      ],
+      "sustaining_conditions": [
+        {
+          "id": "enabled",
+          "left": {
+            "source": "signal",
+            "ref": "enable"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "operation_authorized",
+          "left": {
+            "source": "authorization",
+            "ref": "operation_allowed"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "phase_interlock",
+          "left": {
+            "source": "signal",
+            "ref": "motion_interlock_valid"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        }
+      ],
+      "completion": {
+        "mode": "evidence",
+        "checks": [
+          {
+            "id": "holding_requested_material",
+            "left": {
+              "source": "observation",
+              "ref": "material_held",
+              "bindings": {
+                "material": "material"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "clear_of_source",
+            "left": {
+              "source": "observation",
+              "ref": "material_clear_of_source",
+              "bindings": {
+                "material": "material",
+                "source": "source"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "actual_motion_stopped",
+            "left": {
+              "source": "signal",
+              "ref": "stopped"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          }
+        ],
+        "description": "仅夹爪闭合不足以成功；指定物料必须已被持有、移离源并停稳。"
+      },
+      "expected_effects": [
+        "执行器建立实际夹持关系并移离源；交接服务据观测更新物料归属和源占用。"
+      ],
+      "failure_policy": "preserve_observed_state_and_report"
+    },
+    {
+      "id": "place",
+      "label": "放料并确认支承",
+      "kind": "action",
+      "invocable": true,
+      "protocol": "request_v1",
+      "executor_ref": "adapter.robot_arm.place@0.1",
+      "requires_features": [
+        "motion",
+        "gripper"
+      ],
+      "arguments": [
+        {
+          "id": "material",
+          "type": "material_ref",
+          "unit": "1",
+          "description": "要操作的物料实例。"
+        },
+        {
+          "id": "target",
+          "type": "location_ref",
+          "unit": "1",
+          "description": "目标位置。"
+        }
+      ],
+      "command_bindings": [
+        {
+          "signal": "command_code",
+          "value": {
+            "source": "literal",
+            "value": 3
+          }
+        },
+        {
+          "signal": "material_id",
+          "value": {
+            "source": "argument",
+            "ref": "material"
+          }
+        },
+        {
+          "signal": "target_location",
+          "value": {
+            "source": "argument",
+            "ref": "target"
+          }
+        },
+        {
+          "signal": "tcp_speed",
+          "value": {
+            "source": "parameter",
+            "ref": "tcp_speed_mps"
+          }
+        }
+      ],
+      "preconditions": [
+        {
+          "id": "device_idle",
+          "left": {
+            "source": "signal",
+            "ref": "busy"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": false
+          }
+        },
+        {
+          "id": "device_healthy",
+          "left": {
+            "source": "signal",
+            "ref": "error"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": false
+          }
+        },
+        {
+          "id": "enabled",
+          "left": {
+            "source": "signal",
+            "ref": "enable"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "operation_authorized",
+          "left": {
+            "source": "authorization",
+            "ref": "operation_allowed"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "holding_requested_material",
+          "left": {
+            "source": "observation",
+            "ref": "material_held",
+            "bindings": {
+              "material": "material"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "target_geometry_valid",
+          "left": {
+            "source": "observation",
+            "ref": "location_valid",
+            "bindings": {
+              "location": "target"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "target_reachable",
+          "left": {
+            "source": "observation",
+            "ref": "location_reachable",
+            "bindings": {
+              "location": "target"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "target_can_receive",
+          "left": {
+            "source": "observation",
+            "ref": "target_accepts",
+            "bindings": {
+              "material": "material",
+              "target": "target"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "target_reserved",
+          "left": {
+            "source": "authorization",
+            "ref": "target_reservation",
+            "bindings": {
+              "material": "material",
+              "target": "target"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        }
+      ],
+      "sustaining_conditions": [
+        {
+          "id": "enabled",
+          "left": {
+            "source": "signal",
+            "ref": "enable"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "operation_authorized",
+          "left": {
+            "source": "authorization",
+            "ref": "operation_allowed"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "phase_interlock",
+          "left": {
+            "source": "signal",
+            "ref": "motion_interlock_valid"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        }
+      ],
+      "completion": {
+        "mode": "evidence",
+        "checks": [
+          {
+            "id": "tool_released",
+            "left": {
+              "source": "signal",
+              "ref": "tool_empty"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "target_support_confirmed",
+            "left": {
+              "source": "observation",
+              "ref": "material_supported_at_target",
+              "bindings": {
+                "material": "material",
+                "target": "target"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "transfer_committed",
+            "left": {
+              "source": "observation",
+              "ref": "handoff_committed",
+              "bindings": {
+                "material": "material",
+                "target": "target"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "actual_motion_stopped",
+            "left": {
+              "source": "signal",
+              "ref": "stopped"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          }
+        ],
+        "description": "目标支承、工具释放、交接提交及停稳共同确认本次放料。"
+      },
+      "expected_effects": [
+        "释放实际夹持关系；依据目标支承证据提交唯一物料归属和占用。"
+      ],
+      "failure_policy": "preserve_observed_state_and_report"
+    },
+    {
+      "id": "transfer_material",
+      "label": "从源搬运到目标",
+      "kind": "action",
+      "invocable": true,
+      "protocol": "request_v1",
+      "executor_ref": "adapter.robot_arm.transfer_material@0.1",
+      "requires_features": [
+        "motion",
+        "gripper"
+      ],
+      "arguments": [
+        {
+          "id": "material",
+          "type": "material_ref",
+          "unit": "1",
+          "description": "要操作的物料实例。"
+        },
+        {
+          "id": "source",
+          "type": "location_ref",
+          "unit": "1",
+          "description": "物料的源位置。"
+        },
+        {
+          "id": "target",
+          "type": "location_ref",
+          "unit": "1",
+          "description": "目标位置。"
+        }
+      ],
+      "command_bindings": [
+        {
+          "signal": "command_code",
+          "value": {
+            "source": "literal",
+            "value": 4
+          }
+        },
+        {
+          "signal": "material_id",
+          "value": {
+            "source": "argument",
+            "ref": "material"
+          }
+        },
+        {
+          "signal": "source_location",
+          "value": {
+            "source": "argument",
+            "ref": "source"
+          }
+        },
+        {
+          "signal": "target_location",
+          "value": {
+            "source": "argument",
+            "ref": "target"
+          }
+        },
+        {
+          "signal": "tcp_speed",
+          "value": {
+            "source": "parameter",
+            "ref": "tcp_speed_mps"
+          }
+        }
+      ],
+      "preconditions": [
+        {
+          "id": "device_idle",
+          "left": {
+            "source": "signal",
+            "ref": "busy"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": false
+          }
+        },
+        {
+          "id": "device_healthy",
+          "left": {
+            "source": "signal",
+            "ref": "error"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": false
+          }
+        },
+        {
+          "id": "enabled",
+          "left": {
+            "source": "signal",
+            "ref": "enable"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "operation_authorized",
+          "left": {
+            "source": "authorization",
+            "ref": "operation_allowed"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "empty_tool",
+          "left": {
+            "source": "signal",
+            "ref": "tool_empty"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "material_at_source",
+          "left": {
+            "source": "observation",
+            "ref": "material_at",
+            "bindings": {
+              "material": "material",
+              "location": "source"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "source_stationary",
+          "left": {
+            "source": "observation",
+            "ref": "source_stopped",
+            "bindings": {
+              "source": "source"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "source_can_release",
+          "left": {
+            "source": "observation",
+            "ref": "source_released",
+            "bindings": {
+              "material": "material",
+              "source": "source"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "source_geometry_valid",
+          "left": {
+            "source": "observation",
+            "ref": "location_valid",
+            "bindings": {
+              "location": "source"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "source_reachable",
+          "left": {
+            "source": "observation",
+            "ref": "location_reachable",
+            "bindings": {
+              "location": "source"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "payload_within_limit",
+          "left": {
+            "source": "observation",
+            "ref": "material_mass",
+            "bindings": {
+              "material": "material"
+            }
+          },
+          "operator": "le",
+          "right": {
+            "source": "parameter",
+            "ref": "max_payload_kg"
+          }
+        },
+        {
+          "id": "source_permission",
+          "left": {
+            "source": "authorization",
+            "ref": "source_access",
+            "bindings": {
+              "material": "material",
+              "source": "source"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "target_geometry_valid",
+          "left": {
+            "source": "observation",
+            "ref": "location_valid",
+            "bindings": {
+              "location": "target"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "target_reachable",
+          "left": {
+            "source": "observation",
+            "ref": "location_reachable",
+            "bindings": {
+              "location": "target"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "target_can_receive",
+          "left": {
+            "source": "observation",
+            "ref": "target_accepts",
+            "bindings": {
+              "material": "material",
+              "target": "target"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "target_reserved",
+          "left": {
+            "source": "authorization",
+            "ref": "target_reservation",
+            "bindings": {
+              "material": "material",
+              "target": "target"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "distinct_locations",
+          "left": {
+            "source": "argument",
+            "ref": "source"
+          },
+          "operator": "ne",
+          "right": {
+            "source": "argument",
+            "ref": "target"
+          }
+        }
+      ],
+      "sustaining_conditions": [
+        {
+          "id": "enabled",
+          "left": {
+            "source": "signal",
+            "ref": "enable"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "operation_authorized",
+          "left": {
+            "source": "authorization",
+            "ref": "operation_allowed"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "phase_interlock",
+          "left": {
+            "source": "signal",
+            "ref": "motion_interlock_valid"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        }
+      ],
+      "completion": {
+        "mode": "evidence",
+        "checks": [
+          {
+            "id": "tool_released",
+            "left": {
+              "source": "signal",
+              "ref": "tool_empty"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "target_support_confirmed",
+            "left": {
+              "source": "observation",
+              "ref": "material_supported_at_target",
+              "bindings": {
+                "material": "material",
+                "target": "target"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "transfer_committed",
+            "left": {
+              "source": "observation",
+              "ref": "handoff_committed",
+              "bindings": {
+                "material": "material",
+                "target": "target"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "actual_motion_stopped",
+            "left": {
+              "source": "signal",
+              "ref": "stopped"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          }
+        ],
+        "description": "以目标实际支承和交接事实验收；中途失败保留已经发生的夹持与位移。"
+      },
+      "expected_effects": [
+        "一个顶层请求串行完成取料、移离、搬运、放置、释放与交接提交；内部阶段不创建新顶层请求。"
+      ],
+      "failure_policy": "preserve_observed_state_and_report"
+    }
+  ]
+}

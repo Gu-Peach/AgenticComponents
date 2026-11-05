@@ -1,0 +1,30 @@
+{
+  "schema_version": "ac-flow-batch/0.2",
+  "scene_id": "S11",
+  "jobs": [
+    {
+      "id": "J01",
+      "material": "M01",
+      "input": "F1.work",
+      "target": "F1.work"
+    },
+    {
+      "id": "J02",
+      "material": "M02",
+      "input": "F1.work",
+      "target": "F1.work"
+    },
+    {
+      "id": "J03",
+      "material": "M03",
+      "input": "F1.work",
+      "target": "F1.work"
+    },
+    {
+      "id": "J04",
+      "material": "M04",
+      "input": "F1.work",
+      "target": "F1.work"
+    }
+  ]
+}

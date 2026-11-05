@@ -1,0 +1,30 @@
+{
+  "schema_version": "ac-flow-batch/0.2",
+  "scene_id": "S05",
+  "jobs": [
+    {
+      "id": "J01",
+      "material": "M01",
+      "input": "C1.entry",
+      "target": "C1.exit"
+    },
+    {
+      "id": "J02",
+      "material": "M02",
+      "input": "C1.entry",
+      "target": "C1.exit"
+    },
+    {
+      "id": "J03",
+      "material": "M03",
+      "input": "C1.entry",
+      "target": "C1.exit"
+    },
+    {
+      "id": "J04",
+      "material": "M04",
+      "input": "C1.entry",
+      "target": "C1.exit"
+    }
+  ]
+}

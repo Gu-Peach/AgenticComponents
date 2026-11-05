@@ -1,0 +1,80 @@
+{
+  "schema_version": "ac-flow-task/0.2",
+  "id": "batch_goal",
+  "scene_id": "S09",
+  "description": "六件双机加工与单机器人互斥服务",
+  "expected": {
+    "material_ids": [
+      "M01",
+      "M02",
+      "M03",
+      "M04",
+      "M05",
+      "M06"
+    ],
+    "material_count": 6,
+    "pallet_ids": [],
+    "pallet_count": 0
+  },
+  "all": [
+    {
+      "kind": "all_delivered_once",
+      "items": [
+        {
+          "material": "M01",
+          "target": "C2.exit"
+        },
+        {
+          "material": "M02",
+          "target": "C2.exit"
+        },
+        {
+          "material": "M03",
+          "target": "C2.exit"
+        },
+        {
+          "material": "M04",
+          "target": "C2.exit"
+        },
+        {
+          "material": "M05",
+          "target": "C2.exit"
+        },
+        {
+          "material": "M06",
+          "target": "C2.exit"
+        }
+      ],
+      "evidence": "actual_target_handoff_before_external_departure"
+    },
+    {
+      "kind": "required_operations",
+      "recipes": {
+        "machining_a": {
+          "station": "MC1",
+          "evidence": "request_material_recipe_matching_operation_record"
+        },
+        "machining_b": {
+          "station": "MC2",
+          "evidence": "request_material_recipe_matching_operation_record"
+        }
+      },
+      "rule": "each_job_declared_recipe_or_all_route_recipes"
+    },
+    {
+      "kind": "tools_empty"
+    },
+    {
+      "kind": "drives_stopped"
+    },
+    {
+      "kind": "no_active_requests"
+    },
+    {
+      "kind": "no_pending_jobs"
+    },
+    {
+      "kind": "operations_released"
+    }
+  ]
+}

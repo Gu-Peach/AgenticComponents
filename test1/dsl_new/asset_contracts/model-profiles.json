@@ -1,0 +1,143 @@
+{
+  "schema_version": "concrete-model-profiles/1.0",
+  "profiles": [
+    {
+      "id": "robot_UR10",
+      "template_alias": "robot_arm",
+      "device_spec_id": "robot_UR10",
+      "contract_version": "1.4",
+      "definition_version": "0.1.0",
+      "source": "../../../apps/public/modles/robot_UR10/schema.json",
+      "source_sha256": "8ea961a9700821dc9743b58af6e6fa395917718095eb2c54d0b07015bf71c9cd",
+      "readme": "../../../apps/public/modles/robot_UR10/README.md",
+      "readme_sha256": "e7f98efe2f638fb1c4b1373ace41d0c274e2e4312fa5f545ee617a2dcd16c25a",
+      "model": "../../../apps/public/modles/robot_UR10/robot_UR10.glb",
+      "model_sha256": "75b9d773c59f477fcf3667ecd3f54e8c96fc3fa964b5e89a0ca6cce04215ea5a",
+      "selection": "reference_only; explicit instance/profile adapter pending",
+      "inherit_missing_template_fields": false,
+      "implemented_claim_scope": "concrete model and supported executor, never automatically inherited by generic template",
+      "template_ref": "robot.articulated@1",
+      "payload_contract_ref": "robot-command@1",
+      "payload_schema_source": "../../../apps/src/contracts/robot-command.ts",
+      "payload_schema_sha256": "4e2d48e9be14ad2c9a7d38ff9ca06db167102596a409810b23ed93a44fc0aa48",
+      "control_source": "manual API through typed command gateway; PLC task triggering not implemented",
+      "top_level_payload_behaviors": [
+        "move_joints",
+        "move_to_pose",
+        "execute_job",
+        "pick_and_place",
+        "grip",
+        "release"
+      ],
+      "step_kinds": [
+        "move_joints",
+        "move_to_pose",
+        "grip",
+        "release",
+        "wait_time",
+        "wait_signal",
+        "set_output"
+      ],
+      "step_only_behaviors": [
+        "wait_time",
+        "wait_signal",
+        "set_output"
+      ],
+      "control_channel_behaviors": [
+        "pause_pick_intake",
+        "resume_pick_intake",
+        "hold_motion",
+        "resume_motion"
+      ],
+      "payload_only_not_device_behavior": [
+        "move_joints"
+      ],
+      "scope": [
+        "single robot",
+        "position IK + joint PTP",
+        "single selected workpiece in a bounded physics session",
+        "no automatic collision avoidance or full scene physics"
+      ]
+    },
+    {
+      "id": "Conveyor_aankws",
+      "template_alias": "conveyor",
+      "device_spec_id": "Conveyor_aankws",
+      "contract_version": "1.3",
+      "definition_version": "0.6.0",
+      "source": "../../../apps/public/modles/Conveyor_aankws/schema.json",
+      "source_sha256": "e353ca4a3687901c8325c0ccf8acf7eecaae233bea9f8a4fb6789a93a764b5ad",
+      "readme": "../../../apps/public/modles/Conveyor_aankws/README.md",
+      "readme_sha256": "ec057ee1f6a0587cffb82471d9e4680e1d34fd7af7978b2fee87976e9b53fd60",
+      "model": "../../../apps/public/modles/Conveyor_aankws/Conveyor_aankws.glb",
+      "model_sha256": "46a159554c0f5d5eda8073d749a5d94dc9b23a2f15fbe8204b56eb66766c767d",
+      "selection": "reference_only; explicit instance/profile adapter pending",
+      "inherit_missing_template_fields": false,
+      "implemented_claim_scope": "concrete model and supported executor, never automatically inherited by generic template",
+      "template_ref": "conveyor.continuous-contact@1",
+      "scope": {
+        "status": "implemented",
+        "scope": "one_static_conveyor_and_one_selected_dynamic_workpiece",
+        "legacy_preview_adapter_available": false
+      },
+      "supported_io": {
+        "inputs": [
+          "runTag",
+          "speedTag"
+        ],
+        "outputs": [
+          "actual_speed",
+          "runningTag",
+          "encoderTag",
+          "part_ready",
+          "accepted",
+          "busy",
+          "done",
+          "error"
+        ],
+        "not_implemented": [
+          "release_waiting_material",
+          "pulseTag",
+          "request_id",
+          "behavior_code",
+          "subject_id",
+          "reset",
+          "result_id",
+          "error_code"
+        ],
+        "note": "到达观察任务通过场景会话 API 关联 requestId/subjectId，尚无 PLC 数字身份映射。"
+      },
+      "behavior_adapter_status": "pending_adapter even though bounded scene template runs",
+      "completion_boundaries": [
+        "arrival is not downstream handoff",
+        "arrival contract does not imply stopped",
+        "one shared surface cannot independently position different loads"
+      ]
+    },
+    {
+      "id": "engine_block",
+      "template_alias": "material",
+      "device_spec_id": "engine_block",
+      "contract_version": "1.3",
+      "definition_version": "0.1.0",
+      "source": "../../../apps/public/modles/engine_block/schema.json",
+      "source_sha256": "33d84efa0d83ebb03d84c3be3fb40bc1e3e9e5a5fb1473942e296a45659ed19b",
+      "readme": "../../../apps/public/modles/engine_block/README.md",
+      "readme_sha256": "77dd134f55381e9928ab22fe816f3326fc37524da9ab16aa55da1f73f10cc1c1",
+      "model": "../../../apps/public/modles/engine_block/engine_block.glb",
+      "model_sha256": "7e279b484bc6dd6a63a177c4c9ef36e936705cba1c6c06841adba615223e2d72",
+      "selection": "reference_only; explicit instance/profile adapter pending",
+      "inherit_missing_template_fields": false,
+      "implemented_claim_scope": "concrete model and supported executor, never automatically inherited by generic template",
+      "template_ref": "workpiece.rigid-body@1",
+      "scope": [
+        "passive dynamic rigid body",
+        "no autonomous commands or behaviors",
+        "mass_kg must be supplied explicitly"
+      ],
+      "signal_count": 0,
+      "behavior_count": 0,
+      "mass_has_default": false
+    }
+  ]
+}

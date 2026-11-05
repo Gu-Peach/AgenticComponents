@@ -1,0 +1,26 @@
+# ac-declarative/0.1 设计示例。不能交给当前ac-python前端或Python解释器执行。
+# 主线每拍共同推进；停稳后R1、R2并行处理各自工位上的不同托盘。
+with process("S01", version="ac-declarative/0.1"):
+    with seq("root"):
+        with repeat("indexed_cycles", count=batch.pallet_count + 2):
+            wait_for("line_can_advance", fact("line_ready_to_index", line=C1), timeout=seconds(30))
+            invoke("advance_main_line", C1, "advance_pitch", inventory=batch.pallets)
+
+            with par("unload_both_stations", join="all"):
+                with seq("station_R1"):
+                    wait_for("snapshot_R1", fact("station_inventory_valid", station=C1.station1), timeout=seconds(30))
+                    with repeat("unload_A", over=items_at(C1.station1, category="A"), bind="item_A", limit=batch.max_items_per_pallet):
+                        invoke("R1_pick_place", R1, "transfer_material", material=item_A.material, source=item_A.source, target=C2.entry)
+                        invoke("R1_retreat", R1, "move_to_location", target=R1.home)
+                        invoke("C2_outfeed", C2, "transport_to_exit", material=item_A.material, speed_mps=quantity(0.2, "m/s"))
+                        wait_for("A_received", fact("output_departed", material=item_A.material, device=C2), timeout=seconds(30))
+
+                with seq("station_R2"):
+                    wait_for("snapshot_R2", fact("station_inventory_valid", station=C1.station2), timeout=seconds(30))
+                    with repeat("unload_B", over=items_at(C1.station2, category="B"), bind="item_B", limit=batch.max_items_per_pallet):
+                        invoke("R2_pick_place", R2, "transfer_material", material=item_B.material, source=item_B.source, target=C3.entry)
+                        invoke("R2_retreat", R2, "move_to_location", target=R2.home)
+                        invoke("C3_outfeed", C3, "transport_to_exit", material=item_B.material, speed_mps=quantity(0.2, "m/s"))
+                        wait_for("B_received", fact("output_departed", material=item_B.material, device=C3), timeout=seconds(30))
+
+        wait_for("batch_acceptance", fact("batch_goal_satisfied", specification="task-spec.json"), timeout=seconds(30))

@@ -1,0 +1,725 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DeviceSpec 1.1 declaration subset with pending execution",
+  "type": "object",
+  "required": [
+    "contract_version",
+    "schema_type",
+    "schema_id",
+    "device_spec_id",
+    "version",
+    "device_type",
+    "display_name",
+    "description",
+    "asset",
+    "params_schema",
+    "interfaces",
+    "signal_ports",
+    "transport_behaviors",
+    "type_specific_contract",
+    "runtime_contract",
+    "runtime_execution_contract"
+  ],
+  "properties": {
+    "contract_version": {
+      "enum": [
+        "1.1",
+        "1.2",
+        "1.3",
+        "1.4"
+      ]
+    },
+    "schema_type": {
+      "const": "DeviceSpec"
+    },
+    "schema_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "device_spec_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "device_type": {
+      "enum": [
+        "conveyor",
+        "lift_table",
+        "material_source_station",
+        "robot_arm",
+        "rotary_table",
+        "storage_rack",
+        "workpiece",
+        "workpiece_carrier"
+      ]
+    },
+    "display_name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "asset": {
+      "type": "object",
+      "required": [
+        "model_format",
+        "model_key"
+      ],
+      "properties": {
+        "model_format": {
+          "const": "glb"
+        },
+        "model_key": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "params_schema": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "type",
+          "required",
+          "mutability",
+          "description"
+        ],
+        "properties": {
+          "type": {
+            "enum": [
+              "number",
+              "integer",
+              "boolean",
+              "string",
+              "enum"
+            ]
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "mutability": {
+            "enum": [
+              "stopped_only",
+              "runtime_setpoint"
+            ]
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "default": {
+            "type": [
+              "boolean",
+              "number",
+              "string"
+            ]
+          },
+          "min": {
+            "type": "number"
+          },
+          "max": {
+            "type": "number"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "options": {
+            "type": "array",
+            "minItems": 1
+          },
+          "required_when": {
+            "type": "object",
+            "required": [
+              "parameter",
+              "equals"
+            ],
+            "properties": {
+              "parameter": {
+                "type": "string"
+              },
+              "equals": {
+                "type": [
+                  "boolean",
+                  "number",
+                  "string"
+                ]
+              }
+            },
+            "additionalProperties": false
+          },
+          "legacy_aliases": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "enum"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "options"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "interfaces": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "interface_id",
+          "name",
+          "capabilities"
+        ],
+        "properties": {
+          "interface_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "local_frame_pending": {
+            "const": true
+          },
+          "local_frame": {
+            "type": "object"
+          },
+          "local_frame_rule": {
+            "type": "object"
+          },
+          "capabilities": {
+            "type": "object",
+            "required": [
+              "snap"
+            ],
+            "properties": {
+              "snap": {
+                "type": "object",
+                "required": [
+                  "role",
+                  "accepts"
+                ],
+                "properties": {
+                  "role": {
+                    "type": "string"
+                  },
+                  "accepts": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "signal_ports": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "port_id",
+          "direction",
+          "value_type",
+          "plc_type",
+          "description",
+          "signal_role",
+          "retention"
+        ],
+        "properties": {
+          "port_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "direction": {
+            "enum": [
+              "input",
+              "output"
+            ]
+          },
+          "value_type": {
+            "enum": [
+              "boolean",
+              "integer",
+              "number"
+            ]
+          },
+          "plc_type": {
+            "enum": [
+              "BOOL",
+              "INT",
+              "DINT",
+              "REAL"
+            ]
+          },
+          "description": {
+            "type": "string"
+          },
+          "signal_role": {
+            "type": "string",
+            "minLength": 1
+          },
+          "retention": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "transport_behaviors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "behavior_id",
+          "display_name",
+          "behavior_type",
+          "schedulable",
+          "executor_ref",
+          "implementation_status",
+          "arguments_schema",
+          "trigger",
+          "input_signals",
+          "output_signals",
+          "condition_contract",
+          "completion_contract"
+        ],
+        "properties": {
+          "behavior_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "display_name": {
+            "type": "string"
+          },
+          "behavior_type": {
+            "enum": [
+              "action",
+              "composite",
+              "service",
+              "internal",
+              "observer",
+              "passive"
+            ]
+          },
+          "schedulable": {
+            "type": "boolean"
+          },
+          "executor_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "implementation_status": {
+            "enum": [
+              "pending_adapter",
+              "implemented"
+            ]
+          },
+          "arguments_schema": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "required": [
+                "type",
+                "required",
+                "mutability",
+                "description"
+              ],
+              "properties": {
+                "type": {
+                  "enum": [
+                    "number",
+                    "integer",
+                    "boolean",
+                    "string",
+                    "enum"
+                  ]
+                },
+                "required": {
+                  "type": "boolean"
+                },
+                "mutability": {
+                  "enum": [
+                    "stopped_only",
+                    "runtime_setpoint"
+                  ]
+                },
+                "description": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "default": {
+                  "type": [
+                    "boolean",
+                    "number",
+                    "string"
+                  ]
+                },
+                "min": {
+                  "type": "number"
+                },
+                "max": {
+                  "type": "number"
+                },
+                "unit": {
+                  "type": "string"
+                },
+                "options": {
+                  "type": "array",
+                  "minItems": 1
+                },
+                "required_when": {
+                  "type": "object",
+                  "required": [
+                    "parameter",
+                    "equals"
+                  ],
+                  "properties": {
+                    "parameter": {
+                      "type": "string"
+                    },
+                    "equals": {
+                      "type": [
+                        "boolean",
+                        "number",
+                        "string"
+                      ]
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "legacy_aliases": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "additionalProperties": false,
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "type": {
+                        "const": "enum"
+                      }
+                    }
+                  },
+                  "then": {
+                    "required": [
+                      "options"
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "trigger": {
+            "type": "object"
+          },
+          "input_signals": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "output_signals": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "condition_contract": {
+            "type": "object",
+            "required": [
+              "preconditions",
+              "sustaining_conditions",
+              "missing_value_policy"
+            ],
+            "properties": {
+              "preconditions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "label",
+                    "source",
+                    "key",
+                    "equals"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "label": {
+                      "type": "string"
+                    },
+                    "source": {
+                      "enum": [
+                        "parameter",
+                        "observation",
+                        "authorization"
+                      ]
+                    },
+                    "key": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "equals": {
+                      "type": [
+                        "boolean",
+                        "number",
+                        "string"
+                      ]
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "sustaining_conditions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "label",
+                    "source",
+                    "key",
+                    "equals"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "label": {
+                      "type": "string"
+                    },
+                    "source": {
+                      "enum": [
+                        "parameter",
+                        "observation",
+                        "authorization"
+                      ]
+                    },
+                    "key": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "equals": {
+                      "type": [
+                        "boolean",
+                        "number",
+                        "string"
+                      ]
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "missing_value_policy": {
+                "const": "unknown_blocks_execution"
+              }
+            },
+            "additionalProperties": false
+          },
+          "completion_contract": {
+            "type": "object",
+            "required": [
+              "mode",
+              "description",
+              "checks",
+              "timer_or_progress_is_success"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "observed",
+                  "continuous"
+                ]
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              },
+              "checks": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "label",
+                    "source",
+                    "key",
+                    "equals"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "label": {
+                      "type": "string"
+                    },
+                    "source": {
+                      "enum": [
+                        "parameter",
+                        "observation",
+                        "authorization"
+                      ]
+                    },
+                    "key": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "equals": {
+                      "type": [
+                        "boolean",
+                        "number",
+                        "string"
+                      ]
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "timer_or_progress_is_success": {
+                "const": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "type_specific_contract": {
+      "type": "object"
+    },
+    "runtime_contract": {
+      "type": "object",
+      "required": [
+        "observation_definitions",
+        "authorization_definitions"
+      ],
+      "properties": {
+        "observation_definitions": {
+          "type": "object"
+        },
+        "authorization_definitions": {
+          "type": "object"
+        }
+      }
+    },
+    "runtime_execution_contract": {
+      "type": "object",
+      "required": [
+        "signal_management",
+        "real_execution_available"
+      ],
+      "properties": {
+        "real_execution_available": {
+          "const": false
+        },
+        "signal_management": {
+          "type": "object",
+          "required": [
+            "owner",
+            "status",
+            "namespace",
+            "definition_source",
+            "spatial_binding",
+            "write_policy",
+            "plc_mapping",
+            "sampling",
+            "unknown_policy"
+          ],
+          "properties": {
+            "owner": {
+              "const": "simulation_engine"
+            },
+            "status": {
+              "const": "pending_engine"
+            },
+            "namespace": {
+              "const": "instance_id/port_id"
+            },
+            "definition_source": {
+              "const": "signal_ports"
+            },
+            "spatial_binding": {
+              "const": false
+            },
+            "write_policy": {
+              "const": "single_writer_per_input"
+            },
+            "plc_mapping": {
+              "const": "instance_bindings"
+            },
+            "sampling": {
+              "const": "simulation_step_snapshot"
+            },
+            "unknown_policy": {
+              "const": "invalid_until_provider_ready"
+            }
+          }
+        }
+      }
+    }
+  },
+  "not": {
+    "anyOf": [
+      {
+        "required": [
+          "behaviors"
+        ]
+      },
+      {
+        "required": [
+          "parameters"
+        ]
+      },
+      {
+        "required": [
+          "spatial_interfaces"
+        ]
+      },
+      {
+        "required": [
+          "physical_interfaces"
+        ]
+      },
+      {
+        "required": [
+          "process_ports"
+        ]
+      },
+      {
+        "required": [
+          "interface_bindings"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,781 @@
+{
+  "schema_version": "asset-contract/0.1",
+  "id": "material",
+  "version": "0.1.0",
+  "label": "物料",
+  "category": "passive",
+  "description": "具有唯一身份、物理属性及可观察持有和支承状态的被动对象；运动由外部执行器负责。",
+  "implementation_status": "contract_only",
+  "protocol_imports": [
+    "passive_v1"
+  ],
+  "features": [],
+  "instance_requirements": [
+    "同一物料实例只能由一个权威世界状态维护持有、位置与支承。",
+    "身份必须跨抓取、运输和放置保持；观测来源必须区分无效与 false。",
+    "GLB 节点、碰撞形状及质量标定由实例适配器提供。"
+  ],
+  "parameters": [
+    {
+      "id": "mass_kg",
+      "type": "number",
+      "unit": "kg",
+      "description": "实验物料质量，实际实例需明确赋值。",
+      "default": 1.0,
+      "minimum": 0.001
+    },
+    {
+      "id": "length_m",
+      "type": "number",
+      "unit": "m",
+      "description": "实验物料包络长度。",
+      "default": 0.1,
+      "minimum": 0.001
+    },
+    {
+      "id": "width_m",
+      "type": "number",
+      "unit": "m",
+      "description": "实验物料包络宽度。",
+      "default": 0.1,
+      "minimum": 0.001
+    },
+    {
+      "id": "height_m",
+      "type": "number",
+      "unit": "m",
+      "description": "实验物料包络高度。",
+      "default": 0.1,
+      "minimum": 0.001
+    },
+    {
+      "id": "graspable",
+      "type": "boolean",
+      "unit": "1",
+      "description": "是否允许已适配夹具抓取。",
+      "default": true
+    },
+    {
+      "id": "material_class",
+      "type": "string",
+      "unit": "1",
+      "description": "类型兼容检查使用的稳定分类。",
+      "default": "workpiece"
+    }
+  ],
+  "signal_ports": [
+    {
+      "id": "exists",
+      "type": "boolean",
+      "unit": "1",
+      "direction": "output",
+      "retention": "state",
+      "description": "本物料实例已在世界中登记且存在。",
+      "writer": "adapter"
+    },
+    {
+      "id": "held",
+      "type": "boolean",
+      "unit": "1",
+      "direction": "output",
+      "retention": "state",
+      "description": "具有实际有效持有关系。",
+      "writer": "adapter"
+    },
+    {
+      "id": "supported",
+      "type": "boolean",
+      "unit": "1",
+      "direction": "output",
+      "retention": "state",
+      "description": "具有实际有效支承；不等同于目标交接完成。",
+      "writer": "adapter"
+    },
+    {
+      "id": "holder_id",
+      "type": "string",
+      "unit": "1",
+      "direction": "output",
+      "retention": "state",
+      "description": "当前有效持有者 ID；无夹持时为空字符串。",
+      "writer": "adapter"
+    },
+    {
+      "id": "location_id",
+      "type": "location_ref",
+      "unit": "1",
+      "direction": "output",
+      "retention": "state",
+      "description": "当前可确认的工艺位置；未知时标无效。",
+      "writer": "adapter"
+    }
+  ],
+  "observations": [
+    {
+      "id": "at_source",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "world_observer",
+      "description": "本物料实例当前位于并由指定源位置支承；源位置绑定到实际世界观测。",
+      "arguments": [
+        "source"
+      ],
+      "argument_types": {
+        "source": "location_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "grasp_compatible",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "device_adapter",
+      "description": "指定持有者的夹具、载荷和捕获条件适用于本物料；不能由发出抓取命令置真。",
+      "arguments": [
+        "holder"
+      ],
+      "argument_types": {
+        "holder": "string"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "no_conflicting_holder",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "handoff_service",
+      "description": "本物料没有与指定持有者冲突的有效夹持或正在进行的交接。",
+      "arguments": [
+        "holder"
+      ],
+      "argument_types": {
+        "holder": "string"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "held_by_holder",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "world_observer",
+      "description": "实际夹持关系已建立且持有者身份等于指定 holder；不要求物料此时已经移离源区。",
+      "arguments": [
+        "holder"
+      ],
+      "argument_types": {
+        "holder": "string"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "holding_relation_valid",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "device_adapter",
+      "description": "指定持有者与本物料的实际约束或已标定持有关系仍然有效。",
+      "arguments": [
+        "holder"
+      ],
+      "argument_types": {
+        "holder": "string"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "target_compatible",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "handoff_service",
+      "description": "指定位置存在，且支承、尺寸、物料类型和容量规则允许接收本物料。",
+      "arguments": [
+        "target"
+      ],
+      "argument_types": {
+        "target": "location_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "placed_at_target",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "world_observer",
+      "description": "本物料实际位于指定目标范围，具有目标有效支承，释放后满足配置的稳定条件。",
+      "arguments": [
+        "target"
+      ],
+      "argument_types": {
+        "target": "location_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "placement_committed",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "handoff_service",
+      "description": "本物料到指定目标的交接已核对实际放置证据并提交；业务归属、占用与实际支承一致。",
+      "arguments": [
+        "target"
+      ],
+      "argument_types": {
+        "target": "location_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "transport_to_target_observed",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "world_observer",
+      "description": "外部输送执行器确实将本物料送到指定目标；证据关联本物料身份及当前外部运输上下文。",
+      "arguments": [
+        "target"
+      ],
+      "argument_types": {
+        "target": "location_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    }
+  ],
+  "authorizations": [
+    {
+      "id": "pickup_allowed",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "resource_service",
+      "description": "指定持有者被允许从指定源位置抓取本物料；来源是已授予许可。",
+      "arguments": [
+        "holder",
+        "source"
+      ],
+      "argument_types": {
+        "holder": "string",
+        "source": "location_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "placement_allowed",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "resource_service",
+      "description": "指定持有者被允许将本物料交给指定目标；许可覆盖当前交接。",
+      "arguments": [
+        "holder",
+        "target"
+      ],
+      "argument_types": {
+        "holder": "string",
+        "target": "location_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    }
+  ],
+  "spatial_interfaces": [
+    {
+      "id": "grasp_reference",
+      "role": "tool",
+      "geometry_binding": "required_per_instance",
+      "requires_features": [],
+      "description": "夹具捕获参考，由实例适配器标定。"
+    },
+    {
+      "id": "support_reference",
+      "role": "support",
+      "geometry_binding": "required_per_instance",
+      "requires_features": [],
+      "description": "支承判定使用的形状与参考面。"
+    }
+  ],
+  "behaviors": [
+    {
+      "id": "be_picked",
+      "label": "被外部执行器抓取",
+      "kind": "passive",
+      "invocable": false,
+      "protocol": "passive_v1",
+      "executor_ref": "observer.material.be_picked@0.1",
+      "requires_features": [],
+      "arguments": [
+        {
+          "id": "holder",
+          "type": "string",
+          "unit": "1",
+          "description": "外部执行器的稳定实例 ID，不是显示名称。"
+        },
+        {
+          "id": "source",
+          "type": "location_ref",
+          "unit": "1",
+          "description": "实际取料源位置。"
+        }
+      ],
+      "command_bindings": [],
+      "preconditions": [
+        {
+          "id": "exists",
+          "left": {
+            "source": "signal",
+            "ref": "exists"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "graspable",
+          "left": {
+            "source": "parameter",
+            "ref": "graspable"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "at_source",
+          "left": {
+            "source": "observation",
+            "ref": "at_source",
+            "bindings": {
+              "source": "source"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "grasp_compatible",
+          "left": {
+            "source": "observation",
+            "ref": "grasp_compatible",
+            "bindings": {
+              "holder": "holder"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "no_conflicting_holder",
+          "left": {
+            "source": "observation",
+            "ref": "no_conflicting_holder",
+            "bindings": {
+              "holder": "holder"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "pickup_allowed",
+          "left": {
+            "source": "authorization",
+            "ref": "pickup_allowed",
+            "bindings": {
+              "holder": "holder",
+              "source": "source"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        }
+      ],
+      "sustaining_conditions": [],
+      "completion": {
+        "mode": "evidence",
+        "checks": [
+          {
+            "id": "held",
+            "left": {
+              "source": "signal",
+              "ref": "held"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "held_by_holder",
+            "left": {
+              "source": "observation",
+              "ref": "held_by_holder",
+              "bindings": {
+                "holder": "holder"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "holding_relation_valid",
+            "left": {
+              "source": "observation",
+              "ref": "holding_relation_valid",
+              "bindings": {
+                "holder": "holder"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          }
+        ],
+        "description": "观察外部抓取的结果，不接受自主请求，也不通过写状态建立夹持。"
+      },
+      "expected_effects": [
+        "外部夹具建立实际持有关系；物料服务根据证据更新持有者。",
+        "抓取与移离分开；该观察不自动清除仍存在的源区域接触或占用。"
+      ],
+      "failure_policy": "report_inconsistent_observation"
+    },
+    {
+      "id": "observe_carried",
+      "label": "观察被携带状态",
+      "kind": "observer",
+      "invocable": false,
+      "protocol": "passive_v1",
+      "executor_ref": "observer.material.observe_carried@0.1",
+      "requires_features": [],
+      "arguments": [
+        {
+          "id": "holder",
+          "type": "string",
+          "unit": "1",
+          "description": "外部执行器的稳定实例 ID，不是显示名称。"
+        }
+      ],
+      "command_bindings": [],
+      "preconditions": [
+        {
+          "id": "exists",
+          "left": {
+            "source": "signal",
+            "ref": "exists"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        }
+      ],
+      "sustaining_conditions": [
+        {
+          "id": "holding_relation_valid",
+          "left": {
+            "source": "observation",
+            "ref": "holding_relation_valid",
+            "bindings": {
+              "holder": "holder"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        }
+      ],
+      "completion": {
+        "mode": "evidence",
+        "checks": [
+          {
+            "id": "held",
+            "left": {
+              "source": "signal",
+              "ref": "held"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "held_by_holder",
+            "left": {
+              "source": "observation",
+              "ref": "held_by_holder",
+              "bindings": {
+                "holder": "holder"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          }
+        ],
+        "description": "这是当前有效持有快照，持续携带没有本体任务完成点或 done 信号。"
+      },
+      "expected_effects": [
+        "实际姿态随外部持有者及其约束更新。"
+      ],
+      "failure_policy": "report_inconsistent_observation"
+    },
+    {
+      "id": "be_placed",
+      "label": "被放置到目标",
+      "kind": "passive",
+      "invocable": false,
+      "protocol": "passive_v1",
+      "executor_ref": "observer.material.be_placed@0.1",
+      "requires_features": [],
+      "arguments": [
+        {
+          "id": "holder",
+          "type": "string",
+          "unit": "1",
+          "description": "外部执行器的稳定实例 ID，不是显示名称。"
+        },
+        {
+          "id": "target",
+          "type": "location_ref",
+          "unit": "1",
+          "description": "实际放置或输送目标位置。"
+        }
+      ],
+      "command_bindings": [],
+      "preconditions": [
+        {
+          "id": "held_by_holder",
+          "left": {
+            "source": "observation",
+            "ref": "held_by_holder",
+            "bindings": {
+              "holder": "holder"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "target_compatible",
+          "left": {
+            "source": "observation",
+            "ref": "target_compatible",
+            "bindings": {
+              "target": "target"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "placement_allowed",
+          "left": {
+            "source": "authorization",
+            "ref": "placement_allowed",
+            "bindings": {
+              "holder": "holder",
+              "target": "target"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        }
+      ],
+      "sustaining_conditions": [],
+      "completion": {
+        "mode": "evidence",
+        "checks": [
+          {
+            "id": "released",
+            "left": {
+              "source": "signal",
+              "ref": "held"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": false
+            }
+          },
+          {
+            "id": "supported",
+            "left": {
+              "source": "signal",
+              "ref": "supported"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "placed_at_target",
+            "left": {
+              "source": "observation",
+              "ref": "placed_at_target",
+              "bindings": {
+                "target": "target"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "placement_committed",
+            "left": {
+              "source": "observation",
+              "ref": "placement_committed",
+              "bindings": {
+                "target": "target"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          }
+        ],
+        "description": "解除夹持本身不算放置成功；自由掉落不能满足目标支承和交接证据。"
+      },
+      "expected_effects": [
+        "外部执行器解除持有后，由世界和交接服务确认目标支承与归属。"
+      ],
+      "failure_policy": "report_inconsistent_observation"
+    },
+    {
+      "id": "be_conveyed_to",
+      "label": "被输送至目标",
+      "kind": "passive",
+      "invocable": false,
+      "protocol": "passive_v1",
+      "executor_ref": "observer.material.be_conveyed_to@0.1",
+      "requires_features": [],
+      "arguments": [
+        {
+          "id": "target",
+          "type": "location_ref",
+          "unit": "1",
+          "description": "实际放置或输送目标位置。"
+        }
+      ],
+      "command_bindings": [],
+      "preconditions": [
+        {
+          "id": "exists",
+          "left": {
+            "source": "signal",
+            "ref": "exists"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "not_held",
+          "left": {
+            "source": "signal",
+            "ref": "held"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": false
+          }
+        },
+        {
+          "id": "target_compatible",
+          "left": {
+            "source": "observation",
+            "ref": "target_compatible",
+            "bindings": {
+              "target": "target"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        }
+      ],
+      "sustaining_conditions": [],
+      "completion": {
+        "mode": "evidence",
+        "checks": [
+          {
+            "id": "transport_to_target_observed",
+            "left": {
+              "source": "observation",
+              "ref": "transport_to_target_observed",
+              "bindings": {
+                "target": "target"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "placed_at_target",
+            "left": {
+              "source": "observation",
+              "ref": "placed_at_target",
+              "bindings": {
+                "target": "target"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          }
+        ],
+        "description": "观察指定物料的外部运输结果；输送机运行反馈不能替代物料到达证据。"
+      },
+      "expected_effects": [
+        "位置变化由外部输送执行器产生，物料观察器只读取结果。"
+      ],
+      "failure_policy": "report_inconsistent_observation"
+    }
+  ]
+}

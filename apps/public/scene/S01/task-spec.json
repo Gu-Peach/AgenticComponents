@@ -1,0 +1,132 @@
+{
+  "schema_version": "ac-flow-task/0.2",
+  "id": "batch_goal",
+  "scene_id": "S01",
+  "description": "三盘分类拆垛，两条绿色线分别出料，全部空盘出线",
+  "expected": {
+    "material_ids": [
+      "M01_1",
+      "M01_2",
+      "M01_3",
+      "M01_4",
+      "M02_1",
+      "M02_2",
+      "M02_3",
+      "M02_4",
+      "M03_1",
+      "M03_2",
+      "M03_3",
+      "M03_4"
+    ],
+    "material_count": 12,
+    "pallet_ids": [
+      "P01",
+      "P02",
+      "P03"
+    ],
+    "pallet_count": 3
+  },
+  "all": [
+    {
+      "kind": "category_deliveries",
+      "items": [
+        {
+          "material": "M01_1",
+          "category": "A",
+          "target": "C2.exit",
+          "handler": "R1"
+        },
+        {
+          "material": "M01_3",
+          "category": "A",
+          "target": "C2.exit",
+          "handler": "R1"
+        },
+        {
+          "material": "M01_2",
+          "category": "B",
+          "target": "C3.exit",
+          "handler": "R2"
+        },
+        {
+          "material": "M01_4",
+          "category": "B",
+          "target": "C3.exit",
+          "handler": "R2"
+        },
+        {
+          "material": "M02_1",
+          "category": "A",
+          "target": "C2.exit",
+          "handler": "R1"
+        },
+        {
+          "material": "M02_3",
+          "category": "A",
+          "target": "C2.exit",
+          "handler": "R1"
+        },
+        {
+          "material": "M02_2",
+          "category": "B",
+          "target": "C3.exit",
+          "handler": "R2"
+        },
+        {
+          "material": "M02_4",
+          "category": "B",
+          "target": "C3.exit",
+          "handler": "R2"
+        },
+        {
+          "material": "M03_1",
+          "category": "A",
+          "target": "C2.exit",
+          "handler": "R1"
+        },
+        {
+          "material": "M03_3",
+          "category": "A",
+          "target": "C2.exit",
+          "handler": "R1"
+        },
+        {
+          "material": "M03_2",
+          "category": "B",
+          "target": "C3.exit",
+          "handler": "R2"
+        },
+        {
+          "material": "M03_4",
+          "category": "B",
+          "target": "C3.exit",
+          "handler": "R2"
+        }
+      ]
+    },
+    {
+      "kind": "all_pallets_empty_and_exited",
+      "ids": [
+        "P01",
+        "P02",
+        "P03"
+      ],
+      "line": "C1"
+    },
+    {
+      "kind": "tools_empty"
+    },
+    {
+      "kind": "drives_stopped"
+    },
+    {
+      "kind": "no_active_requests"
+    },
+    {
+      "kind": "no_pending_jobs"
+    },
+    {
+      "kind": "operations_released"
+    }
+  ]
+}

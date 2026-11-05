@@ -1,0 +1,55 @@
+{
+  "schema_version": "ac-flow-task/0.2",
+  "id": "batch_goal",
+  "scene_id": "S10",
+  "description": "三托盘各四件的批次码垛与换盘",
+  "expected": {
+    "material_ids": [
+      "M01_1",
+      "M01_2",
+      "M01_3",
+      "M01_4",
+      "M02_1",
+      "M02_2",
+      "M02_3",
+      "M02_4",
+      "M03_1",
+      "M03_2",
+      "M03_3",
+      "M03_4"
+    ],
+    "material_count": 12,
+    "pallet_ids": [
+      "P01",
+      "P02",
+      "P03"
+    ],
+    "pallet_count": 3
+  },
+  "all": [
+    {
+      "kind": "all_pallets_loaded_and_departed",
+      "ids": [
+        "P01",
+        "P02",
+        "P03"
+      ],
+      "manifest": "pallets.items"
+    },
+    {
+      "kind": "tools_empty"
+    },
+    {
+      "kind": "drives_stopped"
+    },
+    {
+      "kind": "no_active_requests"
+    },
+    {
+      "kind": "no_pending_jobs"
+    },
+    {
+      "kind": "operations_released"
+    }
+  ]
+}

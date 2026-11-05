@@ -1,0 +1,4167 @@
+{
+  "schema_version": "strict-device-binding-audit/1.0",
+  "asset_definition_valid": true,
+  "contract_binding_valid": false,
+  "executable": false,
+  "scenes": [
+    {
+      "scene": "S01",
+      "syntax_valid": true,
+      "contract_binding_valid": false,
+      "executable": false,
+      "calls": 7,
+      "errors": [
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "R1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "R1: position_tolerance_m, tcp_speed_mps",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "R2: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "R2: position_tolerance_m, tcp_speed_mps",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "C1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "C1: acceleration_mps2, carrier_speed_mps, max_carrier_load_kg, max_speed_mps, speed_tolerance, stop_speed_tolerance",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "C2: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "C2: acceleration_mps2, carrier_speed_mps, max_carrier_load_kg, max_speed_mps, speed_tolerance, stop_speed_tolerance",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "C3: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "C3: acceleration_mps2, carrier_speed_mps, max_carrier_load_kg, max_speed_mps, speed_tolerance, stop_speed_tolerance",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "P01: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "P01: max_payload_kg, slot_count",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M01_1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M01_1: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M01_2: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M01_2: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M01_3: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M01_3: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M01_4: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M01_4: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "P02: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "P02: max_payload_kg, slot_count",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M02_1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M02_1: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M02_2: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M02_2: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M02_3: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M02_3: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M02_4: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M02_4: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "P03: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "P03: max_payload_kg, slot_count",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M03_1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M03_1: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M03_2: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M03_2: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M03_3: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M03_3: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M03_4: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M03_4: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "C1.advance_pitch",
+          "source": {
+            "file": "processes/S01/process.py",
+            "line": 9,
+            "column": 17
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.transfer_material",
+          "source": {
+            "file": "processes/S01/process.py",
+            "line": 16,
+            "column": 37
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.move_to_location",
+          "source": {
+            "file": "processes/S01/process.py",
+            "line": 17,
+            "column": 37
+          }
+        },
+        {
+          "code": "ARGUMENTS_DIFFER_FROM_CONTRACT",
+          "message": "C2.transport_to_exit: missing=['subject_id'], unknown=['material', 'speed_mps']",
+          "source": {
+            "file": "processes/S01/process.py",
+            "line": 18,
+            "column": 33
+          }
+        },
+        {
+          "code": "ACTION_PAYLOAD_ADAPTER_REQUIRED",
+          "message": "C2.transport_to_exit: scalar arguments do not constitute the required model command payload",
+          "source": {
+            "file": "processes/S01/process.py",
+            "line": 18,
+            "column": 33
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R2.transfer_material",
+          "source": {
+            "file": "processes/S01/process.py",
+            "line": 25,
+            "column": 37
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R2.move_to_location",
+          "source": {
+            "file": "processes/S01/process.py",
+            "line": 26,
+            "column": 37
+          }
+        },
+        {
+          "code": "ARGUMENTS_DIFFER_FROM_CONTRACT",
+          "message": "C3.transport_to_exit: missing=['subject_id'], unknown=['material', 'speed_mps']",
+          "source": {
+            "file": "processes/S01/process.py",
+            "line": 27,
+            "column": 33
+          }
+        },
+        {
+          "code": "ACTION_PAYLOAD_ADAPTER_REQUIRED",
+          "message": "C3.transport_to_exit: scalar arguments do not constitute the required model command payload",
+          "source": {
+            "file": "processes/S01/process.py",
+            "line": 27,
+            "column": 33
+          }
+        }
+      ],
+      "blockers": [
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "R1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "R2"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "C1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "C2"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "C3"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "P01"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M01_1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M01_2"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M01_3"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M01_4"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "P02"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M02_1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M02_2"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M02_3"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M02_4"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "P03"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M03_1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M03_2"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M03_3"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M03_4"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "line_ready_to_index"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "station_inventory_valid"
+        },
+        {
+          "code": "PENDING_BEHAVIOR_IMPLEMENTATION",
+          "node": "c2_transport_to_exit_005",
+          "behavior": "transport_to_exit"
+        },
+        {
+          "code": "MODEL_SPECIFIC_PAYLOAD_BINDING_REQUIRED",
+          "node": "c2_transport_to_exit_005"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "output_departed"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "station_inventory_valid"
+        },
+        {
+          "code": "PENDING_BEHAVIOR_IMPLEMENTATION",
+          "node": "c3_transport_to_exit_014",
+          "behavior": "transport_to_exit"
+        },
+        {
+          "code": "MODEL_SPECIFIC_PAYLOAD_BINDING_REQUIRED",
+          "node": "c3_transport_to_exit_014"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "output_departed"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "batch_goal_satisfied"
+        }
+      ]
+    },
+    {
+      "scene": "S02",
+      "syntax_valid": true,
+      "contract_binding_valid": false,
+      "executable": false,
+      "calls": 11,
+      "errors": [
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "R1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "R1: position_tolerance_m, tcp_speed_mps",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "R2: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "R2: position_tolerance_m, tcp_speed_mps",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "R3: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "R3: position_tolerance_m, tcp_speed_mps",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "C1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "C1: acceleration_mps2, carrier_speed_mps, max_carrier_load_kg, max_speed_mps, speed_tolerance, stop_speed_tolerance",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "C2: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "C2: acceleration_mps2, carrier_speed_mps, max_carrier_load_kg, max_speed_mps, speed_tolerance, stop_speed_tolerance",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "C3: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "C3: acceleration_mps2, carrier_speed_mps, max_carrier_load_kg, max_speed_mps, speed_tolerance, stop_speed_tolerance",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "C4: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "C4: acceleration_mps2, carrier_speed_mps, max_carrier_load_kg, max_speed_mps, speed_tolerance, stop_speed_tolerance",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "P01: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "P01: max_payload_kg, slot_count",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "P02: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "P02: max_payload_kg, slot_count",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "P03: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "P03: max_payload_kg, slot_count",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "P04: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "P04: max_payload_kg, slot_count",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "P05: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "P05: max_payload_kg, slot_count",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "P06: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "P06: max_payload_kg, slot_count",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M01_1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M01_1: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M01_2: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M01_2: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M01_3: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M01_3: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M01_4: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M01_4: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M02_1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M02_1: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M02_2: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M02_2: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M02_3: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M02_3: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M02_4: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M02_4: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M03_1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M03_1: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M03_2: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M03_2: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M03_3: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M03_3: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M03_4: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M03_4: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M04_1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M04_1: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M04_2: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M04_2: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M04_3: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M04_3: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M04_4: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M04_4: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M05_1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M05_1: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M05_2: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M05_2: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M05_3: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M05_3: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M05_4: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M05_4: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M06_1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M06_1: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M06_2: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M06_2: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M06_3: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M06_3: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M06_4: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M06_4: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "C1.index_carriers",
+          "source": {
+            "file": "processes/S02/process.py",
+            "line": 9,
+            "column": 17
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.transfer_material",
+          "source": {
+            "file": "processes/S02/process.py",
+            "line": 16,
+            "column": 37
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.move_to_location",
+          "source": {
+            "file": "processes/S02/process.py",
+            "line": 17,
+            "column": 37
+          }
+        },
+        {
+          "code": "ARGUMENTS_DIFFER_FROM_CONTRACT",
+          "message": "C2.transport_to_exit: missing=['subject_id'], unknown=['material', 'speed_mps']",
+          "source": {
+            "file": "processes/S02/process.py",
+            "line": 18,
+            "column": 33
+          }
+        },
+        {
+          "code": "ACTION_PAYLOAD_ADAPTER_REQUIRED",
+          "message": "C2.transport_to_exit: scalar arguments do not constitute the required model command payload",
+          "source": {
+            "file": "processes/S02/process.py",
+            "line": 18,
+            "column": 33
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R2.transfer_material",
+          "source": {
+            "file": "processes/S02/process.py",
+            "line": 25,
+            "column": 37
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R2.move_to_location",
+          "source": {
+            "file": "processes/S02/process.py",
+            "line": 26,
+            "column": 37
+          }
+        },
+        {
+          "code": "ARGUMENTS_DIFFER_FROM_CONTRACT",
+          "message": "C3.transport_to_exit: missing=['subject_id'], unknown=['material', 'speed_mps']",
+          "source": {
+            "file": "processes/S02/process.py",
+            "line": 27,
+            "column": 33
+          }
+        },
+        {
+          "code": "ACTION_PAYLOAD_ADAPTER_REQUIRED",
+          "message": "C3.transport_to_exit: scalar arguments do not constitute the required model command payload",
+          "source": {
+            "file": "processes/S02/process.py",
+            "line": 27,
+            "column": 33
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R3.transfer_material",
+          "source": {
+            "file": "processes/S02/process.py",
+            "line": 34,
+            "column": 37
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R3.move_to_location",
+          "source": {
+            "file": "processes/S02/process.py",
+            "line": 35,
+            "column": 37
+          }
+        },
+        {
+          "code": "ARGUMENTS_DIFFER_FROM_CONTRACT",
+          "message": "C4.transport_to_exit: missing=['subject_id'], unknown=['material', 'speed_mps']",
+          "source": {
+            "file": "processes/S02/process.py",
+            "line": 36,
+            "column": 33
+          }
+        },
+        {
+          "code": "ACTION_PAYLOAD_ADAPTER_REQUIRED",
+          "message": "C4.transport_to_exit: scalar arguments do not constitute the required model command payload",
+          "source": {
+            "file": "processes/S02/process.py",
+            "line": 36,
+            "column": 33
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "C1.index_carriers",
+          "source": {
+            "file": "processes/S02/process.py",
+            "line": 39,
+            "column": 17
+          }
+        }
+      ],
+      "blockers": [
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "R1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "R2"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "R3"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "C1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "C2"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "C3"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "C4"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "P01"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "P02"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "P03"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "P04"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "P05"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "P06"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M01_1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M01_2"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M01_3"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M01_4"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M02_1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M02_2"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M02_3"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M02_4"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M03_1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M03_2"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M03_3"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M03_4"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M04_1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M04_2"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M04_3"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M04_4"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M05_1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M05_2"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M05_3"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M05_4"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M06_1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M06_2"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M06_3"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M06_4"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "line_ready_to_index"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "station_inventory_valid"
+        },
+        {
+          "code": "PENDING_BEHAVIOR_IMPLEMENTATION",
+          "node": "c2_transport_to_exit_030",
+          "behavior": "transport_to_exit"
+        },
+        {
+          "code": "MODEL_SPECIFIC_PAYLOAD_BINDING_REQUIRED",
+          "node": "c2_transport_to_exit_030"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "output_departed"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "station_inventory_valid"
+        },
+        {
+          "code": "PENDING_BEHAVIOR_IMPLEMENTATION",
+          "node": "c3_transport_to_exit_039",
+          "behavior": "transport_to_exit"
+        },
+        {
+          "code": "MODEL_SPECIFIC_PAYLOAD_BINDING_REQUIRED",
+          "node": "c3_transport_to_exit_039"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "output_departed"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "station_inventory_valid"
+        },
+        {
+          "code": "PENDING_BEHAVIOR_IMPLEMENTATION",
+          "node": "c4_transport_to_exit_048",
+          "behavior": "transport_to_exit"
+        },
+        {
+          "code": "MODEL_SPECIFIC_PAYLOAD_BINDING_REQUIRED",
+          "node": "c4_transport_to_exit_048"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "output_departed"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "wave_empty_and_clear"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "carriers_departed"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "batch_goal_satisfied"
+        }
+      ]
+    },
+    {
+      "scene": "S03",
+      "syntax_valid": true,
+      "contract_binding_valid": false,
+      "executable": false,
+      "calls": 7,
+      "errors": [
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "R1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "R1: position_tolerance_m, tcp_speed_mps",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "R2: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "R2: position_tolerance_m, tcp_speed_mps",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "LOOP: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "LOOP: acceleration_mps2, carrier_speed_mps, max_carrier_load_kg, max_speed_mps, speed_tolerance, stop_speed_tolerance",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "IN: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "IN: acceleration_mps2, carrier_speed_mps, max_carrier_load_kg, max_speed_mps, speed_tolerance, stop_speed_tolerance",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "OUT: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "OUT: acceleration_mps2, carrier_speed_mps, max_carrier_load_kg, max_speed_mps, speed_tolerance, stop_speed_tolerance",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M01: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M01: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M02: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M02: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M03: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M03: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M04: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M04: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M05: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M05: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M06: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M06: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "ARGUMENTS_DIFFER_FROM_CONTRACT",
+          "message": "IN.transport_to_exit: missing=['subject_id'], unknown=['material', 'speed_mps']",
+          "source": {
+            "file": "processes/S03/process.py",
+            "line": 10,
+            "column": 21
+          }
+        },
+        {
+          "code": "ACTION_PAYLOAD_ADAPTER_REQUIRED",
+          "message": "IN.transport_to_exit: scalar arguments do not constitute the required model command payload",
+          "source": {
+            "file": "processes/S03/process.py",
+            "line": 10,
+            "column": 21
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.transfer_material",
+          "source": {
+            "file": "processes/S03/process.py",
+            "line": 12,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.move_to_location",
+          "source": {
+            "file": "processes/S03/process.py",
+            "line": 13,
+            "column": 25
+          }
+        },
+        {
+          "code": "ARGUMENTS_DIFFER_FROM_CONTRACT",
+          "message": "LOOP.transport_to_exit: missing=['subject_id'], unknown=['material', 'speed_mps']",
+          "source": {
+            "file": "processes/S03/process.py",
+            "line": 17,
+            "column": 21
+          }
+        },
+        {
+          "code": "ACTION_PAYLOAD_ADAPTER_REQUIRED",
+          "message": "LOOP.transport_to_exit: scalar arguments do not constitute the required model command payload",
+          "source": {
+            "file": "processes/S03/process.py",
+            "line": 17,
+            "column": 21
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R2.transfer_material",
+          "source": {
+            "file": "processes/S03/process.py",
+            "line": 22,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R2.move_to_location",
+          "source": {
+            "file": "processes/S03/process.py",
+            "line": 23,
+            "column": 25
+          }
+        },
+        {
+          "code": "ARGUMENTS_DIFFER_FROM_CONTRACT",
+          "message": "OUT.transport_to_exit: missing=['subject_id'], unknown=['material', 'speed_mps']",
+          "source": {
+            "file": "processes/S03/process.py",
+            "line": 24,
+            "column": 21
+          }
+        },
+        {
+          "code": "ACTION_PAYLOAD_ADAPTER_REQUIRED",
+          "message": "OUT.transport_to_exit: scalar arguments do not constitute the required model command payload",
+          "source": {
+            "file": "processes/S03/process.py",
+            "line": 24,
+            "column": 21
+          }
+        }
+      ],
+      "blockers": [
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "R1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "R2"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "LOOP"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "IN"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "OUT"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M01"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M02"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M03"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M04"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M05"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M06"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "input_present"
+        },
+        {
+          "code": "PENDING_BEHAVIOR_IMPLEMENTATION",
+          "node": "in_transport_to_exit_064",
+          "behavior": "transport_to_exit"
+        },
+        {
+          "code": "MODEL_SPECIFIC_PAYLOAD_BINDING_REQUIRED",
+          "node": "in_transport_to_exit_064"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "material_at"
+        },
+        {
+          "code": "PENDING_BEHAVIOR_IMPLEMENTATION",
+          "node": "loop_transport_to_exit_071",
+          "behavior": "transport_to_exit"
+        },
+        {
+          "code": "MODEL_SPECIFIC_PAYLOAD_BINDING_REQUIRED",
+          "node": "loop_transport_to_exit_071"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "material_at"
+        },
+        {
+          "code": "PENDING_BEHAVIOR_IMPLEMENTATION",
+          "node": "out_transport_to_exit_078",
+          "behavior": "transport_to_exit"
+        },
+        {
+          "code": "MODEL_SPECIFIC_PAYLOAD_BINDING_REQUIRED",
+          "node": "out_transport_to_exit_078"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "output_departed"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "batch_goal_satisfied"
+        }
+      ]
+    },
+    {
+      "scene": "S04",
+      "syntax_valid": true,
+      "contract_binding_valid": false,
+      "executable": false,
+      "calls": 6,
+      "errors": [
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "R1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "R1: position_tolerance_m, tcp_speed_mps",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "R2: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "R2: position_tolerance_m, tcp_speed_mps",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "C1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "C1: acceleration_mps2, carrier_speed_mps, max_carrier_load_kg, max_speed_mps, speed_tolerance, stop_speed_tolerance",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "C2: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "C2: acceleration_mps2, carrier_speed_mps, max_carrier_load_kg, max_speed_mps, speed_tolerance, stop_speed_tolerance",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "S: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "S: capacity, feed_speed_mps, max_payload_kg",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M01: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M01: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M02: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M02: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M03: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M03: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M04: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M04: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.transfer_material",
+          "source": {
+            "file": "processes/S04/process.py",
+            "line": 11,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.move_to_location",
+          "source": {
+            "file": "processes/S04/process.py",
+            "line": 12,
+            "column": 25
+          }
+        },
+        {
+          "code": "ARGUMENTS_DIFFER_FROM_CONTRACT",
+          "message": "C1.transport_to_exit: missing=['subject_id'], unknown=['material', 'speed_mps']",
+          "source": {
+            "file": "processes/S04/process.py",
+            "line": 16,
+            "column": 21
+          }
+        },
+        {
+          "code": "ACTION_PAYLOAD_ADAPTER_REQUIRED",
+          "message": "C1.transport_to_exit: scalar arguments do not constitute the required model command payload",
+          "source": {
+            "file": "processes/S04/process.py",
+            "line": 16,
+            "column": 21
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R2.transfer_material",
+          "source": {
+            "file": "processes/S04/process.py",
+            "line": 21,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R2.move_to_location",
+          "source": {
+            "file": "processes/S04/process.py",
+            "line": 22,
+            "column": 25
+          }
+        },
+        {
+          "code": "ARGUMENTS_DIFFER_FROM_CONTRACT",
+          "message": "C2.transport_to_exit: missing=['subject_id'], unknown=['material', 'speed_mps']",
+          "source": {
+            "file": "processes/S04/process.py",
+            "line": 23,
+            "column": 21
+          }
+        },
+        {
+          "code": "ACTION_PAYLOAD_ADAPTER_REQUIRED",
+          "message": "C2.transport_to_exit: scalar arguments do not constitute the required model command payload",
+          "source": {
+            "file": "processes/S04/process.py",
+            "line": 23,
+            "column": 21
+          }
+        }
+      ],
+      "blockers": [
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "R1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "R2"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "C1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "C2"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "S"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M01"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M02"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M03"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M04"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "input_present"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "material_at"
+        },
+        {
+          "code": "PENDING_BEHAVIOR_IMPLEMENTATION",
+          "node": "c1_transport_to_exit_092",
+          "behavior": "transport_to_exit"
+        },
+        {
+          "code": "MODEL_SPECIFIC_PAYLOAD_BINDING_REQUIRED",
+          "node": "c1_transport_to_exit_092"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "material_at"
+        },
+        {
+          "code": "PENDING_BEHAVIOR_IMPLEMENTATION",
+          "node": "c2_transport_to_exit_099",
+          "behavior": "transport_to_exit"
+        },
+        {
+          "code": "MODEL_SPECIFIC_PAYLOAD_BINDING_REQUIRED",
+          "node": "c2_transport_to_exit_099"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "output_departed"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "batch_goal_satisfied"
+        }
+      ]
+    },
+    {
+      "scene": "S05",
+      "syntax_valid": true,
+      "contract_binding_valid": false,
+      "executable": false,
+      "calls": 12,
+      "errors": [
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "R1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "R1: position_tolerance_m, tcp_speed_mps",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "R2: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "R2: position_tolerance_m, tcp_speed_mps",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "C1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "C1: acceleration_mps2, carrier_speed_mps, max_carrier_load_kg, max_speed_mps, speed_tolerance, stop_speed_tolerance",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "F1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "F1: capacity, feed_speed_mps, max_payload_kg",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M01: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M01: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M02: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M02: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M03: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M03: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M04: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M04: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "ARGUMENTS_DIFFER_FROM_CONTRACT",
+          "message": "C1.transport_to_exit: missing=['subject_id'], unknown=['material', 'speed_mps']",
+          "source": {
+            "file": "processes/S05/process.py",
+            "line": 9,
+            "column": 17
+          }
+        },
+        {
+          "code": "ACTION_PAYLOAD_ADAPTER_REQUIRED",
+          "message": "C1.transport_to_exit: scalar arguments do not constitute the required model command payload",
+          "source": {
+            "file": "processes/S05/process.py",
+            "line": 9,
+            "column": 17
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.transfer_material",
+          "source": {
+            "file": "processes/S05/process.py",
+            "line": 11,
+            "column": 21
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.move_to_location",
+          "source": {
+            "file": "processes/S05/process.py",
+            "line": 12,
+            "column": 21
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R2.transfer_material",
+          "source": {
+            "file": "processes/S05/process.py",
+            "line": 14,
+            "column": 21
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R2.move_to_location",
+          "source": {
+            "file": "processes/S05/process.py",
+            "line": 15,
+            "column": 21
+          }
+        },
+        {
+          "code": "EXPERIMENTAL_BEHAVIOR_NOT_ADMITTED",
+          "message": "D1.clamp",
+          "source": {
+            "file": "processes/S05/process.py",
+            "line": 16,
+            "column": 17
+          }
+        },
+        {
+          "code": "EXPERIMENTAL_BEHAVIOR_NOT_ADMITTED",
+          "message": "D1.process_material",
+          "source": {
+            "file": "processes/S05/process.py",
+            "line": 17,
+            "column": 17
+          }
+        },
+        {
+          "code": "EXPERIMENTAL_BEHAVIOR_NOT_ADMITTED",
+          "message": "D1.process_material",
+          "source": {
+            "file": "processes/S05/process.py",
+            "line": 20,
+            "column": 25
+          }
+        },
+        {
+          "code": "EXPERIMENTAL_BEHAVIOR_NOT_ADMITTED",
+          "message": "D1.unclamp",
+          "source": {
+            "file": "processes/S05/process.py",
+            "line": 23,
+            "column": 17
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R2.transfer_material",
+          "source": {
+            "file": "processes/S05/process.py",
+            "line": 25,
+            "column": 21
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R2.move_to_location",
+          "source": {
+            "file": "processes/S05/process.py",
+            "line": 26,
+            "column": 21
+          }
+        },
+        {
+          "code": "ARGUMENTS_DIFFER_FROM_CONTRACT",
+          "message": "C1.transport_to_exit: missing=['subject_id'], unknown=['material', 'speed_mps']",
+          "source": {
+            "file": "processes/S05/process.py",
+            "line": 27,
+            "column": 17
+          }
+        },
+        {
+          "code": "ACTION_PAYLOAD_ADAPTER_REQUIRED",
+          "message": "C1.transport_to_exit: scalar arguments do not constitute the required model command payload",
+          "source": {
+            "file": "processes/S05/process.py",
+            "line": 27,
+            "column": 17
+          }
+        }
+      ],
+      "blockers": [
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "R1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "R2"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "C1"
+        },
+        {
+          "code": "EXPERIMENTAL_ASSET",
+          "instance": "D1",
+          "contract": "processing_station"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "F1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M01"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M02"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M03"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M04"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "input_present"
+        },
+        {
+          "code": "PENDING_BEHAVIOR_IMPLEMENTATION",
+          "node": "c1_transport_to_exit_110",
+          "behavior": "transport_to_exit"
+        },
+        {
+          "code": "MODEL_SPECIFIC_PAYLOAD_BINDING_REQUIRED",
+          "node": "c1_transport_to_exit_110"
+        },
+        {
+          "code": "PENDING_BEHAVIOR_IMPLEMENTATION",
+          "node": "c1_transport_to_exit_123",
+          "behavior": "transport_to_exit"
+        },
+        {
+          "code": "MODEL_SPECIFIC_PAYLOAD_BINDING_REQUIRED",
+          "node": "c1_transport_to_exit_123"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "output_departed"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "batch_goal_satisfied"
+        }
+      ]
+    },
+    {
+      "scene": "S06",
+      "syntax_valid": true,
+      "contract_binding_valid": false,
+      "executable": false,
+      "calls": 8,
+      "errors": [
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "R1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "R1: position_tolerance_m, tcp_speed_mps",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "R2: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "R2: position_tolerance_m, tcp_speed_mps",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "T1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "T1: angle_tolerance_rad, angular_speed_rad_s, max_angle_rad, min_angle_rad, settle_speed_rad_s",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "C1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "C1: acceleration_mps2, carrier_speed_mps, max_carrier_load_kg, max_speed_mps, speed_tolerance, stop_speed_tolerance",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "C2: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "C2: acceleration_mps2, carrier_speed_mps, max_carrier_load_kg, max_speed_mps, speed_tolerance, stop_speed_tolerance",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "C3: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "C3: acceleration_mps2, carrier_speed_mps, max_carrier_load_kg, max_speed_mps, speed_tolerance, stop_speed_tolerance",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "C4: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "C4: acceleration_mps2, carrier_speed_mps, max_carrier_load_kg, max_speed_mps, speed_tolerance, stop_speed_tolerance",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "C5: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "C5: acceleration_mps2, carrier_speed_mps, max_carrier_load_kg, max_speed_mps, speed_tolerance, stop_speed_tolerance",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M01: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M01: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M02: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M02: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M03: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M03: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M04: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M04: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "ARGUMENTS_DIFFER_FROM_CONTRACT",
+          "message": "C1.transport_to_exit: missing=['subject_id'], unknown=['material', 'speed_mps']",
+          "source": {
+            "file": "processes/S06/process.py",
+            "line": 10,
+            "column": 21
+          }
+        },
+        {
+          "code": "ACTION_PAYLOAD_ADAPTER_REQUIRED",
+          "message": "C1.transport_to_exit: scalar arguments do not constitute the required model command payload",
+          "source": {
+            "file": "processes/S06/process.py",
+            "line": 10,
+            "column": 21
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.transfer_material",
+          "source": {
+            "file": "processes/S06/process.py",
+            "line": 15,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.move_to_location",
+          "source": {
+            "file": "processes/S06/process.py",
+            "line": 16,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "T1.index_to_angle",
+          "source": {
+            "file": "processes/S06/process.py",
+            "line": 17,
+            "column": 21
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R2.transfer_material",
+          "source": {
+            "file": "processes/S06/process.py",
+            "line": 19,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R2.move_to_location",
+          "source": {
+            "file": "processes/S06/process.py",
+            "line": 20,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "T1.index_to_angle",
+          "source": {
+            "file": "processes/S06/process.py",
+            "line": 21,
+            "column": 21
+          }
+        },
+        {
+          "code": "ARGUMENTS_DIFFER_FROM_CONTRACT",
+          "message": "C3.transport_to_exit: missing=['subject_id'], unknown=['material', 'speed_mps']",
+          "source": {
+            "file": "processes/S06/process.py",
+            "line": 25,
+            "column": 21
+          }
+        },
+        {
+          "code": "ACTION_PAYLOAD_ADAPTER_REQUIRED",
+          "message": "C3.transport_to_exit: scalar arguments do not constitute the required model command payload",
+          "source": {
+            "file": "processes/S06/process.py",
+            "line": 25,
+            "column": 21
+          }
+        }
+      ],
+      "blockers": [
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "R1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "R2"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "T1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "C1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "C2"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "C3"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "C4"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "C5"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M01"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M02"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M03"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M04"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "input_present"
+        },
+        {
+          "code": "PENDING_BEHAVIOR_IMPLEMENTATION",
+          "node": "c1_transport_to_exit_141",
+          "behavior": "transport_to_exit"
+        },
+        {
+          "code": "MODEL_SPECIFIC_PAYLOAD_BINDING_REQUIRED",
+          "node": "c1_transport_to_exit_141"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "material_at"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "material_at"
+        },
+        {
+          "code": "PENDING_BEHAVIOR_IMPLEMENTATION",
+          "node": "c3_transport_to_exit_145",
+          "behavior": "transport_to_exit"
+        },
+        {
+          "code": "MODEL_SPECIFIC_PAYLOAD_BINDING_REQUIRED",
+          "node": "c3_transport_to_exit_145"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "output_departed"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "batch_goal_satisfied"
+        }
+      ]
+    },
+    {
+      "scene": "S07",
+      "syntax_valid": true,
+      "contract_binding_valid": false,
+      "executable": false,
+      "calls": 15,
+      "errors": [
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "STORE: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "STORE: cell_count, max_cell_load_kg, max_total_load_kg",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "L1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "L1: travel_speed_mps, vertical_speed_mps",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "L2: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "L2: travel_speed_mps, vertical_speed_mps",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "C1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "C1: acceleration_mps2, carrier_speed_mps, max_carrier_load_kg, max_speed_mps, speed_tolerance, stop_speed_tolerance",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "C2: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "C2: acceleration_mps2, carrier_speed_mps, max_carrier_load_kg, max_speed_mps, speed_tolerance, stop_speed_tolerance",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "X1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "X1: position_tolerance_m, tcp_speed_mps",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M01: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M01: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M02: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M02: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M03: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M03: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M04: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M04: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "ARGUMENTS_DIFFER_FROM_CONTRACT",
+          "message": "C1.transport_to_exit: missing=['subject_id'], unknown=['material', 'speed_mps']",
+          "source": {
+            "file": "processes/S07/process.py",
+            "line": 10,
+            "column": 21
+          }
+        },
+        {
+          "code": "ACTION_PAYLOAD_ADAPTER_REQUIRED",
+          "message": "C1.transport_to_exit: scalar arguments do not constitute the required model command payload",
+          "source": {
+            "file": "processes/S07/process.py",
+            "line": 10,
+            "column": 21
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "L1.move_to_height",
+          "source": {
+            "file": "processes/S07/process.py",
+            "line": 11,
+            "column": 21
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "X1.transfer_material",
+          "source": {
+            "file": "processes/S07/process.py",
+            "line": 13,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "X1.move_to_location",
+          "source": {
+            "file": "processes/S07/process.py",
+            "line": 14,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "L1.move_to_height",
+          "source": {
+            "file": "processes/S07/process.py",
+            "line": 15,
+            "column": 21
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "X1.transfer_material",
+          "source": {
+            "file": "processes/S07/process.py",
+            "line": 17,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "X1.move_to_location",
+          "source": {
+            "file": "processes/S07/process.py",
+            "line": 18,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "L1.move_to_height",
+          "source": {
+            "file": "processes/S07/process.py",
+            "line": 19,
+            "column": 21
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "L2.move_to_height",
+          "source": {
+            "file": "processes/S07/process.py",
+            "line": 24,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "X1.transfer_material",
+          "source": {
+            "file": "processes/S07/process.py",
+            "line": 26,
+            "column": 29
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "X1.move_to_location",
+          "source": {
+            "file": "processes/S07/process.py",
+            "line": 27,
+            "column": 29
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "L2.move_to_height",
+          "source": {
+            "file": "processes/S07/process.py",
+            "line": 28,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "X1.transfer_material",
+          "source": {
+            "file": "processes/S07/process.py",
+            "line": 30,
+            "column": 29
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "X1.move_to_location",
+          "source": {
+            "file": "processes/S07/process.py",
+            "line": 31,
+            "column": 29
+          }
+        },
+        {
+          "code": "ARGUMENTS_DIFFER_FROM_CONTRACT",
+          "message": "C2.transport_to_exit: missing=['subject_id'], unknown=['material', 'speed_mps']",
+          "source": {
+            "file": "processes/S07/process.py",
+            "line": 35,
+            "column": 25
+          }
+        },
+        {
+          "code": "ACTION_PAYLOAD_ADAPTER_REQUIRED",
+          "message": "C2.transport_to_exit: scalar arguments do not constitute the required model command payload",
+          "source": {
+            "file": "processes/S07/process.py",
+            "line": 35,
+            "column": 25
+          }
+        }
+      ],
+      "blockers": [
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "STORE"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "L1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "L2"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "C1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "C2"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "X1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M01"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M02"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M03"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M04"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "input_present"
+        },
+        {
+          "code": "PENDING_BEHAVIOR_IMPLEMENTATION",
+          "node": "c1_transport_to_exit_153",
+          "behavior": "transport_to_exit"
+        },
+        {
+          "code": "MODEL_SPECIFIC_PAYLOAD_BINDING_REQUIRED",
+          "node": "c1_transport_to_exit_153"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "inventory_stored"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "material_at"
+        },
+        {
+          "code": "PENDING_BEHAVIOR_IMPLEMENTATION",
+          "node": "c2_transport_to_exit_177",
+          "behavior": "transport_to_exit"
+        },
+        {
+          "code": "MODEL_SPECIFIC_PAYLOAD_BINDING_REQUIRED",
+          "node": "c2_transport_to_exit_177"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "output_departed"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "batch_goal_satisfied"
+        }
+      ]
+    },
+    {
+      "scene": "S08",
+      "syntax_valid": true,
+      "contract_binding_valid": false,
+      "executable": false,
+      "calls": 9,
+      "errors": [
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "R1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "R1: position_tolerance_m, tcp_speed_mps",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "C1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "C1: acceleration_mps2, carrier_speed_mps, max_carrier_load_kg, max_speed_mps, speed_tolerance, stop_speed_tolerance",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "C2: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "C2: acceleration_mps2, carrier_speed_mps, max_carrier_load_kg, max_speed_mps, speed_tolerance, stop_speed_tolerance",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M01: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M01: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M02: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M02: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M03: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M03: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M04: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M04: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "ARGUMENTS_DIFFER_FROM_CONTRACT",
+          "message": "C1.transport_to_exit: missing=['subject_id'], unknown=['material', 'speed_mps']",
+          "source": {
+            "file": "processes/S08/process.py",
+            "line": 10,
+            "column": 21
+          }
+        },
+        {
+          "code": "ACTION_PAYLOAD_ADAPTER_REQUIRED",
+          "message": "C1.transport_to_exit: scalar arguments do not constitute the required model command payload",
+          "source": {
+            "file": "processes/S08/process.py",
+            "line": 10,
+            "column": 21
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.transfer_material",
+          "source": {
+            "file": "processes/S08/process.py",
+            "line": 15,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.move_to_location",
+          "source": {
+            "file": "processes/S08/process.py",
+            "line": 16,
+            "column": 25
+          }
+        },
+        {
+          "code": "EXPERIMENTAL_BEHAVIOR_NOT_ADMITTED",
+          "message": "MC1.clamp",
+          "source": {
+            "file": "processes/S08/process.py",
+            "line": 18,
+            "column": 25
+          }
+        },
+        {
+          "code": "EXPERIMENTAL_BEHAVIOR_NOT_ADMITTED",
+          "message": "MC1.process_material",
+          "source": {
+            "file": "processes/S08/process.py",
+            "line": 19,
+            "column": 25
+          }
+        },
+        {
+          "code": "EXPERIMENTAL_BEHAVIOR_NOT_ADMITTED",
+          "message": "MC1.unclamp",
+          "source": {
+            "file": "processes/S08/process.py",
+            "line": 20,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.transfer_material",
+          "source": {
+            "file": "processes/S08/process.py",
+            "line": 22,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.move_to_location",
+          "source": {
+            "file": "processes/S08/process.py",
+            "line": 23,
+            "column": 25
+          }
+        },
+        {
+          "code": "ARGUMENTS_DIFFER_FROM_CONTRACT",
+          "message": "C2.transport_to_exit: missing=['subject_id'], unknown=['material', 'speed_mps']",
+          "source": {
+            "file": "processes/S08/process.py",
+            "line": 27,
+            "column": 21
+          }
+        },
+        {
+          "code": "ACTION_PAYLOAD_ADAPTER_REQUIRED",
+          "message": "C2.transport_to_exit: scalar arguments do not constitute the required model command payload",
+          "source": {
+            "file": "processes/S08/process.py",
+            "line": 27,
+            "column": 21
+          }
+        }
+      ],
+      "blockers": [
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "R1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "C1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "C2"
+        },
+        {
+          "code": "EXPERIMENTAL_ASSET",
+          "instance": "MC1",
+          "contract": "processing_station"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M01"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M02"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M03"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M04"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "input_present"
+        },
+        {
+          "code": "PENDING_BEHAVIOR_IMPLEMENTATION",
+          "node": "c1_transport_to_exit_186",
+          "behavior": "transport_to_exit"
+        },
+        {
+          "code": "MODEL_SPECIFIC_PAYLOAD_BINDING_REQUIRED",
+          "node": "c1_transport_to_exit_186"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "material_at"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "material_at"
+        },
+        {
+          "code": "PENDING_BEHAVIOR_IMPLEMENTATION",
+          "node": "c2_transport_to_exit_203",
+          "behavior": "transport_to_exit"
+        },
+        {
+          "code": "MODEL_SPECIFIC_PAYLOAD_BINDING_REQUIRED",
+          "node": "c2_transport_to_exit_203"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "output_departed"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "batch_goal_satisfied"
+        }
+      ]
+    },
+    {
+      "scene": "S09",
+      "syntax_valid": true,
+      "contract_binding_valid": false,
+      "executable": false,
+      "calls": 17,
+      "errors": [
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "R1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "R1: position_tolerance_m, tcp_speed_mps",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "C1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "C1: acceleration_mps2, carrier_speed_mps, max_carrier_load_kg, max_speed_mps, speed_tolerance, stop_speed_tolerance",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "C2: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "C2: acceleration_mps2, carrier_speed_mps, max_carrier_load_kg, max_speed_mps, speed_tolerance, stop_speed_tolerance",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M01: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M01: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M02: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M02: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M03: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M03: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M04: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M04: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M05: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M05: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M06: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M06: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "ARGUMENTS_DIFFER_FROM_CONTRACT",
+          "message": "C1.transport_to_exit: missing=['subject_id'], unknown=['material', 'speed_mps']",
+          "source": {
+            "file": "processes/S09/process.py",
+            "line": 10,
+            "column": 21
+          }
+        },
+        {
+          "code": "ACTION_PAYLOAD_ADAPTER_REQUIRED",
+          "message": "C1.transport_to_exit: scalar arguments do not constitute the required model command payload",
+          "source": {
+            "file": "processes/S09/process.py",
+            "line": 10,
+            "column": 21
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.transfer_material",
+          "source": {
+            "file": "processes/S09/process.py",
+            "line": 15,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.move_to_location",
+          "source": {
+            "file": "processes/S09/process.py",
+            "line": 16,
+            "column": 25
+          }
+        },
+        {
+          "code": "EXPERIMENTAL_BEHAVIOR_NOT_ADMITTED",
+          "message": "MC1.clamp",
+          "source": {
+            "file": "processes/S09/process.py",
+            "line": 18,
+            "column": 25
+          }
+        },
+        {
+          "code": "EXPERIMENTAL_BEHAVIOR_NOT_ADMITTED",
+          "message": "MC1.process_material",
+          "source": {
+            "file": "processes/S09/process.py",
+            "line": 19,
+            "column": 25
+          }
+        },
+        {
+          "code": "EXPERIMENTAL_BEHAVIOR_NOT_ADMITTED",
+          "message": "MC1.unclamp",
+          "source": {
+            "file": "processes/S09/process.py",
+            "line": 20,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.transfer_material",
+          "source": {
+            "file": "processes/S09/process.py",
+            "line": 22,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.move_to_location",
+          "source": {
+            "file": "processes/S09/process.py",
+            "line": 23,
+            "column": 25
+          }
+        },
+        {
+          "code": "ARGUMENTS_DIFFER_FROM_CONTRACT",
+          "message": "C2.transport_to_exit: missing=['subject_id'], unknown=['material', 'speed_mps']",
+          "source": {
+            "file": "processes/S09/process.py",
+            "line": 24,
+            "column": 21
+          }
+        },
+        {
+          "code": "ACTION_PAYLOAD_ADAPTER_REQUIRED",
+          "message": "C2.transport_to_exit: scalar arguments do not constitute the required model command payload",
+          "source": {
+            "file": "processes/S09/process.py",
+            "line": 24,
+            "column": 21
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.transfer_material",
+          "source": {
+            "file": "processes/S09/process.py",
+            "line": 30,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.move_to_location",
+          "source": {
+            "file": "processes/S09/process.py",
+            "line": 31,
+            "column": 25
+          }
+        },
+        {
+          "code": "EXPERIMENTAL_BEHAVIOR_NOT_ADMITTED",
+          "message": "MC2.clamp",
+          "source": {
+            "file": "processes/S09/process.py",
+            "line": 33,
+            "column": 25
+          }
+        },
+        {
+          "code": "EXPERIMENTAL_BEHAVIOR_NOT_ADMITTED",
+          "message": "MC2.process_material",
+          "source": {
+            "file": "processes/S09/process.py",
+            "line": 34,
+            "column": 25
+          }
+        },
+        {
+          "code": "EXPERIMENTAL_BEHAVIOR_NOT_ADMITTED",
+          "message": "MC2.unclamp",
+          "source": {
+            "file": "processes/S09/process.py",
+            "line": 35,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.transfer_material",
+          "source": {
+            "file": "processes/S09/process.py",
+            "line": 37,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.move_to_location",
+          "source": {
+            "file": "processes/S09/process.py",
+            "line": 38,
+            "column": 25
+          }
+        },
+        {
+          "code": "ARGUMENTS_DIFFER_FROM_CONTRACT",
+          "message": "C2.transport_to_exit: missing=['subject_id'], unknown=['material', 'speed_mps']",
+          "source": {
+            "file": "processes/S09/process.py",
+            "line": 39,
+            "column": 21
+          }
+        },
+        {
+          "code": "ACTION_PAYLOAD_ADAPTER_REQUIRED",
+          "message": "C2.transport_to_exit: scalar arguments do not constitute the required model command payload",
+          "source": {
+            "file": "processes/S09/process.py",
+            "line": 39,
+            "column": 21
+          }
+        }
+      ],
+      "blockers": [
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "R1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "C1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "C2"
+        },
+        {
+          "code": "EXPERIMENTAL_ASSET",
+          "instance": "MC1",
+          "contract": "processing_station"
+        },
+        {
+          "code": "EXPERIMENTAL_ASSET",
+          "instance": "MC2",
+          "contract": "processing_station"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M01"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M02"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M03"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M04"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M05"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M06"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "input_present"
+        },
+        {
+          "code": "PENDING_BEHAVIOR_IMPLEMENTATION",
+          "node": "c1_transport_to_exit_211",
+          "behavior": "transport_to_exit"
+        },
+        {
+          "code": "MODEL_SPECIFIC_PAYLOAD_BINDING_REQUIRED",
+          "node": "c1_transport_to_exit_211"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "material_at"
+        },
+        {
+          "code": "PENDING_BEHAVIOR_IMPLEMENTATION",
+          "node": "c2_transport_to_exit_225",
+          "behavior": "transport_to_exit"
+        },
+        {
+          "code": "MODEL_SPECIFIC_PAYLOAD_BINDING_REQUIRED",
+          "node": "c2_transport_to_exit_225"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "output_departed"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "material_at"
+        },
+        {
+          "code": "PENDING_BEHAVIOR_IMPLEMENTATION",
+          "node": "c2_transport_to_exit_240",
+          "behavior": "transport_to_exit"
+        },
+        {
+          "code": "MODEL_SPECIFIC_PAYLOAD_BINDING_REQUIRED",
+          "node": "c2_transport_to_exit_240"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "output_departed"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "batch_goal_satisfied"
+        }
+      ]
+    },
+    {
+      "scene": "S10",
+      "syntax_valid": true,
+      "contract_binding_valid": false,
+      "executable": false,
+      "calls": 3,
+      "errors": [
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "R1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "R1: position_tolerance_m, tcp_speed_mps",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "C1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "C1: acceleration_mps2, carrier_speed_mps, max_carrier_load_kg, max_speed_mps, speed_tolerance, stop_speed_tolerance",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "P01: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "P01: max_payload_kg, slot_count",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "P02: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "P02: max_payload_kg, slot_count",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "P03: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "P03: max_payload_kg, slot_count",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M01_1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M01_1: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M01_2: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M01_2: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M01_3: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M01_3: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M01_4: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M01_4: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M02_1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M02_1: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M02_2: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M02_2: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M02_3: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M02_3: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M02_4: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M02_4: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M03_1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M03_1: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M03_2: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M03_2: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M03_3: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M03_3: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M03_4: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M03_4: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "ARGUMENTS_DIFFER_FROM_CONTRACT",
+          "message": "C1.transport_to_exit: missing=['subject_id'], unknown=['material', 'speed_mps']",
+          "source": {
+            "file": "processes/S10/process.py",
+            "line": 12,
+            "column": 25
+          }
+        },
+        {
+          "code": "ACTION_PAYLOAD_ADAPTER_REQUIRED",
+          "message": "C1.transport_to_exit: scalar arguments do not constitute the required model command payload",
+          "source": {
+            "file": "processes/S10/process.py",
+            "line": 12,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.transfer_material",
+          "source": {
+            "file": "processes/S10/process.py",
+            "line": 14,
+            "column": 29
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.move_to_location",
+          "source": {
+            "file": "processes/S10/process.py",
+            "line": 15,
+            "column": 29
+          }
+        }
+      ],
+      "blockers": [
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "R1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "C1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "P01"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "P02"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "P03"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M01_1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M01_2"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M01_3"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M01_4"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M02_1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M02_2"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M02_3"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M02_4"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M03_1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M03_2"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M03_3"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M03_4"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "empty_pallet_present"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "input_present"
+        },
+        {
+          "code": "PENDING_BEHAVIOR_IMPLEMENTATION",
+          "node": "c1_transport_to_exit_248",
+          "behavior": "transport_to_exit"
+        },
+        {
+          "code": "MODEL_SPECIFIC_PAYLOAD_BINDING_REQUIRED",
+          "node": "c1_transport_to_exit_248"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "full_pallet_departed"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "batch_goal_satisfied"
+        }
+      ]
+    },
+    {
+      "scene": "S11",
+      "syntax_valid": true,
+      "contract_binding_valid": false,
+      "executable": false,
+      "calls": 11,
+      "errors": [
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "R1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "R1: position_tolerance_m, tcp_speed_mps",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "T1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "T1: angle_tolerance_rad, angular_speed_rad_s, max_angle_rad, min_angle_rad, settle_speed_rad_s",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "F1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "F1: capacity, feed_speed_mps, max_payload_kg",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M01: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M01: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M02: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M02: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M03: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M03: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M04: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M04: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.transfer_material",
+          "source": {
+            "file": "processes/S11/process.py",
+            "line": 10,
+            "column": 21
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.move_to_location",
+          "source": {
+            "file": "processes/S11/process.py",
+            "line": 11,
+            "column": 21
+          }
+        },
+        {
+          "code": "EXPERIMENTAL_BEHAVIOR_NOT_ADMITTED",
+          "message": "W1.clamp",
+          "source": {
+            "file": "processes/S11/process.py",
+            "line": 13,
+            "column": 21
+          }
+        },
+        {
+          "code": "EXPERIMENTAL_BEHAVIOR_NOT_ADMITTED",
+          "message": "W1.process_material",
+          "source": {
+            "file": "processes/S11/process.py",
+            "line": 14,
+            "column": 21
+          }
+        },
+        {
+          "code": "EXPERIMENTAL_BEHAVIOR_NOT_ADMITTED",
+          "message": "W1.unclamp",
+          "source": {
+            "file": "processes/S11/process.py",
+            "line": 15,
+            "column": 21
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.transfer_material",
+          "source": {
+            "file": "processes/S11/process.py",
+            "line": 17,
+            "column": 21
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.move_to_location",
+          "source": {
+            "file": "processes/S11/process.py",
+            "line": 18,
+            "column": 21
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "T1.index_to_angle",
+          "source": {
+            "file": "processes/S11/process.py",
+            "line": 19,
+            "column": 17
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.transfer_material",
+          "source": {
+            "file": "processes/S11/process.py",
+            "line": 21,
+            "column": 21
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.move_to_location",
+          "source": {
+            "file": "processes/S11/process.py",
+            "line": 22,
+            "column": 21
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "T1.index_to_angle",
+          "source": {
+            "file": "processes/S11/process.py",
+            "line": 23,
+            "column": 17
+          }
+        }
+      ],
+      "blockers": [
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "R1"
+        },
+        {
+          "code": "EXPERIMENTAL_ASSET",
+          "instance": "W1",
+          "contract": "processing_station"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "T1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "F1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M01"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M02"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M03"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M04"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "input_present"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "output_departed"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "batch_goal_satisfied"
+        }
+      ]
+    },
+    {
+      "scene": "S12",
+      "syntax_valid": true,
+      "contract_binding_valid": false,
+      "executable": false,
+      "calls": 18,
+      "errors": [
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "R1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "R1: position_tolerance_m, tcp_speed_mps",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "R2: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "R2: position_tolerance_m, tcp_speed_mps",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "T1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "T1: angle_tolerance_rad, angular_speed_rad_s, max_angle_rad, min_angle_rad, settle_speed_rad_s",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "C1: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "C1: acceleration_mps2, carrier_speed_mps, max_carrier_load_kg, max_speed_mps, speed_tolerance, stop_speed_tolerance",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "C2: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "C2: acceleration_mps2, carrier_speed_mps, max_carrier_load_kg, max_speed_mps, speed_tolerance, stop_speed_tolerance",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M01: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M01: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M02: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M02: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M03: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M03: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_VERSION_REBIND_REQUIRED",
+          "message": "M04: instance revision differs from canonical DeviceSpec",
+          "source": null
+        },
+        {
+          "code": "INSTANCE_PARAMETERS_REBIND_REQUIRED",
+          "message": "M04: graspable, material_class",
+          "source": null
+        },
+        {
+          "code": "ARGUMENTS_DIFFER_FROM_CONTRACT",
+          "message": "C1.transport_to_exit: missing=['subject_id'], unknown=['material', 'speed_mps']",
+          "source": {
+            "file": "processes/S12/process.py",
+            "line": 10,
+            "column": 21
+          }
+        },
+        {
+          "code": "ACTION_PAYLOAD_ADAPTER_REQUIRED",
+          "message": "C1.transport_to_exit: scalar arguments do not constitute the required model command payload",
+          "source": {
+            "file": "processes/S12/process.py",
+            "line": 10,
+            "column": 21
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.transfer_material",
+          "source": {
+            "file": "processes/S12/process.py",
+            "line": 15,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.move_to_location",
+          "source": {
+            "file": "processes/S12/process.py",
+            "line": 16,
+            "column": 25
+          }
+        },
+        {
+          "code": "EXPERIMENTAL_BEHAVIOR_NOT_ADMITTED",
+          "message": "PS1.clamp",
+          "source": {
+            "file": "processes/S12/process.py",
+            "line": 18,
+            "column": 25
+          }
+        },
+        {
+          "code": "EXPERIMENTAL_BEHAVIOR_NOT_ADMITTED",
+          "message": "PS1.process_material",
+          "source": {
+            "file": "processes/S12/process.py",
+            "line": 19,
+            "column": 25
+          }
+        },
+        {
+          "code": "EXPERIMENTAL_BEHAVIOR_NOT_ADMITTED",
+          "message": "PS1.unclamp",
+          "source": {
+            "file": "processes/S12/process.py",
+            "line": 20,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.transfer_material",
+          "source": {
+            "file": "processes/S12/process.py",
+            "line": 26,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R1.move_to_location",
+          "source": {
+            "file": "processes/S12/process.py",
+            "line": 27,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "T1.index_to_angle",
+          "source": {
+            "file": "processes/S12/process.py",
+            "line": 28,
+            "column": 21
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R2.transfer_material",
+          "source": {
+            "file": "processes/S12/process.py",
+            "line": 30,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R2.move_to_location",
+          "source": {
+            "file": "processes/S12/process.py",
+            "line": 31,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "T1.index_to_angle",
+          "source": {
+            "file": "processes/S12/process.py",
+            "line": 32,
+            "column": 21
+          }
+        },
+        {
+          "code": "EXPERIMENTAL_BEHAVIOR_NOT_ADMITTED",
+          "message": "PS2.clamp",
+          "source": {
+            "file": "processes/S12/process.py",
+            "line": 37,
+            "column": 25
+          }
+        },
+        {
+          "code": "EXPERIMENTAL_BEHAVIOR_NOT_ADMITTED",
+          "message": "PS2.process_material",
+          "source": {
+            "file": "processes/S12/process.py",
+            "line": 38,
+            "column": 25
+          }
+        },
+        {
+          "code": "EXPERIMENTAL_BEHAVIOR_NOT_ADMITTED",
+          "message": "PS2.unclamp",
+          "source": {
+            "file": "processes/S12/process.py",
+            "line": 39,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R2.transfer_material",
+          "source": {
+            "file": "processes/S12/process.py",
+            "line": 41,
+            "column": 25
+          }
+        },
+        {
+          "code": "BEHAVIOR_NOT_IN_DEVICE_CONTRACT",
+          "message": "R2.move_to_location",
+          "source": {
+            "file": "processes/S12/process.py",
+            "line": 42,
+            "column": 25
+          }
+        },
+        {
+          "code": "ARGUMENTS_DIFFER_FROM_CONTRACT",
+          "message": "C2.transport_to_exit: missing=['subject_id'], unknown=['material', 'speed_mps']",
+          "source": {
+            "file": "processes/S12/process.py",
+            "line": 46,
+            "column": 21
+          }
+        },
+        {
+          "code": "ACTION_PAYLOAD_ADAPTER_REQUIRED",
+          "message": "C2.transport_to_exit: scalar arguments do not constitute the required model command payload",
+          "source": {
+            "file": "processes/S12/process.py",
+            "line": 46,
+            "column": 21
+          }
+        }
+      ],
+      "blockers": [
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "R1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "R2"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "T1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "C1"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "C2"
+        },
+        {
+          "code": "EXPERIMENTAL_ASSET",
+          "instance": "PS1",
+          "contract": "processing_station"
+        },
+        {
+          "code": "EXPERIMENTAL_ASSET",
+          "instance": "PS2",
+          "contract": "processing_station"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M01"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M02"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M03"
+        },
+        {
+          "code": "PENDING_ADAPTER_AND_CALIBRATION",
+          "instance": "M04"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "input_present"
+        },
+        {
+          "code": "PENDING_BEHAVIOR_IMPLEMENTATION",
+          "node": "c1_transport_to_exit_314",
+          "behavior": "transport_to_exit"
+        },
+        {
+          "code": "MODEL_SPECIFIC_PAYLOAD_BINDING_REQUIRED",
+          "node": "c1_transport_to_exit_314"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "material_at"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "operation_completed"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "subject_unclamped"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "material_at"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "material_at"
+        },
+        {
+          "code": "PENDING_BEHAVIOR_IMPLEMENTATION",
+          "node": "c2_transport_to_exit_318",
+          "behavior": "transport_to_exit"
+        },
+        {
+          "code": "MODEL_SPECIFIC_PAYLOAD_BINDING_REQUIRED",
+          "node": "c2_transport_to_exit_318"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "output_departed"
+        },
+        {
+          "code": "SCENE_FACT_PROVIDER_REQUIRES_BINDING",
+          "fact": "batch_goal_satisfied"
+        }
+      ]
+    }
+  ]
+}

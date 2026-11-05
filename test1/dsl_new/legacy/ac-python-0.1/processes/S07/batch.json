@@ -1,0 +1,38 @@
+{
+  "schema_version": "ac-flow-batch/0.2",
+  "scene_id": "S07",
+  "jobs": [
+    {
+      "id": "J01",
+      "material": "M01",
+      "input": "C1.entry",
+      "slot": "STORE.slot1",
+      "height": 1.0,
+      "target": "C2.exit"
+    },
+    {
+      "id": "J02",
+      "material": "M02",
+      "input": "C1.entry",
+      "slot": "STORE.slot2",
+      "height": 1.0,
+      "target": "C2.exit"
+    },
+    {
+      "id": "J03",
+      "material": "M03",
+      "input": "C1.entry",
+      "slot": "STORE.slot3",
+      "height": 2.0,
+      "target": "C2.exit"
+    },
+    {
+      "id": "J04",
+      "material": "M04",
+      "input": "C1.entry",
+      "slot": "STORE.slot4",
+      "height": 2.0,
+      "target": "C2.exit"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+; 三托盘各四件的批次码垛与换盘
+; 单机器人逐件码放，按托盘清单完成后等待实际换盘；总计12件。
+(process "ac-flow/0.2" S10
+  (sequence
+    (for-each pallets pallet
+      (sequence
+        (await empty_pallet_present $pallet.id 1800 tick)
+        (for-each $pallet.items item
+          (sequence
+            (await input_present $item.material $item.input 1800 tick)
+            (with-resources
+              (C1)
+              (sequence
+                (invoke op_075 C1 transport_to_exit
+                  (arg material $item.material)
+                  (arg speed_mps 0.2 m/s))))
+            (await target_available $item.target 1800 tick)
+            (with-resources
+              (R1 C1 $pallet.id)
+              (sequence
+                (sequence
+                  (invoke op_076 R1 transfer_material
+                    (arg material $item.material)
+                    (arg source C1.exit)
+                    (arg target $item.target))
+                  (invoke op_077 R1 move_to_location
+                    (arg target R1.home)))))))
+        (await full_pallet_departed $pallet.id 1800 tick)))
+    (verify batch_goal)))

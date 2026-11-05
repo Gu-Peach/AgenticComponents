@@ -1,0 +1,51 @@
+; 四件装夹焊接与转位下料
+; 共用装卸台和转位台，逐件完成后再接下一件，保留有限批次循环。
+(process "ac-flow/0.2" S11
+  (sequence
+    (for-each jobs job
+      (sequence
+        (await input_present $job.material $job.input 1800 tick)
+        (with-resources
+          (R1 F1 W1)
+          (sequence
+            (sequence
+              (invoke op_078 R1 transfer_material
+                (arg material $job.material)
+                (arg source $job.input)
+                (arg target W1.work))
+              (invoke op_079 R1 move_to_location
+                (arg target R1.home)))))
+        (with-resources
+          (W1)
+          (sequence
+            (sequence
+              (invoke op_080 W1 clamp
+                (arg material $job.material))
+              (invoke op_081 W1 process_material
+                (arg material $job.material)
+                (arg recipe welding))
+              (invoke op_082 W1 unclamp
+                (arg material $job.material)))))
+        (with-resources
+          (R1 W1 T1 F1)
+          (sequence
+            (sequence
+              (invoke op_083 R1 transfer_material
+                (arg material $job.material)
+                (arg source W1.work)
+                (arg target T1.slot1))
+              (invoke op_084 R1 move_to_location
+                (arg target R1.home)))
+            (invoke op_085 T1 index_to_angle
+              (arg angle 3.141592653589793 rad))
+            (sequence
+              (invoke op_086 R1 transfer_material
+                (arg material $job.material)
+                (arg source T1.slot1)
+                (arg target F1.work))
+              (invoke op_087 R1 move_to_location
+                (arg target R1.home)))
+            (invoke op_088 T1 index_to_angle
+              (arg angle 0.0 rad))))
+        (await output_departed $job.material F1 1800 tick)))
+    (verify batch_goal)))

@@ -1,0 +1,124 @@
+{
+  "schema_version": "ac-flow-task/0.2",
+  "id": "batch_goal",
+  "scene_id": "S05",
+  "description": "四件双机器人去毛刺闭环",
+  "expected": {
+    "material_ids": [
+      "M01",
+      "M02",
+      "M03",
+      "M04"
+    ],
+    "material_count": 4,
+    "pallet_ids": [],
+    "pallet_count": 0
+  },
+  "all": [
+    {
+      "kind": "all_delivered_once",
+      "items": [
+        {
+          "material": "M01",
+          "target": "C1.exit"
+        },
+        {
+          "material": "M02",
+          "target": "C1.exit"
+        },
+        {
+          "material": "M03",
+          "target": "C1.exit"
+        },
+        {
+          "material": "M04",
+          "target": "C1.exit"
+        }
+      ],
+      "evidence": "actual_target_handoff_before_external_departure"
+    },
+    {
+      "kind": "required_operations",
+      "recipes": {
+        "deburr": {
+          "station": "D1",
+          "evidence": "request_material_recipe_matching_operation_record"
+        }
+      },
+      "rule": "each_job_declared_recipe_or_all_route_recipes"
+    },
+    {
+      "kind": "tools_empty"
+    },
+    {
+      "kind": "drives_stopped"
+    },
+    {
+      "kind": "no_active_requests"
+    },
+    {
+      "kind": "no_pending_jobs"
+    },
+    {
+      "kind": "operations_released"
+    },
+    {
+      "kind": "operation_counts",
+      "items": [
+        {
+          "material": "M01",
+          "station": "D1",
+          "recipe": "deburr",
+          "count": 1
+        },
+        {
+          "material": "M02",
+          "station": "D1",
+          "recipe": "deburr",
+          "count": 1
+        },
+        {
+          "material": "M03",
+          "station": "D1",
+          "recipe": "deburr",
+          "count": 1
+        },
+        {
+          "material": "M04",
+          "station": "D1",
+          "recipe": "deburr",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "kind": "operation_counts",
+      "items": [
+        {
+          "material": "M01",
+          "station": "D1",
+          "recipe": "deburr",
+          "count": 1
+        },
+        {
+          "material": "M02",
+          "station": "D1",
+          "recipe": "deburr",
+          "count": 1
+        },
+        {
+          "material": "M03",
+          "station": "D1",
+          "recipe": "deburr",
+          "count": 1
+        },
+        {
+          "material": "M04",
+          "station": "D1",
+          "recipe": "deburr",
+          "count": 2
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "language": "ac-declarative/0.1",
+  "status": "declaration_compilable_runtime_pending",
+  "runtime_ready": false,
+  "example": "S01.pydsl",
+  "batch_example": {
+    "pallet_count": 3,
+    "max_items_per_pallet": 4
+  },
+  "required_capability_not_yet_in_contract": {
+    "device": "C1",
+    "behavior": "advance_pitch",
+    "arguments": {
+      "inventory": "frozen bounded pallet registry reference"
+    },
+    "semantics": "Move all admitted pallets one validated common pitch, admit at most one pending pallet, deliver empty exit pallets to confirmed outfeed; preserve all carrier loads and stop before returning.",
+    "must_not_alias_without_proof": [
+      "transport_carrier_to",
+      "index_carriers"
+    ],
+    "preconditions": [
+      "all robots clear",
+      "common pitch and carrier spacing validated",
+      "downstream capacity available",
+      "atomic motion authorization",
+      "every exiting carrier verified empty"
+    ],
+    "completion": [
+      "all affected carrier identities and target positions observed",
+      "drive physically stopped",
+      "support maintained",
+      "required admission/departure acknowledged"
+    ]
+  },
+  "required_condition_providers": [
+    "line_ready_to_index",
+    "station_inventory_valid",
+    "output_departed",
+    "batch_goal_satisfied"
+  ],
+  "required_collection_provider": {
+    "name": "items_at",
+    "result": "bounded immutable material/source records for the currently parked carrier and selected category",
+    "empty": "only known-empty station or known-zero matching items",
+    "unknown": "wait or reject; never coerce to empty",
+    "identity": [
+      "run",
+      "carrier",
+      "station",
+      "provider_epoch",
+      "snapshot_revision"
+    ]
+  },
+  "geometry_obligations": [
+    "compatible indexing pitch",
+    "nonconflicting simultaneous robot workspaces",
+    "separate green outfeeds",
+    "bounded inlet and exit capacity",
+    "capacity for two parked carriers plus declared entry/exit transient occupancy; logical S01 capacity=3 is declared; physical capacity and spacing remain unverified"
+  ],
+  "current_missing_implementation": [
+    "nine-node runtime",
+    "common-pitch driver",
+    "snapshot collection provider",
+    "concurrent evidence-based acceptance"
+  ]
+}

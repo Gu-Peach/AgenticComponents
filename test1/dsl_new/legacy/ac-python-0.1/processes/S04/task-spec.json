@@ -1,0 +1,56 @@
+{
+  "schema_version": "ac-flow-task/0.2",
+  "id": "batch_goal",
+  "scene_id": "S04",
+  "description": "四件双机械臂双输送带流水交接",
+  "expected": {
+    "material_ids": [
+      "M01",
+      "M02",
+      "M03",
+      "M04"
+    ],
+    "material_count": 4,
+    "pallet_ids": [],
+    "pallet_count": 0
+  },
+  "all": [
+    {
+      "kind": "all_delivered_once",
+      "items": [
+        {
+          "material": "M01",
+          "target": "C2.exit"
+        },
+        {
+          "material": "M02",
+          "target": "C2.exit"
+        },
+        {
+          "material": "M03",
+          "target": "C2.exit"
+        },
+        {
+          "material": "M04",
+          "target": "C2.exit"
+        }
+      ],
+      "evidence": "actual_target_handoff_before_external_departure"
+    },
+    {
+      "kind": "tools_empty"
+    },
+    {
+      "kind": "drives_stopped"
+    },
+    {
+      "kind": "no_active_requests"
+    },
+    {
+      "kind": "no_pending_jobs"
+    },
+    {
+      "kind": "operations_released"
+    }
+  ]
+}

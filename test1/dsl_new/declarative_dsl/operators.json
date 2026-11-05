@@ -1,0 +1,69 @@
+{
+  "language": "ac-declarative/0.3",
+  "status": "declarative_frontend_and_static_interfaces",
+  "operators": [
+    {
+      "kind": "seq",
+      "python_surface": "with seq",
+      "meaning": "sequential children"
+    },
+    {
+      "kind": "par",
+      "python_surface": "with par",
+      "meaning": "concurrent candidates; join all"
+    },
+    {
+      "kind": "branch",
+      "python_surface": "with branch/case/otherwise",
+      "meaning": "snapshot-based ordered or exclusive selection"
+    },
+    {
+      "kind": "repeat",
+      "python_surface": "with repeat",
+      "meaning": "bounded count or frozen bounded collection"
+    },
+    {
+      "kind": "invoke",
+      "python_surface": "invoke",
+      "meaning": "contract-bound discrete operation"
+    },
+    {
+      "kind": "delay",
+      "python_surface": "delay",
+      "meaning": "logical time only"
+    },
+    {
+      "kind": "with-control",
+      "python_surface": "with with_control",
+      "meaning": "enter, monitor, exit continuous control"
+    },
+    {
+      "kind": "fail",
+      "python_surface": "fail",
+      "meaning": "explicit business failure"
+    }
+  ],
+  "runtime_implemented": false,
+  "accepted_versions": [
+    "ac-declarative/0.1",
+    "ac-declarative/0.2",
+    "ac-declarative/0.3"
+  ],
+  "expressions_added_in_0_2": [
+    "payload(binding_name, **typed_fields)"
+  ],
+  "legacy_only_operators": [
+    "await"
+  ],
+  "expressions_added_in_0_3": [
+    "calibration(instance, key)",
+    "subject_id(material)"
+  ],
+  "automatic_lifecycle": [
+    "contract_preconditions",
+    "contract_sustaining_conditions",
+    "contract_completion",
+    "collection_admission",
+    "process_finalization"
+  ]
+}

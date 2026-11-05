@@ -1,0 +1,125 @@
+{
+  "schema_version": "ac-process-catalog/0.3",
+  "scenes": [
+    {
+      "id": "S01",
+      "title": "三托盘分类拆垛与双绿色线出料",
+      "path": "processes/S01",
+      "materials": 12,
+      "pallets": 3,
+      "strategy": "主线整线启停，一盘依次停靠两工位；A类由R1送C2，B类由R2送C3，确认空盘后出线。",
+      "source": "process.py",
+      "language": "ac-python/0.1"
+    },
+    {
+      "id": "S02",
+      "title": "六托盘按空闲工位分配、并行拆垛与空盘出线",
+      "path": "processes/S02",
+      "materials": 24,
+      "pallets": 6,
+      "strategy": "整线共同启停；一波最多3盘到位后停带，三工位并行逐件拆垛，全体退位后空盘出线。",
+      "source": "process.py",
+      "language": "ac-python/0.1"
+    },
+    {
+      "id": "S03",
+      "title": "六件入环输送与双机械臂出环流水",
+      "path": "processes/S03",
+      "materials": 6,
+      "pallets": 0,
+      "strategy": "最多2件在途，入口、环线和出口分别互锁；环线单次沿允许方向到交接点。",
+      "source": "process.py",
+      "language": "ac-python/0.1"
+    },
+    {
+      "id": "S04",
+      "title": "四件双机械臂双输送带流水交接",
+      "path": "processes/S04",
+      "materials": 4,
+      "pallets": 0,
+      "strategy": "最多2件在途，上游准备可与下游出料重叠；共享设备和目标容量互锁。",
+      "source": "process.py",
+      "language": "ac-python/0.1"
+    },
+    {
+      "id": "S05",
+      "title": "四件双机器人去毛刺闭环",
+      "path": "processes/S05",
+      "materials": 4,
+      "pallets": 0,
+      "strategy": "共用同一条进出料输送带，逐件循环；不假定存在独立回流通道。",
+      "source": "process.py",
+      "language": "ac-python/0.1"
+    },
+    {
+      "id": "S06",
+      "title": "四件分度台批次与前后段流水",
+      "path": "processes/S06",
+      "materials": 4,
+      "pallets": 0,
+      "strategy": "进出料可与转位工位处理重叠，T1单工位周期串行。",
+      "source": "process.py",
+      "language": "ac-python/0.1"
+    },
+    {
+      "id": "S07",
+      "title": "四件分层入库后按订单出库",
+      "path": "processes/S07",
+      "materials": 4,
+      "pallets": 0,
+      "strategy": "先完成有限入库批次，再按订单出库；共享抓放机构X1互斥。",
+      "source": "process.py",
+      "language": "ac-python/0.1"
+    },
+    {
+      "id": "S08",
+      "title": "四件L形加工工位流水",
+      "path": "processes/S08",
+      "materials": 4,
+      "pallets": 0,
+      "strategy": "单机加工串行，下一件输送准备与当前加工/出料可重叠。",
+      "source": "process.py",
+      "language": "ac-python/0.1"
+    },
+    {
+      "id": "S09",
+      "title": "六件双机加工与单机器人互斥服务",
+      "path": "processes/S09",
+      "materials": 6,
+      "pallets": 0,
+      "strategy": "任务按明确轮换分配到MC1/MC2，两机可并行加工，R1的上下料和退位均互斥。",
+      "source": "process.py",
+      "language": "ac-python/0.1"
+    },
+    {
+      "id": "S10",
+      "title": "三托盘各四件的批次码垛与换盘",
+      "path": "processes/S10",
+      "materials": 12,
+      "pallets": 3,
+      "strategy": "单机器人逐件码放，按托盘清单完成后等待实际换盘；总计12件。",
+      "source": "process.py",
+      "language": "ac-python/0.1"
+    },
+    {
+      "id": "S11",
+      "title": "四件装夹焊接与转位下料",
+      "path": "processes/S11",
+      "materials": 4,
+      "pallets": 0,
+      "strategy": "共用装卸台和转位台，逐件完成后再接下一件，保留有限批次循环。",
+      "source": "process.py",
+      "language": "ac-python/0.1"
+    },
+    {
+      "id": "S12",
+      "title": "四件双侧加工与转位交接流水",
+      "path": "processes/S12",
+      "materials": 4,
+      "pallets": 0,
+      "strategy": "最多2件在途，PS1与PS2可加工不同工件，转台交接周期互斥。",
+      "source": "process.py",
+      "language": "ac-python/0.1"
+    }
+  ]
+}

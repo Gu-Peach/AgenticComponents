@@ -1,0 +1,46 @@
+{
+  "schema_version": "ac-flow-batch/0.2",
+  "scene_id": "S03",
+  "jobs": [
+    {
+      "id": "J01",
+      "material": "M01",
+      "input": "IN.entry",
+      "target": "OUT.exit"
+    },
+    {
+      "id": "J02",
+      "material": "M02",
+      "input": "IN.entry",
+      "target": "OUT.exit"
+    },
+    {
+      "id": "J03",
+      "material": "M03",
+      "input": "IN.entry",
+      "target": "OUT.exit"
+    },
+    {
+      "id": "J04",
+      "material": "M04",
+      "input": "IN.entry",
+      "target": "OUT.exit"
+    },
+    {
+      "id": "J05",
+      "material": "M05",
+      "input": "IN.entry",
+      "target": "OUT.exit"
+    },
+    {
+      "id": "J06",
+      "material": "M06",
+      "input": "IN.entry",
+      "target": "OUT.exit"
+    }
+  ],
+  "material_count": 6,
+  "pallet_count": 0,
+  "max_items_per_pallet": 0,
+  "job_count": 6
+}

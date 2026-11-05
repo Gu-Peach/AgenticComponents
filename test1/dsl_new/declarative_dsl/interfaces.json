@@ -1,0 +1,271 @@
+{
+  "schema_version": "ac-declarative-interfaces/0.1",
+  "facts": {
+    "input_present": {
+      "parameters": {
+        "material": "material_ref",
+        "location": "location_ref"
+      },
+      "value_type": "boolean",
+      "provider": "world_observer_and_external_handoff",
+      "validity": [
+        "run_id",
+        "subject_identity",
+        "provider_epoch",
+        "sample_tick",
+        "snapshot_revision"
+      ],
+      "implementation_status": "pending",
+      "description": "指定物料实际到达指定入口并有合法支承；只读外部供料证据。"
+    },
+    "material_at": {
+      "parameters": {
+        "material": "material_ref",
+        "location": "location_ref"
+      },
+      "value_type": "boolean",
+      "provider": "world_observer_and_external_handoff",
+      "validity": [
+        "run_id",
+        "subject_identity",
+        "provider_epoch",
+        "sample_tick",
+        "snapshot_revision"
+      ],
+      "implementation_status": "pending",
+      "description": "指定物料当前实际位于指定工艺位置并由该位置合法支承，不能复用过往到达事件。"
+    },
+    "output_departed": {
+      "parameters": {
+        "material": "material_ref",
+        "device": "device_ref"
+      },
+      "value_type": "boolean",
+      "provider": "world_observer_and_external_handoff",
+      "validity": [
+        "run_id",
+        "subject_identity",
+        "provider_epoch",
+        "sample_tick",
+        "snapshot_revision"
+      ],
+      "implementation_status": "pending",
+      "description": "当前物料在对应出口完成关联交接后已由下游移走。"
+    },
+    "line_ready_to_index": {
+      "parameters": {
+        "line": "device_ref"
+      },
+      "value_type": "boolean",
+      "provider": "resource_service_and_world_observer",
+      "validity": [
+        "run_id",
+        "subject_identity",
+        "provider_epoch",
+        "sample_tick",
+        "snapshot_revision"
+      ],
+      "implementation_status": "pending",
+      "description": "本次共同分度的机器人清空、主线状态、容量及运动条件均可确认；不代表已获得命令写许可。"
+    },
+    "station_inventory_valid": {
+      "parameters": {
+        "station": "location_ref"
+      },
+      "value_type": "boolean",
+      "provider": "world_and_inventory_service",
+      "validity": [
+        "run_id",
+        "subject_identity",
+        "provider_epoch",
+        "sample_tick",
+        "snapshot_revision"
+      ],
+      "implementation_status": "pending",
+      "description": "该工位当前载具及库存快照有效，已知空工位也可为真；未知快照不为真。"
+    },
+    "wave_empty_and_clear": {
+      "parameters": {
+        "carriers": "carrier_list",
+        "line": "device_ref"
+      },
+      "value_type": "boolean",
+      "provider": "inventory_and_resource_service",
+      "validity": [
+        "run_id",
+        "subject_identity",
+        "provider_epoch",
+        "sample_tick",
+        "snapshot_revision"
+      ],
+      "implementation_status": "pending",
+      "description": "本波每个载具已空、交接已提交、机械臂已退位。"
+    },
+    "carriers_departed": {
+      "parameters": {
+        "carriers": "carrier_list"
+      },
+      "value_type": "boolean",
+      "provider": "world_observer_and_external_handoff",
+      "validity": [
+        "run_id",
+        "subject_identity",
+        "provider_epoch",
+        "sample_tick",
+        "snapshot_revision"
+      ],
+      "implementation_status": "pending",
+      "description": "本波全部载具已按身份在主线出口完成移交。"
+    },
+    "inventory_stored": {
+      "parameters": {
+        "inventory": "job_list"
+      },
+      "value_type": "boolean",
+      "provider": "inventory_service",
+      "validity": [
+        "run_id",
+        "subject_identity",
+        "provider_epoch",
+        "sample_tick",
+        "snapshot_revision"
+      ],
+      "implementation_status": "pending",
+      "description": "本批每个入库订单的指定物料已在指定槽位完成交接。"
+    },
+    "empty_pallet_present": {
+      "parameters": {
+        "pallet": "pallet_ref"
+      },
+      "value_type": "boolean",
+      "provider": "world_observer_and_external_handoff",
+      "validity": [
+        "run_id",
+        "subject_identity",
+        "provider_epoch",
+        "sample_tick",
+        "snapshot_revision"
+      ],
+      "implementation_status": "pending",
+      "description": "指定空盘在码垛位停稳并可用于当前批次。"
+    },
+    "full_pallet_departed": {
+      "parameters": {
+        "pallet": "pallet_ref"
+      },
+      "value_type": "boolean",
+      "provider": "world_observer_and_external_handoff",
+      "validity": [
+        "run_id",
+        "subject_identity",
+        "provider_epoch",
+        "sample_tick",
+        "snapshot_revision"
+      ],
+      "implementation_status": "pending",
+      "description": "指定托盘的完整装载清单已确认，且已由外部接盘方移走。"
+    },
+    "operation_completed": {
+      "parameters": {
+        "material": "material_ref",
+        "station": "device_ref",
+        "recipe": "recipe_ref"
+      },
+      "value_type": "boolean",
+      "provider": "recipe_service",
+      "validity": [
+        "run_id",
+        "subject_identity",
+        "provider_epoch",
+        "sample_tick",
+        "snapshot_revision"
+      ],
+      "implementation_status": "pending",
+      "description": "当前运行内指定工件/工位/配方的匹配工序完成记录存在；不能仅凭计时。"
+    },
+    "subject_unclamped": {
+      "parameters": {
+        "material": "material_ref",
+        "station": "device_ref"
+      },
+      "value_type": "boolean",
+      "provider": "world_observer_and_external_handoff",
+      "validity": [
+        "run_id",
+        "subject_identity",
+        "provider_epoch",
+        "sample_tick",
+        "snapshot_revision"
+      ],
+      "implementation_status": "pending",
+      "description": "指定工件已解除指定工位夹持且仍有合法支承。"
+    },
+    "batch_goal_satisfied": {
+      "parameters": {
+        "specification": "string"
+      },
+      "value_type": "boolean",
+      "provider": "independent_goal_monitor",
+      "validity": [
+        "run_id",
+        "subject_identity",
+        "provider_epoch",
+        "sample_tick",
+        "snapshot_revision"
+      ],
+      "implementation_status": "pending",
+      "description": "独立监测器按task-spec核对全部身份、数量、工序记录、目标交接及停止清理义务。"
+    },
+    "line_brake_point_reached": {
+      "parameters": {
+        "line": "device_ref"
+      },
+      "value_type": "boolean",
+      "provider": "calibrated_world_and_drive_observer",
+      "implementation_status": "pending",
+      "validity": [
+        "run_id",
+        "activation_id",
+        "subject_identity",
+        "sample_tick",
+        "snapshot_revision"
+      ],
+      "description": "本次连续驱动激活后，到达一节距的标定制动点；仅读取编码器和物理位置，不推进主线。"
+    },
+    "line_indexed_and_stopped": {
+      "parameters": {
+        "line": "device_ref"
+      },
+      "value_type": "boolean",
+      "provider": "calibrated_world_and_drive_observer",
+      "implementation_status": "pending",
+      "validity": [
+        "run_id",
+        "activation_id",
+        "subject_identity",
+        "sample_tick",
+        "snapshot_revision"
+      ],
+      "description": "本次主线移动的载具身份、实际到站、支承及停稳均成立；不能只看电机速度。"
+    },
+    "material_brake_point_reached": {
+      "parameters": {
+        "material": "material_ref",
+        "device": "device_ref"
+      },
+      "value_type": "boolean",
+      "provider": "calibrated_world_and_drive_observer",
+      "implementation_status": "pending",
+      "validity": [
+        "run_id",
+        "activation_id",
+        "subject_identity",
+        "sample_tick",
+        "snapshot_revision"
+      ],
+      "description": "指定物料到达本次出料输送的标定制动点；不表示已完成出口交接。"
+    }
+  },
+  "capabilities": {},
+  "capability_policy": "DeviceSpec-only; no proposed capability fallback"
+}

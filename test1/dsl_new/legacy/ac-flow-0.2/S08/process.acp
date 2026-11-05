@@ -1,0 +1,54 @@
+; 四件L形加工工位流水
+; 单机加工串行，下一件输送准备与当前加工/出料可重叠。
+(process "ac-flow/0.2" S08
+  (sequence
+    (parallel-for jobs job 2
+      (sequence
+        (await input_present $job.material $job.input 1800 tick)
+        (with-resources
+          (C1)
+          (sequence
+            (invoke op_057 C1 transport_to_exit
+              (arg material $job.material)
+              (arg speed_mps 0.2 m/s))))
+        (await target_available MC1.work 1800 tick)
+        (with-resources
+          (MC1)
+          (sequence
+            (with-resources
+              (R1 C1)
+              (sequence
+                (sequence
+                  (invoke op_058 R1 transfer_material
+                    (arg material $job.material)
+                    (arg source C1.exit)
+                    (arg target MC1.work))
+                  (invoke op_059 R1 move_to_location
+                    (arg target R1.home)))))
+            (sequence
+              (invoke op_060 MC1 clamp
+                (arg material $job.material))
+              (invoke op_061 MC1 process_material
+                (arg material $job.material)
+                (arg recipe machining))
+              (invoke op_062 MC1 unclamp
+                (arg material $job.material)))
+            (await target_available C2.entry 1800 tick)
+            (with-resources
+              (R1 C2)
+              (sequence
+                (sequence
+                  (invoke op_063 R1 transfer_material
+                    (arg material $job.material)
+                    (arg source MC1.work)
+                    (arg target C2.entry))
+                  (invoke op_064 R1 move_to_location
+                    (arg target R1.home)))))))
+        (with-resources
+          (C2)
+          (sequence
+            (invoke op_065 C2 transport_to_exit
+              (arg material $job.material)
+              (arg speed_mps 0.2 m/s))))
+        (await output_departed $job.material C2 1800 tick)))
+    (verify batch_goal)))

@@ -1,0 +1,1300 @@
+{
+  "schema_version": "asset-contract/0.1",
+  "id": "conveyor",
+  "version": "0.3.0",
+  "label": "传送带",
+  "category": "active",
+  "description": "单驱动、正向输送的共享模型；皮带和滚筒使用同一信号语义，几何与物理适配由实例提供。",
+  "implementation_status": "contract_only",
+  "protocol_imports": [
+    "request_v1"
+  ],
+  "features": [
+    {
+      "id": "carrier_indexing",
+      "default": false,
+      "description": "整线共同启停、多个承载托盘按显式运动计划停到工位；不授予独立分区驱动。"
+    }
+  ],
+  "instance_requirements": [
+    "几何适配必须提供连续输送面和 entry/exit 检测区。",
+    "本版不启用反转或独立分区；外观存在多段滚筒不自动表示多驱动。",
+    "离散 transport_to_exit 自己持有驱动，不与 run 同时开启。",
+    "carrier_indexing启用时实例必须提供整线运动计划检查器；不兼容的托盘间距/工位距离须拒绝。",
+    "托盘本体及内容物总载荷计入物理质量；拆垛移走物料后才更新库存。"
+  ],
+  "parameters": [
+    {
+      "id": "max_speed_mps",
+      "type": "number",
+      "unit": "m/s",
+      "description": "实验最大表面速度。",
+      "default": 0.5,
+      "minimum": 0.001
+    },
+    {
+      "id": "acceleration_mps2",
+      "type": "number",
+      "unit": "m/s2",
+      "description": "实验加减速参数，由适配器落实。",
+      "default": 0.5,
+      "minimum": 0.001
+    },
+    {
+      "id": "stop_speed_tolerance",
+      "type": "number",
+      "unit": "m/s",
+      "description": "停稳容差。",
+      "default": 0.005,
+      "minimum": 0
+    },
+    {
+      "id": "speed_tolerance",
+      "type": "number",
+      "unit": "m/s",
+      "description": "到速容差。",
+      "default": 0.01,
+      "minimum": 0
+    },
+    {
+      "id": "capacity",
+      "type": "integer",
+      "unit": "1",
+      "description": "包含占用与未提交预留的最大容量。",
+      "default": 1,
+      "minimum": 1
+    },
+    {
+      "id": "max_carrier_load_kg",
+      "type": "number",
+      "unit": "kg",
+      "description": "主线允许的全部托盘及其装载物总质量。",
+      "default": 100,
+      "minimum": 0.001
+    },
+    {
+      "id": "carrier_speed_mps",
+      "type": "number",
+      "unit": "m/s",
+      "default": 0.2,
+      "minimum": 0.001,
+      "description": "单托盘工位输送的统一速度设定，不是每个任务的工艺步骤。"
+    }
+  ],
+  "signal_ports": [
+    {
+      "id": "material_id",
+      "type": "material_ref",
+      "unit": "1",
+      "direction": "input",
+      "retention": "state",
+      "description": "离散输送的目标物料。",
+      "writer": "controller"
+    },
+    {
+      "id": "speed_setpoint",
+      "type": "number",
+      "unit": "m/s",
+      "direction": "input",
+      "retention": "state",
+      "description": "接受请求时冻结的正向速度。",
+      "writer": "controller"
+    },
+    {
+      "id": "actual_speed",
+      "type": "number",
+      "unit": "m/s",
+      "direction": "output",
+      "retention": "state",
+      "description": "实际表面速度。",
+      "writer": "adapter"
+    },
+    {
+      "id": "running",
+      "type": "boolean",
+      "unit": "1",
+      "direction": "output",
+      "retention": "state",
+      "description": "实际运动状态。",
+      "writer": "adapter"
+    },
+    {
+      "id": "blocked",
+      "type": "boolean",
+      "unit": "1",
+      "direction": "output",
+      "retention": "state",
+      "description": "下游或本机路径阻塞。",
+      "writer": "adapter"
+    },
+    {
+      "id": "capacity_available",
+      "type": "boolean",
+      "unit": "1",
+      "direction": "output",
+      "retention": "state",
+      "description": "占用与预留计算后的可接收状态。",
+      "writer": "adapter"
+    },
+    {
+      "id": "transport_plan_id",
+      "type": "transport_plan_ref",
+      "unit": "1",
+      "direction": "input",
+      "retention": "state",
+      "description": "运行时已登记的整线托盘运动计划。",
+      "writer": "controller"
+    },
+    {
+      "id": "handoff_zones_clear",
+      "type": "boolean",
+      "unit": "1",
+      "direction": "output",
+      "retention": "state",
+      "description": "所有机械臂和其他交接执行器已退出整条主线的运动区。",
+      "writer": "adapter"
+    },
+    {
+      "id": "carrier_id",
+      "type": "pallet_ref",
+      "unit": "1",
+      "direction": "input",
+      "writer": "controller",
+      "retention": "level_command",
+      "description": "当前请求搬运的托盘身份。"
+    },
+    {
+      "id": "target_position",
+      "type": "location_ref",
+      "unit": "1",
+      "direction": "input",
+      "writer": "controller",
+      "retention": "level_command",
+      "description": "本次请求的主线目标停靠位置。"
+    }
+  ],
+  "observations": [
+    {
+      "id": "material_at_entry",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "world_observer",
+      "description": "指定物料位于本机入口，具有有效支承。",
+      "arguments": [
+        "material"
+      ],
+      "argument_types": {
+        "material": "material_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "material_at_exit",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "world_observer",
+      "description": "指定物料位于本机出口检测区；不等于交给下游。",
+      "arguments": [
+        "material"
+      ],
+      "argument_types": {
+        "material": "material_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "subject_supported",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "world_observer",
+      "description": "指定物料仍受本输送面支承。",
+      "arguments": [
+        "material"
+      ],
+      "argument_types": {
+        "material": "material_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "path_clear",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "world_observer",
+      "description": "指定物料到本机出口的输送路径当前未被阻塞。",
+      "arguments": [
+        "material"
+      ],
+      "argument_types": {
+        "material": "material_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "drive_stopped",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "device_adapter",
+      "description": "实际速度绝对值小于 stop_speed_tolerance；命令为零不足以成立。",
+      "arguments": [],
+      "argument_types": {},
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "forward_speed_error",
+      "type": "number",
+      "unit": "m/s",
+      "provider": "device_adapter",
+      "description": "当前有效请求的 speed_mps 与实际速度之差的绝对值。",
+      "arguments": [],
+      "argument_types": {},
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "plan_ready",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "world_observer",
+      "description": "计划列出线上的全部托盘、起点、目标、先后次序、间距、载荷和被承载物；可由同一主线驱动实现且无超车。",
+      "arguments": [
+        "plan"
+      ],
+      "argument_types": {
+        "plan": "transport_plan_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "plan_targets_observed",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "world_observer",
+      "description": "计划中所有托盘已在对应工位或出口，身份与位置匹配。",
+      "arguments": [
+        "plan"
+      ],
+      "argument_types": {
+        "plan": "transport_plan_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "carrier_loads_supported",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "world_observer",
+      "description": "移动期间所有托盘和盘上物料保持合法支承，装载关系随托盘整体运动。",
+      "arguments": [
+        "plan"
+      ],
+      "argument_types": {
+        "plan": "transport_plan_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "plan_load_mass",
+      "type": "number",
+      "unit": "kg",
+      "provider": "world_observer",
+      "description": "计划所有托盘及其当前装载物的总质量。",
+      "arguments": [
+        "plan"
+      ],
+      "argument_types": {
+        "plan": "transport_plan_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "carrier_target_permitted",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "geometry_adapter",
+      "description": "目标属于本机、沿允许方向可达；当前全部在线载具可由同一驱动移动且不会冲突。以当前状态计算，不从生产清单读取工序。",
+      "arguments": [
+        "carrier",
+        "target"
+      ],
+      "argument_types": {
+        "carrier": "pallet_ref",
+        "target": "location_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "carrier_at_requested_position",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "world_observer",
+      "description": "当前请求指定托盘实际到达本次target；核对主体与位置证据。",
+      "arguments": [
+        "carrier",
+        "target"
+      ],
+      "argument_types": {
+        "carrier": "pallet_ref",
+        "target": "location_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "carrier_supported",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "world_observer",
+      "description": "指定托盘及盘上剩余物料在本机具有有效支承。",
+      "arguments": [
+        "carrier"
+      ],
+      "argument_types": {
+        "carrier": "pallet_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    },
+    {
+      "id": "carrier_total_mass",
+      "type": "number",
+      "unit": "kg",
+      "provider": "world_observer",
+      "description": "指定托盘本体及实际装载物的总质量。",
+      "arguments": [
+        "carrier"
+      ],
+      "argument_types": {
+        "carrier": "pallet_ref"
+      },
+      "validity": "fresh_valid_same_run"
+    }
+  ],
+  "authorizations": [
+    {
+      "id": "operation_allowed",
+      "type": "boolean",
+      "unit": "1",
+      "provider": "resource_service",
+      "description": "当前实例、行为和请求的操作许可；仅在资源实际授予后为真。",
+      "arguments": [],
+      "argument_types": {},
+      "validity": "fresh_valid_same_run"
+    }
+  ],
+  "spatial_interfaces": [
+    {
+      "id": "entry",
+      "role": "process",
+      "geometry_binding": "required_per_instance",
+      "requires_features": [],
+      "description": "入口支承与交接检测区。"
+    },
+    {
+      "id": "exit",
+      "role": "process",
+      "geometry_binding": "required_per_instance",
+      "requires_features": [],
+      "description": "出口支承与交接检测区。"
+    },
+    {
+      "id": "mount",
+      "role": "attachment",
+      "geometry_binding": "required_per_instance",
+      "requires_features": [],
+      "description": "安装参考坐标系。"
+    }
+  ],
+  "behaviors": [
+    {
+      "id": "transport_to_exit",
+      "label": "输送指定物料到出口并停稳",
+      "kind": "action",
+      "invocable": true,
+      "protocol": "request_v1",
+      "executor_ref": "adapter.conveyor.transport_to_exit@0.1",
+      "requires_features": [],
+      "arguments": [
+        {
+          "id": "material",
+          "type": "material_ref",
+          "unit": "1",
+          "description": "本次输送的物料。"
+        },
+        {
+          "id": "speed_mps",
+          "type": "number",
+          "unit": "m/s",
+          "description": "正向运输速度。",
+          "minimum": 0.001
+        }
+      ],
+      "command_bindings": [
+        {
+          "signal": "command_code",
+          "value": {
+            "source": "literal",
+            "value": 1
+          }
+        },
+        {
+          "signal": "material_id",
+          "value": {
+            "source": "argument",
+            "ref": "material"
+          }
+        },
+        {
+          "signal": "speed_setpoint",
+          "value": {
+            "source": "argument",
+            "ref": "speed_mps"
+          }
+        }
+      ],
+      "preconditions": [
+        {
+          "id": "device_idle",
+          "left": {
+            "source": "signal",
+            "ref": "busy"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": false
+          }
+        },
+        {
+          "id": "device_healthy",
+          "left": {
+            "source": "signal",
+            "ref": "error"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": false
+          }
+        },
+        {
+          "id": "enabled",
+          "left": {
+            "source": "signal",
+            "ref": "enable"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "operation_authorized",
+          "left": {
+            "source": "authorization",
+            "ref": "operation_allowed"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "positive_speed",
+          "left": {
+            "source": "argument",
+            "ref": "speed_mps"
+          },
+          "operator": "gt",
+          "right": {
+            "source": "literal",
+            "value": 0
+          }
+        },
+        {
+          "id": "within_speed_limit",
+          "left": {
+            "source": "argument",
+            "ref": "speed_mps"
+          },
+          "operator": "le",
+          "right": {
+            "source": "parameter",
+            "ref": "max_speed_mps"
+          }
+        },
+        {
+          "id": "subject_ready",
+          "left": {
+            "source": "observation",
+            "ref": "material_at_entry",
+            "bindings": {
+              "material": "material"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        }
+      ],
+      "sustaining_conditions": [
+        {
+          "id": "enabled",
+          "left": {
+            "source": "signal",
+            "ref": "enable"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "operation_authorized",
+          "left": {
+            "source": "authorization",
+            "ref": "operation_allowed"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "subject_supported",
+          "left": {
+            "source": "observation",
+            "ref": "subject_supported",
+            "bindings": {
+              "material": "material"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        }
+      ],
+      "completion": {
+        "mode": "evidence",
+        "checks": [
+          {
+            "id": "at_exit",
+            "left": {
+              "source": "observation",
+              "ref": "material_at_exit",
+              "bindings": {
+                "material": "material"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "stopped_at_exit",
+            "left": {
+              "source": "observation",
+              "ref": "drive_stopped"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          }
+        ],
+        "description": "本次请求结果有效，指定物料到达出口并停稳。阻塞可等待，不把堵料自动当设备故障。"
+      },
+      "expected_effects": [
+        "适配器启动输送，遇阻塞减速等待；目标物料到达出口后受控减速。",
+        "物料归属保持为本机，直到另一个经证据确认的交接完成。"
+      ],
+      "failure_policy": "preserve_observed_state_and_report"
+    },
+    {
+      "id": "run",
+      "label": "持续正向运行",
+      "kind": "continuous",
+      "invocable": true,
+      "protocol": "request_v1",
+      "executor_ref": "adapter.conveyor.run@0.1",
+      "requires_features": [],
+      "arguments": [
+        {
+          "id": "speed_mps",
+          "type": "number",
+          "unit": "m/s",
+          "description": "本运行作用域的正向速度。",
+          "minimum": 0.001
+        }
+      ],
+      "command_bindings": [
+        {
+          "signal": "command_code",
+          "value": {
+            "source": "literal",
+            "value": 2
+          }
+        },
+        {
+          "signal": "speed_setpoint",
+          "value": {
+            "source": "argument",
+            "ref": "speed_mps"
+          }
+        }
+      ],
+      "preconditions": [
+        {
+          "id": "device_idle",
+          "left": {
+            "source": "signal",
+            "ref": "busy"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": false
+          }
+        },
+        {
+          "id": "device_healthy",
+          "left": {
+            "source": "signal",
+            "ref": "error"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": false
+          }
+        },
+        {
+          "id": "enabled",
+          "left": {
+            "source": "signal",
+            "ref": "enable"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "operation_authorized",
+          "left": {
+            "source": "authorization",
+            "ref": "operation_allowed"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "positive_speed",
+          "left": {
+            "source": "argument",
+            "ref": "speed_mps"
+          },
+          "operator": "gt",
+          "right": {
+            "source": "literal",
+            "value": 0
+          }
+        },
+        {
+          "id": "within_speed_limit",
+          "left": {
+            "source": "argument",
+            "ref": "speed_mps"
+          },
+          "operator": "le",
+          "right": {
+            "source": "parameter",
+            "ref": "max_speed_mps"
+          }
+        }
+      ],
+      "sustaining_conditions": [
+        {
+          "id": "enabled",
+          "left": {
+            "source": "signal",
+            "ref": "enable"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "operation_authorized",
+          "left": {
+            "source": "authorization",
+            "ref": "operation_allowed"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        }
+      ],
+      "completion": {
+        "mode": "scope",
+        "checks": [
+          {
+            "id": "scope_stop_observed",
+            "left": {
+              "source": "observation",
+              "ref": "drive_stopped"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          }
+        ],
+        "description": "运行本身没有一次性成功。撤销作用域发出关联 cancel，等待停止确认及实际停稳后退出。"
+      },
+      "expected_effects": [
+        "适配器在运行作用域内维持目标速度，允许空转；持续反馈 actual_speed。"
+      ],
+      "failure_policy": "preserve_observed_state_and_report"
+    },
+    {
+      "id": "index_carriers",
+      "label": "按整线运动计划输送托盘并停稳",
+      "kind": "action",
+      "invocable": true,
+      "protocol": "request_v1",
+      "executor_ref": "adapter.index_carriers",
+      "requires_features": [
+        "carrier_indexing"
+      ],
+      "arguments": [
+        {
+          "id": "plan",
+          "type": "transport_plan_ref",
+          "unit": "1",
+          "description": "已登记的有限托盘运动计划。"
+        }
+      ],
+      "command_bindings": [
+        {
+          "signal": "command_code",
+          "value": {
+            "source": "literal",
+            "value": 3
+          }
+        },
+        {
+          "signal": "transport_plan_id",
+          "value": {
+            "source": "argument",
+            "ref": "plan"
+          }
+        }
+      ],
+      "preconditions": [
+        {
+          "id": "device_idle",
+          "left": {
+            "source": "signal",
+            "ref": "busy"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": false
+          }
+        },
+        {
+          "id": "device_healthy",
+          "left": {
+            "source": "signal",
+            "ref": "error"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": false
+          }
+        },
+        {
+          "id": "enabled",
+          "left": {
+            "source": "signal",
+            "ref": "enable"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "operation_authorized",
+          "left": {
+            "source": "authorization",
+            "ref": "operation_allowed"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "valid_plan",
+          "left": {
+            "source": "observation",
+            "ref": "plan_ready",
+            "bindings": {
+              "plan": "plan"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "zones_clear",
+          "left": {
+            "source": "signal",
+            "ref": "handoff_zones_clear"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "load_limit",
+          "left": {
+            "source": "observation",
+            "ref": "plan_load_mass",
+            "bindings": {
+              "plan": "plan"
+            }
+          },
+          "operator": "le",
+          "right": {
+            "source": "parameter",
+            "ref": "max_carrier_load_kg"
+          }
+        }
+      ],
+      "sustaining_conditions": [
+        {
+          "id": "enabled",
+          "left": {
+            "source": "signal",
+            "ref": "enable"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "operation_authorized",
+          "left": {
+            "source": "authorization",
+            "ref": "operation_allowed"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "zones_stay_clear",
+          "left": {
+            "source": "signal",
+            "ref": "handoff_zones_clear"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "loads_supported",
+          "left": {
+            "source": "observation",
+            "ref": "carrier_loads_supported",
+            "bindings": {
+              "plan": "plan"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        }
+      ],
+      "completion": {
+        "mode": "evidence",
+        "checks": [
+          {
+            "id": "targets_observed",
+            "left": {
+              "source": "observation",
+              "ref": "plan_targets_observed",
+              "bindings": {
+                "plan": "plan"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "actual_stop",
+            "left": {
+              "source": "observation",
+              "ref": "drive_stopped"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "support_preserved",
+            "left": {
+              "source": "observation",
+              "ref": "carrier_loads_supported",
+              "bindings": {
+                "plan": "plan"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          }
+        ],
+        "description": "全部指定托盘到达计划目标并停稳；计划不能通过逐托盘瞬移或假定独立分区实现。"
+      },
+      "expected_effects": [
+        "仅按执行器实际输送更新托盘位置；盘上物料保留槽位身份，其世界位姿随载具变化。",
+        "动作结束主线停稳，机械臂才可取得对应工位的拆垛许可。"
+      ],
+      "failure_policy": "preserve_observed_state_and_report"
+    },
+    {
+      "id": "transport_carrier_to",
+      "label": "将指定托盘输送到本机工位并停稳",
+      "kind": "action",
+      "invocable": true,
+      "protocol": "request_v1",
+      "executor_ref": "adapter.conveyor.transport_carrier_to@0.1",
+      "requires_features": [
+        "carrier_indexing"
+      ],
+      "arguments": [
+        {
+          "id": "carrier",
+          "type": "pallet_ref",
+          "unit": "1",
+          "description": "本次运输的托盘。"
+        },
+        {
+          "id": "target",
+          "type": "location_ref",
+          "unit": "1",
+          "description": "本机已登记的目标停靠位置。"
+        }
+      ],
+      "command_bindings": [
+        {
+          "signal": "command_code",
+          "value": {
+            "source": "literal",
+            "value": 4
+          }
+        },
+        {
+          "signal": "carrier_id",
+          "value": {
+            "source": "argument",
+            "ref": "carrier"
+          }
+        },
+        {
+          "signal": "target_position",
+          "value": {
+            "source": "argument",
+            "ref": "target"
+          }
+        },
+        {
+          "signal": "speed_setpoint",
+          "value": {
+            "source": "parameter",
+            "ref": "carrier_speed_mps"
+          }
+        }
+      ],
+      "preconditions": [
+        {
+          "id": "device_idle",
+          "left": {
+            "source": "signal",
+            "ref": "busy"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": false
+          }
+        },
+        {
+          "id": "device_healthy",
+          "left": {
+            "source": "signal",
+            "ref": "error"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": false
+          }
+        },
+        {
+          "id": "enabled",
+          "left": {
+            "source": "signal",
+            "ref": "enable"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "authorized",
+          "left": {
+            "source": "authorization",
+            "ref": "operation_allowed"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "handoff_clear",
+          "left": {
+            "source": "signal",
+            "ref": "handoff_zones_clear"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "target_permitted",
+          "left": {
+            "source": "observation",
+            "ref": "carrier_target_permitted",
+            "bindings": {
+              "carrier": "carrier",
+              "target": "target"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "load_supported",
+          "left": {
+            "source": "observation",
+            "ref": "carrier_supported",
+            "bindings": {
+              "carrier": "carrier"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "load_limit",
+          "left": {
+            "source": "observation",
+            "ref": "carrier_total_mass",
+            "bindings": {
+              "carrier": "carrier"
+            }
+          },
+          "operator": "le",
+          "right": {
+            "source": "parameter",
+            "ref": "max_carrier_load_kg"
+          }
+        },
+        {
+          "id": "speed_within_limit",
+          "left": {
+            "source": "parameter",
+            "ref": "carrier_speed_mps"
+          },
+          "operator": "le",
+          "right": {
+            "source": "parameter",
+            "ref": "max_speed_mps"
+          }
+        }
+      ],
+      "sustaining_conditions": [
+        {
+          "id": "enabled",
+          "left": {
+            "source": "signal",
+            "ref": "enable"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "authorized",
+          "left": {
+            "source": "authorization",
+            "ref": "operation_allowed"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "handoff_clear",
+          "left": {
+            "source": "signal",
+            "ref": "handoff_zones_clear"
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        },
+        {
+          "id": "load_supported",
+          "left": {
+            "source": "observation",
+            "ref": "carrier_supported",
+            "bindings": {
+              "carrier": "carrier"
+            }
+          },
+          "operator": "eq",
+          "right": {
+            "source": "literal",
+            "value": true
+          }
+        }
+      ],
+      "completion": {
+        "mode": "evidence",
+        "checks": [
+          {
+            "id": "target_observed",
+            "left": {
+              "source": "observation",
+              "ref": "carrier_at_requested_position",
+              "bindings": {
+                "carrier": "carrier",
+                "target": "target"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "drive_stopped",
+            "left": {
+              "source": "observation",
+              "ref": "drive_stopped"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "load_supported",
+            "left": {
+              "source": "observation",
+              "ref": "carrier_supported",
+              "bindings": {
+                "carrier": "carrier"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          }
+        ],
+        "description": "当前请求关联的托盘到达调用指定位置，实际停稳并保持载荷支承。"
+      },
+      "expected_effects": [
+        "底层执行器根据当前载具位置和target生成或验证运动计划；计划是派生产物，不是批次中的工序。",
+        "实际位置只能由场景执行器推进，不能因写入target便瞬移。"
+      ],
+      "failure_policy": "preserve_observed_state_and_report"
+    }
+  ],
+  "configuration_constraints": [
+    {
+      "kind": "parameter_le",
+      "left": "carrier_speed_mps",
+      "right": "max_speed_mps"
+    }
+  ]
+}
