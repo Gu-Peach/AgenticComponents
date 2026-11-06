@@ -45,6 +45,32 @@ export function SceneTree() {
       </button>
       <div className="tree-list">
         {open &&
+          project?.scenePackages
+            ?.filter((s) =>
+              `${s.bundle.name} ${s.id}`
+                .toLowerCase()
+                .includes(search.toLowerCase()),
+            )
+            .map((scene) => (
+              <div
+                className={`tree-row ${selectedId === scene.id ? "selected" : ""}`}
+                key={scene.id}
+              >
+                <button
+                  className="tree-select"
+                  onClick={() => useWorkspace.getState().select(scene.id)}
+                  onDoubleClick={() =>
+                    useWorkspace.setState((s) => ({
+                      focusToken: s.focusToken + 1,
+                    }))
+                  }
+                >
+                  <Layers3 size={16} />
+                  <span>{scene.bundle.name} · 场景</span>
+                </button>
+              </div>
+            ))}
+        {open &&
           project?.instances
             .filter((i) =>
               `${i.name} ${i.instanceId}`
@@ -94,7 +120,7 @@ export function SceneTree() {
                 </div>
               );
             })}
-        {project?.instances.length === 0 && (
+        {project?.instances.length === 0 && !project?.scenePackages?.length && (
           <div className="empty-state">
             从底部资产库添加设备
             <br />

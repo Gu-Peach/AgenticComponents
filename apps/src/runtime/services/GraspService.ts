@@ -77,21 +77,29 @@ export class GraspService {
       .applyQuaternion(new Quaternion(...support.rotation).invert());
     const relative = new Quaternion(...support.rotation).invert().multiply(q),
       half = new Vector3(...s.materialSize!).multiplyScalar(0.5);
-    const corners: Vector3[] = [];
-    for (const x of [-1, 1])
-      for (const y of [-1, 1])
-        for (const z of [-1, 1])
-          corners.push(
-            new Vector3(x * half.x, y * half.y, z * half.z).applyQuaternion(
-              relative,
-            ),
-          );
-    const extent = (axis: "x" | "z") =>
-      Math.max(...corners.map((v) => Math.abs(v[axis])));
+    const vertices = s
+      .physics!.bodies!.find((b) => b.id === s.materialBodyId)
+      ?.convexParts?.flat();
+    const corners: Vector3[] =
+      vertices?.map((v) => new Vector3(...v).applyQuaternion(relative)) ?? [];
+    if (!vertices)
+      for (const x of [-1, 1])
+        for (const y of [-1, 1])
+          for (const z of [-1, 1])
+            corners.push(
+              new Vector3(x * half.x, y * half.y, z * half.z).applyQuaternion(
+                relative,
+              ),
+            );
+    const contained = (axis: "x" | "z", size: number) =>
+      local[axis] + Math.min(...corners.map((v) => v[axis])) >=
+        -size / 2 - 0.005 &&
+      local[axis] + Math.max(...corners.map((v) => v[axis])) <=
+        size / 2 + 0.005;
     return (
       this.physics.hasSupport(s.materialBodyId, s.supportSurfaceId) &&
-      Math.abs(local.x) + extent("x") <= support.size[0] / 2 + 0.005 &&
-      Math.abs(local.z) + extent("z") <= support.size[2] / 2 + 0.005 &&
+      contained("x", support.size[0]) &&
+      contained("z", support.size[2]) &&
       new Vector3(...p.position).distanceTo(new Vector3(...s.placementCenter)) <
         0.12 &&
       Math.hypot(...p.velocity) < 0.08 &&

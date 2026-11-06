@@ -1,8 +1,7 @@
-# 四件分层入库后按订单出库
-# 行为前后条件由契约自动处理；工艺只声明动作与协作关系。
-with process('S07', version='ac-declarative/0.3'):
+# Scene assets are resolved from device; this is data-only DSL.
+with process('S07', version='ac-declarative/0.4', devices='./device', task=production(jobs=[{'id': 'J01', 'material': 'M01', 'input': 'C1.entry', 'slot': 'STORE.slot1', 'height': 1.0, 'target': 'C2.exit'}, {'id': 'J02', 'material': 'M02', 'input': 'C1.entry', 'slot': 'STORE.slot2', 'height': 1.0, 'target': 'C2.exit'}, {'id': 'J03', 'material': 'M03', 'input': 'C1.entry', 'slot': 'STORE.slot3', 'height': 2.0, 'target': 'C2.exit'}, {'id': 'J04', 'material': 'M04', 'input': 'C1.entry', 'slot': 'STORE.slot4', 'height': 2.0, 'target': 'C2.exit'}], pallets=[]), goal='./task-spec.json'):
     with seq('warehouse_182'):
-        with repeat('store_orders_164', over=batch.jobs, bind='job', limit=batch.material_count):
+        with repeat('store_orders_164', over=task.jobs, bind='job', limit=task.material_count):
             with seq('store_orders_body_163'):
                 invoke('c1_transport_to_exit_153', C1, 'transport_to_exit', subject_id=subject_id(job.material))
                 invoke('c1_transport_to_exit_153_stop', C1, 'stop_conveying')
@@ -14,7 +13,7 @@ with process('S07', version='ac-declarative/0.3'):
                 invoke('x1_move_to_location_160', X1, 'move_to_pose', payload=payload('X1.move_to_pose', target=X1.home))
                 invoke('l1_move_to_height_162', L1, 'lift_to_level', move_to_level=quantity(0, 'm'))
         with par('retrieve_and_outfeed_181', join='all'):
-            with repeat('retrieve_orders_174', over=batch.jobs, bind='job', limit=batch.material_count):
+            with repeat('retrieve_orders_174', over=task.jobs, bind='job', limit=task.material_count):
                 with seq('retrieve_orders_body_173'):
                     invoke('l2_move_to_height_165', L2, 'lift_to_level', move_to_level=quantity(job.height, 'm'))
                     invoke('x1_transfer_material_166', X1, 'pick_and_place', payload=payload('X1.pick_and_place', material=job.material, source=job.slot, target=L2.work))
@@ -22,7 +21,7 @@ with process('S07', version='ac-declarative/0.3'):
                     invoke('l2_move_to_height_169', L2, 'lift_to_level', move_to_level=quantity(0, 'm'))
                     invoke('x1_transfer_material_170', X1, 'pick_and_place', payload=payload('X1.pick_and_place', material=job.material, source=L2.work, target=C2.entry))
                     invoke('x1_move_to_location_171', X1, 'move_to_pose', payload=payload('X1.move_to_pose', target=X1.home))
-            with repeat('outfeed_180', over=batch.jobs, bind='job', limit=batch.material_count):
+            with repeat('outfeed_180', over=task.jobs, bind='job', limit=task.material_count):
                 with seq('outfeed_body_179'):
                     invoke('c2_transport_to_exit_177', C2, 'transport_to_exit', subject_id=subject_id(job.material))
                     invoke('c2_transport_to_exit_177_stop', C2, 'stop_conveying')

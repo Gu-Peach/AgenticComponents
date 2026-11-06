@@ -1,0 +1,959 @@
+{
+  "contract_version": "1.1",
+  "schema_type": "DeviceSpec",
+  "schema_id": "standard.workpiece",
+  "device_spec_id": "standard.workpiece",
+  "version": "1.0.0",
+  "device_type": "workpiece",
+  "display_name": "物料：被动对象与状态观测",
+  "asset": {
+    "model_format": "glb",
+    "model_key": "../Closed Conveyor Loop/Closed Conveyor Loop.glb",
+    "sha256": "11aeab283c378c1ec8bf7d2709db74d4e8ff70b640a4b7a62f686307223501b0"
+  },
+  "params_schema": {
+    "mass_kg": {
+      "type": "number",
+      "required": true,
+      "default": 0.2,
+      "unit": "kg",
+      "min": 0.001,
+      "max": 500,
+      "mutability": "stopped_only",
+      "description": "物料物理质量"
+    },
+    "shape": {
+      "type": "enum",
+      "required": true,
+      "default": "cylinder",
+      "options": [
+        "cylinder",
+        "box"
+      ],
+      "mutability": "stopped_only",
+      "description": "参数化碰撞形状；复杂网格需另选几何配置"
+    },
+    "height_m": {
+      "type": "number",
+      "required": true,
+      "default": 0.12,
+      "unit": "m",
+      "min": 0.001,
+      "max": 5,
+      "mutability": "stopped_only",
+      "description": "高度"
+    },
+    "diameter_m": {
+      "type": "number",
+      "required": false,
+      "default": 0.08,
+      "unit": "m",
+      "min": 0.001,
+      "max": 5,
+      "mutability": "stopped_only",
+      "description": "圆柱直径",
+      "required_when": {
+        "parameter": "shape",
+        "equals": "cylinder"
+      }
+    },
+    "length_m": {
+      "type": "number",
+      "required": false,
+      "default": 0.1,
+      "unit": "m",
+      "min": 0.001,
+      "max": 5,
+      "mutability": "stopped_only",
+      "description": "盒形长度",
+      "required_when": {
+        "parameter": "shape",
+        "equals": "box"
+      }
+    },
+    "width_m": {
+      "type": "number",
+      "required": false,
+      "default": 0.1,
+      "unit": "m",
+      "min": 0.001,
+      "max": 5,
+      "mutability": "stopped_only",
+      "description": "盒形宽度",
+      "required_when": {
+        "parameter": "shape",
+        "equals": "box"
+      }
+    },
+    "friction": {
+      "type": "number",
+      "required": false,
+      "default": 0.5,
+      "unit": "ratio",
+      "min": 0,
+      "max": 2,
+      "mutability": "stopped_only",
+      "description": "接触摩擦参数"
+    },
+    "restitution": {
+      "type": "number",
+      "required": false,
+      "default": 0,
+      "unit": "ratio",
+      "min": 0,
+      "max": 1,
+      "mutability": "stopped_only",
+      "description": "恢复系数"
+    },
+    "can_stack": {
+      "type": "boolean",
+      "required": true,
+      "default": false,
+      "mutability": "stopped_only",
+      "description": "是否允许作为合法堆叠对象"
+    }
+  },
+  "interfaces": [],
+  "signal_ports": [
+    {
+      "port_id": "picked",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "本次实际建立持有关系的锁存通知，带事件／任务关联；不是每个抓取命令都算成功",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "carried",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "当前物料是否被有效持有，属于持续状态",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "placed",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "当前物料已完成有效放置并满足配置的稳定条件；上层可另发放置事件",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "holder_id",
+      "direction": "output",
+      "value_type": "integer",
+      "plc_type": "DINT",
+      "description": "当前持有设备／载具的映射 ID，0 表示未被持有",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "location_id",
+      "direction": "output",
+      "value_type": "integer",
+      "plc_type": "DINT",
+      "description": "当前确认的位置或工艺区域；未知位置必须有明确编码",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    }
+  ],
+  "transport_behaviors": [
+    {
+      "behavior_id": "be_picked",
+      "display_name": "被抓取",
+      "behavior_type": "passive",
+      "schedulable": false,
+      "executor_ref": "pending.workpiece.be_picked",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "外部夹具实际抓取",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "signal_or_external_event"
+      },
+      "input_signals": [],
+      "output_signals": [
+        "carried",
+        "holder_id",
+        "picked"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "物料存在且可抓、几何可接触、无冲突持有或预留、夹具及载荷兼容",
+            "source": "observation",
+            "key": "be_picked.pre_1",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "be_picked.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "实际持有关系建立，发布 picked 并更新 carried/holder_id",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "实际持有关系建立，发布 picked 并更新 carried/holder_id",
+            "source": "observation",
+            "key": "be_picked.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "be_conveyed",
+      "display_name": "被输送",
+      "behavior_type": "passive",
+      "schedulable": false,
+      "executor_ref": "pending.workpiece.be_conveyed",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "外部输送面运动与实际接触",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "signal_or_external_event"
+      },
+      "input_signals": [],
+      "output_signals": [
+        "location_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "物料与输送面具有有效接触／支承",
+            "source": "observation",
+            "key": "be_conveyed.pre_1",
+            "equals": true
+          },
+          {
+            "id": "pre_2",
+            "label": "不被冲突执行器独立驱动",
+            "source": "observation",
+            "key": "be_conveyed.pre_2",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "be_conveyed.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "continuous",
+        "description": "实际位置及工艺区域更新；目标到达由外层运输任务确认",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "实际位置及工艺区域更新；目标到达由外层运输任务确认",
+            "source": "observation",
+            "key": "be_conveyed.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "be_carried",
+      "display_name": "被携带",
+      "behavior_type": "passive",
+      "schedulable": false,
+      "executor_ref": "pending.workpiece.be_carried",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "持有者执行运动",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "signal_or_external_event"
+      },
+      "input_signals": [],
+      "output_signals": [
+        "carried",
+        "holder_id",
+        "location_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "有效持有关系仍成立",
+            "source": "observation",
+            "key": "be_carried.pre_1",
+            "equals": true
+          },
+          {
+            "id": "pre_2",
+            "label": "身份与任务关联一致",
+            "source": "observation",
+            "key": "be_carried.pre_2",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "be_carried.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "continuous",
+        "description": "按声明持有模型更新姿态；持续过程无本体任务 done",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "按声明持有模型更新姿态；持续过程无本体任务 done",
+            "source": "observation",
+            "key": "be_carried.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "be_placed",
+      "display_name": "被放置",
+      "behavior_type": "passive",
+      "schedulable": false,
+      "executor_ref": "pending.workpiece.be_placed",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "外部放置及交接过程",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "signal_or_external_event"
+      },
+      "input_signals": [],
+      "output_signals": [
+        "location_id",
+        "placed"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "目标兼容、容量可用、支承和位置满足要求",
+            "source": "observation",
+            "key": "be_placed.pre_1",
+            "equals": true
+          },
+          {
+            "id": "pre_2",
+            "label": "can_stack=false 时禁止把堆叠当合法目标",
+            "source": "observation",
+            "key": "be_placed.pre_2",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "be_placed.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "实际放置和交接成立，更新 placed/location_id",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "实际放置和交接成立，更新 placed/location_id",
+            "source": "observation",
+            "key": "be_placed.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "be_released",
+      "display_name": "被释放",
+      "behavior_type": "passive",
+      "schedulable": false,
+      "executor_ref": "pending.workpiece.be_released",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "持有者解除实际持有关系",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "signal_or_external_event"
+      },
+      "input_signals": [],
+      "output_signals": [
+        "carried",
+        "holder_id",
+        "placed"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "释放者确为持有者且获准",
+            "source": "authorization",
+            "key": "be_released.pre_1",
+            "equals": true
+          },
+          {
+            "id": "pre_2",
+            "label": "按放置或自由释放模式检查条件",
+            "source": "observation",
+            "key": "be_released.pre_2",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "be_released.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "清除持有关系；自由释放不自动等于稳定放置成功",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "清除持有关系；自由释放不自动等于稳定放置成功",
+            "source": "observation",
+            "key": "be_released.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "respond_to_physics",
+      "display_name": "响应重力与接触",
+      "behavior_type": "passive",
+      "schedulable": false,
+      "executor_ref": "pending.workpiece.respond_to_physics",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "物理仿真步",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "signal_or_external_event"
+      },
+      "input_signals": [],
+      "output_signals": [
+        "location_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "已配置实际物理执行",
+            "source": "observation",
+            "key": "respond_to_physics.pre_1",
+            "equals": true
+          },
+          {
+            "id": "pre_2",
+            "label": "质量、形状和约束有效",
+            "source": "observation",
+            "key": "respond_to_physics.pre_2",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "respond_to_physics.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "continuous",
+        "description": "刚体位置、接触和支承按物理结果更新，无本体任务 done",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "刚体位置、接触和支承按物理结果更新，无本体任务 done",
+            "source": "observation",
+            "key": "respond_to_physics.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "publish_material_state",
+      "display_name": "发布物料状态",
+      "behavior_type": "observer",
+      "schedulable": false,
+      "executor_ref": "pending.workpiece.publish_material_state",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "位置、持有或交接变化",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "signal_or_external_event"
+      },
+      "input_signals": [],
+      "output_signals": [
+        "carried",
+        "holder_id",
+        "location_id",
+        "picked",
+        "placed"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "来源有效",
+            "source": "observation",
+            "key": "publish_material_state.pre_1",
+            "equals": true
+          },
+          {
+            "id": "pre_2",
+            "label": "区分持续状态与一次通知",
+            "source": "observation",
+            "key": "publish_material_state.pre_2",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "continuous",
+        "description": "更新 picked/carried/placed、holder_id、location_id 和事件关联",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "更新 picked/carried/placed、holder_id、location_id 和事件关联",
+            "source": "observation",
+            "key": "publish_material_state.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    }
+  ],
+  "type_specific_contract": {
+    "coordinate_system": {
+      "up_axis": "Y",
+      "length_unit": "m",
+      "origin": "material_bottom_center"
+    },
+    "material_class": "workpiece",
+    "geometry": {
+      "shape_param": "shape",
+      "height_param": "height_m",
+      "diameter_param": "diameter_m",
+      "length_param": "length_m",
+      "width_param": "width_m",
+      "dimension_applicability": {
+        "diameter": "cylinder",
+        "length": "box",
+        "width": "box"
+      }
+    },
+    "physics": {
+      "body_type": "dynamic",
+      "mass_param": "mass_kg",
+      "friction_param": "friction",
+      "restitution_param": "restitution",
+      "optional_coefficient_defaults": "execution_profile"
+    },
+    "process_geometry": {
+      "regions": [
+        {
+          "region_id": "grasp_surface",
+          "placement_rule": "top_center_from_geometry"
+        },
+        {
+          "region_id": "bottom",
+          "placement_rule": "bottom_center_from_geometry"
+        }
+      ]
+    },
+    "grasping": {
+      "allowed_grasp_regions": [
+        "grasp_surface"
+      ],
+      "preferred_grasp": "top",
+      "frame_source": "process_geometry"
+    },
+    "placement": {
+      "stable_regions": [
+        "bottom"
+      ],
+      "can_stack_param": "can_stack"
+    },
+    "movement_role": "passive_subject"
+  },
+  "runtime_contract": {
+    "observation_definitions": {
+      "be_picked.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "carried",
+          "holder_id",
+          "picked"
+        ]
+      },
+      "be_picked.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "carried",
+          "holder_id",
+          "picked"
+        ]
+      },
+      "be_picked.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "carried",
+          "holder_id",
+          "picked"
+        ]
+      },
+      "be_conveyed.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "location_id"
+        ]
+      },
+      "be_conveyed.pre_2": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "location_id"
+        ]
+      },
+      "be_conveyed.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "location_id"
+        ]
+      },
+      "be_conveyed.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "location_id"
+        ]
+      },
+      "be_carried.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "carried",
+          "holder_id",
+          "location_id"
+        ]
+      },
+      "be_carried.pre_2": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "carried",
+          "holder_id",
+          "location_id"
+        ]
+      },
+      "be_carried.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "carried",
+          "holder_id",
+          "location_id"
+        ]
+      },
+      "be_carried.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "carried",
+          "holder_id",
+          "location_id"
+        ]
+      },
+      "be_placed.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "location_id",
+          "placed"
+        ]
+      },
+      "be_placed.pre_2": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "location_id",
+          "placed"
+        ]
+      },
+      "be_placed.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "location_id",
+          "placed"
+        ]
+      },
+      "be_placed.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "location_id",
+          "placed"
+        ]
+      },
+      "be_released.pre_2": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "carried",
+          "holder_id",
+          "placed"
+        ]
+      },
+      "be_released.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "carried",
+          "holder_id",
+          "placed"
+        ]
+      },
+      "be_released.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "carried",
+          "holder_id",
+          "placed"
+        ]
+      },
+      "respond_to_physics.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "location_id"
+        ]
+      },
+      "respond_to_physics.pre_2": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "location_id"
+        ]
+      },
+      "respond_to_physics.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "location_id"
+        ]
+      },
+      "respond_to_physics.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "location_id"
+        ]
+      },
+      "publish_material_state.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "carried",
+          "holder_id",
+          "location_id",
+          "picked",
+          "placed"
+        ]
+      },
+      "publish_material_state.pre_2": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "carried",
+          "holder_id",
+          "location_id",
+          "picked",
+          "placed"
+        ]
+      },
+      "publish_material_state.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "carried",
+          "holder_id",
+          "location_id",
+          "picked",
+          "placed"
+        ]
+      },
+      "publish_material_state.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "carried",
+          "holder_id",
+          "location_id",
+          "picked",
+          "placed"
+        ]
+      }
+    },
+    "authorization_definitions": {
+      "be_released.pre_1": {
+        "value_type": "boolean",
+        "provider": "authorization_service",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "carried",
+          "holder_id",
+          "placed"
+        ]
+      }
+    }
+  },
+  "runtime_execution_contract": {
+    "signal_management": {
+      "owner": "simulation_engine",
+      "status": "pending_engine",
+      "namespace": "instance_id/port_id",
+      "definition_source": "signal_ports",
+      "spatial_binding": false,
+      "write_policy": "single_writer_per_input",
+      "plc_mapping": "instance_bindings",
+      "sampling": "simulation_step_snapshot",
+      "unknown_policy": "invalid_until_provider_ready"
+    },
+    "status": "pending_adapter",
+    "protocol": {
+      "basis": "schema.md公共请求协议",
+      "acceptance": "same request identity and frozen parameters",
+      "completion": "matching result_id plus observed completion checks",
+      "single_command_entry": true
+    },
+    "payload_binding_status": "requires_explicit_model_adapter",
+    "calibration_required": true,
+    "real_execution_available": false,
+    "raw_api_and_plc_simultaneous_writers": false,
+    "signal_host": "world_material_observer"
+  }
+}

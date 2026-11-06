@@ -104,6 +104,7 @@ export interface SpatialConnection {
   b: { instanceId: string; interfaceId: string };
 }
 export interface ProjectDocument {
+  scenePackages?: import("./scene-package").ScenePackageInstance[];
   connections?: SpatialConnection[];
   format: "agentic-workbench";
   version: 1;

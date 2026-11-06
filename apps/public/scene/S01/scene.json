@@ -1,0 +1,96 @@
+{
+  "schema_version": "scene-package/0.2",
+  "id": "S01",
+  "name": "S01：三盘各十二件双臂分类拆垛",
+  "model": "assembly_order_index/assembly_order_index.glb",
+  "model_sha256": "c68cc1ea4219a6616e13b9c036da871ac0886be3e76f8ec3202c22faffda0249",
+  "process": "process.py",
+  "goal": "task-spec.json",
+  "devices": [
+    "device/C1.json",
+    "device/C2.json",
+    "device/C3.json",
+    "device/C4.json",
+    "device/R1.json",
+    "device/R2.json",
+    "device/F1.json",
+    "device/Pallet.json",
+    "device/Workpiece.json"
+  ],
+  "coordinate_system": {
+    "frame": "scene_world_m",
+    "length_unit": "m",
+    "up_axis": "Y"
+  },
+  "sorting_station": {
+    "id": "sorting",
+    "frame": "scene_world_m",
+    "position_m": [
+      -0.3324265038139765,
+      0.19988948375233662,
+      -1.1967109759622407
+    ],
+    "reference": "carrier_origin",
+    "support_device": "C2",
+    "carrier_template": "Pallet",
+    "robots": [
+      "R1",
+      "R2"
+    ],
+    "capacity": 1,
+    "status": "candidate"
+  },
+  "initial": {
+    "existing_carrier": "P01",
+    "carrier_template": "Pallet",
+    "placement": "from_glb"
+  },
+  "environment": [
+    {
+      "kind": "finite_loaded_carrier_supply",
+      "carrier_template": "Pallet",
+      "source_device": "F1",
+      "target": "C1.entry",
+      "task_source": "process",
+      "spawn_policy": "on_admission",
+      "status": "pending_adapter"
+    },
+    {
+      "kind": "empty_carrier_takeaway",
+      "source": "C2.exit",
+      "status": "pending_adapter"
+    },
+    {
+      "kind": "material_takeaway",
+      "sources": [
+        "C3.exit",
+        "C4.exit"
+      ],
+      "status": "pending_adapter"
+    }
+  ],
+  "drive_groups": {
+    "mainline": {
+      "members": [
+        "C1",
+        "C2"
+      ],
+      "mode": "coupled_motion",
+      "status": "pending_coordinated_adapter"
+    }
+  },
+  "execution": {
+    "tick_hz": 60,
+    "deadline_ticks": 72000,
+    "timeouts_s": {
+      "preconditions": 30,
+      "acceptance": 30,
+      "execution": 120,
+      "stop": 30,
+      "collection": 30,
+      "finalization": 30
+    },
+    "unknown_policy": "block_then_fail_on_deadline",
+    "on_failure": "stop_admissions_cancel_siblings_stop_drives_confirm_or_attention"
+  }
+}

@@ -1,0 +1,101 @@
+"""Validate literal task data and typed call inputs without executing device actions."""
+import math
+
+class Quantity:
+    def __init__(self,value,unit):self.value,self.unit=value,unit
+class DynamicInventory(list):pass
+
+def validate_inputs(ir,devices,goal):
+    task=ir['task'];locations={key for d in devices.values() for key in d['locations']}
+    materials={j['material'] for j in task['jobs']}|{j['material'] for p in task['pallets'] for j in p['items']}
+    subjects=materials|{p['id'] for p in task['pallets']}
+    if not materials<=set(devices):raise ValueError('Task material has no device declaration')
+    if goal['expected']['material_count']!=len(materials) or goal['expected']['pallet_count']!=task['pallet_count']:raise ValueError('Goal count differs')
+    if goal['expected']['pallet_ids']!=[p['id'] for p in task['pallets']]:raise ValueError('Goal pallet identities differ')
+    rows=task['jobs']+[j for p in task['pallets'] for j in p['items']]
+    def need(ok,message):
+        if not ok:raise ValueError(message)
+    def evaluate(e,env):
+        kind=e['kind']
+        if kind=='literal':return e['value']
+        if kind=='ref':
+            if e['name']=='task':return task
+            if e['name'] in env:return env[e['name']]
+            need(e['name'] in devices,'Unknown symbol: '+e['name']);return e['name']
+        if kind=='field':
+            base=evaluate(e['base'],env)
+            if isinstance(base,dict):need(e['field'] in base,'Missing field: '+e['field']);return base[e['field']]
+            key=str(base)+'.'+e['field'];need(key in locations,'Unknown location: '+key);return key
+        if kind in ('add','sub'):
+            a,b=evaluate(e['left'],env),evaluate(e['right'],env);need(type(a)is int and type(b)is int,'Counts require integers');return a+b if kind=='add' else a-b
+        args=[evaluate(a,env) for a in e.get('args',[])];kw={k:evaluate(v,env) for k,v in e.get('kwargs',{}).items()}
+        if kind in ('quantity','seconds','milliseconds'):
+            need(type(args[0])in(int,float) and math.isfinite(args[0]),'Quantity requires finite number')
+            return Quantity(args[0],args[1] if kind=='quantity' else 's' if kind=='seconds' else 'ms')
+        if kind=='calibration':
+            d=devices[args[0]];record=d['calibrations'].get(args[0]+'.'+args[1]);need(record is not None,'Missing calibration')
+            need(record['status']=='pending_calibration' and record['value'] is None or record['status']=='calibrated' and type(record['value'])in(int,float) and record['min']<=record['value']<=record['max'],'Invalid calibration value/status')
+            return Quantity(record['value'],record['unit'])
+        if kind=='subject_id':need(args[0] in subjects,'Unknown load identity');return (sorted(materials)+sorted(subjects-materials)).index(args[0])+1
+        if kind=='items_at':
+            need(args[0] in locations,'Unknown inventory location')
+            return DynamicInventory([r for r in rows if 'source' in r and (not kw or r.get('category')==kw['category'])])
+        if kind=='chunks':
+            size=kw['size'];need(isinstance(args[0],list) and type(size)is int and 1<=size<=10000,'Invalid chunk size');return [args[0][i:i+size] for i in range(0,len(args[0]),size)]
+        if kind=='select':
+            need(isinstance(args[0],list),'Select requires list')
+            for r in args[0]:need(set(kw)<=set(r),'Unknown selector field')
+            return [r for r in args[0] if all(r[k]==v for k,v in kw.items())]
+        if kind in ('eq','ne'):
+            need(type(args[0])is type(args[1]),'Comparison types differ');return args[0]==args[1] if kind=='eq' else args[0]!=args[1]
+        raise ValueError('Unsupported scene expression: '+kind)
+    def check(value,typ,unit='1',schema=None):
+        if unit!='1':need(isinstance(value,Quantity) and value.unit==unit,'Argument unit mismatch');value=value.value
+        if value is None:return # Unresolved calibration remains an execution blocker.
+        if typ=='material_ref':need(value in materials,'Invalid material reference')
+        elif typ=='location_ref':need(value in locations,'Invalid location reference')
+        elif typ in ('number','integer'):
+            need(type(value)in(int,float) and math.isfinite(value) and (typ!='integer' or type(value)is int),'Invalid numeric argument')
+            need(not schema or schema.get('min',-math.inf)<=value<=schema.get('max',math.inf),'Argument outside contract range')
+        elif typ=='boolean':need(type(value)is bool,'Expected Boolean')
+        elif typ in ('string','recipe_ref'):need(type(value)is str,'Expected string')
+        else:raise ValueError('Unsupported argument type: '+typ)
+    visited=0
+    def visit(n,env):
+        nonlocal visited
+        visited+=1
+        need(visited<=200000,'Static expansion budget exceeded')
+        kind=n['kind']
+        if kind in ('seq','par'):
+            for c in n['children']:visit(c,env)
+        elif kind=='repeat':
+            if 'count' in n:
+                count=evaluate(n['count'],env);need(type(count)is int and 0<=count<=10000,'Invalid repeat count');visit(n['body'],env)
+            else:
+                values=evaluate(n['over'],env);limit=evaluate(n['limit'],env)
+                need(isinstance(values,list) and type(limit)is int and 0<=limit<=10000,'Invalid bounded collection')
+                need(limit>=task['max_items_per_pallet'] if isinstance(values,DynamicInventory) else len(values)<=limit,'Collection exceeds bound')
+                need(n['bind'] not in env and n['bind'] not in devices,'Variable shadowing')
+                need(bool(values),'Empty collection needs a declared element schema before compilation')
+                for value in values:visit(n['body'],{**env,n['bind']:value})
+        elif kind=='branch':
+            for case in n['cases']:check(evaluate(case['condition'],env),'boolean');visit(case['body'],env)
+            visit(n['otherwise'],env)
+        elif kind=='invoke':
+            id=evaluate(n['device'],env);device=devices[id];contract=device['contract'];experimental=contract.get('schema_type')!='DeviceSpec'
+            bs=contract.get('transport_behaviors',contract.get('definition',{}).get('behaviors',[]))
+            behavior=next(b for b in bs if b.get('behavior_id',b.get('id'))==n['behavior'])
+            schema=behavior.get('arguments_schema',{p['id']:p for p in behavior.get('arguments',[])})
+            for key,expr in n['arguments'].items():
+                p=schema[key];value=evaluate(expr,env);check(value,p['type'],p.get('unit','1'),p)
+                if n['behavior']=='transport_to_position' and key=='target':need(value in device.get('position_targets',{}),'Unknown scene transport target')
+                if p['type']=='recipe_ref':need(value in device.get('recipes',{}),'Unknown device recipe')
+            if 'payload' in n:
+                payload=n['payload'];key=payload['args'][0]['value'];record=device['command_payloads'].get(key)
+                need(record and record['instance']==id and record['behavior']==n['behavior'],'Payload redirects behavior')
+                need(set(record['fields'])==set(payload['kwargs']),'Payload fields differ')
+                for key,expr in payload['kwargs'].items():check(evaluate(expr,env),record['fields'][key])
+        elif kind=='delay':
+            q=evaluate(n['duration'],env);need(isinstance(q,Quantity) and q.unit in ('s','ms') and q.value>=0,'Invalid delay')
+        elif kind!='fail':raise ValueError('Unsupported scene operator: '+kind)
+    visit(ir['body'],{})

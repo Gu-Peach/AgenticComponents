@@ -1,0 +1,246 @@
+{
+  "source": "production(carrier_template=\"Pallet\", count=3)",
+  "authored_contracts": 9,
+  "runtime_carriers": 3,
+  "runtime_materials": 36,
+  "runtime_identity_count": 46,
+  "initial_existing_carriers": 1,
+  "later_carriers_require_instantiation": 2,
+  "pallets": [
+    {
+      "id": "P01",
+      "items": [
+        {
+          "material": "M01_01",
+          "category": "A",
+          "source": "P01.slot1",
+          "visual_variant": "gray"
+        },
+        {
+          "material": "M01_02",
+          "category": "A",
+          "source": "P01.slot2",
+          "visual_variant": "gray"
+        },
+        {
+          "material": "M01_03",
+          "category": "B",
+          "source": "P01.slot3",
+          "visual_variant": "brown"
+        },
+        {
+          "material": "M01_04",
+          "category": "A",
+          "source": "P01.slot4",
+          "visual_variant": "gray"
+        },
+        {
+          "material": "M01_05",
+          "category": "A",
+          "source": "P01.slot5",
+          "visual_variant": "gray"
+        },
+        {
+          "material": "M01_06",
+          "category": "A",
+          "source": "P01.slot6",
+          "visual_variant": "gray"
+        },
+        {
+          "material": "M01_07",
+          "category": "A",
+          "source": "P01.slot7",
+          "visual_variant": "gray"
+        },
+        {
+          "material": "M01_08",
+          "category": "B",
+          "source": "P01.slot8",
+          "visual_variant": "brown"
+        },
+        {
+          "material": "M01_09",
+          "category": "B",
+          "source": "P01.slot9",
+          "visual_variant": "brown"
+        },
+        {
+          "material": "M01_10",
+          "category": "B",
+          "source": "P01.slot10",
+          "visual_variant": "brown"
+        },
+        {
+          "material": "M01_11",
+          "category": "B",
+          "source": "P01.slot11",
+          "visual_variant": "brown"
+        },
+        {
+          "material": "M01_12",
+          "category": "B",
+          "source": "P01.slot12",
+          "visual_variant": "brown"
+        }
+      ],
+      "prototype_ref": "Pallet"
+    },
+    {
+      "id": "P02",
+      "items": [
+        {
+          "material": "M02_01",
+          "category": "A",
+          "source": "P02.slot1",
+          "visual_variant": "gray"
+        },
+        {
+          "material": "M02_02",
+          "category": "A",
+          "source": "P02.slot2",
+          "visual_variant": "gray"
+        },
+        {
+          "material": "M02_03",
+          "category": "B",
+          "source": "P02.slot3",
+          "visual_variant": "brown"
+        },
+        {
+          "material": "M02_04",
+          "category": "A",
+          "source": "P02.slot4",
+          "visual_variant": "gray"
+        },
+        {
+          "material": "M02_05",
+          "category": "A",
+          "source": "P02.slot5",
+          "visual_variant": "gray"
+        },
+        {
+          "material": "M02_06",
+          "category": "A",
+          "source": "P02.slot6",
+          "visual_variant": "gray"
+        },
+        {
+          "material": "M02_07",
+          "category": "A",
+          "source": "P02.slot7",
+          "visual_variant": "gray"
+        },
+        {
+          "material": "M02_08",
+          "category": "B",
+          "source": "P02.slot8",
+          "visual_variant": "brown"
+        },
+        {
+          "material": "M02_09",
+          "category": "B",
+          "source": "P02.slot9",
+          "visual_variant": "brown"
+        },
+        {
+          "material": "M02_10",
+          "category": "B",
+          "source": "P02.slot10",
+          "visual_variant": "brown"
+        },
+        {
+          "material": "M02_11",
+          "category": "B",
+          "source": "P02.slot11",
+          "visual_variant": "brown"
+        },
+        {
+          "material": "M02_12",
+          "category": "B",
+          "source": "P02.slot12",
+          "visual_variant": "brown"
+        }
+      ],
+      "prototype_ref": "Pallet"
+    },
+    {
+      "id": "P03",
+      "items": [
+        {
+          "material": "M03_01",
+          "category": "A",
+          "source": "P03.slot1",
+          "visual_variant": "gray"
+        },
+        {
+          "material": "M03_02",
+          "category": "A",
+          "source": "P03.slot2",
+          "visual_variant": "gray"
+        },
+        {
+          "material": "M03_03",
+          "category": "B",
+          "source": "P03.slot3",
+          "visual_variant": "brown"
+        },
+        {
+          "material": "M03_04",
+          "category": "A",
+          "source": "P03.slot4",
+          "visual_variant": "gray"
+        },
+        {
+          "material": "M03_05",
+          "category": "A",
+          "source": "P03.slot5",
+          "visual_variant": "gray"
+        },
+        {
+          "material": "M03_06",
+          "category": "A",
+          "source": "P03.slot6",
+          "visual_variant": "gray"
+        },
+        {
+          "material": "M03_07",
+          "category": "A",
+          "source": "P03.slot7",
+          "visual_variant": "gray"
+        },
+        {
+          "material": "M03_08",
+          "category": "B",
+          "source": "P03.slot8",
+          "visual_variant": "brown"
+        },
+        {
+          "material": "M03_09",
+          "category": "B",
+          "source": "P03.slot9",
+          "visual_variant": "brown"
+        },
+        {
+          "material": "M03_10",
+          "category": "B",
+          "source": "P03.slot10",
+          "visual_variant": "brown"
+        },
+        {
+          "material": "M03_11",
+          "category": "B",
+          "source": "P03.slot11",
+          "visual_variant": "brown"
+        },
+        {
+          "material": "M03_12",
+          "category": "B",
+          "source": "P03.slot12",
+          "visual_variant": "brown"
+        }
+      ],
+      "prototype_ref": "Pallet"
+    }
+  ],
+  "geometry_is_not_duplicated_by_the_contract_author": true
+}

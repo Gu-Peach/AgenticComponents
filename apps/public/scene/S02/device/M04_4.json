@@ -1,0 +1,13 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "M04_4",
+  "contract_ref": "../contracts/workpiece.json",
+  "parameters": {
+    "mass_kg": 1.0,
+    "height_m": 0.1
+  },
+  "node_binding": {
+    "status": "unresolved"
+  },
+  "subject_id": 16
+}

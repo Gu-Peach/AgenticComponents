@@ -1,0 +1,877 @@
+{
+  "schema_type": "ExperimentalAssetContract",
+  "extension_id": "processing_station",
+  "status": "pending_normative_contract",
+  "standard_device_type": false,
+  "definition": {
+    "schema_version": "asset-contract/0.1",
+    "id": "processing_station",
+    "version": "0.1.0",
+    "label": "加工设备",
+    "category": "active",
+    "description": "机加工、去毛刺、焊接使用统一的装夹—加工—松夹接口；配方与执行器决定具体工艺，完成记录不代表真实加工质量已获验证。",
+    "implementation_status": "contract_only",
+    "protocol_imports": [
+      "request_v1"
+    ],
+    "features": [],
+    "instance_requirements": [
+      "实例必须登记支持的配方及执行器证据来源。",
+      "门、工具等具体互锁由实例适配到 interlock_ok，不能用常量 true 填充缺失观测。",
+      "发生停止时先停止加工，保留夹持和物料现场状态；恢复是显式新请求。"
+    ],
+    "parameters": [
+      {
+        "id": "max_payload_kg",
+        "type": "number",
+        "unit": "kg",
+        "description": "工位最大实验载荷。",
+        "default": 5,
+        "minimum": 0.001
+      },
+      {
+        "id": "capacity",
+        "type": "integer",
+        "unit": "1",
+        "description": "本版一个活动工件。",
+        "default": 1,
+        "minimum": 1,
+        "maximum": 1
+      },
+      {
+        "id": "nominal_cycle_s",
+        "type": "number",
+        "unit": "s",
+        "description": "抽象执行器使用的明确实验周期；计时结束本身不是物理完成证据。",
+        "default": 2,
+        "minimum": 0.001
+      }
+    ],
+    "signal_ports": [
+      {
+        "id": "material_id",
+        "type": "material_ref",
+        "unit": "1",
+        "direction": "input",
+        "retention": "state",
+        "description": "当前动作工件。",
+        "writer": "controller"
+      },
+      {
+        "id": "recipe_id",
+        "type": "recipe_ref",
+        "unit": "1",
+        "direction": "input",
+        "retention": "state",
+        "description": "加工请求使用的配方。",
+        "writer": "controller"
+      },
+      {
+        "id": "fixture_closed",
+        "type": "boolean",
+        "unit": "1",
+        "direction": "output",
+        "retention": "state",
+        "description": "夹具的实际闭合状态。",
+        "writer": "adapter"
+      },
+      {
+        "id": "process_ready",
+        "type": "boolean",
+        "unit": "1",
+        "direction": "output",
+        "retention": "state",
+        "description": "加工模块及必要工具当前就绪。",
+        "writer": "adapter"
+      },
+      {
+        "id": "interlock_ok",
+        "type": "boolean",
+        "unit": "1",
+        "direction": "output",
+        "retention": "state",
+        "description": "已绑定的工位互锁满足；缺少提供者时无效。",
+        "writer": "adapter"
+      },
+      {
+        "id": "cycle_finished",
+        "type": "boolean",
+        "unit": "1",
+        "direction": "output",
+        "retention": "latched_result",
+        "description": "当前请求的加工周期证据；需结合 result_id 和工件/配方核查。",
+        "writer": "adapter"
+      }
+    ],
+    "observations": [
+      {
+        "id": "subject_present",
+        "type": "boolean",
+        "unit": "1",
+        "provider": "world_observer",
+        "description": "指定物料位于本工位并具有实际支承。",
+        "arguments": [
+          "material"
+        ],
+        "argument_types": {
+          "material": "material_ref"
+        },
+        "validity": "fresh_valid_same_run"
+      },
+      {
+        "id": "subject_clamped",
+        "type": "boolean",
+        "unit": "1",
+        "provider": "world_observer",
+        "description": "夹具实际夹紧指定物料。",
+        "arguments": [
+          "material"
+        ],
+        "argument_types": {
+          "material": "material_ref"
+        },
+        "validity": "fresh_valid_same_run"
+      },
+      {
+        "id": "subject_unclamped",
+        "type": "boolean",
+        "unit": "1",
+        "provider": "world_observer",
+        "description": "指定物料不再被本工位夹具保持。",
+        "arguments": [
+          "material"
+        ],
+        "argument_types": {
+          "material": "material_ref"
+        },
+        "validity": "fresh_valid_same_run"
+      },
+      {
+        "id": "recipe_available",
+        "type": "boolean",
+        "unit": "1",
+        "provider": "recipe_service",
+        "description": "工位已登记此配方，且物料类型与配方兼容。",
+        "arguments": [
+          "material",
+          "recipe"
+        ],
+        "argument_types": {
+          "material": "material_ref",
+          "recipe": "recipe_ref"
+        },
+        "validity": "fresh_valid_same_run"
+      },
+      {
+        "id": "operation_recorded",
+        "type": "boolean",
+        "unit": "1",
+        "provider": "recipe_service",
+        "description": "当前请求对应的工件和配方有完成记录；记录来自执行器证据而非控制器置位。",
+        "arguments": [
+          "material",
+          "recipe"
+        ],
+        "argument_types": {
+          "material": "material_ref",
+          "recipe": "recipe_ref"
+        },
+        "validity": "fresh_valid_same_run"
+      },
+      {
+        "id": "process_stopped",
+        "type": "boolean",
+        "unit": "1",
+        "provider": "device_adapter",
+        "description": "加工驱动实际停止；持续的夹紧状态仍保留。",
+        "arguments": [],
+        "argument_types": {},
+        "validity": "fresh_valid_same_run"
+      },
+      {
+        "id": "material_mass",
+        "type": "number",
+        "unit": "kg",
+        "provider": "world_observer",
+        "description": "指定工件的实际登记质量。",
+        "arguments": [
+          "material"
+        ],
+        "argument_types": {
+          "material": "material_ref"
+        },
+        "validity": "fresh_valid_same_run"
+      }
+    ],
+    "authorizations": [
+      {
+        "id": "operation_allowed",
+        "type": "boolean",
+        "unit": "1",
+        "provider": "resource_service",
+        "description": "当前实例、行为和请求的操作许可；仅在资源实际授予后为真。",
+        "arguments": [],
+        "argument_types": {},
+        "validity": "fresh_valid_same_run"
+      }
+    ],
+    "spatial_interfaces": [
+      {
+        "id": "work",
+        "role": "support",
+        "geometry_binding": "required_per_instance",
+        "requires_features": [],
+        "description": "工件支承、装夹和加工区。"
+      },
+      {
+        "id": "mount",
+        "role": "attachment",
+        "geometry_binding": "required_per_instance",
+        "requires_features": [],
+        "description": "安装参考系。"
+      }
+    ],
+    "behaviors": [
+      {
+        "id": "clamp",
+        "label": "装夹工件",
+        "kind": "action",
+        "invocable": true,
+        "protocol": "request_v1",
+        "executor_ref": "adapter.processing_station.clamp@0.1",
+        "requires_features": [],
+        "arguments": [
+          {
+            "id": "material",
+            "type": "material_ref",
+            "unit": "1",
+            "description": "目标工件。"
+          }
+        ],
+        "command_bindings": [
+          {
+            "signal": "command_code",
+            "value": {
+              "source": "literal",
+              "value": 1
+            }
+          },
+          {
+            "signal": "material_id",
+            "value": {
+              "source": "argument",
+              "ref": "material"
+            }
+          }
+        ],
+        "preconditions": [
+          {
+            "id": "device_idle",
+            "left": {
+              "source": "signal",
+              "ref": "busy"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": false
+            }
+          },
+          {
+            "id": "device_healthy",
+            "left": {
+              "source": "signal",
+              "ref": "error"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": false
+            }
+          },
+          {
+            "id": "enabled",
+            "left": {
+              "source": "signal",
+              "ref": "enable"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "operation_authorized",
+            "left": {
+              "source": "authorization",
+              "ref": "operation_allowed"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "subject_present",
+            "left": {
+              "source": "observation",
+              "ref": "subject_present",
+              "bindings": {
+                "material": "material"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "payload_within_limit",
+            "left": {
+              "source": "observation",
+              "ref": "material_mass",
+              "bindings": {
+                "material": "material"
+              }
+            },
+            "operator": "le",
+            "right": {
+              "source": "parameter",
+              "ref": "max_payload_kg"
+            }
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "enabled",
+            "left": {
+              "source": "signal",
+              "ref": "enable"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "operation_authorized",
+            "left": {
+              "source": "authorization",
+              "ref": "operation_allowed"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          }
+        ],
+        "completion": {
+          "mode": "evidence",
+          "checks": [
+            {
+              "id": "clamped_subject",
+              "left": {
+                "source": "observation",
+                "ref": "subject_clamped",
+                "bindings": {
+                  "material": "material"
+                }
+              },
+              "operator": "eq",
+              "right": {
+                "source": "literal",
+                "value": true
+              }
+            }
+          ],
+          "description": "夹紧证据关联指定工件及本次请求。"
+        },
+        "expected_effects": [
+          "由夹具执行器建立对工件的约束，保留其工位支承与归属。"
+        ],
+        "failure_policy": "preserve_observed_state_and_report"
+      },
+      {
+        "id": "process_material",
+        "label": "按配方加工工件",
+        "kind": "action",
+        "invocable": true,
+        "protocol": "request_v1",
+        "executor_ref": "adapter.processing_station.process_material@0.1",
+        "requires_features": [],
+        "arguments": [
+          {
+            "id": "material",
+            "type": "material_ref",
+            "unit": "1",
+            "description": "目标工件。"
+          },
+          {
+            "id": "recipe",
+            "type": "recipe_ref",
+            "unit": "1",
+            "description": "场景登记的机加工、去毛刺或焊接配方。"
+          }
+        ],
+        "command_bindings": [
+          {
+            "signal": "command_code",
+            "value": {
+              "source": "literal",
+              "value": 2
+            }
+          },
+          {
+            "signal": "material_id",
+            "value": {
+              "source": "argument",
+              "ref": "material"
+            }
+          },
+          {
+            "signal": "recipe_id",
+            "value": {
+              "source": "argument",
+              "ref": "recipe"
+            }
+          }
+        ],
+        "preconditions": [
+          {
+            "id": "device_idle",
+            "left": {
+              "source": "signal",
+              "ref": "busy"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": false
+            }
+          },
+          {
+            "id": "device_healthy",
+            "left": {
+              "source": "signal",
+              "ref": "error"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": false
+            }
+          },
+          {
+            "id": "enabled",
+            "left": {
+              "source": "signal",
+              "ref": "enable"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "operation_authorized",
+            "left": {
+              "source": "authorization",
+              "ref": "operation_allowed"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "subject_present",
+            "left": {
+              "source": "observation",
+              "ref": "subject_present",
+              "bindings": {
+                "material": "material"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "payload_within_limit",
+            "left": {
+              "source": "observation",
+              "ref": "material_mass",
+              "bindings": {
+                "material": "material"
+              }
+            },
+            "operator": "le",
+            "right": {
+              "source": "parameter",
+              "ref": "max_payload_kg"
+            }
+          },
+          {
+            "id": "clamped",
+            "left": {
+              "source": "observation",
+              "ref": "subject_clamped",
+              "bindings": {
+                "material": "material"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "recipe_supported",
+            "left": {
+              "source": "observation",
+              "ref": "recipe_available",
+              "bindings": {
+                "material": "material",
+                "recipe": "recipe"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "ready",
+            "left": {
+              "source": "signal",
+              "ref": "process_ready"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "interlock",
+            "left": {
+              "source": "signal",
+              "ref": "interlock_ok"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "enabled",
+            "left": {
+              "source": "signal",
+              "ref": "enable"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "operation_authorized",
+            "left": {
+              "source": "authorization",
+              "ref": "operation_allowed"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "clamping_maintained",
+            "left": {
+              "source": "observation",
+              "ref": "subject_clamped",
+              "bindings": {
+                "material": "material"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "interlock_maintained",
+            "left": {
+              "source": "signal",
+              "ref": "interlock_ok"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          }
+        ],
+        "completion": {
+          "mode": "evidence",
+          "checks": [
+            {
+              "id": "cycle_evidence",
+              "left": {
+                "source": "signal",
+                "ref": "cycle_finished"
+              },
+              "operator": "eq",
+              "right": {
+                "source": "literal",
+                "value": true
+              }
+            },
+            {
+              "id": "matching_operation",
+              "left": {
+                "source": "observation",
+                "ref": "operation_recorded",
+                "bindings": {
+                  "material": "material",
+                  "recipe": "recipe"
+                }
+              },
+              "operator": "eq",
+              "right": {
+                "source": "literal",
+                "value": true
+              }
+            },
+            {
+              "id": "process_stopped",
+              "left": {
+                "source": "observation",
+                "ref": "process_stopped"
+              },
+              "operator": "eq",
+              "right": {
+                "source": "literal",
+                "value": true
+              }
+            }
+          ],
+          "description": "当前请求、指定工件和配方的完成证据一致。抽象计时模型只证明其声明的模拟工序完成。"
+        },
+        "expected_effects": [
+          "向指定物料记录本次配方工序；不自动松夹或搬走工件。"
+        ],
+        "failure_policy": "preserve_observed_state_and_report"
+      },
+      {
+        "id": "unclamp",
+        "label": "松夹工件",
+        "kind": "action",
+        "invocable": true,
+        "protocol": "request_v1",
+        "executor_ref": "adapter.processing_station.unclamp@0.1",
+        "requires_features": [],
+        "arguments": [
+          {
+            "id": "material",
+            "type": "material_ref",
+            "unit": "1",
+            "description": "目标工件。"
+          }
+        ],
+        "command_bindings": [
+          {
+            "signal": "command_code",
+            "value": {
+              "source": "literal",
+              "value": 3
+            }
+          },
+          {
+            "signal": "material_id",
+            "value": {
+              "source": "argument",
+              "ref": "material"
+            }
+          }
+        ],
+        "preconditions": [
+          {
+            "id": "device_idle",
+            "left": {
+              "source": "signal",
+              "ref": "busy"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": false
+            }
+          },
+          {
+            "id": "device_healthy",
+            "left": {
+              "source": "signal",
+              "ref": "error"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": false
+            }
+          },
+          {
+            "id": "enabled",
+            "left": {
+              "source": "signal",
+              "ref": "enable"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "operation_authorized",
+            "left": {
+              "source": "authorization",
+              "ref": "operation_allowed"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "subject_present",
+            "left": {
+              "source": "observation",
+              "ref": "subject_present",
+              "bindings": {
+                "material": "material"
+              }
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "payload_within_limit",
+            "left": {
+              "source": "observation",
+              "ref": "material_mass",
+              "bindings": {
+                "material": "material"
+              }
+            },
+            "operator": "le",
+            "right": {
+              "source": "parameter",
+              "ref": "max_payload_kg"
+            }
+          },
+          {
+            "id": "processing_stopped",
+            "left": {
+              "source": "observation",
+              "ref": "process_stopped"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "enabled",
+            "left": {
+              "source": "signal",
+              "ref": "enable"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          },
+          {
+            "id": "operation_authorized",
+            "left": {
+              "source": "authorization",
+              "ref": "operation_allowed"
+            },
+            "operator": "eq",
+            "right": {
+              "source": "literal",
+              "value": true
+            }
+          }
+        ],
+        "completion": {
+          "mode": "evidence",
+          "checks": [
+            {
+              "id": "unclamped_subject",
+              "left": {
+                "source": "observation",
+                "ref": "subject_unclamped",
+                "bindings": {
+                  "material": "material"
+                }
+              },
+              "operator": "eq",
+              "right": {
+                "source": "literal",
+                "value": true
+              }
+            },
+            {
+              "id": "support_preserved",
+              "left": {
+                "source": "observation",
+                "ref": "subject_present",
+                "bindings": {
+                  "material": "material"
+                }
+              },
+              "operator": "eq",
+              "right": {
+                "source": "literal",
+                "value": true
+              }
+            }
+          ],
+          "description": "指定工件已释放夹持且仍有合法支承。"
+        },
+        "expected_effects": [
+          "撤销夹具约束，工件仍在工作区；外部搬运不得将松夹误当已转移。"
+        ],
+        "failure_policy": "preserve_observed_state_and_report"
+      }
+    ]
+  },
+  "source_boundary": "Do not treat successful experimental validation as DeviceSpec conformance."
+}

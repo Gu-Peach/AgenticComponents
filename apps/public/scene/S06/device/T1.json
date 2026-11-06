@@ -1,0 +1,25 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "T1",
+  "contract_ref": "../contracts/rotary_table.json",
+  "parameters": {
+    "position_mode": "angle"
+  },
+  "node_binding": {
+    "status": "unresolved"
+  },
+  "locations": {
+    "T1.slot1": {
+      "geometry_status": "pending_calibration"
+    },
+    "T1.slot2": {
+      "geometry_status": "pending_calibration"
+    },
+    "T1.slot3": {
+      "geometry_status": "pending_calibration"
+    },
+    "T1.slot4": {
+      "geometry_status": "pending_calibration"
+    }
+  }
+}

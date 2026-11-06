@@ -1,8 +1,7 @@
-# 四件装夹焊接与转位下料
-# 行为前后条件由契约自动处理；工艺只声明动作与协作关系。
-with process('S11', version='ac-declarative/0.3'):
+# Scene assets are resolved from device; this is data-only DSL.
+with process('S11', version='ac-declarative/0.4', devices='./device', task=production(jobs=[{'id': 'J01', 'material': 'M01', 'input': 'F1.work', 'target': 'F1.work'}, {'id': 'J02', 'material': 'M02', 'input': 'F1.work', 'target': 'F1.work'}, {'id': 'J03', 'material': 'M03', 'input': 'F1.work', 'target': 'F1.work'}, {'id': 'J04', 'material': 'M04', 'input': 'F1.work', 'target': 'F1.work'}], pallets=[]), goal='./task-spec.json'):
     with seq('batch_root'):
-        with repeat('welding_batch_278', over=batch.jobs, bind='job', limit=batch.material_count):
+        with repeat('welding_batch_278', over=task.jobs, bind='job', limit=task.material_count):
             with seq('welding_batch_body_277'):
                 invoke('r1_transfer_material_261', R1, 'pick_and_place', payload=payload('R1.pick_and_place', material=job.material, source=F1.work, target=W1.work))
                 invoke('r1_move_to_location_262', R1, 'move_to_pose', payload=payload('R1.move_to_pose', target=R1.home))

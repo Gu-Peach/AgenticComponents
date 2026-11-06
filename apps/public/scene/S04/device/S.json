@@ -1,0 +1,13 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "S",
+  "contract_ref": "../contracts/material_source_station.json",
+  "node_binding": {
+    "status": "unresolved"
+  },
+  "locations": {
+    "S.work": {
+      "geometry_status": "pending_calibration"
+    }
+  }
+}

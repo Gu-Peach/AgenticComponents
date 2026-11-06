@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { SceneCatalogPanel } from "./SceneCatalogPanel";
 import { Search, Plus, ArrowUpRight, Upload } from "lucide-react";
 import { useWorkspace } from "@/stores/workspace";
 import { DeviceIcon } from "@/components/ui/DeviceIcon";
@@ -70,6 +71,12 @@ export function AssetPanel() {
           >
             物料与载具
           </button>
+          <button
+            className={filter === "scene" ? "active" : ""}
+            onClick={() => setFilter("scene")}
+          >
+            场景
+          </button>
         </div>
         <div className="search-field compact">
           <Search size={14} />
@@ -113,83 +120,86 @@ export function AssetPanel() {
           <option value="workpiece_1">物料 DeviceSpec</option>
         </select>
       </div>
-      <div className="asset-body">
-        <div className="asset-grid">
-          {definitions
-            .filter(
-              (d) =>
-                d.name.includes(search) ||
-                d.deviceType.includes(search.toLowerCase()),
-            )
-            .filter(
-              (d) =>
-                filter === "all" ||
-                (filter === "material") ===
-                  ["workpiece", "workpiece_carrier"].includes(d.deviceType),
-            )
-            .map((d) => (
-              <button
-                key={d.specId}
-                className={`asset-card ${selectedAsset === d.specId ? "selected" : ""}`}
-                onClick={() => {
-                  const e = publicEntries.find((e) => e.specId === d.specId);
-                  if (e) void selectPublicAsset(e).catch(reportError);
-                  else useWorkspace.getState().selectAsset(d.specId);
-                }}
-                onDoubleClick={() => add(d.specId)}
-              >
-                <div className={`asset-art art-${d.deviceType}`}>
-                  <span className="asset-grid-pattern" />
-                  <DeviceIcon type={d.deviceType} size={38} />
-                  <ArrowUpRight size={12} className="asset-arrow" />
-                </div>
-                <strong>{d.name}</strong>
-                <small>
-                  {d.template
-                    ? "待配置模板"
-                    : d.asset.sourceUrl
-                      ? "公共模型"
-                      : d.asset.assetId
-                        ? "已关联模型"
-                        : "模型未关联"}
-                </small>
-              </button>
-            ))}
-        </div>
-        <div className="asset-summary">
-          {selected ? (
-            <>
-              <div className="eyebrow">ASSET DEFINITION</div>
-              <h3>
-                <DeviceIcon type={selected.deviceType} />
-                {selected.name}
-              </h3>
-              <code>{selected.specId}</code>
+      {filter === "scene" && <SceneCatalogPanel search={search} />}
+      {filter !== "scene" && (
+        <div className="asset-body">
+          <div className="asset-grid">
+            {definitions
+              .filter(
+                (d) =>
+                  d.name.includes(search) ||
+                  d.deviceType.includes(search.toLowerCase()),
+              )
+              .filter(
+                (d) =>
+                  filter === "all" ||
+                  (filter === "material") ===
+                    ["workpiece", "workpiece_carrier"].includes(d.deviceType),
+              )
+              .map((d) => (
+                <button
+                  key={d.specId}
+                  className={`asset-card ${selectedAsset === d.specId ? "selected" : ""}`}
+                  onClick={() => {
+                    const e = publicEntries.find((e) => e.specId === d.specId);
+                    if (e) void selectPublicAsset(e).catch(reportError);
+                    else useWorkspace.getState().selectAsset(d.specId);
+                  }}
+                  onDoubleClick={() => add(d.specId)}
+                >
+                  <div className={`asset-art art-${d.deviceType}`}>
+                    <span className="asset-grid-pattern" />
+                    <DeviceIcon type={d.deviceType} size={38} />
+                    <ArrowUpRight size={12} className="asset-arrow" />
+                  </div>
+                  <strong>{d.name}</strong>
+                  <small>
+                    {d.template
+                      ? "待配置模板"
+                      : d.asset.sourceUrl
+                        ? "公共模型"
+                        : d.asset.assetId
+                          ? "已关联模型"
+                          : "模型未关联"}
+                  </small>
+                </button>
+              ))}
+          </div>
+          <div className="asset-summary">
+            {selected ? (
+              <>
+                <div className="eyebrow">ASSET DEFINITION</div>
+                <h3>
+                  <DeviceIcon type={selected.deviceType} />
+                  {selected.name}
+                </h3>
+                <code>{selected.specId}</code>
+                <p>
+                  {typeLabels[selected.deviceType]} ·{" "}
+                  {Object.keys(selected.paramsSchema).length} 个参数 ·{" "}
+                  {selected.behaviors.length} 个行为
+                </p>
+                <span className="pill warning">
+                  {selected.template ? "模板 · 需完善契约" : "执行器待接入"}
+                </span>
+                <button
+                  className="primary"
+                  disabled={Boolean(addingAsset)}
+                  onClick={() => add(selected.specId)}
+                >
+                  <Plus size={15} />
+                  添加到现场
+                </button>
+              </>
+            ) : (
               <p>
-                {typeLabels[selected.deviceType]} ·{" "}
-                {Object.keys(selected.paramsSchema).length} 个参数 ·{" "}
-                {selected.behaviors.length} 个行为
+                <Upload size={18} />
+                选择资产查看定义
               </p>
-              <span className="pill warning">
-                {selected.template ? "模板 · 需完善契约" : "执行器待接入"}
-              </span>
-              <button
-                className="primary"
-                disabled={Boolean(addingAsset)}
-                onClick={() => add(selected.specId)}
-              >
-                <Plus size={15} />
-                添加到现场
-              </button>
-            </>
-          ) : (
-            <p>
-              <Upload size={18} />
-              选择资产查看定义
-            </p>
-          )}
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

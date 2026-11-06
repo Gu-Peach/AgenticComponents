@@ -1,0 +1,40 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "P06",
+  "contract_ref": "../contracts/workpiece_carrier.json",
+  "parameters": {
+    "empty_mass_kg": 2.0,
+    "slot_rows": 2,
+    "slot_columns": 2
+  },
+  "node_binding": {
+    "status": "unresolved"
+  },
+  "locations": {
+    "P06.slot1": {
+      "geometry_status": "pending_calibration",
+      "role": "moving_carrier_slot"
+    },
+    "P06.slot2": {
+      "geometry_status": "pending_calibration",
+      "role": "moving_carrier_slot"
+    },
+    "P06.slot3": {
+      "geometry_status": "pending_calibration",
+      "role": "moving_carrier_slot"
+    },
+    "P06.slot4": {
+      "geometry_status": "pending_calibration",
+      "role": "moving_carrier_slot"
+    }
+  },
+  "initial_inventory": {
+    "location": "carrier_infeed",
+    "contents": [
+      "M06_1",
+      "M06_2",
+      "M06_3",
+      "M06_4"
+    ]
+  }
+}

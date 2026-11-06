@@ -1,0 +1,1882 @@
+{
+  "contract_version": "1.1",
+  "schema_type": "DeviceSpec",
+  "schema_id": "standard.robot_arm",
+  "device_spec_id": "standard.robot_arm",
+  "version": "1.0.0",
+  "device_type": "robot_arm",
+  "display_name": "机械臂：可组合动作与任务执行",
+  "asset": {
+    "model_format": "glb",
+    "model_key": "../Machine tending/Machine tending.glb",
+    "sha256": "25ce1c6d1f47b176bedb89c51c447681499a54ce2e9ba88903897c8a06714667"
+  },
+  "params_schema": {
+    "joint_speed_rad_s": {
+      "type": "number",
+      "required": true,
+      "default": 1.2,
+      "unit": "rad/s",
+      "min": 0.01,
+      "max": 6,
+      "mutability": "stopped_only",
+      "description": "各关节的默认速度上限，具体关节可更严格"
+    },
+    "joint_accel_rad_s2": {
+      "type": "number",
+      "required": true,
+      "default": 2,
+      "unit": "rad/s²",
+      "min": 0.01,
+      "max": 20,
+      "mutability": "stopped_only",
+      "description": "默认关节加速度上限"
+    },
+    "max_payload_kg": {
+      "type": "number",
+      "required": true,
+      "default": 5,
+      "unit": "kg",
+      "min": 0.01,
+      "max": 5,
+      "mutability": "stopped_only",
+      "description": "模型允许载荷上限；不同于当前物料实际质量",
+      "legacy_aliases": [
+        "payload_kg"
+      ]
+    },
+    "lift_height": {
+      "type": "number",
+      "required": true,
+      "default": 0.3,
+      "unit": "m",
+      "min": 0,
+      "max": 1.5,
+      "mutability": "stopped_only",
+      "description": "抓放路径的默认抬升高度"
+    },
+    "ik_position_tolerance_m": {
+      "type": "number",
+      "required": true,
+      "default": 0.001,
+      "unit": "m",
+      "min": 1e-05,
+      "max": 0.05,
+      "mutability": "stopped_only",
+      "description": "TCP 位置求解误差阈值"
+    },
+    "ik_max_iterations": {
+      "type": "integer",
+      "required": true,
+      "default": 50,
+      "min": 1,
+      "max": 1000,
+      "mutability": "stopped_only",
+      "description": "一次 IK 求解迭代预算"
+    },
+    "ik_mode": {
+      "type": "enum",
+      "required": true,
+      "default": "position_only",
+      "options": [
+        "position_only"
+      ],
+      "mutability": "stopped_only",
+      "description": "仅位置或位置及姿态；后者需执行器支持"
+    },
+    "settle_speed_rad_s": {
+      "type": "number",
+      "required": true,
+      "default": 0.01,
+      "unit": "rad/s",
+      "min": 0,
+      "max": 0.1,
+      "mutability": "stopped_only",
+      "description": "精确停稳完成时的关节速度阈值"
+    }
+  },
+  "interfaces": [],
+  "signal_ports": [
+    {
+      "port_id": "commandTag",
+      "direction": "input",
+      "value_type": "integer",
+      "plc_type": "INT",
+      "description": "选择预定义任务／动作序列；参数表包含取放目标及关节／笛卡尔路径绑定",
+      "signal_role": "continuous_command",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "start_pick",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "原 start_pick 事件的 PLC 投影；作为公共 execute 角色，默认选择抓放任务，或执行 commandTag 指定任务",
+      "signal_role": "request_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "request_id",
+      "direction": "input",
+      "value_type": "integer",
+      "plc_type": "DINT",
+      "description": "原 start_pick 事件的 PLC 投影；作为公共 execute 角色，默认选择抓放任务，或执行 commandTag 指定任务",
+      "signal_role": "request_parameter",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "pause_pick",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "保留原含义：持续阻止启动新抓取任务，不自动暂停在途动作",
+      "signal_role": "continuous_command",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "resume_pick",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "清除同一暂停锁存的请求；与 pause_pick 的写入规则统一，冲突输入应拒绝",
+      "signal_role": "request_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "enableTag",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "控制在途运动使能；具备减速保持能力时暂停当前任务，并在恢复后继续",
+      "signal_role": "continuous_command",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "gripperTag",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "独立夹具开关；任务表模式由任务控制，二者不能同时写夹具",
+      "signal_role": "continuous_command",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "in1Tag",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "工艺任务中可等待的外部条件，如目标就绪或区域许可",
+      "signal_role": "continuous_command",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "in2Tag",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "工艺任务中可等待的外部条件，如目标就绪或区域许可",
+      "signal_role": "continuous_command",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "in3Tag",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "工艺任务中可等待的外部条件，如目标就绪或区域许可",
+      "signal_role": "continuous_command",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "in4Tag",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "工艺任务中可等待的外部条件，如目标就绪或区域许可",
+      "signal_role": "continuous_command",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "reset",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "允许状态下复位故障，保留或显式处置仍持有的工件",
+      "signal_role": "request_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "accepted",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "公共握手；本方案 done 表示当前任务成功，不沿用 Blend 提前可接命令的含义",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "busy",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "公共握手；本方案 done 表示当前任务成功，不沿用 Blend 提前可接命令的含义",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "done",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "公共握手；本方案 done 表示当前任务成功，不沿用 Blend 提前可接命令的含义",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "error",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "公共握手；本方案 done 表示当前任务成功，不沿用 Blend 提前可接命令的含义",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "result_id",
+      "direction": "output",
+      "value_type": "integer",
+      "plc_type": "DINT",
+      "description": "公共握手；本方案 done 表示当前任务成功，不沿用 Blend 提前可接命令的含义",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "error_code",
+      "direction": "output",
+      "value_type": "integer",
+      "plc_type": "INT",
+      "description": "公共握手；本方案 done 表示当前任务成功，不沿用 Blend 提前可接命令的含义",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "out1Tag",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "可配置阶段反馈，如已离开取料区、已放下工件；明确保持和清除规则",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "out2Tag",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "可配置阶段反馈，如已离开取料区、已放下工件；明确保持和清除规则",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "out3Tag",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "可配置阶段反馈，如已离开取料区、已放下工件；明确保持和清除规则",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "out4Tag",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "可配置阶段反馈，如已离开取料区、已放下工件；明确保持和清除规则",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "holding_material",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "来自实际夹持／持有关系的反馈，不等同于 gripperTag 的命令值",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    }
+  ],
+  "transport_behaviors": [
+    {
+      "behavior_id": "execute_job",
+      "display_name": "执行预定义任务",
+      "behavior_type": "composite",
+      "schedulable": true,
+      "executor_ref": "pending.robot_arm.execute_job",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "commandTag、start_pick 和新 request_id",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "pending_model_specific_payload"
+      },
+      "input_signals": [
+        "commandTag",
+        "enableTag",
+        "pause_pick",
+        "request_id",
+        "start_pick"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "error_code",
+        "holding_material",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "设备可接受、未暂停接单、任务编号及参数有效、资源获准",
+            "source": "authorization",
+            "key": "execute_job.pre_1",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "execute_job.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "选定任务的必需子行为均成功，终态满足契约后报告本次 done",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "选定任务的必需子行为均成功，终态满足契约后报告本次 done",
+            "source": "observation",
+            "key": "execute_job.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "pick_and_place",
+      "display_name": "抓放",
+      "behavior_type": "composite",
+      "schedulable": true,
+      "executor_ref": "pending.robot_arm.pick_and_place",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "execute_job 选择抓放任务，或经同一网关直接调用",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "pending_model_specific_payload"
+      },
+      "input_signals": [
+        "commandTag",
+        "enableTag",
+        "pause_pick",
+        "request_id",
+        "start_pick"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "error_code",
+        "holding_material",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "设备空闲、取料点有指定工件、夹具为空、未暂停接单、目标及资源合法",
+            "source": "observation",
+            "key": "pick_and_place.pre_1",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "pick_and_place.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "取料、移动、放置等子行为完成；实际物料交接成立",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "取料、移动、放置等子行为完成；实际物料交接成立",
+            "source": "observation",
+            "key": "pick_and_place.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "move_to_pose",
+      "display_name": "移动",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "pending.robot_arm.move_to_pose",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "任务中的 Move 或经网关调用",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "pending_model_specific_payload"
+      },
+      "input_signals": [
+        "commandTag",
+        "enableTag",
+        "request_id",
+        "start_pick"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "error_code",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "目标位置／姿态及关节限制合法、有可执行路径、使能有效",
+            "source": "observation",
+            "key": "move_to_pose.pre_1",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "move_to_pose.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "实际 TCP 位置、所需姿态和速度满足阈值；IK 未收敛不算完成",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "实际 TCP 位置、所需姿态和速度满足阈值；IK 未收敛不算完成",
+            "source": "observation",
+            "key": "move_to_pose.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "grip",
+      "display_name": "抓取",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "pending.robot_arm.grip",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "任务中的 Vacuum on 或有效手动夹具命令",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "pending_model_specific_payload"
+      },
+      "input_signals": [
+        "gripperTag"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "error_code",
+        "holding_material",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "指定工件存在且归属本任务、夹具为空、物料和载荷兼容、接近／接触条件满足",
+            "source": "observation",
+            "key": "grip.pre_1",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "grip.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "实际持有关系建立，holding_material 为真",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "实际持有关系建立，holding_material 为真",
+            "source": "observation",
+            "key": "grip.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "release",
+      "display_name": "放置释放",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "pending.robot_arm.release",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "任务中的 Vacuum off 或有效手动释放命令",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "pending_model_specific_payload"
+      },
+      "input_signals": [
+        "gripperTag"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "error_code",
+        "holding_material",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "当前持有指定物料、目标容量已预留、姿态及释放条件满足",
+            "source": "observation",
+            "key": "release.pre_1",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "release.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "工件与目标完成有效交接；夹具命令置零本身不足以证明成功",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "工件与目标完成有效交接；夹具命令置零本身不足以证明成功",
+            "source": "observation",
+            "key": "release.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "wait_time",
+      "display_name": "定时等待",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "pending.robot_arm.wait_time",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "任务中的 Wait",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "pending_model_specific_payload"
+      },
+      "input_signals": [],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "error_code",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "时长合法且等待策略已配置",
+            "source": "observation",
+            "key": "wait_time.pre_1",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "wait_time.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "按仿真时间达到有效等待时长；失能保持时按约定冻结计时",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "按仿真时间达到有效等待时长；失能保持时按约定冻结计时",
+            "source": "observation",
+            "key": "wait_time.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "wait_signal",
+      "display_name": "等待外部信号",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "pending.robot_arm.wait_signal",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "任务中的 Wait for",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "pending_model_specific_payload"
+      },
+      "input_signals": [
+        "in1Tag",
+        "in2Tag",
+        "in3Tag",
+        "in4Tag"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "error_code",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "信号已绑定且类型正确、期望值和超时策略明确",
+            "source": "observation",
+            "key": "wait_signal.pre_1",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "wait_signal.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "实际信号满足期望；超时走失败分支",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "实际信号满足期望；超时走失败分支",
+            "source": "observation",
+            "key": "wait_signal.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "set_output",
+      "display_name": "设置任务输出",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "pending.robot_arm.set_output",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "任务中的 Set",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "pending_model_specific_payload"
+      },
+      "input_signals": [],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "error_code",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "输出已绑定、取值合法且由本任务拥有写入权",
+            "source": "observation",
+            "key": "set_output.pre_1",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "set_output.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "输出提交成功，状态按声明规则保持或清除",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "输出提交成功，状态按声明规则保持或清除",
+            "source": "observation",
+            "key": "set_output.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "pause_pick_intake",
+      "display_name": "暂停接收抓取",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "pending.robot_arm.pause_pick_intake",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "pause_pick=TRUE",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "pending_model_specific_payload"
+      },
+      "input_signals": [
+        "pause_pick"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "error_code",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "适用于当前接单模式",
+            "source": "observation",
+            "key": "pause_pick_intake.pre_1",
+            "equals": true
+          },
+          {
+            "id": "pre_2",
+            "label": "不改变在途动作阶段",
+            "source": "observation",
+            "key": "pause_pick_intake.pre_2",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "pause_pick_intake.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "阻止新抓取被接受；不宣称机械臂已经停稳",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "阻止新抓取被接受；不宣称机械臂已经停稳",
+            "source": "observation",
+            "key": "pause_pick_intake.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "resume_pick_intake",
+      "display_name": "恢复接收抓取",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "pending.robot_arm.resume_pick_intake",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "兼容 resume_pick 或暂停许可解除",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "pending_model_specific_payload"
+      },
+      "input_signals": [
+        "pause_pick",
+        "resume_pick"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "error_code",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "暂停锁存允许解除、没有冲突暂停输入",
+            "source": "observation",
+            "key": "resume_pick_intake.pre_1",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "resume_pick_intake.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "允许新的抓取请求，原任务不重复执行",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "允许新的抓取请求，原任务不重复执行",
+            "source": "observation",
+            "key": "resume_pick_intake.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "hold_motion",
+      "display_name": "暂停在途运动",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "pending.robot_arm.hold_motion",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "enableTag 失能",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "pending_model_specific_payload"
+      },
+      "input_signals": [
+        "enableTag"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "error_code",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "设备具有减速保持实现",
+            "source": "observation",
+            "key": "hold_motion.pre_1",
+            "equals": true
+          },
+          {
+            "id": "pre_2",
+            "label": "当前任务、工件和资源继续保留",
+            "source": "observation",
+            "key": "hold_motion.pre_2",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "hold_motion.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "运动减速至保持状态，任务仍未终止",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "运动减速至保持状态，任务仍未终止",
+            "source": "observation",
+            "key": "hold_motion.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "resume_motion",
+      "display_name": "恢复在途运动",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "pending.robot_arm.resume_motion",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "enableTag 恢复且存在保持任务",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "pending_model_specific_payload"
+      },
+      "input_signals": [
+        "enableTag"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "error_code",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "原任务有效、资源仍获准、故障条件已解除",
+            "source": "authorization",
+            "key": "resume_motion.pre_1",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "resume_motion.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "继续原阶段，不重复已经完成的 grip/release",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "继续原阶段，不重复已经完成的 grip/release",
+            "source": "observation",
+            "key": "resume_motion.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "publish_robot_state",
+      "display_name": "发布动作与夹持状态",
+      "behavior_type": "observer",
+      "schedulable": false,
+      "executor_ref": "pending.robot_arm.publish_robot_state",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "仿真步、任务及持有关系变化",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "signal_or_external_event"
+      },
+      "input_signals": [],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "error_code",
+        "holding_material",
+        "out1Tag",
+        "out2Tag",
+        "out3Tag",
+        "out4Tag",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "状态来源与接口绑定有效",
+            "source": "observation",
+            "key": "publish_robot_state.pre_1",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "continuous",
+        "description": "更新 accepted/busy/done/error、holding_material 与阶段输出",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "更新 accepted/busy/done/error、holding_material 与阶段输出",
+            "source": "observation",
+            "key": "publish_robot_state.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    }
+  ],
+  "type_specific_contract": {
+    "coordinate_system": {
+      "length_unit": "m",
+      "joint_angle_unit": "rad",
+      "up_axis": "Y"
+    },
+    "ik": {
+      "solver": "ccd_position",
+      "mode_param": "ik_mode",
+      "position_tolerance_param": "ik_position_tolerance_m",
+      "max_iterations_param": "ik_max_iterations"
+    },
+    "trajectoryConfig": {
+      "motion_mode": "joint_ptp",
+      "joint_speed_param": "joint_speed_rad_s",
+      "joint_acceleration_param": "joint_accel_rad_s2"
+    }
+  },
+  "runtime_contract": {
+    "observation_definitions": {
+      "execute_job.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "commandTag",
+          "enableTag",
+          "pause_pick",
+          "request_id",
+          "start_pick",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "holding_material",
+          "result_id"
+        ]
+      },
+      "execute_job.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "commandTag",
+          "enableTag",
+          "pause_pick",
+          "request_id",
+          "start_pick",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "holding_material",
+          "result_id"
+        ]
+      },
+      "pick_and_place.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "commandTag",
+          "enableTag",
+          "pause_pick",
+          "request_id",
+          "start_pick",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "holding_material",
+          "result_id"
+        ]
+      },
+      "pick_and_place.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "commandTag",
+          "enableTag",
+          "pause_pick",
+          "request_id",
+          "start_pick",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "holding_material",
+          "result_id"
+        ]
+      },
+      "pick_and_place.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "commandTag",
+          "enableTag",
+          "pause_pick",
+          "request_id",
+          "start_pick",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "holding_material",
+          "result_id"
+        ]
+      },
+      "move_to_pose.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "commandTag",
+          "enableTag",
+          "request_id",
+          "start_pick",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ]
+      },
+      "move_to_pose.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "commandTag",
+          "enableTag",
+          "request_id",
+          "start_pick",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ]
+      },
+      "move_to_pose.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "commandTag",
+          "enableTag",
+          "request_id",
+          "start_pick",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ]
+      },
+      "grip.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "gripperTag",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "holding_material",
+          "result_id"
+        ]
+      },
+      "grip.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "gripperTag",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "holding_material",
+          "result_id"
+        ]
+      },
+      "grip.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "gripperTag",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "holding_material",
+          "result_id"
+        ]
+      },
+      "release.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "gripperTag",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "holding_material",
+          "result_id"
+        ]
+      },
+      "release.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "gripperTag",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "holding_material",
+          "result_id"
+        ]
+      },
+      "release.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "gripperTag",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "holding_material",
+          "result_id"
+        ]
+      },
+      "wait_time.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ]
+      },
+      "wait_time.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ]
+      },
+      "wait_time.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ]
+      },
+      "wait_signal.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "in1Tag",
+          "in2Tag",
+          "in3Tag",
+          "in4Tag",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ]
+      },
+      "wait_signal.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "in1Tag",
+          "in2Tag",
+          "in3Tag",
+          "in4Tag",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ]
+      },
+      "wait_signal.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "in1Tag",
+          "in2Tag",
+          "in3Tag",
+          "in4Tag",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ]
+      },
+      "set_output.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ]
+      },
+      "set_output.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ]
+      },
+      "set_output.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ]
+      },
+      "pause_pick_intake.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "pause_pick",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ]
+      },
+      "pause_pick_intake.pre_2": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "pause_pick",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ]
+      },
+      "pause_pick_intake.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "pause_pick",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ]
+      },
+      "pause_pick_intake.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "pause_pick",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ]
+      },
+      "resume_pick_intake.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "pause_pick",
+          "resume_pick",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ]
+      },
+      "resume_pick_intake.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "pause_pick",
+          "resume_pick",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ]
+      },
+      "resume_pick_intake.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "pause_pick",
+          "resume_pick",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ]
+      },
+      "hold_motion.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "enableTag",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ]
+      },
+      "hold_motion.pre_2": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "enableTag",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ]
+      },
+      "hold_motion.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "enableTag",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ]
+      },
+      "hold_motion.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "enableTag",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ]
+      },
+      "resume_motion.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "enableTag",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ]
+      },
+      "resume_motion.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "enableTag",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ]
+      },
+      "publish_robot_state.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "holding_material",
+          "out1Tag",
+          "out2Tag",
+          "out3Tag",
+          "out4Tag",
+          "result_id"
+        ]
+      },
+      "publish_robot_state.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "holding_material",
+          "out1Tag",
+          "out2Tag",
+          "out3Tag",
+          "out4Tag",
+          "result_id"
+        ]
+      },
+      "publish_robot_state.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "holding_material",
+          "out1Tag",
+          "out2Tag",
+          "out3Tag",
+          "out4Tag",
+          "result_id"
+        ]
+      }
+    },
+    "authorization_definitions": {
+      "execute_job.pre_1": {
+        "value_type": "boolean",
+        "provider": "authorization_service",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "commandTag",
+          "enableTag",
+          "pause_pick",
+          "request_id",
+          "start_pick",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "holding_material",
+          "result_id"
+        ]
+      },
+      "resume_motion.pre_1": {
+        "value_type": "boolean",
+        "provider": "authorization_service",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "enableTag",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ]
+      }
+    }
+  },
+  "runtime_execution_contract": {
+    "signal_management": {
+      "owner": "simulation_engine",
+      "status": "pending_engine",
+      "namespace": "instance_id/port_id",
+      "definition_source": "signal_ports",
+      "spatial_binding": false,
+      "write_policy": "single_writer_per_input",
+      "plc_mapping": "instance_bindings",
+      "sampling": "simulation_step_snapshot",
+      "unknown_policy": "invalid_until_provider_ready"
+    },
+    "status": "pending_adapter",
+    "protocol": {
+      "basis": "schema.md公共请求协议",
+      "acceptance": "same request identity and frozen parameters",
+      "completion": "matching result_id plus observed completion checks",
+      "single_command_entry": true
+    },
+    "payload_binding_status": "requires_explicit_model_adapter",
+    "calibration_required": true,
+    "real_execution_available": false,
+    "raw_api_and_plc_simultaneous_writers": false,
+    "payload_templates": {
+      "pick_and_place": {
+        "fields": {
+          "material": "material_ref",
+          "source": "location_ref",
+          "target": "location_ref"
+        },
+        "status": "pending_model_adapter",
+        "target_payload_schema": null
+      },
+      "move_to_pose": {
+        "fields": {
+          "target": "location_ref"
+        },
+        "status": "pending_model_adapter",
+        "target_payload_schema": null
+      }
+    }
+  }
+}

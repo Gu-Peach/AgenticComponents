@@ -1,0 +1,106 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "Pallet",
+  "contract_ref": "../contracts/workpiece_carrier.json",
+  "asset_kind": "carrier_prefab",
+  "parameters": {
+    "length_m": 1.2000000431161295,
+    "width_m": 0.8000000870259361,
+    "height_m": 0.14999999664723873,
+    "empty_mass_kg": 2.0,
+    "slot_pitch_x_m": 0.19,
+    "slot_pitch_z_m": 0.189014
+  },
+  "node_binding": {
+    "status": "bound",
+    "node": "AssemblyBaseComponent_00Ln",
+    "model_sha256": "c68cc1ea4219a6616e13b9c036da871ac0886be3e76f8ec3202c22faffda0249",
+    "geometry_nodes": [
+      "__Geometry___00Kc",
+      "__Geometry___00Lc"
+    ]
+  },
+  "model": {
+    "calibration": {
+      "status": "pending"
+    }
+  },
+  "prefab": {
+    "kind": "loaded_carrier",
+    "material_template": "Workpiece",
+    "slots": [
+      {
+        "id": "slot1",
+        "node": "Lathe_Comp_3_00On",
+        "category": "A",
+        "variant": "gray"
+      },
+      {
+        "id": "slot2",
+        "node": "Lathe_Comp_3_00Pn",
+        "category": "A",
+        "variant": "gray"
+      },
+      {
+        "id": "slot3",
+        "node": "Lathe_Comp_3_00Qn",
+        "category": "B",
+        "variant": "brown"
+      },
+      {
+        "id": "slot4",
+        "node": "Lathe_Comp_3_00Rn",
+        "category": "A",
+        "variant": "gray"
+      },
+      {
+        "id": "slot5",
+        "node": "Lathe_Comp_3_00Sn",
+        "category": "A",
+        "variant": "gray"
+      },
+      {
+        "id": "slot6",
+        "node": "Lathe_Comp_3_00Tn",
+        "category": "A",
+        "variant": "gray"
+      },
+      {
+        "id": "slot7",
+        "node": "Lathe_Comp_3_00Un",
+        "category": "A",
+        "variant": "gray"
+      },
+      {
+        "id": "slot8",
+        "node": "Lathe_Comp_3_00Vn",
+        "category": "B",
+        "variant": "brown"
+      },
+      {
+        "id": "slot9",
+        "node": "Lathe_Comp_3_00Wn",
+        "category": "B",
+        "variant": "brown"
+      },
+      {
+        "id": "slot10",
+        "node": "Lathe_Comp_3_00Xn",
+        "category": "B",
+        "variant": "brown"
+      },
+      {
+        "id": "slot11",
+        "node": "Lathe_Comp_3_00Yn",
+        "category": "B",
+        "variant": "brown"
+      },
+      {
+        "id": "slot12",
+        "node": "Lathe_Comp_3_00Zn",
+        "category": "B",
+        "variant": "brown"
+      }
+    ]
+  }
+}

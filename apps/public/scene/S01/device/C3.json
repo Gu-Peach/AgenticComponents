@@ -1,0 +1,57 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "C3",
+  "contract_ref": "../contracts/conveyor.json",
+  "parameters": {
+    "speed_mps": 0.2,
+    "length_m": 1.5010000574230873,
+    "width_m": 0.32300411106693705,
+    "surface_height_m": 0.799944745303435,
+    "capacity": 1,
+    "resume_threshold": 0
+  },
+  "node_binding": {
+    "status": "bound",
+    "node": "Conveyor(3)",
+    "model_sha256": "c68cc1ea4219a6616e13b9c036da871ac0886be3e76f8ec3202c22faffda0249"
+  },
+  "locations": {
+    "C3.entry": {
+      "frame": "scene_world_m",
+      "position": [
+        -1.0428520925230245,
+        0.799944745303435,
+        -2.234896095325697
+      ],
+      "status": "mesh_bound_candidate"
+    },
+    "C3.exit": {
+      "frame": "scene_world_m",
+      "position": [
+        -2.5438521499461118,
+        0.799944745303435,
+        -2.234896095325697
+      ],
+      "status": "mesh_bound_candidate"
+    }
+  },
+  "model": {
+    "surface": {
+      "frame": "scene_world_m",
+      "flow_axis": [
+        -1,
+        0,
+        0
+      ],
+      "candidate_support_height_m": 0.799944745303435,
+      "collision_proxy": {
+        "kind": "box_surface",
+        "status": "requires_contact_validation",
+        "thickness_m": 0.01
+      }
+    },
+    "calibration": {
+      "status": "pending"
+    }
+  }
+}

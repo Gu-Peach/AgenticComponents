@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { SceneModulePanel } from "./SceneModulePanel";
 import { FileCode2, Download, Upload, CircleOff } from "lucide-react";
 import { useWorkspace } from "@/stores/workspace";
 import { download } from "@/services/BrowserProjectRepository";
@@ -8,6 +9,8 @@ export function PlcPanel() {
   const lines = useRef<HTMLDivElement>(null);
   const instance = project?.instances.find((i) => i.instanceId === selectedId);
   const def = project?.definitions.find((d) => d.specId === instance?.specId);
+  const scene = project?.scenePackages?.find((s) => s.id === selectedId);
+  if (scene) return <SceneModulePanel scene={scene} />;
   return (
     <div className="plc-panel">
       <div className="panel-toolbar">

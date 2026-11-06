@@ -5,6 +5,7 @@ import type { RobotStep } from "@/contracts/robot-command";
 import type { BodyPose, PhysicsPort } from "@/contracts/physics";
 import { RobotKinematics } from "@/runtime/kinematics/RobotKinematics";
 import { CcdPositionIK } from "@/runtime/kinematics/CcdPositionIK";
+import { DampedPoseIK } from "@/runtime/kinematics/DampedPoseIK";
 import { JointTrajectory } from "@/runtime/mechanisms/JointTrajectory";
 import { GraspService } from "@/runtime/services/GraspService";
 import { SignalRegistry } from "@/runtime/engine/SignalRegistry";
@@ -61,9 +62,14 @@ export class RobotJobRunner {
           t.rotation_quaternion = r.toArray();
           fk = new RobotKinematics(model);
         }
-        const key = (step.subject ?? "tcp") + target.toArray().join(","),
+        const key =
+            (step.subject ?? "tcp") +
+            target.toArray().join(",") +
+            JSON.stringify(step.world_rotation),
           cached = visited.get(key),
-          solver = new CcdPositionIK(fk);
+          solver = step.world_rotation
+            ? new DampedPoseIK(fk, new Quaternion(...step.world_rotation))
+            : new CcdPositionIK(fk);
         let solved = cached
           ? { q: cached, converged: true, error: 0, iterations: 0 }
           : solver.solve(target, seed);
@@ -107,7 +113,8 @@ export class RobotJobRunner {
       if (step.kind === "move_joints") {
         step.q.forEach((q, i) => {
           const l = this.scene.model.urdf.joints[i].limit;
-          if (q < l.lower || q > l.upper) throw new Error("关节目标超出限位");
+          if (l !== null && (q < l.lower || q > l.upper))
+            throw new Error("关节目标超出限位");
         });
         seed = [...step.q];
         return { step, q: seed };
@@ -211,7 +218,9 @@ export class RobotJobRunner {
       this.grasp.error(this.previousTCP) >
         this.scene.model.gripper.constraint_tolerance_m
     )
-      throw new Error("抓取约束误差超限");
+      throw new Error(
+        `抓取约束误差超限 ${this.scene.instanceId} ${s.phase}: ${this.grasp!.error(this.previousTCP).toFixed(4)} m`,
+      );
     if (this.finished || this.signals.read("enableTag") !== true || s.holding)
       return;
     const { step, q, target, fk } = this.steps[this.index];

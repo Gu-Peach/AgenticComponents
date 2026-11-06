@@ -1,0 +1,45 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "F1",
+  "contract_ref": "../contracts/material_source_station.json",
+  "parameters": {
+    "product_spec": "Pallet",
+    "buffer_length_m": 1.2000000168892972,
+    "buffer_width_m": 0.5000000937314586
+  },
+  "node_binding": {
+    "status": "bound",
+    "node": "__Geometry___00Jc",
+    "model_sha256": "c68cc1ea4219a6616e13b9c036da871ac0886be3e76f8ec3202c22faffda0249"
+  },
+  "locations": {
+    "F1.work": {
+      "frame": "scene_world_m",
+      "position": [
+        3.2690755266224274,
+        0.19999997645616574,
+        -1.196711063385188
+      ],
+      "status": "observed_initial_carrier_support"
+    }
+  },
+  "model": {
+    "surface": {
+      "frame": "scene_world_m",
+      "flow_axis": [
+        -1,
+        0,
+        0
+      ],
+      "candidate_support_height_m": 0.19988948375233662,
+      "collision_proxy": {
+        "kind": "box_surface",
+        "status": "requires_contact_validation",
+        "thickness_m": 0.01
+      }
+    },
+    "calibration": {
+      "status": "pending"
+    }
+  }
+}

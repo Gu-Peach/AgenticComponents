@@ -1,0 +1,19 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "MC1",
+  "contract_ref": "../contracts/processing_station.json",
+  "node_binding": {
+    "status": "unresolved"
+  },
+  "locations": {
+    "MC1.work": {
+      "geometry_status": "pending_calibration"
+    }
+  },
+  "recipes": {
+    "machining": {
+      "station": "MC1",
+      "evidence": "request_material_recipe_matching_operation_record"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "R3",
+  "contract_ref": "../contracts/robot_arm.json",
+  "node_binding": {
+    "status": "unresolved"
+  },
+  "locations": {
+    "R3.tool": {
+      "geometry_status": "pending_calibration"
+    },
+    "R3.home": {
+      "geometry_status": "pending_calibration",
+      "role": "outside_all_shared_motion_zones"
+    }
+  }
+}

@@ -24,8 +24,15 @@ export async function acquireModel(id: string) {
     const promise = (async () => {
       const blob = await projectRepository.getAsset(id);
       if (!blob) throw new Error("模型文件缺失，请重新关联 GLB");
-      return (await new GLTFLoader().parseAsync(await blob.arrayBuffer(), ""))
-        .scene;
+      const gltf = await new GLTFLoader().parseAsync(
+        await blob.arrayBuffer(),
+        "",
+      );
+      gltf.scene.traverse((o) => {
+        const index = gltf.parser.associations.get(o)?.nodes;
+        if (index !== undefined) o.userData.sceneNodeIndex = index;
+      });
+      return gltf.scene;
     })();
     entry = { promise, refs: 0 };
     cache.set(id, entry);

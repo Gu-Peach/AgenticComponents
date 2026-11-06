@@ -32,7 +32,8 @@ class JoltPhysicsBackend implements PhysicsPort {
     pairs.EnableCollision(0, 1);
     pairs.EnableCollision(1, 1);
     const broad = new J.BroadPhaseLayerInterfaceTable(2, 2);
-    for (let i = 0; i < 2; i++) {
+    const substeps = this.config.carrierBindings?.length ? 8 : 2;
+    for (let i = 0; i < substeps; i++) {
       const layer = new J.BroadPhaseLayer(i);
       broad.MapObjectToBroadPhaseLayer(i, layer);
       J.destroy(layer);
@@ -47,6 +48,11 @@ class JoltPhysicsBackend implements PhysicsPort {
     this.bi = this.system.GetBodyInterface();
     const ps = this.system.GetPhysicsSettings();
     ps.mPenetrationSlop = 0.001;
+    // Millimetre-scale pallet rails must not collide with a downstream edge centimetres early.
+    if (config.bodies?.some((b) => b.convexParts))
+      ps.mSpeculativeContactDistance = 0.002;
+    if (config.carrierBindings?.length) ps.mNumVelocitySteps = 40;
+
     this.system.SetPhysicsSettings(ps);
     const q = config.rotation,
       flow: [number, number, number] = [
@@ -144,19 +150,23 @@ class JoltPhysicsBackend implements PhysicsPort {
           throw new Error("输送方向/法向无效");
       }
       this.registry.get(this.targetId);
-      if (definitions.some((d) => d.role === "tool"))
+      if (
+        definitions.some((d) => d.role === "tool") ||
+        config.carrierBindings?.length
+      )
         this.grasps = new GraspConstraints(
           J,
           this.system,
           this.bi,
           this.registry,
         );
+      this.bindActiveCarriers();
       this.contacts = new ConveyorContacts(J, this.registry, surfaces);
       this.system.SetContactListener(this.contacts.listener);
     } catch (e) {
       this.grasps?.dispose();
-      for (const { body } of this.registry.values()) {
-        this.bi.RemoveBody(body.GetID());
+      for (const { body, active } of this.registry.values()) {
+        if (active) this.bi.RemoveBody(body.GetID());
         this.bi.DestroyBody(body.GetID());
       }
       this.registry.clear();
@@ -170,50 +180,189 @@ class JoltPhysicsBackend implements PhysicsPort {
     const position = d.position,
       size = d.size,
       dynamic = d.motionType === "dynamic";
-    const J = this.J,
-      half = new J.Vec3(size[0] / 2, size[1] / 2, size[2] / 2),
-      shape = new J.BoxShape(half, 0.001);
-    J.destroy(half);
-    const pos = new J.RVec3(...(position as [number, number, number])),
-      q = new J.Quat(...d.rotation),
-      settings = new J.BodyCreationSettings(
-        shape,
-        pos,
-        q,
-        dynamic
-          ? J.EMotionType_Dynamic
-          : d.motionType === "kinematic"
-            ? J.EMotionType_Kinematic
-            : J.EMotionType_Static,
-        d.motionType !== "static" ? 1 : 0,
-      );
-    settings.mFriction = d.friction;
-    settings.mRestitution = d.restitution;
-    settings.mLinearDamping = 0;
-    settings.mAllowSleeping = false;
-    if (dynamic) {
-      settings.mOverrideMassProperties =
-        J.EOverrideMassProperties_CalculateInertia;
-      settings.mMassPropertiesOverride.mMass = d.mass!;
+    const J = this.J;
+    let shape: Jolt.Shape;
+    const keepAlive: Jolt.ShapeResult[] = [];
+    try {
+      if (d.convexParts) {
+        if (!d.convexParts.length || d.convexParts.length > 256)
+          throw new Error("Invalid convex parts");
+        const compound = new J.StaticCompoundShapeSettings(),
+          zero = new J.Vec3(0, 0, 0),
+          identity = new J.Quat(0, 0, 0, 1);
+        try {
+          for (const [index, points] of d.convexParts.entries()) {
+            if (
+              points.length < 4 ||
+              points.some((p) => p.length !== 3 || !p.every(Number.isFinite))
+            )
+              throw new Error("Invalid hull points");
+            const hull = new J.ConvexHullShapeSettings();
+            hull.mMaxConvexRadius = 0.001;
+            for (const point of points) {
+              const v = new J.Vec3(...point);
+              hull.mPoints.push_back(v);
+              J.destroy(v);
+            }
+            const result = hull.Create();
+            J.destroy(hull);
+            keepAlive.push(result);
+            if (result.HasError())
+              throw new Error(
+                "Hull creation failed: " + result.GetError().c_str(),
+              );
+            compound.AddShapeShape(zero, identity, result.Get(), index);
+          }
+          const result = compound.Create();
+          keepAlive.push(result);
+          if (result.HasError())
+            throw new Error(
+              "Compound creation failed: " + result.GetError().c_str(),
+            );
+          shape = result.Get();
+        } finally {
+          J.destroy(compound);
+          J.destroy(zero);
+          J.destroy(identity);
+        }
+      } else {
+        const half = new J.Vec3(size[0] / 2, size[1] / 2, size[2] / 2);
+        shape = new J.BoxShape(half, 0.001);
+        J.destroy(half);
+      }
+      const pos = new J.RVec3(...(position as [number, number, number])),
+        q = new J.Quat(...d.rotation),
+        settings = new J.BodyCreationSettings(
+          shape,
+          pos,
+          q,
+          dynamic
+            ? J.EMotionType_Dynamic
+            : d.motionType === "kinematic"
+              ? J.EMotionType_Kinematic
+              : J.EMotionType_Static,
+          d.motionType !== "static" ? 1 : 0,
+        );
+      settings.mFriction = d.friction;
+      settings.mRestitution = d.restitution;
+      settings.mLinearDamping = 0;
+      settings.mAllowSleeping = false;
+      if (dynamic) {
+        settings.mOverrideMassProperties =
+          J.EOverrideMassProperties_CalculateInertia;
+        settings.mMassPropertiesOverride.mMass = d.mass!;
+      }
+      const body = this.bi.CreateBody(settings);
+
+      if (d.initiallyActive !== false)
+        this.bi.AddBody(body.GetID(), J.EActivation_Activate);
+      this.registry.add(d, body);
+      J.destroy(pos);
+      J.destroy(q);
+      J.destroy(settings);
+      return body;
+    } finally {
+      for (const result of keepAlive) J.destroy(result);
     }
-    const body = this.bi.CreateBody(settings);
-    this.bi.AddBody(body.GetID(), J.EActivation_Activate);
-    this.registry.add(d, body);
-    J.destroy(pos);
-    J.destroy(q);
-    J.destroy(settings);
-    return body;
   }
   setSurfaceSpeed(speed: number) {
     if (!Number.isFinite(speed)) throw new Error("表面速度必须有限");
     if (this.disposed) throw new Error("物理世界已释放");
     this.contacts.setSpeed(speed);
   }
+  setSurfaceSpeeds(speeds: Readonly<Record<string, number>>) {
+    if (this.disposed) throw new Error("World disposed");
+    this.contacts.setSpeeds(speeds);
+  }
+  getSurfaceSpeed(id: string) {
+    if (this.disposed) throw new Error("World disposed");
+    return this.contacts.getSpeed(id);
+  }
+  isBodyActive(id: string) {
+    return !this.disposed && this.registry.get(id).active;
+  }
+  hasGraspForBody(id: string) {
+    return this.grasps?.involves(id) ?? false;
+  }
+  isCarriedBy(material: string, carrier?: string) {
+    return this.grasps?.isCarriedBy(material, carrier) ?? false;
+  }
+  private bindActiveCarriers() {
+    for (const { carrier, material } of this.config.carrierBindings ?? []) {
+      if (
+        this.registry.get(carrier).active &&
+        this.registry.get(material).active &&
+        !this.isCarriedBy(material)
+      )
+        this.grasps!.carry(carrier, material);
+    }
+  }
+  activateBodies(placements: readonly { id: string; pose: BodyPose }[]) {
+    if (this.disposed) throw new Error("World disposed");
+    if (new Set(placements.map((p) => p.id)).size !== placements.length)
+      throw new Error("Duplicate activation");
+    for (const { id, pose } of placements) {
+      const r = this.registry.get(id);
+      if (
+        r.active ||
+        r.definition.motionType !== "dynamic" ||
+        ![...pose.position, ...pose.rotation, ...pose.velocity].every(
+          Number.isFinite,
+        ) ||
+        Math.abs(Math.hypot(...pose.rotation) - 1) > 1e-5
+      )
+        throw new Error("Invalid body admission");
+    }
+    for (const { id, pose } of placements) {
+      const r = this.registry.get(id),
+        p = new this.J.RVec3(...pose.position),
+        q = new this.J.Quat(...pose.rotation),
+        v = new this.J.Vec3(...pose.velocity),
+        w = new this.J.Vec3(0, 0, 0);
+      try {
+        this.bi.SetPositionAndRotation(
+          r.body.GetID(),
+          p,
+          q,
+          this.J.EActivation_DontActivate,
+        );
+        this.bi.SetLinearAndAngularVelocity(r.body.GetID(), v, w);
+        this.bi.AddBody(r.body.GetID(), this.J.EActivation_Activate);
+        r.active = true;
+      } finally {
+        this.J.destroy(p);
+        this.J.destroy(q);
+        this.J.destroy(v);
+        this.J.destroy(w);
+      }
+    }
+    this.bindActiveCarriers();
+  }
+  deactivateBodies(ids: readonly string[]) {
+    if (this.disposed) throw new Error("World disposed");
+    if (new Set(ids).size !== ids.length) throw new Error("Duplicate removal");
+    for (const id of ids) {
+      const r = this.registry.get(id);
+      if (
+        !r.active ||
+        r.definition.motionType !== "dynamic" ||
+        this.hasGraspForBody(id) ||
+        this.grasps?.hasCarrierBindings(id)
+      )
+        throw new Error("Body cannot be removed");
+    }
+    for (const id of ids) {
+      const r = this.registry.get(id);
+      this.bi.RemoveBody(r.body.GetID());
+      r.active = false;
+    }
+  }
   step(dt: number) {
     if (this.disposed) throw new Error("物理世界已释放");
-    for (let i = 0; i < 2; i++) {
+    const substeps = this.config.carrierBindings?.length ? 8 : 2;
+    for (let i = 0; i < substeps; i++) {
       this.contacts.beginSubstep();
-      this.world.Step(dt / 2, 1);
+      this.world.Step(dt / substeps, 1);
     }
   }
   readMaterial(): BodyPose {
@@ -221,7 +370,9 @@ class JoltPhysicsBackend implements PhysicsPort {
   }
   readBody(id: string): BodyPose {
     if (this.disposed) throw new Error("物理世界已释放");
-    const body = this.registry.get(id).body;
+    const record = this.registry.get(id);
+    if (!record.active) throw new Error("Body is not present in the world");
+    const body = record.body;
     const p = body.GetPosition(),
       q = body.GetRotation(),
       v = body.GetLinearVelocity();
@@ -237,7 +388,9 @@ class JoltPhysicsBackend implements PhysicsPort {
     };
   }
   hasSupport(id = this.targetId, surface?: string) {
-    return this.contacts.hasSupport(id, surface);
+    return (
+      this.contacts.hasSupport(id, surface) || this.isCarriedBy(id, surface)
+    );
   }
   moveTool(id: string, pose: BodyPose, dt: number) {
     if (this.disposed) throw new Error("物理世界已释放");
@@ -261,8 +414,8 @@ class JoltPhysicsBackend implements PhysicsPort {
     if (this.disposed) return;
     this.disposed = true;
     this.grasps?.dispose();
-    for (const { body: b } of this.registry.values()) {
-      this.bi.RemoveBody(b.GetID());
+    for (const { body: b, active } of this.registry.values()) {
+      if (active) this.bi.RemoveBody(b.GetID());
       this.bi.DestroyBody(b.GetID());
     }
     this.grasps?.releaseFilter();

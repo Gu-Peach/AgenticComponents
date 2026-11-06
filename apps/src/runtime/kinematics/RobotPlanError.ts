@@ -42,9 +42,11 @@ export class RobotPlanError extends Error {
         .map((n) => n.toFixed(3))
         .join(", ")}]`;
     const hint =
-      subject === "held_material"
-        ? "当前放料目标取所选传送带中心；请重置实验后，将目标传送带移近机械臂，再重新准备。"
-        : "请重置实验后调整物料或目标位置，再重新准备。";
+      result.orientationError !== undefined
+        ? `姿态残差 ${result.orientationError.toFixed(4)} rad；检查本步路径与姿态约束。`
+        : subject === "held_material"
+          ? "当前放料目标取所选传送带中心；请重置实验后，将目标传送带移近机械臂，再重新准备。"
+          : "请重置实验后调整物料或目标位置，再重新准备。";
     super(
       `抓放预检查失败：第${step}步「${label}」的${subject === "held_material" ? "物料中心" : "TCP"}目标${outside ? "超出保守最大伸展范围" : "IK未收敛（不能据此断定不可达）"}。世界坐标${coords(target)} m；相对机械臂基座${coords(base)} m；求解残差${result.error.toFixed(4)} m，容差${scene.tolerance.toFixed(4)} m。${hint}本次任务未启动，未新增抓取约束。`,
     );

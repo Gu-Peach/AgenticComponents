@@ -1,0 +1,464 @@
+{
+  "model_sha256": "c68cc1ea4219a6616e13b9c036da871ac0886be3e76f8ec3202c22faffda0249",
+  "frame": "scene_world_m",
+  "axis": "Y-up",
+  "roles": {
+    "C1": {
+      "root": {
+        "index": 52,
+        "name": "Conveyor(1)",
+        "three_name": "Conveyor(1)",
+        "path": [
+          {
+            "index": 487,
+            "name": "Scene Collection"
+          },
+          {
+            "index": 486,
+            "name": "Collection"
+          },
+          {
+            "index": 52,
+            "name": "Conveyor(1)"
+          }
+        ]
+      },
+      "role": "第一段主滚筒输送线",
+      "bounds": {
+        "min": [
+          0.6680775037660931,
+          0,
+          -1.6597113270710475
+        ],
+        "max": [
+          2.669077602466976,
+          0.19988948375233662,
+          -0.7337112173812046
+        ],
+        "size": [
+          2.001000098700883,
+          0.19988948375233662,
+          0.9260001096898429
+        ]
+      }
+    },
+    "C2": {
+      "root": {
+        "index": 103,
+        "name": "Conveyor(2)",
+        "three_name": "Conveyor(2)",
+        "path": [
+          {
+            "index": 487,
+            "name": "Scene Collection"
+          },
+          {
+            "index": 486,
+            "name": "Collection"
+          },
+          {
+            "index": 103,
+            "name": "Conveyor(2)"
+          }
+        ]
+      },
+      "role": "第二段主滚筒输送线",
+      "bounds": {
+        "min": [
+          -1.3329265531644179,
+          0,
+          -1.6597110308071623
+        ],
+        "max": [
+          0.6680735455364649,
+          0.19988948375233662,
+          -0.7337109211173194
+        ],
+        "size": [
+          2.001000098700883,
+          0.19988948375233662,
+          0.9260001096898429
+        ]
+      }
+    },
+    "C3": {
+      "root": {
+        "index": 138,
+        "name": "Conveyor(3)",
+        "three_name": "Conveyor(3)",
+        "path": [
+          {
+            "index": 487,
+            "name": "Scene Collection"
+          },
+          {
+            "index": 486,
+            "name": "Collection"
+          },
+          {
+            "index": 138,
+            "name": "Conveyor(3)"
+          }
+        ]
+      },
+      "role": "近处robot(2)对应的绿色出料线",
+      "bounds": {
+        "min": [
+          -2.5438521499461118,
+          0,
+          -2.3963981508591656
+        ],
+        "max": [
+          -1.0428520925230245,
+          0.799944745303435,
+          -2.0733940397922286
+        ],
+        "size": [
+          1.5010000574230873,
+          0.799944745303435,
+          0.32300411106693705
+        ]
+      }
+    },
+    "C4": {
+      "root": {
+        "index": 173,
+        "name": "Conveyor(4)",
+        "three_name": "Conveyor(4)",
+        "path": [
+          {
+            "index": 487,
+            "name": "Scene Collection"
+          },
+          {
+            "index": 486,
+            "name": "Collection"
+          },
+          {
+            "index": 173,
+            "name": "Conveyor(4)"
+          }
+        ]
+      },
+      "role": "远处robot(center)(1)对应的绿色出料线",
+      "bounds": {
+        "min": [
+          -2.5438510885761403,
+          0,
+          -0.33437722915192114
+        ],
+        "max": [
+          -1.042851031153053,
+          0.799944745303435,
+          -0.011373118084984257
+        ],
+        "size": [
+          1.5010000574230873,
+          0.799944745303435,
+          0.3230041110669369
+        ]
+      }
+    },
+    "R1": {
+      "root": {
+        "index": 485,
+        "name": "robot(center)(1)",
+        "three_name": "robot(center)(1)",
+        "path": [
+          {
+            "index": 487,
+            "name": "Scene Collection"
+          },
+          {
+            "index": 486,
+            "name": "Collection"
+          },
+          {
+            "index": 485,
+            "name": "robot(center)(1)"
+          }
+        ]
+      },
+      "role": "远处机械臂，出料到C4",
+      "bounds": {
+        "min": [
+          -1.3244557386884368,
+          -2.822683307930875e-30,
+          -0.39999931077257245
+        ],
+        "max": [
+          0.40000074128405144,
+          2.0396775015726556,
+          0.4000007412842538
+        ],
+        "size": [
+          1.7244564799724882,
+          2.0396775015726556,
+          0.8000000520568262
+        ]
+      }
+    },
+    "R2": {
+      "root": {
+        "index": 375,
+        "name": "robot(2)",
+        "three_name": "robot(2)",
+        "path": [
+          {
+            "index": 487,
+            "name": "Scene Collection"
+          },
+          {
+            "index": 486,
+            "name": "Collection"
+          },
+          {
+            "index": 375,
+            "name": "robot(2)"
+          }
+        ]
+      },
+      "role": "近处机械臂，出料到C3",
+      "bounds": {
+        "min": [
+          -1.314959251521376,
+          -2.822683307930875e-30,
+          -2.823180918389348
+        ],
+        "max": [
+          0.40949671487101336,
+          2.039677500296827,
+          -2.0231808663325217
+        ],
+        "size": [
+          1.7244559663923893,
+          2.039677500296827,
+          0.8000000520568262
+        ]
+      }
+    },
+    "F1": {
+      "root": {
+        "index": 186,
+        "name": "__Geometry__ [00Jc]",
+        "three_name": "__Geometry___00Jc",
+        "path": [
+          {
+            "index": 487,
+            "name": "Scene Collection"
+          },
+          {
+            "index": 486,
+            "name": "Collection"
+          },
+          {
+            "index": 265,
+            "name": "Feeder"
+          },
+          {
+            "index": 264,
+            "name": "__Model__ [00Av]"
+          },
+          {
+            "index": 186,
+            "name": "__Geometry__ [00Jc]"
+          }
+        ]
+      },
+      "role": "Feeder内的出料口/供盘支承",
+      "bounds": {
+        "min": [
+          2.6690762331491555,
+          0,
+          -1.4467111102509798
+        ],
+        "max": [
+          3.869076250038453,
+          0.20499999541789293,
+          -0.9467110165195212
+        ],
+        "size": [
+          1.2000000168892972,
+          0.20499999541789293,
+          0.5000000937314586
+        ]
+      }
+    },
+    "Pallet": {
+      "root": {
+        "index": 263,
+        "name": "AssemblyBaseComponent [00Ln]",
+        "three_name": "AssemblyBaseComponent_00Ln",
+        "path": [
+          {
+            "index": 487,
+            "name": "Scene Collection"
+          },
+          {
+            "index": 486,
+            "name": "Collection"
+          },
+          {
+            "index": 265,
+            "name": "Feeder"
+          },
+          {
+            "index": 264,
+            "name": "__Model__ [00Av]"
+          },
+          {
+            "index": 263,
+            "name": "AssemblyBaseComponent [00Ln]"
+          }
+        ]
+      },
+      "role": "一盘十二件的可复制托盘预制体",
+      "bounds": {
+        "min": [
+          2.6690790799212465,
+          0.19999997645616574,
+          -1.5967111068984685
+        ],
+        "max": [
+          3.869079123037376,
+          0.34999997310340447,
+          -0.7967110198725325
+        ],
+        "size": [
+          1.2000000431161295,
+          0.14999999664723873,
+          0.8000000870259361
+        ]
+      }
+    },
+    "Workpiece": {
+      "root": {
+        "index": 213,
+        "name": "Lathe Comp 3 [00On]",
+        "three_name": "Lathe_Comp_3_00On",
+        "path": [
+          {
+            "index": 487,
+            "name": "Scene Collection"
+          },
+          {
+            "index": 486,
+            "name": "Collection"
+          },
+          {
+            "index": 265,
+            "name": "Feeder"
+          },
+          {
+            "index": 264,
+            "name": "__Model__ [00Av]"
+          },
+          {
+            "index": 263,
+            "name": "AssemblyBaseComponent [00Ln]"
+          },
+          {
+            "index": 262,
+            "name": "__Model__ [00Bv]"
+          },
+          {
+            "index": 261,
+            "name": "Euro Pallet [00Mn]"
+          },
+          {
+            "index": 260,
+            "name": "__Model__ [00Cv]"
+          },
+          {
+            "index": 259,
+            "name": "Block Geo [00Nn]"
+          },
+          {
+            "index": 258,
+            "name": "__Model__ [00Dv]"
+          },
+          {
+            "index": 213,
+            "name": "Lathe Comp 3 [00On]"
+          }
+        ]
+      },
+      "role": "Lathe Comp 3统一物料预制体",
+      "bounds": {
+        "min": [
+          2.889082835260345,
+          0.34999997310340447,
+          -1.0972054431218523
+        ],
+        "max": [
+          3.0690828468869276,
+          0.5499999686330561,
+          -0.9181914829464746
+        ],
+        "size": [
+          0.18000001162658252,
+          0.19999999552965164,
+          0.17901396017537774
+        ]
+      }
+    }
+  },
+  "observed_materials": 12,
+  "visual_variants": {
+    "gray": 6,
+    "brown": 6
+  },
+  "confirmed_task": {
+    "carrier_template": "Pallet",
+    "carrier_count": 3,
+    "items_per_carrier": 12,
+    "material_count": 36
+  },
+  "classification": {
+    "source": "user_confirmed",
+    "A": {
+      "visual_variant": "gray",
+      "robot": "R1",
+      "output": "C4"
+    },
+    "B": {
+      "visual_variant": "brown",
+      "robot": "R2",
+      "output": "C3"
+    }
+  },
+  "warnings": [
+    "two roller sections are distinct devices; previous three-conveyor logical mapping is obsolete",
+    "pallet parent includes workpieces; collision ownership excludes twelve material subtrees",
+    "robot rest nodes are verified but axes, limits, tool/TCP and collision model remain unvalidated",
+    "GLB rest positions place both robot bases at nearly the same mainline X; two longitudinal stations/pitch must not be inferred from base positions"
+  ],
+  "scene_bounds": {
+    "min": [
+      -2.5438521499461118,
+      -2.822683307930875e-30,
+      -2.823180918389348
+    ],
+    "max": [
+      3.869079123037376,
+      2.0396775015726556,
+      0.4000007412842538
+    ],
+    "size": [
+      6.412931272983488,
+      2.0396775015726556,
+      3.223181659673602
+    ]
+  },
+  "virtual_tool": {
+    "approved_by": "user",
+    "type": "virtual_fixed_grasp",
+    "tcp": "flange_origin",
+    "motion_and_capture_validation": "pending"
+  },
+  "sorting_stop": {
+    "approved_by": "user",
+    "candidate": "Conveyor(2) midpoint",
+    "status": "requires_motion_contact_and_braking_validation"
+  }
+}

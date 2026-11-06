@@ -1,0 +1,19 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "D1",
+  "contract_ref": "../contracts/processing_station.json",
+  "node_binding": {
+    "status": "unresolved"
+  },
+  "locations": {
+    "D1.work": {
+      "geometry_status": "pending_calibration"
+    }
+  },
+  "recipes": {
+    "deburr": {
+      "station": "D1",
+      "evidence": "request_material_recipe_matching_operation_record"
+    }
+  }
+}

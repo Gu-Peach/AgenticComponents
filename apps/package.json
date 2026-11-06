@@ -14,8 +14,9 @@
     "format": "prettier --write src tests e2e scripts README.md docs/动画接入指南.md *.json *.ts *.mjs",
     "format:check": "prettier --check src tests e2e scripts README.md docs/动画接入指南.md *.json *.ts *.mjs",
     "catalog:models": "node scripts/build-model-catalog.mjs",
-    "predev": "npm run catalog:models",
-    "prebuild": "npm run catalog:models"
+    "predev": "npm run catalog:models && npm run catalog:scenes",
+    "prebuild": "npm run catalog:models && npm run catalog:scenes",
+    "catalog:scenes": "python -B scripts/build-scene-catalog.py"
   },
   "dependencies": {
     "@react-three/drei": "^10.0.0",

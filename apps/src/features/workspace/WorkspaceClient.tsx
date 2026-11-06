@@ -1,5 +1,6 @@
 "use client";
 import { runtimeController } from "@/services/RuntimeController";
+import { sceneRuntimeController } from "@/services/SceneRuntimeController";
 import { TransformToolbar } from "./TransformToolbar";
 import dynamic from "next/dynamic";
 import {
@@ -53,6 +54,22 @@ const SceneCanvas = dynamic(() => import("@/renderer/SceneCanvas"), {
     </div>
   ),
 });
+function SceneRuntimeLabel() {
+  const scenes = useWorkspace((s) => s.project?.scenePackages);
+  const runtime = useSyncExternalStore(
+    sceneRuntimeController.subscribe,
+    () =>
+      scenes?.map((s) => sceneRuntimeController.snapshot(s.id)).find(Boolean),
+    () => undefined,
+  );
+  return (
+    <span className="mock-watermark">
+      {runtime
+        ? `场景仿真 ${runtime.status} · tick ${runtime.tick} · 其他资产未参与`
+        : "示意资产 · 非物理仿真"}
+    </span>
+  );
+}
 function Splitter({
   label,
   axis,
@@ -313,7 +330,7 @@ export default function WorkspaceClient() {
               透视视图
             </span>
             <span>选中后拖动坐标轴 · Esc 取消 · 空白拖动旋转视角</span>
-            <span className="mock-watermark">示意资产 · 非物理仿真</span>
+            <SceneRuntimeLabel />
           </div>
         </main>
         {showRight && (

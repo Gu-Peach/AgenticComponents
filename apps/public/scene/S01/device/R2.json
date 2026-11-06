@@ -1,0 +1,76 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "R2",
+  "contract_ref": "../contracts/robot_arm.json",
+  "parameters": {
+    "ik_position_tolerance_m": 0.005
+  },
+  "node_binding": {
+    "status": "bound",
+    "node": "robot(2)",
+    "model_sha256": "c68cc1ea4219a6616e13b9c036da871ac0886be3e76f8ec3202c22faffda0249"
+  },
+  "locations": {
+    "R2.home": {
+      "node": "mountplate_00Bn",
+      "frame": "flange_pose_scene_world_m",
+      "status": "rest_pose_only_clearance_unvalidated"
+    }
+  },
+  "model": {
+    "urdf": {
+      "joints": [
+        {
+          "nodeName": "Axis_1_005n",
+          "axis": [0, 1, 0],
+          "limit": null
+        },
+        {
+          "nodeName": "Axis_2_006n",
+          "axis": [0, 0, 1],
+          "limit": null
+        },
+        {
+          "nodeName": "Axis_3_007n",
+          "axis": [0, 0, 1],
+          "limit": null
+        },
+        {
+          "nodeName": "Axis_4_008n",
+          "axis": [0, 1, 0],
+          "limit": null
+        },
+        {
+          "nodeName": "Axis_5_009n",
+          "axis": [0, 0, 1],
+          "limit": null
+        },
+        {
+          "nodeName": "Axis_6_00An",
+          "axis": [0, 1, 0],
+          "limit": null
+        }
+      ]
+    },
+    "tooling": {
+      "flange_node_name": "mountplate_00Bn",
+      "tcp_local_frame": {
+        "position": [0, 0, 0],
+        "rotation_quaternion": [0, 0, 0, 1]
+      },
+      "simulation_tool": true
+    },
+    "gripper": {
+      "type": "virtual_fixed_grasp",
+      "capture_radius_m": 0.06,
+      "max_relative_speed_mps": 0.08,
+      "max_payload_param": "max_payload_kg",
+      "tool_size_m": [0.025, 0.025, 0.025],
+      "constraint_tolerance_m": 0.015,
+      "orientation_policy": "spherical_virtual_capture"
+    },
+    "calibration": {
+      "status": "pending"
+    }
+  }
+}

@@ -16,6 +16,18 @@ export const robotStepSchema = z.discriminatedUnion("kind", [
     ...target,
     subject: z.enum(["tcp", "held_material"]).optional(),
     support_clearance: z.boolean().optional(),
+    world_rotation: z
+      .tuple([
+        z.number().finite(),
+        z.number().finite(),
+        z.number().finite(),
+        z.number().finite(),
+      ])
+      .refine(
+        (q) => Math.abs(Math.hypot(...q) - 1) < 1e-5,
+        "Quaternion must be normalized",
+      )
+      .optional(),
   }),
   z.object({ kind: z.literal("grip"), materialId: z.string().min(1) }),
   z.object({ kind: z.literal("release"), materialId: z.string().min(1) }),

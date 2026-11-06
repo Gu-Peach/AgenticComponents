@@ -1,0 +1,116 @@
+{
+  "schema_version": "scene-package/0.1",
+  "id": "S11",
+  "name": "S11：四件装夹焊接与转位下料",
+  "model": "Robot Welding cell/Robot Welding cell.glb",
+  "model_sha256": "527ddb9592f311dda119b1a3006fffff540999a5bec21fee1b3ee3b5dc0bba11",
+  "process": "process.py",
+  "goal": "task-spec.json",
+  "devices": [
+    "device/R1.json",
+    "device/W1.json",
+    "device/T1.json",
+    "device/F1.json",
+    "device/M01.json",
+    "device/M02.json",
+    "device/M03.json",
+    "device/M04.json"
+  ],
+  "lifecycle": {
+    "task_specification": "task-spec.json",
+    "completion": "independent_goal_monitor",
+    "precondition_timeout_s": 30,
+    "acceptance_timeout_s": 30,
+    "execution_timeout_s": 120,
+    "stop_timeout_s": 30,
+    "collection_timeout_s": 30,
+    "finalization_timeout_s": 30,
+    "unknown_policy": "block_then_fail_on_deadline",
+    "on_failure": "stop_admissions_cancel_siblings_stop_drives_confirm_or_attention",
+    "status": "pending_runtime"
+  },
+  "iteration_contracts": {
+    "welding_batch_278": {
+      "status": "pending_provider",
+      "scope": "current material identity",
+      "entry": [
+        "previous output receipt complete",
+        "current input present"
+      ],
+      "completion": [
+        "processed material handed off at F1.work"
+      ],
+      "unknown_policy": "block_then_fail_on_deadline"
+    }
+  },
+  "collection_bindings": {
+    "items_at": {
+      "status": "pending_provider",
+      "fields": {
+        "material": "material_ref",
+        "source": "location_ref"
+      },
+      "source": "current_station_carrier_inventory",
+      "freeze": "at_repeat_activation",
+      "unknown_policy": "block_not_empty",
+      "side_effects": false,
+      "admission": {
+        "mode": "automatic_before_snapshot",
+        "requirements": [
+          "station actually stopped",
+          "carrier identity and inventory revision known"
+        ],
+        "timeout_policy": "process_contract.collection_timeout_s"
+      }
+    }
+  },
+  "environment": [
+    {
+      "kind": "external_infeed",
+      "location": "F1.work",
+      "rule": "release_next_registered_job_only_when_entry_empty_and_owner_capacity_including_reservations_available",
+      "evidence": "subject_identity_and_actual_support",
+      "implementation_status": "pending"
+    },
+    {
+      "kind": "external_takeaway",
+      "rule": "accept_only_materials_with_matching_completed_output_handoff_then_publish_departure",
+      "implementation_status": "pending"
+    }
+  ],
+  "initial": {
+    "materials": "registered_finite_inventory",
+    "material_origins": {
+      "M01": "external_input_buffer",
+      "M02": "external_input_buffer",
+      "M03": "external_input_buffer",
+      "M04": "external_input_buffer"
+    },
+    "carriers": {},
+    "devices": "idle_stopped_unclamped",
+    "robot_positions": {
+      "R1": "R1.home"
+    },
+    "angles": {
+      "T1": 0
+    },
+    "heights": {}
+  },
+  "legacy_inputs": "not_loaded_by_scene_runtime",
+  "assumptions": [
+    "同类契约统一；实例几何、配方、观测和运动适配均待接入。",
+    "物料在有限外部缓冲区登记，真实入口交接证据到达后才可进入流程；await不创建或移动物料。",
+    "目标可用检查和容量预留必须在提交时原子复核；先前await不能代替当前授权。",
+    "home须在共享运动区之外，升降和转位仍需要真实运动区清空反馈。"
+  ],
+  "motion_interlocks": {
+    "status": "pending_provider",
+    "policy": "robot picks require actual stationary source/target; turn/lift motions require relevant robots clear; exclusive drive/robot ownership; next material admission respects capacity and prior handoff"
+  },
+  "execution_defaults": {
+    "tick_hz": 60,
+    "deadline_ticks": 72000,
+    "scheduler": "fair_finite_jobs_with_atomic_resource_sets",
+    "on_failure": "stop_admissions_cancel_siblings_confirm_stops_or_attention"
+  }
+}

@@ -2,23 +2,47 @@
   "schema_version": "ac-flow-task/0.2",
   "id": "batch_goal",
   "scene_id": "S01",
-  "description": "三盘分类拆垛，两条绿色线分别出料，全部空盘出线",
+  "description": "三盘各12件：灰色由远处R1送C4，棕色由近处R2送C3，全部空盘从第二段主线出线",
   "expected": {
     "material_ids": [
-      "M01_1",
-      "M01_2",
-      "M01_3",
-      "M01_4",
-      "M02_1",
-      "M02_2",
-      "M02_3",
-      "M02_4",
-      "M03_1",
-      "M03_2",
-      "M03_3",
-      "M03_4"
+      "M01_01",
+      "M01_02",
+      "M01_03",
+      "M01_04",
+      "M01_05",
+      "M01_06",
+      "M01_07",
+      "M01_08",
+      "M01_09",
+      "M01_10",
+      "M01_11",
+      "M01_12",
+      "M02_01",
+      "M02_02",
+      "M02_03",
+      "M02_04",
+      "M02_05",
+      "M02_06",
+      "M02_07",
+      "M02_08",
+      "M02_09",
+      "M02_10",
+      "M02_11",
+      "M02_12",
+      "M03_01",
+      "M03_02",
+      "M03_03",
+      "M03_04",
+      "M03_05",
+      "M03_06",
+      "M03_07",
+      "M03_08",
+      "M03_09",
+      "M03_10",
+      "M03_11",
+      "M03_12"
     ],
-    "material_count": 12,
+    "material_count": 36,
     "pallet_ids": [
       "P01",
       "P02",
@@ -31,73 +55,217 @@
       "kind": "category_deliveries",
       "items": [
         {
-          "material": "M01_1",
+          "material": "M01_01",
           "category": "A",
-          "target": "C2.exit",
+          "target": "C4.exit",
           "handler": "R1"
         },
         {
-          "material": "M01_3",
+          "material": "M01_02",
           "category": "A",
-          "target": "C2.exit",
+          "target": "C4.exit",
           "handler": "R1"
         },
         {
-          "material": "M01_2",
+          "material": "M01_03",
           "category": "B",
           "target": "C3.exit",
           "handler": "R2"
         },
         {
-          "material": "M01_4",
+          "material": "M01_04",
+          "category": "A",
+          "target": "C4.exit",
+          "handler": "R1"
+        },
+        {
+          "material": "M01_05",
+          "category": "A",
+          "target": "C4.exit",
+          "handler": "R1"
+        },
+        {
+          "material": "M01_06",
+          "category": "A",
+          "target": "C4.exit",
+          "handler": "R1"
+        },
+        {
+          "material": "M01_07",
+          "category": "A",
+          "target": "C4.exit",
+          "handler": "R1"
+        },
+        {
+          "material": "M01_08",
           "category": "B",
           "target": "C3.exit",
           "handler": "R2"
         },
         {
-          "material": "M02_1",
-          "category": "A",
-          "target": "C2.exit",
-          "handler": "R1"
-        },
-        {
-          "material": "M02_3",
-          "category": "A",
-          "target": "C2.exit",
-          "handler": "R1"
-        },
-        {
-          "material": "M02_2",
+          "material": "M01_09",
           "category": "B",
           "target": "C3.exit",
           "handler": "R2"
         },
         {
-          "material": "M02_4",
+          "material": "M01_10",
           "category": "B",
           "target": "C3.exit",
           "handler": "R2"
         },
         {
-          "material": "M03_1",
-          "category": "A",
-          "target": "C2.exit",
-          "handler": "R1"
-        },
-        {
-          "material": "M03_3",
-          "category": "A",
-          "target": "C2.exit",
-          "handler": "R1"
-        },
-        {
-          "material": "M03_2",
+          "material": "M01_11",
           "category": "B",
           "target": "C3.exit",
           "handler": "R2"
         },
         {
-          "material": "M03_4",
+          "material": "M01_12",
+          "category": "B",
+          "target": "C3.exit",
+          "handler": "R2"
+        },
+        {
+          "material": "M02_01",
+          "category": "A",
+          "target": "C4.exit",
+          "handler": "R1"
+        },
+        {
+          "material": "M02_02",
+          "category": "A",
+          "target": "C4.exit",
+          "handler": "R1"
+        },
+        {
+          "material": "M02_03",
+          "category": "B",
+          "target": "C3.exit",
+          "handler": "R2"
+        },
+        {
+          "material": "M02_04",
+          "category": "A",
+          "target": "C4.exit",
+          "handler": "R1"
+        },
+        {
+          "material": "M02_05",
+          "category": "A",
+          "target": "C4.exit",
+          "handler": "R1"
+        },
+        {
+          "material": "M02_06",
+          "category": "A",
+          "target": "C4.exit",
+          "handler": "R1"
+        },
+        {
+          "material": "M02_07",
+          "category": "A",
+          "target": "C4.exit",
+          "handler": "R1"
+        },
+        {
+          "material": "M02_08",
+          "category": "B",
+          "target": "C3.exit",
+          "handler": "R2"
+        },
+        {
+          "material": "M02_09",
+          "category": "B",
+          "target": "C3.exit",
+          "handler": "R2"
+        },
+        {
+          "material": "M02_10",
+          "category": "B",
+          "target": "C3.exit",
+          "handler": "R2"
+        },
+        {
+          "material": "M02_11",
+          "category": "B",
+          "target": "C3.exit",
+          "handler": "R2"
+        },
+        {
+          "material": "M02_12",
+          "category": "B",
+          "target": "C3.exit",
+          "handler": "R2"
+        },
+        {
+          "material": "M03_01",
+          "category": "A",
+          "target": "C4.exit",
+          "handler": "R1"
+        },
+        {
+          "material": "M03_02",
+          "category": "A",
+          "target": "C4.exit",
+          "handler": "R1"
+        },
+        {
+          "material": "M03_03",
+          "category": "B",
+          "target": "C3.exit",
+          "handler": "R2"
+        },
+        {
+          "material": "M03_04",
+          "category": "A",
+          "target": "C4.exit",
+          "handler": "R1"
+        },
+        {
+          "material": "M03_05",
+          "category": "A",
+          "target": "C4.exit",
+          "handler": "R1"
+        },
+        {
+          "material": "M03_06",
+          "category": "A",
+          "target": "C4.exit",
+          "handler": "R1"
+        },
+        {
+          "material": "M03_07",
+          "category": "A",
+          "target": "C4.exit",
+          "handler": "R1"
+        },
+        {
+          "material": "M03_08",
+          "category": "B",
+          "target": "C3.exit",
+          "handler": "R2"
+        },
+        {
+          "material": "M03_09",
+          "category": "B",
+          "target": "C3.exit",
+          "handler": "R2"
+        },
+        {
+          "material": "M03_10",
+          "category": "B",
+          "target": "C3.exit",
+          "handler": "R2"
+        },
+        {
+          "material": "M03_11",
+          "category": "B",
+          "target": "C3.exit",
+          "handler": "R2"
+        },
+        {
+          "material": "M03_12",
           "category": "B",
           "target": "C3.exit",
           "handler": "R2"
@@ -111,7 +279,7 @@
         "P02",
         "P03"
       ],
-      "line": "C1"
+      "line": "C2"
     },
     {
       "kind": "tools_empty"

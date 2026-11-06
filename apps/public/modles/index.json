@@ -31,7 +31,7 @@
       "deviceType": "robot_arm",
       "schemaUrl": "/modles/robot_UR10/schema.json",
       "modelUrl": "/modles/robot_UR10/robot_UR10.glb",
-      "schemaSha256": "7a864a5f864002afab28032594267908989bd920eec6757d53d135af709907f1",
+      "schemaSha256": "8ea961a9700821dc9743b58af6e6fa395917718095eb2c54d0b07015bf71c9cd",
       "modelSha256": "75b9d773c59f477fcf3667ecd3f54e8c96fc3fa964b5e89a0ca6cce04215ea5a"
     }
   ]

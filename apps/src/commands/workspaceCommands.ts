@@ -133,6 +133,9 @@ export async function removeSelected() {
   useWorkspace.getState().updateProject((p) => ({
     ...p,
     instances: p.instances.filter((i) => i.instanceId !== id),
+    ...(p.scenePackages
+      ? { scenePackages: p.scenePackages.filter((s) => s.id !== id) }
+      : {}),
     ...(p.connections
       ? {
           connections: p.connections.filter(

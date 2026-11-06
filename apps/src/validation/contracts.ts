@@ -1,4 +1,5 @@
 import { spatialInterfaceSchema } from "@/contracts/spatial";
+import { sceneInstanceSchema } from "@/contracts/scene-package";
 import { z } from "zod";
 import {
   deviceTypes,
@@ -107,6 +108,7 @@ const vec = z.tuple([
   z.number().finite(),
 ]);
 export const projectSchema = z.object({
+  scenePackages: z.array(sceneInstanceSchema).optional(),
   format: z.literal("agentic-workbench"),
   version: z.literal(1),
   id: z.string(),
@@ -320,6 +322,16 @@ export function parseProject(raw: unknown) {
     project.assets.map((a) => a.id),
     "资源",
   );
+  unique(
+    [
+      ...project.instances.map((i) => i.instanceId),
+      ...(project.scenePackages ?? []).map((s) => s.id),
+    ],
+    "现场对象",
+  );
+  for (const scene of project.scenePackages ?? [])
+    if (!project.assets.some((a) => a.id === scene.assetId))
+      throw new Error("场景模型资源未登记");
   for (const def of project.definitions) {
     const errors = semanticIssues(
       def,

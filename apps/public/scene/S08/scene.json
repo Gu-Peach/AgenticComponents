@@ -1,0 +1,101 @@
+{
+  "schema_version": "scene-package/0.1",
+  "id": "S08",
+  "name": "S08：四件L形加工工位流水",
+  "model": "L-shaped Automated Machining Cell/L-shaped Automated Machining Cell.glb",
+  "model_sha256": "1849f8414051bb2da442c632674133311db24ce63ef888bf7bb88418c413b4c7",
+  "process": "process.py",
+  "goal": "task-spec.json",
+  "devices": [
+    "device/R1.json",
+    "device/C1.json",
+    "device/C2.json",
+    "device/MC1.json",
+    "device/M01.json",
+    "device/M02.json",
+    "device/M03.json",
+    "device/M04.json"
+  ],
+  "lifecycle": {
+    "task_specification": "task-spec.json",
+    "completion": "independent_goal_monitor",
+    "precondition_timeout_s": 30,
+    "acceptance_timeout_s": 30,
+    "execution_timeout_s": 120,
+    "stop_timeout_s": 30,
+    "collection_timeout_s": 30,
+    "finalization_timeout_s": 30,
+    "unknown_policy": "block_then_fail_on_deadline",
+    "on_failure": "stop_admissions_cancel_siblings_stop_drives_confirm_or_attention",
+    "status": "pending_runtime"
+  },
+  "iteration_contracts": {},
+  "collection_bindings": {
+    "items_at": {
+      "status": "pending_provider",
+      "fields": {
+        "material": "material_ref",
+        "source": "location_ref"
+      },
+      "source": "current_station_carrier_inventory",
+      "freeze": "at_repeat_activation",
+      "unknown_policy": "block_not_empty",
+      "side_effects": false,
+      "admission": {
+        "mode": "automatic_before_snapshot",
+        "requirements": [
+          "station actually stopped",
+          "carrier identity and inventory revision known"
+        ],
+        "timeout_policy": "process_contract.collection_timeout_s"
+      }
+    }
+  },
+  "environment": [
+    {
+      "kind": "external_infeed",
+      "location": "C1.entry",
+      "rule": "release_next_registered_job_only_when_entry_empty_and_owner_capacity_including_reservations_available",
+      "evidence": "subject_identity_and_actual_support",
+      "implementation_status": "pending"
+    },
+    {
+      "kind": "external_takeaway",
+      "rule": "accept_only_materials_with_matching_completed_output_handoff_then_publish_departure",
+      "implementation_status": "pending"
+    }
+  ],
+  "initial": {
+    "materials": "registered_finite_inventory",
+    "material_origins": {
+      "M01": "external_input_buffer",
+      "M02": "external_input_buffer",
+      "M03": "external_input_buffer",
+      "M04": "external_input_buffer"
+    },
+    "carriers": {},
+    "devices": "idle_stopped_unclamped",
+    "robot_positions": {
+      "R1": "R1.home"
+    },
+    "angles": {},
+    "heights": {}
+  },
+  "legacy_inputs": "not_loaded_by_scene_runtime",
+  "assumptions": [
+    "同类契约统一；实例几何、配方、观测和运动适配均待接入。",
+    "物料在有限外部缓冲区登记，真实入口交接证据到达后才可进入流程；await不创建或移动物料。",
+    "目标可用检查和容量预留必须在提交时原子复核；先前await不能代替当前授权。",
+    "home须在共享运动区之外，升降和转位仍需要真实运动区清空反馈。"
+  ],
+  "motion_interlocks": {
+    "status": "pending_provider",
+    "policy": "robot picks require actual stationary source/target; turn/lift motions require relevant robots clear; exclusive drive/robot ownership; next material admission respects capacity and prior handoff"
+  },
+  "execution_defaults": {
+    "tick_hz": 60,
+    "deadline_ticks": 72000,
+    "scheduler": "fair_finite_jobs_with_atomic_resource_sets",
+    "on_failure": "stop_admissions_cancel_siblings_confirm_stops_or_attention"
+  }
+}

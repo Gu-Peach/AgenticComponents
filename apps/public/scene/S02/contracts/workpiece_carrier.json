@@ -1,0 +1,1088 @@
+{
+  "contract_version": "1.1",
+  "schema_type": "DeviceSpec",
+  "schema_id": "standard.workpiece_carrier",
+  "device_spec_id": "standard.workpiece_carrier",
+  "version": "1.0.0",
+  "device_type": "workpiece_carrier",
+  "display_name": "物料托盘／载具：槽位、承载与被动随动",
+  "asset": {
+    "model_format": "glb",
+    "model_key": "../assmbly_depalletizing/assmbly_depalletizing.glb",
+    "sha256": "49188df3b54eefa3e0472c92f71f46c1a801875b082c581dc9c61a354cb3c19d"
+  },
+  "params_schema": {
+    "length_m": {
+      "type": "number",
+      "required": true,
+      "default": 0.8,
+      "unit": "m",
+      "min": 0.01,
+      "max": 5,
+      "mutability": "stopped_only",
+      "description": "载具外形长度"
+    },
+    "width_m": {
+      "type": "number",
+      "required": true,
+      "default": 0.45,
+      "unit": "m",
+      "min": 0.01,
+      "max": 5,
+      "mutability": "stopped_only",
+      "description": "载具外形宽度"
+    },
+    "height_m": {
+      "type": "number",
+      "required": true,
+      "default": 0.08,
+      "unit": "m",
+      "min": 0.001,
+      "max": 1,
+      "mutability": "stopped_only",
+      "description": "载具高度"
+    },
+    "empty_mass_kg": {
+      "type": "number",
+      "required": true,
+      "default": 3,
+      "unit": "kg",
+      "min": 0.001,
+      "max": 500,
+      "mutability": "stopped_only",
+      "description": "空载质量"
+    },
+    "max_load_kg": {
+      "type": "number",
+      "required": true,
+      "default": 20,
+      "unit": "kg",
+      "min": 0.01,
+      "max": 5000,
+      "mutability": "stopped_only",
+      "description": "可装载物料总质量上限"
+    },
+    "slot_rows": {
+      "type": "integer",
+      "required": true,
+      "default": 3,
+      "min": 1,
+      "max": 20,
+      "mutability": "stopped_only",
+      "description": "沿局部 Z 的槽位行数"
+    },
+    "slot_columns": {
+      "type": "integer",
+      "required": true,
+      "default": 4,
+      "min": 1,
+      "max": 20,
+      "mutability": "stopped_only",
+      "description": "沿局部 X 的槽位列数"
+    },
+    "slot_pitch_x_m": {
+      "type": "number",
+      "required": true,
+      "default": 0.2,
+      "unit": "m",
+      "min": 0.001,
+      "max": 2,
+      "mutability": "stopped_only",
+      "description": "相邻列中心距离"
+    },
+    "slot_pitch_z_m": {
+      "type": "number",
+      "required": true,
+      "default": 0.12,
+      "unit": "m",
+      "min": 0.001,
+      "max": 2,
+      "mutability": "stopped_only",
+      "description": "相邻行中心距离"
+    },
+    "edge_margin_m": {
+      "type": "number",
+      "required": true,
+      "default": 0.05,
+      "unit": "m",
+      "min": 0,
+      "max": 0.5,
+      "mutability": "stopped_only",
+      "description": "物料外廓与载具边缘最小距离"
+    },
+    "allow_partial_load": {
+      "type": "boolean",
+      "required": true,
+      "default": true,
+      "mutability": "stopped_only",
+      "description": "是否允许未满载就参与运输"
+    }
+  },
+  "interfaces": [],
+  "signal_ports": [
+    {
+      "port_id": "loaded",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "当前载具至少装有一件物料；部分装载允许时不等同于满载",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "unloaded",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "当前没有已装载物料；卸载完成的离散事件另写 Runtime 日志",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "load_count",
+      "direction": "output",
+      "value_type": "integer",
+      "plc_type": "INT",
+      "description": "当前已确认装载数量，不包含尚未完成的装载请求",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "free_slots",
+      "direction": "output",
+      "value_type": "integer",
+      "plc_type": "INT",
+      "description": "扣除实际占用和有效预留后的可用槽位数",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "slot_available",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "对查询中指定槽位的可用状态；不能用一位同时表达全部槽位",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "in_transport",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "当前正在被其他执行设备搬运或输送",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "holder_id",
+      "direction": "output",
+      "value_type": "integer",
+      "plc_type": "DINT",
+      "description": "当前搬运者或持有者 ID，由外层运行时更新",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    }
+  ],
+  "transport_behaviors": [
+    {
+      "behavior_id": "reserve_carrier_slot",
+      "display_name": "预留槽位",
+      "behavior_type": "service",
+      "schedulable": true,
+      "executor_ref": "pending.workpiece_carrier.reserve_carrier_slot",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {
+        "carrier_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "载具服务上下文登记表编号：carrier_id",
+          "min": 1,
+          "max": 2147483647
+        },
+        "slot_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "载具服务上下文登记表编号：slot_id",
+          "min": 1,
+          "max": 2147483647
+        },
+        "material_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "载具服务上下文登记表编号：material_id",
+          "min": 1,
+          "max": 2147483647
+        },
+        "owner_task_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "载具服务上下文登记表编号：owner_task_id",
+          "min": 1,
+          "max": 2147483647
+        }
+      },
+      "trigger": {
+        "description": "可选载具服务 API 与任务上下文",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "pending_model_specific_payload"
+      },
+      "input_signals": [],
+      "output_signals": [
+        "free_slots",
+        "load_count",
+        "slot_available"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "槽位有效且可用、物料类型兼容、任务身份有效",
+            "source": "observation",
+            "key": "reserve_carrier_slot.pre_1",
+            "equals": true
+          },
+          {
+            "id": "pre_2",
+            "label": "累计预留不超容量",
+            "source": "observation",
+            "key": "reserve_carrier_slot.pre_2",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "reserve_carrier_slot.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "原子建立带任务身份的槽位预留；不增加实际 load_count",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "原子建立带任务身份的槽位预留；不增加实际 load_count",
+            "source": "observation",
+            "key": "reserve_carrier_slot.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "cancel_carrier_reservation",
+      "display_name": "取消槽位预留",
+      "behavior_type": "service",
+      "schedulable": true,
+      "executor_ref": "pending.workpiece_carrier.cancel_carrier_reservation",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {
+        "carrier_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "载具服务上下文登记表编号：carrier_id",
+          "min": 1,
+          "max": 2147483647
+        },
+        "slot_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "载具服务上下文登记表编号：slot_id",
+          "min": 1,
+          "max": 2147483647
+        },
+        "material_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "载具服务上下文登记表编号：material_id",
+          "min": 1,
+          "max": 2147483647
+        },
+        "owner_task_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "载具服务上下文登记表编号：owner_task_id",
+          "min": 1,
+          "max": 2147483647
+        }
+      },
+      "trigger": {
+        "description": "可选服务 API 的取消请求",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "pending_model_specific_payload"
+      },
+      "input_signals": [],
+      "output_signals": [
+        "free_slots",
+        "slot_available"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "预留属于本任务、物料尚未交接到该槽位",
+            "source": "observation",
+            "key": "cancel_carrier_reservation.pre_1",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "cancel_carrier_reservation.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "删除指定未完成预留，不把真实装载清空",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "删除指定未完成预留，不把真实装载清空",
+            "source": "observation",
+            "key": "cancel_carrier_reservation.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "confirm_load",
+      "display_name": "确认装载",
+      "behavior_type": "service",
+      "schedulable": true,
+      "executor_ref": "pending.workpiece_carrier.confirm_load",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {
+        "carrier_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "载具服务上下文登记表编号：carrier_id",
+          "min": 1,
+          "max": 2147483647
+        },
+        "slot_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "载具服务上下文登记表编号：slot_id",
+          "min": 1,
+          "max": 2147483647
+        },
+        "material_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "载具服务上下文登记表编号：material_id",
+          "min": 1,
+          "max": 2147483647
+        },
+        "owner_task_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "载具服务上下文登记表编号：owner_task_id",
+          "min": 1,
+          "max": 2147483647
+        }
+      },
+      "trigger": {
+        "description": "搬运方的装载与交接反馈",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "pending_model_specific_payload"
+      },
+      "input_signals": [],
+      "output_signals": [
+        "free_slots",
+        "load_count",
+        "loaded",
+        "slot_available",
+        "unloaded"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "槽位可用或为本任务预留、无物料归属冲突、类型和声明载荷上限满足",
+            "source": "observation",
+            "key": "confirm_load.pre_1",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "confirm_load.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "物料实际位于槽位并完成交接，预留转占用，增加 load_count",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "物料实际位于槽位并完成交接，预留转占用，增加 load_count",
+            "source": "observation",
+            "key": "confirm_load.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "carry_material",
+      "display_name": "随动承载",
+      "behavior_type": "passive",
+      "schedulable": false,
+      "executor_ref": "pending.workpiece_carrier.carry_material",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "载具运动、支承或持有关系变化",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "signal_or_external_event"
+      },
+      "input_signals": [],
+      "output_signals": [
+        "holder_id",
+        "in_transport"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "物料已归属载具",
+            "source": "observation",
+            "key": "carry_material.pre_1",
+            "equals": true
+          },
+          {
+            "id": "pre_2",
+            "label": "或采用明确的物理支承关系",
+            "source": "observation",
+            "key": "carry_material.pre_2",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "carry_material.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "continuous",
+        "description": "按选定模型更新物料与载具相对姿态；持续过程无本体任务 done",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "按选定模型更新物料与载具相对姿态；持续过程无本体任务 done",
+            "source": "observation",
+            "key": "carry_material.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "release_material",
+      "display_name": "卸载确认",
+      "behavior_type": "passive",
+      "schedulable": false,
+      "executor_ref": "pending.workpiece_carrier.release_material",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {
+        "carrier_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "载具服务上下文登记表编号：carrier_id",
+          "min": 1,
+          "max": 2147483647
+        },
+        "slot_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "载具服务上下文登记表编号：slot_id",
+          "min": 1,
+          "max": 2147483647
+        },
+        "material_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "载具服务上下文登记表编号：material_id",
+          "min": 1,
+          "max": 2147483647
+        },
+        "owner_task_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "载具服务上下文登记表编号：owner_task_id",
+          "min": 1,
+          "max": 2147483647
+        }
+      },
+      "trigger": {
+        "description": "外部执行器取走与接收方确认",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "signal_or_external_event"
+      },
+      "input_signals": [],
+      "output_signals": [
+        "free_slots",
+        "load_count",
+        "loaded",
+        "unloaded"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "指定物料属于本载具、目标可用、任务有权限",
+            "source": "authorization",
+            "key": "release_material.pre_1",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "release_material.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "物料转移给接收方后减少 load_count 并释放槽位",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "物料转移给接收方后减少 load_count 并释放槽位",
+            "source": "observation",
+            "key": "release_material.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "be_transported_loaded",
+      "display_name": "整托搬运",
+      "behavior_type": "passive",
+      "schedulable": false,
+      "executor_ref": "pending.workpiece_carrier.be_transported_loaded",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "外部机器人、车辆或输送机执行",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "signal_or_external_event"
+      },
+      "input_signals": [],
+      "output_signals": [
+        "holder_id",
+        "in_transport"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "载具可被该执行器搬运、整托质量及外形满足限制、装载关系有效",
+            "source": "observation",
+            "key": "be_transported_loaded.pre_1",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "be_transported_loaded.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "continuous",
+        "description": "载具及装载物按一致语义移动；外部运输任务确认到达",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "载具及装载物按一致语义移动；外部运输任务确认到达",
+            "source": "observation",
+            "key": "be_transported_loaded.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "publish_carrier_state",
+      "display_name": "发布载具状态",
+      "behavior_type": "observer",
+      "schedulable": false,
+      "executor_ref": "pending.workpiece_carrier.publish_carrier_state",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "装卸、预留和运动状态变化",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "signal_or_external_event"
+      },
+      "input_signals": [],
+      "output_signals": [
+        "free_slots",
+        "holder_id",
+        "in_transport",
+        "load_count",
+        "loaded",
+        "slot_available",
+        "unloaded"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "实际占用与预留已区分",
+            "source": "observation",
+            "key": "publish_carrier_state.pre_1",
+            "equals": true
+          },
+          {
+            "id": "pre_2",
+            "label": "身份与状态版本有效",
+            "source": "observation",
+            "key": "publish_carrier_state.pre_2",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "continuous",
+        "description": "更新 loaded/unloaded、load_count、free_slots、slot_available、in_transport、holder_id",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "更新 loaded/unloaded、load_count、free_slots、slot_available、in_transport、holder_id",
+            "source": "observation",
+            "key": "publish_carrier_state.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    }
+  ],
+  "type_specific_contract": {
+    "coordinate_system": {
+      "up_axis": "Y",
+      "length_unit": "m",
+      "origin": "carrier_bottom_center"
+    },
+    "carrier_geometry": {
+      "length_param": "length_m",
+      "width_param": "width_m",
+      "height_param": "height_m"
+    },
+    "slots": {
+      "layout": "centered_grid",
+      "rows_param": "slot_rows",
+      "columns_param": "slot_columns",
+      "pitch_x_param": "slot_pitch_x_m",
+      "pitch_z_param": "slot_pitch_z_m",
+      "margin_param": "edge_margin_m",
+      "surface_height_param": "height_m",
+      "id_rule": "slot_01_to_slot_count"
+    },
+    "load_policy": {
+      "accepted_material_classes": [
+        "workpiece"
+      ],
+      "allow_partial_load_param": "allow_partial_load",
+      "max_load_param": "max_load_kg"
+    },
+    "physics": {
+      "empty_mass_param": "empty_mass_kg",
+      "load_motion_mode": "relative_constraint",
+      "supported_modes": [
+        "relative_constraint",
+        "rigid_compound",
+        "physical_support"
+      ]
+    },
+    "derived_values": {
+      "slot_count": "slot_rows * slot_columns",
+      "total_mass": "empty_mass_kg + sum(confirmed_loaded_material_masses)"
+    },
+    "movement_role": "passive_subject"
+  },
+  "runtime_contract": {
+    "observation_definitions": {
+      "reserve_carrier_slot.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "free_slots",
+          "load_count",
+          "slot_available"
+        ]
+      },
+      "reserve_carrier_slot.pre_2": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "free_slots",
+          "load_count",
+          "slot_available"
+        ]
+      },
+      "reserve_carrier_slot.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "free_slots",
+          "load_count",
+          "slot_available"
+        ]
+      },
+      "reserve_carrier_slot.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "free_slots",
+          "load_count",
+          "slot_available"
+        ]
+      },
+      "cancel_carrier_reservation.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "free_slots",
+          "slot_available"
+        ]
+      },
+      "cancel_carrier_reservation.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "free_slots",
+          "slot_available"
+        ]
+      },
+      "cancel_carrier_reservation.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "free_slots",
+          "slot_available"
+        ]
+      },
+      "confirm_load.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "free_slots",
+          "load_count",
+          "loaded",
+          "slot_available",
+          "unloaded"
+        ]
+      },
+      "confirm_load.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "free_slots",
+          "load_count",
+          "loaded",
+          "slot_available",
+          "unloaded"
+        ]
+      },
+      "confirm_load.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "free_slots",
+          "load_count",
+          "loaded",
+          "slot_available",
+          "unloaded"
+        ]
+      },
+      "carry_material.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "holder_id",
+          "in_transport"
+        ]
+      },
+      "carry_material.pre_2": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "holder_id",
+          "in_transport"
+        ]
+      },
+      "carry_material.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "holder_id",
+          "in_transport"
+        ]
+      },
+      "carry_material.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "holder_id",
+          "in_transport"
+        ]
+      },
+      "release_material.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "free_slots",
+          "load_count",
+          "loaded",
+          "unloaded"
+        ]
+      },
+      "release_material.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "free_slots",
+          "load_count",
+          "loaded",
+          "unloaded"
+        ]
+      },
+      "be_transported_loaded.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "holder_id",
+          "in_transport"
+        ]
+      },
+      "be_transported_loaded.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "holder_id",
+          "in_transport"
+        ]
+      },
+      "be_transported_loaded.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "holder_id",
+          "in_transport"
+        ]
+      },
+      "publish_carrier_state.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "free_slots",
+          "holder_id",
+          "in_transport",
+          "load_count",
+          "loaded",
+          "slot_available",
+          "unloaded"
+        ]
+      },
+      "publish_carrier_state.pre_2": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "free_slots",
+          "holder_id",
+          "in_transport",
+          "load_count",
+          "loaded",
+          "slot_available",
+          "unloaded"
+        ]
+      },
+      "publish_carrier_state.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "free_slots",
+          "holder_id",
+          "in_transport",
+          "load_count",
+          "loaded",
+          "slot_available",
+          "unloaded"
+        ]
+      },
+      "publish_carrier_state.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "free_slots",
+          "holder_id",
+          "in_transport",
+          "load_count",
+          "loaded",
+          "slot_available",
+          "unloaded"
+        ]
+      }
+    },
+    "authorization_definitions": {
+      "release_material.pre_1": {
+        "value_type": "boolean",
+        "provider": "authorization_service",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "free_slots",
+          "load_count",
+          "loaded",
+          "unloaded"
+        ]
+      }
+    }
+  },
+  "runtime_execution_contract": {
+    "signal_management": {
+      "owner": "simulation_engine",
+      "status": "pending_engine",
+      "namespace": "instance_id/port_id",
+      "definition_source": "signal_ports",
+      "spatial_binding": false,
+      "write_policy": "single_writer_per_input",
+      "plc_mapping": "instance_bindings",
+      "sampling": "simulation_step_snapshot",
+      "unknown_policy": "invalid_until_provider_ready"
+    },
+    "status": "pending_adapter",
+    "protocol": {
+      "basis": "schema.md公共请求协议",
+      "acceptance": "same request identity and frozen parameters",
+      "completion": "matching result_id plus observed completion checks",
+      "single_command_entry": true
+    },
+    "payload_binding_status": "requires_explicit_model_adapter",
+    "calibration_required": true,
+    "real_execution_available": false,
+    "raw_api_and_plc_simultaneous_writers": false,
+    "signal_host": "carrier_observer",
+    "service_host": "optional_carrier_service"
+  }
+}

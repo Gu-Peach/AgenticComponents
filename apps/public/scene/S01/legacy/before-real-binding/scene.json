@@ -1,0 +1,153 @@
+{
+  "schema_version": "scene-package/0.1",
+  "id": "S01",
+  "name": "S01：三托盘分类拆垛",
+  "model": "assembly_order_index/assembly_order_index.glb",
+  "model_sha256": "c68cc1ea4219a6616e13b9c036da871ac0886be3e76f8ec3202c22faffda0249",
+  "process": "process.py",
+  "goal": "task-spec.json",
+  "devices": [
+    "device/R1.json",
+    "device/R2.json",
+    "device/C1.json",
+    "device/C2.json",
+    "device/C3.json",
+    "device/P01.json",
+    "device/M01_1.json",
+    "device/M01_2.json",
+    "device/M01_3.json",
+    "device/M01_4.json",
+    "device/P02.json",
+    "device/M02_1.json",
+    "device/M02_2.json",
+    "device/M02_3.json",
+    "device/M02_4.json",
+    "device/P03.json",
+    "device/M03_1.json",
+    "device/M03_2.json",
+    "device/M03_3.json",
+    "device/M03_4.json"
+  ],
+  "lifecycle": {
+    "task_specification": "task-spec.json",
+    "completion": "independent_goal_monitor",
+    "precondition_timeout_s": 30,
+    "acceptance_timeout_s": 30,
+    "execution_timeout_s": 120,
+    "stop_timeout_s": 30,
+    "collection_timeout_s": 30,
+    "finalization_timeout_s": 30,
+    "unknown_policy": "block_then_fail_on_deadline",
+    "on_failure": "stop_admissions_cancel_siblings_stop_drives_confirm_or_attention",
+    "status": "pending_runtime"
+  },
+  "iteration_contracts": {},
+  "collection_bindings": {
+    "items_at": {
+      "status": "pending_provider",
+      "fields": {
+        "material": "material_ref",
+        "source": "location_ref"
+      },
+      "source": "current_station_carrier_inventory",
+      "freeze": "at_repeat_activation",
+      "unknown_policy": "block_not_empty",
+      "side_effects": false,
+      "admission": {
+        "mode": "automatic_before_snapshot",
+        "requirements": [
+          "station actually stopped",
+          "carrier identity and inventory revision known"
+        ],
+        "timeout_policy": "process_contract.collection_timeout_s"
+      }
+    }
+  },
+  "environment": [
+    {
+      "kind": "external_loaded_carrier_infeed",
+      "rule": "admit_next_manifest_pallet_only_when_entry_clear_and_line_stopped; at_most_one_per_cycle",
+      "implementation_status": "pending"
+    },
+    {
+      "kind": "external_takeaway",
+      "rule": "confirm_matching_material_at_stopped_green_output_then_remove",
+      "implementation_status": "pending"
+    },
+    {
+      "kind": "external_empty_carrier_takeaway",
+      "rule": "confirm_empty_carrier_at_stopped_C1_exit_then_remove_before_next_advance",
+      "implementation_status": "pending"
+    }
+  ],
+  "initial": {
+    "materials": "registered_finite_inventory",
+    "material_origins": {
+      "M01_1": "P01.slot1",
+      "M01_2": "P01.slot2",
+      "M01_3": "P01.slot3",
+      "M01_4": "P01.slot4",
+      "M02_1": "P02.slot1",
+      "M02_2": "P02.slot2",
+      "M02_3": "P02.slot3",
+      "M02_4": "P02.slot4",
+      "M03_1": "P03.slot1",
+      "M03_2": "P03.slot2",
+      "M03_3": "P03.slot3",
+      "M03_4": "P03.slot4"
+    },
+    "carriers": {
+      "P01": {
+        "location": "carrier_infeed",
+        "contents": [
+          "M01_1",
+          "M01_2",
+          "M01_3",
+          "M01_4"
+        ]
+      },
+      "P02": {
+        "location": "carrier_infeed",
+        "contents": [
+          "M02_1",
+          "M02_2",
+          "M02_3",
+          "M02_4"
+        ]
+      },
+      "P03": {
+        "location": "carrier_infeed",
+        "contents": [
+          "M03_1",
+          "M03_2",
+          "M03_3",
+          "M03_4"
+        ]
+      }
+    },
+    "devices": "idle_stopped_unclamped",
+    "robot_positions": {
+      "R1": "R1.home",
+      "R2": "R2.home"
+    },
+    "angles": {},
+    "heights": {}
+  },
+  "legacy_inputs": "not_loaded_by_scene_runtime",
+  "assumptions": [
+    "物流方向由用户确认：载料托盘从主滚筒线左端进入，两机械臂取料并送入各自绿色出料线，空盘从主线末端离开。",
+    "A/B为实验物料类别，分类动作及目标出料线由DSL声明；batch只保存物料及初始装载。",
+    "R1/R2分别绑定图中两机械臂；C2/C3分别为其对应的绿色出料线。准确节点和可达范围仍待标定。",
+    "托盘槽位随载具移动，抓取改变实际库存后才确认拆垛；不能将托盘支承丢失或旧完成信号当成功。",
+    "输入、下游接收、空盘移出均需真实关联证据；未知观测不默认满足。",
+    "位置顺序与机械臂可达工位是场景物理事实，具体停止步骤和类别分流由process.py声明。",
+    "共同分度设计：两工位可同时停靠托盘，只有两台机械臂完成并退位后才统一前进；节距和过渡容量仍待验证。"
+  ],
+  "motion_interlocks": {},
+  "execution_defaults": {
+    "tick_hz": 60,
+    "deadline_ticks": 72000,
+    "scheduler": "declarative_control_tree_with_atomic_authorization",
+    "on_failure": "stop_admissions_cancel_siblings_confirm_stops_or_attention"
+  }
+}

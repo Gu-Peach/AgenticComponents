@@ -1,0 +1,2232 @@
+{
+  "contract_version": "1.1",
+  "schema_type": "DeviceSpec",
+  "schema_id": "standard.conveyor",
+  "device_spec_id": "standard.conveyor",
+  "version": "1.1.0",
+  "device_type": "conveyor",
+  "display_name": "传送带：连续输送与可选分区积放",
+  "asset": {
+    "model_format": "glb",
+    "model_key": "../Robot Palletizing Workstation/Robot Palletizing Workstation.glb",
+    "sha256": "29c4798f4385f29a5ca10c576ec2897f8d549ded504472f35dcd9d1bb9766f9f"
+  },
+  "params_schema": {
+    "speed_mps": {
+      "type": "number",
+      "required": true,
+      "default": 0.4,
+      "unit": "m/s",
+      "min": -2,
+      "max": 2,
+      "mutability": "runtime_setpoint",
+      "description": "有符号目标输送速度；反向还需模式许可"
+    },
+    "length_m": {
+      "type": "number",
+      "required": true,
+      "default": 1.6,
+      "unit": "m",
+      "min": 0.1,
+      "max": 50,
+      "mutability": "stopped_only",
+      "description": "输送面长度"
+    },
+    "width_m": {
+      "type": "number",
+      "required": true,
+      "default": 0.35,
+      "unit": "m",
+      "min": 0.05,
+      "max": 5,
+      "mutability": "stopped_only",
+      "description": "输送面宽度"
+    },
+    "surface_height_m": {
+      "type": "number",
+      "required": true,
+      "default": 0.45,
+      "unit": "m",
+      "min": 0,
+      "max": 10,
+      "mutability": "stopped_only",
+      "description": "输送面相对设备基准的高度"
+    },
+    "transport_mode": {
+      "type": "enum",
+      "required": true,
+      "default": "continuous",
+      "options": [
+        "continuous",
+        "zoned"
+      ],
+      "mutability": "stopped_only",
+      "description": "整体驱动或独立分区驱动"
+    },
+    "allow_reverse": {
+      "type": "boolean",
+      "required": true,
+      "default": false,
+      "mutability": "stopped_only",
+      "description": "是否允许反向；还需执行器支持"
+    },
+    "capacity": {
+      "type": "integer",
+      "required": true,
+      "default": 3,
+      "min": 1,
+      "max": 100,
+      "mutability": "stopped_only",
+      "description": "允许的同时承载件数，含预留时不得超限"
+    },
+    "resume_threshold": {
+      "type": "integer",
+      "required": true,
+      "default": 2,
+      "min": 0,
+      "max": 99,
+      "mutability": "stopped_only",
+      "description": "积压解除后的恢复阈值"
+    },
+    "stop_point_count": {
+      "type": "integer",
+      "required": false,
+      "default": 4,
+      "min": 1,
+      "max": 100,
+      "mutability": "stopped_only",
+      "description": "分区数量；普通模式不据此获得分区驱动能力",
+      "required_when": {
+        "parameter": "transport_mode",
+        "equals": "zoned"
+      }
+    },
+    "accel_time_s": {
+      "type": "number",
+      "required": true,
+      "default": 0.5,
+      "unit": "s",
+      "min": 0,
+      "max": 30,
+      "mutability": "stopped_only",
+      "description": "从零到额定速度的加速时间；0表示理想瞬时切换"
+    },
+    "decel_time_s": {
+      "type": "number",
+      "required": true,
+      "default": 0.5,
+      "unit": "s",
+      "min": 0,
+      "max": 30,
+      "mutability": "stopped_only",
+      "description": "从额定速度到零的减速时间"
+    },
+    "release_gap_s": {
+      "type": "number",
+      "required": false,
+      "default": 0,
+      "unit": "s",
+      "min": 0,
+      "max": 60,
+      "mutability": "stopped_only",
+      "description": "相邻物料出口放行的最小间隔",
+      "required_when": {
+        "parameter": "transport_mode",
+        "equals": "zoned"
+      }
+    },
+    "encoder_pitch_m": {
+      "type": "number",
+      "required": false,
+      "default": 0.0254,
+      "unit": "m",
+      "min": 0.0001,
+      "max": 10,
+      "mutability": "stopped_only",
+      "description": "每编码脉冲对应的表面行程"
+    }
+  },
+  "interfaces": [
+    {
+      "interface_id": "end_negative_x",
+      "name": "负向端点",
+      "local_frame_pending": true,
+      "capabilities": {
+        "snap": {
+          "role": "conveyor_end",
+          "accepts": [
+            "conveyor_end"
+          ]
+        }
+      }
+    },
+    {
+      "interface_id": "end_positive_x",
+      "name": "正向端点",
+      "local_frame_pending": true,
+      "capabilities": {
+        "snap": {
+          "role": "conveyor_end",
+          "accepts": [
+            "conveyor_end"
+          ]
+        }
+      }
+    }
+  ],
+  "signal_ports": [
+    {
+      "port_id": "runTag",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "持续运行许可；FALSE 将目标速度置零，实际速度按减速曲线下降",
+      "signal_role": "continuous_command",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "target_distance",
+      "direction": "input",
+      "value_type": "number",
+      "plc_type": "REAL",
+      "unit": "m",
+      "description": "可选定距任务目标表面行程，接受时冻结；不是实际物料位置",
+      "signal_role": "request_parameter",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "speedTag",
+      "direction": "input",
+      "value_type": "number",
+      "plc_type": "REAL",
+      "description": "目标表面速度，m/s；负值表示反向，是否允许反向由设备配置限定",
+      "signal_role": "continuous_command",
+      "retention": "sampled_state",
+      "unit": "m/s"
+    },
+    {
+      "port_id": "speedFpmTag",
+      "direction": "input",
+      "value_type": "number",
+      "plc_type": "REAL",
+      "description": "英制速度设定；仅在 FPM 模式下生效",
+      "signal_role": "continuous_command",
+      "retention": "sampled_state",
+      "unit": "ft/min"
+    },
+    {
+      "port_id": "release_waiting_material",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "保留手稿改型；作为末端持续放行许可，TRUE 不表示每次扫描都创建一条运输任务",
+      "signal_role": "continuous_command",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "runningTag",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "实际表面速度超过静止容差；减速过程中仍可能为 TRUE",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "actual_speed",
+      "direction": "output",
+      "value_type": "number",
+      "plc_type": "REAL",
+      "description": "实际表面速度，m/s；区别于目标速度",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state",
+      "unit": "m/s"
+    },
+    {
+      "port_id": "velocityTag",
+      "direction": "output",
+      "value_type": "number",
+      "plc_type": "REAL",
+      "description": "Open-Industry 风格的比例速度反馈，需声明标定关系；不默认等于 m/s",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "pulseTag",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "表面每行进指定距离产生编码脉冲；采样分辨率应满足配置",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "encoderTag",
+      "direction": "output",
+      "value_type": "number",
+      "plc_type": "REAL",
+      "description": "累计有符号表面行程，m；不直接等于物料位移",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state",
+      "unit": "m"
+    },
+    {
+      "port_id": "blocked",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "存在因下一分区／下游不可接收而等待的物料；空带停机不算阻塞",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "part_ready",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "出口交接区域当前有待交接物料；物料交接后清除",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "capacity_available",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "当前入口及容量允许接收；改为持续状态，上层可另发“容量恢复”事件",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "done",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "本次有限任务满足对应行为的完成契约；关联result_id，连续空转没有全局完成",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "request_id",
+      "direction": "input",
+      "value_type": "integer",
+      "plc_type": "DINT",
+      "description": "schema.md公共请求协议：request_id",
+      "signal_role": "request_parameter",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "execute",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "schema.md公共请求协议：execute",
+      "signal_role": "request_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "reset",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "schema.md公共请求协议：reset",
+      "signal_role": "request_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "accepted",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "schema.md公共请求协议：accepted",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "busy",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "schema.md公共请求协议：busy",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "result_id",
+      "direction": "output",
+      "value_type": "integer",
+      "plc_type": "DINT",
+      "description": "schema.md公共请求协议：result_id",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "error",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "schema.md公共请求协议：error",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "error_code",
+      "direction": "output",
+      "value_type": "integer",
+      "plc_type": "INT",
+      "description": "schema.md公共请求协议：error_code",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request"
+    }
+  ],
+  "transport_behaviors": [
+    {
+      "behavior_id": "accept_material",
+      "display_name": "接收物料",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "pending.conveyor.accept_material",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {
+        "subject_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "场景载荷登记表编号；与Conveyor_aankws现有契约一致。",
+          "min": 1,
+          "max": 2147483647
+        }
+      },
+      "trigger": {
+        "description": "入料交接任务或接收授权",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "pending_model_specific_payload"
+      },
+      "input_signals": [
+        "execute",
+        "request_id"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "capacity_available",
+        "done",
+        "error",
+        "error_code",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "入口可用、容量含预留仍有余量、物料类型和尺寸兼容、交接授权有效",
+            "source": "authorization",
+            "key": "accept_material.pre_1",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "accept_material.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "物料确实进入入口区，提交归属与占用",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "物料确实进入入口区，提交归属与占用",
+            "source": "observation",
+            "key": "accept_material.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "advance_to_next_stop_point",
+      "display_name": "区间推进",
+      "behavior_type": "internal",
+      "schedulable": false,
+      "executor_ref": "pending.conveyor.advance_to_next_stop_point",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "本区检测到物料或下一分区释放",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "signal_or_external_event"
+      },
+      "input_signals": [],
+      "output_signals": [],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "已启用分区模式",
+            "source": "observation",
+            "key": "advance_to_next_stop_point.pre_1",
+            "equals": true
+          },
+          {
+            "id": "pre_2",
+            "label": "本区有料、下一区可接收、对应驱动许可有效",
+            "source": "observation",
+            "key": "advance_to_next_stop_point.pre_2",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "advance_to_next_stop_point.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "continuous",
+        "description": "观测到物料进入下一检测区后更新两区占用；每次迁移可发事件",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "观测到物料进入下一检测区后更新两区占用；每次迁移可发事件",
+            "source": "observation",
+            "key": "advance_to_next_stop_point.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": [
+          {
+            "parameter": "transport_mode",
+            "equals": "zoned"
+          }
+        ]
+      }
+    },
+    {
+      "behavior_id": "move_by_distance",
+      "display_name": "定距输送并停稳",
+      "behavior_type": "composite",
+      "schedulable": true,
+      "executor_ref": "pending.conveyor.move_by_distance",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {
+        "distance_m": {
+          "type": "number",
+          "required": true,
+          "unit": "m",
+          "mutability": "stopped_only",
+          "min": 0.0001,
+          "max": 50,
+          "description": "本次目标表面行程，必须有有效标定"
+        }
+      },
+      "trigger": {
+        "description": "同一任务网关写target_distance、request_id及execute，接受后冻结目标及载荷快照",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "pending_model_specific_payload"
+      },
+      "input_signals": [
+        "target_distance",
+        "execute",
+        "request_id",
+        "runTag",
+        "speedTag"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "error_code",
+        "result_id",
+        "encoderTag",
+        "actual_speed",
+        "runningTag"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "ready",
+            "label": "整带连续模式、定距与位置观测模块有效，距离速度合法，载荷快照及目标标定有效，设备实际停稳",
+            "source": "observation",
+            "key": "move_by_distance.ready",
+            "equals": true
+          },
+          {
+            "id": "motion_authorized",
+            "label": "相关机械臂退位、夹具已空、入口供盘或排空状态成立、出口清空且参与载荷与目标空间获准",
+            "source": "authorization",
+            "key": "move_by_distance.motion_authorized",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "本次请求及冻结载荷身份有效，运动区互锁、支承与允许载荷持续成立",
+            "source": "observation",
+            "key": "move_by_distance.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "本次请求的表面行程达到目标距离且实际停稳，参与载荷的身份、实际目标位置与支承均确认；仅编码器到数不算完成",
+        "checks": [
+          {
+            "id": "completion",
+            "label": "本次请求的表面行程达到目标距离且实际停稳，参与载荷的身份、实际目标位置与支承均确认；仅编码器到数不算完成",
+            "source": "observation",
+            "key": "move_by_distance.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": [
+          {
+            "parameter": "transport_mode",
+            "equals": "continuous"
+          }
+        ]
+      }
+    },
+    {
+      "behavior_id": "transport_to_exit",
+      "display_name": "运输至出口",
+      "behavior_type": "composite",
+      "schedulable": true,
+      "executor_ref": "pending.conveyor.transport_to_exit",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {
+        "subject_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "场景载荷登记表编号；与Conveyor_aankws现有契约一致。",
+          "min": 1,
+          "max": 2147483647
+        }
+      },
+      "trigger": {
+        "description": "指定物料的运输任务",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "pending_model_specific_payload"
+      },
+      "input_signals": [
+        "execute",
+        "request_id",
+        "runTag",
+        "speedTag"
+      ],
+      "output_signals": [
+        "accepted",
+        "actual_speed",
+        "busy",
+        "done",
+        "error",
+        "error_code",
+        "part_ready",
+        "result_id",
+        "runningTag"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "目标物料已被接收、方向及路径有效、所经分区允许推进",
+            "source": "observation",
+            "key": "transport_to_exit.pre_1",
+            "equals": true
+          },
+          {
+            "id": "pre_2",
+            "label": "遇阻塞等待",
+            "source": "observation",
+            "key": "transport_to_exit.pre_2",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "transport_to_exit.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "指定物料到达出口交接区并发布 part_ready；不等同于已交给下游",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "指定物料到达出口交接区并发布 part_ready；不等同于已交给下游",
+            "source": "observation",
+            "key": "transport_to_exit.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "release_material",
+      "display_name": "出口交接",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "pending.conveyor.release_material",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {
+        "subject_id": {
+          "type": "integer",
+          "required": true,
+          "mutability": "stopped_only",
+          "description": "场景载荷登记表编号；与Conveyor_aankws现有契约一致。",
+          "min": 1,
+          "max": 2147483647
+        }
+      },
+      "trigger": {
+        "description": "release_waiting_material 持续许可及交接任务",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "pending_model_specific_payload"
+      },
+      "input_signals": [
+        "execute",
+        "release_waiting_material",
+        "request_id"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "capacity_available",
+        "done",
+        "error",
+        "error_code",
+        "part_ready",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "出口有指定物料、许可有效、下游容量已预留、放行间隔满足",
+            "source": "observation",
+            "key": "release_material.pre_1",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "release_material.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "物料离开本设备且下游确认接收，释放本设备占用",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "物料离开本设备且下游确认接收，释放本设备占用",
+            "source": "observation",
+            "key": "release_material.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "start_conveying",
+      "display_name": "连续运行",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "pending.conveyor.start_conveying",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "runTag=TRUE",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "signal_or_external_event"
+      },
+      "input_signals": [
+        "runTag",
+        "speedTag"
+      ],
+      "output_signals": [
+        "actual_speed",
+        "done",
+        "runningTag"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "运行许可和速度设定有效",
+            "source": "observation",
+            "key": "start_conveying.pre_1",
+            "equals": true
+          },
+          {
+            "id": "pre_2",
+            "label": "允许空转",
+            "source": "observation",
+            "key": "start_conveying.pre_2",
+            "equals": true
+          },
+          {
+            "id": "pre_3",
+            "label": "启用积放时服从各区门控",
+            "source": "observation",
+            "key": "start_conveying.pre_3",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "start_conveying.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "continuous",
+        "description": "持续发布实际速度；无单次 done，停止由 stop_conveying 判断",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "持续发布实际速度；无单次 done，停止由 stop_conveying 判断",
+            "source": "observation",
+            "key": "start_conveying.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "set_speed",
+      "display_name": "调整速度",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "pending.conveyor.set_speed",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "选定单位的速度设定变化",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "signal_or_external_event"
+      },
+      "input_signals": [
+        "speedTag"
+      ],
+      "output_signals": [
+        "accepted",
+        "actual_speed",
+        "busy",
+        "done",
+        "error",
+        "error_code",
+        "result_id",
+        "runningTag"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "只有一个速度来源、数值有限且在允许范围、运行模式有效",
+            "source": "observation",
+            "key": "set_speed.pre_1",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "set_speed.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "实际速度在允许误差内达到新设定；受阻或禁用时不伪报到速",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "实际速度在允许误差内达到新设定；受阻或禁用时不伪报到速",
+            "source": "observation",
+            "key": "set_speed.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "stop_conveying",
+      "display_name": "受控停止",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "pending.conveyor.stop_conveying",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "runTag=FALSE 或目标速度为零",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "signal_or_external_event"
+      },
+      "input_signals": [
+        "runTag",
+        "speedTag"
+      ],
+      "output_signals": [
+        "accepted",
+        "actual_speed",
+        "busy",
+        "done",
+        "error",
+        "error_code",
+        "result_id",
+        "runningTag"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "适用于运行中或已静止状态",
+            "source": "observation",
+            "key": "stop_conveying.pre_1",
+            "equals": true
+          },
+          {
+            "id": "pre_2",
+            "label": "按配置执行减速",
+            "source": "observation",
+            "key": "stop_conveying.pre_2",
+            "equals": true
+          },
+          {
+            "id": "pre_3",
+            "label": "保留仍在带上的物料",
+            "source": "observation",
+            "key": "stop_conveying.pre_3",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "stop_conveying.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "实际表面速度低于静止容差；已静止可幂等完成",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "实际表面速度低于静止容差；已静止可幂等完成",
+            "source": "observation",
+            "key": "stop_conveying.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "reverse_conveying",
+      "display_name": "反转",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "pending.conveyor.reverse_conveying",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "选定速度设定改变符号",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "signal_or_external_event"
+      },
+      "input_signals": [
+        "runTag",
+        "speedTag"
+      ],
+      "output_signals": [
+        "accepted",
+        "actual_speed",
+        "busy",
+        "done",
+        "error",
+        "error_code",
+        "result_id",
+        "runningTag"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "设备和工艺允许反向",
+            "source": "observation",
+            "key": "reverse_conveying.pre_1",
+            "equals": true
+          },
+          {
+            "id": "pre_2",
+            "label": "若为积放模式",
+            "source": "observation",
+            "key": "reverse_conveying.pre_2",
+            "equals": true
+          },
+          {
+            "id": "pre_3",
+            "label": "其规则必须支持反向",
+            "source": "observation",
+            "key": "reverse_conveying.pre_3",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "reverse_conveying.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "先减速至零，再达到反向速度；第一版单向积放拒绝该请求",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "先减速至零，再达到反向速度；第一版单向积放拒绝该请求",
+            "source": "observation",
+            "key": "reverse_conveying.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": [
+          {
+            "parameter": "allow_reverse",
+            "equals": true
+          }
+        ]
+      }
+    },
+    {
+      "behavior_id": "zone_accumulation",
+      "display_name": "分区积放",
+      "behavior_type": "internal",
+      "schedulable": false,
+      "executor_ref": "pending.conveyor.zone_accumulation",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "分区检测或下游状态变化",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "signal_or_external_event"
+      },
+      "input_signals": [],
+      "output_signals": [
+        "blocked",
+        "capacity_available",
+        "done",
+        "runningTag"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "启用独立分区驱动及检测",
+            "source": "observation",
+            "key": "zone_accumulation.pre_1",
+            "equals": true
+          },
+          {
+            "id": "pre_2",
+            "label": "产品尺寸与区间配置兼容",
+            "source": "observation",
+            "key": "zone_accumulation.pre_2",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "zone_accumulation.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "continuous",
+        "description": "按占用与下区状态持续更新各区速度和 blocked，无全局 done",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "按占用与下区状态持续更新各区速度和 blocked，无全局 done",
+            "source": "observation",
+            "key": "zone_accumulation.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": [
+          {
+            "parameter": "transport_mode",
+            "equals": "zoned"
+          }
+        ]
+      }
+    },
+    {
+      "behavior_id": "meter_release",
+      "display_name": "出口间隔放行",
+      "behavior_type": "internal",
+      "schedulable": false,
+      "executor_ref": "pending.conveyor.meter_release",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "出口检测、许可或仿真计时变化",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "signal_or_external_event"
+      },
+      "input_signals": [],
+      "output_signals": [
+        "blocked",
+        "part_ready"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "启用间隔放行",
+            "source": "observation",
+            "key": "meter_release.pre_1",
+            "equals": true
+          },
+          {
+            "id": "pre_2",
+            "label": "有待放物料、放行许可有效、距上一件离开已达到间隔",
+            "source": "observation",
+            "key": "meter_release.pre_2",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "meter_release.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "continuous",
+        "description": "允许一件离开后更新放行计时；release_material 负责最终交接",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "允许一件离开后更新放行计时；release_material 负责最终交接",
+            "source": "observation",
+            "key": "meter_release.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": [
+          {
+            "parameter": "transport_mode",
+            "equals": "zoned"
+          }
+        ]
+      }
+    },
+    {
+      "behavior_id": "publish_drive_feedback",
+      "display_name": "发布驱动反馈",
+      "behavior_type": "observer",
+      "schedulable": false,
+      "executor_ref": "pending.conveyor.publish_drive_feedback",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "每个仿真步",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "signal_or_external_event"
+      },
+      "input_signals": [],
+      "output_signals": [
+        "accepted",
+        "actual_speed",
+        "blocked",
+        "busy",
+        "capacity_available",
+        "done",
+        "encoderTag",
+        "error",
+        "error_code",
+        "part_ready",
+        "pulseTag",
+        "result_id",
+        "runningTag",
+        "velocityTag"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "反馈字段已配置",
+            "source": "observation",
+            "key": "publish_drive_feedback.pre_1",
+            "equals": true
+          },
+          {
+            "id": "pre_2",
+            "label": "由实际表面速度及仿真时间计算",
+            "source": "observation",
+            "key": "publish_drive_feedback.pre_2",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "continuous",
+        "description": "更新 runningTag、actual_speed 和启用的速度／编码反馈，无动作 done",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "更新 runningTag、actual_speed 和启用的速度／编码反馈，无动作 done",
+            "source": "observation",
+            "key": "publish_drive_feedback.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    }
+  ],
+  "type_specific_contract": {
+    "coordinate_system": {
+      "handedness": "right",
+      "up_axis": "Y",
+      "length_unit": "m",
+      "angle_unit": "rad",
+      "origin": "authored_device_root"
+    },
+    "conveyor_geometry": {
+      "length_param": "length_m",
+      "width_param": "width_m",
+      "surface_height_param": "surface_height_m"
+    },
+    "motion_model": {
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "axis_frame": "device_local",
+      "speed_param": "speed_mps",
+      "accel_time_param": "accel_time_s",
+      "decel_time_param": "decel_time_s",
+      "reverse_permission_param": "allow_reverse"
+    },
+    "capacity_model": {
+      "capacity_param": "capacity",
+      "resume_threshold_param": "resume_threshold",
+      "counting_unit": "material_or_declared_unit_load"
+    },
+    "zone_model": {
+      "enabled_when": {
+        "parameter": "transport_mode",
+        "equals": "zoned"
+      },
+      "count_param": "stop_point_count",
+      "layout": "along_conveying_surface",
+      "drive_requirement": "independently_driven_sections",
+      "one_load_per_zone": true,
+      "surface_ref": "main_belt"
+    },
+    "release_model": {
+      "gap_param": "release_gap_s",
+      "clock": "simulation_time"
+    },
+    "encoder_model": {
+      "enabled_if_parameter_present": "encoder_pitch_m",
+      "pitch_param": "encoder_pitch_m",
+      "measurement": "surface_travel"
+    },
+    "conveying_surface": {
+      "surface_id": "main_belt",
+      "node_binding_role": "upper_belt_surface",
+      "coordinate_space": "device_local",
+      "flow_axis": [
+        1,
+        0,
+        0
+      ],
+      "normal": [
+        0,
+        1,
+        0
+      ],
+      "geometry": {
+        "length_param": "length_m",
+        "width_param": "width_m",
+        "height_param": "surface_height_m",
+        "calibration_status": "pending",
+        "collision_shape": "box"
+      },
+      "contact": {
+        "model": "moving_surface_contact",
+        "friction_status": "pending",
+        "material_body_requirement": "dynamic_rigid_body",
+        "contact_requirement": "valid_support_contact",
+        "collision_response": "physics_solver"
+      },
+      "drive": {
+        "run_signal": "runTag",
+        "speed_signal": "speedTag",
+        "actual_speed_signal": "actual_speed",
+        "speed_param": "speed_mps",
+        "accel_time_param": "accel_time_s",
+        "decel_time_param": "decel_time_s"
+      },
+      "material_motion": "physics_contact_only",
+      "implementation_status": "pending_engine"
+    },
+    "observation_regions": [
+      {
+        "region_id": "entry_zone",
+        "surface_ref": "main_belt",
+        "purpose": "entry_availability",
+        "geometry_status": "pending",
+        "observation_keys": [
+          "entry_region_clear"
+        ]
+      },
+      {
+        "region_id": "exit_zone",
+        "surface_ref": "main_belt",
+        "purpose": "exit_arrival",
+        "geometry_status": "pending",
+        "observation_keys": [
+          "subject_at_exit",
+          "exit_arrival_confirmed"
+        ]
+      },
+      {
+        "region_id": "support_zone",
+        "surface_ref": "main_belt",
+        "purpose": "surface_occupancy",
+        "geometry_status": "pending",
+        "observation_keys": [
+          "subject_on_conveyor"
+        ]
+      }
+    ],
+    "node_bindings": [
+      {
+        "role": "upper_belt_surface",
+        "status": "requires_instance_mapping"
+      }
+    ]
+  },
+  "runtime_contract": {
+    "observation_definitions": {
+      "accept_material.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "execute",
+          "request_id",
+          "accepted",
+          "busy",
+          "capacity_available",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ]
+      },
+      "accept_material.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "execute",
+          "request_id",
+          "accepted",
+          "busy",
+          "capacity_available",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ]
+      },
+      "advance_to_next_stop_point.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": []
+      },
+      "advance_to_next_stop_point.pre_2": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": []
+      },
+      "advance_to_next_stop_point.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": []
+      },
+      "advance_to_next_stop_point.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": []
+      },
+      "transport_to_exit.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "execute",
+          "request_id",
+          "runTag",
+          "speedTag",
+          "accepted",
+          "actual_speed",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "part_ready",
+          "result_id",
+          "runningTag"
+        ]
+      },
+      "transport_to_exit.pre_2": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "execute",
+          "request_id",
+          "runTag",
+          "speedTag",
+          "accepted",
+          "actual_speed",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "part_ready",
+          "result_id",
+          "runningTag"
+        ]
+      },
+      "transport_to_exit.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "execute",
+          "request_id",
+          "runTag",
+          "speedTag",
+          "accepted",
+          "actual_speed",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "part_ready",
+          "result_id",
+          "runningTag"
+        ]
+      },
+      "transport_to_exit.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "execute",
+          "request_id",
+          "runTag",
+          "speedTag",
+          "accepted",
+          "actual_speed",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "part_ready",
+          "result_id",
+          "runningTag"
+        ]
+      },
+      "release_material.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "execute",
+          "release_waiting_material",
+          "request_id",
+          "accepted",
+          "busy",
+          "capacity_available",
+          "done",
+          "error",
+          "error_code",
+          "part_ready",
+          "result_id"
+        ]
+      },
+      "release_material.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "execute",
+          "release_waiting_material",
+          "request_id",
+          "accepted",
+          "busy",
+          "capacity_available",
+          "done",
+          "error",
+          "error_code",
+          "part_ready",
+          "result_id"
+        ]
+      },
+      "release_material.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "execute",
+          "release_waiting_material",
+          "request_id",
+          "accepted",
+          "busy",
+          "capacity_available",
+          "done",
+          "error",
+          "error_code",
+          "part_ready",
+          "result_id"
+        ]
+      },
+      "start_conveying.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "speedTag",
+          "actual_speed",
+          "done",
+          "runningTag"
+        ]
+      },
+      "start_conveying.pre_2": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "speedTag",
+          "actual_speed",
+          "done",
+          "runningTag"
+        ]
+      },
+      "start_conveying.pre_3": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "speedTag",
+          "actual_speed",
+          "done",
+          "runningTag"
+        ]
+      },
+      "start_conveying.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "speedTag",
+          "actual_speed",
+          "done",
+          "runningTag"
+        ]
+      },
+      "start_conveying.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "speedTag",
+          "actual_speed",
+          "done",
+          "runningTag"
+        ]
+      },
+      "set_speed.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "speedTag",
+          "accepted",
+          "actual_speed",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id",
+          "runningTag"
+        ]
+      },
+      "set_speed.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "speedTag",
+          "accepted",
+          "actual_speed",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id",
+          "runningTag"
+        ]
+      },
+      "set_speed.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "speedTag",
+          "accepted",
+          "actual_speed",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id",
+          "runningTag"
+        ]
+      },
+      "stop_conveying.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "speedTag",
+          "accepted",
+          "actual_speed",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id",
+          "runningTag"
+        ]
+      },
+      "stop_conveying.pre_2": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "speedTag",
+          "accepted",
+          "actual_speed",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id",
+          "runningTag"
+        ]
+      },
+      "stop_conveying.pre_3": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "speedTag",
+          "accepted",
+          "actual_speed",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id",
+          "runningTag"
+        ]
+      },
+      "stop_conveying.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "speedTag",
+          "accepted",
+          "actual_speed",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id",
+          "runningTag"
+        ]
+      },
+      "stop_conveying.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "speedTag",
+          "accepted",
+          "actual_speed",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id",
+          "runningTag"
+        ]
+      },
+      "reverse_conveying.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "speedTag",
+          "accepted",
+          "actual_speed",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id",
+          "runningTag"
+        ]
+      },
+      "reverse_conveying.pre_2": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "speedTag",
+          "accepted",
+          "actual_speed",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id",
+          "runningTag"
+        ]
+      },
+      "reverse_conveying.pre_3": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "speedTag",
+          "accepted",
+          "actual_speed",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id",
+          "runningTag"
+        ]
+      },
+      "reverse_conveying.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "speedTag",
+          "accepted",
+          "actual_speed",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id",
+          "runningTag"
+        ]
+      },
+      "reverse_conveying.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "speedTag",
+          "accepted",
+          "actual_speed",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id",
+          "runningTag"
+        ]
+      },
+      "zone_accumulation.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "blocked",
+          "capacity_available",
+          "done",
+          "runningTag"
+        ]
+      },
+      "zone_accumulation.pre_2": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "blocked",
+          "capacity_available",
+          "done",
+          "runningTag"
+        ]
+      },
+      "zone_accumulation.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "blocked",
+          "capacity_available",
+          "done",
+          "runningTag"
+        ]
+      },
+      "zone_accumulation.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "blocked",
+          "capacity_available",
+          "done",
+          "runningTag"
+        ]
+      },
+      "meter_release.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "blocked",
+          "part_ready"
+        ]
+      },
+      "meter_release.pre_2": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "blocked",
+          "part_ready"
+        ]
+      },
+      "meter_release.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "blocked",
+          "part_ready"
+        ]
+      },
+      "meter_release.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "blocked",
+          "part_ready"
+        ]
+      },
+      "publish_drive_feedback.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "accepted",
+          "actual_speed",
+          "blocked",
+          "busy",
+          "capacity_available",
+          "done",
+          "encoderTag",
+          "error",
+          "error_code",
+          "part_ready",
+          "pulseTag",
+          "result_id",
+          "runningTag",
+          "velocityTag"
+        ]
+      },
+      "publish_drive_feedback.pre_2": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "accepted",
+          "actual_speed",
+          "blocked",
+          "busy",
+          "capacity_available",
+          "done",
+          "encoderTag",
+          "error",
+          "error_code",
+          "part_ready",
+          "pulseTag",
+          "result_id",
+          "runningTag",
+          "velocityTag"
+        ]
+      },
+      "publish_drive_feedback.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "accepted",
+          "actual_speed",
+          "blocked",
+          "busy",
+          "capacity_available",
+          "done",
+          "encoderTag",
+          "error",
+          "error_code",
+          "part_ready",
+          "pulseTag",
+          "result_id",
+          "runningTag",
+          "velocityTag"
+        ]
+      },
+      "publish_drive_feedback.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "accepted",
+          "actual_speed",
+          "blocked",
+          "busy",
+          "capacity_available",
+          "done",
+          "encoderTag",
+          "error",
+          "error_code",
+          "part_ready",
+          "pulseTag",
+          "result_id",
+          "runningTag",
+          "velocityTag"
+        ]
+      },
+      "entry_region_clear": {
+        "value_type": "boolean",
+        "provider": "physical_region_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": []
+      },
+      "subject_at_exit": {
+        "value_type": "boolean",
+        "provider": "physical_region_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": []
+      },
+      "exit_arrival_confirmed": {
+        "value_type": "boolean",
+        "provider": "physical_region_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": []
+      },
+      "subject_on_conveyor": {
+        "value_type": "boolean",
+        "provider": "physical_region_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": []
+      },
+      "move_by_distance.ready": {
+        "value_type": "boolean",
+        "provider": "distance_motion_adapter_and_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "encoderTag",
+          "actual_speed",
+          "error"
+        ]
+      },
+      "move_by_distance.sustaining": {
+        "value_type": "boolean",
+        "provider": "distance_motion_adapter_and_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "error",
+          "actual_speed",
+          "encoderTag"
+        ]
+      },
+      "move_by_distance.completion": {
+        "value_type": "boolean",
+        "provider": "distance_motion_adapter_and_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "done",
+          "result_id",
+          "actual_speed",
+          "encoderTag"
+        ]
+      }
+    },
+    "authorization_definitions": {
+      "accept_material.pre_1": {
+        "value_type": "boolean",
+        "provider": "authorization_service",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "execute",
+          "request_id",
+          "accepted",
+          "busy",
+          "capacity_available",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ]
+      },
+      "move_by_distance.motion_authorized": {
+        "value_type": "boolean",
+        "provider": "atomic_resource_authorizer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "blocked",
+          "capacity_available"
+        ]
+      }
+    }
+  },
+  "runtime_execution_contract": {
+    "signal_management": {
+      "owner": "simulation_engine",
+      "status": "pending_engine",
+      "namespace": "instance_id/port_id",
+      "definition_source": "signal_ports",
+      "spatial_binding": false,
+      "write_policy": "single_writer_per_input",
+      "plc_mapping": "instance_bindings",
+      "sampling": "simulation_step_snapshot",
+      "unknown_policy": "invalid_until_provider_ready"
+    },
+    "status": "pending_adapter",
+    "protocol": {
+      "basis": "schema.md公共请求协议",
+      "acceptance": "same request identity and frozen parameters",
+      "completion": "matching result_id plus observed completion checks",
+      "single_command_entry": true
+    },
+    "payload_binding_status": "requires_explicit_model_adapter",
+    "calibration_required": true,
+    "real_execution_available": false,
+    "raw_api_and_plc_simultaneous_writers": false,
+    "speed_input_selection": {
+      "selected": "speedTag",
+      "speedFpmTag": "disabled_until_explicit_unit_adapter_selected"
+    },
+    "signal_templates": [
+      {
+        "pattern": "stop_point_occupied_{i}",
+        "direction": "output",
+        "value_type": "boolean",
+        "plc_type": "BOOL",
+        "index_parameter": "stop_point_count",
+        "enabled_when": {
+          "parameter": "transport_mode",
+          "equals": "zoned"
+        },
+        "status": "requires_instance_scalar_expansion"
+      },
+      {
+        "pattern": "stop_point_released_{i}",
+        "direction": "output",
+        "value_type": "boolean",
+        "plc_type": "BOOL",
+        "index_parameter": "stop_point_count",
+        "enabled_when": {
+          "parameter": "transport_mode",
+          "equals": "zoned"
+        },
+        "status": "optional_latched_notification_requires_instance_expansion"
+      }
+    ],
+    "distance_motion": {
+      "status": "pending_adapter",
+      "optional": true,
+      "argument_bindings": {
+        "distance_m": "target_distance"
+      },
+      "children": [
+        "start_conveying",
+        "stop_conveying"
+      ],
+      "baseline": "freeze encoder and all affected load identities/poses on acceptance",
+      "completion_requires": [
+        "matching result_id",
+        "encoder displacement within calibrated tolerance",
+        "actual speed below calibrated stop tolerance",
+        "each load at calibrated physical target with support"
+      ],
+      "on_failure_or_cancel": "stop_conveying; retain ownership until actual stop; attention if unknown",
+      "no_implicit_native_support": true
+    }
+  }
+}

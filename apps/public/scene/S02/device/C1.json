@@ -1,0 +1,57 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "C1",
+  "contract_ref": "../contracts/conveyor.json",
+  "parameters": {
+    "speed_mps": 0.2
+  },
+  "node_binding": {
+    "status": "unresolved"
+  },
+  "locations": {
+    "C1.entry": {
+      "geometry_status": "pending_calibration"
+    },
+    "C1.exit": {
+      "geometry_status": "pending_calibration"
+    },
+    "C1.station1": {
+      "geometry_status": "pending_calibration",
+      "role": "pallet_stop"
+    },
+    "C1.station2": {
+      "geometry_status": "pending_calibration",
+      "role": "pallet_stop"
+    },
+    "C1.station3": {
+      "geometry_status": "pending_calibration",
+      "role": "pallet_stop"
+    }
+  },
+  "calibrations": {
+    "C1.pitch_m": {
+      "type": "number",
+      "unit": "m",
+      "min": 0.0001,
+      "max": 50,
+      "value": null,
+      "status": "pending_calibration",
+      "runtime_requirement": "all frozen loads reach corresponding actual targets; encoder alone is insufficient"
+    }
+  },
+  "model": {
+    "line_indexing": {
+      "status": "pending_calibration",
+      "pitch_m": null,
+      "braking_model": null,
+      "ordered_positions": [
+        "C1.entry",
+        "C1.station1",
+        "C1.station2",
+        "C1.station3",
+        "C1.exit"
+      ],
+      "expected_relation": "four adjacent intervals share one calibrated pitch"
+    }
+  }
+}

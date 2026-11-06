@@ -31,7 +31,10 @@ export class CcdPositionIK implements PositionIK {
           Math.max(-1, Math.min(1, a.dot(b))),
         );
         const limit = scene.model.urdf.joints[i].limit;
-        q[i] = Math.max(limit.lower, Math.min(limit.upper, q[i] + angle));
+        q[i] =
+          limit === null
+            ? q[i] + angle
+            : Math.max(limit.lower, Math.min(limit.upper, q[i] + angle));
       }
     }
     error = new Vector3(...this.fk.forward(q).tcp.position).distanceTo(target);

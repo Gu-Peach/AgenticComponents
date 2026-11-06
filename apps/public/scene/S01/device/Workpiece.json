@@ -1,0 +1,26 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "Workpiece",
+  "contract_ref": "../contracts/workpiece.json",
+  "asset_kind": "material_prefab",
+  "parameters": {
+    "mass_kg": 1.0,
+    "height_m": 0.19999999552965164,
+    "diameter_m": 0.18000001162658252
+  },
+  "node_binding": {
+    "status": "bound",
+    "node": "Lathe_Comp_3_00On",
+    "model_sha256": "c68cc1ea4219a6616e13b9c036da871ac0886be3e76f8ec3202c22faffda0249"
+  },
+  "subject_id": 1,
+  "model": {
+    "collision": {
+      "kind": "convex_or_compound",
+      "status": "requires_physics_validation"
+    },
+    "calibration": {
+      "status": "pending"
+    }
+  }
+}

@@ -1,0 +1,432 @@
+{
+  "schema_version": "parameter-provenance/0.1",
+  "note": "Measurement/configuration evidence; active parameters are defined by shared contracts and instance overrides.",
+  "devices": {
+    "C1": {
+      "speed_mps": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.2
+      },
+      "length_m": {
+        "source": "GLB_geometry_envelope",
+        "value": 2.001000098700883
+      },
+      "width_m": {
+        "source": "GLB_geometry_envelope",
+        "value": 0.9260001096898429
+      },
+      "surface_height_m": {
+        "source": "GLB_geometry_envelope",
+        "value": 0.19988948375233662
+      },
+      "transport_mode": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": "continuous"
+      },
+      "allow_reverse": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": false
+      },
+      "capacity": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 1
+      },
+      "resume_threshold": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0
+      },
+      "stop_point_count": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 4
+      },
+      "accel_time_s": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.5
+      },
+      "decel_time_s": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.5
+      },
+      "release_gap_s": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0
+      },
+      "encoder_pitch_m": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.0254
+      }
+    },
+    "C2": {
+      "speed_mps": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.2
+      },
+      "length_m": {
+        "source": "GLB_geometry_envelope",
+        "value": 2.001000098700883
+      },
+      "width_m": {
+        "source": "GLB_geometry_envelope",
+        "value": 0.9260001096898429
+      },
+      "surface_height_m": {
+        "source": "GLB_geometry_envelope",
+        "value": 0.19988948375233662
+      },
+      "transport_mode": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": "continuous"
+      },
+      "allow_reverse": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": false
+      },
+      "capacity": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 1
+      },
+      "resume_threshold": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0
+      },
+      "stop_point_count": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 4
+      },
+      "accel_time_s": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.5
+      },
+      "decel_time_s": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.5
+      },
+      "release_gap_s": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0
+      },
+      "encoder_pitch_m": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.0254
+      }
+    },
+    "C3": {
+      "speed_mps": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.2
+      },
+      "length_m": {
+        "source": "GLB_geometry_envelope",
+        "value": 1.5010000574230873
+      },
+      "width_m": {
+        "source": "GLB_geometry_envelope",
+        "value": 0.32300411106693705
+      },
+      "surface_height_m": {
+        "source": "GLB_geometry_envelope",
+        "value": 0.799944745303435
+      },
+      "transport_mode": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": "continuous"
+      },
+      "allow_reverse": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": false
+      },
+      "capacity": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 1
+      },
+      "resume_threshold": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0
+      },
+      "stop_point_count": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 4
+      },
+      "accel_time_s": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.5
+      },
+      "decel_time_s": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.5
+      },
+      "release_gap_s": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0
+      },
+      "encoder_pitch_m": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.0254
+      }
+    },
+    "C4": {
+      "speed_mps": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.2
+      },
+      "length_m": {
+        "source": "GLB_geometry_envelope",
+        "value": 1.5010000574230873
+      },
+      "width_m": {
+        "source": "GLB_geometry_envelope",
+        "value": 0.3230041110669369
+      },
+      "surface_height_m": {
+        "source": "GLB_geometry_envelope",
+        "value": 0.799944745303435
+      },
+      "transport_mode": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": "continuous"
+      },
+      "allow_reverse": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": false
+      },
+      "capacity": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 1
+      },
+      "resume_threshold": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0
+      },
+      "stop_point_count": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 4
+      },
+      "accel_time_s": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.5
+      },
+      "decel_time_s": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.5
+      },
+      "release_gap_s": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0
+      },
+      "encoder_pitch_m": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.0254
+      }
+    },
+    "F1": {
+      "production_mode": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": "on_demand"
+      },
+      "cycle_time_s": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 5
+      },
+      "buffer_capacity": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 1
+      },
+      "product_spec": {
+        "source": "user_confirmed_loaded_carrier_prefab_task",
+        "value": "Pallet"
+      },
+      "buffer_length_m": {
+        "source": "GLB_source_platform_mesh_envelope",
+        "value": 1.2000000168892972
+      },
+      "buffer_width_m": {
+        "source": "GLB_source_platform_mesh_envelope",
+        "value": 0.5000000937314586
+      },
+      "fixed_interval": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": true
+      },
+      "interval_jitter_ratio": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.5
+      },
+      "random_seed": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 1
+      },
+      "vary_attribute": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": ""
+      }
+    },
+    "Pallet": {
+      "length_m": {
+        "source": "GLB_geometry_envelope",
+        "value": 1.2000000431161295
+      },
+      "width_m": {
+        "source": "GLB_geometry_envelope",
+        "value": 0.8000000870259361
+      },
+      "height_m": {
+        "source": "GLB_geometry_envelope",
+        "value": 0.14999999664723873
+      },
+      "empty_mass_kg": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 2.0
+      },
+      "max_load_kg": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 20.0
+      },
+      "slot_rows": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 3
+      },
+      "slot_columns": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 4
+      },
+      "slot_pitch_x_m": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.19
+      },
+      "slot_pitch_z_m": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.189014
+      },
+      "edge_margin_m": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.05
+      },
+      "allow_partial_load": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": true
+      }
+    },
+    "R1": {
+      "cartesian_speed_mps": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.2
+      },
+      "joint_speed_rad_s": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 1.2
+      },
+      "joint_accel_rad_s2": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 2
+      },
+      "max_payload_kg": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 5.0
+      },
+      "lift_height": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.3
+      },
+      "ik_position_tolerance_m": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.005
+      },
+      "ik_max_iterations": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 50
+      },
+      "ik_mode": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": "position_only"
+      },
+      "orientation_tolerance_rad": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.01
+      },
+      "settle_speed_rad_s": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.01
+      }
+    },
+    "R2": {
+      "cartesian_speed_mps": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.2
+      },
+      "joint_speed_rad_s": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 1.2
+      },
+      "joint_accel_rad_s2": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 2
+      },
+      "max_payload_kg": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 5.0
+      },
+      "lift_height": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.3
+      },
+      "ik_position_tolerance_m": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.005
+      },
+      "ik_max_iterations": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 50
+      },
+      "ik_mode": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": "position_only"
+      },
+      "orientation_tolerance_rad": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.01
+      },
+      "settle_speed_rad_s": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.01
+      }
+    },
+    "Workpiece": {
+      "mass_kg": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 1.0
+      },
+      "shape": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": "cylinder"
+      },
+      "height_m": {
+        "source": "GLB_geometry_envelope",
+        "value": 0.19999999552965164
+      },
+      "diameter_m": {
+        "source": "GLB_geometry_envelope",
+        "value": 0.18000001162658252
+      },
+      "length_m": {
+        "source": "GLB_geometry_envelope",
+        "value": 0.1
+      },
+      "width_m": {
+        "source": "GLB_geometry_envelope",
+        "value": 0.1
+      },
+      "friction": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0.5
+      },
+      "restitution": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": 0
+      },
+      "can_stack": {
+        "source": "inherited_simulation_configuration_not_measured",
+        "value": false
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "STORE",
+  "contract_ref": "../contracts/storage_rack.json",
+  "node_binding": {
+    "status": "unresolved"
+  },
+  "locations": {
+    "STORE.slot1": {
+      "geometry_status": "pending_calibration"
+    },
+    "STORE.slot2": {
+      "geometry_status": "pending_calibration"
+    },
+    "STORE.slot3": {
+      "geometry_status": "pending_calibration"
+    },
+    "STORE.slot4": {
+      "geometry_status": "pending_calibration"
+    },
+    "STORE.slot5": {
+      "geometry_status": "pending_calibration"
+    },
+    "STORE.slot6": {
+      "geometry_status": "pending_calibration"
+    }
+  }
+}

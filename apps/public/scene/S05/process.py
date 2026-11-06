@@ -1,8 +1,7 @@
-# 四件双机器人去毛刺闭环
-# 行为前后条件由契约自动处理；工艺只声明动作与协作关系。
-with process('S05', version='ac-declarative/0.3'):
+# Scene assets are resolved from device; this is data-only DSL.
+with process('S05', version='ac-declarative/0.4', devices='./device', task=production(jobs=[{'id': 'J01', 'material': 'M01', 'input': 'C1.entry', 'target': 'C1.exit', 'rework_required': False}, {'id': 'J02', 'material': 'M02', 'input': 'C1.entry', 'target': 'C1.exit', 'rework_required': False}, {'id': 'J03', 'material': 'M03', 'input': 'C1.entry', 'target': 'C1.exit', 'rework_required': False}, {'id': 'J04', 'material': 'M04', 'input': 'C1.entry', 'target': 'C1.exit', 'rework_required': True}], pallets=[]), goal='./task-spec.json'):
     with seq('batch_root'):
-        with repeat('shared_return_lane_126', over=batch.jobs, bind='job', limit=batch.material_count):
+        with repeat('shared_return_lane_126', over=task.jobs, bind='job', limit=task.material_count):
             with seq('shared_return_lane_body_125'):
                 invoke('c1_transport_to_exit_110', C1, 'transport_to_exit', subject_id=subject_id(job.material))
                 invoke('c1_transport_to_exit_110_stop', C1, 'stop_conveying')

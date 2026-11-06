@@ -67,8 +67,8 @@ describe("robot kinematics", () => {
     expect(r.converged).toBe(false);
     expect(r.iterations).toBe(3);
     r.q.forEach((v, i) => {
-      expect(v).toBeGreaterThanOrEqual(scene.model.urdf.joints[i].limit.lower);
-      expect(v).toBeLessThanOrEqual(scene.model.urdf.joints[i].limit.upper);
+      expect(v).toBeGreaterThanOrEqual(scene.model.urdf.joints[i].limit!.lower);
+      expect(v).toBeLessThanOrEqual(scene.model.urdf.joints[i].limit!.upper);
     });
     expect(() => solver.solve(new Vector3(NaN, 0, 0), r.q)).toThrow();
   });

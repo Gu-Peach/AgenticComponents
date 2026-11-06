@@ -18,9 +18,17 @@ export interface PhysicsConfig {
   bodies?: RuntimeBody[];
   surfaces?: RuntimeSurface[];
   targetBodyId?: string;
+  carrierBindings?: { carrier: string; material: string }[];
 }
 export interface PhysicsPort {
   setSurfaceSpeed(speed: number): void;
+  setSurfaceSpeeds?(speeds: Readonly<Record<string, number>>): void;
+  getSurfaceSpeed?(surfaceId: string): number;
+  isBodyActive?(bodyId: string): boolean;
+  activateBodies?(placements: readonly { id: string; pose: BodyPose }[]): void;
+  deactivateBodies?(ids: readonly string[]): void;
+  hasGraspForBody?(id: string): boolean;
+  isCarriedBy?(material: string, carrier?: string): boolean;
   step(dt: number): void;
   readMaterial(): BodyPose;
   hasSupport(bodyId?: string, surfaceId?: string): boolean;
@@ -33,10 +41,18 @@ export interface PhysicsPort {
 }
 
 export interface RuntimeBody {
+  convexParts?: Vec3[][];
+  initiallyActive?: boolean;
   id: string;
   instanceId: string;
   motionType: "static" | "dynamic" | "kinematic";
-  role: "conveying_support" | "material" | "ground" | "tool";
+  role:
+    | "conveying_support"
+    | "material"
+    | "ground"
+    | "tool"
+    | "carrier"
+    | "support";
   position: Vec3;
   rotation: Quat;
   size: Vec3;
@@ -45,6 +61,7 @@ export interface RuntimeBody {
   restitution: number;
 }
 export interface RuntimeSurface {
+  aliases?: string[];
   id: string;
   bodyId: string;
   direction: Vec3;

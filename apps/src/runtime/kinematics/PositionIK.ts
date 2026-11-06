@@ -4,6 +4,7 @@ export interface IKResult {
   converged: boolean;
   error: number;
   iterations: number;
+  orientationError?: number;
 }
 export interface PositionIK {
   solve(target: Vector3, seed: readonly number[]): IKResult;

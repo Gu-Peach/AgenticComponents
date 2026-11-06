@@ -49,7 +49,8 @@ export const robotModelSchema = z.object({
             .refine(
               (v) => v.lower < v.upper && v.lower <= 0 && v.upper >= 0,
               "范围必须包含资产静止零点",
-            ),
+            )
+            .nullable(),
           velocity_limit_param: z.string(),
           acceleration_limit_param: z.string(),
         }),
