@@ -12,4 +12,4 @@
 | 006 | 2026-11-05 | [场景DSL、真实资产执行与PLC实时模块](006-2026-11-05-scene-dsl-runtime-and-live-plc.md) | 场景包、目录及契约模块基础已接入；真实场景执行待完成 |
 | 007 | 2026-11-05 | [工艺调度层与真实信号闭环](007-2026-11-05-process-scheduler-and-signal-loop.md) | 调度与信号核心已接入；整场装配待完成 |
 | 008 | 2026-11-06 | [通用场景运行装配器与S01整场闭环](008-2026-11-06-generic-scene-runtime-assembly.md) | 通用装配与 S01 候选仿真闭环已实现；见[实现说明](../scene-runtime-assembly.md) |
-
+| 009 | 2026-11-06 | [统一条件表达式与场景实时梯形图](009-2026-11-06-condition-expressions-and-live-ladder.md) | 条件引擎、决策轨迹与只读梯形图已接入；S01 整场验收通过 |

@@ -44,11 +44,12 @@ const specSchema = z.object({
     }),
   ),
 });
+export const DEFAULT_FEEDBACK_MAX_AGE_TICKS = 2;
 export function signalLayoutFromContract(
   sceneId: string,
   device: string,
   raw: unknown,
-  feedbackMaxAgeTicks = 2,
+  feedbackMaxAgeTicks = DEFAULT_FEEDBACK_MAX_AGE_TICKS,
 ): SceneSignalDefinition[] {
   const spec = specSchema.parse(raw);
   return spec.signal_ports.map((p) => ({

@@ -1,0 +1,48 @@
+{
+  "schema_version": "condition-migration-report/0.1",
+  "date": "2026-11-06",
+  "condition_schema": "ac-condition/0.1",
+  "execution_mode": "declaration_only",
+  "expression_runtime_verified": false,
+  "contracts": {
+    "conveyor.json": {
+      "structured": 16,
+      "opaque": 40,
+      "sha256": "4972f72c270dff5c51b35ca8c922a40520ef7fb7009fe5e833b3bd28534a4324"
+    },
+    "material_source_station.json": {
+      "structured": 0,
+      "opaque": 23,
+      "sha256": "d17e19c240b4fbe07e45049b16cc4933e27f52e4b0a1bfdc107be82031cdb1d1"
+    },
+    "robot_arm.json": {
+      "structured": 6,
+      "opaque": 35,
+      "sha256": "d5f69a224a591db7043e6f0ea0f701cec6bf1dff32074881065d3e8ed8d7288f"
+    },
+    "workpiece.json": {
+      "structured": 0,
+      "opaque": 27,
+      "sha256": "1b54ed0eb40a4626d44d3bbdb12164d4288a0d5eb2545e5168151099c26a7269"
+    },
+    "workpiece_carrier.json": {
+      "structured": 0,
+      "opaque": 24,
+      "sha256": "f777595572f4e995289513f04895f2b51197d78a107f1c7d1c0679c5f7349d61"
+    }
+  },
+  "protected_files_verified": 334,
+  "protected_files_changed": [],
+  "other_catalog_entries_unchanged": 11,
+  "python_tests_passed": 31,
+  "typescript_tests_passed": 162,
+  "legacy_native_regression": {
+    "status": "succeeded",
+    "delivered_materials": 36,
+    "departed_carriers": 3,
+    "ticks": 44874,
+    "overlap_ticks": 31263,
+    "evidence": "009-s01-legacy-native-runtime.json"
+  },
+  "note": "Declaration validation and legacy-native compatibility only; expression evaluation/trace/ladder UI remain pending."
+}

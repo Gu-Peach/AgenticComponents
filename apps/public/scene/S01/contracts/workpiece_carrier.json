@@ -801,7 +801,8 @@
           "free_slots",
           "load_count",
           "slot_available"
-        ]
+        ],
+        "expression_ref": "reserve_carrier_slot.pre_1"
       },
       "reserve_carrier_slot.pre_2": {
         "value_type": "boolean",
@@ -811,7 +812,8 @@
           "free_slots",
           "load_count",
           "slot_available"
-        ]
+        ],
+        "expression_ref": "reserve_carrier_slot.pre_2"
       },
       "reserve_carrier_slot.sustaining": {
         "value_type": "boolean",
@@ -821,7 +823,8 @@
           "free_slots",
           "load_count",
           "slot_available"
-        ]
+        ],
+        "expression_ref": "reserve_carrier_slot.sustaining"
       },
       "reserve_carrier_slot.completion": {
         "value_type": "boolean",
@@ -831,7 +834,8 @@
           "free_slots",
           "load_count",
           "slot_available"
-        ]
+        ],
+        "expression_ref": "reserve_carrier_slot.completion"
       },
       "cancel_carrier_reservation.pre_1": {
         "value_type": "boolean",
@@ -840,7 +844,8 @@
         "signal_refs": [
           "free_slots",
           "slot_available"
-        ]
+        ],
+        "expression_ref": "cancel_carrier_reservation.pre_1"
       },
       "cancel_carrier_reservation.sustaining": {
         "value_type": "boolean",
@@ -849,7 +854,8 @@
         "signal_refs": [
           "free_slots",
           "slot_available"
-        ]
+        ],
+        "expression_ref": "cancel_carrier_reservation.sustaining"
       },
       "cancel_carrier_reservation.completion": {
         "value_type": "boolean",
@@ -858,7 +864,8 @@
         "signal_refs": [
           "free_slots",
           "slot_available"
-        ]
+        ],
+        "expression_ref": "cancel_carrier_reservation.completion"
       },
       "confirm_load.pre_1": {
         "value_type": "boolean",
@@ -870,7 +877,8 @@
           "loaded",
           "slot_available",
           "unloaded"
-        ]
+        ],
+        "expression_ref": "confirm_load.pre_1"
       },
       "confirm_load.sustaining": {
         "value_type": "boolean",
@@ -882,7 +890,8 @@
           "loaded",
           "slot_available",
           "unloaded"
-        ]
+        ],
+        "expression_ref": "confirm_load.sustaining"
       },
       "confirm_load.completion": {
         "value_type": "boolean",
@@ -894,7 +903,8 @@
           "loaded",
           "slot_available",
           "unloaded"
-        ]
+        ],
+        "expression_ref": "confirm_load.completion"
       },
       "carry_material.pre_1": {
         "value_type": "boolean",
@@ -903,7 +913,8 @@
         "signal_refs": [
           "holder_id",
           "in_transport"
-        ]
+        ],
+        "expression_ref": "carry_material.pre_1"
       },
       "carry_material.pre_2": {
         "value_type": "boolean",
@@ -912,7 +923,8 @@
         "signal_refs": [
           "holder_id",
           "in_transport"
-        ]
+        ],
+        "expression_ref": "carry_material.pre_2"
       },
       "carry_material.sustaining": {
         "value_type": "boolean",
@@ -921,7 +933,8 @@
         "signal_refs": [
           "holder_id",
           "in_transport"
-        ]
+        ],
+        "expression_ref": "carry_material.sustaining"
       },
       "carry_material.completion": {
         "value_type": "boolean",
@@ -930,7 +943,8 @@
         "signal_refs": [
           "holder_id",
           "in_transport"
-        ]
+        ],
+        "expression_ref": "carry_material.completion"
       },
       "release_material.sustaining": {
         "value_type": "boolean",
@@ -941,7 +955,8 @@
           "load_count",
           "loaded",
           "unloaded"
-        ]
+        ],
+        "expression_ref": "release_material.sustaining"
       },
       "release_material.completion": {
         "value_type": "boolean",
@@ -952,7 +967,8 @@
           "load_count",
           "loaded",
           "unloaded"
-        ]
+        ],
+        "expression_ref": "release_material.completion"
       },
       "be_transported_loaded.pre_1": {
         "value_type": "boolean",
@@ -961,7 +977,8 @@
         "signal_refs": [
           "holder_id",
           "in_transport"
-        ]
+        ],
+        "expression_ref": "be_transported_loaded.pre_1"
       },
       "be_transported_loaded.sustaining": {
         "value_type": "boolean",
@@ -970,7 +987,8 @@
         "signal_refs": [
           "holder_id",
           "in_transport"
-        ]
+        ],
+        "expression_ref": "be_transported_loaded.sustaining"
       },
       "be_transported_loaded.completion": {
         "value_type": "boolean",
@@ -979,7 +997,8 @@
         "signal_refs": [
           "holder_id",
           "in_transport"
-        ]
+        ],
+        "expression_ref": "be_transported_loaded.completion"
       },
       "publish_carrier_state.pre_1": {
         "value_type": "boolean",
@@ -993,7 +1012,8 @@
           "loaded",
           "slot_available",
           "unloaded"
-        ]
+        ],
+        "expression_ref": "publish_carrier_state.pre_1"
       },
       "publish_carrier_state.pre_2": {
         "value_type": "boolean",
@@ -1007,7 +1027,8 @@
           "loaded",
           "slot_available",
           "unloaded"
-        ]
+        ],
+        "expression_ref": "publish_carrier_state.pre_2"
       },
       "publish_carrier_state.sustaining": {
         "value_type": "boolean",
@@ -1021,7 +1042,8 @@
           "loaded",
           "slot_available",
           "unloaded"
-        ]
+        ],
+        "expression_ref": "publish_carrier_state.sustaining"
       },
       "publish_carrier_state.completion": {
         "value_type": "boolean",
@@ -1035,7 +1057,8 @@
           "loaded",
           "slot_available",
           "unloaded"
-        ]
+        ],
+        "expression_ref": "publish_carrier_state.completion"
       }
     },
     "authorization_definitions": {
@@ -1048,7 +1071,232 @@
           "load_count",
           "loaded",
           "unloaded"
-        ]
+        ],
+        "expression_ref": "release_material.pre_1"
+      }
+    },
+    "condition_model": {
+      "schema_version": "ac-condition/0.1",
+      "execution_mode": "declaration_only",
+      "unknown_policy": "three_valued_fail_closed",
+      "bindings": {},
+      "expressions": {
+        "reserve_carrier_slot.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "reserve_carrier_slot.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "reserve_carrier_slot.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "reserve_carrier_slot.pre_2"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "reserve_carrier_slot.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "reserve_carrier_slot.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "reserve_carrier_slot.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "reserve_carrier_slot.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "cancel_carrier_reservation.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "cancel_carrier_reservation.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "cancel_carrier_reservation.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "cancel_carrier_reservation.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "cancel_carrier_reservation.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "cancel_carrier_reservation.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "confirm_load.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "confirm_load.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "confirm_load.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "confirm_load.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "confirm_load.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "confirm_load.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "carry_material.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "carry_material.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "carry_material.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "carry_material.pre_2"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "carry_material.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "carry_material.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "carry_material.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "carry_material.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "release_material.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "release_material.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "release_material.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "release_material.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "be_transported_loaded.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "be_transported_loaded.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "be_transported_loaded.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "be_transported_loaded.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "be_transported_loaded.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "be_transported_loaded.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "publish_carrier_state.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "publish_carrier_state.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "publish_carrier_state.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "publish_carrier_state.pre_2"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "publish_carrier_state.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "publish_carrier_state.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "publish_carrier_state.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "publish_carrier_state.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "release_material.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "authorization",
+            "key": "release_material.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        }
       }
     }
   },

@@ -1,0 +1,27 @@
+{
+  "schema_version": "condition-runtime-verification/0.1",
+  "date": "2026-11-06",
+  "default_mode": "expression",
+  "typescript_tests": 197,
+  "python_tests": 31,
+  "production_build": "passed",
+  "compared_decisions": 85285,
+  "condition_mismatches": 0,
+  "completed_materials": 36,
+  "completed_carriers": 3,
+  "ticks": 44874,
+  "overlap_ticks": 31263,
+  "authored_sources_unchanged": true,
+  "browser": {
+    "port": 3110,
+    "mode": "expression",
+    "runId": "cfb2675a-f479-46e6-88a2-5aac383617ff",
+    "paused_tick": 35483,
+    "subject": "P03",
+    "requestId": "125",
+    "decision_tick": 29849,
+    "console_errors_or_warnings": [],
+    "screenshot": "009-live-ladder.jpg"
+  },
+  "boundary": "Read-only process ladder and actual evaluation trace; no PLC hardware program export."
+}

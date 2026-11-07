@@ -106,6 +106,8 @@ export class SceneRuntimeController {
     };
   };
   snapshot = (id: string) => this.values.get(id);
+  signalHistory = (id: string, afterSequence = 0) =>
+    this.programs.get(id)?.signals.trace(afterSequence);
   private publish(program: SceneRuntimeProgram) {
     this.values.set(program.sceneInstanceId, program.snapshot());
     this.listeners.forEach((f) => f());

@@ -12,6 +12,14 @@ it("completes all three pallets and 36 deliveries with actual parallel robot exe
     "integration-scene",
     "integration-run",
     compiled,
+    {
+      conditionMode:
+        process.env.AC_CONDITION_MODE === "compare"
+          ? "compare"
+          : process.env.AC_CONDITION_MODE === "legacy"
+            ? "legacy"
+            : "expression",
+    },
   );
   let last = program.snapshot(),
     overlapTicks = 0;
@@ -51,6 +59,10 @@ it("completes all three pallets and 36 deliveries with actual parallel robot exe
     robotClear: Record<string, boolean>;
   };
   const report = {
+    conditionMode: last.conditions?.mode,
+    conditionComparisons: last.conditions?.comparisons,
+    conditionMismatches: last.conditions?.mismatches,
+    conditionDecisions: last.conditions?.events,
     modelSha256: bundle.model_sha256,
     sourceHashes: bundle.source_hashes,
     status: last.status,

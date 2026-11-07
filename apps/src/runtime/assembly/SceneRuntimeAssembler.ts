@@ -34,6 +34,14 @@ import {
 import { bindProcess } from "@/domain/runtime/bindProcess";
 import { SceneRuntimeProgram } from "@/runtime/engine/SceneRuntimeProgram";
 import { RuntimeFactoryRegistry } from "./RuntimeFactoryRegistry";
+import { compileConditions } from "@/domain/runtime/compileConditions";
+import { ConditionTrace } from "@/runtime/signals/ConditionTrace";
+import {
+  sceneConditionReader,
+  sceneConditionProviderIds,
+  supportsSceneConditionBinding,
+} from "./SceneConditionBindings";
+import type { ConditionDiagnostics } from "@/contracts/condition-expression";
 
 interface BodyObservation {
   active: boolean;
@@ -68,9 +76,11 @@ export async function assembleSceneRuntime(
   sceneId: string,
   runId: string,
   compiled: CompiledSceneRuntime,
+  options: { conditionMode?: ConditionDiagnostics["mode"] } = {},
 ): Promise<AssembledScene> {
+  const conditionMode = options.conditionMode ?? "expression";
   const drivers: DeviceActionPort[] = [],
-    providers = new ConditionProviders(),
+    providers = new ConditionProviders(new ConditionTrace(conditionMode)),
     observations: ObservationDefinition[] = [];
   const positionConfigs = new Map<string, PositionTransportConfig>();
   const positionDrivers = new Map<string, PositionTransportAdapter>();
@@ -242,6 +252,7 @@ export async function assembleSceneRuntime(
         )
           throw new Error("Coupled drive ramp profiles disagree");
       const config: PositionTransportConfig = {
+        publishDriveState: true,
         sceneId,
         runId,
         leader: id,
@@ -474,6 +485,7 @@ export async function assembleSceneRuntime(
     for (const id of positionConfigs.keys()) {
       observe(id + "/loads", "adapter:" + id);
       observe(id + "/transport", "adapter:" + id);
+      observe(id + "/drive_state", "adapter:" + id);
     }
     for (const id of compiled.robots.keys())
       observe(id + "/robot_state", "adapter:" + id);
@@ -695,8 +707,42 @@ export async function assembleSceneRuntime(
             ) <= 0.02,
         );
       });
+      const expressionRules =
+        conditionMode === "legacy"
+          ? []
+          : compileConditions(call.device, d.contract, call.behavior);
+      const readBinding = sceneConditionReader(
+        sceneId,
+        call.device,
+        compiled,
+        positionConfigs,
+        bindings,
+      );
+      const registerBehavior = (
+        id: string,
+        legacy: (c: ConditionContext) => Truth,
+      ) => {
+        if (registered.has(id)) return;
+        const rule = expressionRules.find((r) => r.key === id);
+        if (conditionMode === "legacy") {
+          register(id, legacy);
+          return;
+        }
+        if (!rule) throw new Error("Missing compiled condition: " + id);
+        for (const b of Object.values(rule.bindings))
+          if (
+            (b.kind === "observation" || b.kind === "authorization") &&
+            (!sceneConditionProviderIds.has(b.provider) ||
+              !supportsSceneConditionBinding(b, d.contract.device_type))
+          )
+            throw new Error(
+              "Unregistered condition leaf provider: " + b.provider,
+            );
+        registered.add(id);
+        providers.registerExpression(rule, readBinding, legacy);
+      };
       for (const condition of description.condition_contract.preconditions)
-        register(
+        registerBehavior(
           call.device + "/" + condition.key,
           condition.source === "authorization"
             ? (c) => ready(c) === true && c.owns("device/" + call.device)
@@ -704,9 +750,9 @@ export async function assembleSceneRuntime(
         );
       for (const condition of description.condition_contract
         .sustaining_conditions)
-        register(call.device + "/" + condition.key, sustained);
+        registerBehavior(call.device + "/" + condition.key, sustained);
       for (const condition of description.completion_contract.checks)
-        register(call.device + "/" + condition.key, completed);
+        registerBehavior(call.device + "/" + condition.key, completed);
       const key = call.device + "." + call.behavior;
       if (bindings.some((b) => b.device + "." + b.behavior === key)) continue;
       bindings.push(

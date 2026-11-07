@@ -1,0 +1,179 @@
+.panel {
+  height: 100%;
+  min-height: 0;
+  overflow: auto;
+  padding: 14px;
+  box-sizing: border-box;
+  background: #111b22;
+  color: #c4d5df;
+  font-size: 12px;
+}
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.toolbar strong {
+  flex: 1;
+}
+.toolbar button {
+  padding: 6px 10px;
+  border: 1px solid #456;
+  border-radius: 4px;
+  background: #1b303e;
+  color: #d6e5ee;
+  cursor: pointer;
+}
+.legend,
+.meta {
+  color: #9bb1c2;
+  line-height: 1.7;
+  margin: 8px 0;
+}
+.rung {
+  border-top: 1px solid #34434d;
+  padding: 12px 0;
+  min-height: 85px;
+  contain: layout style;
+}
+.rungHeader {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+.kind {
+  font-family: monospace;
+  color: #8ac8e8;
+  background: #183242;
+  padding: 3px 6px;
+  border-radius: 3px;
+}
+.state {
+  margin-left: auto;
+  padding: 3px 8px;
+  border: 1px solid #536778;
+  border-radius: 4px;
+}
+.state[data-state="running"] {
+  color: #53d394;
+  border-color: #53d394;
+}
+.state[data-state="failed"] {
+  color: #ff8888;
+  border-color: #ff8888;
+}
+.state[data-state="succeeded"] {
+  color: #83bba2;
+}
+.condition {
+  margin: 10px 0;
+  border-left: 3px solid #354c5d;
+  padding: 6px 9px;
+  background: #15212a;
+}
+.conditionHeader {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  color: #92aabb;
+  align-items: center;
+}
+.conditionHeader code {
+  color: #c8dce8;
+}
+.conditionHeader span:last-child {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+.network {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.operand {
+  fill: #d3e2ec;
+  font:
+    11px ui-monospace,
+    monospace;
+}
+.value {
+  fill: #99b5c6;
+  font:
+    10px ui-monospace,
+    monospace;
+}
+.ports {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  color: #8da5b4;
+  font:
+    11px ui-monospace,
+    monospace;
+  padding: 8px;
+  background: #10202a;
+}
+.ports span {
+  min-width: 105px;
+}
+.ports b {
+  color: #afdcc5;
+  font-variant-numeric: tabular-nums;
+}
+.control {
+  display: flex;
+  align-items: stretch;
+  gap: 18px;
+  margin: 12px 0;
+  min-height: 68px;
+}
+.rail {
+  width: 3px;
+  background: #526b7a;
+}
+.controlBody {
+  border: 1px solid #456172;
+  background: #152732;
+  padding: 10px;
+  flex: 1;
+}
+.controlBody small {
+  display: block;
+  color: #8ca8b9;
+  margin-top: 8px;
+}
+.token {
+  display: inline-block;
+  border: 1px solid #435c6b;
+  padding: 5px 8px;
+  margin: 8px 10px 0 0;
+  font-family: monospace;
+}
+.token[data-state="succeeded"] {
+  border-color: #53d394;
+  color: #53d394;
+}
+.trace {
+  border-collapse: collapse;
+  width: 100%;
+  font:
+    11px ui-monospace,
+    monospace;
+  margin: 8px 0;
+}
+.trace th,
+.trace td {
+  padding: 6px;
+  text-align: left;
+  border-bottom: 1px solid #30434f;
+  overflow-wrap: anywhere;
+}
+.panel details {
+  padding: 6px 0;
+}
+.panel summary {
+  cursor: pointer;
+  color: #8bc0dc;
+}

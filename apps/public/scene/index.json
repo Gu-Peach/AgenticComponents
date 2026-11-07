@@ -5,7 +5,7 @@
       "id": "S01",
       "name": "S01：三盘各十二件双臂分类拆垛",
       "bundleUrl": "/scene/S01/.generated/scene.bundle.json",
-      "bundleSha256": "4d65a259f26583dfb77c938c0be885645a9bb8bb510bd02651254fbc26f50b8b",
+      "bundleSha256": "0b1f2c016bd035b01e02d0cbeaa93bdb0f9a9589a1ee2ef7a1d45dc209d03c92",
       "deviceCount": 9,
       "nodeCount": 488,
       "blockerCount": 22

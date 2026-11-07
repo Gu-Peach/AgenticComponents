@@ -88,6 +88,11 @@ export interface SchedulerSnapshot {
     node: string;
     state: string;
     requestId?: string;
+    subjectId?: string;
+    parentId?: string;
+    iteration?: number;
+    totalIterations?: number;
+    selectedChild?: string;
     blockedBy: readonly string[];
   }[];
   resources: Record<string, string>;

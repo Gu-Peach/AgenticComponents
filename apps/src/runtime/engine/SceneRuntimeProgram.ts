@@ -12,6 +12,7 @@ import {
 import { ProcessScheduler } from "@/runtime/scheduler/ProcessScheduler";
 import type { DeviceActionPort } from "@/runtime/adapters/scene/DeviceActionPort";
 import { SceneWorldStepper, type SceneWorld } from "./SceneWorldStepper";
+import type { ConditionDiagnostics } from "@/contracts/condition-expression";
 
 export interface SceneRuntimeSnapshot {
   sceneInstanceId: string;
@@ -22,6 +23,7 @@ export interface SceneRuntimeSnapshot {
   signals: Readonly<SceneSignalFrame>;
   observations: Readonly<ObservationFrame>;
   process: Readonly<SchedulerSnapshot>;
+  conditions?: ConditionDiagnostics;
 }
 /** Scene composition root. A step consumes the last complete feedback frame. */
 export class SceneRuntimeProgram {
@@ -34,7 +36,7 @@ export class SceneRuntimeProgram {
   constructor(
     readonly sceneInstanceId: string,
     readonly runId: string,
-    process: BoundProcess,
+    private process: BoundProcess,
     readonly signals: SignalRegistry,
     world: SceneWorld,
     drivers: readonly DeviceActionPort[],
@@ -225,6 +227,7 @@ export class SceneRuntimeProgram {
       signals: this.signals.snapshot(world.tick),
       observations: this.observations.snapshot(world.tick),
       process,
+      conditions: this.process.providers.diagnostics?.(),
     });
   }
   dispose() {

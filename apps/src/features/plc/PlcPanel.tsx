@@ -1,4 +1,5 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { SceneLadderPanel } from "./ladder/SceneLadderPanel";
 import { SceneModulePanel } from "./SceneModulePanel";
 import { FileCode2, Download, Upload, CircleOff } from "lucide-react";
 import { useWorkspace } from "@/stores/workspace";
@@ -6,11 +7,37 @@ import { download } from "@/services/BrowserProjectRepository";
 export function PlcPanel() {
   const { project, selectedId } = useWorkspace();
   const input = useRef<HTMLInputElement>(null);
+  const [sceneView, setSceneView] = useState<"ladder" | "devices">("ladder");
   const lines = useRef<HTMLDivElement>(null);
   const instance = project?.instances.find((i) => i.instanceId === selectedId);
   const def = project?.definitions.find((d) => d.specId === instance?.specId);
   const scene = project?.scenePackages?.find((s) => s.id === selectedId);
-  if (scene) return <SceneModulePanel scene={scene} />;
+  if (scene)
+    return sceneView === "ladder" ? (
+      <SceneLadderPanel
+        scene={scene}
+        onDevices={() => setSceneView("devices")}
+      />
+    ) : (
+      <div
+        style={{
+          height: "100%",
+          minHeight: 0,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <button
+          onClick={() => setSceneView("ladder")}
+          style={{ alignSelf: "flex-start", margin: 8 }}
+        >
+          返回场景梯形图
+        </button>
+        <div style={{ flex: 1, minHeight: 0 }}>
+          <SceneModulePanel scene={scene} />
+        </div>
+      </div>
+    );
   return (
     <div className="plc-panel">
       <div className="panel-toolbar">

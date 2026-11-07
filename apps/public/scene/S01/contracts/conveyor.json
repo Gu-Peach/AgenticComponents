@@ -1565,7 +1565,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "accept_material.sustaining"
       },
       "accept_material.completion": {
         "value_type": "boolean",
@@ -1581,31 +1582,36 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "accept_material.completion"
       },
       "advance_to_next_stop_point.pre_1": {
         "value_type": "boolean",
         "provider": "device_or_world_observer",
         "implementation_status": "pending_provider",
-        "signal_refs": []
+        "signal_refs": [],
+        "expression_ref": "advance_to_next_stop_point.pre_1"
       },
       "advance_to_next_stop_point.pre_2": {
         "value_type": "boolean",
         "provider": "device_or_world_observer",
         "implementation_status": "pending_provider",
-        "signal_refs": []
+        "signal_refs": [],
+        "expression_ref": "advance_to_next_stop_point.pre_2"
       },
       "advance_to_next_stop_point.sustaining": {
         "value_type": "boolean",
         "provider": "behavior_adapter",
         "implementation_status": "pending_provider",
-        "signal_refs": []
+        "signal_refs": [],
+        "expression_ref": "advance_to_next_stop_point.sustaining"
       },
       "advance_to_next_stop_point.completion": {
         "value_type": "boolean",
         "provider": "behavior_or_world_observer",
         "implementation_status": "pending_provider",
-        "signal_refs": []
+        "signal_refs": [],
+        "expression_ref": "advance_to_next_stop_point.completion"
       },
       "transport_to_exit.pre_1": {
         "value_type": "boolean",
@@ -1625,7 +1631,8 @@
           "part_ready",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "transport_to_exit.pre_1"
       },
       "transport_to_exit.pre_2": {
         "value_type": "boolean",
@@ -1645,7 +1652,8 @@
           "part_ready",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "transport_to_exit.pre_2"
       },
       "transport_to_exit.sustaining": {
         "value_type": "boolean",
@@ -1665,7 +1673,8 @@
           "part_ready",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "transport_to_exit.sustaining"
       },
       "transport_to_exit.completion": {
         "value_type": "boolean",
@@ -1685,7 +1694,8 @@
           "part_ready",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "transport_to_exit.completion"
       },
       "release_material.pre_1": {
         "value_type": "boolean",
@@ -1703,7 +1713,8 @@
           "error_code",
           "part_ready",
           "result_id"
-        ]
+        ],
+        "expression_ref": "release_material.pre_1"
       },
       "release_material.sustaining": {
         "value_type": "boolean",
@@ -1721,7 +1732,8 @@
           "error_code",
           "part_ready",
           "result_id"
-        ]
+        ],
+        "expression_ref": "release_material.sustaining"
       },
       "release_material.completion": {
         "value_type": "boolean",
@@ -1739,7 +1751,8 @@
           "error_code",
           "part_ready",
           "result_id"
-        ]
+        ],
+        "expression_ref": "release_material.completion"
       },
       "start_conveying.pre_1": {
         "value_type": "boolean",
@@ -1751,7 +1764,8 @@
           "actual_speed",
           "done",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "start_conveying.pre_1"
       },
       "start_conveying.pre_2": {
         "value_type": "boolean",
@@ -1763,7 +1777,8 @@
           "actual_speed",
           "done",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "start_conveying.pre_2"
       },
       "start_conveying.pre_3": {
         "value_type": "boolean",
@@ -1775,7 +1790,8 @@
           "actual_speed",
           "done",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "start_conveying.pre_3"
       },
       "start_conveying.sustaining": {
         "value_type": "boolean",
@@ -1787,7 +1803,8 @@
           "actual_speed",
           "done",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "start_conveying.sustaining"
       },
       "start_conveying.completion": {
         "value_type": "boolean",
@@ -1799,7 +1816,8 @@
           "actual_speed",
           "done",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "start_conveying.completion"
       },
       "set_speed.pre_1": {
         "value_type": "boolean",
@@ -1815,7 +1833,8 @@
           "error_code",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "set_speed.pre_1"
       },
       "set_speed.sustaining": {
         "value_type": "boolean",
@@ -1831,7 +1850,8 @@
           "error_code",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "set_speed.sustaining"
       },
       "set_speed.completion": {
         "value_type": "boolean",
@@ -1847,7 +1867,8 @@
           "error_code",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "set_speed.completion"
       },
       "stop_conveying.pre_1": {
         "value_type": "boolean",
@@ -1864,7 +1885,8 @@
           "error_code",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "stop_conveying.pre_1"
       },
       "stop_conveying.pre_2": {
         "value_type": "boolean",
@@ -1881,7 +1903,8 @@
           "error_code",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "stop_conveying.pre_2"
       },
       "stop_conveying.pre_3": {
         "value_type": "boolean",
@@ -1898,7 +1921,8 @@
           "error_code",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "stop_conveying.pre_3"
       },
       "stop_conveying.sustaining": {
         "value_type": "boolean",
@@ -1915,7 +1939,8 @@
           "error_code",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "stop_conveying.sustaining"
       },
       "stop_conveying.completion": {
         "value_type": "boolean",
@@ -1932,7 +1957,8 @@
           "error_code",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "stop_conveying.completion"
       },
       "reverse_conveying.pre_1": {
         "value_type": "boolean",
@@ -1949,7 +1975,8 @@
           "error_code",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "reverse_conveying.pre_1"
       },
       "reverse_conveying.pre_2": {
         "value_type": "boolean",
@@ -1966,7 +1993,8 @@
           "error_code",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "reverse_conveying.pre_2"
       },
       "reverse_conveying.pre_3": {
         "value_type": "boolean",
@@ -1983,7 +2011,8 @@
           "error_code",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "reverse_conveying.pre_3"
       },
       "reverse_conveying.sustaining": {
         "value_type": "boolean",
@@ -2000,7 +2029,8 @@
           "error_code",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "reverse_conveying.sustaining"
       },
       "reverse_conveying.completion": {
         "value_type": "boolean",
@@ -2017,7 +2047,8 @@
           "error_code",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "reverse_conveying.completion"
       },
       "zone_accumulation.pre_1": {
         "value_type": "boolean",
@@ -2028,7 +2059,8 @@
           "capacity_available",
           "done",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "zone_accumulation.pre_1"
       },
       "zone_accumulation.pre_2": {
         "value_type": "boolean",
@@ -2039,7 +2071,8 @@
           "capacity_available",
           "done",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "zone_accumulation.pre_2"
       },
       "zone_accumulation.sustaining": {
         "value_type": "boolean",
@@ -2050,7 +2083,8 @@
           "capacity_available",
           "done",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "zone_accumulation.sustaining"
       },
       "zone_accumulation.completion": {
         "value_type": "boolean",
@@ -2061,7 +2095,8 @@
           "capacity_available",
           "done",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "zone_accumulation.completion"
       },
       "meter_release.pre_1": {
         "value_type": "boolean",
@@ -2070,7 +2105,8 @@
         "signal_refs": [
           "blocked",
           "part_ready"
-        ]
+        ],
+        "expression_ref": "meter_release.pre_1"
       },
       "meter_release.pre_2": {
         "value_type": "boolean",
@@ -2079,7 +2115,8 @@
         "signal_refs": [
           "blocked",
           "part_ready"
-        ]
+        ],
+        "expression_ref": "meter_release.pre_2"
       },
       "meter_release.sustaining": {
         "value_type": "boolean",
@@ -2088,7 +2125,8 @@
         "signal_refs": [
           "blocked",
           "part_ready"
-        ]
+        ],
+        "expression_ref": "meter_release.sustaining"
       },
       "meter_release.completion": {
         "value_type": "boolean",
@@ -2097,7 +2135,8 @@
         "signal_refs": [
           "blocked",
           "part_ready"
-        ]
+        ],
+        "expression_ref": "meter_release.completion"
       },
       "publish_drive_feedback.pre_1": {
         "value_type": "boolean",
@@ -2118,7 +2157,8 @@
           "result_id",
           "runningTag",
           "velocityTag"
-        ]
+        ],
+        "expression_ref": "publish_drive_feedback.pre_1"
       },
       "publish_drive_feedback.pre_2": {
         "value_type": "boolean",
@@ -2139,7 +2179,8 @@
           "result_id",
           "runningTag",
           "velocityTag"
-        ]
+        ],
+        "expression_ref": "publish_drive_feedback.pre_2"
       },
       "publish_drive_feedback.sustaining": {
         "value_type": "boolean",
@@ -2160,7 +2201,8 @@
           "result_id",
           "runningTag",
           "velocityTag"
-        ]
+        ],
+        "expression_ref": "publish_drive_feedback.sustaining"
       },
       "publish_drive_feedback.completion": {
         "value_type": "boolean",
@@ -2181,31 +2223,36 @@
           "result_id",
           "runningTag",
           "velocityTag"
-        ]
+        ],
+        "expression_ref": "publish_drive_feedback.completion"
       },
       "entry_region_clear": {
         "value_type": "boolean",
         "provider": "physical_region_observer",
         "implementation_status": "pending_provider",
-        "signal_refs": []
+        "signal_refs": [],
+        "expression_ref": "entry_region_clear"
       },
       "subject_at_exit": {
         "value_type": "boolean",
         "provider": "physical_region_observer",
         "implementation_status": "pending_provider",
-        "signal_refs": []
+        "signal_refs": [],
+        "expression_ref": "subject_at_exit"
       },
       "exit_arrival_confirmed": {
         "value_type": "boolean",
         "provider": "physical_region_observer",
         "implementation_status": "pending_provider",
-        "signal_refs": []
+        "signal_refs": [],
+        "expression_ref": "exit_arrival_confirmed"
       },
       "subject_on_conveyor": {
         "value_type": "boolean",
         "provider": "physical_region_observer",
         "implementation_status": "pending_provider",
-        "signal_refs": []
+        "signal_refs": [],
+        "expression_ref": "subject_on_conveyor"
       },
       "move_by_distance.ready": {
         "value_type": "boolean",
@@ -2215,7 +2262,8 @@
           "encoderTag",
           "actual_speed",
           "error"
-        ]
+        ],
+        "expression_ref": "move_by_distance.ready"
       },
       "move_by_distance.sustaining": {
         "value_type": "boolean",
@@ -2225,7 +2273,8 @@
           "error",
           "actual_speed",
           "encoderTag"
-        ]
+        ],
+        "expression_ref": "move_by_distance.sustaining"
       },
       "move_by_distance.completion": {
         "value_type": "boolean",
@@ -2236,7 +2285,8 @@
           "result_id",
           "actual_speed",
           "encoderTag"
-        ]
+        ],
+        "expression_ref": "move_by_distance.completion"
       },
       "transport_to_position.ready": {
         "value_type": "boolean",
@@ -2247,7 +2297,8 @@
           "actual_speed",
           "error"
         ],
-        "description": "位置目标输送：核验载荷身份、路径、支承、资源及本次请求的实际位置/停稳证据"
+        "description": "位置目标输送：核验载荷身份、路径、支承、资源及本次请求的实际位置/停稳证据",
+        "expression_ref": "transport_to_position.ready"
       },
       "transport_to_position.sustaining": {
         "value_type": "boolean",
@@ -2258,7 +2309,8 @@
           "actual_speed",
           "encoderTag"
         ],
-        "description": "位置目标输送：核验载荷身份、路径、支承、资源及本次请求的实际位置/停稳证据"
+        "description": "位置目标输送：核验载荷身份、路径、支承、资源及本次请求的实际位置/停稳证据",
+        "expression_ref": "transport_to_position.sustaining"
       },
       "transport_to_position.completion": {
         "value_type": "boolean",
@@ -2270,7 +2322,8 @@
           "actual_speed",
           "encoderTag"
         ],
-        "description": "位置目标输送：核验载荷身份、路径、支承、资源及本次请求的实际位置/停稳证据"
+        "description": "位置目标输送：核验载荷身份、路径、支承、资源及本次请求的实际位置/停稳证据",
+        "expression_ref": "transport_to_position.completion"
       }
     },
     "authorization_definitions": {
@@ -2288,7 +2341,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "accept_material.pre_1"
       },
       "move_by_distance.motion_authorized": {
         "value_type": "boolean",
@@ -2297,7 +2351,8 @@
         "signal_refs": [
           "blocked",
           "capacity_available"
-        ]
+        ],
+        "expression_ref": "move_by_distance.motion_authorized"
       },
       "transport_to_position.motion_authorized": {
         "value_type": "boolean",
@@ -2307,7 +2362,1485 @@
           "blocked",
           "capacity_available"
         ],
-        "description": "位置目标输送：核验载荷身份、路径、支承、资源及本次请求的实际位置/停稳证据"
+        "description": "位置目标输送：核验载荷身份、路径、支承、资源及本次请求的实际位置/停稳证据",
+        "expression_ref": "transport_to_position.motion_authorized"
+      }
+    },
+    "condition_model": {
+      "schema_version": "ac-condition/0.1",
+      "execution_mode": "declaration_only",
+      "unknown_policy": "three_valued_fail_closed",
+      "bindings": {
+        "transport_to_position.transport_mode": {
+          "kind": "parameter",
+          "behavior": "transport_to_position",
+          "value_type": "string",
+          "unit": "1",
+          "parameter": "transport_mode"
+        },
+        "transport_to_position.target_and_subject_valid": {
+          "kind": "observation",
+          "behavior": "transport_to_position",
+          "value_type": "boolean",
+          "unit": "1",
+          "provider": "scene.conveyor.target_and_subject_valid@1",
+          "description": "解析 arguments.subject_id/target、主体参考点、方向和路径，并检查实际支承与停稳。",
+          "scope": "run_subject",
+          "arguments": {
+            "device": {
+              "from": "self"
+            },
+            "subject_id": {
+              "from": "argument",
+              "name": "subject_id"
+            },
+            "target": {
+              "from": "argument",
+              "name": "target"
+            }
+          },
+          "sample_keys": [
+            "world/state"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        },
+        "transport_to_position.environment_ready": {
+          "kind": "observation",
+          "behavior": "transport_to_position",
+          "value_type": "boolean",
+          "unit": "1",
+          "provider": "scene.conveyor.environment_ready@1",
+          "description": "按入口/加工点/出口语义核对供盘、机械臂退位、载荷身份和交付回执。",
+          "scope": "run_subject",
+          "arguments": {
+            "device": {
+              "from": "self"
+            },
+            "subject_id": {
+              "from": "argument",
+              "name": "subject_id"
+            },
+            "target": {
+              "from": "argument",
+              "name": "target"
+            }
+          },
+          "sample_keys": [
+            "world/state"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        },
+        "transport_to_position.resources_granted": {
+          "kind": "authorization",
+          "behavior": "transport_to_position",
+          "value_type": "boolean",
+          "unit": "1",
+          "provider": "scheduler.resources_granted@1",
+          "scope": "request_subject",
+          "arguments": {
+            "device": {
+              "from": "self"
+            },
+            "subject_id": {
+              "from": "argument",
+              "name": "subject_id"
+            },
+            "target": {
+              "from": "argument",
+              "name": "target"
+            }
+          },
+          "resource_set": "compiled_action_footprint",
+          "implementation_status": "pending_provider_binding"
+        },
+        "transport_to_position.motion_interlocks_clear": {
+          "kind": "observation",
+          "behavior": "transport_to_position",
+          "value_type": "boolean",
+          "unit": "1",
+          "provider": "scene.conveyor.motion_interlocks_clear@1",
+          "description": "资源获授后重检当前机械臂退位及运动区互锁。",
+          "scope": "run_subject",
+          "arguments": {
+            "device": {
+              "from": "self"
+            },
+            "subject_id": {
+              "from": "argument",
+              "name": "subject_id"
+            },
+            "target": {
+              "from": "argument",
+              "name": "target"
+            }
+          },
+          "sample_keys": [
+            "world/state"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        },
+        "transport_to_position.matching_accepted": {
+          "kind": "request",
+          "behavior": "transport_to_position",
+          "value_type": "boolean",
+          "unit": "1",
+          "field": "matching_accepted",
+          "scope": "request_subject",
+          "implementation_status": "pending_request_trace_binding"
+        },
+        "transport_to_position.transport_integrity": {
+          "kind": "observation",
+          "behavior": "transport_to_position",
+          "value_type": "boolean",
+          "unit": "1",
+          "provider": "scene.conveyor.transport_integrity@1",
+          "description": "冻结主体、全部耦合驱动、支承和互锁持续成立。",
+          "scope": "request_subject",
+          "arguments": {
+            "device": {
+              "from": "self"
+            },
+            "subject_id": {
+              "from": "argument",
+              "name": "subject_id"
+            },
+            "target": {
+              "from": "argument",
+              "name": "target"
+            }
+          },
+          "sample_keys": [
+            "{self}/transport",
+            "world/state"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        },
+        "transport_to_position.target_error_m": {
+          "kind": "observation",
+          "behavior": "transport_to_position",
+          "value_type": "number",
+          "unit": "m",
+          "provider": "scene.conveyor.target_error_m@1",
+          "description": "指定主体参考点到解析目标的实际距离，不能以编码器替代。",
+          "scope": "request_subject",
+          "arguments": {
+            "device": {
+              "from": "self"
+            },
+            "subject_id": {
+              "from": "argument",
+              "name": "subject_id"
+            },
+            "target": {
+              "from": "argument",
+              "name": "target"
+            }
+          },
+          "sample_keys": [
+            "{self}/transport"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        },
+        "transport_to_position.target_supported": {
+          "kind": "observation",
+          "behavior": "transport_to_position",
+          "value_type": "boolean",
+          "unit": "1",
+          "provider": "scene.conveyor.target_supported@1",
+          "description": "同主体在声明目标支承上。",
+          "scope": "request_subject",
+          "arguments": {
+            "device": {
+              "from": "self"
+            },
+            "subject_id": {
+              "from": "argument",
+              "name": "subject_id"
+            },
+            "target": {
+              "from": "argument",
+              "name": "target"
+            }
+          },
+          "sample_keys": [
+            "{self}/transport"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        },
+        "transport_to_position.subject_and_drives_stationary": {
+          "kind": "observation",
+          "behavior": "transport_to_position",
+          "value_type": "boolean",
+          "unit": "1",
+          "provider": "scene.conveyor.subject_and_drives_stationary@1",
+          "description": "同主体及全部关联驱动实际停稳。",
+          "scope": "request_subject",
+          "arguments": {
+            "device": {
+              "from": "self"
+            },
+            "subject_id": {
+              "from": "argument",
+              "name": "subject_id"
+            },
+            "target": {
+              "from": "argument",
+              "name": "target"
+            }
+          },
+          "sample_keys": [
+            "{self}/transport",
+            "world/state"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        },
+        "transport_to_position.matching_success": {
+          "kind": "request",
+          "behavior": "transport_to_position",
+          "value_type": "boolean",
+          "unit": "1",
+          "field": "matching_success",
+          "scope": "request_subject",
+          "implementation_status": "pending_request_trace_binding"
+        },
+        "transport_to_position.position_tolerance_m": {
+          "kind": "profile",
+          "behavior": "transport_to_position",
+          "value_type": "number",
+          "unit": "m",
+          "profile": "scene.assembly@1",
+          "parameter": "position_tolerance_m",
+          "implementation_status": "pending_profile_binding"
+        },
+        "transport_to_exit.subject_admitted": {
+          "kind": "observation",
+          "behavior": "transport_to_exit",
+          "value_type": "boolean",
+          "unit": "1",
+          "provider": "scene.conveyor.subject_admitted@1",
+          "description": "指定物料已实际进入本设备并被有效支承。",
+          "scope": "run_subject",
+          "arguments": {
+            "device": {
+              "from": "self"
+            },
+            "subject_id": {
+              "from": "argument",
+              "name": "subject_id"
+            }
+          },
+          "sample_keys": [
+            "world/state"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        },
+        "transport_to_exit.exit_path_valid": {
+          "kind": "observation",
+          "behavior": "transport_to_exit",
+          "value_type": "boolean",
+          "unit": "1",
+          "provider": "scene.conveyor.exit_path_valid@1",
+          "description": "本设备出口、输送方向与路径已解析且可用。",
+          "scope": "run_subject",
+          "arguments": {
+            "device": {
+              "from": "self"
+            },
+            "subject_id": {
+              "from": "argument",
+              "name": "subject_id"
+            }
+          },
+          "sample_keys": [
+            "world/state"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        },
+        "transport_to_exit.path_unblocked": {
+          "kind": "observation",
+          "behavior": "transport_to_exit",
+          "value_type": "boolean",
+          "unit": "1",
+          "provider": "scene.conveyor.path_unblocked@1",
+          "description": "无禁止推进的区域或下游阻塞；占用包含当前任务自己的物料，不把入口满误当出口路径阻塞。",
+          "scope": "run_subject",
+          "arguments": {
+            "device": {
+              "from": "self"
+            },
+            "subject_id": {
+              "from": "argument",
+              "name": "subject_id"
+            }
+          },
+          "sample_keys": [
+            "world/state"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        },
+        "transport_to_exit.matching_accepted": {
+          "kind": "request",
+          "behavior": "transport_to_exit",
+          "value_type": "boolean",
+          "unit": "1",
+          "field": "matching_accepted",
+          "scope": "request_subject",
+          "implementation_status": "pending_request_trace_binding"
+        },
+        "transport_to_exit.error_run": {
+          "kind": "signal",
+          "behavior": "transport_to_exit",
+          "value_type": "boolean",
+          "unit": "1",
+          "device": "self",
+          "port": "error",
+          "scope": "run",
+          "required_quality": "good",
+          "freshness": "signal_definition"
+        },
+        "transport_to_exit.transport_integrity": {
+          "kind": "observation",
+          "behavior": "transport_to_exit",
+          "value_type": "boolean",
+          "unit": "1",
+          "provider": "scene.conveyor.transport_integrity@1",
+          "description": "本次主体仍受有效支承，运动与互锁证据有效。",
+          "scope": "request_subject",
+          "arguments": {
+            "device": {
+              "from": "self"
+            },
+            "subject_id": {
+              "from": "argument",
+              "name": "subject_id"
+            }
+          },
+          "sample_keys": [
+            "{self}/transport",
+            "world/state"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        },
+        "transport_to_exit.target_error_m": {
+          "kind": "observation",
+          "behavior": "transport_to_exit",
+          "value_type": "number",
+          "unit": "m",
+          "provider": "scene.conveyor.target_error_m@1",
+          "description": "指定主体参考点到解析目标的实际距离，不能以编码器替代。",
+          "scope": "request_subject",
+          "arguments": {
+            "device": {
+              "from": "self"
+            },
+            "subject_id": {
+              "from": "argument",
+              "name": "subject_id"
+            }
+          },
+          "sample_keys": [
+            "{self}/transport"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        },
+        "transport_to_exit.target_supported": {
+          "kind": "observation",
+          "behavior": "transport_to_exit",
+          "value_type": "boolean",
+          "unit": "1",
+          "provider": "scene.conveyor.target_supported@1",
+          "description": "同主体在声明目标支承上。",
+          "scope": "request_subject",
+          "arguments": {
+            "device": {
+              "from": "self"
+            },
+            "subject_id": {
+              "from": "argument",
+              "name": "subject_id"
+            }
+          },
+          "sample_keys": [
+            "{self}/transport"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        },
+        "transport_to_exit.subject_and_drives_stationary": {
+          "kind": "observation",
+          "behavior": "transport_to_exit",
+          "value_type": "boolean",
+          "unit": "1",
+          "provider": "scene.conveyor.subject_and_drives_stationary@1",
+          "description": "同主体及全部关联驱动实际停稳。",
+          "scope": "request_subject",
+          "arguments": {
+            "device": {
+              "from": "self"
+            },
+            "subject_id": {
+              "from": "argument",
+              "name": "subject_id"
+            }
+          },
+          "sample_keys": [
+            "{self}/transport",
+            "world/state"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        },
+        "transport_to_exit.matching_success": {
+          "kind": "request",
+          "behavior": "transport_to_exit",
+          "value_type": "boolean",
+          "unit": "1",
+          "field": "matching_success",
+          "scope": "request_subject",
+          "implementation_status": "pending_request_trace_binding"
+        },
+        "transport_to_exit.position_tolerance_m": {
+          "kind": "profile",
+          "behavior": "transport_to_exit",
+          "value_type": "number",
+          "unit": "m",
+          "profile": "scene.assembly@1",
+          "parameter": "position_tolerance_m",
+          "implementation_status": "pending_profile_binding"
+        },
+        "release_material.subject_at_exit": {
+          "kind": "observation",
+          "behavior": "release_material",
+          "value_type": "boolean",
+          "unit": "1",
+          "provider": "scene.conveyor.subject_at_exit@1",
+          "description": "指定物料实际到出口且停稳。",
+          "scope": "run_subject",
+          "arguments": {
+            "device": {
+              "from": "self"
+            },
+            "subject_id": {
+              "from": "argument",
+              "name": "subject_id"
+            }
+          },
+          "sample_keys": [
+            "world/state"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        },
+        "release_material.receiver_admissible": {
+          "kind": "observation",
+          "behavior": "release_material",
+          "value_type": "boolean",
+          "unit": "1",
+          "provider": "scene.conveyor.receiver_admissible@1",
+          "description": "下游可接收且交接命令有合法来源；资源在候选成立后原子申请，不等待本动作提交后才写入的放行输入。",
+          "scope": "run_subject",
+          "arguments": {
+            "device": {
+              "from": "self"
+            },
+            "subject_id": {
+              "from": "argument",
+              "name": "subject_id"
+            }
+          },
+          "sample_keys": [
+            "world/state"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        },
+        "release_material.release_history_exists": {
+          "kind": "observation",
+          "behavior": "release_material",
+          "value_type": "boolean",
+          "unit": "1",
+          "provider": "scene.conveyor.release_history_exists@1",
+          "description": "当前运行中本设备存在上一件成功交付记录。",
+          "scope": "run",
+          "arguments": {
+            "device": {
+              "from": "self"
+            },
+            "subject_id": {
+              "from": "argument",
+              "name": "subject_id"
+            }
+          },
+          "sample_keys": [
+            "world/state"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        },
+        "release_material.elapsed_since_release_s": {
+          "kind": "observation",
+          "behavior": "release_material",
+          "value_type": "number",
+          "unit": "s",
+          "provider": "scene.conveyor.elapsed_since_release_s@1",
+          "description": "当前仿真时间减上一成功交付时刻；无历史时为 unknown，由另一 OR 支路处理。",
+          "scope": "run",
+          "arguments": {
+            "device": {
+              "from": "self"
+            },
+            "subject_id": {
+              "from": "argument",
+              "name": "subject_id"
+            }
+          },
+          "sample_keys": [
+            "world/state"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        },
+        "release_material.release_gap_s": {
+          "kind": "parameter",
+          "behavior": "release_material",
+          "value_type": "number",
+          "unit": "s",
+          "parameter": "release_gap_s"
+        },
+        "release_material.matching_accepted": {
+          "kind": "request",
+          "behavior": "release_material",
+          "value_type": "boolean",
+          "unit": "1",
+          "field": "matching_accepted",
+          "scope": "request_subject",
+          "implementation_status": "pending_request_trace_binding"
+        },
+        "release_material.release_waiting_material_run": {
+          "kind": "signal",
+          "behavior": "release_material",
+          "value_type": "boolean",
+          "unit": "1",
+          "device": "self",
+          "port": "release_waiting_material",
+          "scope": "run",
+          "required_quality": "good",
+          "freshness": "signal_definition"
+        },
+        "release_material.handoff_ownership_valid": {
+          "kind": "observation",
+          "behavior": "release_material",
+          "value_type": "boolean",
+          "unit": "1",
+          "provider": "scene.conveyor.handoff_ownership_valid@1",
+          "description": "本次交接预留、主体身份及接收许可仍有效。",
+          "scope": "request_subject",
+          "arguments": {
+            "device": {
+              "from": "self"
+            },
+            "subject_id": {
+              "from": "argument",
+              "name": "subject_id"
+            }
+          },
+          "sample_keys": [
+            "world/state"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        },
+        "release_material.matching_success": {
+          "kind": "request",
+          "behavior": "release_material",
+          "value_type": "boolean",
+          "unit": "1",
+          "field": "matching_success",
+          "scope": "request_subject",
+          "implementation_status": "pending_request_trace_binding"
+        },
+        "release_material.receiver_receipt": {
+          "kind": "observation",
+          "behavior": "release_material",
+          "value_type": "boolean",
+          "unit": "1",
+          "provider": "scene.conveyor.receiver_receipt@1",
+          "description": "接收方提供同运行、同主体的真实交付回执。",
+          "scope": "run_subject",
+          "arguments": {
+            "device": {
+              "from": "self"
+            },
+            "subject_id": {
+              "from": "argument",
+              "name": "subject_id"
+            }
+          },
+          "sample_keys": [
+            "world/state"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        },
+        "release_material.subject_on_device": {
+          "kind": "observation",
+          "behavior": "release_material",
+          "value_type": "boolean",
+          "unit": "1",
+          "provider": "scene.conveyor.subject_on_device@1",
+          "description": "指定主体当前仍归属或占用本输送设备。",
+          "scope": "run_subject",
+          "arguments": {
+            "device": {
+              "from": "self"
+            },
+            "subject_id": {
+              "from": "argument",
+              "name": "subject_id"
+            }
+          },
+          "sample_keys": [
+            "world/state"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        },
+        "stop_conveying.already_stationary": {
+          "kind": "observation",
+          "behavior": "stop_conveying",
+          "value_type": "boolean",
+          "unit": "1",
+          "provider": "scene.conveyor.already_stationary@1",
+          "description": "设备已经实际静止，允许幂等停止。",
+          "scope": "run",
+          "arguments": {
+            "device": {
+              "from": "self"
+            }
+          },
+          "sample_keys": [
+            "world/state"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        },
+        "stop_conveying.controlled_stop_supported": {
+          "kind": "observation",
+          "behavior": "stop_conveying",
+          "value_type": "boolean",
+          "unit": "1",
+          "provider": "scene.conveyor.controlled_stop_supported@1",
+          "description": "当前驱动有受控停止能力。",
+          "scope": "run",
+          "arguments": {
+            "device": {
+              "from": "self"
+            }
+          },
+          "sample_keys": [
+            "world/state"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        },
+        "stop_conveying.decel_time_s": {
+          "kind": "parameter",
+          "behavior": "stop_conveying",
+          "value_type": "number",
+          "unit": "s",
+          "parameter": "decel_time_s"
+        },
+        "stop_conveying.load_tracking_available": {
+          "kind": "observation",
+          "behavior": "stop_conveying",
+          "value_type": "boolean",
+          "unit": "1",
+          "provider": "scene.conveyor.load_tracking_available@1",
+          "description": "已有载荷身份可继续保持，不要求设备为空。",
+          "scope": "run",
+          "arguments": {
+            "device": {
+              "from": "self"
+            }
+          },
+          "sample_keys": [
+            "world/state"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        },
+        "stop_conveying.matching_accepted": {
+          "kind": "request",
+          "behavior": "stop_conveying",
+          "value_type": "boolean",
+          "unit": "1",
+          "field": "matching_accepted",
+          "scope": "request",
+          "implementation_status": "pending_request_trace_binding"
+        },
+        "stop_conveying.stop_retains_loads": {
+          "kind": "observation",
+          "behavior": "stop_conveying",
+          "value_type": "boolean",
+          "unit": "1",
+          "provider": "scene.conveyor.stop_retains_loads@1",
+          "description": "减速过程中保持载荷及其归属；故障停止不能依赖 error=false 才允许运行。",
+          "scope": "request",
+          "arguments": {
+            "device": {
+              "from": "self"
+            }
+          },
+          "sample_keys": [
+            "world/state"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        },
+        "stop_conveying.matching_success": {
+          "kind": "request",
+          "behavior": "stop_conveying",
+          "value_type": "boolean",
+          "unit": "1",
+          "field": "matching_success",
+          "scope": "request",
+          "implementation_status": "pending_request_trace_binding"
+        },
+        "stop_conveying.max_drive_speed_mps": {
+          "kind": "observation",
+          "behavior": "stop_conveying",
+          "value_type": "number",
+          "unit": "m/s",
+          "provider": "scene.conveyor.max_drive_speed_mps@1",
+          "description": "所有参与驱动的实际速度绝对值最大值。",
+          "scope": "request",
+          "arguments": {
+            "device": {
+              "from": "self"
+            }
+          },
+          "sample_keys": [
+            "{self}/drive_state"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        },
+        "stop_conveying.speed_tolerance_mps": {
+          "kind": "profile",
+          "behavior": "stop_conveying",
+          "value_type": "number",
+          "unit": "m/s",
+          "profile": "scene.assembly@1",
+          "parameter": "speed_tolerance_mps",
+          "implementation_status": "pending_profile_binding"
+        }
+      },
+      "expressions": {
+        "accept_material.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "accept_material.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "accept_material.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "accept_material.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "advance_to_next_stop_point.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "advance_to_next_stop_point.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "advance_to_next_stop_point.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "advance_to_next_stop_point.pre_2"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "advance_to_next_stop_point.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "advance_to_next_stop_point.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "advance_to_next_stop_point.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "advance_to_next_stop_point.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "transport_to_exit.pre_1": {
+          "status": "structured",
+          "expr": {
+            "op": "all",
+            "args": [
+              {
+                "op": "ref",
+                "binding": "transport_to_exit.subject_admitted"
+              },
+              {
+                "op": "ref",
+                "binding": "transport_to_exit.exit_path_valid"
+              }
+            ]
+          }
+        },
+        "transport_to_exit.pre_2": {
+          "status": "structured",
+          "expr": {
+            "op": "ref",
+            "binding": "transport_to_exit.path_unblocked"
+          }
+        },
+        "transport_to_exit.sustaining": {
+          "status": "structured",
+          "expr": {
+            "op": "all",
+            "args": [
+              {
+                "op": "ref",
+                "binding": "transport_to_exit.matching_accepted"
+              },
+              {
+                "op": "not",
+                "arg": {
+                  "op": "ref",
+                  "binding": "transport_to_exit.error_run"
+                }
+              },
+              {
+                "op": "ref",
+                "binding": "transport_to_exit.transport_integrity"
+              }
+            ]
+          }
+        },
+        "transport_to_exit.completion": {
+          "status": "structured",
+          "expr": {
+            "op": "all",
+            "args": [
+              {
+                "op": "ref",
+                "binding": "transport_to_exit.matching_success"
+              },
+              {
+                "op": "compare",
+                "operator": "le",
+                "left": {
+                  "op": "ref",
+                  "binding": "transport_to_exit.target_error_m"
+                },
+                "right": {
+                  "op": "ref",
+                  "binding": "transport_to_exit.position_tolerance_m"
+                }
+              },
+              {
+                "op": "ref",
+                "binding": "transport_to_exit.target_supported"
+              },
+              {
+                "op": "ref",
+                "binding": "transport_to_exit.subject_and_drives_stationary"
+              }
+            ]
+          }
+        },
+        "release_material.pre_1": {
+          "status": "structured",
+          "expr": {
+            "op": "all",
+            "args": [
+              {
+                "op": "ref",
+                "binding": "release_material.subject_at_exit"
+              },
+              {
+                "op": "ref",
+                "binding": "release_material.receiver_admissible"
+              },
+              {
+                "op": "any",
+                "args": [
+                  {
+                    "op": "not",
+                    "arg": {
+                      "op": "ref",
+                      "binding": "release_material.release_history_exists"
+                    }
+                  },
+                  {
+                    "op": "compare",
+                    "operator": "ge",
+                    "left": {
+                      "op": "ref",
+                      "binding": "release_material.elapsed_since_release_s"
+                    },
+                    "right": {
+                      "op": "ref",
+                      "binding": "release_material.release_gap_s"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "release_material.sustaining": {
+          "status": "structured",
+          "expr": {
+            "op": "all",
+            "args": [
+              {
+                "op": "ref",
+                "binding": "release_material.matching_accepted"
+              },
+              {
+                "op": "ref",
+                "binding": "release_material.release_waiting_material_run"
+              },
+              {
+                "op": "ref",
+                "binding": "release_material.handoff_ownership_valid"
+              }
+            ]
+          }
+        },
+        "release_material.completion": {
+          "status": "structured",
+          "expr": {
+            "op": "all",
+            "args": [
+              {
+                "op": "ref",
+                "binding": "release_material.matching_success"
+              },
+              {
+                "op": "ref",
+                "binding": "release_material.receiver_receipt"
+              },
+              {
+                "op": "not",
+                "arg": {
+                  "op": "ref",
+                  "binding": "release_material.subject_on_device"
+                }
+              }
+            ]
+          }
+        },
+        "start_conveying.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "start_conveying.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "start_conveying.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "start_conveying.pre_2"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "start_conveying.pre_3": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "start_conveying.pre_3"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "start_conveying.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "start_conveying.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "start_conveying.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "start_conveying.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "set_speed.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "set_speed.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "set_speed.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "set_speed.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "set_speed.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "set_speed.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "stop_conveying.pre_1": {
+          "status": "structured",
+          "expr": {
+            "op": "any",
+            "args": [
+              {
+                "op": "ref",
+                "binding": "stop_conveying.already_stationary"
+              },
+              {
+                "op": "ref",
+                "binding": "stop_conveying.controlled_stop_supported"
+              }
+            ]
+          }
+        },
+        "stop_conveying.pre_2": {
+          "status": "structured",
+          "expr": {
+            "op": "compare",
+            "operator": "ge",
+            "left": {
+              "op": "ref",
+              "binding": "stop_conveying.decel_time_s"
+            },
+            "right": {
+              "op": "literal",
+              "value": 0,
+              "unit": "s"
+            }
+          }
+        },
+        "stop_conveying.pre_3": {
+          "status": "structured",
+          "expr": {
+            "op": "ref",
+            "binding": "stop_conveying.load_tracking_available"
+          }
+        },
+        "stop_conveying.sustaining": {
+          "status": "structured",
+          "expr": {
+            "op": "all",
+            "args": [
+              {
+                "op": "ref",
+                "binding": "stop_conveying.matching_accepted"
+              },
+              {
+                "op": "ref",
+                "binding": "stop_conveying.stop_retains_loads"
+              }
+            ]
+          }
+        },
+        "stop_conveying.completion": {
+          "status": "structured",
+          "expr": {
+            "op": "all",
+            "args": [
+              {
+                "op": "ref",
+                "binding": "stop_conveying.matching_success"
+              },
+              {
+                "op": "compare",
+                "operator": "le",
+                "left": {
+                  "op": "ref",
+                  "binding": "stop_conveying.max_drive_speed_mps"
+                },
+                "right": {
+                  "op": "ref",
+                  "binding": "stop_conveying.speed_tolerance_mps"
+                }
+              }
+            ]
+          }
+        },
+        "reverse_conveying.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "reverse_conveying.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "reverse_conveying.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "reverse_conveying.pre_2"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "reverse_conveying.pre_3": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "reverse_conveying.pre_3"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "reverse_conveying.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "reverse_conveying.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "reverse_conveying.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "reverse_conveying.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "zone_accumulation.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "zone_accumulation.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "zone_accumulation.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "zone_accumulation.pre_2"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "zone_accumulation.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "zone_accumulation.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "zone_accumulation.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "zone_accumulation.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "meter_release.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "meter_release.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "meter_release.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "meter_release.pre_2"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "meter_release.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "meter_release.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "meter_release.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "meter_release.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "publish_drive_feedback.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "publish_drive_feedback.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "publish_drive_feedback.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "publish_drive_feedback.pre_2"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "publish_drive_feedback.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "publish_drive_feedback.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "publish_drive_feedback.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "publish_drive_feedback.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "entry_region_clear": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "entry_region_clear"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "subject_at_exit": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "subject_at_exit"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "exit_arrival_confirmed": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "exit_arrival_confirmed"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "subject_on_conveyor": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "subject_on_conveyor"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "move_by_distance.ready": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "move_by_distance.ready"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "move_by_distance.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "move_by_distance.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "move_by_distance.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "move_by_distance.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "transport_to_position.ready": {
+          "status": "structured",
+          "expr": {
+            "op": "all",
+            "args": [
+              {
+                "op": "compare",
+                "operator": "eq",
+                "left": {
+                  "op": "ref",
+                  "binding": "transport_to_position.transport_mode"
+                },
+                "right": {
+                  "op": "literal",
+                  "value": "continuous",
+                  "unit": "1"
+                }
+              },
+              {
+                "op": "ref",
+                "binding": "transport_to_position.target_and_subject_valid"
+              },
+              {
+                "op": "ref",
+                "binding": "transport_to_position.environment_ready"
+              }
+            ]
+          }
+        },
+        "transport_to_position.sustaining": {
+          "status": "structured",
+          "expr": {
+            "op": "all",
+            "args": [
+              {
+                "op": "ref",
+                "binding": "transport_to_position.matching_accepted"
+              },
+              {
+                "op": "ref",
+                "binding": "transport_to_position.transport_integrity"
+              }
+            ]
+          }
+        },
+        "transport_to_position.completion": {
+          "status": "structured",
+          "expr": {
+            "op": "all",
+            "args": [
+              {
+                "op": "ref",
+                "binding": "transport_to_position.matching_success"
+              },
+              {
+                "op": "compare",
+                "operator": "le",
+                "left": {
+                  "op": "ref",
+                  "binding": "transport_to_position.target_error_m"
+                },
+                "right": {
+                  "op": "ref",
+                  "binding": "transport_to_position.position_tolerance_m"
+                }
+              },
+              {
+                "op": "ref",
+                "binding": "transport_to_position.target_supported"
+              },
+              {
+                "op": "ref",
+                "binding": "transport_to_position.subject_and_drives_stationary"
+              }
+            ]
+          }
+        },
+        "accept_material.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "authorization",
+            "key": "accept_material.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "move_by_distance.motion_authorized": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "authorization",
+            "key": "move_by_distance.motion_authorized"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "transport_to_position.motion_authorized": {
+          "status": "structured",
+          "expr": {
+            "op": "all",
+            "args": [
+              {
+                "op": "ref",
+                "binding": "transport_to_position.resources_granted"
+              },
+              {
+                "op": "ref",
+                "binding": "transport_to_position.motion_interlocks_clear"
+              }
+            ]
+          }
+        }
       }
     }
   },

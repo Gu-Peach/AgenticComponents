@@ -11,6 +11,7 @@ import type { ConditionContext } from "@/runtime/signals/ConditionProviders";
 import { evaluate, UNKNOWN, durationTicks, immutable } from "./expressions";
 import { ResourceArbiter } from "./ResourceArbiter";
 import { RequestBook } from "./RequestBook";
+import type { ConditionPhase } from "@/contracts/condition-expression";
 
 interface Activation {
   id: string;
@@ -20,6 +21,7 @@ interface Activation {
   since: number;
   index: number;
   children: Activation[];
+  parentId?: string;
   blockedBy: string[];
   values?: unknown[];
   request?: ActionRequest;
@@ -73,7 +75,19 @@ export class ProcessScheduler {
     return a;
   }
   private context(a: Activation): ConditionContext {
+    const record = a.request
+      ? this.requests.get(a.request.requestId)
+      : undefined;
     return {
+      nodeId: a.node.id,
+      activationId: a.id,
+      requestState: record
+        ? {
+            accepted: record.accepted,
+            outcome: record.outcome,
+            stopped: record.stopped,
+          }
+        : undefined,
       frame: this.input.frame,
       observations: this.input.observations,
       tick: this.tick,
@@ -85,9 +99,16 @@ export class ProcessScheduler {
   private value(e: Expression, a: Activation) {
     return evaluate(e, this.context(a), this.process.readers);
   }
-  private checks(ids: readonly string[], a: Activation) {
+  private checks(
+    ids: readonly string[],
+    a: Activation,
+    phase: ConditionPhase = "gate",
+  ) {
     const values = ids.map((id) => {
-      const value = this.process.providers.evaluate(id, this.context(a));
+      const value = this.process.providers.evaluate(id, {
+        ...this.context(a),
+        phase,
+      });
       if (value !== true)
         a.blockedBy.push(`${id}: ${value === undefined ? "unknown" : "false"}`);
       return value;
@@ -108,6 +129,7 @@ export class ProcessScheduler {
   }
   private child(a: Activation, node: ProcessNode, scope = a.scope) {
     const c = this.activate(node, scope, this.tick);
+    c.parentId = a.id;
     a.children.push(c);
     return c;
   }
@@ -123,10 +145,11 @@ export class ProcessScheduler {
     a.normalExit = normal;
   }
   private stopped(a: Activation) {
+    if (!a.request) return false;
+    const physical = this.checks(a.binding!.stopped, a, "stopped");
     return (
-      !!a.request &&
       this.requests.get(a.request.requestId)?.stopped === true &&
-      this.checks(a.binding!.stopped, a) === true
+      physical === true
     );
   }
   private action(a: Activation) {
@@ -189,7 +212,7 @@ export class ProcessScheduler {
       });
     }
     if (a.submitted === undefined) {
-      if (this.checks(b.preconditions, a) !== true) {
+      if (this.checks(b.preconditions, a, "precondition") !== true) {
         this.resources.release(a.id);
         a.state = "waiting_preconditions";
         this.timed(a, this.process.deadlines.preconditions);
@@ -205,7 +228,7 @@ export class ProcessScheduler {
         this.timed(a, this.process.deadlines.preconditions);
         return;
       }
-      if (this.checks(b.authorization, a) !== true) {
+      if (this.checks(b.authorization, a, "authorization") !== true) {
         this.resources.release(a.id);
         a.state = "waiting_authorization";
         this.timed(a, this.process.deadlines.preconditions);
@@ -230,12 +253,13 @@ export class ProcessScheduler {
       this.timed(a, this.process.deadlines.acceptance, a.submitted);
       return;
     }
-    if (this.checks(b.sustaining, a) !== true)
+    if (this.checks(b.sustaining, a, "sustaining") !== true)
       throw new Error("Sustaining evidence lost: " + n.id);
     a.state = "running";
     if (n.kind === "with-control") {
       if (!a.children.length) {
-        if (this.checks(b.completion, a) === true) this.child(a, n.body);
+        if (this.checks(b.completion, a, "completion") === true)
+          this.child(a, n.body);
         else this.timed(a, this.process.deadlines.acceptance, a.submitted);
         return;
       }
@@ -247,8 +271,8 @@ export class ProcessScheduler {
     if (r.outcome === "succeeded") {
       a.state = "verifying_completion";
       if (
-        this.checks(b.completion, a) === true &&
-        this.checks(b.release, a) === true
+        this.checks(b.completion, a, "completion") === true &&
+        this.checks(b.release, a, "release") === true
       ) {
         this.succeed(a);
         return;
@@ -440,10 +464,10 @@ export class ProcessScheduler {
       }
       if (this.status === "finalizing") {
         if (
-          this.process.providers.all(
-            this.process.finalization,
-            this.context(this.root),
-          ) === true
+          this.process.providers.all(this.process.finalization, {
+            ...this.context(this.root),
+            phase: "finalization",
+          }) === true
         )
           this.status = "succeeded";
         else if (
@@ -493,6 +517,15 @@ export class ProcessScheduler {
         node: a.node.id,
         state: a.state,
         requestId: a.request?.requestId,
+        subjectId: a.request?.subjectId,
+        parentId: a.parentId,
+        iteration:
+          a.node.kind === "repeat" && a.values
+            ? Math.min(a.index + 1, a.values.length)
+            : undefined,
+        totalIterations: a.values?.length,
+        selectedChild:
+          a.node.kind === "branch" ? a.children[0]?.node.id : undefined,
         blockedBy: [...a.blockedBy],
       })),
       resources: this.resources.snapshot(),

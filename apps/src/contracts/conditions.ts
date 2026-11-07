@@ -3,6 +3,10 @@ import type {
   SignalIdentity,
   SignalQuality,
 } from "./scene-signals";
+import type {
+  ConditionPhase,
+  ConditionDiagnostics,
+} from "./condition-expression";
 export type Truth = boolean | undefined;
 export interface ObservationWrite extends SignalIdentity {
   key: string;
@@ -26,6 +30,14 @@ export interface ObservationFrame {
   samples: Readonly<Record<string, Readonly<ObservationSample>>>;
 }
 export interface ConditionContext {
+  nodeId?: string;
+  activationId?: string;
+  phase?: ConditionPhase;
+  requestState?: Readonly<{
+    accepted: boolean;
+    outcome?: "succeeded" | "failed";
+    stopped: boolean;
+  }>;
   frame: Readonly<SceneSignalFrame>;
   tick: number;
   scope: Readonly<Record<string, unknown>>;
@@ -45,6 +57,7 @@ export interface ConditionProvider {
   ): Truth;
 }
 export interface ConditionProviderPort {
+  diagnostics?(): ConditionDiagnostics | undefined;
   validate(ids: readonly string[]): void;
   evaluate(id: string, context: ConditionContext): Truth;
   all(ids: readonly string[], context: ConditionContext): Truth;

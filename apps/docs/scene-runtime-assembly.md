@@ -88,3 +88,8 @@ node node_modules/vitest/vitest.mjs run tests/assembly/s01-integration.test.ts
 在本机生产构建中验证了导入、准备、运行、暂停、继续、停止完成和重置。暂停时 tick 保持不变，重置后 runId 改变；取消完成后可以重新准备。关节可视变换另有 GLB/FK 一致性测试。
 
 [浏览器验证截图](development-plans/evidence/008-browser-proof.jpg)记录的是候选会话暂停在 tick 8079 的场景与 C2 实时端口，不代表浏览器已经跑完全部任务；整场 36 件结论来自独立的真实 Jolt 自动化验收记录。最终浏览器控制台未发现 error/warn。
+
+
+## 009 条件与梯形图接入
+
+当前准备默认使用统一条件表达式运行 profile。PLC 页默认显示按 DSL 生成的只读工步梯形图，设备接口视图保留为详情；两者共用本场景会话。使用方式及完整验收见[实时工步梯形图说明](scene-live-ladder.md)。

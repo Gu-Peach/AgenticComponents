@@ -3,6 +3,7 @@ import copy, hashlib, json
 import math
 from pathlib import Path
 from scene_geometry import SceneGeometry, quaternion, relative_pose
+from condition_model import validate_condition_model
 
 def defaults(contract):
     if contract.get('schema_type')=='DeviceSpec':return {k:v['default'] for k,v in contract['params_schema'].items() if 'default'in v}
@@ -59,6 +60,7 @@ def load_scene_devices(folder,manifest,gltf):
         contract=read(contract_file);instance=authored['instance_id']
         if contract.get('schema_type')=='DeviceSpec':
             if not all(key in contract for key in ('version','params_schema','signal_ports','transport_behaviors','type_specific_contract','runtime_contract','runtime_execution_contract')):raise ValueError('Invalid shared contract')
+            validate_condition_model(contract)
         elif contract.get('schema_type')!='ExperimentalAssetContract' or 'definition' not in contract:raise ValueError('Invalid shared contract')
         if instance in devices:raise ValueError('Duplicate instance identity')
         allowed=set(contract.get('params_schema',{})) if contract.get('schema_type')=='DeviceSpec' else {p['id'] for p in contract['definition']['parameters']}

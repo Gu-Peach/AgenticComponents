@@ -3,6 +3,12 @@ import type {
   ConditionProvider,
   Truth,
 } from "@/contracts/conditions";
+import type { CompiledCondition } from "@/contracts/condition-expression";
+import {
+  evaluateCondition,
+  type ConditionBindingReader,
+} from "./ConditionEvaluator";
+import { ConditionTrace } from "./ConditionTrace";
 export type {
   ConditionContext,
   ConditionProvider,
@@ -10,6 +16,31 @@ export type {
 } from "@/contracts/conditions";
 export class ConditionProviders {
   private providers = new Map<string, ConditionProvider>();
+  private expressions = new Set<string>();
+  constructor(private trace?: ConditionTrace) {}
+  diagnostics() {
+    return this.trace?.snapshot();
+  }
+  registerExpression(
+    condition: CompiledCondition,
+    reader: ConditionBindingReader,
+    legacy?: (c: ConditionContext) => Truth,
+  ) {
+    this.expressions.add(condition.key);
+    this.register(condition.key, {
+      evaluate: (c) => {
+        const result = evaluateCondition(condition, c, reader, () =>
+          legacy?.(c),
+        );
+        this.trace?.record(
+          this.trace.mode === "compare" && legacy
+            ? Object.freeze({ ...result, legacyValue: legacy(c) ?? null })
+            : result,
+        );
+        return result.value ?? undefined;
+      },
+    });
+  }
   register(id: string, provider: ConditionProvider) {
     if (this.providers.has(id)) throw new Error("Duplicate condition provider");
     this.providers.set(id, provider);
@@ -41,6 +72,27 @@ export class ConditionProviders {
       if (result !== true && result !== false && result !== undefined)
         throw new Error("Invalid condition result");
       cache.set(key, result);
+      if (this.trace && !this.expressions.has(key)) {
+        const compiled: CompiledCondition = {
+          key,
+          device: context.request?.device ?? "",
+          behavior: "native",
+          expected: true,
+          phase: context.phase ?? "gate",
+          expr: { op: "opaque", key, source: "observation" },
+          bindings: {},
+        };
+        this.trace.record(
+          evaluateCondition(
+            compiled,
+            context,
+            () => {
+              throw new Error("No native leaf");
+            },
+            () => result,
+          ),
+        );
+      }
       return result;
     };
     return evalOne(id);

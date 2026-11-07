@@ -23,6 +23,7 @@ export interface TransportDrive {
   flow: [number, number, number];
 }
 export interface PositionTransportConfig {
+  publishDriveState?: boolean;
   sceneId: string;
   runId: string;
   leader: string;
@@ -404,6 +405,21 @@ export class PositionTransportAdapter implements DeviceActionPort {
   }
   afterPhysics(dt: number, tick: number) {
     this.encoder += this.speed * dt;
+    if (this.config.publishDriveState)
+      this.observations.push({
+        key: `${this.id}/drive_state`,
+        provider: `adapter:${this.id}`,
+        runId: this.config.runId,
+        ...this.request,
+        value: {
+          maxSpeed: Math.max(
+            ...this.config.drives.map((d) =>
+              Math.abs(this.physics.getSurfaceSpeed!(d.surfaceId)),
+            ),
+          ),
+          error: this.error || null,
+        },
+      });
     const loads = [...this.config.subjects].flatMap(([id, subject]) => {
       if (
         this.physics.isBodyActive &&

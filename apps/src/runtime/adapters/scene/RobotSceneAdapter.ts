@@ -8,6 +8,7 @@ import { SignalRegistry } from "@/runtime/engine/SignalRegistry";
 import { RobotJobRunner } from "@/runtime/templates/robot/RobotJobRunner";
 import { RobotState } from "@/runtime/templates/robot/RobotState";
 import type { DeviceActionPort } from "./DeviceActionPort";
+import { Quaternion } from "three";
 export interface PreparedRobotAction {
   scene: CompiledRobotScene;
   steps: RobotStep[];
@@ -18,7 +19,14 @@ export class RobotSceneAdapter implements DeviceActionPort {
   private state = new RobotState();
   private runner?: RobotJobRunner;
   private request?: ActionRequest;
-  private prepared?: { id: string; runner: RobotJobRunner; state: RobotState };
+  private prepared?: {
+    id: string;
+    runner: RobotJobRunner;
+    state: RobotState;
+    action: PreparedRobotAction;
+  };
+  private action?: PreparedRobotAction;
+  private placementConfirmed = false;
   private terminal = false;
   private succeeded = false;
   private acknowledged = false;
@@ -124,7 +132,7 @@ export class RobotSceneAdapter implements DeviceActionPort {
       port,
     );
     runner.plan(command.steps);
-    this.prepared = { id: request.requestId, runner, state };
+    this.prepared = { id: request.requestId, runner, state, action };
     return [
       this.write("enableTag", true, request),
       this.write("start_pick", true, request),
@@ -137,6 +145,8 @@ export class RobotSceneAdapter implements DeviceActionPort {
     this.runner?.dispose();
     this.runner = this.prepared.runner;
     this.state = this.prepared.state;
+    this.action = this.prepared.action;
+    this.placementConfirmed = false;
     this.prepared = undefined;
     this.request = request;
     this.terminal = false;
@@ -210,6 +220,22 @@ export class RobotSceneAdapter implements DeviceActionPort {
       const physicallyAtTCP =
         Math.hypot(...measured.position.map((v, i) => v - tcp.position[i])) <=
         this.base.tolerance;
+      if (this.runner.grasp?.holding) this.placementConfirmed = false;
+      else if (
+        this.action?.scene.materialBodyId &&
+        this.physics.isBodyActive?.(this.action.scene.materialBodyId) !==
+          false &&
+        this.runner.grasp?.placed()
+      )
+        this.placementConfirmed = true;
+      const targetStep = this.action?.steps[0],
+        poseTarget =
+          this.request.behavior === "move_to_pose" &&
+          targetStep?.kind === "move_to_pose"
+            ? this.runner.fk
+                .targetToWorld(targetStep.position, targetStep.frame)
+                .toArray()
+            : undefined;
       if (
         !this.terminal &&
         !this.stopping &&
@@ -236,6 +262,22 @@ export class RobotSceneAdapter implements DeviceActionPort {
           tool: this.physics.readBody!(this.base.toolBodyId),
           holding: !!this.runner.grasp?.holding,
           phase: this.state.phase,
+          motionIntegrity:
+            !this.error &&
+            physicallyAtTCP &&
+            (!this.runner.grasp?.holding ||
+              this.runner.grasp.error(tcp) <=
+                this.base.model.gripper.constraint_tolerance_m),
+          placementConfirmed: this.placementConfirmed,
+          targetError: poseTarget
+            ? Math.hypot(...measured.position.map((v, i) => v - poseTarget[i]))
+            : null,
+          orientationSatisfied:
+            targetStep?.kind === "move_to_pose" && targetStep.world_rotation
+              ? new Quaternion(...measured.rotation).angleTo(
+                  new Quaternion(...targetStep.world_rotation),
+                ) <= 0.005
+              : true,
         },
       });
     }
