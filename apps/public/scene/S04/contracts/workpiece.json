@@ -643,27 +643,59 @@
     "process_geometry": {
       "regions": [
         {
-          "region_id": "grasp_surface",
+          "region_id": "head",
           "placement_rule": "top_center_from_geometry"
         },
         {
-          "region_id": "bottom",
+          "region_id": "tail",
           "placement_rule": "bottom_center_from_geometry"
         }
       ]
     },
     "grasping": {
       "allowed_grasp_regions": [
-        "grasp_surface"
+        "head",
+        "tail"
       ],
-      "preferred_grasp": "top",
-      "frame_source": "process_geometry"
+      "preferred_grasp": "head",
+      "frame_source": "material_local_m",
+      "frames": {
+        "head": {
+          "position_m": [
+            0,
+            0.21499999519437551,
+            0
+          ],
+          "approach_axis": [
+            0,
+            -1,
+            0
+          ],
+          "reference": "cap_top_center"
+        },
+        "tail": {
+          "position_m": [
+            0,
+            0,
+            0
+          ],
+          "approach_axis": [
+            0,
+            1,
+            0
+          ],
+          "reference": "base_center"
+        }
+      }
     },
     "placement": {
       "stable_regions": [
-        "bottom"
+        "tail"
       ],
-      "can_stack_param": "can_stack"
+      "can_stack_param": "can_stack",
+      "candidate_contact_regions": [
+        "head"
+      ]
     },
     "movement_role": "passive_subject"
   },

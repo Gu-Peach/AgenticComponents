@@ -2,16 +2,135 @@
   "schema_version": "scene-device/0.2",
   "instance_id": "R2",
   "contract_ref": "../contracts/robot_arm.json",
+  "parameters": {},
   "node_binding": {
-    "status": "unresolved"
+    "status": "bound",
+    "node": "robot(UR10)(1)(center)",
+    "model_sha256": "30370e9a08f95df30feac2f6fc92cfce6fa6ec291f3a015d244580135845738e"
   },
   "locations": {
-    "R2.tool": {
-      "geometry_status": "pending_calibration"
-    },
     "R2.home": {
-      "geometry_status": "pending_calibration",
-      "role": "outside_all_shared_motion_zones"
+      "frame": "flange_pose_scene_world_m",
+      "node": "mountplate_009n",
+      "reference": "robot_rest_pose",
+      "status": "rest_pose_only_clearance_unvalidated"
+    }
+  },
+  "model": {
+    "calibration": {
+      "status": "pending",
+      "source": "S04 GLB 同构 UR10 串联连杆，逐级枢轴间距与 robot_UR10 参考匹配。采用参考关节局部轴和相对 GLB 零位的 ±π 仿真行程，TCP 取法兰原点。"
+    },
+    "urdf": {
+      "joints": [
+        {
+          "nodeName": "Link1_003n",
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "limit": {
+            "lower": -3.141592653589793,
+            "upper": 3.141592653589793
+          }
+        },
+        {
+          "nodeName": "Link2_004n",
+          "axis": [
+            0,
+            0,
+            1
+          ],
+          "limit": {
+            "lower": -3.141592653589793,
+            "upper": 3.141592653589793
+          }
+        },
+        {
+          "nodeName": "Link3_005n",
+          "axis": [
+            0,
+            0,
+            1
+          ],
+          "limit": {
+            "lower": -3.141592653589793,
+            "upper": 3.141592653589793
+          }
+        },
+        {
+          "nodeName": "Link4_006n",
+          "axis": [
+            0,
+            0,
+            1
+          ],
+          "limit": {
+            "lower": -3.141592653589793,
+            "upper": 3.141592653589793
+          }
+        },
+        {
+          "nodeName": "Link5_007n",
+          "axis": [
+            1,
+            0,
+            0
+          ],
+          "limit": {
+            "lower": -3.141592653589793,
+            "upper": 3.141592653589793
+          }
+        },
+        {
+          "nodeName": "Link6_008n",
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "limit": {
+            "lower": -3.141592653589793,
+            "upper": 3.141592653589793
+          }
+        }
+      ]
+    },
+    "tooling": {
+      "flange_node_name": "mountplate_009n",
+      "tcp_local_frame": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation_quaternion": [
+          0,
+          0,
+          0,
+          1
+        ]
+      },
+      "simulation_tool": true,
+      "approach_axis_local": [
+        0,
+        1,
+        0
+      ]
+    },
+    "gripper": {
+      "type": "virtual_fixed_grasp",
+      "capture_radius_m": 0.012,
+      "max_relative_speed_mps": 0.035,
+      "max_payload_param": "max_payload_kg",
+      "tool_size_m": [
+        0.025,
+        0.025,
+        0.025
+      ],
+      "constraint_tolerance_m": 0.012,
+      "orientation_policy": "spherical_virtual_capture"
     }
   }
 }

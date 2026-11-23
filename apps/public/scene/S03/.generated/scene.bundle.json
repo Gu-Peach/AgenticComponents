@@ -2,21 +2,21 @@
   "schema_version": "scene-bundle/0.1",
   "id": "S03",
   "name": "S03：六件入环输送与双机械臂出环流水",
-  "model_sha256": "11aeab283c378c1ec8bf7d2709db74d4e8ff70b640a4b7a62f686307223501b0",
-  "model_url": "/scene/S03/Closed%20Conveyor%20Loop/Closed%20Conveyor%20Loop.glb",
+  "model_sha256": "0ab1f8e1a746a08d1dd0a30f92a1a79354b5482b1e9bd038226486590bb5f718",
+  "model_url": "/scene/S03/Closed%20Conveyor%20Loop/PM%20Closed%20Conveyor%20Loop.centered.glb",
   "source_hashes": {
     "process.py": "4df6bc08daad118d27f578b4d05bd556858f6f075ef9bccf6819981ca2280537",
     "task-spec.json": "7621f0ad7c6a9b9073ac843729d76695daa41a57618de31c4c093869ec480690",
-    "scene.json": "6c1e58c7b6893001968eec6fefff33bcac1956b359b33c50646e05e56256d05a",
+    "scene.json": "6b6eafe59252f4177c8031c57a5ee018bd4e13c6b349a3f64b9310068feb03e2",
     "device/R1.json": "f5ee0aa2f86ab7789338ecdc0291148d7dbe78c7397ff044a1289f45571defe5",
-    "contracts/robot_arm.json": "7f7dd5e1d460e7ff170340321821fd40383f41d0f2e4b3c155c9412357940d36",
+    "contracts/robot_arm.json": "40e91ff20c6168cea0da03a1934e801981a373ea44135cbbe4a5b1108598db80",
     "device/R2.json": "f03b9626374228171a35e7bf021ffc477b90c5d451f973280f46f87f30d09c08",
     "device/LOOP.json": "e3cfbf8c71db32e94463a44a8ad5df3fbde95b7d25d5932a4b831f5f6651cb94",
-    "contracts/conveyor.json": "2e29f61a1ee952011f0bcb63797dd7a9b62edeb0972844231b9881836fffd808",
+    "contracts/conveyor.json": "2409448d262d85a4c0f15edd22cb5d67886d8874b2f1e4c3e1596d5d327a4ca4",
     "device/IN.json": "ef50d6ee78748b296e06db1f09a2cb435e1714caf00aac4d90c7c43cd5bb76ee",
     "device/OUT.json": "4e80cc552632b7ec14a165adb1c889becb6a5f614b15e78eaa9608b83ad9c655",
     "device/M01.json": "8fd96d27d0196204673f972331e74e34a9ac1dcc4ea88ad35b7199f2895a5e15",
-    "contracts/workpiece.json": "a0b7a95d76d7411dd5bdadbe1560c42f9a8e6f14c74f6558173beaa59830b9a2",
+    "contracts/workpiece.json": "da74c64545f35ff7367f6242718cee7be9d14c178502b5304d60909136777dd5",
     "device/M02.json": "ecefe531d32422e6f9e6fcfc2bf4161d7041263cd9f028a9656ff574dec549fd",
     "device/M03.json": "18bafe2158cbfcd55ff3e85ad76e1b1abf934f8c032fbb7fa971bd377075d794",
     "device/M04.json": "e600ce6b78da85c722da28610e305d88a1ffaeaecdb870a98f2911b092358243",
@@ -561,7 +561,7 @@
       "instance_id": "R1",
       "node_binding": {
         "status": "unresolved",
-        "model_sha256": "11aeab283c378c1ec8bf7d2709db74d4e8ff70b640a4b7a62f686307223501b0",
+        "model_sha256": "0ab1f8e1a746a08d1dd0a30f92a1a79354b5482b1e9bd038226486590bb5f718",
         "node_indices": []
       },
       "locations": {
@@ -585,8 +585,8 @@
         "display_name": "机械臂：可组合动作与任务执行",
         "asset": {
           "model_format": "glb",
-          "model_key": "../Closed Conveyor Loop/Closed Conveyor Loop.glb",
-          "sha256": "11aeab283c378c1ec8bf7d2709db74d4e8ff70b640a4b7a62f686307223501b0"
+          "model_key": "../Closed Conveyor Loop/PM Closed Conveyor Loop.centered.glb",
+          "sha256": "0ab1f8e1a746a08d1dd0a30f92a1a79354b5482b1e9bd038226486590bb5f718"
         },
         "params_schema": {
           "joint_speed_rad_s": {
@@ -2662,7 +2662,7 @@
       "instance_id": "R2",
       "node_binding": {
         "status": "unresolved",
-        "model_sha256": "11aeab283c378c1ec8bf7d2709db74d4e8ff70b640a4b7a62f686307223501b0",
+        "model_sha256": "0ab1f8e1a746a08d1dd0a30f92a1a79354b5482b1e9bd038226486590bb5f718",
         "node_indices": []
       },
       "locations": {
@@ -2686,8 +2686,8 @@
         "display_name": "机械臂：可组合动作与任务执行",
         "asset": {
           "model_format": "glb",
-          "model_key": "../Closed Conveyor Loop/Closed Conveyor Loop.glb",
-          "sha256": "11aeab283c378c1ec8bf7d2709db74d4e8ff70b640a4b7a62f686307223501b0"
+          "model_key": "../Closed Conveyor Loop/PM Closed Conveyor Loop.centered.glb",
+          "sha256": "0ab1f8e1a746a08d1dd0a30f92a1a79354b5482b1e9bd038226486590bb5f718"
         },
         "params_schema": {
           "joint_speed_rad_s": {
@@ -4778,7 +4778,7 @@
       },
       "node_binding": {
         "status": "unresolved",
-        "model_sha256": "11aeab283c378c1ec8bf7d2709db74d4e8ff70b640a4b7a62f686307223501b0",
+        "model_sha256": "0ab1f8e1a746a08d1dd0a30f92a1a79354b5482b1e9bd038226486590bb5f718",
         "node_indices": []
       },
       "locations": {
@@ -4801,8 +4801,8 @@
         "display_name": "传送带：连续输送与可选分区积放",
         "asset": {
           "model_format": "glb",
-          "model_key": "../Closed Conveyor Loop/Closed Conveyor Loop.glb",
-          "sha256": "11aeab283c378c1ec8bf7d2709db74d4e8ff70b640a4b7a62f686307223501b0"
+          "model_key": "../Closed Conveyor Loop/PM Closed Conveyor Loop.centered.glb",
+          "sha256": "0ab1f8e1a746a08d1dd0a30f92a1a79354b5482b1e9bd038226486590bb5f718"
         },
         "params_schema": {
           "speed_mps": {
@@ -7204,7 +7204,7 @@
       },
       "node_binding": {
         "status": "unresolved",
-        "model_sha256": "11aeab283c378c1ec8bf7d2709db74d4e8ff70b640a4b7a62f686307223501b0",
+        "model_sha256": "0ab1f8e1a746a08d1dd0a30f92a1a79354b5482b1e9bd038226486590bb5f718",
         "node_indices": []
       },
       "locations": {
@@ -7227,8 +7227,8 @@
         "display_name": "传送带：连续输送与可选分区积放",
         "asset": {
           "model_format": "glb",
-          "model_key": "../Closed Conveyor Loop/Closed Conveyor Loop.glb",
-          "sha256": "11aeab283c378c1ec8bf7d2709db74d4e8ff70b640a4b7a62f686307223501b0"
+          "model_key": "../Closed Conveyor Loop/PM Closed Conveyor Loop.centered.glb",
+          "sha256": "0ab1f8e1a746a08d1dd0a30f92a1a79354b5482b1e9bd038226486590bb5f718"
         },
         "params_schema": {
           "speed_mps": {
@@ -9630,7 +9630,7 @@
       },
       "node_binding": {
         "status": "unresolved",
-        "model_sha256": "11aeab283c378c1ec8bf7d2709db74d4e8ff70b640a4b7a62f686307223501b0",
+        "model_sha256": "0ab1f8e1a746a08d1dd0a30f92a1a79354b5482b1e9bd038226486590bb5f718",
         "node_indices": []
       },
       "locations": {
@@ -9653,8 +9653,8 @@
         "display_name": "传送带：连续输送与可选分区积放",
         "asset": {
           "model_format": "glb",
-          "model_key": "../Closed Conveyor Loop/Closed Conveyor Loop.glb",
-          "sha256": "11aeab283c378c1ec8bf7d2709db74d4e8ff70b640a4b7a62f686307223501b0"
+          "model_key": "../Closed Conveyor Loop/PM Closed Conveyor Loop.centered.glb",
+          "sha256": "0ab1f8e1a746a08d1dd0a30f92a1a79354b5482b1e9bd038226486590bb5f718"
         },
         "params_schema": {
           "speed_mps": {
@@ -12052,7 +12052,7 @@
       },
       "node_binding": {
         "status": "unresolved",
-        "model_sha256": "11aeab283c378c1ec8bf7d2709db74d4e8ff70b640a4b7a62f686307223501b0",
+        "model_sha256": "0ab1f8e1a746a08d1dd0a30f92a1a79354b5482b1e9bd038226486590bb5f718",
         "node_indices": []
       },
       "subject_id": 1,
@@ -12066,8 +12066,8 @@
         "display_name": "物料：被动对象与状态观测",
         "asset": {
           "model_format": "glb",
-          "model_key": "../Closed Conveyor Loop/Closed Conveyor Loop.glb",
-          "sha256": "11aeab283c378c1ec8bf7d2709db74d4e8ff70b640a4b7a62f686307223501b0"
+          "model_key": "../Closed Conveyor Loop/PM Closed Conveyor Loop.centered.glb",
+          "sha256": "0ab1f8e1a746a08d1dd0a30f92a1a79354b5482b1e9bd038226486590bb5f718"
         },
         "params_schema": {
           "mass_kg": {
@@ -13073,7 +13073,7 @@
       },
       "node_binding": {
         "status": "unresolved",
-        "model_sha256": "11aeab283c378c1ec8bf7d2709db74d4e8ff70b640a4b7a62f686307223501b0",
+        "model_sha256": "0ab1f8e1a746a08d1dd0a30f92a1a79354b5482b1e9bd038226486590bb5f718",
         "node_indices": []
       },
       "subject_id": 2,
@@ -13087,8 +13087,8 @@
         "display_name": "物料：被动对象与状态观测",
         "asset": {
           "model_format": "glb",
-          "model_key": "../Closed Conveyor Loop/Closed Conveyor Loop.glb",
-          "sha256": "11aeab283c378c1ec8bf7d2709db74d4e8ff70b640a4b7a62f686307223501b0"
+          "model_key": "../Closed Conveyor Loop/PM Closed Conveyor Loop.centered.glb",
+          "sha256": "0ab1f8e1a746a08d1dd0a30f92a1a79354b5482b1e9bd038226486590bb5f718"
         },
         "params_schema": {
           "mass_kg": {
@@ -14094,7 +14094,7 @@
       },
       "node_binding": {
         "status": "unresolved",
-        "model_sha256": "11aeab283c378c1ec8bf7d2709db74d4e8ff70b640a4b7a62f686307223501b0",
+        "model_sha256": "0ab1f8e1a746a08d1dd0a30f92a1a79354b5482b1e9bd038226486590bb5f718",
         "node_indices": []
       },
       "subject_id": 3,
@@ -14108,8 +14108,8 @@
         "display_name": "物料：被动对象与状态观测",
         "asset": {
           "model_format": "glb",
-          "model_key": "../Closed Conveyor Loop/Closed Conveyor Loop.glb",
-          "sha256": "11aeab283c378c1ec8bf7d2709db74d4e8ff70b640a4b7a62f686307223501b0"
+          "model_key": "../Closed Conveyor Loop/PM Closed Conveyor Loop.centered.glb",
+          "sha256": "0ab1f8e1a746a08d1dd0a30f92a1a79354b5482b1e9bd038226486590bb5f718"
         },
         "params_schema": {
           "mass_kg": {
@@ -15115,7 +15115,7 @@
       },
       "node_binding": {
         "status": "unresolved",
-        "model_sha256": "11aeab283c378c1ec8bf7d2709db74d4e8ff70b640a4b7a62f686307223501b0",
+        "model_sha256": "0ab1f8e1a746a08d1dd0a30f92a1a79354b5482b1e9bd038226486590bb5f718",
         "node_indices": []
       },
       "subject_id": 4,
@@ -15129,8 +15129,8 @@
         "display_name": "物料：被动对象与状态观测",
         "asset": {
           "model_format": "glb",
-          "model_key": "../Closed Conveyor Loop/Closed Conveyor Loop.glb",
-          "sha256": "11aeab283c378c1ec8bf7d2709db74d4e8ff70b640a4b7a62f686307223501b0"
+          "model_key": "../Closed Conveyor Loop/PM Closed Conveyor Loop.centered.glb",
+          "sha256": "0ab1f8e1a746a08d1dd0a30f92a1a79354b5482b1e9bd038226486590bb5f718"
         },
         "params_schema": {
           "mass_kg": {
@@ -16136,7 +16136,7 @@
       },
       "node_binding": {
         "status": "unresolved",
-        "model_sha256": "11aeab283c378c1ec8bf7d2709db74d4e8ff70b640a4b7a62f686307223501b0",
+        "model_sha256": "0ab1f8e1a746a08d1dd0a30f92a1a79354b5482b1e9bd038226486590bb5f718",
         "node_indices": []
       },
       "subject_id": 5,
@@ -16150,8 +16150,8 @@
         "display_name": "物料：被动对象与状态观测",
         "asset": {
           "model_format": "glb",
-          "model_key": "../Closed Conveyor Loop/Closed Conveyor Loop.glb",
-          "sha256": "11aeab283c378c1ec8bf7d2709db74d4e8ff70b640a4b7a62f686307223501b0"
+          "model_key": "../Closed Conveyor Loop/PM Closed Conveyor Loop.centered.glb",
+          "sha256": "0ab1f8e1a746a08d1dd0a30f92a1a79354b5482b1e9bd038226486590bb5f718"
         },
         "params_schema": {
           "mass_kg": {
@@ -17157,7 +17157,7 @@
       },
       "node_binding": {
         "status": "unresolved",
-        "model_sha256": "11aeab283c378c1ec8bf7d2709db74d4e8ff70b640a4b7a62f686307223501b0",
+        "model_sha256": "0ab1f8e1a746a08d1dd0a30f92a1a79354b5482b1e9bd038226486590bb5f718",
         "node_indices": []
       },
       "subject_id": 6,
@@ -17171,8 +17171,8 @@
         "display_name": "物料：被动对象与状态观测",
         "asset": {
           "model_format": "glb",
-          "model_key": "../Closed Conveyor Loop/Closed Conveyor Loop.glb",
-          "sha256": "11aeab283c378c1ec8bf7d2709db74d4e8ff70b640a4b7a62f686307223501b0"
+          "model_key": "../Closed Conveyor Loop/PM Closed Conveyor Loop.centered.glb",
+          "sha256": "0ab1f8e1a746a08d1dd0a30f92a1a79354b5482b1e9bd038226486590bb5f718"
         },
         "params_schema": {
           "mass_kg": {
@@ -18240,223 +18240,55 @@
   "nodes": [
     {
       "index": 0,
-      "name": "Mesh [06ag]",
+      "name": "Mesh_000g",
       "children": [],
       "mesh": 0
     },
     {
       "index": 1,
-      "name": "Mesh [06bg]",
+      "name": "Mesh_001g",
       "children": [],
       "mesh": 1
     },
     {
       "index": 2,
-      "name": "Mesh [06cg]",
+      "name": "Mesh_002g",
       "children": [],
       "mesh": 2
     },
     {
       "index": 3,
-      "name": "Mesh [06dg]",
+      "name": "Mesh_003g",
       "children": [],
       "mesh": 3
     },
     {
       "index": 4,
-      "name": "Mesh [06eg]",
+      "name": "Mesh_004g",
       "children": [],
       "mesh": 4
     },
     {
       "index": 5,
-      "name": "Mesh [06fg]",
+      "name": "Mesh_005g",
       "children": [],
       "mesh": 5
     },
     {
       "index": 6,
-      "name": "Mesh [06gg]",
+      "name": "Mesh_006g",
       "children": [],
       "mesh": 6
     },
     {
       "index": 7,
-      "name": "Mesh [06hg]",
+      "name": "Mesh_007g",
       "children": [],
       "mesh": 7
     },
     {
       "index": 8,
-      "name": "Mesh [06ig]",
-      "children": [],
-      "mesh": 8
-    },
-    {
-      "index": 9,
-      "name": "Mesh [06jg]",
-      "children": [],
-      "mesh": 9
-    },
-    {
-      "index": 10,
-      "name": "Mesh [06kg]",
-      "children": [],
-      "mesh": 10
-    },
-    {
-      "index": 11,
-      "name": "Mesh [06lg]",
-      "children": [],
-      "mesh": 11
-    },
-    {
-      "index": 12,
-      "name": "Mesh [06mg]",
-      "children": [],
-      "mesh": 12
-    },
-    {
-      "index": 13,
-      "name": "Mesh [06ng]",
-      "children": [],
-      "mesh": 13
-    },
-    {
-      "index": 14,
-      "name": "Mesh [06og]",
-      "children": [],
-      "mesh": 14
-    },
-    {
-      "index": 15,
-      "name": "Mesh [06pg]",
-      "children": [],
-      "mesh": 15
-    },
-    {
-      "index": 16,
-      "name": "Mesh [06qg]",
-      "children": [],
-      "mesh": 16
-    },
-    {
-      "index": 17,
-      "name": "Mesh [06rg]",
-      "children": [],
-      "mesh": 17
-    },
-    {
-      "index": 18,
-      "name": "Mesh [06sg]",
-      "children": [],
-      "mesh": 18
-    },
-    {
-      "index": 19,
-      "name": "Mesh [06tg]",
-      "children": [],
-      "mesh": 19
-    },
-    {
-      "index": 20,
-      "name": "Mesh [06ug]",
-      "children": [],
-      "mesh": 20
-    },
-    {
-      "index": 21,
-      "name": "Mesh [06vg]",
-      "children": [],
-      "mesh": 21
-    },
-    {
-      "index": 22,
-      "name": "Mesh [06Wg]",
-      "children": [],
-      "mesh": 22
-    },
-    {
-      "index": 23,
-      "name": "Mesh [06wg]",
-      "children": [],
-      "mesh": 23
-    },
-    {
-      "index": 24,
-      "name": "Mesh [06Xg]",
-      "children": [],
-      "mesh": 24
-    },
-    {
-      "index": 25,
-      "name": "Mesh [06xg]",
-      "children": [],
-      "mesh": 25
-    },
-    {
-      "index": 26,
-      "name": "Mesh [06Yg]",
-      "children": [],
-      "mesh": 26
-    },
-    {
-      "index": 27,
-      "name": "Mesh [06yg]",
-      "children": [],
-      "mesh": 27
-    },
-    {
-      "index": 28,
-      "name": "Mesh [06Zg]",
-      "children": [],
-      "mesh": 28
-    },
-    {
-      "index": 29,
-      "name": "Mesh [06zg]",
-      "children": [],
-      "mesh": 29
-    },
-    {
-      "index": 30,
-      "name": "Mesh [070g]",
-      "children": [],
-      "mesh": 30
-    },
-    {
-      "index": 31,
-      "name": "Mesh [071g]",
-      "children": [],
-      "mesh": 31
-    },
-    {
-      "index": 32,
-      "name": "Mesh [072g]",
-      "children": [],
-      "mesh": 32
-    },
-    {
-      "index": 33,
-      "name": "Mesh [073g]",
-      "children": [],
-      "mesh": 33
-    },
-    {
-      "index": 34,
-      "name": "Mesh [074g]",
-      "children": [],
-      "mesh": 34
-    },
-    {
-      "index": 35,
-      "name": "Mesh [075g]",
-      "children": [],
-      "mesh": 35
-    },
-    {
-      "index": 36,
-      "name": "__Geometry__ [00Jc]",
+      "name": "__Geometry___000c",
       "children": [
         0,
         1,
@@ -18465,10 +18297,78 @@
         4,
         5,
         6,
-        7,
-        8,
-        9,
-        10,
+        7
+      ],
+      "mesh": null
+    },
+    {
+      "index": 9,
+      "name": "__Model___000v",
+      "children": [
+        8
+      ],
+      "mesh": null
+    },
+    {
+      "index": 10,
+      "name": "AssemblyNode1_000n",
+      "children": [
+        9
+      ],
+      "mesh": null
+    },
+    {
+      "index": 11,
+      "name": "Mesh_008g",
+      "children": [],
+      "mesh": 0
+    },
+    {
+      "index": 12,
+      "name": "Mesh_009g",
+      "children": [],
+      "mesh": 1
+    },
+    {
+      "index": 13,
+      "name": "Mesh_00Ag",
+      "children": [],
+      "mesh": 2
+    },
+    {
+      "index": 14,
+      "name": "Mesh_00Bg",
+      "children": [],
+      "mesh": 3
+    },
+    {
+      "index": 15,
+      "name": "Mesh_00Cg",
+      "children": [],
+      "mesh": 4
+    },
+    {
+      "index": 16,
+      "name": "Mesh_00Dg",
+      "children": [],
+      "mesh": 5
+    },
+    {
+      "index": 17,
+      "name": "Mesh_00Eg",
+      "children": [],
+      "mesh": 6
+    },
+    {
+      "index": 18,
+      "name": "Mesh_00Fg",
+      "children": [],
+      "mesh": 7
+    },
+    {
+      "index": 19,
+      "name": "__Geometry___001c",
+      "children": [
         11,
         12,
         13,
@@ -18476,10 +18376,222 @@
         15,
         16,
         17,
-        18,
-        19,
-        20,
-        21,
+        18
+      ],
+      "mesh": null
+    },
+    {
+      "index": 20,
+      "name": "__Model___001v",
+      "children": [
+        19
+      ],
+      "mesh": null
+    },
+    {
+      "index": 21,
+      "name": "DissassemblyNode2_001n",
+      "children": [
+        20
+      ],
+      "mesh": null
+    },
+    {
+      "index": 22,
+      "name": "Mesh_00Gg",
+      "children": [],
+      "mesh": 8
+    },
+    {
+      "index": 23,
+      "name": "Mesh_00Hg",
+      "children": [],
+      "mesh": 9
+    },
+    {
+      "index": 24,
+      "name": "Mesh_00Ig",
+      "children": [],
+      "mesh": 10
+    },
+    {
+      "index": 25,
+      "name": "Mesh_00Jg",
+      "children": [],
+      "mesh": 11
+    },
+    {
+      "index": 26,
+      "name": "Mesh_00Kg",
+      "children": [],
+      "mesh": 12
+    },
+    {
+      "index": 27,
+      "name": "Mesh_00Lg",
+      "children": [],
+      "mesh": 13
+    },
+    {
+      "index": 28,
+      "name": "Mesh_00Mg",
+      "children": [],
+      "mesh": 14
+    },
+    {
+      "index": 29,
+      "name": "Mesh_00Ng",
+      "children": [],
+      "mesh": 15
+    },
+    {
+      "index": 30,
+      "name": "Mesh_00Og",
+      "children": [],
+      "mesh": 16
+    },
+    {
+      "index": 31,
+      "name": "Mesh_00Pg",
+      "children": [],
+      "mesh": 17
+    },
+    {
+      "index": 32,
+      "name": "Mesh_00Qg",
+      "children": [],
+      "mesh": 18
+    },
+    {
+      "index": 33,
+      "name": "Mesh_00Rg",
+      "children": [],
+      "mesh": 19
+    },
+    {
+      "index": 34,
+      "name": "Mesh_00Sg",
+      "children": [],
+      "mesh": 20
+    },
+    {
+      "index": 35,
+      "name": "Mesh_00Tg",
+      "children": [],
+      "mesh": 21
+    },
+    {
+      "index": 36,
+      "name": "Mesh_00Ug",
+      "children": [],
+      "mesh": 22
+    },
+    {
+      "index": 37,
+      "name": "Mesh_00Vg",
+      "children": [],
+      "mesh": 23
+    },
+    {
+      "index": 38,
+      "name": "Mesh_00Wg",
+      "children": [],
+      "mesh": 24
+    },
+    {
+      "index": 39,
+      "name": "Mesh_00Xg",
+      "children": [],
+      "mesh": 25
+    },
+    {
+      "index": 40,
+      "name": "Mesh_00Yg",
+      "children": [],
+      "mesh": 26
+    },
+    {
+      "index": 41,
+      "name": "Mesh_00Zg",
+      "children": [],
+      "mesh": 27
+    },
+    {
+      "index": 42,
+      "name": "Mesh_00ag",
+      "children": [],
+      "mesh": 28
+    },
+    {
+      "index": 43,
+      "name": "Mesh_00bg",
+      "children": [],
+      "mesh": 29
+    },
+    {
+      "index": 44,
+      "name": "Mesh_00cg",
+      "children": [],
+      "mesh": 30
+    },
+    {
+      "index": 45,
+      "name": "Mesh_00dg",
+      "children": [],
+      "mesh": 31
+    },
+    {
+      "index": 46,
+      "name": "Mesh_00eg",
+      "children": [],
+      "mesh": 32
+    },
+    {
+      "index": 47,
+      "name": "Mesh_00fg",
+      "children": [],
+      "mesh": 33
+    },
+    {
+      "index": 48,
+      "name": "Mesh_00gg",
+      "children": [],
+      "mesh": 34
+    },
+    {
+      "index": 49,
+      "name": "Mesh_00hg",
+      "children": [],
+      "mesh": 35
+    },
+    {
+      "index": 50,
+      "name": "Mesh_00ig",
+      "children": [],
+      "mesh": 36
+    },
+    {
+      "index": 51,
+      "name": "Mesh_00jg",
+      "children": [],
+      "mesh": 37
+    },
+    {
+      "index": 52,
+      "name": "Mesh_00kg",
+      "children": [],
+      "mesh": 38
+    },
+    {
+      "index": 53,
+      "name": "Mesh_00lg",
+      "children": [],
+      "mesh": 39
+    },
+    {
+      "index": 54,
+      "name": "__Geometry___002c",
+      "children": [
         22,
         23,
         24,
@@ -18493,246 +18605,10 @@
         32,
         33,
         34,
-        35
-      ],
-      "mesh": null
-    },
-    {
-      "index": 37,
-      "name": "__Model__ [00Av]",
-      "children": [
-        36
-      ],
-      "mesh": null
-    },
-    {
-      "index": 38,
-      "name": "Conveyor(1)",
-      "children": [
-        37
-      ],
-      "mesh": null
-    },
-    {
-      "index": 39,
-      "name": "Mesh [05wg]",
-      "children": [],
-      "mesh": 22
-    },
-    {
-      "index": 40,
-      "name": "Mesh [05xg]",
-      "children": [],
-      "mesh": 24
-    },
-    {
-      "index": 41,
-      "name": "Mesh [05yg]",
-      "children": [],
-      "mesh": 26
-    },
-    {
-      "index": 42,
-      "name": "Mesh [05zg]",
-      "children": [],
-      "mesh": 28
-    },
-    {
-      "index": 43,
-      "name": "Mesh [060g]",
-      "children": [],
-      "mesh": 0
-    },
-    {
-      "index": 44,
-      "name": "Mesh [061g]",
-      "children": [],
-      "mesh": 1
-    },
-    {
-      "index": 45,
-      "name": "Mesh [062g]",
-      "children": [],
-      "mesh": 2
-    },
-    {
-      "index": 46,
-      "name": "Mesh [063g]",
-      "children": [],
-      "mesh": 3
-    },
-    {
-      "index": 47,
-      "name": "Mesh [064g]",
-      "children": [],
-      "mesh": 4
-    },
-    {
-      "index": 48,
-      "name": "Mesh [065g]",
-      "children": [],
-      "mesh": 5
-    },
-    {
-      "index": 49,
-      "name": "Mesh [066g]",
-      "children": [],
-      "mesh": 6
-    },
-    {
-      "index": 50,
-      "name": "Mesh [067g]",
-      "children": [],
-      "mesh": 7
-    },
-    {
-      "index": 51,
-      "name": "Mesh [068g]",
-      "children": [],
-      "mesh": 8
-    },
-    {
-      "index": 52,
-      "name": "Mesh [069g]",
-      "children": [],
-      "mesh": 9
-    },
-    {
-      "index": 53,
-      "name": "Mesh [06Ag]",
-      "children": [],
-      "mesh": 10
-    },
-    {
-      "index": 54,
-      "name": "Mesh [06Bg]",
-      "children": [],
-      "mesh": 11
-    },
-    {
-      "index": 55,
-      "name": "Mesh [06Cg]",
-      "children": [],
-      "mesh": 12
-    },
-    {
-      "index": 56,
-      "name": "Mesh [06Dg]",
-      "children": [],
-      "mesh": 13
-    },
-    {
-      "index": 57,
-      "name": "Mesh [06Eg]",
-      "children": [],
-      "mesh": 14
-    },
-    {
-      "index": 58,
-      "name": "Mesh [06Fg]",
-      "children": [],
-      "mesh": 15
-    },
-    {
-      "index": 59,
-      "name": "Mesh [06Gg]",
-      "children": [],
-      "mesh": 16
-    },
-    {
-      "index": 60,
-      "name": "Mesh [06Hg]",
-      "children": [],
-      "mesh": 17
-    },
-    {
-      "index": 61,
-      "name": "Mesh [06Ig]",
-      "children": [],
-      "mesh": 18
-    },
-    {
-      "index": 62,
-      "name": "Mesh [06Jg]",
-      "children": [],
-      "mesh": 19
-    },
-    {
-      "index": 63,
-      "name": "Mesh [06Kg]",
-      "children": [],
-      "mesh": 20
-    },
-    {
-      "index": 64,
-      "name": "Mesh [06Lg]",
-      "children": [],
-      "mesh": 21
-    },
-    {
-      "index": 65,
-      "name": "Mesh [06Mg]",
-      "children": [],
-      "mesh": 23
-    },
-    {
-      "index": 66,
-      "name": "Mesh [06Ng]",
-      "children": [],
-      "mesh": 25
-    },
-    {
-      "index": 67,
-      "name": "Mesh [06Og]",
-      "children": [],
-      "mesh": 27
-    },
-    {
-      "index": 68,
-      "name": "Mesh [06Pg]",
-      "children": [],
-      "mesh": 29
-    },
-    {
-      "index": 69,
-      "name": "Mesh [06Qg]",
-      "children": [],
-      "mesh": 30
-    },
-    {
-      "index": 70,
-      "name": "Mesh [06Rg]",
-      "children": [],
-      "mesh": 31
-    },
-    {
-      "index": 71,
-      "name": "Mesh [06Sg]",
-      "children": [],
-      "mesh": 32
-    },
-    {
-      "index": 72,
-      "name": "Mesh [06Tg]",
-      "children": [],
-      "mesh": 33
-    },
-    {
-      "index": 73,
-      "name": "Mesh [06Ug]",
-      "children": [],
-      "mesh": 34
-    },
-    {
-      "index": 74,
-      "name": "Mesh [06Vg]",
-      "children": [],
-      "mesh": 35
-    },
-    {
-      "index": 75,
-      "name": "__Geometry__ [00Ic]",
-      "children": [
+        35,
+        36,
+        37,
+        38,
         39,
         40,
         41,
@@ -18747,20 +18623,295 @@
         50,
         51,
         52,
-        53,
-        54,
+        53
+      ],
+      "mesh": null
+    },
+    {
+      "index": 55,
+      "name": "Mesh_00mg",
+      "children": [],
+      "mesh": 40
+    },
+    {
+      "index": 56,
+      "name": "Mesh_00ng",
+      "children": [],
+      "mesh": 41
+    },
+    {
+      "index": 57,
+      "name": "Mesh_00og",
+      "children": [],
+      "mesh": 42
+    },
+    {
+      "index": 58,
+      "name": "Mesh_00pg",
+      "children": [],
+      "mesh": 43
+    },
+    {
+      "index": 59,
+      "name": "Mesh_00qg",
+      "children": [],
+      "mesh": 44
+    },
+    {
+      "index": 60,
+      "name": "Mesh_00rg",
+      "children": [],
+      "mesh": 45
+    },
+    {
+      "index": 61,
+      "name": "Mesh_00sg",
+      "children": [],
+      "mesh": 46
+    },
+    {
+      "index": 62,
+      "name": "__Geometry___003c",
+      "children": [
         55,
         56,
         57,
         58,
         59,
         60,
-        61,
-        62,
-        63,
-        64,
-        65,
-        66,
+        61
+      ],
+      "mesh": null
+    },
+    {
+      "index": 63,
+      "name": "__Model___003v",
+      "children": [
+        62
+      ],
+      "mesh": null
+    },
+    {
+      "index": 64,
+      "name": "Cola_Can_003n",
+      "children": [
+        63
+      ],
+      "mesh": null
+    },
+    {
+      "index": 65,
+      "name": "__Model___002v",
+      "children": [
+        54,
+        64
+      ],
+      "mesh": null
+    },
+    {
+      "index": 66,
+      "name": "Conveyor_#6_002n",
+      "children": [
+        65
+      ],
+      "mesh": null
+    },
+    {
+      "index": 67,
+      "name": "Mesh_00tg",
+      "children": [],
+      "mesh": 8
+    },
+    {
+      "index": 68,
+      "name": "Mesh_00ug",
+      "children": [],
+      "mesh": 9
+    },
+    {
+      "index": 69,
+      "name": "Mesh_00vg",
+      "children": [],
+      "mesh": 10
+    },
+    {
+      "index": 70,
+      "name": "Mesh_00wg",
+      "children": [],
+      "mesh": 11
+    },
+    {
+      "index": 71,
+      "name": "Mesh_00xg",
+      "children": [],
+      "mesh": 12
+    },
+    {
+      "index": 72,
+      "name": "Mesh_00yg",
+      "children": [],
+      "mesh": 13
+    },
+    {
+      "index": 73,
+      "name": "Mesh_00zg",
+      "children": [],
+      "mesh": 14
+    },
+    {
+      "index": 74,
+      "name": "Mesh_010g",
+      "children": [],
+      "mesh": 15
+    },
+    {
+      "index": 75,
+      "name": "Mesh_011g",
+      "children": [],
+      "mesh": 16
+    },
+    {
+      "index": 76,
+      "name": "Mesh_012g",
+      "children": [],
+      "mesh": 17
+    },
+    {
+      "index": 77,
+      "name": "Mesh_013g",
+      "children": [],
+      "mesh": 18
+    },
+    {
+      "index": 78,
+      "name": "Mesh_014g",
+      "children": [],
+      "mesh": 19
+    },
+    {
+      "index": 79,
+      "name": "Mesh_015g",
+      "children": [],
+      "mesh": 20
+    },
+    {
+      "index": 80,
+      "name": "Mesh_016g",
+      "children": [],
+      "mesh": 21
+    },
+    {
+      "index": 81,
+      "name": "Mesh_017g",
+      "children": [],
+      "mesh": 22
+    },
+    {
+      "index": 82,
+      "name": "Mesh_018g",
+      "children": [],
+      "mesh": 23
+    },
+    {
+      "index": 83,
+      "name": "Mesh_019g",
+      "children": [],
+      "mesh": 24
+    },
+    {
+      "index": 84,
+      "name": "Mesh_01Ag",
+      "children": [],
+      "mesh": 25
+    },
+    {
+      "index": 85,
+      "name": "Mesh_01Bg",
+      "children": [],
+      "mesh": 26
+    },
+    {
+      "index": 86,
+      "name": "Mesh_01Cg",
+      "children": [],
+      "mesh": 27
+    },
+    {
+      "index": 87,
+      "name": "Mesh_01Dg",
+      "children": [],
+      "mesh": 28
+    },
+    {
+      "index": 88,
+      "name": "Mesh_01Eg",
+      "children": [],
+      "mesh": 29
+    },
+    {
+      "index": 89,
+      "name": "Mesh_01Fg",
+      "children": [],
+      "mesh": 30
+    },
+    {
+      "index": 90,
+      "name": "Mesh_01Gg",
+      "children": [],
+      "mesh": 31
+    },
+    {
+      "index": 91,
+      "name": "Mesh_01Hg",
+      "children": [],
+      "mesh": 32
+    },
+    {
+      "index": 92,
+      "name": "Mesh_01Ig",
+      "children": [],
+      "mesh": 33
+    },
+    {
+      "index": 93,
+      "name": "Mesh_01Jg",
+      "children": [],
+      "mesh": 34
+    },
+    {
+      "index": 94,
+      "name": "Mesh_01Kg",
+      "children": [],
+      "mesh": 35
+    },
+    {
+      "index": 95,
+      "name": "Mesh_01Lg",
+      "children": [],
+      "mesh": 36
+    },
+    {
+      "index": 96,
+      "name": "Mesh_01Mg",
+      "children": [],
+      "mesh": 37
+    },
+    {
+      "index": 97,
+      "name": "Mesh_01Ng",
+      "children": [],
+      "mesh": 38
+    },
+    {
+      "index": 98,
+      "name": "Mesh_01Og",
+      "children": [],
+      "mesh": 39
+    },
+    {
+      "index": 99,
+      "name": "__Geometry___004c",
+      "children": [
         67,
         68,
         69,
@@ -18768,246 +18919,10 @@
         71,
         72,
         73,
-        74
-      ],
-      "mesh": null
-    },
-    {
-      "index": 76,
-      "name": "__Model__ [009v]",
-      "children": [
-        75
-      ],
-      "mesh": null
-    },
-    {
-      "index": 77,
-      "name": "Conveyor(2)",
-      "children": [
-        76
-      ],
-      "mesh": null
-    },
-    {
-      "index": 78,
-      "name": "Mesh [04mg]",
-      "children": [],
-      "mesh": 22
-    },
-    {
-      "index": 79,
-      "name": "Mesh [04ng]",
-      "children": [],
-      "mesh": 24
-    },
-    {
-      "index": 80,
-      "name": "Mesh [04og]",
-      "children": [],
-      "mesh": 26
-    },
-    {
-      "index": 81,
-      "name": "Mesh [04pg]",
-      "children": [],
-      "mesh": 28
-    },
-    {
-      "index": 82,
-      "name": "Mesh [04qg]",
-      "children": [],
-      "mesh": 0
-    },
-    {
-      "index": 83,
-      "name": "Mesh [04rg]",
-      "children": [],
-      "mesh": 1
-    },
-    {
-      "index": 84,
-      "name": "Mesh [04sg]",
-      "children": [],
-      "mesh": 2
-    },
-    {
-      "index": 85,
-      "name": "Mesh [04tg]",
-      "children": [],
-      "mesh": 3
-    },
-    {
-      "index": 86,
-      "name": "Mesh [04ug]",
-      "children": [],
-      "mesh": 4
-    },
-    {
-      "index": 87,
-      "name": "Mesh [04vg]",
-      "children": [],
-      "mesh": 5
-    },
-    {
-      "index": 88,
-      "name": "Mesh [04wg]",
-      "children": [],
-      "mesh": 6
-    },
-    {
-      "index": 89,
-      "name": "Mesh [04xg]",
-      "children": [],
-      "mesh": 7
-    },
-    {
-      "index": 90,
-      "name": "Mesh [04yg]",
-      "children": [],
-      "mesh": 8
-    },
-    {
-      "index": 91,
-      "name": "Mesh [04zg]",
-      "children": [],
-      "mesh": 9
-    },
-    {
-      "index": 92,
-      "name": "Mesh [050g]",
-      "children": [],
-      "mesh": 10
-    },
-    {
-      "index": 93,
-      "name": "Mesh [051g]",
-      "children": [],
-      "mesh": 11
-    },
-    {
-      "index": 94,
-      "name": "Mesh [052g]",
-      "children": [],
-      "mesh": 12
-    },
-    {
-      "index": 95,
-      "name": "Mesh [053g]",
-      "children": [],
-      "mesh": 13
-    },
-    {
-      "index": 96,
-      "name": "Mesh [054g]",
-      "children": [],
-      "mesh": 14
-    },
-    {
-      "index": 97,
-      "name": "Mesh [055g]",
-      "children": [],
-      "mesh": 15
-    },
-    {
-      "index": 98,
-      "name": "Mesh [056g]",
-      "children": [],
-      "mesh": 16
-    },
-    {
-      "index": 99,
-      "name": "Mesh [057g]",
-      "children": [],
-      "mesh": 17
-    },
-    {
-      "index": 100,
-      "name": "Mesh [058g]",
-      "children": [],
-      "mesh": 18
-    },
-    {
-      "index": 101,
-      "name": "Mesh [059g]",
-      "children": [],
-      "mesh": 19
-    },
-    {
-      "index": 102,
-      "name": "Mesh [05Ag]",
-      "children": [],
-      "mesh": 20
-    },
-    {
-      "index": 103,
-      "name": "Mesh [05Bg]",
-      "children": [],
-      "mesh": 21
-    },
-    {
-      "index": 104,
-      "name": "Mesh [05Cg]",
-      "children": [],
-      "mesh": 23
-    },
-    {
-      "index": 105,
-      "name": "Mesh [05Dg]",
-      "children": [],
-      "mesh": 25
-    },
-    {
-      "index": 106,
-      "name": "Mesh [05Eg]",
-      "children": [],
-      "mesh": 27
-    },
-    {
-      "index": 107,
-      "name": "Mesh [05Fg]",
-      "children": [],
-      "mesh": 29
-    },
-    {
-      "index": 108,
-      "name": "Mesh [05Gg]",
-      "children": [],
-      "mesh": 30
-    },
-    {
-      "index": 109,
-      "name": "Mesh [05Hg]",
-      "children": [],
-      "mesh": 31
-    },
-    {
-      "index": 110,
-      "name": "Mesh [05Ig]",
-      "children": [],
-      "mesh": 32
-    },
-    {
-      "index": 111,
-      "name": "Mesh [05Jg]",
-      "children": [],
-      "mesh": 33
-    },
-    {
-      "index": 112,
-      "name": "Mesh [05Kg]",
-      "children": [],
-      "mesh": 34
-    },
-    {
-      "index": 113,
-      "name": "Mesh [05Lg]",
-      "children": [],
-      "mesh": 35
-    },
-    {
-      "index": 114,
-      "name": "__Geometry__ [00Gc]",
-      "children": [
+        74,
+        75,
+        76,
+        77,
         78,
         79,
         80,
@@ -19028,10 +18943,144 @@
         95,
         96,
         97,
-        98,
-        99,
-        100,
-        101,
+        98
+      ],
+      "mesh": null
+    },
+    {
+      "index": 100,
+      "name": "__Model___004v",
+      "children": [
+        99
+      ],
+      "mesh": null
+    },
+    {
+      "index": 101,
+      "name": "Conveyor_#5_004n",
+      "children": [
+        100
+      ],
+      "mesh": null
+    },
+    {
+      "index": 102,
+      "name": "Mesh_01Pg",
+      "children": [],
+      "mesh": 47
+    },
+    {
+      "index": 103,
+      "name": "Mesh_01Qg",
+      "children": [],
+      "mesh": 48
+    },
+    {
+      "index": 104,
+      "name": "Mesh_01Rg",
+      "children": [],
+      "mesh": 49
+    },
+    {
+      "index": 105,
+      "name": "Mesh_01Sg",
+      "children": [],
+      "mesh": 50
+    },
+    {
+      "index": 106,
+      "name": "Mesh_01Tg",
+      "children": [],
+      "mesh": 51
+    },
+    {
+      "index": 107,
+      "name": "Mesh_01Ug",
+      "children": [],
+      "mesh": 52
+    },
+    {
+      "index": 108,
+      "name": "Mesh_01Vg",
+      "children": [],
+      "mesh": 53
+    },
+    {
+      "index": 109,
+      "name": "Mesh_01Wg",
+      "children": [],
+      "mesh": 54
+    },
+    {
+      "index": 110,
+      "name": "Mesh_01Xg",
+      "children": [],
+      "mesh": 55
+    },
+    {
+      "index": 111,
+      "name": "Mesh_01Yg",
+      "children": [],
+      "mesh": 56
+    },
+    {
+      "index": 112,
+      "name": "Mesh_01Zg",
+      "children": [],
+      "mesh": 57
+    },
+    {
+      "index": 113,
+      "name": "Mesh_01ag",
+      "children": [],
+      "mesh": 58
+    },
+    {
+      "index": 114,
+      "name": "Mesh_01bg",
+      "children": [],
+      "mesh": 59
+    },
+    {
+      "index": 115,
+      "name": "Mesh_01cg",
+      "children": [],
+      "mesh": 60
+    },
+    {
+      "index": 116,
+      "name": "Mesh_01dg",
+      "children": [],
+      "mesh": 61
+    },
+    {
+      "index": 117,
+      "name": "Mesh_01eg",
+      "children": [],
+      "mesh": 62
+    },
+    {
+      "index": 118,
+      "name": "Mesh_01fg",
+      "children": [],
+      "mesh": 63
+    },
+    {
+      "index": 119,
+      "name": "Mesh_01gg",
+      "children": [],
+      "mesh": 64
+    },
+    {
+      "index": 120,
+      "name": "Mesh_01hg",
+      "children": [],
+      "mesh": 65
+    },
+    {
+      "index": 121,
+      "name": "__Geometry___005c",
+      "children": [
         102,
         103,
         104,
@@ -19043,252 +19092,93 @@
         110,
         111,
         112,
-        113
-      ],
-      "mesh": null
-    },
-    {
-      "index": 115,
-      "name": "__Model__ [007v]",
-      "children": [
-        114
-      ],
-      "mesh": null
-    },
-    {
-      "index": 116,
-      "name": "Conveyor(3)",
-      "children": [
-        115
-      ],
-      "mesh": null
-    },
-    {
-      "index": 117,
-      "name": "Mesh [05ag]",
-      "children": [],
-      "mesh": 10
-    },
-    {
-      "index": 118,
-      "name": "Mesh [05bg]",
-      "children": [],
-      "mesh": 11
-    },
-    {
-      "index": 119,
-      "name": "Mesh [05cg]",
-      "children": [],
-      "mesh": 12
-    },
-    {
-      "index": 120,
-      "name": "Mesh [05dg]",
-      "children": [],
-      "mesh": 13
-    },
-    {
-      "index": 121,
-      "name": "Mesh [05eg]",
-      "children": [],
-      "mesh": 14
-    },
-    {
-      "index": 122,
-      "name": "Mesh [05fg]",
-      "children": [],
-      "mesh": 15
-    },
-    {
-      "index": 123,
-      "name": "Mesh [05gg]",
-      "children": [],
-      "mesh": 16
-    },
-    {
-      "index": 124,
-      "name": "Mesh [05hg]",
-      "children": [],
-      "mesh": 17
-    },
-    {
-      "index": 125,
-      "name": "Mesh [05ig]",
-      "children": [],
-      "mesh": 18
-    },
-    {
-      "index": 126,
-      "name": "Mesh [05jg]",
-      "children": [],
-      "mesh": 19
-    },
-    {
-      "index": 127,
-      "name": "Mesh [05kg]",
-      "children": [],
-      "mesh": 20
-    },
-    {
-      "index": 128,
-      "name": "Mesh [05lg]",
-      "children": [],
-      "mesh": 21
-    },
-    {
-      "index": 129,
-      "name": "Mesh [05Mg]",
-      "children": [],
-      "mesh": 22
-    },
-    {
-      "index": 130,
-      "name": "Mesh [05mg]",
-      "children": [],
-      "mesh": 23
-    },
-    {
-      "index": 131,
-      "name": "Mesh [05Ng]",
-      "children": [],
-      "mesh": 24
-    },
-    {
-      "index": 132,
-      "name": "Mesh [05ng]",
-      "children": [],
-      "mesh": 25
-    },
-    {
-      "index": 133,
-      "name": "Mesh [05Og]",
-      "children": [],
-      "mesh": 26
-    },
-    {
-      "index": 134,
-      "name": "Mesh [05og]",
-      "children": [],
-      "mesh": 27
-    },
-    {
-      "index": 135,
-      "name": "Mesh [05Pg]",
-      "children": [],
-      "mesh": 28
-    },
-    {
-      "index": 136,
-      "name": "Mesh [05pg]",
-      "children": [],
-      "mesh": 29
-    },
-    {
-      "index": 137,
-      "name": "Mesh [05Qg]",
-      "children": [],
-      "mesh": 0
-    },
-    {
-      "index": 138,
-      "name": "Mesh [05qg]",
-      "children": [],
-      "mesh": 30
-    },
-    {
-      "index": 139,
-      "name": "Mesh [05Rg]",
-      "children": [],
-      "mesh": 1
-    },
-    {
-      "index": 140,
-      "name": "Mesh [05rg]",
-      "children": [],
-      "mesh": 31
-    },
-    {
-      "index": 141,
-      "name": "Mesh [05Sg]",
-      "children": [],
-      "mesh": 2
-    },
-    {
-      "index": 142,
-      "name": "Mesh [05sg]",
-      "children": [],
-      "mesh": 32
-    },
-    {
-      "index": 143,
-      "name": "Mesh [05Tg]",
-      "children": [],
-      "mesh": 3
-    },
-    {
-      "index": 144,
-      "name": "Mesh [05tg]",
-      "children": [],
-      "mesh": 33
-    },
-    {
-      "index": 145,
-      "name": "Mesh [05Ug]",
-      "children": [],
-      "mesh": 4
-    },
-    {
-      "index": 146,
-      "name": "Mesh [05ug]",
-      "children": [],
-      "mesh": 34
-    },
-    {
-      "index": 147,
-      "name": "Mesh [05Vg]",
-      "children": [],
-      "mesh": 5
-    },
-    {
-      "index": 148,
-      "name": "Mesh [05vg]",
-      "children": [],
-      "mesh": 35
-    },
-    {
-      "index": 149,
-      "name": "Mesh [05Wg]",
-      "children": [],
-      "mesh": 6
-    },
-    {
-      "index": 150,
-      "name": "Mesh [05Xg]",
-      "children": [],
-      "mesh": 7
-    },
-    {
-      "index": 151,
-      "name": "Mesh [05Yg]",
-      "children": [],
-      "mesh": 8
-    },
-    {
-      "index": 152,
-      "name": "Mesh [05Zg]",
-      "children": [],
-      "mesh": 9
-    },
-    {
-      "index": 153,
-      "name": "__Geometry__ [00Hc]",
-      "children": [
+        113,
+        114,
+        115,
+        116,
         117,
         118,
         119,
-        120,
-        121,
-        122,
+        120
+      ],
+      "mesh": null
+    },
+    {
+      "index": 122,
+      "name": "__Geometry___006c",
+      "children": [],
+      "mesh": null
+    },
+    {
+      "index": 123,
+      "name": "Mesh_01ig",
+      "children": [],
+      "mesh": 66
+    },
+    {
+      "index": 124,
+      "name": "Mesh_01jg",
+      "children": [],
+      "mesh": 67
+    },
+    {
+      "index": 125,
+      "name": "Mesh_01kg",
+      "children": [],
+      "mesh": 68
+    },
+    {
+      "index": 126,
+      "name": "Mesh_01lg",
+      "children": [],
+      "mesh": 69
+    },
+    {
+      "index": 127,
+      "name": "Mesh_01mg",
+      "children": [],
+      "mesh": 70
+    },
+    {
+      "index": 128,
+      "name": "Mesh_01ng",
+      "children": [],
+      "mesh": 71
+    },
+    {
+      "index": 129,
+      "name": "Mesh_01og",
+      "children": [],
+      "mesh": 72
+    },
+    {
+      "index": 130,
+      "name": "Mesh_01pg",
+      "children": [],
+      "mesh": 73
+    },
+    {
+      "index": 131,
+      "name": "Mesh_01qg",
+      "children": [],
+      "mesh": 74
+    },
+    {
+      "index": 132,
+      "name": "Mesh_01rg",
+      "children": [],
+      "mesh": 75
+    },
+    {
+      "index": 133,
+      "name": "Mesh_01sg",
+      "children": [],
+      "mesh": 76
+    },
+    {
+      "index": 134,
+      "name": "__Geometry___007c",
+      "children": [
         123,
         124,
         125,
@@ -19299,8 +19189,74 @@
         130,
         131,
         132,
-        133,
-        134,
+        133
+      ],
+      "mesh": null
+    },
+    {
+      "index": 135,
+      "name": "Mesh_01tg",
+      "children": [],
+      "mesh": 77
+    },
+    {
+      "index": 136,
+      "name": "Mesh_01ug",
+      "children": [],
+      "mesh": 78
+    },
+    {
+      "index": 137,
+      "name": "Mesh_01vg",
+      "children": [],
+      "mesh": 79
+    },
+    {
+      "index": 138,
+      "name": "Mesh_01wg",
+      "children": [],
+      "mesh": 80
+    },
+    {
+      "index": 139,
+      "name": "Mesh_01xg",
+      "children": [],
+      "mesh": 81
+    },
+    {
+      "index": 140,
+      "name": "Mesh_01yg",
+      "children": [],
+      "mesh": 82
+    },
+    {
+      "index": 141,
+      "name": "Mesh_01zg",
+      "children": [],
+      "mesh": 83
+    },
+    {
+      "index": 142,
+      "name": "Mesh_020g",
+      "children": [],
+      "mesh": 84
+    },
+    {
+      "index": 143,
+      "name": "Mesh_021g",
+      "children": [],
+      "mesh": 85
+    },
+    {
+      "index": 144,
+      "name": "Mesh_022g",
+      "children": [],
+      "mesh": 86
+    },
+    {
+      "index": 145,
+      "name": "__Geometry___008c",
+      "children": [
         135,
         136,
         137,
@@ -19310,232 +19266,194 @@
         141,
         142,
         143,
-        144,
-        145,
+        144
+      ],
+      "mesh": null
+    },
+    {
+      "index": 146,
+      "name": "Mesh_023g",
+      "children": [],
+      "mesh": 87
+    },
+    {
+      "index": 147,
+      "name": "Mesh_024g",
+      "children": [],
+      "mesh": 88
+    },
+    {
+      "index": 148,
+      "name": "Mesh_025g",
+      "children": [],
+      "mesh": 89
+    },
+    {
+      "index": 149,
+      "name": "Mesh_026g",
+      "children": [],
+      "mesh": 90
+    },
+    {
+      "index": 150,
+      "name": "Mesh_027g",
+      "children": [],
+      "mesh": 91
+    },
+    {
+      "index": 151,
+      "name": "Mesh_028g",
+      "children": [],
+      "mesh": 92
+    },
+    {
+      "index": 152,
+      "name": "Mesh_029g",
+      "children": [],
+      "mesh": 93
+    },
+    {
+      "index": 153,
+      "name": "Mesh_02Ag",
+      "children": [],
+      "mesh": 94
+    },
+    {
+      "index": 154,
+      "name": "Mesh_02Bg",
+      "children": [],
+      "mesh": 95
+    },
+    {
+      "index": 155,
+      "name": "Mesh_02Cg",
+      "children": [],
+      "mesh": 96
+    },
+    {
+      "index": 156,
+      "name": "Mesh_02Dg",
+      "children": [],
+      "mesh": 97
+    },
+    {
+      "index": 157,
+      "name": "__Geometry___009c",
+      "children": [
         146,
         147,
         148,
         149,
         150,
         151,
-        152
+        152,
+        153,
+        154,
+        155,
+        156
       ],
       "mesh": null
-    },
-    {
-      "index": 154,
-      "name": "__Model__ [008v]",
-      "children": [
-        153
-      ],
-      "mesh": null
-    },
-    {
-      "index": 155,
-      "name": "Conveyor(4)",
-      "children": [
-        154
-      ],
-      "mesh": null
-    },
-    {
-      "index": 156,
-      "name": "Mesh [00ag]",
-      "children": [],
-      "mesh": 36
-    },
-    {
-      "index": 157,
-      "name": "Mesh [00bg]",
-      "children": [],
-      "mesh": 37
     },
     {
       "index": 158,
-      "name": "Mesh [00cg]",
+      "name": "Mesh_02Eg",
       "children": [],
-      "mesh": 38
+      "mesh": 98
     },
     {
       "index": 159,
-      "name": "Mesh [00dg]",
+      "name": "Mesh_02Fg",
       "children": [],
-      "mesh": 39
+      "mesh": 99
     },
     {
       "index": 160,
-      "name": "Mesh [00eg]",
+      "name": "Mesh_02Gg",
       "children": [],
-      "mesh": 40
+      "mesh": 100
     },
     {
       "index": 161,
-      "name": "Mesh [00fg]",
+      "name": "Mesh_02Hg",
       "children": [],
-      "mesh": 41
+      "mesh": 101
     },
     {
       "index": 162,
-      "name": "Mesh [00gg]",
+      "name": "Mesh_02Ig",
       "children": [],
-      "mesh": 42
+      "mesh": 102
     },
     {
       "index": 163,
-      "name": "Mesh [00hg]",
+      "name": "Mesh_02Jg",
       "children": [],
-      "mesh": 43
+      "mesh": 103
     },
     {
       "index": 164,
-      "name": "Mesh [00ig]",
+      "name": "Mesh_02Kg",
       "children": [],
-      "mesh": 44
+      "mesh": 104
     },
     {
       "index": 165,
-      "name": "Mesh [00jg]",
+      "name": "Mesh_02Lg",
       "children": [],
-      "mesh": 45
+      "mesh": 105
     },
     {
       "index": 166,
-      "name": "Mesh [00kg]",
+      "name": "Mesh_02Mg",
       "children": [],
-      "mesh": 46
+      "mesh": 106
     },
     {
       "index": 167,
-      "name": "Mesh [00lg]",
+      "name": "Mesh_02Ng",
       "children": [],
-      "mesh": 47
+      "mesh": 107
     },
     {
       "index": 168,
-      "name": "Mesh [00mg]",
+      "name": "Mesh_02Og",
       "children": [],
-      "mesh": 48
+      "mesh": 108
     },
     {
       "index": 169,
-      "name": "Mesh [00ng]",
+      "name": "Mesh_02Pg",
       "children": [],
-      "mesh": 49
+      "mesh": 109
     },
     {
       "index": 170,
-      "name": "Mesh [00og]",
+      "name": "Mesh_02Qg",
       "children": [],
-      "mesh": 50
+      "mesh": 110
     },
     {
       "index": 171,
-      "name": "Mesh [00pg]",
+      "name": "Mesh_02Rg",
       "children": [],
-      "mesh": 51
+      "mesh": 111
     },
     {
       "index": 172,
-      "name": "Mesh [00qg]",
+      "name": "Mesh_02Sg",
       "children": [],
-      "mesh": 52
+      "mesh": 112
     },
     {
       "index": 173,
-      "name": "Mesh [00rg]",
+      "name": "Mesh_02Tg",
       "children": [],
-      "mesh": 53
+      "mesh": 113
     },
     {
       "index": 174,
-      "name": "Mesh [00sg]",
-      "children": [],
-      "mesh": 54
-    },
-    {
-      "index": 175,
-      "name": "Mesh [00tg]",
-      "children": [],
-      "mesh": 55
-    },
-    {
-      "index": 176,
-      "name": "Mesh [00ug]",
-      "children": [],
-      "mesh": 56
-    },
-    {
-      "index": 177,
-      "name": "Mesh [00vg]",
-      "children": [],
-      "mesh": 57
-    },
-    {
-      "index": 178,
-      "name": "Mesh [00Wg]",
-      "children": [],
-      "mesh": 58
-    },
-    {
-      "index": 179,
-      "name": "Mesh [00wg]",
-      "children": [],
-      "mesh": 59
-    },
-    {
-      "index": 180,
-      "name": "Mesh [00Xg]",
-      "children": [],
-      "mesh": 60
-    },
-    {
-      "index": 181,
-      "name": "Mesh [00xg]",
-      "children": [],
-      "mesh": 61
-    },
-    {
-      "index": 182,
-      "name": "Mesh [00Yg]",
-      "children": [],
-      "mesh": 62
-    },
-    {
-      "index": 183,
-      "name": "Mesh [00yg]",
-      "children": [],
-      "mesh": 63
-    },
-    {
-      "index": 184,
-      "name": "Mesh [00Zg]",
-      "children": [],
-      "mesh": 64
-    },
-    {
-      "index": 185,
-      "name": "Mesh [00zg]",
-      "children": [],
-      "mesh": 65
-    },
-    {
-      "index": 186,
-      "name": "Mesh [010g]",
-      "children": [],
-      "mesh": 66
-    },
-    {
-      "index": 187,
-      "name": "Mesh [011g]",
-      "children": [],
-      "mesh": 67
-    },
-    {
-      "index": 188,
-      "name": "__Geometry__ [001c]",
+      "name": "__Geometry___00Ac",
       "children": [
-        156,
-        157,
         158,
         159,
         160,
@@ -19551,8 +19469,86 @@
         170,
         171,
         172,
-        173,
-        174,
+        173
+      ],
+      "mesh": null
+    },
+    {
+      "index": 175,
+      "name": "Mesh_02Ug",
+      "children": [],
+      "mesh": 114
+    },
+    {
+      "index": 176,
+      "name": "Mesh_02Vg",
+      "children": [],
+      "mesh": 115
+    },
+    {
+      "index": 177,
+      "name": "Mesh_02Wg",
+      "children": [],
+      "mesh": 116
+    },
+    {
+      "index": 178,
+      "name": "Mesh_02Xg",
+      "children": [],
+      "mesh": 117
+    },
+    {
+      "index": 179,
+      "name": "Mesh_02Yg",
+      "children": [],
+      "mesh": 118
+    },
+    {
+      "index": 180,
+      "name": "Mesh_02Zg",
+      "children": [],
+      "mesh": 119
+    },
+    {
+      "index": 181,
+      "name": "Mesh_02ag",
+      "children": [],
+      "mesh": 120
+    },
+    {
+      "index": 182,
+      "name": "Mesh_02bg",
+      "children": [],
+      "mesh": 121
+    },
+    {
+      "index": 183,
+      "name": "Mesh_02cg",
+      "children": [],
+      "mesh": 122
+    },
+    {
+      "index": 184,
+      "name": "Mesh_02dg",
+      "children": [],
+      "mesh": 123
+    },
+    {
+      "index": 185,
+      "name": "Mesh_02eg",
+      "children": [],
+      "mesh": 124
+    },
+    {
+      "index": 186,
+      "name": "Mesh_02fg",
+      "children": [],
+      "mesh": 125
+    },
+    {
+      "index": 187,
+      "name": "__Geometry___00Bc",
+      "children": [
         175,
         176,
         177,
@@ -19564,244 +19560,498 @@
         183,
         184,
         185,
-        186,
-        187
+        186
       ],
       "mesh": null
+    },
+    {
+      "index": 188,
+      "name": "Mesh_02gg",
+      "children": [],
+      "mesh": 126
     },
     {
       "index": 189,
-      "name": "__Model__ [001v]",
-      "children": [
-        188
-      ],
-      "mesh": null
+      "name": "Mesh_02hg",
+      "children": [],
+      "mesh": 127
     },
     {
       "index": 190,
-      "name": "Conveyor(5)",
+      "name": "Mesh_02ig",
+      "children": [],
+      "mesh": 128
+    },
+    {
+      "index": 191,
+      "name": "__Geometry___00Cc",
       "children": [
-        189
+        188,
+        189,
+        190
       ],
       "mesh": null
     },
     {
-      "index": 191,
-      "name": "Mesh [000g]",
-      "children": [],
-      "mesh": 58
-    },
-    {
       "index": 192,
-      "name": "Mesh [001g]",
+      "name": "Mesh_02jg",
       "children": [],
-      "mesh": 60
+      "mesh": 129
     },
     {
       "index": 193,
-      "name": "Mesh [002g]",
-      "children": [],
-      "mesh": 62
+      "name": "__Geometry___00Dc",
+      "children": [
+        192
+      ],
+      "mesh": null
     },
     {
       "index": 194,
-      "name": "Mesh [003g]",
+      "name": "__Geometry___00Ec",
       "children": [],
-      "mesh": 64
+      "mesh": null
     },
     {
       "index": 195,
-      "name": "Mesh [004g]",
-      "children": [],
-      "mesh": 36
+      "name": "mountplate_00En",
+      "children": [
+        194
+      ],
+      "mesh": null
     },
     {
       "index": 196,
-      "name": "Mesh [005g]",
-      "children": [],
-      "mesh": 37
+      "name": "Axis_6_00Dn",
+      "children": [
+        193,
+        195
+      ],
+      "mesh": null
     },
     {
       "index": 197,
-      "name": "Mesh [006g]",
-      "children": [],
-      "mesh": 38
+      "name": "Axis_5_00Cn",
+      "children": [
+        191,
+        196
+      ],
+      "mesh": null
     },
     {
       "index": 198,
-      "name": "Mesh [007g]",
-      "children": [],
-      "mesh": 39
+      "name": "Axis_4_00Bn",
+      "children": [
+        187,
+        197
+      ],
+      "mesh": null
     },
     {
       "index": 199,
-      "name": "Mesh [008g]",
-      "children": [],
-      "mesh": 40
+      "name": "Axis_3_00An",
+      "children": [
+        174,
+        198
+      ],
+      "mesh": null
     },
     {
       "index": 200,
-      "name": "Mesh [009g]",
-      "children": [],
-      "mesh": 41
+      "name": "Axis_2_009n",
+      "children": [
+        157,
+        199
+      ],
+      "mesh": null
     },
     {
       "index": 201,
-      "name": "Mesh [00Ag]",
-      "children": [],
-      "mesh": 42
+      "name": "Axis_1_008n",
+      "children": [
+        145,
+        200
+      ],
+      "mesh": null
     },
     {
       "index": 202,
-      "name": "Mesh [00Bg]",
+      "name": "Robot_World_00Fn",
       "children": [],
-      "mesh": 43
+      "mesh": null
     },
     {
       "index": 203,
-      "name": "Mesh [00Cg]",
-      "children": [],
-      "mesh": 44
+      "name": "__Model___006v",
+      "children": [
+        134,
+        201,
+        202
+      ],
+      "mesh": null
     },
     {
       "index": 204,
-      "name": "Mesh [00Dg]",
-      "children": [],
-      "mesh": 45
+      "name": "Generic_Articulated_Robot_#2_007n",
+      "children": [
+        203
+      ],
+      "mesh": null
     },
     {
       "index": 205,
-      "name": "Mesh [00Eg]",
-      "children": [],
-      "mesh": 46
+      "name": "Link1_006n",
+      "children": [
+        122,
+        204
+      ],
+      "mesh": null
     },
     {
       "index": 206,
-      "name": "Mesh [00Fg]",
+      "name": "Mesh_02kg",
       "children": [],
-      "mesh": 47
+      "mesh": 130
     },
     {
       "index": 207,
-      "name": "Mesh [00Gg]",
+      "name": "Mesh_02lg",
       "children": [],
-      "mesh": 48
+      "mesh": 131
     },
     {
       "index": 208,
-      "name": "Mesh [00Hg]",
-      "children": [],
-      "mesh": 49
+      "name": "__Geometry___00Fc",
+      "children": [
+        206,
+        207
+      ],
+      "mesh": null
     },
     {
       "index": 209,
-      "name": "Mesh [00Ig]",
-      "children": [],
-      "mesh": 50
+      "name": "Status_00Gn",
+      "children": [
+        208
+      ],
+      "mesh": null
     },
     {
       "index": 210,
-      "name": "Mesh [00Jg]",
-      "children": [],
-      "mesh": 51
+      "name": "__Model___005v",
+      "children": [
+        121,
+        205,
+        209
+      ],
+      "mesh": null
     },
     {
       "index": 211,
-      "name": "Mesh [00Kg]",
-      "children": [],
-      "mesh": 52
+      "name": "Robot_Transport_Controller_#2_005n",
+      "children": [
+        210
+      ],
+      "mesh": null
     },
     {
       "index": 212,
-      "name": "Mesh [00Lg]",
+      "name": "Mesh_02mg",
       "children": [],
-      "mesh": 53
+      "mesh": 132
     },
     {
       "index": 213,
-      "name": "Mesh [00Mg]",
+      "name": "Mesh_02ng",
       "children": [],
-      "mesh": 54
+      "mesh": 133
     },
     {
       "index": 214,
-      "name": "Mesh [00Ng]",
+      "name": "Mesh_02og",
       "children": [],
-      "mesh": 55
+      "mesh": 134
     },
     {
       "index": 215,
-      "name": "Mesh [00Og]",
+      "name": "Mesh_02pg",
       "children": [],
-      "mesh": 56
+      "mesh": 135
     },
     {
       "index": 216,
-      "name": "Mesh [00Pg]",
+      "name": "Mesh_02qg",
       "children": [],
-      "mesh": 57
+      "mesh": 136
     },
     {
       "index": 217,
-      "name": "Mesh [00Qg]",
+      "name": "Mesh_02rg",
       "children": [],
-      "mesh": 59
+      "mesh": 137
     },
     {
       "index": 218,
-      "name": "Mesh [00Rg]",
+      "name": "Mesh_02sg",
       "children": [],
-      "mesh": 61
+      "mesh": 138
     },
     {
       "index": 219,
-      "name": "Mesh [00Sg]",
+      "name": "Mesh_02tg",
       "children": [],
-      "mesh": 63
+      "mesh": 139
     },
     {
       "index": 220,
-      "name": "Mesh [00Tg]",
+      "name": "Mesh_02ug",
       "children": [],
-      "mesh": 65
+      "mesh": 140
     },
     {
       "index": 221,
-      "name": "Mesh [00Ug]",
+      "name": "Mesh_02vg",
       "children": [],
-      "mesh": 66
+      "mesh": 141
     },
     {
       "index": 222,
-      "name": "Mesh [00Vg]",
+      "name": "Mesh_02wg",
       "children": [],
-      "mesh": 67
+      "mesh": 142
     },
     {
       "index": 223,
-      "name": "__Geometry__ [000c]",
+      "name": "Mesh_02xg",
+      "children": [],
+      "mesh": 143
+    },
+    {
+      "index": 224,
+      "name": "Mesh_02yg",
+      "children": [],
+      "mesh": 144
+    },
+    {
+      "index": 225,
+      "name": "Mesh_02zg",
+      "children": [],
+      "mesh": 145
+    },
+    {
+      "index": 226,
+      "name": "Mesh_030g",
+      "children": [],
+      "mesh": 146
+    },
+    {
+      "index": 227,
+      "name": "Mesh_031g",
+      "children": [],
+      "mesh": 147
+    },
+    {
+      "index": 228,
+      "name": "Mesh_032g",
+      "children": [],
+      "mesh": 148
+    },
+    {
+      "index": 229,
+      "name": "Mesh_033g",
+      "children": [],
+      "mesh": 149
+    },
+    {
+      "index": 230,
+      "name": "Mesh_034g",
+      "children": [],
+      "mesh": 150
+    },
+    {
+      "index": 231,
+      "name": "Mesh_035g",
+      "children": [],
+      "mesh": 151
+    },
+    {
+      "index": 232,
+      "name": "Mesh_036g",
+      "children": [],
+      "mesh": 152
+    },
+    {
+      "index": 233,
+      "name": "Mesh_037g",
+      "children": [],
+      "mesh": 153
+    },
+    {
+      "index": 234,
+      "name": "Mesh_038g",
+      "children": [],
+      "mesh": 154
+    },
+    {
+      "index": 235,
+      "name": "Mesh_039g",
+      "children": [],
+      "mesh": 155
+    },
+    {
+      "index": 236,
+      "name": "Mesh_03Ag",
+      "children": [],
+      "mesh": 156
+    },
+    {
+      "index": 237,
+      "name": "Mesh_03Bg",
+      "children": [],
+      "mesh": 157
+    },
+    {
+      "index": 238,
+      "name": "Mesh_03Cg",
+      "children": [],
+      "mesh": 158
+    },
+    {
+      "index": 239,
+      "name": "Mesh_03Dg",
+      "children": [],
+      "mesh": 159
+    },
+    {
+      "index": 240,
+      "name": "Mesh_03Eg",
+      "children": [],
+      "mesh": 160
+    },
+    {
+      "index": 241,
+      "name": "Mesh_03Fg",
+      "children": [],
+      "mesh": 161
+    },
+    {
+      "index": 242,
+      "name": "Mesh_03Gg",
+      "children": [],
+      "mesh": 162
+    },
+    {
+      "index": 243,
+      "name": "Mesh_03Hg",
+      "children": [],
+      "mesh": 163
+    },
+    {
+      "index": 244,
+      "name": "Mesh_03Ig",
+      "children": [],
+      "mesh": 164
+    },
+    {
+      "index": 245,
+      "name": "Mesh_03Jg",
+      "children": [],
+      "mesh": 165
+    },
+    {
+      "index": 246,
+      "name": "Mesh_03Kg",
+      "children": [],
+      "mesh": 166
+    },
+    {
+      "index": 247,
+      "name": "Mesh_03Lg",
+      "children": [],
+      "mesh": 167
+    },
+    {
+      "index": 248,
+      "name": "Mesh_03Mg",
+      "children": [],
+      "mesh": 168
+    },
+    {
+      "index": 249,
+      "name": "Mesh_03Ng",
+      "children": [],
+      "mesh": 169
+    },
+    {
+      "index": 250,
+      "name": "Mesh_03Og",
+      "children": [],
+      "mesh": 170
+    },
+    {
+      "index": 251,
+      "name": "Mesh_03Pg",
+      "children": [],
+      "mesh": 171
+    },
+    {
+      "index": 252,
+      "name": "Mesh_03Qg",
+      "children": [],
+      "mesh": 172
+    },
+    {
+      "index": 253,
+      "name": "Mesh_03Rg",
+      "children": [],
+      "mesh": 173
+    },
+    {
+      "index": 254,
+      "name": "Mesh_03Sg",
+      "children": [],
+      "mesh": 174
+    },
+    {
+      "index": 255,
+      "name": "Mesh_03Tg",
+      "children": [],
+      "mesh": 175
+    },
+    {
+      "index": 256,
+      "name": "Mesh_03Ug",
+      "children": [],
+      "mesh": 176
+    },
+    {
+      "index": 257,
+      "name": "Mesh_03Vg",
+      "children": [],
+      "mesh": 177
+    },
+    {
+      "index": 258,
+      "name": "Mesh_03Wg",
+      "children": [],
+      "mesh": 178
+    },
+    {
+      "index": 259,
+      "name": "Mesh_03Xg",
+      "children": [],
+      "mesh": 179
+    },
+    {
+      "index": 260,
+      "name": "Mesh_03Yg",
+      "children": [],
+      "mesh": 180
+    },
+    {
+      "index": 261,
+      "name": "__Geometry___00Gc",
       "children": [
-        191,
-        192,
-        193,
-        194,
-        195,
-        196,
-        197,
-        198,
-        199,
-        200,
-        201,
-        202,
-        203,
-        204,
-        205,
-        206,
-        207,
-        208,
-        209,
-        210,
-        211,
         212,
         213,
         214,
@@ -19812,324 +20062,10 @@
         219,
         220,
         221,
-        222
-      ],
-      "mesh": null
-    },
-    {
-      "index": 224,
-      "name": "__Model__ [000v]",
-      "children": [
-        223
-      ],
-      "mesh": null
-    },
-    {
-      "index": 225,
-      "name": "Conveyor(6)",
-      "children": [
-        224
-      ],
-      "mesh": null
-    },
-    {
-      "index": 226,
-      "name": "Mesh [076g]",
-      "children": [],
-      "mesh": 68
-    },
-    {
-      "index": 227,
-      "name": "Mesh [077g]",
-      "children": [],
-      "mesh": 69
-    },
-    {
-      "index": 228,
-      "name": "Mesh [078g]",
-      "children": [],
-      "mesh": 70
-    },
-    {
-      "index": 229,
-      "name": "Mesh [079g]",
-      "children": [],
-      "mesh": 71
-    },
-    {
-      "index": 230,
-      "name": "Mesh [07Ag]",
-      "children": [],
-      "mesh": 72
-    },
-    {
-      "index": 231,
-      "name": "Mesh [07ag]",
-      "children": [],
-      "mesh": 73
-    },
-    {
-      "index": 232,
-      "name": "Mesh [07Bg]",
-      "children": [],
-      "mesh": 74
-    },
-    {
-      "index": 233,
-      "name": "Mesh [07bg]",
-      "children": [],
-      "mesh": 75
-    },
-    {
-      "index": 234,
-      "name": "Mesh [07Cg]",
-      "children": [],
-      "mesh": 76
-    },
-    {
-      "index": 235,
-      "name": "Mesh [07cg]",
-      "children": [],
-      "mesh": 77
-    },
-    {
-      "index": 236,
-      "name": "Mesh [07Dg]",
-      "children": [],
-      "mesh": 78
-    },
-    {
-      "index": 237,
-      "name": "Mesh [07dg]",
-      "children": [],
-      "mesh": 79
-    },
-    {
-      "index": 238,
-      "name": "Mesh [07Eg]",
-      "children": [],
-      "mesh": 80
-    },
-    {
-      "index": 239,
-      "name": "Mesh [07eg]",
-      "children": [],
-      "mesh": 81
-    },
-    {
-      "index": 240,
-      "name": "Mesh [07Fg]",
-      "children": [],
-      "mesh": 82
-    },
-    {
-      "index": 241,
-      "name": "Mesh [07fg]",
-      "children": [],
-      "mesh": 83
-    },
-    {
-      "index": 242,
-      "name": "Mesh [07Gg]",
-      "children": [],
-      "mesh": 84
-    },
-    {
-      "index": 243,
-      "name": "Mesh [07gg]",
-      "children": [],
-      "mesh": 85
-    },
-    {
-      "index": 244,
-      "name": "Mesh [07Hg]",
-      "children": [],
-      "mesh": 86
-    },
-    {
-      "index": 245,
-      "name": "Mesh [07hg]",
-      "children": [],
-      "mesh": 87
-    },
-    {
-      "index": 246,
-      "name": "Mesh [07Ig]",
-      "children": [],
-      "mesh": 88
-    },
-    {
-      "index": 247,
-      "name": "Mesh [07ig]",
-      "children": [],
-      "mesh": 89
-    },
-    {
-      "index": 248,
-      "name": "Mesh [07Jg]",
-      "children": [],
-      "mesh": 90
-    },
-    {
-      "index": 249,
-      "name": "Mesh [07jg]",
-      "children": [],
-      "mesh": 91
-    },
-    {
-      "index": 250,
-      "name": "Mesh [07Kg]",
-      "children": [],
-      "mesh": 92
-    },
-    {
-      "index": 251,
-      "name": "Mesh [07kg]",
-      "children": [],
-      "mesh": 93
-    },
-    {
-      "index": 252,
-      "name": "Mesh [07Lg]",
-      "children": [],
-      "mesh": 94
-    },
-    {
-      "index": 253,
-      "name": "Mesh [07lg]",
-      "children": [],
-      "mesh": 95
-    },
-    {
-      "index": 254,
-      "name": "Mesh [07Mg]",
-      "children": [],
-      "mesh": 96
-    },
-    {
-      "index": 255,
-      "name": "Mesh [07mg]",
-      "children": [],
-      "mesh": 97
-    },
-    {
-      "index": 256,
-      "name": "Mesh [07Ng]",
-      "children": [],
-      "mesh": 98
-    },
-    {
-      "index": 257,
-      "name": "Mesh [07ng]",
-      "children": [],
-      "mesh": 99
-    },
-    {
-      "index": 258,
-      "name": "Mesh [07Og]",
-      "children": [],
-      "mesh": 100
-    },
-    {
-      "index": 259,
-      "name": "Mesh [07og]",
-      "children": [],
-      "mesh": 101
-    },
-    {
-      "index": 260,
-      "name": "Mesh [07Pg]",
-      "children": [],
-      "mesh": 102
-    },
-    {
-      "index": 261,
-      "name": "Mesh [07pg]",
-      "children": [],
-      "mesh": 103
-    },
-    {
-      "index": 262,
-      "name": "Mesh [07Qg]",
-      "children": [],
-      "mesh": 104
-    },
-    {
-      "index": 263,
-      "name": "Mesh [07qg]",
-      "children": [],
-      "mesh": 105
-    },
-    {
-      "index": 264,
-      "name": "Mesh [07Rg]",
-      "children": [],
-      "mesh": 106
-    },
-    {
-      "index": 265,
-      "name": "Mesh [07rg]",
-      "children": [],
-      "mesh": 107
-    },
-    {
-      "index": 266,
-      "name": "Mesh [07Sg]",
-      "children": [],
-      "mesh": 108
-    },
-    {
-      "index": 267,
-      "name": "Mesh [07sg]",
-      "children": [],
-      "mesh": 109
-    },
-    {
-      "index": 268,
-      "name": "Mesh [07Tg]",
-      "children": [],
-      "mesh": 110
-    },
-    {
-      "index": 269,
-      "name": "Mesh [07Ug]",
-      "children": [],
-      "mesh": 111
-    },
-    {
-      "index": 270,
-      "name": "Mesh [07Vg]",
-      "children": [],
-      "mesh": 112
-    },
-    {
-      "index": 271,
-      "name": "Mesh [07Wg]",
-      "children": [],
-      "mesh": 113
-    },
-    {
-      "index": 272,
-      "name": "Mesh [07Xg]",
-      "children": [],
-      "mesh": 114
-    },
-    {
-      "index": 273,
-      "name": "Mesh [07Yg]",
-      "children": [],
-      "mesh": 115
-    },
-    {
-      "index": 274,
-      "name": "Mesh [07Zg]",
-      "children": [],
-      "mesh": 116
-    },
-    {
-      "index": 275,
-      "name": "__Geometry__ [00Kc]",
-      "children": [
+        222,
+        223,
+        224,
+        225,
         226,
         227,
         228,
@@ -20164,10 +20100,324 @@
         257,
         258,
         259,
-        260,
-        261,
-        262,
-        263,
+        260
+      ],
+      "mesh": null
+    },
+    {
+      "index": 262,
+      "name": "__Model___007v",
+      "children": [
+        261
+      ],
+      "mesh": null
+    },
+    {
+      "index": 263,
+      "name": "Curve_Conveyor_#4_00Hn",
+      "children": [
+        262
+      ],
+      "mesh": null
+    },
+    {
+      "index": 264,
+      "name": "Mesh_03Zg",
+      "children": [],
+      "mesh": 132
+    },
+    {
+      "index": 265,
+      "name": "Mesh_03ag",
+      "children": [],
+      "mesh": 133
+    },
+    {
+      "index": 266,
+      "name": "Mesh_03bg",
+      "children": [],
+      "mesh": 134
+    },
+    {
+      "index": 267,
+      "name": "Mesh_03cg",
+      "children": [],
+      "mesh": 135
+    },
+    {
+      "index": 268,
+      "name": "Mesh_03dg",
+      "children": [],
+      "mesh": 136
+    },
+    {
+      "index": 269,
+      "name": "Mesh_03eg",
+      "children": [],
+      "mesh": 137
+    },
+    {
+      "index": 270,
+      "name": "Mesh_03fg",
+      "children": [],
+      "mesh": 138
+    },
+    {
+      "index": 271,
+      "name": "Mesh_03gg",
+      "children": [],
+      "mesh": 139
+    },
+    {
+      "index": 272,
+      "name": "Mesh_03hg",
+      "children": [],
+      "mesh": 140
+    },
+    {
+      "index": 273,
+      "name": "Mesh_03ig",
+      "children": [],
+      "mesh": 141
+    },
+    {
+      "index": 274,
+      "name": "Mesh_03jg",
+      "children": [],
+      "mesh": 142
+    },
+    {
+      "index": 275,
+      "name": "Mesh_03kg",
+      "children": [],
+      "mesh": 143
+    },
+    {
+      "index": 276,
+      "name": "Mesh_03lg",
+      "children": [],
+      "mesh": 144
+    },
+    {
+      "index": 277,
+      "name": "Mesh_03mg",
+      "children": [],
+      "mesh": 145
+    },
+    {
+      "index": 278,
+      "name": "Mesh_03ng",
+      "children": [],
+      "mesh": 146
+    },
+    {
+      "index": 279,
+      "name": "Mesh_03og",
+      "children": [],
+      "mesh": 147
+    },
+    {
+      "index": 280,
+      "name": "Mesh_03pg",
+      "children": [],
+      "mesh": 148
+    },
+    {
+      "index": 281,
+      "name": "Mesh_03qg",
+      "children": [],
+      "mesh": 149
+    },
+    {
+      "index": 282,
+      "name": "Mesh_03rg",
+      "children": [],
+      "mesh": 150
+    },
+    {
+      "index": 283,
+      "name": "Mesh_03sg",
+      "children": [],
+      "mesh": 151
+    },
+    {
+      "index": 284,
+      "name": "Mesh_03tg",
+      "children": [],
+      "mesh": 152
+    },
+    {
+      "index": 285,
+      "name": "Mesh_03ug",
+      "children": [],
+      "mesh": 153
+    },
+    {
+      "index": 286,
+      "name": "Mesh_03vg",
+      "children": [],
+      "mesh": 154
+    },
+    {
+      "index": 287,
+      "name": "Mesh_03wg",
+      "children": [],
+      "mesh": 155
+    },
+    {
+      "index": 288,
+      "name": "Mesh_03xg",
+      "children": [],
+      "mesh": 156
+    },
+    {
+      "index": 289,
+      "name": "Mesh_03yg",
+      "children": [],
+      "mesh": 157
+    },
+    {
+      "index": 290,
+      "name": "Mesh_03zg",
+      "children": [],
+      "mesh": 158
+    },
+    {
+      "index": 291,
+      "name": "Mesh_040g",
+      "children": [],
+      "mesh": 159
+    },
+    {
+      "index": 292,
+      "name": "Mesh_041g",
+      "children": [],
+      "mesh": 160
+    },
+    {
+      "index": 293,
+      "name": "Mesh_042g",
+      "children": [],
+      "mesh": 161
+    },
+    {
+      "index": 294,
+      "name": "Mesh_043g",
+      "children": [],
+      "mesh": 162
+    },
+    {
+      "index": 295,
+      "name": "Mesh_044g",
+      "children": [],
+      "mesh": 163
+    },
+    {
+      "index": 296,
+      "name": "Mesh_045g",
+      "children": [],
+      "mesh": 164
+    },
+    {
+      "index": 297,
+      "name": "Mesh_046g",
+      "children": [],
+      "mesh": 165
+    },
+    {
+      "index": 298,
+      "name": "Mesh_047g",
+      "children": [],
+      "mesh": 166
+    },
+    {
+      "index": 299,
+      "name": "Mesh_048g",
+      "children": [],
+      "mesh": 167
+    },
+    {
+      "index": 300,
+      "name": "Mesh_049g",
+      "children": [],
+      "mesh": 168
+    },
+    {
+      "index": 301,
+      "name": "Mesh_04Ag",
+      "children": [],
+      "mesh": 169
+    },
+    {
+      "index": 302,
+      "name": "Mesh_04Bg",
+      "children": [],
+      "mesh": 170
+    },
+    {
+      "index": 303,
+      "name": "Mesh_04Cg",
+      "children": [],
+      "mesh": 171
+    },
+    {
+      "index": 304,
+      "name": "Mesh_04Dg",
+      "children": [],
+      "mesh": 172
+    },
+    {
+      "index": 305,
+      "name": "Mesh_04Eg",
+      "children": [],
+      "mesh": 173
+    },
+    {
+      "index": 306,
+      "name": "Mesh_04Fg",
+      "children": [],
+      "mesh": 174
+    },
+    {
+      "index": 307,
+      "name": "Mesh_04Gg",
+      "children": [],
+      "mesh": 175
+    },
+    {
+      "index": 308,
+      "name": "Mesh_04Hg",
+      "children": [],
+      "mesh": 176
+    },
+    {
+      "index": 309,
+      "name": "Mesh_04Ig",
+      "children": [],
+      "mesh": 177
+    },
+    {
+      "index": 310,
+      "name": "Mesh_04Jg",
+      "children": [],
+      "mesh": 178
+    },
+    {
+      "index": 311,
+      "name": "Mesh_04Kg",
+      "children": [],
+      "mesh": 179
+    },
+    {
+      "index": 312,
+      "name": "Mesh_04Lg",
+      "children": [],
+      "mesh": 180
+    },
+    {
+      "index": 313,
+      "name": "__Geometry___00Hc",
+      "children": [
         264,
         265,
         266,
@@ -20178,324 +20428,10 @@
         271,
         272,
         273,
-        274
-      ],
-      "mesh": null
-    },
-    {
-      "index": 276,
-      "name": "__Model__ [00Bv]",
-      "children": [
-        275
-      ],
-      "mesh": null
-    },
-    {
-      "index": 277,
-      "name": "Curve Conveyor(1)",
-      "children": [
-        276
-      ],
-      "mesh": null
-    },
-    {
-      "index": 278,
-      "name": "Mesh [03zg]",
-      "children": [],
-      "mesh": 68
-    },
-    {
-      "index": 279,
-      "name": "Mesh [040g]",
-      "children": [],
-      "mesh": 69
-    },
-    {
-      "index": 280,
-      "name": "Mesh [041g]",
-      "children": [],
-      "mesh": 70
-    },
-    {
-      "index": 281,
-      "name": "Mesh [042g]",
-      "children": [],
-      "mesh": 71
-    },
-    {
-      "index": 282,
-      "name": "Mesh [043g]",
-      "children": [],
-      "mesh": 72
-    },
-    {
-      "index": 283,
-      "name": "Mesh [044g]",
-      "children": [],
-      "mesh": 74
-    },
-    {
-      "index": 284,
-      "name": "Mesh [045g]",
-      "children": [],
-      "mesh": 76
-    },
-    {
-      "index": 285,
-      "name": "Mesh [046g]",
-      "children": [],
-      "mesh": 78
-    },
-    {
-      "index": 286,
-      "name": "Mesh [047g]",
-      "children": [],
-      "mesh": 80
-    },
-    {
-      "index": 287,
-      "name": "Mesh [048g]",
-      "children": [],
-      "mesh": 82
-    },
-    {
-      "index": 288,
-      "name": "Mesh [049g]",
-      "children": [],
-      "mesh": 84
-    },
-    {
-      "index": 289,
-      "name": "Mesh [04Ag]",
-      "children": [],
-      "mesh": 86
-    },
-    {
-      "index": 290,
-      "name": "Mesh [04ag]",
-      "children": [],
-      "mesh": 87
-    },
-    {
-      "index": 291,
-      "name": "Mesh [04Bg]",
-      "children": [],
-      "mesh": 88
-    },
-    {
-      "index": 292,
-      "name": "Mesh [04bg]",
-      "children": [],
-      "mesh": 89
-    },
-    {
-      "index": 293,
-      "name": "Mesh [04Cg]",
-      "children": [],
-      "mesh": 90
-    },
-    {
-      "index": 294,
-      "name": "Mesh [04cg]",
-      "children": [],
-      "mesh": 91
-    },
-    {
-      "index": 295,
-      "name": "Mesh [04Dg]",
-      "children": [],
-      "mesh": 92
-    },
-    {
-      "index": 296,
-      "name": "Mesh [04dg]",
-      "children": [],
-      "mesh": 93
-    },
-    {
-      "index": 297,
-      "name": "Mesh [04Eg]",
-      "children": [],
-      "mesh": 94
-    },
-    {
-      "index": 298,
-      "name": "Mesh [04eg]",
-      "children": [],
-      "mesh": 95
-    },
-    {
-      "index": 299,
-      "name": "Mesh [04Fg]",
-      "children": [],
-      "mesh": 96
-    },
-    {
-      "index": 300,
-      "name": "Mesh [04fg]",
-      "children": [],
-      "mesh": 97
-    },
-    {
-      "index": 301,
-      "name": "Mesh [04Gg]",
-      "children": [],
-      "mesh": 98
-    },
-    {
-      "index": 302,
-      "name": "Mesh [04gg]",
-      "children": [],
-      "mesh": 99
-    },
-    {
-      "index": 303,
-      "name": "Mesh [04Hg]",
-      "children": [],
-      "mesh": 100
-    },
-    {
-      "index": 304,
-      "name": "Mesh [04hg]",
-      "children": [],
-      "mesh": 101
-    },
-    {
-      "index": 305,
-      "name": "Mesh [04Ig]",
-      "children": [],
-      "mesh": 102
-    },
-    {
-      "index": 306,
-      "name": "Mesh [04ig]",
-      "children": [],
-      "mesh": 103
-    },
-    {
-      "index": 307,
-      "name": "Mesh [04Jg]",
-      "children": [],
-      "mesh": 104
-    },
-    {
-      "index": 308,
-      "name": "Mesh [04jg]",
-      "children": [],
-      "mesh": 105
-    },
-    {
-      "index": 309,
-      "name": "Mesh [04Kg]",
-      "children": [],
-      "mesh": 106
-    },
-    {
-      "index": 310,
-      "name": "Mesh [04kg]",
-      "children": [],
-      "mesh": 107
-    },
-    {
-      "index": 311,
-      "name": "Mesh [04Lg]",
-      "children": [],
-      "mesh": 108
-    },
-    {
-      "index": 312,
-      "name": "Mesh [04lg]",
-      "children": [],
-      "mesh": 109
-    },
-    {
-      "index": 313,
-      "name": "Mesh [04Mg]",
-      "children": [],
-      "mesh": 110
-    },
-    {
-      "index": 314,
-      "name": "Mesh [04Ng]",
-      "children": [],
-      "mesh": 111
-    },
-    {
-      "index": 315,
-      "name": "Mesh [04Og]",
-      "children": [],
-      "mesh": 112
-    },
-    {
-      "index": 316,
-      "name": "Mesh [04Pg]",
-      "children": [],
-      "mesh": 113
-    },
-    {
-      "index": 317,
-      "name": "Mesh [04Qg]",
-      "children": [],
-      "mesh": 114
-    },
-    {
-      "index": 318,
-      "name": "Mesh [04Rg]",
-      "children": [],
-      "mesh": 115
-    },
-    {
-      "index": 319,
-      "name": "Mesh [04Sg]",
-      "children": [],
-      "mesh": 116
-    },
-    {
-      "index": 320,
-      "name": "Mesh [04Tg]",
-      "children": [],
-      "mesh": 73
-    },
-    {
-      "index": 321,
-      "name": "Mesh [04Ug]",
-      "children": [],
-      "mesh": 75
-    },
-    {
-      "index": 322,
-      "name": "Mesh [04Vg]",
-      "children": [],
-      "mesh": 77
-    },
-    {
-      "index": 323,
-      "name": "Mesh [04Wg]",
-      "children": [],
-      "mesh": 79
-    },
-    {
-      "index": 324,
-      "name": "Mesh [04Xg]",
-      "children": [],
-      "mesh": 81
-    },
-    {
-      "index": 325,
-      "name": "Mesh [04Yg]",
-      "children": [],
-      "mesh": 83
-    },
-    {
-      "index": 326,
-      "name": "Mesh [04Zg]",
-      "children": [],
-      "mesh": 85
-    },
-    {
-      "index": 327,
-      "name": "__Geometry__ [00Fc]",
-      "children": [
+        274,
+        275,
+        276,
+        277,
         278,
         279,
         280,
@@ -20530,10 +20466,324 @@
         309,
         310,
         311,
-        312,
-        313,
-        314,
-        315,
+        312
+      ],
+      "mesh": null
+    },
+    {
+      "index": 314,
+      "name": "__Model___008v",
+      "children": [
+        313
+      ],
+      "mesh": null
+    },
+    {
+      "index": 315,
+      "name": "Curve_Conveyor_#3_00In",
+      "children": [
+        314
+      ],
+      "mesh": null
+    },
+    {
+      "index": 316,
+      "name": "Mesh_04Mg",
+      "children": [],
+      "mesh": 132
+    },
+    {
+      "index": 317,
+      "name": "Mesh_04Ng",
+      "children": [],
+      "mesh": 133
+    },
+    {
+      "index": 318,
+      "name": "Mesh_04Og",
+      "children": [],
+      "mesh": 134
+    },
+    {
+      "index": 319,
+      "name": "Mesh_04Pg",
+      "children": [],
+      "mesh": 135
+    },
+    {
+      "index": 320,
+      "name": "Mesh_04Qg",
+      "children": [],
+      "mesh": 136
+    },
+    {
+      "index": 321,
+      "name": "Mesh_04Rg",
+      "children": [],
+      "mesh": 137
+    },
+    {
+      "index": 322,
+      "name": "Mesh_04Sg",
+      "children": [],
+      "mesh": 138
+    },
+    {
+      "index": 323,
+      "name": "Mesh_04Tg",
+      "children": [],
+      "mesh": 139
+    },
+    {
+      "index": 324,
+      "name": "Mesh_04Ug",
+      "children": [],
+      "mesh": 140
+    },
+    {
+      "index": 325,
+      "name": "Mesh_04Vg",
+      "children": [],
+      "mesh": 141
+    },
+    {
+      "index": 326,
+      "name": "Mesh_04Wg",
+      "children": [],
+      "mesh": 142
+    },
+    {
+      "index": 327,
+      "name": "Mesh_04Xg",
+      "children": [],
+      "mesh": 143
+    },
+    {
+      "index": 328,
+      "name": "Mesh_04Yg",
+      "children": [],
+      "mesh": 144
+    },
+    {
+      "index": 329,
+      "name": "Mesh_04Zg",
+      "children": [],
+      "mesh": 145
+    },
+    {
+      "index": 330,
+      "name": "Mesh_04ag",
+      "children": [],
+      "mesh": 146
+    },
+    {
+      "index": 331,
+      "name": "Mesh_04bg",
+      "children": [],
+      "mesh": 147
+    },
+    {
+      "index": 332,
+      "name": "Mesh_04cg",
+      "children": [],
+      "mesh": 148
+    },
+    {
+      "index": 333,
+      "name": "Mesh_04dg",
+      "children": [],
+      "mesh": 149
+    },
+    {
+      "index": 334,
+      "name": "Mesh_04eg",
+      "children": [],
+      "mesh": 150
+    },
+    {
+      "index": 335,
+      "name": "Mesh_04fg",
+      "children": [],
+      "mesh": 151
+    },
+    {
+      "index": 336,
+      "name": "Mesh_04gg",
+      "children": [],
+      "mesh": 152
+    },
+    {
+      "index": 337,
+      "name": "Mesh_04hg",
+      "children": [],
+      "mesh": 153
+    },
+    {
+      "index": 338,
+      "name": "Mesh_04ig",
+      "children": [],
+      "mesh": 154
+    },
+    {
+      "index": 339,
+      "name": "Mesh_04jg",
+      "children": [],
+      "mesh": 155
+    },
+    {
+      "index": 340,
+      "name": "Mesh_04kg",
+      "children": [],
+      "mesh": 156
+    },
+    {
+      "index": 341,
+      "name": "Mesh_04lg",
+      "children": [],
+      "mesh": 157
+    },
+    {
+      "index": 342,
+      "name": "Mesh_04mg",
+      "children": [],
+      "mesh": 158
+    },
+    {
+      "index": 343,
+      "name": "Mesh_04ng",
+      "children": [],
+      "mesh": 159
+    },
+    {
+      "index": 344,
+      "name": "Mesh_04og",
+      "children": [],
+      "mesh": 160
+    },
+    {
+      "index": 345,
+      "name": "Mesh_04pg",
+      "children": [],
+      "mesh": 161
+    },
+    {
+      "index": 346,
+      "name": "Mesh_04qg",
+      "children": [],
+      "mesh": 162
+    },
+    {
+      "index": 347,
+      "name": "Mesh_04rg",
+      "children": [],
+      "mesh": 163
+    },
+    {
+      "index": 348,
+      "name": "Mesh_04sg",
+      "children": [],
+      "mesh": 164
+    },
+    {
+      "index": 349,
+      "name": "Mesh_04tg",
+      "children": [],
+      "mesh": 165
+    },
+    {
+      "index": 350,
+      "name": "Mesh_04ug",
+      "children": [],
+      "mesh": 166
+    },
+    {
+      "index": 351,
+      "name": "Mesh_04vg",
+      "children": [],
+      "mesh": 167
+    },
+    {
+      "index": 352,
+      "name": "Mesh_04wg",
+      "children": [],
+      "mesh": 168
+    },
+    {
+      "index": 353,
+      "name": "Mesh_04xg",
+      "children": [],
+      "mesh": 169
+    },
+    {
+      "index": 354,
+      "name": "Mesh_04yg",
+      "children": [],
+      "mesh": 170
+    },
+    {
+      "index": 355,
+      "name": "Mesh_04zg",
+      "children": [],
+      "mesh": 171
+    },
+    {
+      "index": 356,
+      "name": "Mesh_050g",
+      "children": [],
+      "mesh": 172
+    },
+    {
+      "index": 357,
+      "name": "Mesh_051g",
+      "children": [],
+      "mesh": 173
+    },
+    {
+      "index": 358,
+      "name": "Mesh_052g",
+      "children": [],
+      "mesh": 174
+    },
+    {
+      "index": 359,
+      "name": "Mesh_053g",
+      "children": [],
+      "mesh": 175
+    },
+    {
+      "index": 360,
+      "name": "Mesh_054g",
+      "children": [],
+      "mesh": 176
+    },
+    {
+      "index": 361,
+      "name": "Mesh_055g",
+      "children": [],
+      "mesh": 177
+    },
+    {
+      "index": 362,
+      "name": "Mesh_056g",
+      "children": [],
+      "mesh": 178
+    },
+    {
+      "index": 363,
+      "name": "Mesh_057g",
+      "children": [],
+      "mesh": 179
+    },
+    {
+      "index": 364,
+      "name": "Mesh_058g",
+      "children": [],
+      "mesh": 180
+    },
+    {
+      "index": 365,
+      "name": "__Geometry___00Ic",
+      "children": [
         316,
         317,
         318,
@@ -20544,324 +20794,10 @@
         323,
         324,
         325,
-        326
-      ],
-      "mesh": null
-    },
-    {
-      "index": 328,
-      "name": "__Model__ [006v]",
-      "children": [
-        327
-      ],
-      "mesh": null
-    },
-    {
-      "index": 329,
-      "name": "Curve Conveyor(2)",
-      "children": [
-        328
-      ],
-      "mesh": null
-    },
-    {
-      "index": 330,
-      "name": "Mesh [03ag]",
-      "children": [],
-      "mesh": 111
-    },
-    {
-      "index": 331,
-      "name": "Mesh [03bg]",
-      "children": [],
-      "mesh": 112
-    },
-    {
-      "index": 332,
-      "name": "Mesh [03Cg]",
-      "children": [],
-      "mesh": 68
-    },
-    {
-      "index": 333,
-      "name": "Mesh [03cg]",
-      "children": [],
-      "mesh": 113
-    },
-    {
-      "index": 334,
-      "name": "Mesh [03Dg]",
-      "children": [],
-      "mesh": 69
-    },
-    {
-      "index": 335,
-      "name": "Mesh [03dg]",
-      "children": [],
-      "mesh": 114
-    },
-    {
-      "index": 336,
-      "name": "Mesh [03Eg]",
-      "children": [],
-      "mesh": 70
-    },
-    {
-      "index": 337,
-      "name": "Mesh [03eg]",
-      "children": [],
-      "mesh": 115
-    },
-    {
-      "index": 338,
-      "name": "Mesh [03Fg]",
-      "children": [],
-      "mesh": 71
-    },
-    {
-      "index": 339,
-      "name": "Mesh [03fg]",
-      "children": [],
-      "mesh": 116
-    },
-    {
-      "index": 340,
-      "name": "Mesh [03Gg]",
-      "children": [],
-      "mesh": 72
-    },
-    {
-      "index": 341,
-      "name": "Mesh [03gg]",
-      "children": [],
-      "mesh": 73
-    },
-    {
-      "index": 342,
-      "name": "Mesh [03Hg]",
-      "children": [],
-      "mesh": 74
-    },
-    {
-      "index": 343,
-      "name": "Mesh [03hg]",
-      "children": [],
-      "mesh": 75
-    },
-    {
-      "index": 344,
-      "name": "Mesh [03Ig]",
-      "children": [],
-      "mesh": 76
-    },
-    {
-      "index": 345,
-      "name": "Mesh [03ig]",
-      "children": [],
-      "mesh": 77
-    },
-    {
-      "index": 346,
-      "name": "Mesh [03Jg]",
-      "children": [],
-      "mesh": 78
-    },
-    {
-      "index": 347,
-      "name": "Mesh [03jg]",
-      "children": [],
-      "mesh": 79
-    },
-    {
-      "index": 348,
-      "name": "Mesh [03Kg]",
-      "children": [],
-      "mesh": 80
-    },
-    {
-      "index": 349,
-      "name": "Mesh [03kg]",
-      "children": [],
-      "mesh": 81
-    },
-    {
-      "index": 350,
-      "name": "Mesh [03Lg]",
-      "children": [],
-      "mesh": 82
-    },
-    {
-      "index": 351,
-      "name": "Mesh [03lg]",
-      "children": [],
-      "mesh": 83
-    },
-    {
-      "index": 352,
-      "name": "Mesh [03Mg]",
-      "children": [],
-      "mesh": 84
-    },
-    {
-      "index": 353,
-      "name": "Mesh [03mg]",
-      "children": [],
-      "mesh": 85
-    },
-    {
-      "index": 354,
-      "name": "Mesh [03Ng]",
-      "children": [],
-      "mesh": 86
-    },
-    {
-      "index": 355,
-      "name": "Mesh [03ng]",
-      "children": [],
-      "mesh": 87
-    },
-    {
-      "index": 356,
-      "name": "Mesh [03Og]",
-      "children": [],
-      "mesh": 88
-    },
-    {
-      "index": 357,
-      "name": "Mesh [03og]",
-      "children": [],
-      "mesh": 89
-    },
-    {
-      "index": 358,
-      "name": "Mesh [03Pg]",
-      "children": [],
-      "mesh": 90
-    },
-    {
-      "index": 359,
-      "name": "Mesh [03pg]",
-      "children": [],
-      "mesh": 91
-    },
-    {
-      "index": 360,
-      "name": "Mesh [03Qg]",
-      "children": [],
-      "mesh": 92
-    },
-    {
-      "index": 361,
-      "name": "Mesh [03qg]",
-      "children": [],
-      "mesh": 93
-    },
-    {
-      "index": 362,
-      "name": "Mesh [03Rg]",
-      "children": [],
-      "mesh": 94
-    },
-    {
-      "index": 363,
-      "name": "Mesh [03rg]",
-      "children": [],
-      "mesh": 95
-    },
-    {
-      "index": 364,
-      "name": "Mesh [03Sg]",
-      "children": [],
-      "mesh": 96
-    },
-    {
-      "index": 365,
-      "name": "Mesh [03sg]",
-      "children": [],
-      "mesh": 97
-    },
-    {
-      "index": 366,
-      "name": "Mesh [03Tg]",
-      "children": [],
-      "mesh": 98
-    },
-    {
-      "index": 367,
-      "name": "Mesh [03tg]",
-      "children": [],
-      "mesh": 99
-    },
-    {
-      "index": 368,
-      "name": "Mesh [03Ug]",
-      "children": [],
-      "mesh": 100
-    },
-    {
-      "index": 369,
-      "name": "Mesh [03ug]",
-      "children": [],
-      "mesh": 101
-    },
-    {
-      "index": 370,
-      "name": "Mesh [03Vg]",
-      "children": [],
-      "mesh": 102
-    },
-    {
-      "index": 371,
-      "name": "Mesh [03vg]",
-      "children": [],
-      "mesh": 103
-    },
-    {
-      "index": 372,
-      "name": "Mesh [03Wg]",
-      "children": [],
-      "mesh": 104
-    },
-    {
-      "index": 373,
-      "name": "Mesh [03wg]",
-      "children": [],
-      "mesh": 105
-    },
-    {
-      "index": 374,
-      "name": "Mesh [03Xg]",
-      "children": [],
-      "mesh": 106
-    },
-    {
-      "index": 375,
-      "name": "Mesh [03xg]",
-      "children": [],
-      "mesh": 107
-    },
-    {
-      "index": 376,
-      "name": "Mesh [03Yg]",
-      "children": [],
-      "mesh": 108
-    },
-    {
-      "index": 377,
-      "name": "Mesh [03yg]",
-      "children": [],
-      "mesh": 109
-    },
-    {
-      "index": 378,
-      "name": "Mesh [03Zg]",
-      "children": [],
-      "mesh": 110
-    },
-    {
-      "index": 379,
-      "name": "__Geometry__ [00Ec]",
-      "children": [
+        326,
+        327,
+        328,
+        329,
         330,
         331,
         332,
@@ -20896,10 +20832,246 @@
         361,
         362,
         363,
-        364,
-        365,
-        366,
-        367,
+        364
+      ],
+      "mesh": null
+    },
+    {
+      "index": 366,
+      "name": "__Model___009v",
+      "children": [
+        365
+      ],
+      "mesh": null
+    },
+    {
+      "index": 367,
+      "name": "Curve_Conveyor_#2_00Jn",
+      "children": [
+        366
+      ],
+      "mesh": null
+    },
+    {
+      "index": 368,
+      "name": "Mesh_059g",
+      "children": [],
+      "mesh": 181
+    },
+    {
+      "index": 369,
+      "name": "Mesh_05Ag",
+      "children": [],
+      "mesh": 182
+    },
+    {
+      "index": 370,
+      "name": "Mesh_05Bg",
+      "children": [],
+      "mesh": 183
+    },
+    {
+      "index": 371,
+      "name": "Mesh_05Cg",
+      "children": [],
+      "mesh": 184
+    },
+    {
+      "index": 372,
+      "name": "Mesh_05Dg",
+      "children": [],
+      "mesh": 185
+    },
+    {
+      "index": 373,
+      "name": "Mesh_05Eg",
+      "children": [],
+      "mesh": 186
+    },
+    {
+      "index": 374,
+      "name": "Mesh_05Fg",
+      "children": [],
+      "mesh": 187
+    },
+    {
+      "index": 375,
+      "name": "Mesh_05Gg",
+      "children": [],
+      "mesh": 188
+    },
+    {
+      "index": 376,
+      "name": "Mesh_05Hg",
+      "children": [],
+      "mesh": 189
+    },
+    {
+      "index": 377,
+      "name": "Mesh_05Ig",
+      "children": [],
+      "mesh": 190
+    },
+    {
+      "index": 378,
+      "name": "Mesh_05Jg",
+      "children": [],
+      "mesh": 191
+    },
+    {
+      "index": 379,
+      "name": "Mesh_05Kg",
+      "children": [],
+      "mesh": 192
+    },
+    {
+      "index": 380,
+      "name": "Mesh_05Lg",
+      "children": [],
+      "mesh": 193
+    },
+    {
+      "index": 381,
+      "name": "Mesh_05Mg",
+      "children": [],
+      "mesh": 194
+    },
+    {
+      "index": 382,
+      "name": "Mesh_05Ng",
+      "children": [],
+      "mesh": 195
+    },
+    {
+      "index": 383,
+      "name": "Mesh_05Og",
+      "children": [],
+      "mesh": 196
+    },
+    {
+      "index": 384,
+      "name": "Mesh_05Pg",
+      "children": [],
+      "mesh": 197
+    },
+    {
+      "index": 385,
+      "name": "Mesh_05Qg",
+      "children": [],
+      "mesh": 198
+    },
+    {
+      "index": 386,
+      "name": "Mesh_05Rg",
+      "children": [],
+      "mesh": 199
+    },
+    {
+      "index": 387,
+      "name": "Mesh_05Sg",
+      "children": [],
+      "mesh": 200
+    },
+    {
+      "index": 388,
+      "name": "Mesh_05Tg",
+      "children": [],
+      "mesh": 201
+    },
+    {
+      "index": 389,
+      "name": "Mesh_05Ug",
+      "children": [],
+      "mesh": 202
+    },
+    {
+      "index": 390,
+      "name": "Mesh_05Vg",
+      "children": [],
+      "mesh": 203
+    },
+    {
+      "index": 391,
+      "name": "Mesh_05Wg",
+      "children": [],
+      "mesh": 204
+    },
+    {
+      "index": 392,
+      "name": "Mesh_05Xg",
+      "children": [],
+      "mesh": 205
+    },
+    {
+      "index": 393,
+      "name": "Mesh_05Yg",
+      "children": [],
+      "mesh": 206
+    },
+    {
+      "index": 394,
+      "name": "Mesh_05Zg",
+      "children": [],
+      "mesh": 207
+    },
+    {
+      "index": 395,
+      "name": "Mesh_05ag",
+      "children": [],
+      "mesh": 208
+    },
+    {
+      "index": 396,
+      "name": "Mesh_05bg",
+      "children": [],
+      "mesh": 209
+    },
+    {
+      "index": 397,
+      "name": "Mesh_05cg",
+      "children": [],
+      "mesh": 210
+    },
+    {
+      "index": 398,
+      "name": "Mesh_05dg",
+      "children": [],
+      "mesh": 211
+    },
+    {
+      "index": 399,
+      "name": "Mesh_05eg",
+      "children": [],
+      "mesh": 212
+    },
+    {
+      "index": 400,
+      "name": "Mesh_05fg",
+      "children": [],
+      "mesh": 213
+    },
+    {
+      "index": 401,
+      "name": "Mesh_05gg",
+      "children": [],
+      "mesh": 214
+    },
+    {
+      "index": 402,
+      "name": "Mesh_05hg",
+      "children": [],
+      "mesh": 215
+    },
+    {
+      "index": 403,
+      "name": "Mesh_05ig",
+      "children": [],
+      "mesh": 216
+    },
+    {
+      "index": 404,
+      "name": "__Geometry___00Jc",
+      "children": [
         368,
         369,
         370,
@@ -20910,324 +21082,10 @@
         375,
         376,
         377,
-        378
-      ],
-      "mesh": null
-    },
-    {
-      "index": 380,
-      "name": "__Model__ [005v]",
-      "children": [
-        379
-      ],
-      "mesh": null
-    },
-    {
-      "index": 381,
-      "name": "Curve Conveyor(3)",
-      "children": [
-        380
-      ],
-      "mesh": null
-    },
-    {
-      "index": 382,
-      "name": "Mesh [02ag]",
-      "children": [],
-      "mesh": 86
-    },
-    {
-      "index": 383,
-      "name": "Mesh [02bg]",
-      "children": [],
-      "mesh": 88
-    },
-    {
-      "index": 384,
-      "name": "Mesh [02cg]",
-      "children": [],
-      "mesh": 90
-    },
-    {
-      "index": 385,
-      "name": "Mesh [02dg]",
-      "children": [],
-      "mesh": 92
-    },
-    {
-      "index": 386,
-      "name": "Mesh [02eg]",
-      "children": [],
-      "mesh": 94
-    },
-    {
-      "index": 387,
-      "name": "Mesh [02fg]",
-      "children": [],
-      "mesh": 96
-    },
-    {
-      "index": 388,
-      "name": "Mesh [02gg]",
-      "children": [],
-      "mesh": 98
-    },
-    {
-      "index": 389,
-      "name": "Mesh [02hg]",
-      "children": [],
-      "mesh": 100
-    },
-    {
-      "index": 390,
-      "name": "Mesh [02ig]",
-      "children": [],
-      "mesh": 102
-    },
-    {
-      "index": 391,
-      "name": "Mesh [02jg]",
-      "children": [],
-      "mesh": 104
-    },
-    {
-      "index": 392,
-      "name": "Mesh [02kg]",
-      "children": [],
-      "mesh": 106
-    },
-    {
-      "index": 393,
-      "name": "Mesh [02lg]",
-      "children": [],
-      "mesh": 108
-    },
-    {
-      "index": 394,
-      "name": "Mesh [02mg]",
-      "children": [],
-      "mesh": 110
-    },
-    {
-      "index": 395,
-      "name": "Mesh [02ng]",
-      "children": [],
-      "mesh": 111
-    },
-    {
-      "index": 396,
-      "name": "Mesh [02og]",
-      "children": [],
-      "mesh": 112
-    },
-    {
-      "index": 397,
-      "name": "Mesh [02Pg]",
-      "children": [],
-      "mesh": 68
-    },
-    {
-      "index": 398,
-      "name": "Mesh [02pg]",
-      "children": [],
-      "mesh": 113
-    },
-    {
-      "index": 399,
-      "name": "Mesh [02Qg]",
-      "children": [],
-      "mesh": 69
-    },
-    {
-      "index": 400,
-      "name": "Mesh [02qg]",
-      "children": [],
-      "mesh": 114
-    },
-    {
-      "index": 401,
-      "name": "Mesh [02Rg]",
-      "children": [],
-      "mesh": 70
-    },
-    {
-      "index": 402,
-      "name": "Mesh [02rg]",
-      "children": [],
-      "mesh": 115
-    },
-    {
-      "index": 403,
-      "name": "Mesh [02Sg]",
-      "children": [],
-      "mesh": 71
-    },
-    {
-      "index": 404,
-      "name": "Mesh [02sg]",
-      "children": [],
-      "mesh": 116
-    },
-    {
-      "index": 405,
-      "name": "Mesh [02Tg]",
-      "children": [],
-      "mesh": 72
-    },
-    {
-      "index": 406,
-      "name": "Mesh [02tg]",
-      "children": [],
-      "mesh": 73
-    },
-    {
-      "index": 407,
-      "name": "Mesh [02Ug]",
-      "children": [],
-      "mesh": 74
-    },
-    {
-      "index": 408,
-      "name": "Mesh [02ug]",
-      "children": [],
-      "mesh": 75
-    },
-    {
-      "index": 409,
-      "name": "Mesh [02Vg]",
-      "children": [],
-      "mesh": 76
-    },
-    {
-      "index": 410,
-      "name": "Mesh [02vg]",
-      "children": [],
-      "mesh": 77
-    },
-    {
-      "index": 411,
-      "name": "Mesh [02Wg]",
-      "children": [],
-      "mesh": 78
-    },
-    {
-      "index": 412,
-      "name": "Mesh [02wg]",
-      "children": [],
-      "mesh": 79
-    },
-    {
-      "index": 413,
-      "name": "Mesh [02Xg]",
-      "children": [],
-      "mesh": 80
-    },
-    {
-      "index": 414,
-      "name": "Mesh [02xg]",
-      "children": [],
-      "mesh": 81
-    },
-    {
-      "index": 415,
-      "name": "Mesh [02Yg]",
-      "children": [],
-      "mesh": 82
-    },
-    {
-      "index": 416,
-      "name": "Mesh [02yg]",
-      "children": [],
-      "mesh": 83
-    },
-    {
-      "index": 417,
-      "name": "Mesh [02Zg]",
-      "children": [],
-      "mesh": 84
-    },
-    {
-      "index": 418,
-      "name": "Mesh [02zg]",
-      "children": [],
-      "mesh": 85
-    },
-    {
-      "index": 419,
-      "name": "Mesh [030g]",
-      "children": [],
-      "mesh": 87
-    },
-    {
-      "index": 420,
-      "name": "Mesh [031g]",
-      "children": [],
-      "mesh": 89
-    },
-    {
-      "index": 421,
-      "name": "Mesh [032g]",
-      "children": [],
-      "mesh": 91
-    },
-    {
-      "index": 422,
-      "name": "Mesh [033g]",
-      "children": [],
-      "mesh": 93
-    },
-    {
-      "index": 423,
-      "name": "Mesh [034g]",
-      "children": [],
-      "mesh": 95
-    },
-    {
-      "index": 424,
-      "name": "Mesh [035g]",
-      "children": [],
-      "mesh": 97
-    },
-    {
-      "index": 425,
-      "name": "Mesh [036g]",
-      "children": [],
-      "mesh": 99
-    },
-    {
-      "index": 426,
-      "name": "Mesh [037g]",
-      "children": [],
-      "mesh": 101
-    },
-    {
-      "index": 427,
-      "name": "Mesh [038g]",
-      "children": [],
-      "mesh": 103
-    },
-    {
-      "index": 428,
-      "name": "Mesh [039g]",
-      "children": [],
-      "mesh": 105
-    },
-    {
-      "index": 429,
-      "name": "Mesh [03Ag]",
-      "children": [],
-      "mesh": 107
-    },
-    {
-      "index": 430,
-      "name": "Mesh [03Bg]",
-      "children": [],
-      "mesh": 109
-    },
-    {
-      "index": 431,
-      "name": "__Geometry__ [00Dc]",
-      "children": [
+        378,
+        379,
+        380,
+        381,
         382,
         383,
         384,
@@ -21249,10 +21107,246 @@
         400,
         401,
         402,
-        403,
-        404,
-        405,
-        406,
+        403
+      ],
+      "mesh": null
+    },
+    {
+      "index": 405,
+      "name": "__Model___00Av",
+      "children": [
+        404
+      ],
+      "mesh": null
+    },
+    {
+      "index": 406,
+      "name": "Conveyor_#4_00Kn",
+      "children": [
+        405
+      ],
+      "mesh": null
+    },
+    {
+      "index": 407,
+      "name": "Mesh_05jg",
+      "children": [],
+      "mesh": 181
+    },
+    {
+      "index": 408,
+      "name": "Mesh_05kg",
+      "children": [],
+      "mesh": 182
+    },
+    {
+      "index": 409,
+      "name": "Mesh_05lg",
+      "children": [],
+      "mesh": 183
+    },
+    {
+      "index": 410,
+      "name": "Mesh_05mg",
+      "children": [],
+      "mesh": 184
+    },
+    {
+      "index": 411,
+      "name": "Mesh_05ng",
+      "children": [],
+      "mesh": 185
+    },
+    {
+      "index": 412,
+      "name": "Mesh_05og",
+      "children": [],
+      "mesh": 186
+    },
+    {
+      "index": 413,
+      "name": "Mesh_05pg",
+      "children": [],
+      "mesh": 187
+    },
+    {
+      "index": 414,
+      "name": "Mesh_05qg",
+      "children": [],
+      "mesh": 188
+    },
+    {
+      "index": 415,
+      "name": "Mesh_05rg",
+      "children": [],
+      "mesh": 189
+    },
+    {
+      "index": 416,
+      "name": "Mesh_05sg",
+      "children": [],
+      "mesh": 190
+    },
+    {
+      "index": 417,
+      "name": "Mesh_05tg",
+      "children": [],
+      "mesh": 191
+    },
+    {
+      "index": 418,
+      "name": "Mesh_05ug",
+      "children": [],
+      "mesh": 192
+    },
+    {
+      "index": 419,
+      "name": "Mesh_05vg",
+      "children": [],
+      "mesh": 193
+    },
+    {
+      "index": 420,
+      "name": "Mesh_05wg",
+      "children": [],
+      "mesh": 194
+    },
+    {
+      "index": 421,
+      "name": "Mesh_05xg",
+      "children": [],
+      "mesh": 195
+    },
+    {
+      "index": 422,
+      "name": "Mesh_05yg",
+      "children": [],
+      "mesh": 196
+    },
+    {
+      "index": 423,
+      "name": "Mesh_05zg",
+      "children": [],
+      "mesh": 197
+    },
+    {
+      "index": 424,
+      "name": "Mesh_060g",
+      "children": [],
+      "mesh": 198
+    },
+    {
+      "index": 425,
+      "name": "Mesh_061g",
+      "children": [],
+      "mesh": 199
+    },
+    {
+      "index": 426,
+      "name": "Mesh_062g",
+      "children": [],
+      "mesh": 200
+    },
+    {
+      "index": 427,
+      "name": "Mesh_063g",
+      "children": [],
+      "mesh": 201
+    },
+    {
+      "index": 428,
+      "name": "Mesh_064g",
+      "children": [],
+      "mesh": 202
+    },
+    {
+      "index": 429,
+      "name": "Mesh_065g",
+      "children": [],
+      "mesh": 203
+    },
+    {
+      "index": 430,
+      "name": "Mesh_066g",
+      "children": [],
+      "mesh": 204
+    },
+    {
+      "index": 431,
+      "name": "Mesh_067g",
+      "children": [],
+      "mesh": 205
+    },
+    {
+      "index": 432,
+      "name": "Mesh_068g",
+      "children": [],
+      "mesh": 206
+    },
+    {
+      "index": 433,
+      "name": "Mesh_069g",
+      "children": [],
+      "mesh": 207
+    },
+    {
+      "index": 434,
+      "name": "Mesh_06Ag",
+      "children": [],
+      "mesh": 208
+    },
+    {
+      "index": 435,
+      "name": "Mesh_06Bg",
+      "children": [],
+      "mesh": 209
+    },
+    {
+      "index": 436,
+      "name": "Mesh_06Cg",
+      "children": [],
+      "mesh": 210
+    },
+    {
+      "index": 437,
+      "name": "Mesh_06Dg",
+      "children": [],
+      "mesh": 211
+    },
+    {
+      "index": 438,
+      "name": "Mesh_06Eg",
+      "children": [],
+      "mesh": 212
+    },
+    {
+      "index": 439,
+      "name": "Mesh_06Fg",
+      "children": [],
+      "mesh": 213
+    },
+    {
+      "index": 440,
+      "name": "Mesh_06Gg",
+      "children": [],
+      "mesh": 214
+    },
+    {
+      "index": 441,
+      "name": "Mesh_06Hg",
+      "children": [],
+      "mesh": 215
+    },
+    {
+      "index": 442,
+      "name": "Mesh_06Ig",
+      "children": [],
+      "mesh": 216
+    },
+    {
+      "index": 443,
+      "name": "__Geometry___00Kc",
+      "children": [
         407,
         408,
         409,
@@ -21276,144 +21370,10 @@
         427,
         428,
         429,
-        430
-      ],
-      "mesh": null
-    },
-    {
-      "index": 432,
-      "name": "__Model__ [004v]",
-      "children": [
-        431
-      ],
-      "mesh": null
-    },
-    {
-      "index": 433,
-      "name": "Curve Conveyor(4)",
-      "children": [
-        432
-      ],
-      "mesh": null
-    },
-    {
-      "index": 434,
-      "name": "Mesh [012g]",
-      "children": [],
-      "mesh": 117
-    },
-    {
-      "index": 435,
-      "name": "Mesh [013g]",
-      "children": [],
-      "mesh": 118
-    },
-    {
-      "index": 436,
-      "name": "Mesh [014g]",
-      "children": [],
-      "mesh": 119
-    },
-    {
-      "index": 437,
-      "name": "Mesh [015g]",
-      "children": [],
-      "mesh": 120
-    },
-    {
-      "index": 438,
-      "name": "Mesh [016g]",
-      "children": [],
-      "mesh": 121
-    },
-    {
-      "index": 439,
-      "name": "Mesh [017g]",
-      "children": [],
-      "mesh": 122
-    },
-    {
-      "index": 440,
-      "name": "Mesh [018g]",
-      "children": [],
-      "mesh": 123
-    },
-    {
-      "index": 441,
-      "name": "Mesh [019g]",
-      "children": [],
-      "mesh": 124
-    },
-    {
-      "index": 442,
-      "name": "Mesh [01Ag]",
-      "children": [],
-      "mesh": 125
-    },
-    {
-      "index": 443,
-      "name": "Mesh [01Bg]",
-      "children": [],
-      "mesh": 126
-    },
-    {
-      "index": 444,
-      "name": "Mesh [01Cg]",
-      "children": [],
-      "mesh": 127
-    },
-    {
-      "index": 445,
-      "name": "Mesh [01Dg]",
-      "children": [],
-      "mesh": 128
-    },
-    {
-      "index": 446,
-      "name": "Mesh [01Eg]",
-      "children": [],
-      "mesh": 129
-    },
-    {
-      "index": 447,
-      "name": "Mesh [01Fg]",
-      "children": [],
-      "mesh": 130
-    },
-    {
-      "index": 448,
-      "name": "Mesh [01Gg]",
-      "children": [],
-      "mesh": 131
-    },
-    {
-      "index": 449,
-      "name": "Mesh [01Hg]",
-      "children": [],
-      "mesh": 132
-    },
-    {
-      "index": 450,
-      "name": "Mesh [01Ig]",
-      "children": [],
-      "mesh": 133
-    },
-    {
-      "index": 451,
-      "name": "Mesh [01Jg]",
-      "children": [],
-      "mesh": 134
-    },
-    {
-      "index": 452,
-      "name": "Mesh [01Kg]",
-      "children": [],
-      "mesh": 135
-    },
-    {
-      "index": 453,
-      "name": "__Geometry__ [002c]",
-      "children": [
+        430,
+        431,
+        432,
+        433,
         434,
         435,
         436,
@@ -21422,174 +21382,377 @@
         439,
         440,
         441,
-        442,
-        443,
-        444,
-        445,
-        446,
-        447,
-        448,
-        449,
-        450,
-        451,
-        452
+        442
       ],
       "mesh": null
+    },
+    {
+      "index": 444,
+      "name": "Mesh_06Jg",
+      "children": [],
+      "mesh": 217
+    },
+    {
+      "index": 445,
+      "name": "__Geometry___00Lc",
+      "children": [
+        444
+      ],
+      "mesh": null
+    },
+    {
+      "index": 446,
+      "name": "__Model___00Dv",
+      "children": [
+        445
+      ],
+      "mesh": null
+    },
+    {
+      "index": 447,
+      "name": "PlasticBinStorage_00Nn",
+      "children": [
+        446
+      ],
+      "mesh": null
+    },
+    {
+      "index": 448,
+      "name": "__Model___00Cv",
+      "children": [
+        447
+      ],
+      "mesh": null
+    },
+    {
+      "index": 449,
+      "name": "AssemblyBaseComponent_00Mn",
+      "children": [
+        448
+      ],
+      "mesh": null
+    },
+    {
+      "index": 450,
+      "name": "Mesh_06Kg",
+      "children": [],
+      "mesh": 218
+    },
+    {
+      "index": 451,
+      "name": "Mesh_06Lg",
+      "children": [],
+      "mesh": 219
+    },
+    {
+      "index": 452,
+      "name": "Mesh_06Mg",
+      "children": [],
+      "mesh": 220
+    },
+    {
+      "index": 453,
+      "name": "Mesh_06Ng",
+      "children": [],
+      "mesh": 221
     },
     {
       "index": 454,
-      "name": "__Geometry__ [003c]",
+      "name": "Mesh_06Og",
       "children": [],
-      "mesh": null
+      "mesh": 222
     },
     {
       "index": 455,
-      "name": "Mesh [01Lg]",
+      "name": "Mesh_06Pg",
       "children": [],
-      "mesh": 136
+      "mesh": 223
     },
     {
       "index": 456,
-      "name": "Mesh [01Mg]",
+      "name": "Mesh_06Qg",
       "children": [],
-      "mesh": 137
+      "mesh": 224
     },
     {
       "index": 457,
-      "name": "Mesh [01Ng]",
+      "name": "Mesh_06Rg",
       "children": [],
-      "mesh": 138
+      "mesh": 225
     },
     {
       "index": 458,
-      "name": "Mesh [01Og]",
-      "children": [],
-      "mesh": 139
-    },
-    {
-      "index": 459,
-      "name": "Mesh [01Pg]",
-      "children": [],
-      "mesh": 140
-    },
-    {
-      "index": 460,
-      "name": "Mesh [01Qg]",
-      "children": [],
-      "mesh": 141
-    },
-    {
-      "index": 461,
-      "name": "Mesh [01Rg]",
-      "children": [],
-      "mesh": 142
-    },
-    {
-      "index": 462,
-      "name": "Mesh [01Sg]",
-      "children": [],
-      "mesh": 143
-    },
-    {
-      "index": 463,
-      "name": "Mesh [01Tg]",
-      "children": [],
-      "mesh": 144
-    },
-    {
-      "index": 464,
-      "name": "Mesh [01Ug]",
-      "children": [],
-      "mesh": 145
-    },
-    {
-      "index": 465,
-      "name": "Mesh [01Vg]",
-      "children": [],
-      "mesh": 146
-    },
-    {
-      "index": 466,
-      "name": "__Geometry__ [004c]",
+      "name": "__Geometry___00Mc",
       "children": [
+        450,
+        451,
+        452,
+        453,
+        454,
         455,
         456,
-        457,
-        458,
-        459,
-        460,
-        461,
-        462,
-        463,
-        464,
-        465
+        457
       ],
       "mesh": null
     },
     {
-      "index": 467,
-      "name": "Mesh [01ag]",
+      "index": 459,
+      "name": "__Model___00Ev",
+      "children": [
+        458
+      ],
+      "mesh": null
+    },
+    {
+      "index": 460,
+      "name": "BoxFeederNode_00On",
+      "children": [
+        459
+      ],
+      "mesh": null
+    },
+    {
+      "index": 461,
+      "name": "__Model___00Bv",
+      "children": [
+        443,
+        449,
+        460
+      ],
+      "mesh": null
+    },
+    {
+      "index": 462,
+      "name": "Conveyor_#3_00Ln",
+      "children": [
+        461
+      ],
+      "mesh": null
+    },
+    {
+      "index": 463,
+      "name": "Mesh_06Sg",
       "children": [],
-      "mesh": 147
+      "mesh": 181
+    },
+    {
+      "index": 464,
+      "name": "Mesh_06Tg",
+      "children": [],
+      "mesh": 182
+    },
+    {
+      "index": 465,
+      "name": "Mesh_06Ug",
+      "children": [],
+      "mesh": 183
+    },
+    {
+      "index": 466,
+      "name": "Mesh_06Vg",
+      "children": [],
+      "mesh": 184
+    },
+    {
+      "index": 467,
+      "name": "Mesh_06Wg",
+      "children": [],
+      "mesh": 185
     },
     {
       "index": 468,
-      "name": "Mesh [01bg]",
+      "name": "Mesh_06Xg",
       "children": [],
-      "mesh": 148
+      "mesh": 186
     },
     {
       "index": 469,
-      "name": "Mesh [01cg]",
+      "name": "Mesh_06Yg",
       "children": [],
-      "mesh": 149
+      "mesh": 187
     },
     {
       "index": 470,
-      "name": "Mesh [01dg]",
+      "name": "Mesh_06Zg",
       "children": [],
-      "mesh": 150
+      "mesh": 188
     },
     {
       "index": 471,
-      "name": "Mesh [01eg]",
+      "name": "Mesh_06ag",
       "children": [],
-      "mesh": 151
+      "mesh": 189
     },
     {
       "index": 472,
-      "name": "Mesh [01fg]",
+      "name": "Mesh_06bg",
       "children": [],
-      "mesh": 152
+      "mesh": 190
     },
     {
       "index": 473,
-      "name": "Mesh [01Wg]",
+      "name": "Mesh_06cg",
       "children": [],
-      "mesh": 153
+      "mesh": 191
     },
     {
       "index": 474,
-      "name": "Mesh [01Xg]",
+      "name": "Mesh_06dg",
       "children": [],
-      "mesh": 154
+      "mesh": 192
     },
     {
       "index": 475,
-      "name": "Mesh [01Yg]",
+      "name": "Mesh_06eg",
       "children": [],
-      "mesh": 155
+      "mesh": 193
     },
     {
       "index": 476,
-      "name": "Mesh [01Zg]",
+      "name": "Mesh_06fg",
       "children": [],
-      "mesh": 156
+      "mesh": 194
     },
     {
       "index": 477,
-      "name": "__Geometry__ [005c]",
+      "name": "Mesh_06gg",
+      "children": [],
+      "mesh": 195
+    },
+    {
+      "index": 478,
+      "name": "Mesh_06hg",
+      "children": [],
+      "mesh": 196
+    },
+    {
+      "index": 479,
+      "name": "Mesh_06ig",
+      "children": [],
+      "mesh": 197
+    },
+    {
+      "index": 480,
+      "name": "Mesh_06jg",
+      "children": [],
+      "mesh": 198
+    },
+    {
+      "index": 481,
+      "name": "Mesh_06kg",
+      "children": [],
+      "mesh": 199
+    },
+    {
+      "index": 482,
+      "name": "Mesh_06lg",
+      "children": [],
+      "mesh": 200
+    },
+    {
+      "index": 483,
+      "name": "Mesh_06mg",
+      "children": [],
+      "mesh": 201
+    },
+    {
+      "index": 484,
+      "name": "Mesh_06ng",
+      "children": [],
+      "mesh": 202
+    },
+    {
+      "index": 485,
+      "name": "Mesh_06og",
+      "children": [],
+      "mesh": 203
+    },
+    {
+      "index": 486,
+      "name": "Mesh_06pg",
+      "children": [],
+      "mesh": 204
+    },
+    {
+      "index": 487,
+      "name": "Mesh_06qg",
+      "children": [],
+      "mesh": 205
+    },
+    {
+      "index": 488,
+      "name": "Mesh_06rg",
+      "children": [],
+      "mesh": 206
+    },
+    {
+      "index": 489,
+      "name": "Mesh_06sg",
+      "children": [],
+      "mesh": 207
+    },
+    {
+      "index": 490,
+      "name": "Mesh_06tg",
+      "children": [],
+      "mesh": 208
+    },
+    {
+      "index": 491,
+      "name": "Mesh_06ug",
+      "children": [],
+      "mesh": 209
+    },
+    {
+      "index": 492,
+      "name": "Mesh_06vg",
+      "children": [],
+      "mesh": 210
+    },
+    {
+      "index": 493,
+      "name": "Mesh_06wg",
+      "children": [],
+      "mesh": 211
+    },
+    {
+      "index": 494,
+      "name": "Mesh_06xg",
+      "children": [],
+      "mesh": 212
+    },
+    {
+      "index": 495,
+      "name": "Mesh_06yg",
+      "children": [],
+      "mesh": 213
+    },
+    {
+      "index": 496,
+      "name": "Mesh_06zg",
+      "children": [],
+      "mesh": 214
+    },
+    {
+      "index": 497,
+      "name": "Mesh_070g",
+      "children": [],
+      "mesh": 215
+    },
+    {
+      "index": 498,
+      "name": "Mesh_071g",
+      "children": [],
+      "mesh": 216
+    },
+    {
+      "index": 499,
+      "name": "__Geometry___00Nc",
       "children": [
+        463,
+        464,
+        465,
+        466,
         467,
         468,
         469,
@@ -21599,80 +21762,8 @@
         473,
         474,
         475,
-        476
-      ],
-      "mesh": null
-    },
-    {
-      "index": 478,
-      "name": "Mesh [01gg]",
-      "children": [],
-      "mesh": 157
-    },
-    {
-      "index": 479,
-      "name": "Mesh [01hg]",
-      "children": [],
-      "mesh": 158
-    },
-    {
-      "index": 480,
-      "name": "Mesh [01ig]",
-      "children": [],
-      "mesh": 159
-    },
-    {
-      "index": 481,
-      "name": "Mesh [01jg]",
-      "children": [],
-      "mesh": 160
-    },
-    {
-      "index": 482,
-      "name": "Mesh [01kg]",
-      "children": [],
-      "mesh": 161
-    },
-    {
-      "index": 483,
-      "name": "Mesh [01lg]",
-      "children": [],
-      "mesh": 162
-    },
-    {
-      "index": 484,
-      "name": "Mesh [01mg]",
-      "children": [],
-      "mesh": 163
-    },
-    {
-      "index": 485,
-      "name": "Mesh [01ng]",
-      "children": [],
-      "mesh": 164
-    },
-    {
-      "index": 486,
-      "name": "Mesh [01og]",
-      "children": [],
-      "mesh": 165
-    },
-    {
-      "index": 487,
-      "name": "Mesh [01pg]",
-      "children": [],
-      "mesh": 166
-    },
-    {
-      "index": 488,
-      "name": "Mesh [01qg]",
-      "children": [],
-      "mesh": 167
-    },
-    {
-      "index": 489,
-      "name": "__Geometry__ [006c]",
-      "children": [
+        476,
+        477,
         478,
         479,
         480,
@@ -21683,110 +21774,8 @@
         485,
         486,
         487,
-        488
-      ],
-      "mesh": null
-    },
-    {
-      "index": 490,
-      "name": "Mesh [01rg]",
-      "children": [],
-      "mesh": 168
-    },
-    {
-      "index": 491,
-      "name": "Mesh [01sg]",
-      "children": [],
-      "mesh": 169
-    },
-    {
-      "index": 492,
-      "name": "Mesh [01tg]",
-      "children": [],
-      "mesh": 170
-    },
-    {
-      "index": 493,
-      "name": "Mesh [01ug]",
-      "children": [],
-      "mesh": 171
-    },
-    {
-      "index": 494,
-      "name": "Mesh [01vg]",
-      "children": [],
-      "mesh": 172
-    },
-    {
-      "index": 495,
-      "name": "Mesh [01wg]",
-      "children": [],
-      "mesh": 173
-    },
-    {
-      "index": 496,
-      "name": "Mesh [01xg]",
-      "children": [],
-      "mesh": 174
-    },
-    {
-      "index": 497,
-      "name": "Mesh [01yg]",
-      "children": [],
-      "mesh": 175
-    },
-    {
-      "index": 498,
-      "name": "Mesh [01zg]",
-      "children": [],
-      "mesh": 176
-    },
-    {
-      "index": 499,
-      "name": "Mesh [020g]",
-      "children": [],
-      "mesh": 177
-    },
-    {
-      "index": 500,
-      "name": "Mesh [021g]",
-      "children": [],
-      "mesh": 178
-    },
-    {
-      "index": 501,
-      "name": "Mesh [022g]",
-      "children": [],
-      "mesh": 179
-    },
-    {
-      "index": 502,
-      "name": "Mesh [023g]",
-      "children": [],
-      "mesh": 180
-    },
-    {
-      "index": 503,
-      "name": "Mesh [024g]",
-      "children": [],
-      "mesh": 181
-    },
-    {
-      "index": 504,
-      "name": "Mesh [025g]",
-      "children": [],
-      "mesh": 182
-    },
-    {
-      "index": 505,
-      "name": "Mesh [026g]",
-      "children": [],
-      "mesh": 183
-    },
-    {
-      "index": 506,
-      "name": "__Geometry__ [007c]",
-      "children": [
+        488,
+        489,
         490,
         491,
         492,
@@ -21795,422 +21784,417 @@
         495,
         496,
         497,
-        498,
-        499,
+        498
+      ],
+      "mesh": null
+    },
+    {
+      "index": 500,
+      "name": "Mesh_072g",
+      "children": [],
+      "mesh": 0
+    },
+    {
+      "index": 501,
+      "name": "Mesh_073g",
+      "children": [],
+      "mesh": 1
+    },
+    {
+      "index": 502,
+      "name": "Mesh_074g",
+      "children": [],
+      "mesh": 2
+    },
+    {
+      "index": 503,
+      "name": "Mesh_075g",
+      "children": [],
+      "mesh": 3
+    },
+    {
+      "index": 504,
+      "name": "Mesh_076g",
+      "children": [],
+      "mesh": 4
+    },
+    {
+      "index": 505,
+      "name": "Mesh_077g",
+      "children": [],
+      "mesh": 5
+    },
+    {
+      "index": 506,
+      "name": "Mesh_078g",
+      "children": [],
+      "mesh": 6
+    },
+    {
+      "index": 507,
+      "name": "Mesh_079g",
+      "children": [],
+      "mesh": 7
+    },
+    {
+      "index": 508,
+      "name": "__Geometry___00Oc",
+      "children": [
         500,
         501,
         502,
         503,
         504,
-        505
+        505,
+        506,
+        507
       ],
       "mesh": null
     },
     {
-      "index": 507,
-      "name": "Mesh [027g]",
+      "index": 509,
+      "name": "__Model___00Gv",
+      "children": [
+        508
+      ],
+      "mesh": null
+    },
+    {
+      "index": 510,
+      "name": "AssemblyNode2_00Qn",
+      "children": [
+        509
+      ],
+      "mesh": null
+    },
+    {
+      "index": 511,
+      "name": "__Model___00Fv",
+      "children": [
+        499,
+        510
+      ],
+      "mesh": null
+    },
+    {
+      "index": 512,
+      "name": "Conveyor_#2_00Pn",
+      "children": [
+        511
+      ],
+      "mesh": null
+    },
+    {
+      "index": 513,
+      "name": "Mesh_07Ag",
+      "children": [],
+      "mesh": 181
+    },
+    {
+      "index": 514,
+      "name": "Mesh_07Bg",
+      "children": [],
+      "mesh": 182
+    },
+    {
+      "index": 515,
+      "name": "Mesh_07Cg",
+      "children": [],
+      "mesh": 183
+    },
+    {
+      "index": 516,
+      "name": "Mesh_07Dg",
       "children": [],
       "mesh": 184
     },
     {
-      "index": 508,
-      "name": "Mesh [028g]",
+      "index": 517,
+      "name": "Mesh_07Eg",
       "children": [],
       "mesh": 185
     },
     {
-      "index": 509,
-      "name": "Mesh [029g]",
+      "index": 518,
+      "name": "Mesh_07Fg",
       "children": [],
       "mesh": 186
     },
     {
-      "index": 510,
-      "name": "Mesh [02Ag]",
+      "index": 519,
+      "name": "Mesh_07Gg",
       "children": [],
       "mesh": 187
     },
     {
-      "index": 511,
-      "name": "Mesh [02Bg]",
+      "index": 520,
+      "name": "Mesh_07Hg",
       "children": [],
       "mesh": 188
     },
     {
-      "index": 512,
-      "name": "Mesh [02Cg]",
+      "index": 521,
+      "name": "Mesh_07Ig",
       "children": [],
       "mesh": 189
     },
     {
-      "index": 513,
-      "name": "Mesh [02Dg]",
+      "index": 522,
+      "name": "Mesh_07Jg",
       "children": [],
       "mesh": 190
     },
     {
-      "index": 514,
-      "name": "Mesh [02Eg]",
+      "index": 523,
+      "name": "Mesh_07Kg",
       "children": [],
       "mesh": 191
     },
     {
-      "index": 515,
-      "name": "Mesh [02Fg]",
+      "index": 524,
+      "name": "Mesh_07Lg",
       "children": [],
       "mesh": 192
     },
     {
-      "index": 516,
-      "name": "Mesh [02Gg]",
+      "index": 525,
+      "name": "Mesh_07Mg",
       "children": [],
       "mesh": 193
     },
     {
-      "index": 517,
-      "name": "Mesh [02Hg]",
+      "index": 526,
+      "name": "Mesh_07Ng",
       "children": [],
       "mesh": 194
     },
     {
-      "index": 518,
-      "name": "Mesh [02Ig]",
+      "index": 527,
+      "name": "Mesh_07Og",
       "children": [],
       "mesh": 195
     },
     {
-      "index": 519,
-      "name": "__Geometry__ [008c]",
+      "index": 528,
+      "name": "Mesh_07Pg",
+      "children": [],
+      "mesh": 196
+    },
+    {
+      "index": 529,
+      "name": "Mesh_07Qg",
+      "children": [],
+      "mesh": 197
+    },
+    {
+      "index": 530,
+      "name": "Mesh_07Rg",
+      "children": [],
+      "mesh": 198
+    },
+    {
+      "index": 531,
+      "name": "Mesh_07Sg",
+      "children": [],
+      "mesh": 199
+    },
+    {
+      "index": 532,
+      "name": "Mesh_07Tg",
+      "children": [],
+      "mesh": 200
+    },
+    {
+      "index": 533,
+      "name": "Mesh_07Ug",
+      "children": [],
+      "mesh": 201
+    },
+    {
+      "index": 534,
+      "name": "Mesh_07Vg",
+      "children": [],
+      "mesh": 202
+    },
+    {
+      "index": 535,
+      "name": "Mesh_07Wg",
+      "children": [],
+      "mesh": 203
+    },
+    {
+      "index": 536,
+      "name": "Mesh_07Xg",
+      "children": [],
+      "mesh": 204
+    },
+    {
+      "index": 537,
+      "name": "Mesh_07Yg",
+      "children": [],
+      "mesh": 205
+    },
+    {
+      "index": 538,
+      "name": "Mesh_07Zg",
+      "children": [],
+      "mesh": 206
+    },
+    {
+      "index": 539,
+      "name": "Mesh_07ag",
+      "children": [],
+      "mesh": 207
+    },
+    {
+      "index": 540,
+      "name": "Mesh_07bg",
+      "children": [],
+      "mesh": 208
+    },
+    {
+      "index": 541,
+      "name": "Mesh_07cg",
+      "children": [],
+      "mesh": 209
+    },
+    {
+      "index": 542,
+      "name": "Mesh_07dg",
+      "children": [],
+      "mesh": 210
+    },
+    {
+      "index": 543,
+      "name": "Mesh_07eg",
+      "children": [],
+      "mesh": 211
+    },
+    {
+      "index": 544,
+      "name": "Mesh_07fg",
+      "children": [],
+      "mesh": 212
+    },
+    {
+      "index": 545,
+      "name": "Mesh_07gg",
+      "children": [],
+      "mesh": 213
+    },
+    {
+      "index": 546,
+      "name": "Mesh_07hg",
+      "children": [],
+      "mesh": 214
+    },
+    {
+      "index": 547,
+      "name": "Mesh_07ig",
+      "children": [],
+      "mesh": 215
+    },
+    {
+      "index": 548,
+      "name": "Mesh_07jg",
+      "children": [],
+      "mesh": 216
+    },
+    {
+      "index": 549,
+      "name": "__Geometry___00Pc",
       "children": [
-        507,
-        508,
-        509,
-        510,
-        511,
-        512,
         513,
         514,
         515,
         516,
         517,
-        518
-      ],
-      "mesh": null
-    },
-    {
-      "index": 520,
-      "name": "Mesh [02Jg]",
-      "children": [],
-      "mesh": 196
-    },
-    {
-      "index": 521,
-      "name": "Mesh [02Kg]",
-      "children": [],
-      "mesh": 197
-    },
-    {
-      "index": 522,
-      "name": "Mesh [02Lg]",
-      "children": [],
-      "mesh": 198
-    },
-    {
-      "index": 523,
-      "name": "__Geometry__ [009c]",
-      "children": [
+        518,
+        519,
         520,
         521,
-        522
-      ],
-      "mesh": null
-    },
-    {
-      "index": 524,
-      "name": "Mesh [02Mg]",
-      "children": [],
-      "mesh": 199
-    },
-    {
-      "index": 525,
-      "name": "__Geometry__ [00Ac]",
-      "children": [
-        524
-      ],
-      "mesh": null
-    },
-    {
-      "index": 526,
-      "name": "__Geometry__ [00Bc]",
-      "children": [],
-      "mesh": null
-    },
-    {
-      "index": 527,
-      "name": "mountplate [00Bn]",
-      "children": [
-        526
-      ],
-      "mesh": null
-    },
-    {
-      "index": 528,
-      "name": "Axis 6 [00An]",
-      "children": [
-        525,
-        527
-      ],
-      "mesh": null
-    },
-    {
-      "index": 529,
-      "name": "Axis 5 [009n]",
-      "children": [
+        522,
         523,
-        528
-      ],
-      "mesh": null
-    },
-    {
-      "index": 530,
-      "name": "Axis 4 [008n]",
-      "children": [
-        519,
-        529
-      ],
-      "mesh": null
-    },
-    {
-      "index": 531,
-      "name": "Axis 3 [007n]",
-      "children": [
-        506,
-        530
-      ],
-      "mesh": null
-    },
-    {
-      "index": 532,
-      "name": "Axis 2 [006n]",
-      "children": [
-        489,
-        531
-      ],
-      "mesh": null
-    },
-    {
-      "index": 533,
-      "name": "Axis 1 [005n]",
-      "children": [
-        477,
-        532
-      ],
-      "mesh": null
-    },
-    {
-      "index": 534,
-      "name": "Robot World [00Cn]",
-      "children": [],
-      "mesh": null
-    },
-    {
-      "index": 535,
-      "name": "__Model__ [003v]",
-      "children": [
-        466,
+        524,
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
         533,
-        534
-      ],
-      "mesh": null
-    },
-    {
-      "index": 536,
-      "name": "Generic Articulated Robot #2 [004n]",
-      "children": [
-        535
-      ],
-      "mesh": null
-    },
-    {
-      "index": 537,
-      "name": "Link1 [003n]",
-      "children": [
-        454,
-        536
-      ],
-      "mesh": null
-    },
-    {
-      "index": 538,
-      "name": "Mesh [02Ng]",
-      "children": [],
-      "mesh": 200
-    },
-    {
-      "index": 539,
-      "name": "Mesh [02Og]",
-      "children": [],
-      "mesh": 201
-    },
-    {
-      "index": 540,
-      "name": "__Geometry__ [00Cc]",
-      "children": [
-        538,
-        539
-      ],
-      "mesh": null
-    },
-    {
-      "index": 541,
-      "name": "Status [00Dn]",
-      "children": [
-        540
-      ],
-      "mesh": null
-    },
-    {
-      "index": 542,
-      "name": "__Model__ [002v]",
-      "children": [
-        453,
+        534,
+        535,
+        536,
         537,
-        541
-      ],
-      "mesh": null
-    },
-    {
-      "index": 543,
-      "name": "robot(2)",
-      "children": [
-        542
-      ],
-      "mesh": null
-    },
-    {
-      "index": 544,
-      "name": "Mesh [07tg]",
-      "children": [],
-      "mesh": 117
-    },
-    {
-      "index": 545,
-      "name": "Mesh [07ug]",
-      "children": [],
-      "mesh": 118
-    },
-    {
-      "index": 546,
-      "name": "Mesh [07vg]",
-      "children": [],
-      "mesh": 119
-    },
-    {
-      "index": 547,
-      "name": "Mesh [07wg]",
-      "children": [],
-      "mesh": 120
-    },
-    {
-      "index": 548,
-      "name": "Mesh [07xg]",
-      "children": [],
-      "mesh": 121
-    },
-    {
-      "index": 549,
-      "name": "Mesh [07yg]",
-      "children": [],
-      "mesh": 122
-    },
-    {
-      "index": 550,
-      "name": "Mesh [07zg]",
-      "children": [],
-      "mesh": 123
-    },
-    {
-      "index": 551,
-      "name": "Mesh [080g]",
-      "children": [],
-      "mesh": 124
-    },
-    {
-      "index": 552,
-      "name": "Mesh [081g]",
-      "children": [],
-      "mesh": 125
-    },
-    {
-      "index": 553,
-      "name": "Mesh [082g]",
-      "children": [],
-      "mesh": 126
-    },
-    {
-      "index": 554,
-      "name": "Mesh [083g]",
-      "children": [],
-      "mesh": 127
-    },
-    {
-      "index": 555,
-      "name": "Mesh [084g]",
-      "children": [],
-      "mesh": 128
-    },
-    {
-      "index": 556,
-      "name": "Mesh [085g]",
-      "children": [],
-      "mesh": 129
-    },
-    {
-      "index": 557,
-      "name": "Mesh [086g]",
-      "children": [],
-      "mesh": 130
-    },
-    {
-      "index": 558,
-      "name": "Mesh [087g]",
-      "children": [],
-      "mesh": 131
-    },
-    {
-      "index": 559,
-      "name": "Mesh [088g]",
-      "children": [],
-      "mesh": 132
-    },
-    {
-      "index": 560,
-      "name": "Mesh [089g]",
-      "children": [],
-      "mesh": 133
-    },
-    {
-      "index": 561,
-      "name": "Mesh [08Ag]",
-      "children": [],
-      "mesh": 134
-    },
-    {
-      "index": 562,
-      "name": "Mesh [08Bg]",
-      "children": [],
-      "mesh": 135
-    },
-    {
-      "index": 563,
-      "name": "__Geometry__ [00Lc]",
-      "children": [
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
         544,
         545,
         546,
         547,
-        548,
-        549,
+        548
+      ],
+      "mesh": null
+    },
+    {
+      "index": 550,
+      "name": "Mesh_07kg",
+      "children": [],
+      "mesh": 0
+    },
+    {
+      "index": 551,
+      "name": "Mesh_07lg",
+      "children": [],
+      "mesh": 1
+    },
+    {
+      "index": 552,
+      "name": "Mesh_07mg",
+      "children": [],
+      "mesh": 2
+    },
+    {
+      "index": 553,
+      "name": "Mesh_07ng",
+      "children": [],
+      "mesh": 3
+    },
+    {
+      "index": 554,
+      "name": "Mesh_07og",
+      "children": [],
+      "mesh": 4
+    },
+    {
+      "index": 555,
+      "name": "Mesh_07pg",
+      "children": [],
+      "mesh": 5
+    },
+    {
+      "index": 556,
+      "name": "Mesh_07qg",
+      "children": [],
+      "mesh": 6
+    },
+    {
+      "index": 557,
+      "name": "Mesh_07rg",
+      "children": [],
+      "mesh": 7
+    },
+    {
+      "index": 558,
+      "name": "__Geometry___00Qc",
+      "children": [
         550,
         551,
         552,
@@ -22218,91 +22202,343 @@
         554,
         555,
         556,
-        557,
-        558,
-        559,
-        560,
-        561,
-        562
+        557
       ],
       "mesh": null
     },
     {
-      "index": 564,
-      "name": "__Geometry__ [00Mc]",
-      "children": [],
+      "index": 559,
+      "name": "__Model___00Iv",
+      "children": [
+        558
+      ],
       "mesh": null
     },
     {
+      "index": 560,
+      "name": "DisassemblyNode1_00Sn",
+      "children": [
+        559
+      ],
+      "mesh": null
+    },
+    {
+      "index": 561,
+      "name": "__Model___00Hv",
+      "children": [
+        549,
+        560
+      ],
+      "mesh": null
+    },
+    {
+      "index": 562,
+      "name": "Conveyor_00Rn",
+      "children": [
+        561
+      ],
+      "mesh": null
+    },
+    {
+      "index": 563,
+      "name": "Mesh_07sg",
+      "children": [],
+      "mesh": 132
+    },
+    {
+      "index": 564,
+      "name": "Mesh_07tg",
+      "children": [],
+      "mesh": 133
+    },
+    {
       "index": 565,
-      "name": "Mesh [08Cg]",
+      "name": "Mesh_07ug",
+      "children": [],
+      "mesh": 134
+    },
+    {
+      "index": 566,
+      "name": "Mesh_07vg",
+      "children": [],
+      "mesh": 135
+    },
+    {
+      "index": 567,
+      "name": "Mesh_07wg",
       "children": [],
       "mesh": 136
     },
     {
-      "index": 566,
-      "name": "Mesh [08Dg]",
+      "index": 568,
+      "name": "Mesh_07xg",
       "children": [],
       "mesh": 137
     },
     {
-      "index": 567,
-      "name": "Mesh [08Eg]",
+      "index": 569,
+      "name": "Mesh_07yg",
       "children": [],
       "mesh": 138
     },
     {
-      "index": 568,
-      "name": "Mesh [08Fg]",
+      "index": 570,
+      "name": "Mesh_07zg",
       "children": [],
       "mesh": 139
     },
     {
-      "index": 569,
-      "name": "Mesh [08Gg]",
+      "index": 571,
+      "name": "Mesh_080g",
       "children": [],
       "mesh": 140
     },
     {
-      "index": 570,
-      "name": "Mesh [08Hg]",
+      "index": 572,
+      "name": "Mesh_081g",
       "children": [],
       "mesh": 141
     },
     {
-      "index": 571,
-      "name": "Mesh [08Ig]",
+      "index": 573,
+      "name": "Mesh_082g",
       "children": [],
       "mesh": 142
     },
     {
-      "index": 572,
-      "name": "Mesh [08Jg]",
+      "index": 574,
+      "name": "Mesh_083g",
       "children": [],
       "mesh": 143
     },
     {
-      "index": 573,
-      "name": "Mesh [08Kg]",
+      "index": 575,
+      "name": "Mesh_084g",
       "children": [],
       "mesh": 144
     },
     {
-      "index": 574,
-      "name": "Mesh [08Lg]",
+      "index": 576,
+      "name": "Mesh_085g",
       "children": [],
       "mesh": 145
     },
     {
-      "index": 575,
-      "name": "Mesh [08Mg]",
+      "index": 577,
+      "name": "Mesh_086g",
       "children": [],
       "mesh": 146
     },
     {
-      "index": 576,
-      "name": "__Geometry__ [00Nc]",
+      "index": 578,
+      "name": "Mesh_087g",
+      "children": [],
+      "mesh": 147
+    },
+    {
+      "index": 579,
+      "name": "Mesh_088g",
+      "children": [],
+      "mesh": 148
+    },
+    {
+      "index": 580,
+      "name": "Mesh_089g",
+      "children": [],
+      "mesh": 149
+    },
+    {
+      "index": 581,
+      "name": "Mesh_08Ag",
+      "children": [],
+      "mesh": 150
+    },
+    {
+      "index": 582,
+      "name": "Mesh_08Bg",
+      "children": [],
+      "mesh": 151
+    },
+    {
+      "index": 583,
+      "name": "Mesh_08Cg",
+      "children": [],
+      "mesh": 152
+    },
+    {
+      "index": 584,
+      "name": "Mesh_08Dg",
+      "children": [],
+      "mesh": 153
+    },
+    {
+      "index": 585,
+      "name": "Mesh_08Eg",
+      "children": [],
+      "mesh": 154
+    },
+    {
+      "index": 586,
+      "name": "Mesh_08Fg",
+      "children": [],
+      "mesh": 155
+    },
+    {
+      "index": 587,
+      "name": "Mesh_08Gg",
+      "children": [],
+      "mesh": 156
+    },
+    {
+      "index": 588,
+      "name": "Mesh_08Hg",
+      "children": [],
+      "mesh": 157
+    },
+    {
+      "index": 589,
+      "name": "Mesh_08Ig",
+      "children": [],
+      "mesh": 158
+    },
+    {
+      "index": 590,
+      "name": "Mesh_08Jg",
+      "children": [],
+      "mesh": 159
+    },
+    {
+      "index": 591,
+      "name": "Mesh_08Kg",
+      "children": [],
+      "mesh": 160
+    },
+    {
+      "index": 592,
+      "name": "Mesh_08Lg",
+      "children": [],
+      "mesh": 161
+    },
+    {
+      "index": 593,
+      "name": "Mesh_08Mg",
+      "children": [],
+      "mesh": 162
+    },
+    {
+      "index": 594,
+      "name": "Mesh_08Ng",
+      "children": [],
+      "mesh": 163
+    },
+    {
+      "index": 595,
+      "name": "Mesh_08Og",
+      "children": [],
+      "mesh": 164
+    },
+    {
+      "index": 596,
+      "name": "Mesh_08Pg",
+      "children": [],
+      "mesh": 165
+    },
+    {
+      "index": 597,
+      "name": "Mesh_08Qg",
+      "children": [],
+      "mesh": 166
+    },
+    {
+      "index": 598,
+      "name": "Mesh_08Rg",
+      "children": [],
+      "mesh": 167
+    },
+    {
+      "index": 599,
+      "name": "Mesh_08Sg",
+      "children": [],
+      "mesh": 168
+    },
+    {
+      "index": 600,
+      "name": "Mesh_08Tg",
+      "children": [],
+      "mesh": 169
+    },
+    {
+      "index": 601,
+      "name": "Mesh_08Ug",
+      "children": [],
+      "mesh": 170
+    },
+    {
+      "index": 602,
+      "name": "Mesh_08Vg",
+      "children": [],
+      "mesh": 171
+    },
+    {
+      "index": 603,
+      "name": "Mesh_08Wg",
+      "children": [],
+      "mesh": 172
+    },
+    {
+      "index": 604,
+      "name": "Mesh_08Xg",
+      "children": [],
+      "mesh": 173
+    },
+    {
+      "index": 605,
+      "name": "Mesh_08Yg",
+      "children": [],
+      "mesh": 174
+    },
+    {
+      "index": 606,
+      "name": "Mesh_08Zg",
+      "children": [],
+      "mesh": 175
+    },
+    {
+      "index": 607,
+      "name": "Mesh_08ag",
+      "children": [],
+      "mesh": 176
+    },
+    {
+      "index": 608,
+      "name": "Mesh_08bg",
+      "children": [],
+      "mesh": 177
+    },
+    {
+      "index": 609,
+      "name": "Mesh_08cg",
+      "children": [],
+      "mesh": 178
+    },
+    {
+      "index": 610,
+      "name": "Mesh_08dg",
+      "children": [],
+      "mesh": 179
+    },
+    {
+      "index": 611,
+      "name": "Mesh_08eg",
+      "children": [],
+      "mesh": 180
+    },
+    {
+      "index": 612,
+      "name": "__Geometry___00Rc",
       "children": [
+        563,
+        564,
         565,
         566,
         567,
@@ -22313,74 +22549,8 @@
         572,
         573,
         574,
-        575
-      ],
-      "mesh": null
-    },
-    {
-      "index": 577,
-      "name": "Mesh [08Ng]",
-      "children": [],
-      "mesh": 153
-    },
-    {
-      "index": 578,
-      "name": "Mesh [08Og]",
-      "children": [],
-      "mesh": 154
-    },
-    {
-      "index": 579,
-      "name": "Mesh [08Pg]",
-      "children": [],
-      "mesh": 155
-    },
-    {
-      "index": 580,
-      "name": "Mesh [08Qg]",
-      "children": [],
-      "mesh": 156
-    },
-    {
-      "index": 581,
-      "name": "Mesh [08Rg]",
-      "children": [],
-      "mesh": 147
-    },
-    {
-      "index": 582,
-      "name": "Mesh [08Sg]",
-      "children": [],
-      "mesh": 148
-    },
-    {
-      "index": 583,
-      "name": "Mesh [08Tg]",
-      "children": [],
-      "mesh": 149
-    },
-    {
-      "index": 584,
-      "name": "Mesh [08Ug]",
-      "children": [],
-      "mesh": 150
-    },
-    {
-      "index": 585,
-      "name": "Mesh [08Vg]",
-      "children": [],
-      "mesh": 151
-    },
-    {
-      "index": 586,
-      "name": "Mesh [08Wg]",
-      "children": [],
-      "mesh": 152
-    },
-    {
-      "index": 587,
-      "name": "__Geometry__ [00Oc]",
-      "children": [
+        575,
+        576,
         577,
         578,
         579,
@@ -22390,80 +22560,8 @@
         583,
         584,
         585,
-        586
-      ],
-      "mesh": null
-    },
-    {
-      "index": 588,
-      "name": "Mesh [08ag]",
-      "children": [],
-      "mesh": 160
-    },
-    {
-      "index": 589,
-      "name": "Mesh [08bg]",
-      "children": [],
-      "mesh": 161
-    },
-    {
-      "index": 590,
-      "name": "Mesh [08cg]",
-      "children": [],
-      "mesh": 162
-    },
-    {
-      "index": 591,
-      "name": "Mesh [08dg]",
-      "children": [],
-      "mesh": 163
-    },
-    {
-      "index": 592,
-      "name": "Mesh [08eg]",
-      "children": [],
-      "mesh": 164
-    },
-    {
-      "index": 593,
-      "name": "Mesh [08fg]",
-      "children": [],
-      "mesh": 165
-    },
-    {
-      "index": 594,
-      "name": "Mesh [08gg]",
-      "children": [],
-      "mesh": 166
-    },
-    {
-      "index": 595,
-      "name": "Mesh [08hg]",
-      "children": [],
-      "mesh": 167
-    },
-    {
-      "index": 596,
-      "name": "Mesh [08Xg]",
-      "children": [],
-      "mesh": 157
-    },
-    {
-      "index": 597,
-      "name": "Mesh [08Yg]",
-      "children": [],
-      "mesh": 158
-    },
-    {
-      "index": 598,
-      "name": "Mesh [08Zg]",
-      "children": [],
-      "mesh": 159
-    },
-    {
-      "index": 599,
-      "name": "__Geometry__ [00Pc]",
-      "children": [
+        586,
+        587,
         588,
         589,
         590,
@@ -22474,110 +22572,8 @@
         595,
         596,
         597,
-        598
-      ],
-      "mesh": null
-    },
-    {
-      "index": 600,
-      "name": "Mesh [08ig]",
-      "children": [],
-      "mesh": 168
-    },
-    {
-      "index": 601,
-      "name": "Mesh [08jg]",
-      "children": [],
-      "mesh": 169
-    },
-    {
-      "index": 602,
-      "name": "Mesh [08kg]",
-      "children": [],
-      "mesh": 170
-    },
-    {
-      "index": 603,
-      "name": "Mesh [08lg]",
-      "children": [],
-      "mesh": 171
-    },
-    {
-      "index": 604,
-      "name": "Mesh [08mg]",
-      "children": [],
-      "mesh": 172
-    },
-    {
-      "index": 605,
-      "name": "Mesh [08ng]",
-      "children": [],
-      "mesh": 173
-    },
-    {
-      "index": 606,
-      "name": "Mesh [08og]",
-      "children": [],
-      "mesh": 174
-    },
-    {
-      "index": 607,
-      "name": "Mesh [08pg]",
-      "children": [],
-      "mesh": 175
-    },
-    {
-      "index": 608,
-      "name": "Mesh [08qg]",
-      "children": [],
-      "mesh": 176
-    },
-    {
-      "index": 609,
-      "name": "Mesh [08rg]",
-      "children": [],
-      "mesh": 177
-    },
-    {
-      "index": 610,
-      "name": "Mesh [08sg]",
-      "children": [],
-      "mesh": 178
-    },
-    {
-      "index": 611,
-      "name": "Mesh [08tg]",
-      "children": [],
-      "mesh": 179
-    },
-    {
-      "index": 612,
-      "name": "Mesh [08ug]",
-      "children": [],
-      "mesh": 180
-    },
-    {
-      "index": 613,
-      "name": "Mesh [08vg]",
-      "children": [],
-      "mesh": 181
-    },
-    {
-      "index": 614,
-      "name": "Mesh [08wg]",
-      "children": [],
-      "mesh": 182
-    },
-    {
-      "index": 615,
-      "name": "Mesh [08xg]",
-      "children": [],
-      "mesh": 183
-    },
-    {
-      "index": 616,
-      "name": "__Geometry__ [00Qc]",
-      "children": [
+        598,
+        599,
         600,
         601,
         602,
@@ -22589,90 +22585,146 @@
         608,
         609,
         610,
-        611,
-        612,
-        613,
-        614,
-        615
+        611
       ],
       "mesh": null
     },
     {
-      "index": 617,
-      "name": "Mesh [08yg]",
+      "index": 613,
+      "name": "__Model___00Jv",
+      "children": [
+        612
+      ],
+      "mesh": null
+    },
+    {
+      "index": 614,
+      "name": "Curve_Conveyor_00Tn",
+      "children": [
+        613
+      ],
+      "mesh": null
+    },
+    {
+      "index": 615,
+      "name": "Mesh_08fg",
       "children": [],
-      "mesh": 184
+      "mesh": 47
+    },
+    {
+      "index": 616,
+      "name": "Mesh_08gg",
+      "children": [],
+      "mesh": 48
+    },
+    {
+      "index": 617,
+      "name": "Mesh_08hg",
+      "children": [],
+      "mesh": 49
     },
     {
       "index": 618,
-      "name": "Mesh [08zg]",
+      "name": "Mesh_08ig",
       "children": [],
-      "mesh": 185
+      "mesh": 50
     },
     {
       "index": 619,
-      "name": "Mesh [090g]",
+      "name": "Mesh_08jg",
       "children": [],
-      "mesh": 186
+      "mesh": 51
     },
     {
       "index": 620,
-      "name": "Mesh [091g]",
+      "name": "Mesh_08kg",
       "children": [],
-      "mesh": 187
+      "mesh": 52
     },
     {
       "index": 621,
-      "name": "Mesh [092g]",
+      "name": "Mesh_08lg",
       "children": [],
-      "mesh": 188
+      "mesh": 53
     },
     {
       "index": 622,
-      "name": "Mesh [093g]",
+      "name": "Mesh_08mg",
       "children": [],
-      "mesh": 189
+      "mesh": 54
     },
     {
       "index": 623,
-      "name": "Mesh [094g]",
+      "name": "Mesh_08ng",
       "children": [],
-      "mesh": 190
+      "mesh": 55
     },
     {
       "index": 624,
-      "name": "Mesh [095g]",
+      "name": "Mesh_08og",
       "children": [],
-      "mesh": 191
+      "mesh": 56
     },
     {
       "index": 625,
-      "name": "Mesh [096g]",
+      "name": "Mesh_08pg",
       "children": [],
-      "mesh": 192
+      "mesh": 57
     },
     {
       "index": 626,
-      "name": "Mesh [097g]",
+      "name": "Mesh_08qg",
       "children": [],
-      "mesh": 193
+      "mesh": 58
     },
     {
       "index": 627,
-      "name": "Mesh [098g]",
+      "name": "Mesh_08rg",
       "children": [],
-      "mesh": 194
+      "mesh": 59
     },
     {
       "index": 628,
-      "name": "Mesh [099g]",
+      "name": "Mesh_08sg",
       "children": [],
-      "mesh": 195
+      "mesh": 60
     },
     {
       "index": 629,
-      "name": "__Geometry__ [00Rc]",
+      "name": "Mesh_08tg",
+      "children": [],
+      "mesh": 61
+    },
+    {
+      "index": 630,
+      "name": "Mesh_08ug",
+      "children": [],
+      "mesh": 62
+    },
+    {
+      "index": 631,
+      "name": "Mesh_08vg",
+      "children": [],
+      "mesh": 63
+    },
+    {
+      "index": 632,
+      "name": "Mesh_08wg",
+      "children": [],
+      "mesh": 64
+    },
+    {
+      "index": 633,
+      "name": "Mesh_08xg",
+      "children": [],
+      "mesh": 65
+    },
+    {
+      "index": 634,
+      "name": "__Geometry___00Sc",
       "children": [
+        615,
+        616,
         617,
         618,
         619,
@@ -22684,224 +22736,929 @@
         625,
         626,
         627,
-        628
-      ],
-      "mesh": null
-    },
-    {
-      "index": 630,
-      "name": "Mesh [09Ag]",
-      "children": [],
-      "mesh": 196
-    },
-    {
-      "index": 631,
-      "name": "Mesh [09Bg]",
-      "children": [],
-      "mesh": 197
-    },
-    {
-      "index": 632,
-      "name": "Mesh [09Cg]",
-      "children": [],
-      "mesh": 198
-    },
-    {
-      "index": 633,
-      "name": "__Geometry__ [00Sc]",
-      "children": [
+        628,
+        629,
         630,
         631,
-        632
+        632,
+        633
       ],
       "mesh": null
-    },
-    {
-      "index": 634,
-      "name": "Mesh [09Dg]",
-      "children": [],
-      "mesh": 199
     },
     {
       "index": 635,
-      "name": "__Geometry__ [00Tc]",
-      "children": [
-        634
-      ],
+      "name": "__Geometry___00Tc",
+      "children": [],
       "mesh": null
     },
     {
       "index": 636,
-      "name": "__Geometry__ [00Uc]",
+      "name": "Mesh_08yg",
       "children": [],
-      "mesh": null
+      "mesh": 66
     },
     {
       "index": 637,
-      "name": "mountplate [00Vn]",
-      "children": [
-        636
-      ],
-      "mesh": null
+      "name": "Mesh_08zg",
+      "children": [],
+      "mesh": 67
     },
     {
       "index": 638,
-      "name": "Axis 6 [00Un]",
-      "children": [
-        635,
-        637
-      ],
-      "mesh": null
+      "name": "Mesh_090g",
+      "children": [],
+      "mesh": 68
     },
     {
       "index": 639,
-      "name": "Axis 5 [00Tn]",
-      "children": [
-        633,
-        638
-      ],
-      "mesh": null
+      "name": "Mesh_091g",
+      "children": [],
+      "mesh": 69
     },
     {
       "index": 640,
-      "name": "Axis 4 [00Sn]",
-      "children": [
-        629,
-        639
-      ],
-      "mesh": null
+      "name": "Mesh_092g",
+      "children": [],
+      "mesh": 70
     },
     {
       "index": 641,
-      "name": "Axis 3 [00Rn]",
-      "children": [
-        616,
-        640
-      ],
-      "mesh": null
+      "name": "Mesh_093g",
+      "children": [],
+      "mesh": 71
     },
     {
       "index": 642,
-      "name": "Axis 2 [00Qn]",
-      "children": [
-        599,
-        641
-      ],
-      "mesh": null
+      "name": "Mesh_094g",
+      "children": [],
+      "mesh": 72
     },
     {
       "index": 643,
-      "name": "Axis 1 [00Pn]",
-      "children": [
-        587,
-        642
-      ],
-      "mesh": null
+      "name": "Mesh_095g",
+      "children": [],
+      "mesh": 73
     },
     {
       "index": 644,
-      "name": "Robot World [00Wn]",
+      "name": "Mesh_096g",
       "children": [],
-      "mesh": null
+      "mesh": 74
     },
     {
       "index": 645,
-      "name": "__Model__ [00Dv]",
-      "children": [
-        576,
-        643,
-        644
-      ],
-      "mesh": null
+      "name": "Mesh_097g",
+      "children": [],
+      "mesh": 75
     },
     {
       "index": 646,
-      "name": "Generic Articulated Robot #1 [00On]",
-      "children": [
-        645
-      ],
-      "mesh": null
+      "name": "Mesh_098g",
+      "children": [],
+      "mesh": 76
     },
     {
       "index": 647,
-      "name": "Link1 [00Nn]",
+      "name": "__Geometry___00Uc",
       "children": [
-        564,
+        636,
+        637,
+        638,
+        639,
+        640,
+        641,
+        642,
+        643,
+        644,
+        645,
         646
       ],
       "mesh": null
     },
     {
       "index": 648,
-      "name": "Mesh [09Eg]",
+      "name": "Mesh_099g",
       "children": [],
-      "mesh": 200
+      "mesh": 77
     },
     {
       "index": 649,
-      "name": "Mesh [09Fg]",
+      "name": "Mesh_09Ag",
       "children": [],
-      "mesh": 201
+      "mesh": 78
     },
     {
       "index": 650,
-      "name": "__Geometry__ [00Vc]",
-      "children": [
-        648,
-        649
-      ],
-      "mesh": null
+      "name": "Mesh_09Bg",
+      "children": [],
+      "mesh": 79
     },
     {
       "index": 651,
-      "name": "Status [00Xn]",
-      "children": [
-        650
-      ],
-      "mesh": null
+      "name": "Mesh_09Cg",
+      "children": [],
+      "mesh": 80
     },
     {
       "index": 652,
-      "name": "__Model__ [00Cv]",
-      "children": [
-        563,
-        647,
-        651
-      ],
-      "mesh": null
+      "name": "Mesh_09Dg",
+      "children": [],
+      "mesh": 81
     },
     {
       "index": 653,
-      "name": "robot(center)(1)",
-      "children": [
-        652
-      ],
-      "mesh": null
+      "name": "Mesh_09Eg",
+      "children": [],
+      "mesh": 82
     },
     {
       "index": 654,
-      "name": "Collection",
+      "name": "Mesh_09Fg",
+      "children": [],
+      "mesh": 83
+    },
+    {
+      "index": 655,
+      "name": "Mesh_09Gg",
+      "children": [],
+      "mesh": 84
+    },
+    {
+      "index": 656,
+      "name": "Mesh_09Hg",
+      "children": [],
+      "mesh": 85
+    },
+    {
+      "index": 657,
+      "name": "Mesh_09Ig",
+      "children": [],
+      "mesh": 86
+    },
+    {
+      "index": 658,
+      "name": "__Geometry___00Vc",
       "children": [
-        38,
-        77,
-        116,
-        155,
-        190,
-        225,
-        277,
-        329,
-        381,
-        433,
-        543,
-        653
+        648,
+        649,
+        650,
+        651,
+        652,
+        653,
+        654,
+        655,
+        656,
+        657
       ],
       "mesh": null
     },
     {
-      "index": 655,
-      "name": "Scene Collection",
+      "index": 659,
+      "name": "Mesh_09Jg",
+      "children": [],
+      "mesh": 87
+    },
+    {
+      "index": 660,
+      "name": "Mesh_09Kg",
+      "children": [],
+      "mesh": 88
+    },
+    {
+      "index": 661,
+      "name": "Mesh_09Lg",
+      "children": [],
+      "mesh": 89
+    },
+    {
+      "index": 662,
+      "name": "Mesh_09Mg",
+      "children": [],
+      "mesh": 90
+    },
+    {
+      "index": 663,
+      "name": "Mesh_09Ng",
+      "children": [],
+      "mesh": 91
+    },
+    {
+      "index": 664,
+      "name": "Mesh_09Og",
+      "children": [],
+      "mesh": 92
+    },
+    {
+      "index": 665,
+      "name": "Mesh_09Pg",
+      "children": [],
+      "mesh": 93
+    },
+    {
+      "index": 666,
+      "name": "Mesh_09Qg",
+      "children": [],
+      "mesh": 94
+    },
+    {
+      "index": 667,
+      "name": "Mesh_09Rg",
+      "children": [],
+      "mesh": 95
+    },
+    {
+      "index": 668,
+      "name": "Mesh_09Sg",
+      "children": [],
+      "mesh": 96
+    },
+    {
+      "index": 669,
+      "name": "Mesh_09Tg",
+      "children": [],
+      "mesh": 97
+    },
+    {
+      "index": 670,
+      "name": "__Geometry___00Wc",
       "children": [
-        654
+        659,
+        660,
+        661,
+        662,
+        663,
+        664,
+        665,
+        666,
+        667,
+        668,
+        669
+      ],
+      "mesh": null
+    },
+    {
+      "index": 671,
+      "name": "Mesh_09Ug",
+      "children": [],
+      "mesh": 98
+    },
+    {
+      "index": 672,
+      "name": "Mesh_09Vg",
+      "children": [],
+      "mesh": 99
+    },
+    {
+      "index": 673,
+      "name": "Mesh_09Wg",
+      "children": [],
+      "mesh": 100
+    },
+    {
+      "index": 674,
+      "name": "Mesh_09Xg",
+      "children": [],
+      "mesh": 101
+    },
+    {
+      "index": 675,
+      "name": "Mesh_09Yg",
+      "children": [],
+      "mesh": 102
+    },
+    {
+      "index": 676,
+      "name": "Mesh_09Zg",
+      "children": [],
+      "mesh": 103
+    },
+    {
+      "index": 677,
+      "name": "Mesh_09ag",
+      "children": [],
+      "mesh": 104
+    },
+    {
+      "index": 678,
+      "name": "Mesh_09bg",
+      "children": [],
+      "mesh": 105
+    },
+    {
+      "index": 679,
+      "name": "Mesh_09cg",
+      "children": [],
+      "mesh": 106
+    },
+    {
+      "index": 680,
+      "name": "Mesh_09dg",
+      "children": [],
+      "mesh": 107
+    },
+    {
+      "index": 681,
+      "name": "Mesh_09eg",
+      "children": [],
+      "mesh": 108
+    },
+    {
+      "index": 682,
+      "name": "Mesh_09fg",
+      "children": [],
+      "mesh": 109
+    },
+    {
+      "index": 683,
+      "name": "Mesh_09gg",
+      "children": [],
+      "mesh": 110
+    },
+    {
+      "index": 684,
+      "name": "Mesh_09hg",
+      "children": [],
+      "mesh": 111
+    },
+    {
+      "index": 685,
+      "name": "Mesh_09ig",
+      "children": [],
+      "mesh": 112
+    },
+    {
+      "index": 686,
+      "name": "Mesh_09jg",
+      "children": [],
+      "mesh": 113
+    },
+    {
+      "index": 687,
+      "name": "__Geometry___00Xc",
+      "children": [
+        671,
+        672,
+        673,
+        674,
+        675,
+        676,
+        677,
+        678,
+        679,
+        680,
+        681,
+        682,
+        683,
+        684,
+        685,
+        686
+      ],
+      "mesh": null
+    },
+    {
+      "index": 688,
+      "name": "Mesh_09kg",
+      "children": [],
+      "mesh": 114
+    },
+    {
+      "index": 689,
+      "name": "Mesh_09lg",
+      "children": [],
+      "mesh": 115
+    },
+    {
+      "index": 690,
+      "name": "Mesh_09mg",
+      "children": [],
+      "mesh": 116
+    },
+    {
+      "index": 691,
+      "name": "Mesh_09ng",
+      "children": [],
+      "mesh": 117
+    },
+    {
+      "index": 692,
+      "name": "Mesh_09og",
+      "children": [],
+      "mesh": 118
+    },
+    {
+      "index": 693,
+      "name": "Mesh_09pg",
+      "children": [],
+      "mesh": 119
+    },
+    {
+      "index": 694,
+      "name": "Mesh_09qg",
+      "children": [],
+      "mesh": 120
+    },
+    {
+      "index": 695,
+      "name": "Mesh_09rg",
+      "children": [],
+      "mesh": 121
+    },
+    {
+      "index": 696,
+      "name": "Mesh_09sg",
+      "children": [],
+      "mesh": 122
+    },
+    {
+      "index": 697,
+      "name": "Mesh_09tg",
+      "children": [],
+      "mesh": 123
+    },
+    {
+      "index": 698,
+      "name": "Mesh_09ug",
+      "children": [],
+      "mesh": 124
+    },
+    {
+      "index": 699,
+      "name": "Mesh_09vg",
+      "children": [],
+      "mesh": 125
+    },
+    {
+      "index": 700,
+      "name": "__Geometry___00Yc",
+      "children": [
+        688,
+        689,
+        690,
+        691,
+        692,
+        693,
+        694,
+        695,
+        696,
+        697,
+        698,
+        699
+      ],
+      "mesh": null
+    },
+    {
+      "index": 701,
+      "name": "Mesh_09wg",
+      "children": [],
+      "mesh": 126
+    },
+    {
+      "index": 702,
+      "name": "Mesh_09xg",
+      "children": [],
+      "mesh": 127
+    },
+    {
+      "index": 703,
+      "name": "Mesh_09yg",
+      "children": [],
+      "mesh": 128
+    },
+    {
+      "index": 704,
+      "name": "__Geometry___00Zc",
+      "children": [
+        701,
+        702,
+        703
+      ],
+      "mesh": null
+    },
+    {
+      "index": 705,
+      "name": "Mesh_09zg",
+      "children": [],
+      "mesh": 129
+    },
+    {
+      "index": 706,
+      "name": "__Geometry___00ac",
+      "children": [
+        705
+      ],
+      "mesh": null
+    },
+    {
+      "index": 707,
+      "name": "__Geometry___00bc",
+      "children": [],
+      "mesh": null
+    },
+    {
+      "index": 708,
+      "name": "mountplate_00dn",
+      "children": [
+        707
+      ],
+      "mesh": null
+    },
+    {
+      "index": 709,
+      "name": "Axis_6_00cn",
+      "children": [
+        706,
+        708
+      ],
+      "mesh": null
+    },
+    {
+      "index": 710,
+      "name": "Axis_5_00bn",
+      "children": [
+        704,
+        709
+      ],
+      "mesh": null
+    },
+    {
+      "index": 711,
+      "name": "Axis_4_00an",
+      "children": [
+        700,
+        710
+      ],
+      "mesh": null
+    },
+    {
+      "index": 712,
+      "name": "Axis_3_00Zn",
+      "children": [
+        687,
+        711
+      ],
+      "mesh": null
+    },
+    {
+      "index": 713,
+      "name": "Axis_2_00Yn",
+      "children": [
+        670,
+        712
+      ],
+      "mesh": null
+    },
+    {
+      "index": 714,
+      "name": "Axis_1_00Xn",
+      "children": [
+        658,
+        713
+      ],
+      "mesh": null
+    },
+    {
+      "index": 715,
+      "name": "Robot_World_00en",
+      "children": [],
+      "mesh": null
+    },
+    {
+      "index": 716,
+      "name": "__Model___00Lv",
+      "children": [
+        647,
+        714,
+        715
+      ],
+      "mesh": null
+    },
+    {
+      "index": 717,
+      "name": "Generic_Articulated_Robot_#1_00Wn",
+      "children": [
+        716
+      ],
+      "mesh": null
+    },
+    {
+      "index": 718,
+      "name": "Link1_00Vn",
+      "children": [
+        635,
+        717
+      ],
+      "mesh": null
+    },
+    {
+      "index": 719,
+      "name": "Mesh_0A0g",
+      "children": [],
+      "mesh": 130
+    },
+    {
+      "index": 720,
+      "name": "Mesh_0A1g",
+      "children": [],
+      "mesh": 131
+    },
+    {
+      "index": 721,
+      "name": "__Geometry___00cc",
+      "children": [
+        719,
+        720
+      ],
+      "mesh": null
+    },
+    {
+      "index": 722,
+      "name": "Status_00fn",
+      "children": [
+        721
+      ],
+      "mesh": null
+    },
+    {
+      "index": 723,
+      "name": "__Model___00Kv",
+      "children": [
+        634,
+        718,
+        722
+      ],
+      "mesh": null
+    },
+    {
+      "index": 724,
+      "name": "Robot_Transport_Controller_#1_00Un",
+      "children": [
+        723
+      ],
+      "mesh": null
+    },
+    {
+      "index": 725,
+      "name": "Mesh_0A2g",
+      "children": [],
+      "mesh": 226
+    },
+    {
+      "index": 726,
+      "name": "Mesh_0A3g",
+      "children": [],
+      "mesh": 227
+    },
+    {
+      "index": 727,
+      "name": "Mesh_0A4g",
+      "children": [],
+      "mesh": 228
+    },
+    {
+      "index": 728,
+      "name": "Mesh_0A5g",
+      "children": [],
+      "mesh": 229
+    },
+    {
+      "index": 729,
+      "name": "Mesh_0A6g",
+      "children": [],
+      "mesh": 230
+    },
+    {
+      "index": 730,
+      "name": "Mesh_0A7g",
+      "children": [],
+      "mesh": 231
+    },
+    {
+      "index": 731,
+      "name": "Mesh_0A8g",
+      "children": [],
+      "mesh": 232
+    },
+    {
+      "index": 732,
+      "name": "Mesh_0A9g",
+      "children": [],
+      "mesh": 233
+    },
+    {
+      "index": 733,
+      "name": "Mesh_0AAg",
+      "children": [],
+      "mesh": 234
+    },
+    {
+      "index": 734,
+      "name": "Mesh_0ABg",
+      "children": [],
+      "mesh": 235
+    },
+    {
+      "index": 735,
+      "name": "Mesh_0ACg",
+      "children": [],
+      "mesh": 236
+    },
+    {
+      "index": 736,
+      "name": "Mesh_0ADg",
+      "children": [],
+      "mesh": 237
+    },
+    {
+      "index": 737,
+      "name": "Mesh_0AEg",
+      "children": [],
+      "mesh": 238
+    },
+    {
+      "index": 738,
+      "name": "Mesh_0AFg",
+      "children": [],
+      "mesh": 239
+    },
+    {
+      "index": 739,
+      "name": "__Geometry___00dc",
+      "children": [
+        725,
+        726,
+        727,
+        728,
+        729,
+        730,
+        731,
+        732,
+        733,
+        734,
+        735,
+        736,
+        737,
+        738
+      ],
+      "mesh": null
+    },
+    {
+      "index": 740,
+      "name": "__Model___00Mv",
+      "children": [
+        739
+      ],
+      "mesh": null
+    },
+    {
+      "index": 741,
+      "name": "ProductSink_00gn",
+      "children": [
+        740
+      ],
+      "mesh": null
+    },
+    {
+      "index": 742,
+      "name": "Mesh_0AGg",
+      "children": [],
+      "mesh": 240
+    },
+    {
+      "index": 743,
+      "name": "Mesh_0AHg",
+      "children": [],
+      "mesh": 241
+    },
+    {
+      "index": 744,
+      "name": "Mesh_0AIg",
+      "children": [],
+      "mesh": 242
+    },
+    {
+      "index": 745,
+      "name": "Mesh_0AJg",
+      "children": [],
+      "mesh": 243
+    },
+    {
+      "index": 746,
+      "name": "Mesh_0AKg",
+      "children": [],
+      "mesh": 244
+    },
+    {
+      "index": 747,
+      "name": "Mesh_0ALg",
+      "children": [],
+      "mesh": 245
+    },
+    {
+      "index": 748,
+      "name": "Mesh_0AMg",
+      "children": [],
+      "mesh": 246
+    },
+    {
+      "index": 749,
+      "name": "Mesh_0ANg",
+      "children": [],
+      "mesh": 247
+    },
+    {
+      "index": 750,
+      "name": "Mesh_0AOg",
+      "children": [],
+      "mesh": 248
+    },
+    {
+      "index": 751,
+      "name": "Mesh_0APg",
+      "children": [],
+      "mesh": 249
+    },
+    {
+      "index": 752,
+      "name": "Mesh_0AQg",
+      "children": [],
+      "mesh": 250
+    },
+    {
+      "index": 753,
+      "name": "Mesh_0ARg",
+      "children": [],
+      "mesh": 251
+    },
+    {
+      "index": 754,
+      "name": "Mesh_0ASg",
+      "children": [],
+      "mesh": 252
+    },
+    {
+      "index": 755,
+      "name": "__Geometry___00ec",
+      "children": [
+        742,
+        743,
+        744,
+        745,
+        746,
+        747,
+        748,
+        749,
+        750,
+        751,
+        752,
+        753,
+        754
+      ],
+      "mesh": null
+    },
+    {
+      "index": 756,
+      "name": "__Model___00Nv",
+      "children": [
+        755
+      ],
+      "mesh": null
+    },
+    {
+      "index": 757,
+      "name": "ProductFeederNode_00hn",
+      "children": [
+        756
+      ],
+      "mesh": null
+    },
+    {
+      "index": 758,
+      "name": "RootNode",
+      "children": [
+        10,
+        21,
+        66,
+        101,
+        211,
+        263,
+        315,
+        367,
+        406,
+        462,
+        512,
+        562,
+        614,
+        724,
+        741,
+        757
+      ],
+      "mesh": null
+    },
+    {
+      "index": 759,
+      "name": "",
+      "children": [
+        758
       ],
       "mesh": null
     }

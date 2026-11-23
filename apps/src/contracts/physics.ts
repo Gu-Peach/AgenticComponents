@@ -1,5 +1,6 @@
 import type { Vec3 } from "./device";
 export type Quat = [number, number, number, number];
+export type { Vec3 } from "./device";
 export interface BodyPose {
   position: Vec3;
   rotation: Quat;
@@ -40,6 +41,12 @@ export interface PhysicsPort {
   bindLoad?(carrier: string, material: string, fromGrasp?: string): void;
   hasContactSupport?(bodyId: string, supportId: string): boolean;
   createGrasp?(id: string, tool: string, material: string): void;
+  transferGrasp?(
+    from: string,
+    to: string,
+    tool: string,
+    material: string,
+  ): void;
   removeGrasp?(id: string): void;
   hasGrasp?(id: string): boolean;
   dispose(): void;

@@ -2,7 +2,7 @@
   "schema_version": "ac-flow-task/0.2",
   "id": "batch_goal",
   "scene_id": "S04",
-  "description": "四件双机械臂双输送带流水交接",
+  "description": "四件瓶体在第一带直立输送，由两臂从瓶头向瓶底交接，最后瓶头朝下经第二带送出。",
   "expected": {
     "material_ids": [
       "M01",
@@ -35,7 +35,22 @@
           "target": "C2.exit"
         }
       ],
-      "evidence": "actual_target_handoff_before_external_departure"
+      "evidence": "actual_target_handoff_before_external_departure",
+      "required_transport_pose": {
+        "device": "C2",
+        "material_axis_local": [
+          0,
+          1,
+          0
+        ],
+        "required_axis_world": [
+          0,
+          -1,
+          0
+        ],
+        "contact_frame": "head",
+        "evidence": "observed_support_and_orientation_during_transport"
+      }
     },
     {
       "kind": "tools_empty"

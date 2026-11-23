@@ -22,6 +22,11 @@ export interface SceneDevice {
       rotation_quaternion?: [number, number, number, number];
       support_device?: string;
       support_layer?: string;
+      material_pose?: {
+        orientation_quaternion: [number, number, number, number];
+        contact_frame?: string;
+        reference?: string;
+      };
     }
   >;
   node_binding: {
@@ -74,6 +79,7 @@ export interface SceneReadiness {
   blockers: string[];
 }
 export interface CompiledSceneRuntime {
+  handoff?: import("./robot-handoff").HandoffConfig;
   loading?: LoadingConfig;
   warehouse?: import("./warehouse").WarehouseConfig;
   bundle: SceneBundle;

@@ -1,0 +1,569 @@
+import type { CompiledSceneRuntime } from "@/contracts/scene-execution";
+import type { ActionBinding, ActionRequest } from "@/contracts/scheduler";
+import type {
+  ConditionContext,
+  ObservationWrite,
+  Truth,
+} from "@/contracts/conditions";
+import type { DeviceActionPort } from "@/runtime/adapters/scene/DeviceActionPort";
+import {
+  bindDeviceBehavior,
+  signalLayoutFromContract,
+} from "@/domain/runtime/bindDeviceBehavior";
+import { bindProcess } from "@/domain/runtime/bindProcess";
+import { compileConditions } from "@/domain/runtime/compileConditions";
+import { PositionTransportAdapter } from "@/runtime/adapters/scene/PositionTransportAdapter";
+import { WarehouseActionAdapter } from "@/runtime/adapters/scene/WarehouseActionAdapter";
+import { SceneRuntimeProgram } from "@/runtime/engine/SceneRuntimeProgram";
+import { createJoltBackend } from "@/runtime/physics/jolt/JoltPhysicsBackend";
+import { BottleHandoffLine } from "@/runtime/services/BottleHandoffLine";
+import {
+  ConditionProviders,
+  ObservationRegistry,
+  SignalRegistry,
+} from "@/runtime/signals";
+import { ConditionTrace } from "@/runtime/signals/ConditionTrace";
+
+interface HandoffState {
+  active: string | null;
+  arms: Record<string, { atHome: boolean; stopped: boolean; held?: string }>;
+  onInfeed: boolean;
+  pickReady: boolean;
+  onOutfeed: boolean;
+  exitReady: boolean;
+  placed: string[];
+  transfers: BottleHandoffLine["transfers"];
+  delivered: { material: string; target: string; tick: number }[];
+}
+
+export async function assembleHandoffRuntime(
+  sceneId: string,
+  runId: string,
+  compiled: CompiledSceneRuntime,
+) {
+  const config = compiled.handoff!;
+  const { source, infeed, outfeed, giver, receiver } = config;
+  const physics = await createJoltBackend(compiled.physics);
+  try {
+    const line = new BottleHandoffLine(compiled, physics);
+    const devices = compiled.devices;
+    const ids = [...compiled.subjectIds];
+    const subject = (r: ActionRequest) =>
+      ids.find(([, id]) => id === Number(r.arguments.subject_id))?.[0];
+    const input = infeed + ".exit",
+      output = outfeed + ".exit",
+      place = outfeed + ".entry";
+    let current = 0,
+      closing = false;
+    const receipts: HandoffState["delivered"] = [];
+    const currentId = () => config.jobs[current]?.material;
+    const location = (device: string, key: string) =>
+      devices.get(device)!.locations[key];
+    const belts = [infeed, outfeed].map((id) => {
+      const params = devices.get(id)!.parameters,
+        speed = Number(params.speed_mps);
+      const belt = new PositionTransportAdapter(
+        {
+          sceneId,
+          runId,
+          leader: id,
+          drives: [
+            {
+              device: id,
+              surfaceId: id + "/surface",
+              flow: compiled.physics.surfaces!.find(
+                (s) => s.id === id + "/surface",
+              )!.direction,
+            },
+          ],
+          subjects: new Map(
+            ids.map(([material, index]) => [
+              index,
+              {
+                id: material,
+                bodyId: line.body(material).id,
+                referenceOffset:
+                  config.materialFrames.get(material)!.points[
+                    id === infeed ? "tail" : "head"
+                  ].offset,
+              },
+            ]),
+          ),
+          targets: [
+            {
+              id: id + ".exit",
+              index: 1,
+              position: location(id, id + ".exit").position,
+              supportIds: [id + "/surface"],
+            },
+          ],
+          admissionSupportIds: id === infeed ? [source + "/surface"] : [],
+          maxSpeed: speed,
+          acceleration: speed / Number(params.accel_time_s),
+          deceleration: speed / Number(params.decel_time_s),
+          positionTolerance: 0.012,
+          speedTolerance: 0.02,
+          verticalTolerance: 0.018,
+          settleTicks: 6,
+          inventoryFeedback: {
+            partReadyPort: "part_ready",
+            capacityPort: "capacity_available",
+            capacity: 1,
+          },
+          releasePermissionPort: "release_waiting_material",
+          publishDriveState: true,
+        },
+        physics,
+        id === outfeed
+          ? (item, target, tick) => {
+              if (
+                closing ||
+                item.id !== currentId() ||
+                !line.placed.has(item.id) ||
+                !line.checkPose(item.id, outfeed, target.id) ||
+                !line.transfers.some(
+                  (t) =>
+                    t.material === item.id &&
+                    t.from === giver &&
+                    t.to === receiver,
+                )
+              )
+                return false;
+              physics.deactivateBodies!([item.bodyId]);
+              receipts.push({ material: item.id, target: target.id, tick });
+              current++;
+              return true;
+            }
+          : undefined,
+      );
+      return belt;
+    });
+    const robots = [giver, receiver].map((id) => {
+      const arm = line.arm(id);
+      return new WarehouseActionAdapter(
+        id,
+        sceneId,
+        runId,
+        [
+          "move_to_pose",
+          id === giver ? "pick_and_handoff" : "place_held_material",
+        ],
+        (request) => line.prepare(request),
+        () => arm.stopped,
+        (faulted) => ({
+          holding_material: arm.holding,
+          error_code: faulted ? 1 : 0,
+        }),
+        "start_pick",
+      );
+    });
+    let pending: ObservationWrite[] = [];
+    const environment: DeviceActionPort = {
+      id: "@handoff-environment",
+      supports: () => false,
+      prepare: () => {
+        throw new Error("Environment is not an actuator");
+      },
+      prepareCancel: () => [],
+      prepareStop: () => [],
+      submit: () => {},
+      cancel: () => {},
+      dispose: () => {},
+      requestStop: () => {
+        closing = true;
+        for (const arm of line.arms.values()) arm.stop();
+      },
+      isStopped: () =>
+        [...line.arms.values()].every((a) => a.stopped && !a.holding),
+      beforePhysics: (dt) => {
+        const id = currentId();
+        if (!closing && id && !physics.isBodyActive!(line.body(id).id)) {
+          const body = line.body(id);
+          physics.activateBodies!([
+            {
+              id: body.id,
+              pose: {
+                position: body.position,
+                rotation: body.rotation,
+                velocity: [0, 0, 0],
+              },
+            },
+          ]);
+        }
+        physics.setSurfaceSpeeds!({
+          [source + "/surface"]: closing
+            ? 0
+            : physics.getSurfaceSpeed!(infeed + "/surface"),
+        });
+        for (const arm of line.arms.values()) arm.step(dt);
+      },
+      afterPhysics: () => {
+        const active = currentId();
+        const eligible =
+          !!active && physics.isBodyActive!(line.body(active).id);
+        const state: HandoffState = {
+          active: active ?? null,
+          arms: Object.fromEntries(
+            [...line.arms].map(([id, a]) => [
+              id,
+              { atHome: a.atHome, stopped: a.stopped, held: a.held },
+            ]),
+          ),
+          onInfeed:
+            eligible &&
+            (line.onBelt(active, infeed) ||
+              physics.hasContactSupport!(
+                line.body(active).id,
+                source + "/surface",
+              )),
+          pickReady: eligible && line.checkPose(active, infeed, input),
+          onOutfeed: eligible && line.onBelt(active, outfeed),
+          exitReady: eligible && line.checkPose(active, outfeed, output),
+          placed: [...line.placed],
+          transfers: line.transfers,
+          delivered: receipts,
+        };
+        pending = [
+          { key: "handoff/state", provider: "physics", runId, value: state },
+          {
+            key: "world/state",
+            provider: "physics",
+            runId,
+            value: {
+              bodies: Object.fromEntries(
+                ids.map(([id]) => {
+                  const body = line.body(id),
+                    present = physics.isBodyActive!(body.id);
+                  return [
+                    body.id,
+                    {
+                      active: present,
+                      pose: present ? line.materialPose(id) : undefined,
+                    },
+                  ];
+                }),
+              ),
+            },
+          },
+          ...robots.map((adapter) => ({
+            key: adapter.id + "/robot_state",
+            provider: "physics",
+            runId,
+            requestId: adapter.request?.requestId,
+            activationId: adapter.request?.activationId,
+            subjectId: adapter.request?.subjectId,
+            value: {
+              q: line.arm(adapter.id).q,
+              qdot: line.arm(adapter.id).qdot,
+              tcp: line.arm(adapter.id).pose,
+              holding: line.arm(adapter.id).holding,
+            },
+          })),
+        ];
+      },
+      drainSignals: () => [],
+      drainFeedback: () => [],
+      drainObservations: () => {
+        const value = pending;
+        pending = [];
+        return value;
+      },
+    };
+    const drivers: DeviceActionPort[] = [...belts, ...robots, environment];
+    const signals = new SignalRegistry(
+      runId,
+      [...devices.values()]
+        .filter((d) => !d.asset_kind?.endsWith("_prefab"))
+        .flatMap((d) =>
+          signalLayoutFromContract(sceneId, d.instance_id, d.contract),
+        ),
+    );
+    const obs = (key: string, provider: string) => ({
+      key,
+      provider,
+      maxAgeTicks: 1,
+      validate: (v: unknown) => !!v && typeof v === "object",
+    });
+    const observations = new ObservationRegistry(runId, [
+      obs("handoff/state", "physics"),
+      obs("world/state", "physics"),
+      ...robots.map((r) => obs(r.id + "/robot_state", "physics")),
+      ...belts.flatMap((b) =>
+        ["loads", "transport", "drive_state"].map((key) =>
+          obs(b.id + "/" + key, "adapter:" + b.id),
+        ),
+      ),
+    ]);
+    const state = (c: ConditionContext) => {
+      const s = c.observations?.samples["handoff/state"];
+      return s?.quality === "good" && s.runId === runId
+        ? (s.value as HandoffState)
+        : undefined;
+    };
+    const fields = (r: ActionRequest) =>
+      (r.payload as { fields?: Record<string, string> } | undefined)?.fields ??
+      {};
+    const footprint = (r: ActionRequest) => {
+      const material = fields(r).material ?? subject(r);
+      const devices =
+        r.behavior === "pick_and_handoff"
+          ? [giver, receiver, infeed]
+          : r.behavior === "place_held_material"
+            ? [receiver, outfeed]
+            : [r.device];
+      return [
+        ...devices.map((d) => "device/" + d),
+        ...(material ? ["material/" + material] : []),
+      ];
+    };
+    const driveStopped = (c: ConditionContext, d: string) => {
+      const s = c.frame.samples[sceneId + "/" + d + "/actual_speed"];
+      return s?.quality === "good" && Math.abs(Number(s.value)) <= 0.02;
+    };
+    const ready = (c: ConditionContext, r: ActionRequest, w: HandoffState) => {
+      const material = fields(r).material ?? subject(r);
+      const home = (id: string) => w.arms[id].atHome && !w.arms[id].held;
+      switch (r.behavior) {
+        case "move_to_pose":
+          return w.arms[r.device].stopped && !w.arms[r.device].held;
+        case "pick_and_handoff":
+          return (
+            material === w.active &&
+            w.pickReady &&
+            home(giver) &&
+            home(receiver) &&
+            driveStopped(c, infeed)
+          );
+        case "place_held_material":
+          return (
+            material === w.active &&
+            w.arms[receiver].held === material &&
+            w.arms[receiver].stopped &&
+            home(giver) &&
+            driveStopped(c, outfeed)
+          );
+        case "stop_conveying":
+          return driveStopped(c, r.device);
+        case "release_material":
+          return (
+            material === w.active &&
+            w.exitReady &&
+            w.placed.includes(material!) &&
+            driveStopped(c, outfeed)
+          );
+        case "transport_to_position":
+          return (
+            material === w.active &&
+            driveStopped(c, r.device) &&
+            (r.device === infeed
+              ? w.onInfeed
+              : w.onOutfeed && w.placed.includes(material!)) &&
+            home(giver) &&
+            home(receiver)
+          );
+        default:
+          return false;
+      }
+    };
+    const completed = (
+      c: ConditionContext,
+      r: ActionRequest,
+      w: HandoffState,
+    ) => {
+      if (c.requestState?.outcome !== "succeeded") return false;
+      const material = fields(r).material ?? subject(r);
+      switch (r.behavior) {
+        case "move_to_pose":
+          return w.arms[r.device].atHome;
+        case "pick_and_handoff":
+          return (
+            w.arms[receiver].held === material &&
+            !w.arms[giver].held &&
+            w.transfers.some(
+              (t) =>
+                t.material === material &&
+                t.from === giver &&
+                t.to === receiver,
+            )
+          );
+        case "place_held_material":
+          return (
+            !w.arms[receiver].held &&
+            w.onOutfeed &&
+            w.placed.includes(material!)
+          );
+        case "stop_conveying":
+          return driveStopped(c, r.device);
+        case "release_material":
+          return w.delivered.some(
+            (t) => t.material === material && t.target === output,
+          );
+        case "transport_to_position":
+          return r.device === infeed ? w.pickReady : w.exitReady;
+      }
+      return false;
+    };
+    const unique = new Map(
+      compiled.bundle.calls.map((c) => [c.device + "." + c.behavior, c]),
+    );
+    const providers = new ConditionProviders(new ConditionTrace("expression"));
+    const actions: ActionBinding[] = [];
+    for (const call of unique.values()) {
+      const d = devices.get(call.device)!;
+      if (
+        !drivers.some((a) => a.id === call.device && a.supports(call.behavior))
+      )
+        throw new Error("Unsupported handoff action");
+      for (const rule of compileConditions(
+        call.device,
+        d.contract,
+        call.behavior,
+      )) {
+        if (rule.expr.op !== "opaque")
+          throw new Error(
+            "Handoff action requires its native condition profile",
+          );
+        const evaluate = (c: ConditionContext): Truth => {
+          const w = state(c),
+            r = c.request as ActionRequest | undefined;
+          if (!w || !r) return undefined;
+          if (rule.phase === "precondition") return ready(c, r, w);
+          if (rule.phase === "authorization")
+            return ready(c, r, w) && footprint(r).every((k) => c.owns(k));
+          if (rule.phase === "completion") return completed(c, r, w);
+          if (rule.phase === "sustaining") {
+            if (r.device === outfeed && r.behavior === "transport_to_position")
+              return w.onOutfeed;
+            return (
+              c.frame.samples[sceneId + "/" + r.device + "/error"]?.value ===
+              false
+            );
+          }
+          return false;
+        };
+        providers.registerExpression(
+          rule,
+          () => {
+            throw new Error("Unexpected handoff leaf");
+          },
+          evaluate,
+        );
+      }
+      const stopped = call.device + "/" + call.behavior + ".stopped";
+      providers.register(stopped, {
+        evaluate: (c) => {
+          const w = state(c);
+          return (
+            w && (w.arms[call.device]?.stopped ?? driveStopped(c, call.device))
+          );
+        },
+      });
+      actions.push(
+        bindDeviceBehavior(call.device, d.contract, call.behavior, {
+          contractVersion: String(d.contract.version),
+          parameters: d.parameters,
+          stopped: [stopped],
+          resources: (c) => footprint(c.request as ActionRequest),
+          validatePayload: (p) => {
+            if (!line.arms.has(call.device)) {
+              if (p !== undefined)
+                throw new Error("Conveyor only accepts scalar args");
+              return;
+            }
+            const v = p as
+                | { binding?: string; fields?: Record<string, string> }
+                | undefined,
+              f = v?.fields;
+            if (v?.binding !== call.device + "." + call.behavior || !f)
+              throw new Error("Invalid handoff payload binding");
+            if (call.behavior === "move_to_pose") {
+              if (f.target !== call.device + ".home")
+                throw new Error("Invalid retreat target");
+              return;
+            }
+            if (!compiled.subjectIds.has(f.material))
+              throw new Error("Unknown bottle identity");
+            if (
+              call.behavior === "pick_and_handoff" &&
+              (f.source !== input ||
+                f.target !== config.rendezvous ||
+                f.receiver !== receiver ||
+                f.giver_grasp !== "head" ||
+                f.receiver_grasp !== "tail")
+            )
+              throw new Error("Invalid head-to-tail route");
+            if (
+              call.behavior === "place_held_material" &&
+              (f.target !== place || f.grasp !== "tail")
+            )
+              throw new Error("Invalid inverted placement route");
+          },
+        }),
+      );
+    }
+    providers.register("handoff/goal", {
+      evaluate: (c) => {
+        const w = state(c);
+        return (
+          w &&
+          w.active === null &&
+          w.delivered.length === config.jobs.length &&
+          config.jobs.every((j) =>
+            w.delivered.some(
+              (r) => r.material === j.material && r.target === j.target,
+            ),
+          ) &&
+          Object.values(w.arms).every((a) => a.atHome && !a.held) &&
+          driveStopped(c, infeed) &&
+          driveStopped(c, outfeed)
+        );
+      },
+    });
+    const scope: Record<string, unknown> = { task: compiled.task };
+    for (const d of devices.values()) {
+      scope[d.instance_id] = d.instance_id;
+      for (const key of Object.keys(d.locations)) scope[key] = key;
+    }
+    const process = bindProcess(compiled.root, {
+      scope,
+      actions,
+      providers,
+      finalization: ["handoff/goal"],
+      readers: { subject_id: (a) => compiled.subjectIds.get(String(a[0])) },
+    });
+    for (let i = 0; i < 35; i++) {
+      drivers.forEach((d) => d.beforePhysics(1 / 60, 0));
+      physics.step(1 / 60);
+      drivers.forEach((d) => d.afterPhysics(1 / 60, 0));
+      signals.publishFeedback(
+        drivers.flatMap((d) => [...d.drainSignals()]),
+        0,
+      );
+      observations.publish(
+        drivers.flatMap((d) => [...(d.drainObservations?.() ?? [])]),
+        0,
+      );
+    }
+    const first = line.body(currentId()!);
+    if (
+      !physics.hasContactSupport!(first.id, source + "/surface") ||
+      Math.hypot(...physics.readBody!(first.id).velocity) > 0.02
+    )
+      throw new Error("首件瓶体未在供料口稳定支承");
+    return {
+      compiled,
+      program: new SceneRuntimeProgram(
+        sceneId,
+        runId,
+        process,
+        signals,
+        physics,
+        drivers,
+        observations,
+      ),
+    };
+  } catch (e) {
+    physics.dispose();
+    throw e;
+  }
+}

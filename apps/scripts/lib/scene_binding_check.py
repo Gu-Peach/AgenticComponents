@@ -55,6 +55,8 @@ def validate_inputs(ir,devices,goal):
         if value is None:return # Unresolved calibration remains an execution blocker.
         if typ=='material_ref':need(value in materials,'Invalid material reference')
         elif typ=='location_ref':need(value in locations,'Invalid location reference')
+        elif typ=='robot_ref':
+            need(isinstance(value,str) and devices.get(value,{}).get('contract',{}).get('device_type')=='robot_arm','Invalid robot reference')
         elif typ in ('number','integer'):
             need(type(value)in(int,float) and math.isfinite(value) and (typ!='integer' or type(value)is int),'Invalid numeric argument')
             need(not schema or schema.get('min',-math.inf)<=value<=schema.get('max',math.inf),'Argument outside contract range')
@@ -96,7 +98,17 @@ def validate_inputs(ir,devices,goal):
                 payload=n['payload'];key=payload['args'][0]['value'];record=device['command_payloads'].get(key)
                 need(record and record['instance']==id and record['behavior']==n['behavior'],'Payload redirects behavior')
                 need(set(record['fields'])==set(payload['kwargs']),'Payload fields differ')
-                for key,expr in payload['kwargs'].items():check(evaluate(expr,env),record['fields'][key])
+                fields={key:evaluate(expr,env) for key,expr in payload['kwargs'].items()}
+                for key,typ in record['fields'].items():
+                    if typ=='grasp_frame_ref':
+                        material=devices.get(fields.get('material'),{})
+                        grasping=material.get('contract',{}).get('type_specific_contract',{}).get('grasping',{})
+                        need(isinstance(fields[key],str) and fields[key] in grasping.get('frames',{}),'Unknown material grasp frame')
+                    else:check(fields[key],typ)
+                if 'receiver' in fields and record['fields']['receiver']=='robot_ref':
+                    need(fields['receiver']!=id,'Handoff receiver must differ from giver')
+                if {'giver_grasp','receiver_grasp'}<=fields.keys():
+                    need(fields['giver_grasp']!=fields['receiver_grasp'],'Handoff requires distinct grasp frames')
                 routes=device.get('transfer_routes')
                 if n['behavior'] in ('transfer_material','accept_material','release_material') and routes is not None:
                     source=evaluate(payload['kwargs']['source'],env) if 'source' in payload['kwargs'] else id+'.work'

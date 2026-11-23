@@ -3,7 +3,7 @@ import { Matrix4, Object3D, Quaternion, Vector3 } from "three";
 import { sceneFixture } from "./fixtures";
 import { compileSceneRuntime } from "../../src/domain/runtime/compileSceneRuntime";
 import { RobotKinematics } from "../../src/runtime/kinematics/RobotKinematics";
-it.each(["S01", "S02"] as const)(
+it.each(["S01", "S02", "S04"] as const)(
   "matches %s GLB flange position and orientation with runtime FK after joint motion",
   (scene) => {
     const { bundle, bytes, goal } = sceneFixture(scene),

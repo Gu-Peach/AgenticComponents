@@ -466,6 +466,10 @@ class JoltPhysicsBackend implements PhysicsPort {
     if (this.disposed || !this.grasps) throw new Error("约束能力不可用");
     this.grasps.create(id, tool, material);
   }
+  transferGrasp(from: string, to: string, tool: string, material: string) {
+    if (this.disposed || !this.grasps) throw new Error("约束能力不可用");
+    this.grasps.transferGrasp(from, to, tool, material);
+  }
   removeGrasp(id: string) {
     if (this.disposed) throw new Error("物理世界已释放");
     this.grasps?.remove(id);

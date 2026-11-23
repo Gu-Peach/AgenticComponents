@@ -1,6 +1,8 @@
 """Compile data-only scene processes; never execute process.py or descriptive predicates."""
 import argparse, ast, copy, hashlib, json, struct, sys
+import os
 from pathlib import Path
+from tempfile import NamedTemporaryFile
 from urllib.parse import quote
 sys.path.insert(0, str(Path(__file__).parent / 'lib'))
 from declarative_frontend import Parser
@@ -13,6 +15,29 @@ def read(path): return json.loads(path.read_text(encoding='utf-8-sig'))
 def write(path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
+
+def write_generated(path, data):
+    """Keep identical bundles untouched and publish updates only after writing them."""
+    payload = (json.dumps(data, ensure_ascii=False, indent=2) + '\n')
+    # Preserve the bytes produced by the previous text-mode writer on Windows.
+    content = payload.replace('\n', os.linesep).encode('utf-8')
+    try:
+        if path.read_bytes() == content:
+            return
+    except FileNotFoundError:
+        pass
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = None
+    try:
+        with NamedTemporaryFile(dir=path.parent, prefix='.' + path.name + '.', suffix='.tmp', delete=False) as stream:
+            temporary = Path(stream.name)
+            stream.write(content)
+        temporary.replace(path)
+    finally:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
+
 def digest(path): return hashlib.sha256(path.read_bytes()).hexdigest()
 def confined(root, value):
     p=(root/value).resolve()
@@ -187,14 +212,14 @@ def build(root, scene=None, output=None):
                 bundle['initial']=manifest['initial']
         if 'coordinate_system' in manifest:bundle['coordinate_system']=manifest['coordinate_system']
         if 'runtime_profile' in manifest:bundle['runtime_profile']=manifest['runtime_profile']
-        target=output/folder.name/'.generated/scene.bundle.json';write(target,bundle)
+        target=output/folder.name/'.generated/scene.bundle.json';write_generated(target,bundle)
         entries.append({'id':manifest['id'],'name':manifest['name'],'bundleUrl':'/scene/'+folder.name+'/.generated/scene.bundle.json',
                         'bundleSha256':digest(target),'deviceCount':authored_count,'nodeCount':len(inventory),'blockerCount':len(blockers)})
     if scene is not None:
         if len(entries)!=1:raise ValueError('Selected scene not found')
         existing=read(root/'index.json')['entries'] if (root/'index.json').exists() else []
         entries=sorted([e for e in existing if e['id']!=scene]+entries,key=lambda e:e['id'])
-    write(output/'index.json',{'version':1,'entries':entries});return entries
+    write_generated(output/'index.json',{'version':1,'entries':entries});return entries
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser();parser.add_argument('--root',type=Path,default=Path(__file__).resolve().parents[1]/'public/scene')

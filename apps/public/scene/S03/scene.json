@@ -2,8 +2,8 @@
   "schema_version": "scene-package/0.1",
   "id": "S03",
   "name": "S03：六件入环输送与双机械臂出环流水",
-  "model": "Closed Conveyor Loop/Closed Conveyor Loop.glb",
-  "model_sha256": "11aeab283c378c1ec8bf7d2709db74d4e8ff70b640a4b7a62f686307223501b0",
+  "model": "Closed Conveyor Loop/PM Closed Conveyor Loop.centered.glb",
+  "model_sha256": "0ab1f8e1a746a08d1dd0a30f92a1a79354b5482b1e9bd038226486590bb5f718",
   "process": "process.py",
   "goal": "task-spec.json",
   "devices": [

@@ -1,0 +1,28 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "Bottle",
+  "contract_ref": "../contracts/workpiece.json",
+  "parameters": {
+    "height_m": 0.21499999519437551,
+    "diameter_m": 0.0600000039042623,
+    "shape": "cylinder",
+    "mass_kg": 1.0
+  },
+  "node_binding": {
+    "status": "bound",
+    "node": "Sleeved_Bottle_00En",
+    "model_sha256": "30370e9a08f95df30feac2f6fc92cfce6fa6ec291f3a015d244580135845738e"
+  },
+  "locations": {},
+  "model": {
+    "calibration": {
+      "status": "pending"
+    },
+    "collision": {
+      "kind": "convex_or_compound",
+      "status": "requires_physics_validation"
+    },
+    "mass_provenance": "existing_s04_simulation_assumption"
+  },
+  "asset_kind": "material_prefab"
+}

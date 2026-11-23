@@ -715,7 +715,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "produce_material.pre_1"
       },
       "produce_material.pre_2": {
         "value_type": "boolean",
@@ -733,7 +734,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "produce_material.pre_2"
       },
       "produce_material.pre_3": {
         "value_type": "boolean",
@@ -751,7 +753,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "produce_material.pre_3"
       },
       "produce_material.sustaining": {
         "value_type": "boolean",
@@ -769,7 +772,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "produce_material.sustaining"
       },
       "produce_material.completion": {
         "value_type": "boolean",
@@ -787,7 +791,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "produce_material.completion"
       },
       "present_material.sustaining": {
         "value_type": "boolean",
@@ -803,7 +808,8 @@
           "error_code",
           "material_available",
           "result_id"
-        ]
+        ],
+        "expression_ref": "present_material.sustaining"
       },
       "present_material.completion": {
         "value_type": "boolean",
@@ -819,7 +825,8 @@
           "error_code",
           "material_available",
           "result_id"
-        ]
+        ],
+        "expression_ref": "present_material.completion"
       },
       "pause_production.pre_1": {
         "value_type": "boolean",
@@ -834,7 +841,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "pause_production.pre_1"
       },
       "pause_production.pre_2": {
         "value_type": "boolean",
@@ -849,7 +857,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "pause_production.pre_2"
       },
       "pause_production.pre_3": {
         "value_type": "boolean",
@@ -864,7 +873,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "pause_production.pre_3"
       },
       "pause_production.sustaining": {
         "value_type": "boolean",
@@ -879,7 +889,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "pause_production.sustaining"
       },
       "pause_production.completion": {
         "value_type": "boolean",
@@ -894,7 +905,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "pause_production.completion"
       },
       "resume_production.pre_1": {
         "value_type": "boolean",
@@ -909,7 +921,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "resume_production.pre_1"
       },
       "resume_production.sustaining": {
         "value_type": "boolean",
@@ -924,7 +937,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "resume_production.sustaining"
       },
       "resume_production.completion": {
         "value_type": "boolean",
@@ -939,7 +953,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "resume_production.completion"
       },
       "schedule_production_cycle.pre_1": {
         "value_type": "boolean",
@@ -949,7 +964,8 @@
           "runTag",
           "buffer_count",
           "countTag"
-        ]
+        ],
+        "expression_ref": "schedule_production_cycle.pre_1"
       },
       "schedule_production_cycle.pre_2": {
         "value_type": "boolean",
@@ -959,7 +975,8 @@
           "runTag",
           "buffer_count",
           "countTag"
-        ]
+        ],
+        "expression_ref": "schedule_production_cycle.pre_2"
       },
       "schedule_production_cycle.sustaining": {
         "value_type": "boolean",
@@ -969,7 +986,8 @@
           "runTag",
           "buffer_count",
           "countTag"
-        ]
+        ],
+        "expression_ref": "schedule_production_cycle.sustaining"
       },
       "schedule_production_cycle.completion": {
         "value_type": "boolean",
@@ -979,7 +997,8 @@
           "runTag",
           "buffer_count",
           "countTag"
-        ]
+        ],
+        "expression_ref": "schedule_production_cycle.completion"
       },
       "publish_source_state.pre_1": {
         "value_type": "boolean",
@@ -996,7 +1015,8 @@
           "error_code",
           "material_available",
           "result_id"
-        ]
+        ],
+        "expression_ref": "publish_source_state.pre_1"
       },
       "publish_source_state.sustaining": {
         "value_type": "boolean",
@@ -1013,7 +1033,8 @@
           "error_code",
           "material_available",
           "result_id"
-        ]
+        ],
+        "expression_ref": "publish_source_state.sustaining"
       },
       "publish_source_state.completion": {
         "value_type": "boolean",
@@ -1030,7 +1051,8 @@
           "error_code",
           "material_available",
           "result_id"
-        ]
+        ],
+        "expression_ref": "publish_source_state.completion"
       }
     },
     "authorization_definitions": {
@@ -1048,7 +1070,223 @@
           "error_code",
           "material_available",
           "result_id"
-        ]
+        ],
+        "expression_ref": "present_material.pre_1"
+      }
+    },
+    "condition_model": {
+      "schema_version": "ac-condition/0.1",
+      "execution_mode": "declaration_only",
+      "unknown_policy": "three_valued_fail_closed",
+      "bindings": {},
+      "expressions": {
+        "produce_material.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "produce_material.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "produce_material.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "produce_material.pre_2"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "produce_material.pre_3": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "produce_material.pre_3"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "produce_material.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "produce_material.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "produce_material.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "produce_material.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "present_material.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "present_material.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "present_material.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "present_material.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "pause_production.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "pause_production.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "pause_production.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "pause_production.pre_2"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "pause_production.pre_3": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "pause_production.pre_3"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "pause_production.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "pause_production.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "pause_production.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "pause_production.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "resume_production.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "resume_production.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "resume_production.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "resume_production.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "resume_production.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "resume_production.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "schedule_production_cycle.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "schedule_production_cycle.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "schedule_production_cycle.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "schedule_production_cycle.pre_2"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "schedule_production_cycle.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "schedule_production_cycle.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "schedule_production_cycle.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "schedule_production_cycle.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "publish_source_state.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "publish_source_state.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "publish_source_state.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "publish_source_state.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "publish_source_state.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "publish_source_state.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "present_material.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "authorization",
+            "key": "present_material.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        }
       }
     }
   },

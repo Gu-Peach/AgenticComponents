@@ -23,19 +23,19 @@
       "id": "S03",
       "name": "S03：六件入环输送与双机械臂出环流水",
       "bundleUrl": "/scene/S03/.generated/scene.bundle.json",
-      "bundleSha256": "afb63fa99f590184b3ed294acad1386b6dd2febbc2325fd559194d94f554d3c9",
+      "bundleSha256": "e498486e3af28f1417136b9da6c10a731770df28ac8de6c288263df2c6d66d6f",
       "deviceCount": 11,
-      "nodeCount": 656,
+      "nodeCount": 760,
       "blockerCount": 22
     },
     {
       "id": "S04",
-      "name": "S04：四件双机械臂双输送带流水交接",
+      "name": "S04：双臂瓶体交接与倒置输送",
       "bundleUrl": "/scene/S04/.generated/scene.bundle.json",
-      "bundleSha256": "20709881d97131c08ac4eacbbab514669986641bfa0bda594e03ff91d1474cec",
-      "deviceCount": 9,
+      "bundleSha256": "ab4c6d5593283fae741d097942c674cde4dda9c12395d4973d3472067f4e50cb",
+      "deviceCount": 6,
       "nodeCount": 208,
-      "blockerCount": 18
+      "blockerCount": 14
     },
     {
       "id": "S05",

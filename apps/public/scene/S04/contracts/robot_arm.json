@@ -3,7 +3,7 @@
   "schema_type": "DeviceSpec",
   "schema_id": "standard.robot_arm",
   "device_spec_id": "standard.robot_arm",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "device_type": "robot_arm",
   "display_name": "机械臂：可组合动作与任务执行",
   "asset": {
@@ -1174,6 +1174,160 @@
         "status": "must_check_configuration",
         "conditions": []
       }
+    },
+    {
+      "behavior_id": "pick_and_handoff",
+      "display_name": "抓取并双臂交接",
+      "behavior_type": "composite",
+      "schedulable": true,
+      "executor_ref": "robot-handoff@1/pick_and_handoff",
+      "implementation_status": "implemented",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "execute_job 选择抓放任务，或经同一网关直接调用",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "candidate_profile_binding"
+      },
+      "input_signals": [
+        "commandTag",
+        "enableTag",
+        "pause_pick",
+        "request_id",
+        "start_pick"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "error_code",
+        "holding_material",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "ready",
+            "label": "第一带停稳，瓶底有支承，供料位置、双臂可达性和两个夹持点兼容",
+            "source": "observation",
+            "key": "pick_and_handoff.ready",
+            "equals": true
+          },
+          {
+            "id": "authorized",
+            "label": "原子预留同一物料、源和目标，双臂交接同时取得两台臂的控制权",
+            "source": "authorization",
+            "key": "pick_and_handoff.authorized",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "integrity",
+            "label": "交接前供方持续持有，接方在尾部对齐且相对速度满足阈值，交接失败时保留现有持有者",
+            "source": "observation",
+            "key": "pick_and_handoff.integrity",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "同一物料在交接位由接方指定夹持点持有，供方释放并退出交接区域",
+        "checks": [
+          {
+            "id": "complete",
+            "label": "同一物料在交接位由接方指定夹持点持有，供方释放并退出交接区域",
+            "source": "observation",
+            "key": "pick_and_handoff.complete",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "place_held_material",
+      "display_name": "放置已持有物料",
+      "behavior_type": "composite",
+      "schedulable": true,
+      "executor_ref": "robot-handoff@1/place_held_material",
+      "implementation_status": "implemented",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "execute_job 选择抓放任务，或经同一网关直接调用",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "candidate_profile_binding"
+      },
+      "input_signals": [
+        "commandTag",
+        "enableTag",
+        "pause_pick",
+        "request_id",
+        "start_pick"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "error_code",
+        "holding_material",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "ready",
+            "label": "本臂正从指定夹持点持有同一物料，目标带已停稳且接料空间空闲",
+            "source": "observation",
+            "key": "place_held_material.ready",
+            "equals": true
+          },
+          {
+            "id": "authorized",
+            "label": "原子预留同一物料、源和目标，双臂交接同时取得两台臂的控制权",
+            "source": "authorization",
+            "key": "place_held_material.authorized",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "integrity",
+            "label": "翻转和下降时保持夹持，倒置到位后释放并核对实际支承",
+            "source": "observation",
+            "key": "place_held_material.integrity",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "按目标姿态释放后，实际检测到持续支承及到位姿态，夹具退出放置区",
+        "checks": [
+          {
+            "id": "complete",
+            "label": "按目标姿态释放后，实际检测到持续支承及到位姿态，夹具退出放置区",
+            "source": "observation",
+            "key": "place_held_material.complete",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
     }
   ],
   "type_specific_contract": {
@@ -1213,7 +1367,8 @@
           "error_code",
           "holding_material",
           "result_id"
-        ]
+        ],
+        "expression_ref": "execute_job.sustaining"
       },
       "execute_job.completion": {
         "value_type": "boolean",
@@ -1232,7 +1387,8 @@
           "error_code",
           "holding_material",
           "result_id"
-        ]
+        ],
+        "expression_ref": "execute_job.completion"
       },
       "pick_and_place.pre_1": {
         "value_type": "boolean",
@@ -1251,7 +1407,8 @@
           "error_code",
           "holding_material",
           "result_id"
-        ]
+        ],
+        "expression_ref": "pick_and_place.pre_1"
       },
       "pick_and_place.sustaining": {
         "value_type": "boolean",
@@ -1270,7 +1427,8 @@
           "error_code",
           "holding_material",
           "result_id"
-        ]
+        ],
+        "expression_ref": "pick_and_place.sustaining"
       },
       "pick_and_place.completion": {
         "value_type": "boolean",
@@ -1289,7 +1447,8 @@
           "error_code",
           "holding_material",
           "result_id"
-        ]
+        ],
+        "expression_ref": "pick_and_place.completion"
       },
       "move_to_pose.pre_1": {
         "value_type": "boolean",
@@ -1306,7 +1465,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "move_to_pose.pre_1"
       },
       "move_to_pose.sustaining": {
         "value_type": "boolean",
@@ -1323,7 +1483,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "move_to_pose.sustaining"
       },
       "move_to_pose.completion": {
         "value_type": "boolean",
@@ -1340,7 +1501,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "move_to_pose.completion"
       },
       "grip.pre_1": {
         "value_type": "boolean",
@@ -1355,7 +1517,8 @@
           "error_code",
           "holding_material",
           "result_id"
-        ]
+        ],
+        "expression_ref": "grip.pre_1"
       },
       "grip.sustaining": {
         "value_type": "boolean",
@@ -1370,7 +1533,8 @@
           "error_code",
           "holding_material",
           "result_id"
-        ]
+        ],
+        "expression_ref": "grip.sustaining"
       },
       "grip.completion": {
         "value_type": "boolean",
@@ -1385,7 +1549,8 @@
           "error_code",
           "holding_material",
           "result_id"
-        ]
+        ],
+        "expression_ref": "grip.completion"
       },
       "release.pre_1": {
         "value_type": "boolean",
@@ -1400,7 +1565,8 @@
           "error_code",
           "holding_material",
           "result_id"
-        ]
+        ],
+        "expression_ref": "release.pre_1"
       },
       "release.sustaining": {
         "value_type": "boolean",
@@ -1415,7 +1581,8 @@
           "error_code",
           "holding_material",
           "result_id"
-        ]
+        ],
+        "expression_ref": "release.sustaining"
       },
       "release.completion": {
         "value_type": "boolean",
@@ -1430,7 +1597,8 @@
           "error_code",
           "holding_material",
           "result_id"
-        ]
+        ],
+        "expression_ref": "release.completion"
       },
       "wait_time.pre_1": {
         "value_type": "boolean",
@@ -1443,7 +1611,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "wait_time.pre_1"
       },
       "wait_time.sustaining": {
         "value_type": "boolean",
@@ -1456,7 +1625,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "wait_time.sustaining"
       },
       "wait_time.completion": {
         "value_type": "boolean",
@@ -1469,7 +1639,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "wait_time.completion"
       },
       "wait_signal.pre_1": {
         "value_type": "boolean",
@@ -1486,7 +1657,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "wait_signal.pre_1"
       },
       "wait_signal.sustaining": {
         "value_type": "boolean",
@@ -1503,7 +1675,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "wait_signal.sustaining"
       },
       "wait_signal.completion": {
         "value_type": "boolean",
@@ -1520,7 +1693,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "wait_signal.completion"
       },
       "set_output.pre_1": {
         "value_type": "boolean",
@@ -1533,7 +1707,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "set_output.pre_1"
       },
       "set_output.sustaining": {
         "value_type": "boolean",
@@ -1546,7 +1721,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "set_output.sustaining"
       },
       "set_output.completion": {
         "value_type": "boolean",
@@ -1559,7 +1735,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "set_output.completion"
       },
       "pause_pick_intake.pre_1": {
         "value_type": "boolean",
@@ -1573,7 +1750,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "pause_pick_intake.pre_1"
       },
       "pause_pick_intake.pre_2": {
         "value_type": "boolean",
@@ -1587,7 +1765,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "pause_pick_intake.pre_2"
       },
       "pause_pick_intake.sustaining": {
         "value_type": "boolean",
@@ -1601,7 +1780,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "pause_pick_intake.sustaining"
       },
       "pause_pick_intake.completion": {
         "value_type": "boolean",
@@ -1615,7 +1795,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "pause_pick_intake.completion"
       },
       "resume_pick_intake.pre_1": {
         "value_type": "boolean",
@@ -1630,7 +1811,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "resume_pick_intake.pre_1"
       },
       "resume_pick_intake.sustaining": {
         "value_type": "boolean",
@@ -1645,7 +1827,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "resume_pick_intake.sustaining"
       },
       "resume_pick_intake.completion": {
         "value_type": "boolean",
@@ -1660,7 +1843,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "resume_pick_intake.completion"
       },
       "hold_motion.pre_1": {
         "value_type": "boolean",
@@ -1674,7 +1858,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "hold_motion.pre_1"
       },
       "hold_motion.pre_2": {
         "value_type": "boolean",
@@ -1688,7 +1873,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "hold_motion.pre_2"
       },
       "hold_motion.sustaining": {
         "value_type": "boolean",
@@ -1702,7 +1888,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "hold_motion.sustaining"
       },
       "hold_motion.completion": {
         "value_type": "boolean",
@@ -1716,7 +1903,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "hold_motion.completion"
       },
       "resume_motion.sustaining": {
         "value_type": "boolean",
@@ -1730,7 +1918,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "resume_motion.sustaining"
       },
       "resume_motion.completion": {
         "value_type": "boolean",
@@ -1744,7 +1933,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "resume_motion.completion"
       },
       "publish_robot_state.pre_1": {
         "value_type": "boolean",
@@ -1762,7 +1952,8 @@
           "out3Tag",
           "out4Tag",
           "result_id"
-        ]
+        ],
+        "expression_ref": "publish_robot_state.pre_1"
       },
       "publish_robot_state.sustaining": {
         "value_type": "boolean",
@@ -1780,7 +1971,8 @@
           "out3Tag",
           "out4Tag",
           "result_id"
-        ]
+        ],
+        "expression_ref": "publish_robot_state.sustaining"
       },
       "publish_robot_state.completion": {
         "value_type": "boolean",
@@ -1798,7 +1990,50 @@
           "out3Tag",
           "out4Tag",
           "result_id"
-        ]
+        ],
+        "expression_ref": "publish_robot_state.completion"
+      },
+      "pick_and_handoff.ready": {
+        "value_type": "boolean",
+        "provider": "pending_handoff_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "expression_ref": "pick_and_handoff.ready"
+      },
+      "pick_and_handoff.integrity": {
+        "value_type": "boolean",
+        "provider": "pending_handoff_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "expression_ref": "pick_and_handoff.integrity"
+      },
+      "pick_and_handoff.complete": {
+        "value_type": "boolean",
+        "provider": "pending_handoff_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "expression_ref": "pick_and_handoff.complete"
+      },
+      "place_held_material.ready": {
+        "value_type": "boolean",
+        "provider": "pending_handoff_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "expression_ref": "place_held_material.ready"
+      },
+      "place_held_material.integrity": {
+        "value_type": "boolean",
+        "provider": "pending_handoff_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "expression_ref": "place_held_material.integrity"
+      },
+      "place_held_material.complete": {
+        "value_type": "boolean",
+        "provider": "pending_handoff_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "expression_ref": "place_held_material.complete"
       }
     },
     "authorization_definitions": {
@@ -1819,7 +2054,8 @@
           "error_code",
           "holding_material",
           "result_id"
-        ]
+        ],
+        "expression_ref": "execute_job.pre_1"
       },
       "resume_motion.pre_1": {
         "value_type": "boolean",
@@ -1833,7 +2069,705 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "resume_motion.pre_1"
+      },
+      "pick_and_handoff.authorized": {
+        "value_type": "boolean",
+        "provider": "pending_handoff_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "expression_ref": "pick_and_handoff.authorized"
+      },
+      "place_held_material.authorized": {
+        "value_type": "boolean",
+        "provider": "pending_handoff_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "expression_ref": "place_held_material.authorized"
+      }
+    },
+    "condition_model": {
+      "schema_version": "ac-condition/0.1",
+      "execution_mode": "declaration_only",
+      "unknown_policy": "three_valued_fail_closed",
+      "bindings": {
+        "pick_and_place.busy_run": {
+          "kind": "signal",
+          "behavior": "pick_and_place",
+          "value_type": "boolean",
+          "unit": "1",
+          "device": "self",
+          "port": "busy",
+          "scope": "run",
+          "required_quality": "good",
+          "freshness": "signal_definition"
+        },
+        "pick_and_place.error_run": {
+          "kind": "signal",
+          "behavior": "pick_and_place",
+          "value_type": "boolean",
+          "unit": "1",
+          "device": "self",
+          "port": "error",
+          "scope": "run",
+          "required_quality": "good",
+          "freshness": "signal_definition"
+        },
+        "pick_and_place.holding_material_run": {
+          "kind": "signal",
+          "behavior": "pick_and_place",
+          "value_type": "boolean",
+          "unit": "1",
+          "device": "self",
+          "port": "holding_material",
+          "scope": "run",
+          "required_quality": "good",
+          "freshness": "signal_definition"
+        },
+        "pick_and_place.source_pickable": {
+          "kind": "observation",
+          "behavior": "pick_and_place",
+          "value_type": "boolean",
+          "unit": "1",
+          "provider": "scene.robot_arm.source_pickable@1",
+          "description": "按 payload.material/source 解析主体、实际支承、停稳及可抓取条件；不是固定材料 ID。",
+          "scope": "run_subject",
+          "arguments": {
+            "device": {
+              "from": "self"
+            },
+            "material": {
+              "from": "payload",
+              "name": "material"
+            },
+            "source": {
+              "from": "payload",
+              "name": "source"
+            },
+            "target": {
+              "from": "payload",
+              "name": "target"
+            }
+          },
+          "sample_keys": [
+            "world/state"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        },
+        "pick_and_place.target_admissible": {
+          "kind": "observation",
+          "behavior": "pick_and_place",
+          "value_type": "boolean",
+          "unit": "1",
+          "provider": "scene.robot_arm.target_admissible@1",
+          "description": "按 payload.target 检查类型、几何与可申请容量；不要求尚未授予的资源。",
+          "scope": "run_subject",
+          "arguments": {
+            "device": {
+              "from": "self"
+            },
+            "material": {
+              "from": "payload",
+              "name": "material"
+            },
+            "source": {
+              "from": "payload",
+              "name": "source"
+            },
+            "target": {
+              "from": "payload",
+              "name": "target"
+            }
+          },
+          "sample_keys": [
+            "world/state"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        },
+        "pick_and_place.matching_accepted": {
+          "kind": "request",
+          "behavior": "pick_and_place",
+          "value_type": "boolean",
+          "unit": "1",
+          "field": "matching_accepted",
+          "scope": "request_subject",
+          "implementation_status": "pending_request_trace_binding"
+        },
+        "pick_and_place.phase_integrity": {
+          "kind": "observation",
+          "behavior": "pick_and_place",
+          "value_type": "boolean",
+          "unit": "1",
+          "provider": "scene.robot_arm.phase_integrity@1",
+          "description": "按当前接近/持有/释放阶段检查主体、抓取约束与运动证据；不要求全程夹具为空。",
+          "scope": "request_subject",
+          "arguments": {
+            "device": {
+              "from": "self"
+            },
+            "material": {
+              "from": "payload",
+              "name": "material"
+            },
+            "source": {
+              "from": "payload",
+              "name": "source"
+            },
+            "target": {
+              "from": "payload",
+              "name": "target"
+            }
+          },
+          "sample_keys": [
+            "{self}/robot_state",
+            "world/state"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        },
+        "pick_and_place.matching_success": {
+          "kind": "request",
+          "behavior": "pick_and_place",
+          "value_type": "boolean",
+          "unit": "1",
+          "field": "matching_success",
+          "scope": "request_subject",
+          "implementation_status": "pending_request_trace_binding"
+        },
+        "pick_and_place.holding_material_request_subject": {
+          "kind": "signal",
+          "behavior": "pick_and_place",
+          "value_type": "boolean",
+          "unit": "1",
+          "device": "self",
+          "port": "holding_material",
+          "scope": "request_subject",
+          "required_quality": "good",
+          "freshness": "signal_definition"
+        },
+        "pick_and_place.placement_confirmed": {
+          "kind": "observation",
+          "behavior": "pick_and_place",
+          "value_type": "boolean",
+          "unit": "1",
+          "provider": "scene.robot_arm.placement_confirmed@1",
+          "description": "本次物料在目标支承上的稳定放置与实际持有解除；不得读取由本条件生成的 done 或仅在 done 后填充的汇总表。",
+          "scope": "request_subject",
+          "arguments": {
+            "device": {
+              "from": "self"
+            },
+            "material": {
+              "from": "payload",
+              "name": "material"
+            },
+            "source": {
+              "from": "payload",
+              "name": "source"
+            },
+            "target": {
+              "from": "payload",
+              "name": "target"
+            }
+          },
+          "sample_keys": [
+            "{self}/robot_state",
+            "world/state"
+          ],
+          "max_age_ticks": 1,
+          "implementation_status": "pending_provider_binding"
+        }
+      },
+      "expressions": {
+        "execute_job.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "execute_job.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "execute_job.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "execute_job.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "pick_and_place.pre_1": {
+          "status": "structured",
+          "expr": {
+            "op": "all",
+            "args": [
+              {
+                "op": "not",
+                "arg": {
+                  "op": "ref",
+                  "binding": "pick_and_place.busy_run"
+                }
+              },
+              {
+                "op": "not",
+                "arg": {
+                  "op": "ref",
+                  "binding": "pick_and_place.error_run"
+                }
+              },
+              {
+                "op": "not",
+                "arg": {
+                  "op": "ref",
+                  "binding": "pick_and_place.holding_material_run"
+                }
+              },
+              {
+                "op": "ref",
+                "binding": "pick_and_place.source_pickable"
+              },
+              {
+                "op": "ref",
+                "binding": "pick_and_place.target_admissible"
+              }
+            ]
+          }
+        },
+        "pick_and_place.sustaining": {
+          "status": "structured",
+          "expr": {
+            "op": "all",
+            "args": [
+              {
+                "op": "ref",
+                "binding": "pick_and_place.matching_accepted"
+              },
+              {
+                "op": "not",
+                "arg": {
+                  "op": "ref",
+                  "binding": "pick_and_place.error_run"
+                }
+              },
+              {
+                "op": "ref",
+                "binding": "pick_and_place.phase_integrity"
+              }
+            ]
+          }
+        },
+        "pick_and_place.completion": {
+          "status": "structured",
+          "expr": {
+            "op": "all",
+            "args": [
+              {
+                "op": "ref",
+                "binding": "pick_and_place.matching_success"
+              },
+              {
+                "op": "not",
+                "arg": {
+                  "op": "ref",
+                  "binding": "pick_and_place.holding_material_request_subject"
+                }
+              },
+              {
+                "op": "ref",
+                "binding": "pick_and_place.placement_confirmed"
+              }
+            ]
+          }
+        },
+        "move_to_pose.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "key": "move_to_pose.pre_1",
+            "source": "observation"
+          }
+        },
+        "move_to_pose.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "key": "move_to_pose.sustaining",
+            "source": "observation"
+          }
+        },
+        "move_to_pose.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "key": "move_to_pose.completion",
+            "source": "observation"
+          }
+        },
+        "grip.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "grip.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "grip.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "grip.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "grip.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "grip.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "release.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "release.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "release.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "release.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "release.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "release.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "wait_time.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "wait_time.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "wait_time.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "wait_time.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "wait_time.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "wait_time.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "wait_signal.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "wait_signal.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "wait_signal.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "wait_signal.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "wait_signal.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "wait_signal.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "set_output.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "set_output.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "set_output.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "set_output.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "set_output.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "set_output.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "pause_pick_intake.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "pause_pick_intake.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "pause_pick_intake.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "pause_pick_intake.pre_2"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "pause_pick_intake.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "pause_pick_intake.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "pause_pick_intake.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "pause_pick_intake.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "resume_pick_intake.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "resume_pick_intake.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "resume_pick_intake.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "resume_pick_intake.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "resume_pick_intake.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "resume_pick_intake.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "hold_motion.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "hold_motion.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "hold_motion.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "hold_motion.pre_2"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "hold_motion.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "hold_motion.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "hold_motion.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "hold_motion.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "resume_motion.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "resume_motion.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "resume_motion.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "resume_motion.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "publish_robot_state.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "publish_robot_state.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "publish_robot_state.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "publish_robot_state.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "publish_robot_state.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "publish_robot_state.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "execute_job.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "authorization",
+            "key": "execute_job.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "resume_motion.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "authorization",
+            "key": "resume_motion.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "pick_and_handoff.ready": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "pick_and_handoff.ready"
+          }
+        },
+        "pick_and_handoff.authorized": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "authorization",
+            "key": "pick_and_handoff.authorized"
+          }
+        },
+        "pick_and_handoff.integrity": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "pick_and_handoff.integrity"
+          }
+        },
+        "pick_and_handoff.complete": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "pick_and_handoff.complete"
+          }
+        },
+        "place_held_material.ready": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "place_held_material.ready"
+          }
+        },
+        "place_held_material.authorized": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "authorization",
+            "key": "place_held_material.authorized"
+          }
+        },
+        "place_held_material.integrity": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "place_held_material.integrity"
+          }
+        },
+        "place_held_material.complete": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "place_held_material.complete"
+          }
+        }
       }
     }
   },
@@ -1875,6 +2809,27 @@
           "target": "location_ref"
         },
         "status": "pending_model_adapter",
+        "target_payload_schema": null
+      },
+      "pick_and_handoff": {
+        "fields": {
+          "material": "material_ref",
+          "source": "location_ref",
+          "target": "location_ref",
+          "receiver": "robot_ref",
+          "giver_grasp": "grasp_frame_ref",
+          "receiver_grasp": "grasp_frame_ref"
+        },
+        "status": "candidate_profile_binding",
+        "target_payload_schema": null
+      },
+      "place_held_material": {
+        "fields": {
+          "material": "material_ref",
+          "target": "location_ref",
+          "grasp": "grasp_frame_ref"
+        },
+        "status": "candidate_profile_binding",
         "target_payload_schema": null
       }
     }

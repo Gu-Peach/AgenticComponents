@@ -27,7 +27,10 @@ export class WarehouseActionAdapter implements DeviceActionPort {
     private behaviors: readonly string[],
     private plan: (r: ActionRequest) => WarehouseJob,
     private physicalStopped: () => boolean,
-    private extraSignals: () => Record<string, number | boolean> = () => ({}),
+    private extraSignals: (
+      faulted: boolean,
+    ) => Record<string, number | boolean> = () => ({}),
+    private trigger = "execute",
   ) {}
   supports(b: string) {
     return this.behaviors.includes(b);
@@ -61,7 +64,7 @@ export class WarehouseActionAdapter implements DeviceActionPort {
       throw new Error("Device request not admissible");
     this.prepared = { request: r, job: this.plan(r) };
     return [
-      this.write("execute", true, "process", r),
+      this.write(this.trigger, true, "process", r),
       this.write("request_id", Number(r.requestId), "process", r),
     ];
   }
@@ -75,13 +78,13 @@ export class WarehouseActionAdapter implements DeviceActionPort {
     this.job.begin();
   }
   prepareCancel() {
-    return [this.write("execute", false)];
+    return [this.write(this.trigger, false)];
   }
   prepareStop() {
-    return [this.write("execute", false)];
+    return [this.write(this.trigger, false)];
   }
   acknowledge() {
-    return [this.write("execute", false)];
+    return [this.write(this.trigger, false)];
   }
   cancel(r: ActionRequest) {
     if (r.requestId !== this.request?.requestId || r.runId !== this.runId)
@@ -138,7 +141,7 @@ export class WarehouseActionAdapter implements DeviceActionPort {
       done: this.state === "succeeded",
       error: !!this.error,
       result_id: Number(this.request?.requestId ?? 0),
-      ...this.extraSignals(),
+      ...this.extraSignals(Boolean(this.error)),
     }))
       this.signals.push(this.write(port, value, "adapter:" + this.id));
   }

@@ -8,8 +8,8 @@
   "display_name": "物料：被动对象与状态观测",
   "asset": {
     "model_format": "glb",
-    "model_key": "../Closed Conveyor Loop/Closed Conveyor Loop.glb",
-    "sha256": "11aeab283c378c1ec8bf7d2709db74d4e8ff70b640a4b7a62f686307223501b0"
+    "model_key": "../Closed Conveyor Loop/PM Closed Conveyor Loop.centered.glb",
+    "sha256": "0ab1f8e1a746a08d1dd0a30f92a1a79354b5482b1e9bd038226486590bb5f718"
   },
   "params_schema": {
     "mass_kg": {

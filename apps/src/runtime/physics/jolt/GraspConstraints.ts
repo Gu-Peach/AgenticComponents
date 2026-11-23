@@ -100,6 +100,26 @@ export class GraspConstraints {
     const c = this.carried.get(material);
     return !!c && (!carrier || c.carrier === carrier);
   }
+  transferGrasp(from: string, to: string, tool: string, material: string) {
+    const previous = this.constraints.get(from);
+    if (
+      !previous ||
+      previous.material !== material ||
+      previous.tool === tool ||
+      this.constraints.has(to) ||
+      this.involves(tool) ||
+      !this.bodies.get(tool).active
+    )
+      throw new Error("Invalid grasp handoff");
+    // No world step between dropping the old constraint and establishing the new one.
+    this.remove(from);
+    try {
+      this.create(to, tool, material);
+    } catch (error) {
+      this.create(from, previous.tool, material);
+      throw error;
+    }
+  }
   /** Switch at a world-step boundary; rollback leaves the old holder intact. */
   bindLoad(carrier: string, material: string, fromGrasp?: string) {
     const previous = fromGrasp ? this.constraints.get(fromGrasp) : undefined;

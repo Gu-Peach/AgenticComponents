@@ -4,6 +4,7 @@ import {
   isLoadingBundle,
 } from "./compileLoadingManifest";
 import { compileWarehouseRuntime } from "./compileWarehouseRuntime";
+import { compileHandoffManifest, materialPose } from "./compileHandoffManifest";
 import { PropertyBinding } from "three";
 import type { SceneBundle } from "@/contracts/scene-package";
 import type {
@@ -52,6 +53,7 @@ const deviceSchema = z.object({
         .optional(),
       support_device: z.string().optional(),
       support_layer: z.string().optional(),
+      material_pose: materialPose.optional(),
     }),
   ),
   node_binding: z.object({
@@ -89,6 +91,36 @@ export function compileSceneRuntime(
   }
   const root = decodeProcessNode(bundle.process.body);
   const leaders = compileDriveGroups(bundle, devices, blockers);
+  if (bundle.runtime_profile === "robot-handoff@1") {
+    if (mode !== "validation")
+      throw new Error("Robot handoff requires candidate simulation");
+    if (blockers.length) throw new Error(blockers.join("\n"));
+    const manifest = compileHandoffManifest(bundle, root, devices, goal);
+    const feederEntries = new Map([
+      [manifest.sourceDevice, manifest.entryDevice],
+    ]);
+    warnings.push(
+      "双臂交接使用候选 UR10 运动学及虚拟夹具，倒置稳定性由 Jolt 接触和姿态验证。",
+    );
+    return {
+      bundle,
+      root,
+      devices,
+      leaders,
+      ...manifest,
+      ...compilePalletWorld(
+        bundle,
+        modelBytes,
+        devices,
+        mode,
+        warnings,
+        leaders,
+        feederEntries,
+        [],
+      ),
+      readiness: { mode, warnings, blockers },
+    };
+  }
   if (isLoadingBundle(bundle)) {
     if (mode !== "validation")
       blockers.push("Loading requires explicit candidate simulation");
