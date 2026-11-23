@@ -30,11 +30,13 @@ export function mergeCoupledConveyors(
   });
   const first = bodies[0],
     flow = surfaces[0].direction;
+  const along = Math.abs(flow[0]) > Math.abs(flow[2]) ? 0 : 2;
+  const across = along === 0 ? 2 : 0;
   if (
-    Math.abs(Math.abs(flow[0]) - 1) > 1e-6 ||
-    Math.abs(flow[1]) + Math.abs(flow[2]) > 1e-6
+    Math.abs(Math.abs(flow[along]) - 1) > 1e-6 ||
+    Math.abs(flow[1]) + Math.abs(flow[across]) > 1e-6
   )
-    throw new Error("Merged support requires scene X-aligned flow");
+    throw new Error("Merged support requires horizontal X/Z-aligned flow");
   for (let i = 0; i < bodies.length; i++) {
     const b = bodies[i],
       s = surfaces[i];
@@ -47,15 +49,18 @@ export function mergeCoupledConveyors(
       Math.abs(
         b.position[1] + b.size[1] / 2 - first.position[1] - first.size[1] / 2,
       ) > 1e-6 ||
-      Math.abs(b.position[2] - first.position[2]) > 1e-6 ||
-      Math.abs(b.size[2] - first.size[2]) > 1e-6 ||
+      Math.abs(b.position[across] - first.position[across]) > 1e-6 ||
+      Math.abs(b.size[across] - first.size[across]) > 1e-6 ||
       b.friction !== first.friction ||
       b.restitution !== first.restitution
     )
       throw new Error("Coupled collision surfaces are not compatible/coplanar");
   }
   const spans = bodies
-    .map((b) => [b.position[0] - b.size[0] / 2, b.position[0] + b.size[0] / 2])
+    .map((b) => [
+      b.position[along] - b.size[along] / 2,
+      b.position[along] + b.size[along] / 2,
+    ])
     .sort((a, b) => a[0] - b[0]);
   let end = spans[0][1];
   for (const [start, next] of spans.slice(1)) {
@@ -72,9 +77,11 @@ export function mergeCoupledConveyors(
     ...first,
     id: groupId,
     instanceId: groupId,
-    position: [(spans[0][0] + end) / 2, first.position[1], first.position[2]],
-    size: [end - spans[0][0], first.size[1], first.size[2]],
+    position: [...first.position],
+    size: [...first.size],
   };
+  body.position[along] = (spans[0][0] + end) / 2;
+  body.size[along] = end - spans[0][0];
   const surface: RuntimeSurface = {
     id: groupId + "/surface",
     bodyId: groupId,

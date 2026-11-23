@@ -1,4 +1,8 @@
 import { z } from "zod";
+import {
+  compileLoadingManifest,
+  isLoadingBundle,
+} from "./compileLoadingManifest";
 import { compileWarehouseRuntime } from "./compileWarehouseRuntime";
 import { PropertyBinding } from "three";
 import type { SceneBundle } from "@/contracts/scene-package";
@@ -24,6 +28,8 @@ const deviceSchema = z.object({
   asset_kind: z.string().optional(),
   creation_policy: z.string().optional(),
   subject_id: z.number().optional(),
+  initial_supply: z.string().optional(),
+  prototype_ref: z.string().optional(),
   contract: z.record(z.string(), z.unknown()),
   parameters: z.record(
     z.string(),
@@ -35,6 +41,17 @@ const deviceSchema = z.object({
       position: vec,
       frame: z.string(),
       owner: z.string().optional(),
+      reference: z.string().optional(),
+      rotation_quaternion: z
+        .tuple([
+          z.number().finite(),
+          z.number().finite(),
+          z.number().finite(),
+          z.number().finite(),
+        ])
+        .optional(),
+      support_device: z.string().optional(),
+      support_layer: z.string().optional(),
     }),
   ),
   node_binding: z.object({
@@ -71,6 +88,43 @@ export function compileSceneRuntime(
       blockers.push(`${d.instance_id}: node binding unresolved`);
   }
   const root = decodeProcessNode(bundle.process.body);
+  const leaders = compileDriveGroups(bundle, devices, blockers);
+  if (isLoadingBundle(bundle)) {
+    if (mode !== "validation")
+      blockers.push("Loading requires explicit candidate simulation");
+    if (blockers.length) throw new Error(blockers.join("\n"));
+    const manifest = compileLoadingManifest(
+      bundle,
+      goal,
+      root,
+      devices,
+      leaders,
+    );
+    const feederEntries = new Map(
+      manifest.loading.supplies.map((s) => [s.device, s.entryDevice]),
+    );
+    warnings.push(
+      "装载候选仿真采用输送支承代理与虚拟夹具。分层支承、机械臂可达性与满盘交付须依据实际运行反馈确认。",
+    );
+    return {
+      bundle,
+      root,
+      ...manifest,
+      devices,
+      leaders,
+      ...compilePalletWorld(
+        bundle,
+        modelBytes,
+        devices,
+        mode,
+        warnings,
+        leaders,
+        feederEntries,
+        [],
+      ),
+      readiness: { mode, warnings, blockers },
+    };
+  }
   const task = z
     .object({
       pallets: z.array(
@@ -210,6 +264,51 @@ export function compileSceneRuntime(
   if (deliveries.some((d) => !receivers.has(d.target)))
     throw new Error("Material goal has no declared receiver");
   const outfeeds = [...new Set(deliveries.map((d) => locationOwner(d.target)))];
+  if (!bundle.sorting_station)
+    throw new Error(
+      "Carrier sorting profile requires a declared process point",
+    );
+  if (mode === "run" && bundle.sorting_station.status === "candidate")
+    blockers.push(
+      "Process point is a calibration candidate; select explicit validation mode",
+    );
+  else
+    warnings.push(
+      "Candidate validation: GLB convex parts and declared support proxies; robot motion is kinematic and full-link collision avoidance is not modeled; coupled-proxy float32 geometry join tolerance is 10 micrometres.",
+    );
+  if (blockers.length) throw new Error(blockers.join("\n"));
+  const world = compilePalletWorld(
+    bundle,
+    modelBytes,
+    devices,
+    mode,
+    warnings,
+    leaders,
+    new Map([[sourceDevice, entryDevice]]),
+    task.pallets,
+  );
+  return {
+    bundle,
+    root,
+    task: task as { pallets: SceneLoad[]; [key: string]: unknown },
+    devices,
+    ...world,
+    subjectIds,
+    sourceDevice,
+    entryDevice,
+    exitDevice,
+    outfeeds,
+    leaders,
+    goals: { ...goalData.expected, deliveries },
+    readiness: { mode, warnings, blockers },
+  };
+}
+
+function compileDriveGroups(
+  bundle: SceneBundle,
+  devices: Map<string, SceneDevice>,
+  blockers: string[],
+) {
   const leaders = new Map<string, string[]>(),
     claimed = new Set<string>();
   for (const group of Object.values(bundle.drive_groups ?? {})) {
@@ -245,19 +344,19 @@ export function compileSceneRuntime(
     if (type === "conveyor" && !claimed.has(call.device))
       leaders.set(call.device, [call.device]);
   }
-  if (!bundle.sorting_station)
-    throw new Error(
-      "Carrier sorting profile requires a declared process point",
-    );
-  if (mode === "run" && bundle.sorting_station.status === "candidate")
-    blockers.push(
-      "Process point is a calibration candidate; select explicit validation mode",
-    );
-  else
-    warnings.push(
-      "Candidate validation: GLB convex parts and declared support proxies; robot motion is kinematic and full-link collision avoidance is not modeled; coupled-proxy float32 geometry join tolerance is 10 micrometres.",
-    );
-  if (blockers.length) throw new Error(blockers.join("\n"));
+  return leaders;
+}
+
+function compilePalletWorld(
+  bundle: SceneBundle,
+  modelBytes: ArrayBuffer,
+  devices: Map<string, SceneDevice>,
+  mode: "run" | "validation",
+  warnings: string[],
+  leaders: Map<string, string[]>,
+  feederEntries: Map<string, string>,
+  preloaded: SceneLoad[],
+) {
   const geometry = new SceneGeometryReader(modelBytes),
     bodies: RuntimeBody[] = [],
     surfaces: RuntimeSurface[] = [],
@@ -286,6 +385,7 @@ export function compileSceneRuntime(
       initiallyActive: d.creation_policy !== "clone_on_admission",
     };
   };
+  const hullCache = new Map<string, Vec3[][]>();
   for (const d of devices.values()) {
     if (d.asset_kind?.endsWith("_prefab")) continue;
     const type = d.contract.device_type;
@@ -304,11 +404,15 @@ export function compileSceneRuntime(
         })
         .parse(d.contract.type_specific_contract).surface;
       if (
-        Math.abs(Math.abs(profile.flow_axis[0]) - 1) > 1e-6 ||
-        Math.abs(profile.flow_axis[1]) + Math.abs(profile.flow_axis[2]) > 1e-6
+        Math.abs(profile.flow_axis[1]) > 1e-6 ||
+        Math.abs(Math.hypot(...profile.flow_axis) - 1) > 1e-6 ||
+        Math.min(
+          Math.abs(profile.flow_axis[0]),
+          Math.abs(profile.flow_axis[2]),
+        ) > 1e-6
       )
         throw new Error(
-          "Only horizontal scene-X conveyor profiles are registered",
+          "Only X/Z-aligned horizontal conveyor profiles are registered",
         );
       const body = makeBody(d, "conveying_support", false);
       body.size = [
@@ -324,13 +428,15 @@ export function compileSceneRuntime(
         direction: profile.flow_axis,
         normal: [0, 1, 0],
       });
-    } else if (d.instance_id === sourceDevice) {
+    } else if (feederEntries.has(d.instance_id)) {
       const body = makeBody(d, "conveying_support", false);
       bodies.push(body);
       const flow = z
         .object({ surface: z.object({ flow_axis: vec }) })
-        .parse(devices.get(entryDevice)!.contract.type_specific_contract)
-        .surface.flow_axis;
+        .parse(
+          devices.get(feederEntries.get(d.instance_id)!)!.contract
+            .type_specific_contract,
+        ).surface.flow_axis;
       surfaces.push({
         id: d.instance_id + "/surface",
         bodyId: body.id,
@@ -346,10 +452,14 @@ export function compileSceneRuntime(
         type === "workpiece" ? "material" : "carrier",
         true,
       );
-      const parts = geometry.convexParts(
+      const key = JSON.stringify([
         d.node_binding.owned_mesh_indices,
         body.position,
-      );
+      ]);
+      const parts =
+        hullCache.get(key) ??
+        geometry.convexParts(d.node_binding.owned_mesh_indices, body.position);
+      hullCache.set(key, parts);
       if (!parts.length)
         throw new Error("Missing collision geometry " + d.instance_id);
       body.convexParts = parts;
@@ -399,7 +509,7 @@ export function compileSceneRuntime(
     (b) => b.role === "carrier" || b.role === "material",
   );
   if (!first) throw new Error("No finite load bodies");
-  const carrierBindings = task.pallets.flatMap((p) => {
+  const carrierBindings = preloaded.flatMap((p) => {
     const mode = z
       .object({
         physics: z.object({
@@ -452,22 +562,10 @@ export function compileSceneRuntime(
     ]),
   );
   return {
-    bundle,
-    root,
-    task: task as { pallets: SceneLoad[]; [key: string]: unknown },
-    devices,
     physics,
     bodyMap: new Map(physics.bodies!.map((b) => [b.id, b])),
     visualBodies,
     robots,
     robotNodes,
-    subjectIds,
-    sourceDevice,
-    entryDevice,
-    exitDevice,
-    outfeeds,
-    leaders,
-    goals: { ...goalData.expected, deliveries },
-    readiness: { mode, warnings, blockers },
   };
 }

@@ -8,9 +8,22 @@ export interface SceneDevice {
   asset_kind?: string;
   creation_policy?: string;
   subject_id?: number;
+  initial_supply?: string;
+  prototype_ref?: string;
   contract: Record<string, unknown>;
   parameters: Record<string, number | string | boolean>;
-  locations: Record<string, { position: Vec3; frame: string; owner?: string }>;
+  locations: Record<
+    string,
+    {
+      position: Vec3;
+      frame: string;
+      owner?: string;
+      reference?: string;
+      rotation_quaternion?: [number, number, number, number];
+      support_device?: string;
+      support_layer?: string;
+    }
+  >;
   node_binding: {
     status: string;
     owned_mesh_indices: number[];
@@ -24,7 +37,29 @@ export interface SceneDevice {
 }
 export interface SceneLoad {
   id: string;
-  items: { material: string; source: string; category?: string }[];
+  items: ({ material: string; category?: string } & (
+    { source: string } | { target: string }
+  ))[];
+}
+export interface LoadingConfig {
+  pallets: {
+    id: string;
+    items: { material: string; category: string; target: string }[];
+  }[];
+  supplies: {
+    device: string;
+    materialTemplate: string;
+    entry: string;
+    entryDevice: string;
+    leader: string;
+    materials: string[];
+  }[];
+  exchange: { entry: string; exit: string; leader: string };
+  materialSupply: Map<string, string>;
+  targets: Map<
+    string,
+    { position: Vec3; reference: string; supportDevice: string }
+  >;
 }
 export interface VisualBodyBinding {
   bodyId: string;
@@ -39,6 +74,7 @@ export interface SceneReadiness {
   blockers: string[];
 }
 export interface CompiledSceneRuntime {
+  loading?: LoadingConfig;
   warehouse?: import("./warehouse").WarehouseConfig;
   bundle: SceneBundle;
   root: ProcessNode;

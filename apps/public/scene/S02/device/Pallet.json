@@ -1,0 +1,463 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "Pallet",
+  "contract_ref": "../contracts/workpiece_carrier.json",
+  "node_binding": {
+    "status": "bound",
+    "node": "AssemblyBaseComponent_00mn",
+    "model_sha256": "9133e33ca8bc22852edaf3cbfef27fbfdbb00d504f516ae1f8d6d534a3f03ac4"
+  },
+  "model": {
+    "calibration": {
+      "status": "pending"
+    },
+    "placement": {
+      "deck_node": "Block_Geo_00on",
+      "cover_alignment": "long dimension parallel to deck long dimension",
+      "orientation_status": "candidate_requires_grasp_pose_validation"
+    }
+  },
+  "asset_kind": "carrier_prefab",
+  "parameters": {
+    "slot_rows": 3,
+    "slot_columns": 4,
+    "length_m": 1.1999999731779099,
+    "height_m": 0.15999999642372145,
+    "width_m": 0.7999999821186066,
+    "slot_pitch_x_m": 0.28749999357387424,
+    "slot_pitch_z_m": 0.24999999441206455,
+    "edge_margin_m": 0.03
+  },
+  "locations": {
+    "Pallet.lower01": {
+      "frame": "carrier_local_m",
+      "position": [
+        0.43124999036081135,
+        -0.2499999944120646,
+        0.15999999642372134
+      ],
+      "reference": "material_bottom_center",
+      "status": "candidate",
+      "support_layer": "deck"
+    },
+    "Pallet.lower02": {
+      "frame": "carrier_local_m",
+      "position": [
+        0.14374999678693712,
+        -0.2499999944120646,
+        0.15999999642372134
+      ],
+      "reference": "material_bottom_center",
+      "status": "candidate",
+      "support_layer": "deck"
+    },
+    "Pallet.lower03": {
+      "frame": "carrier_local_m",
+      "position": [
+        -0.14374999678693712,
+        -0.2499999944120646,
+        0.15999999642372134
+      ],
+      "reference": "material_bottom_center",
+      "status": "candidate",
+      "support_layer": "deck"
+    },
+    "Pallet.lower04": {
+      "frame": "carrier_local_m",
+      "position": [
+        -0.43124999036081135,
+        -0.2499999944120646,
+        0.15999999642372134
+      ],
+      "reference": "material_bottom_center",
+      "status": "candidate",
+      "support_layer": "deck"
+    },
+    "Pallet.lower05": {
+      "frame": "carrier_local_m",
+      "position": [
+        0.43124999036081135,
+        -2.7755575615628914e-17,
+        0.15999999642372137
+      ],
+      "reference": "material_bottom_center",
+      "status": "candidate",
+      "support_layer": "deck"
+    },
+    "Pallet.lower06": {
+      "frame": "carrier_local_m",
+      "position": [
+        0.14374999678693712,
+        -2.7755575615628914e-17,
+        0.15999999642372137
+      ],
+      "reference": "material_bottom_center",
+      "status": "candidate",
+      "support_layer": "deck"
+    },
+    "Pallet.lower07": {
+      "frame": "carrier_local_m",
+      "position": [
+        -0.14374999678693712,
+        -2.7755575615628914e-17,
+        0.15999999642372137
+      ],
+      "reference": "material_bottom_center",
+      "status": "candidate",
+      "support_layer": "deck"
+    },
+    "Pallet.lower08": {
+      "frame": "carrier_local_m",
+      "position": [
+        -0.43124999036081135,
+        -2.7755575615628914e-17,
+        0.15999999642372137
+      ],
+      "reference": "material_bottom_center",
+      "status": "candidate",
+      "support_layer": "deck"
+    },
+    "Pallet.lower09": {
+      "frame": "carrier_local_m",
+      "position": [
+        0.43124999036081135,
+        0.24999999441206455,
+        0.1599999964237214
+      ],
+      "reference": "material_bottom_center",
+      "status": "candidate",
+      "support_layer": "deck"
+    },
+    "Pallet.lower10": {
+      "frame": "carrier_local_m",
+      "position": [
+        0.14374999678693712,
+        0.24999999441206455,
+        0.1599999964237214
+      ],
+      "reference": "material_bottom_center",
+      "status": "candidate",
+      "support_layer": "deck"
+    },
+    "Pallet.lower11": {
+      "frame": "carrier_local_m",
+      "position": [
+        -0.14374999678693712,
+        0.24999999441206455,
+        0.1599999964237214
+      ],
+      "reference": "material_bottom_center",
+      "status": "candidate",
+      "support_layer": "deck"
+    },
+    "Pallet.lower12": {
+      "frame": "carrier_local_m",
+      "position": [
+        -0.43124999036081135,
+        0.24999999441206455,
+        0.1599999964237214
+      ],
+      "reference": "material_bottom_center",
+      "status": "candidate",
+      "support_layer": "deck"
+    },
+    "Pallet.cover": {
+      "frame": "carrier_local_m",
+      "position": [
+        0.0,
+        -2.7755575615628914e-17,
+        0.35999999195337296
+      ],
+      "reference": "material_bottom_center",
+      "status": "candidate",
+      "support_layer": "lower"
+    },
+    "Pallet.upper01": {
+      "frame": "carrier_local_m",
+      "position": [
+        0.43124999036081135,
+        -0.2499999944120646,
+        0.36999999172985576
+      ],
+      "reference": "material_bottom_center",
+      "status": "candidate",
+      "support_layer": "cover"
+    },
+    "Pallet.upper02": {
+      "frame": "carrier_local_m",
+      "position": [
+        0.14374999678693712,
+        -0.2499999944120646,
+        0.36999999172985576
+      ],
+      "reference": "material_bottom_center",
+      "status": "candidate",
+      "support_layer": "cover"
+    },
+    "Pallet.upper03": {
+      "frame": "carrier_local_m",
+      "position": [
+        -0.14374999678693712,
+        -0.2499999944120646,
+        0.36999999172985576
+      ],
+      "reference": "material_bottom_center",
+      "status": "candidate",
+      "support_layer": "cover"
+    },
+    "Pallet.upper04": {
+      "frame": "carrier_local_m",
+      "position": [
+        -0.43124999036081135,
+        -0.2499999944120646,
+        0.36999999172985576
+      ],
+      "reference": "material_bottom_center",
+      "status": "candidate",
+      "support_layer": "cover"
+    },
+    "Pallet.upper05": {
+      "frame": "carrier_local_m",
+      "position": [
+        0.43124999036081135,
+        -5.551115123125783e-17,
+        0.3699999917298558
+      ],
+      "reference": "material_bottom_center",
+      "status": "candidate",
+      "support_layer": "cover"
+    },
+    "Pallet.upper06": {
+      "frame": "carrier_local_m",
+      "position": [
+        0.14374999678693712,
+        -5.551115123125783e-17,
+        0.3699999917298558
+      ],
+      "reference": "material_bottom_center",
+      "status": "candidate",
+      "support_layer": "cover"
+    },
+    "Pallet.upper07": {
+      "frame": "carrier_local_m",
+      "position": [
+        -0.14374999678693712,
+        -5.551115123125783e-17,
+        0.3699999917298558
+      ],
+      "reference": "material_bottom_center",
+      "status": "candidate",
+      "support_layer": "cover"
+    },
+    "Pallet.upper08": {
+      "frame": "carrier_local_m",
+      "position": [
+        -0.43124999036081135,
+        -5.551115123125783e-17,
+        0.3699999917298558
+      ],
+      "reference": "material_bottom_center",
+      "status": "candidate",
+      "support_layer": "cover"
+    },
+    "Pallet.upper09": {
+      "frame": "carrier_local_m",
+      "position": [
+        0.43124999036081135,
+        0.2499999944120645,
+        0.36999999172985587
+      ],
+      "reference": "material_bottom_center",
+      "status": "candidate",
+      "support_layer": "cover"
+    },
+    "Pallet.upper10": {
+      "frame": "carrier_local_m",
+      "position": [
+        0.14374999678693712,
+        0.2499999944120645,
+        0.36999999172985587
+      ],
+      "reference": "material_bottom_center",
+      "status": "candidate",
+      "support_layer": "cover"
+    },
+    "Pallet.upper11": {
+      "frame": "carrier_local_m",
+      "position": [
+        -0.14374999678693712,
+        0.2499999944120645,
+        0.36999999172985587
+      ],
+      "reference": "material_bottom_center",
+      "status": "candidate",
+      "support_layer": "cover"
+    },
+    "Pallet.upper12": {
+      "frame": "carrier_local_m",
+      "position": [
+        -0.43124999036081135,
+        0.2499999944120645,
+        0.36999999172985587
+      ],
+      "reference": "material_bottom_center",
+      "status": "candidate",
+      "support_layer": "cover"
+    }
+  },
+  "prefab": {
+    "kind": "empty_carrier",
+    "slots": [
+      {
+        "id": "lower01",
+        "material_template": "LowerPart",
+        "category": "lower",
+        "source_device": "F1"
+      },
+      {
+        "id": "lower02",
+        "material_template": "LowerPart",
+        "category": "lower",
+        "source_device": "F1"
+      },
+      {
+        "id": "lower03",
+        "material_template": "LowerPart",
+        "category": "lower",
+        "source_device": "F1"
+      },
+      {
+        "id": "lower04",
+        "material_template": "LowerPart",
+        "category": "lower",
+        "source_device": "F1"
+      },
+      {
+        "id": "lower05",
+        "material_template": "LowerPart",
+        "category": "lower",
+        "source_device": "F1"
+      },
+      {
+        "id": "lower06",
+        "material_template": "LowerPart",
+        "category": "lower",
+        "source_device": "F1"
+      },
+      {
+        "id": "lower07",
+        "material_template": "LowerPart",
+        "category": "lower",
+        "source_device": "F1"
+      },
+      {
+        "id": "lower08",
+        "material_template": "LowerPart",
+        "category": "lower",
+        "source_device": "F1"
+      },
+      {
+        "id": "lower09",
+        "material_template": "LowerPart",
+        "category": "lower",
+        "source_device": "F1"
+      },
+      {
+        "id": "lower10",
+        "material_template": "LowerPart",
+        "category": "lower",
+        "source_device": "F1"
+      },
+      {
+        "id": "lower11",
+        "material_template": "LowerPart",
+        "category": "lower",
+        "source_device": "F1"
+      },
+      {
+        "id": "lower12",
+        "material_template": "LowerPart",
+        "category": "lower",
+        "source_device": "F1"
+      },
+      {
+        "id": "cover",
+        "material_template": "Cover",
+        "category": "cover",
+        "source_device": "F2"
+      },
+      {
+        "id": "upper01",
+        "material_template": "UpperPart",
+        "category": "upper",
+        "source_device": "F3"
+      },
+      {
+        "id": "upper02",
+        "material_template": "UpperPart",
+        "category": "upper",
+        "source_device": "F3"
+      },
+      {
+        "id": "upper03",
+        "material_template": "UpperPart",
+        "category": "upper",
+        "source_device": "F3"
+      },
+      {
+        "id": "upper04",
+        "material_template": "UpperPart",
+        "category": "upper",
+        "source_device": "F3"
+      },
+      {
+        "id": "upper05",
+        "material_template": "UpperPart",
+        "category": "upper",
+        "source_device": "F3"
+      },
+      {
+        "id": "upper06",
+        "material_template": "UpperPart",
+        "category": "upper",
+        "source_device": "F3"
+      },
+      {
+        "id": "upper07",
+        "material_template": "UpperPart",
+        "category": "upper",
+        "source_device": "F3"
+      },
+      {
+        "id": "upper08",
+        "material_template": "UpperPart",
+        "category": "upper",
+        "source_device": "F3"
+      },
+      {
+        "id": "upper09",
+        "material_template": "UpperPart",
+        "category": "upper",
+        "source_device": "F3"
+      },
+      {
+        "id": "upper10",
+        "material_template": "UpperPart",
+        "category": "upper",
+        "source_device": "F3"
+      },
+      {
+        "id": "upper11",
+        "material_template": "UpperPart",
+        "category": "upper",
+        "source_device": "F3"
+      },
+      {
+        "id": "upper12",
+        "material_template": "UpperPart",
+        "category": "upper",
+        "source_device": "F3"
+      }
+    ]
+  }
+}

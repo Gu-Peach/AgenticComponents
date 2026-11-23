@@ -13,6 +13,7 @@ export class GraspService {
   constructor(
     private scene: CompiledRobotScene,
     private physics: PhysicsPort,
+    private placementCheck?: () => boolean,
   ) {
     this.constraintId = `${scene.instanceId}/grasp`;
   }
@@ -67,6 +68,7 @@ export class GraspService {
     this.binding = undefined;
   }
   placed() {
+    if (this.placementCheck) return !this.holding && this.placementCheck();
     const s = this.scene;
     if (!s.placementCenter) return false;
     const p = this.physics.readMaterial(),

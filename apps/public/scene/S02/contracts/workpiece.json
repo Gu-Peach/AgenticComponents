@@ -9,7 +9,7 @@
   "asset": {
     "model_format": "glb",
     "model_key": "../assmbly_depalletizing/assmbly_depalletizing.glb",
-    "sha256": "49188df3b54eefa3e0472c92f71f46c1a801875b082c581dc9c61a354cb3c19d"
+    "sha256": "9133e33ca8bc22852edaf3cbfef27fbfdbb00d504f516ae1f8d6d534a3f03ac4"
   },
   "params_schema": {
     "mass_kg": {
@@ -677,7 +677,8 @@
           "carried",
           "holder_id",
           "picked"
-        ]
+        ],
+        "expression_ref": "be_picked.pre_1"
       },
       "be_picked.sustaining": {
         "value_type": "boolean",
@@ -687,7 +688,8 @@
           "carried",
           "holder_id",
           "picked"
-        ]
+        ],
+        "expression_ref": "be_picked.sustaining"
       },
       "be_picked.completion": {
         "value_type": "boolean",
@@ -697,7 +699,8 @@
           "carried",
           "holder_id",
           "picked"
-        ]
+        ],
+        "expression_ref": "be_picked.completion"
       },
       "be_conveyed.pre_1": {
         "value_type": "boolean",
@@ -705,7 +708,8 @@
         "implementation_status": "pending_provider",
         "signal_refs": [
           "location_id"
-        ]
+        ],
+        "expression_ref": "be_conveyed.pre_1"
       },
       "be_conveyed.pre_2": {
         "value_type": "boolean",
@@ -713,7 +717,8 @@
         "implementation_status": "pending_provider",
         "signal_refs": [
           "location_id"
-        ]
+        ],
+        "expression_ref": "be_conveyed.pre_2"
       },
       "be_conveyed.sustaining": {
         "value_type": "boolean",
@@ -721,7 +726,8 @@
         "implementation_status": "pending_provider",
         "signal_refs": [
           "location_id"
-        ]
+        ],
+        "expression_ref": "be_conveyed.sustaining"
       },
       "be_conveyed.completion": {
         "value_type": "boolean",
@@ -729,7 +735,8 @@
         "implementation_status": "pending_provider",
         "signal_refs": [
           "location_id"
-        ]
+        ],
+        "expression_ref": "be_conveyed.completion"
       },
       "be_carried.pre_1": {
         "value_type": "boolean",
@@ -739,7 +746,8 @@
           "carried",
           "holder_id",
           "location_id"
-        ]
+        ],
+        "expression_ref": "be_carried.pre_1"
       },
       "be_carried.pre_2": {
         "value_type": "boolean",
@@ -749,7 +757,8 @@
           "carried",
           "holder_id",
           "location_id"
-        ]
+        ],
+        "expression_ref": "be_carried.pre_2"
       },
       "be_carried.sustaining": {
         "value_type": "boolean",
@@ -759,7 +768,8 @@
           "carried",
           "holder_id",
           "location_id"
-        ]
+        ],
+        "expression_ref": "be_carried.sustaining"
       },
       "be_carried.completion": {
         "value_type": "boolean",
@@ -769,7 +779,8 @@
           "carried",
           "holder_id",
           "location_id"
-        ]
+        ],
+        "expression_ref": "be_carried.completion"
       },
       "be_placed.pre_1": {
         "value_type": "boolean",
@@ -778,7 +789,8 @@
         "signal_refs": [
           "location_id",
           "placed"
-        ]
+        ],
+        "expression_ref": "be_placed.pre_1"
       },
       "be_placed.pre_2": {
         "value_type": "boolean",
@@ -787,7 +799,8 @@
         "signal_refs": [
           "location_id",
           "placed"
-        ]
+        ],
+        "expression_ref": "be_placed.pre_2"
       },
       "be_placed.sustaining": {
         "value_type": "boolean",
@@ -796,7 +809,8 @@
         "signal_refs": [
           "location_id",
           "placed"
-        ]
+        ],
+        "expression_ref": "be_placed.sustaining"
       },
       "be_placed.completion": {
         "value_type": "boolean",
@@ -805,7 +819,8 @@
         "signal_refs": [
           "location_id",
           "placed"
-        ]
+        ],
+        "expression_ref": "be_placed.completion"
       },
       "be_released.pre_2": {
         "value_type": "boolean",
@@ -815,7 +830,8 @@
           "carried",
           "holder_id",
           "placed"
-        ]
+        ],
+        "expression_ref": "be_released.pre_2"
       },
       "be_released.sustaining": {
         "value_type": "boolean",
@@ -825,7 +841,8 @@
           "carried",
           "holder_id",
           "placed"
-        ]
+        ],
+        "expression_ref": "be_released.sustaining"
       },
       "be_released.completion": {
         "value_type": "boolean",
@@ -835,7 +852,8 @@
           "carried",
           "holder_id",
           "placed"
-        ]
+        ],
+        "expression_ref": "be_released.completion"
       },
       "respond_to_physics.pre_1": {
         "value_type": "boolean",
@@ -843,7 +861,8 @@
         "implementation_status": "pending_provider",
         "signal_refs": [
           "location_id"
-        ]
+        ],
+        "expression_ref": "respond_to_physics.pre_1"
       },
       "respond_to_physics.pre_2": {
         "value_type": "boolean",
@@ -851,7 +870,8 @@
         "implementation_status": "pending_provider",
         "signal_refs": [
           "location_id"
-        ]
+        ],
+        "expression_ref": "respond_to_physics.pre_2"
       },
       "respond_to_physics.sustaining": {
         "value_type": "boolean",
@@ -859,7 +879,8 @@
         "implementation_status": "pending_provider",
         "signal_refs": [
           "location_id"
-        ]
+        ],
+        "expression_ref": "respond_to_physics.sustaining"
       },
       "respond_to_physics.completion": {
         "value_type": "boolean",
@@ -867,7 +888,8 @@
         "implementation_status": "pending_provider",
         "signal_refs": [
           "location_id"
-        ]
+        ],
+        "expression_ref": "respond_to_physics.completion"
       },
       "publish_material_state.pre_1": {
         "value_type": "boolean",
@@ -879,7 +901,8 @@
           "location_id",
           "picked",
           "placed"
-        ]
+        ],
+        "expression_ref": "publish_material_state.pre_1"
       },
       "publish_material_state.pre_2": {
         "value_type": "boolean",
@@ -891,7 +914,8 @@
           "location_id",
           "picked",
           "placed"
-        ]
+        ],
+        "expression_ref": "publish_material_state.pre_2"
       },
       "publish_material_state.sustaining": {
         "value_type": "boolean",
@@ -903,7 +927,8 @@
           "location_id",
           "picked",
           "placed"
-        ]
+        ],
+        "expression_ref": "publish_material_state.sustaining"
       },
       "publish_material_state.completion": {
         "value_type": "boolean",
@@ -915,7 +940,8 @@
           "location_id",
           "picked",
           "placed"
-        ]
+        ],
+        "expression_ref": "publish_material_state.completion"
       }
     },
     "authorization_definitions": {
@@ -927,7 +953,259 @@
           "carried",
           "holder_id",
           "placed"
-        ]
+        ],
+        "expression_ref": "be_released.pre_1"
+      }
+    },
+    "condition_model": {
+      "schema_version": "ac-condition/0.1",
+      "execution_mode": "declaration_only",
+      "unknown_policy": "three_valued_fail_closed",
+      "bindings": {},
+      "expressions": {
+        "be_picked.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "be_picked.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "be_picked.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "be_picked.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "be_picked.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "be_picked.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "be_conveyed.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "be_conveyed.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "be_conveyed.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "be_conveyed.pre_2"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "be_conveyed.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "be_conveyed.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "be_conveyed.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "be_conveyed.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "be_carried.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "be_carried.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "be_carried.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "be_carried.pre_2"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "be_carried.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "be_carried.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "be_carried.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "be_carried.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "be_placed.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "be_placed.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "be_placed.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "be_placed.pre_2"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "be_placed.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "be_placed.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "be_placed.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "be_placed.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "be_released.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "be_released.pre_2"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "be_released.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "be_released.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "be_released.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "be_released.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "respond_to_physics.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "respond_to_physics.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "respond_to_physics.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "respond_to_physics.pre_2"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "respond_to_physics.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "respond_to_physics.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "respond_to_physics.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "respond_to_physics.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "publish_material_state.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "publish_material_state.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "publish_material_state.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "publish_material_state.pre_2"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "publish_material_state.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "publish_material_state.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "publish_material_state.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "publish_material_state.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "be_released.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "authorization",
+            "key": "be_released.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        }
       }
     }
   },

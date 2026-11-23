@@ -29,6 +29,8 @@ def expand_prefabs(ir, authored):
         return devices
     template=authored.get(request['carrier_template'])
     if template is None or template.get('asset_kind')!='carrier_prefab':raise ValueError('Unknown carrier template')
+    if template['prefab']['kind']=='empty_carrier':
+        return expand_empty_carriers(ir,authored,template,request['count'])
     count=request['count'];slots=template['prefab']['slots']
     if type(count)is not int or not 1<=count<=10000 or not slots or count*len(slots)>10000:raise ValueError('Invalid finite prefab production')
     devices=dict(authored);pallets=[]
@@ -63,4 +65,52 @@ def expand_prefabs(ir, authored):
         carrier['initial_inventory']={'contents':[i['material'] for i in items],'source':'finite prefab request','status':'existing' if batch==1 else 'not_instantiated_until_admitted'}
         devices[id]=carrier;pallets.append({'id':id,'items':items,'prototype_ref':request['carrier_template']})
     ir['task'].update(jobs=[],pallets=pallets,material_count=count*len(slots),pallet_count=count,job_count=0,max_items_per_pallet=len(slots))
+    return devices
+
+def expand_empty_carriers(ir, authored, template, count):
+    """A loading manifest describes future deliveries, never initial occupancy."""
+    slots = template['prefab']['slots']
+    if type(count) is not int or count < 1 or not slots or len(slots)*count > 10000 or len({s['id'] for s in slots}) != len(slots):
+        raise ValueError('Invalid empty-carrier loading manifest')
+    devices = dict(authored)
+    adopted = set()
+    pallets = []
+    def instantiate(prototype, identity, kind, subject):
+        if identity in devices:
+            raise ValueError('Duplicate production identity: '+identity)
+        obj = copy.deepcopy(prototype)
+        source = prototype['instance_id']
+        first = source not in adopted
+        obj.update(instance_id=identity, asset_kind=kind, prototype_ref=source,
+                   creation_policy='adopt_existing_glb' if first else 'clone_on_admission', subject_id=subject)
+        obj['node_binding']['status'] = 'bound' if first else 'prototype'
+        instance_signals(obj,source,identity)
+        adopted.add(source)
+        devices[identity] = obj
+        return obj
+    for number in range(1,count+1):
+        pallet = f'P{number:02d}'
+        carrier = instantiate(template,pallet,'runtime_carrier',count*len(slots)+number)
+        carrier['locations'] = {}
+        carrier['initial_inventory'] = {'contents':[]}
+        items = []
+        for ordinal, slot in enumerate(slots,1):
+            prototype = authored.get(slot['material_template'])
+            if not prototype or prototype.get('asset_kind') != 'material_prefab':
+                raise ValueError('Unknown loading material prototype')
+            feeder = authored.get(slot['source_device'])
+            if not feeder or feeder['contract']['device_type']!='material_source_station' or feeder['parameters']['product_spec']!=prototype['instance_id']:
+                raise ValueError('Invalid material supply binding')
+            identity = f'M{number:02d}_{ordinal:02d}'
+            obj = instantiate(prototype,identity,'runtime_material',(number-1)*len(slots)+ordinal)
+            obj['initial_supply'] = feeder['instance_id']
+            target = pallet+'.'+slot['id']
+            origin = template['instance_id']+'.'+slot['id']
+            if origin not in template['locations'] or template['locations'][origin].get('frame')!='carrier_local_m':
+                raise ValueError('Missing carrier-local loading target: '+origin)
+            carrier['locations'][target] = {**template['locations'][origin],'owner':pallet}
+            items.append({'material':identity,'category':slot['category'],'target':target})
+        pallets.append({'id':pallet,'prototype_ref':template['instance_id'],'items':items})
+    ir['task'].update(jobs=[],job_count=0,pallets=pallets,pallet_count=count,
+                      material_count=count*len(slots),max_items_per_pallet=len(slots))
     return devices

@@ -31,10 +31,11 @@ export class RobotJobRunner {
     readonly state: RobotState,
     private signals: SignalRegistry,
     private physics?: PhysicsPort,
+    placementCheck?: () => boolean,
   ) {
     this.fk = new RobotKinematics(scene);
     this.previousTCP = this.fk.forward(state.q).tcp;
-    if (physics) this.grasp = new GraspService(scene, physics);
+    if (physics) this.grasp = new GraspService(scene, physics, placementCheck);
   }
   plan(steps: RobotStep[]) {
     let seed = [...this.state.q];

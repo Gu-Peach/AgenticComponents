@@ -1,226 +1,109 @@
 {
-  "schema_version": "scene-package/0.1",
+  "schema_version": "scene-package/0.2",
   "id": "S02",
-  "name": "S02：六托盘三工位成组并行拆垛与空盘出线",
+  "name": "S02：六托盘三工位分层装载",
   "model": "assmbly_depalletizing/assmbly_depalletizing.glb",
-  "model_sha256": "49188df3b54eefa3e0472c92f71f46c1a801875b082c581dc9c61a354cb3c19d",
+  "model_sha256": "9133e33ca8bc22852edaf3cbfef27fbfdbb00d504f516ae1f8d6d534a3f03ac4",
   "process": "process.py",
   "goal": "task-spec.json",
   "devices": [
-    "device/R1.json",
-    "device/R2.json",
-    "device/R3.json",
     "device/C1.json",
     "device/C2.json",
     "device/C3.json",
     "device/C4.json",
-    "device/P01.json",
-    "device/P02.json",
-    "device/P03.json",
-    "device/P04.json",
-    "device/P05.json",
-    "device/P06.json",
-    "device/M01_1.json",
-    "device/M01_2.json",
-    "device/M01_3.json",
-    "device/M01_4.json",
-    "device/M02_1.json",
-    "device/M02_2.json",
-    "device/M02_3.json",
-    "device/M02_4.json",
-    "device/M03_1.json",
-    "device/M03_2.json",
-    "device/M03_3.json",
-    "device/M03_4.json",
-    "device/M04_1.json",
-    "device/M04_2.json",
-    "device/M04_3.json",
-    "device/M04_4.json",
-    "device/M05_1.json",
-    "device/M05_2.json",
-    "device/M05_3.json",
-    "device/M05_4.json",
-    "device/M06_1.json",
-    "device/M06_2.json",
-    "device/M06_3.json",
-    "device/M06_4.json"
+    "device/C5.json",
+    "device/S1A.json",
+    "device/S1B.json",
+    "device/S2A.json",
+    "device/S2B.json",
+    "device/S3A.json",
+    "device/S3B.json",
+    "device/F1.json",
+    "device/LowerPart.json",
+    "device/R1.json",
+    "device/F2.json",
+    "device/Cover.json",
+    "device/R2.json",
+    "device/F3.json",
+    "device/UpperPart.json",
+    "device/R3.json",
+    "device/Pallet.json"
   ],
-  "lifecycle": {
-    "task_specification": "task-spec.json",
-    "completion": "independent_goal_monitor",
-    "precondition_timeout_s": 30,
-    "acceptance_timeout_s": 30,
-    "execution_timeout_s": 120,
-    "stop_timeout_s": 30,
-    "collection_timeout_s": 30,
-    "finalization_timeout_s": 30,
-    "unknown_policy": "block_then_fail_on_deadline",
-    "on_failure": "stop_admissions_cancel_siblings_stop_drives_confirm_or_attention",
-    "status": "pending_runtime"
+  "coordinate_system": {
+    "frame": "scene_world_m",
+    "length_unit": "m",
+    "up_axis": "Y"
   },
-  "iteration_contracts": {
-    "waves_060": {
-      "status": "pending_provider",
-      "scope": "frozen wave identities",
-      "entry": [
-        "mainline empty and stopped",
-        "only current wave admitted, one per pitch"
+  "drive_groups": {
+    "mainline": {
+      "members": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5"
       ],
-      "completion": [
-        "all current-wave carriers empty and actually taken away"
+      "mode": "coupled_motion",
+      "status": "pending_coordinated_adapter"
+    },
+    "feed1": {
+      "members": [
+        "S1A",
+        "S1B"
       ],
-      "unknown_policy": "block_then_fail_on_deadline"
+      "mode": "coupled_motion",
+      "status": "pending_coordinated_adapter"
+    },
+    "feed2": {
+      "members": [
+        "S2A",
+        "S2B"
+      ],
+      "mode": "coupled_motion",
+      "status": "pending_coordinated_adapter"
+    },
+    "feed3": {
+      "members": [
+        "S3A",
+        "S3B"
+      ],
+      "mode": "coupled_motion",
+      "status": "pending_coordinated_adapter"
     }
   },
-  "collection_bindings": {
-    "items_at": {
-      "status": "pending_provider",
-      "fields": {
-        "material": "material_ref",
-        "source": "location_ref"
-      },
-      "source": "current_station_carrier_inventory",
-      "freeze": "at_repeat_activation",
-      "unknown_policy": "block_not_empty",
-      "side_effects": false,
-      "admission": {
-        "mode": "automatic_before_snapshot",
-        "requirements": [
-          "station actually stopped",
-          "carrier identity and inventory revision known"
-        ],
-        "timeout_policy": "process_contract.collection_timeout_s"
-      }
-    }
+  "initial": {
+    "existing_carrier": "P01",
+    "placement": "from_glb",
+    "contents": []
   },
   "environment": [
     {
-      "kind": "external_empty_carrier_takeaway",
-      "rule": "confirm_empty_carrier_at_main_exit_then_remove_to_registered_outfeed_buffer_before_next_wave",
+      "kind": "finite_material_supply",
+      "source_device": "F1",
+      "target": "S1A.entry",
+      "material_template": "LowerPart",
       "implementation_status": "pending"
     },
     {
-      "kind": "external_takeaway",
-      "rule": "accept_only_materials_with_matching_completed_output_handoff_then_publish_departure",
+      "kind": "finite_material_supply",
+      "source_device": "F2",
+      "target": "S2A.entry",
+      "material_template": "Cover",
       "implementation_status": "pending"
     },
     {
-      "kind": "external_loaded_carrier_infeed",
-      "rule": "admit only current frozen wave, at most one carrier at clear stopped entry per fill pitch; no infeed during drain",
+      "kind": "finite_material_supply",
+      "source_device": "F3",
+      "target": "S3A.entry",
+      "material_template": "UpperPart",
+      "implementation_status": "pending"
+    },
+    {
+      "kind": "external_pallet_exchange",
+      "entry": "C1.entry",
+      "source": "C5.exit",
+      "rule": "provide_registered_empty_pallet_and_remove_only_after_all_manifest_items_loaded_and_robot_clear",
       "implementation_status": "pending"
     }
-  ],
-  "initial": {
-    "materials": "registered_finite_inventory",
-    "material_origins": {
-      "M01_1": "P01.slot1",
-      "M01_2": "P01.slot2",
-      "M01_3": "P01.slot3",
-      "M01_4": "P01.slot4",
-      "M02_1": "P02.slot1",
-      "M02_2": "P02.slot2",
-      "M02_3": "P02.slot3",
-      "M02_4": "P02.slot4",
-      "M03_1": "P03.slot1",
-      "M03_2": "P03.slot2",
-      "M03_3": "P03.slot3",
-      "M03_4": "P03.slot4",
-      "M04_1": "P04.slot1",
-      "M04_2": "P04.slot2",
-      "M04_3": "P04.slot3",
-      "M04_4": "P04.slot4",
-      "M05_1": "P05.slot1",
-      "M05_2": "P05.slot2",
-      "M05_3": "P05.slot3",
-      "M05_4": "P05.slot4",
-      "M06_1": "P06.slot1",
-      "M06_2": "P06.slot2",
-      "M06_3": "P06.slot3",
-      "M06_4": "P06.slot4"
-    },
-    "carriers": {
-      "P01": {
-        "location": "carrier_infeed",
-        "contents": [
-          "M01_1",
-          "M01_2",
-          "M01_3",
-          "M01_4"
-        ]
-      },
-      "P02": {
-        "location": "carrier_infeed",
-        "contents": [
-          "M02_1",
-          "M02_2",
-          "M02_3",
-          "M02_4"
-        ]
-      },
-      "P03": {
-        "location": "carrier_infeed",
-        "contents": [
-          "M03_1",
-          "M03_2",
-          "M03_3",
-          "M03_4"
-        ]
-      },
-      "P04": {
-        "location": "carrier_infeed",
-        "contents": [
-          "M04_1",
-          "M04_2",
-          "M04_3",
-          "M04_4"
-        ]
-      },
-      "P05": {
-        "location": "carrier_infeed",
-        "contents": [
-          "M05_1",
-          "M05_2",
-          "M05_3",
-          "M05_4"
-        ]
-      },
-      "P06": {
-        "location": "carrier_infeed",
-        "contents": [
-          "M06_1",
-          "M06_2",
-          "M06_3",
-          "M06_4"
-        ]
-      }
-    },
-    "devices": "idle_stopped_unclamped",
-    "robot_positions": {
-      "R1": "R1.home",
-      "R2": "R2.home",
-      "R3": "R3.home"
-    },
-    "angles": {},
-    "heights": {}
-  },
-  "legacy_inputs": "not_loaded_by_scene_runtime",
-  "assumptions": [
-    "所有托盘间距与三个停靠工位必须兼容共同驱动；运动计划检查器不接受需托盘独立启停/超车的计划。",
-    "每波可从1到3盘，只选择沿线可达且空闲可接料的工位；无可用工位时等待，不丢弃未分配托盘。",
-    "波内全部工位结束并退位才可移动主线；此基线不声称拆垛时其他托盘还能在同一主线上移动。",
-    "同类契约统一；实例几何、配方、观测和运动适配均待接入。",
-    "物料在有限外部缓冲区登记，真实入口交接证据到达后才可进入流程；await不创建或移动物料。",
-    "目标可用检查和容量预留必须在提交时原子复核；先前await不能代替当前授权。",
-    "home须在共享运动区之外，升降和转位仍需要真实运动区清空反馈。"
-  ],
-  "motion_interlocks": {
-    "status": "pending_provider",
-    "policy": "robot picks require actual stationary source/target; turn/lift motions require relevant robots clear; exclusive drive/robot ownership; next material admission respects capacity and prior handoff"
-  },
-  "execution_defaults": {
-    "tick_hz": 60,
-    "deadline_ticks": 72000,
-    "scheduler": "fair_finite_jobs_with_atomic_resource_sets",
-    "on_failure": "stop_admissions_cancel_siblings_confirm_stops_or_attention"
-  }
+  ]
 }

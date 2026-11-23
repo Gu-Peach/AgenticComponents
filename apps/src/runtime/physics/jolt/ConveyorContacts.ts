@@ -58,7 +58,7 @@ export class ConveyorContacts {
           r.definition.motionType === "dynamic" &&
           ["material", "carrier"].includes(r.definition.role);
         const isSupport = (r: typeof ra) =>
-          ["carrier", "support", "conveying_support"].includes(
+          ["material", "carrier", "support", "conveying_support"].includes(
             r.definition.role,
           );
         if (isLoad(rb) && isSupport(ra) && n.GetY() > 0.8)

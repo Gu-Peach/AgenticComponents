@@ -1,0 +1,18 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "F2",
+  "contract_ref": "../contracts/material_source_station.json",
+  "node_binding": {
+    "status": "bound",
+    "node": "__Geometry___003c",
+    "model_sha256": "9133e33ca8bc22852edaf3cbfef27fbfdbb00d504f516ae1f8d6d534a3f03ac4"
+  },
+  "model": {
+    "calibration": {
+      "status": "pending"
+    }
+  },
+  "parameters": {
+    "product_spec": "Cover"
+  }
+}

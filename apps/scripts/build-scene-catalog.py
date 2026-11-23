@@ -181,6 +181,10 @@ def build(root, scene=None, output=None):
             bundle['sorting_station']=sorting_station
         bundle['drive_groups']=manifest.get('drive_groups',{})
         bundle['environment']=manifest.get('environment',[])
+        if 'prefab_request' in ir['task']:
+            carrier_template=devices[ir['task']['prefab_request']['carrier_template']]
+            if carrier_template['prefab']['kind']=='empty_carrier':
+                bundle['initial']=manifest['initial']
         if 'coordinate_system' in manifest:bundle['coordinate_system']=manifest['coordinate_system']
         if 'runtime_profile' in manifest:bundle['runtime_profile']=manifest['runtime_profile']
         target=output/folder.name/'.generated/scene.bundle.json';write(target,bundle)

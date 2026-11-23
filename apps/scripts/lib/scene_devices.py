@@ -111,7 +111,9 @@ def load_scene_devices(folder,manifest,gltf):
             if 'node' in record:
                 index=geometry.resolve(record.pop('node'));matrix=geometry.world(index)
                 record.update(position=matrix[12:15],rotation_quaternion=quaternion(matrix))
-        if authored.get('asset_kind')=='carrier_prefab':
+        if authored.get('asset_kind')=='carrier_prefab' and authored['prefab']['kind'] not in ('loaded_carrier','empty_carrier'):
+            raise ValueError('Unknown carrier prefab kind')
+        if authored.get('asset_kind')=='carrier_prefab' and authored['prefab']['kind']=='loaded_carrier':
             prefab=authored['prefab'];slots=[]
             for slot in prefab['slots']:
                 index=geometry.resolve(slot['node']);position,_=relative_pose(geometry.world(root_index),geometry.world(index))

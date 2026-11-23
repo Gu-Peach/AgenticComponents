@@ -33,8 +33,9 @@ describe("compact device authoring", () => {
         }
       }
     }
-    // S07 now authors one actual box prototype; four runtime identities are expanded.
-    expect(count).toBe(151);
+    expect(count).toBe(
+      entries.reduce((total, scene) => total + scene.deviceCount, 0),
+    );
   });
   it("keeps exactly the eight implemented robot parameters and preserves unknown calibration", () => {
     const expected = [

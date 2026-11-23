@@ -70,7 +70,8 @@ export function SceneRunPanel({ scene }: { scene: ScenePackageInstance }) {
             </button>
           )}
         {status === "attention_required" &&
-          controller.configuration(scene.id)?.warehouse && (
+          (controller.configuration(scene.id)?.warehouse ||
+            controller.configuration(scene.id)?.loading) && (
             <button onClick={() => act(() => controller.discard(scene.id))}>
               放弃本次仿真并恢复初态
             </button>

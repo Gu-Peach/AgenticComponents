@@ -9,9 +9,11 @@ import { RobotJobRunner } from "@/runtime/templates/robot/RobotJobRunner";
 import { RobotState } from "@/runtime/templates/robot/RobotState";
 import type { DeviceActionPort } from "./DeviceActionPort";
 import { Quaternion } from "three";
+import { restJointTarget } from "@/runtime/kinematics/restJointTarget";
 export interface PreparedRobotAction {
   scene: CompiledRobotScene;
   steps: RobotStep[];
+  returnToRest?: boolean;
 }
 /** Reuses the existing FK/IK/trajectory/grasp runner while the scene owns physics.step. */
 export class RobotSceneAdapter implements DeviceActionPort {
@@ -44,6 +46,7 @@ export class RobotSceneAdapter implements DeviceActionPort {
     private base: CompiledRobotScene,
     private physics: PhysicsPort,
     private resolve: (request: ActionRequest) => PreparedRobotAction,
+    private placementCheck?: (request: ActionRequest) => boolean,
   ) {
     this.id = base.instanceId;
     if (!physics.readBody || !physics.moveTool)
@@ -130,8 +133,25 @@ export class RobotSceneAdapter implements DeviceActionPort {
       state,
       this.localSignals,
       port,
+      this.placementCheck ? () => this.placementCheck!(request) : undefined,
     );
-    runner.plan(command.steps);
+    if (action.returnToRest) {
+      const home = command.steps[0];
+      if (
+        command.behaviorId !== "move_to_pose" ||
+        home.kind !== "move_to_pose" ||
+        home.frame !== "world" ||
+        !home.world_rotation
+      )
+        throw new Error("Invalid rest-pose binding");
+      const q = restJointTarget(action.scene, {
+        position: home.position,
+        rotation: home.world_rotation,
+      });
+      runner.plan([{ kind: "move_joints", q }]);
+    } else {
+      runner.plan(command.steps);
+    }
     this.prepared = { id: request.requestId, runner, state, action };
     return [
       this.write("enableTag", true, request),

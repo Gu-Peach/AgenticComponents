@@ -3,15 +3,76 @@
   "instance_id": "R2",
   "contract_ref": "../contracts/robot_arm.json",
   "node_binding": {
-    "status": "unresolved"
+    "status": "bound",
+    "node": "RobotController_#2_00Ln",
+    "model_sha256": "9133e33ca8bc22852edaf3cbfef27fbfdbb00d504f516ae1f8d6d534a3f03ac4"
+  },
+  "model": {
+    "calibration": {
+      "status": "pending",
+      "source": "对齐 S01 与本场 GLB 的零位连杆以确定候选轴线。按 S02 作者约定，J2、J3、J5 取局部 +Y 为正，与 S01 等效姿态的关节角符号相反。使用无界关节仿真假设。"
+    },
+    "urdf": {
+      "joints": [
+        {
+          "nodeName": "Axis_1_00On",
+          "axis": [0, 0, 1],
+          "limit": null
+        },
+        {
+          "nodeName": "Axis_2_00Pn",
+          "axis": [0, 1, 0],
+          "limit": null
+        },
+        {
+          "nodeName": "Axis_3_00Qn",
+          "axis": [0, 1, 0],
+          "limit": null
+        },
+        {
+          "nodeName": "Axis_4_00Rn",
+          "axis": [0, 0, 1],
+          "limit": null
+        },
+        {
+          "nodeName": "Axis_5_00Sn",
+          "axis": [0, 1, 0],
+          "limit": null
+        },
+        {
+          "nodeName": "Axis_6_00Tn",
+          "axis": [0, 0, 1],
+          "limit": null
+        }
+      ]
+    },
+    "tooling": {
+      "flange_node_name": "mountplate_00Un",
+      "tcp_local_frame": {
+        "position": [0, 0, 0],
+        "rotation_quaternion": [0, 0, 0, 1]
+      },
+      "simulation_tool": true
+    },
+    "gripper": {
+      "type": "virtual_fixed_grasp",
+      "capture_radius_m": 0.06,
+      "max_relative_speed_mps": 0.08,
+      "max_payload_param": "max_payload_kg",
+      "tool_size_m": [0.025, 0.025, 0.025],
+      "constraint_tolerance_m": 0.015,
+      "orientation_policy": "spherical_virtual_capture"
+    }
   },
   "locations": {
-    "R2.tool": {
-      "geometry_status": "pending_calibration"
-    },
     "R2.home": {
-      "geometry_status": "pending_calibration",
-      "role": "outside_all_shared_motion_zones"
+      "node": "mountplate_00Un",
+      "frame": "flange_pose_scene_world_m",
+      "reference": "robot_rest_pose",
+      "status": "rest_pose_only_clearance_unvalidated"
     }
+  },
+  "parameters": {
+    "ik_position_tolerance_m": 0.005
   }
 }

@@ -85,7 +85,7 @@ export class SceneRuntimeProgram {
         frame.tick,
       );
     } catch (e) {
-      this.error = e instanceof Error ? e.message : String(e);
+      this.error ??= e instanceof Error ? e.message : String(e);
     }
     this.stepper.stop();
   }
@@ -204,7 +204,7 @@ export class SceneRuntimeProgram {
           );
       }
     } catch (e) {
-      this.error = e instanceof Error ? e.message : String(e);
+      this.error ??= e instanceof Error ? e.message : String(e);
       this.stop();
     }
     return this.snapshot();
@@ -235,7 +235,7 @@ export class SceneRuntimeProgram {
     this.disposed = true;
   }
   discard() {
-    this.stepper.discard();
+    this.stepper.discard(Boolean(this.error));
     this.disposed = true;
   }
 }

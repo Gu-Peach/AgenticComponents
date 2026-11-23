@@ -1,0 +1,33 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "Cover",
+  "contract_ref": "../contracts/workpiece.json",
+  "node_binding": {
+    "status": "bound",
+    "node": "Block_Geo_004n",
+    "model_sha256": "9133e33ca8bc22852edaf3cbfef27fbfdbb00d504f516ae1f8d6d534a3f03ac4"
+  },
+  "model": {
+    "calibration": {
+      "status": "pending"
+    },
+    "loading_pose": {
+      "grasp_reference": "top_center",
+      "placement_reference": "bottom_center",
+      "rotation_axis_frame": "scene_world_m",
+      "rotation_axis": [
+        0,
+        1,
+        0
+      ],
+      "placement_yaw_rad": 1.5707963267948966
+    }
+  },
+  "asset_kind": "material_prefab",
+  "parameters": {
+    "height_m": 0.009999999776482804,
+    "shape": "box",
+    "length_m": 1.1500000070790364,
+    "width_m": 0.7500000335042891
+  }
+}

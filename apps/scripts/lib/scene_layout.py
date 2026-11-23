@@ -25,7 +25,7 @@ def bind_position_targets(manifest,devices):
     station=validate_sorting_station(manifest,devices)
     for id,device in devices.items():
         if device['contract'].get('device_type')!='conveyor':continue
-        targets={key:{**location,'reference':'carrier_origin'} for key,location in device.get('locations',{}).items() if 'position' in location}
+        targets={key:{'reference':'carrier_origin',**location} for key,location in device.get('locations',{}).items() if 'position' in location}
         if station and station['support_device']==id:targets['scene.'+station['id']]={'frame':station['frame'],'position':station['position_m'],'reference':station['reference'],'status':station['status']}
         device['position_targets']=targets
         groups=[g for g in manifest.get('drive_groups',{}).values() if id in g['members']]

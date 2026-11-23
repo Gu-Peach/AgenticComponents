@@ -1,0 +1,95 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "C5",
+  "contract_ref": "../contracts/conveyor.json",
+  "node_binding": {
+    "status": "bound",
+    "node": "Conveyor_#13_00cn",
+    "model_sha256": "9133e33ca8bc22852edaf3cbfef27fbfdbb00d504f516ae1f8d6d534a3f03ac4",
+    "geometry_nodes": [
+      "__Geometry___00ac"
+    ]
+  },
+  "model": {
+    "calibration": {
+      "status": "pending"
+    },
+    "surface": {
+      "frame": "scene_world_m",
+      "flow_axis": [
+        -1,
+        0,
+        0
+      ],
+      "candidate_support_height_m": 0.2,
+      "collision_proxy": {
+        "kind": "box_surface",
+        "status": "requires_contact_validation",
+        "thickness_m": 0.01
+      }
+    }
+  },
+  "parameters": {
+    "length_m": 2.0010000235230923,
+    "width_m": 0.9259999640434984,
+    "surface_height_m": 0.2,
+    "capacity": 1,
+    "resume_threshold": 0
+  },
+  "locations": {
+    "C5.entry": {
+      "frame": "scene_world_m",
+      "position": [
+        -8.40979193919736,
+        0.2,
+        0.7382925152778625
+      ],
+      "status": "mesh_bound_candidate"
+    },
+    "C5.exit": {
+      "frame": "scene_world_m",
+      "position": [
+        -10.410791962720452,
+        0.2,
+        0.7382925152778625
+      ],
+      "status": "mesh_bound_candidate"
+    },
+    "C5.station1": {
+      "frame": "scene_world_m",
+      "position": [
+        -4.060791589006783,
+        0.2,
+        0.7382925152778624
+      ],
+      "status": "mesh_bound_candidate",
+      "reference": "carrier_origin",
+      "support_device": "C2",
+      "source_node": "Process_Node_#2_00hn"
+    },
+    "C5.station2": {
+      "frame": "scene_world_m",
+      "position": [
+        -6.061791516527535,
+        0.2,
+        0.7382925152778624
+      ],
+      "status": "mesh_bound_candidate",
+      "reference": "carrier_origin",
+      "support_device": "C3",
+      "source_node": "Process_Node_#3_00Yn"
+    },
+    "C5.station3": {
+      "frame": "scene_world_m",
+      "position": [
+        -8.062791444048287,
+        0.2,
+        0.7382925152778624
+      ],
+      "status": "mesh_bound_candidate",
+      "reference": "carrier_origin",
+      "support_device": "C4",
+      "source_node": "Process_Node_#4_00In"
+    }
+  }
+}

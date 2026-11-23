@@ -1,0 +1,32 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "UpperPart",
+  "contract_ref": "../contracts/workpiece.json",
+  "node_binding": {
+    "status": "bound",
+    "node": "Lathe_Comp_3_002n",
+    "model_sha256": "9133e33ca8bc22852edaf3cbfef27fbfdbb00d504f516ae1f8d6d534a3f03ac4"
+  },
+  "model": {
+    "calibration": {
+      "status": "pending"
+    },
+    "loading_pose": {
+      "grasp_reference": "top_center",
+      "placement_reference": "bottom_center",
+      "rotation_axis_frame": "scene_world_m",
+      "rotation_axis": [
+        0,
+        1,
+        0
+      ],
+      "placement_yaw_rad": 0
+    }
+  },
+  "asset_kind": "material_prefab",
+  "parameters": {
+    "height_m": 0.19999999552965164,
+    "shape": "cylinder",
+    "diameter_m": 0.18000000380163428
+  }
+}

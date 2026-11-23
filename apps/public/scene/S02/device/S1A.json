@@ -1,0 +1,59 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "S1A",
+  "contract_ref": "../contracts/conveyor.json",
+  "node_binding": {
+    "status": "bound",
+    "node": "Conveyor_#6_00fn",
+    "model_sha256": "9133e33ca8bc22852edaf3cbfef27fbfdbb00d504f516ae1f8d6d534a3f03ac4",
+    "geometry_nodes": [
+      "__Geometry___00dc"
+    ]
+  },
+  "model": {
+    "calibration": {
+      "status": "pending"
+    },
+    "surface": {
+      "frame": "scene_world_m",
+      "flow_axis": [
+        0,
+        0,
+        -1
+      ],
+      "candidate_support_height_m": 0.7,
+      "collision_proxy": {
+        "kind": "box_surface",
+        "status": "requires_contact_validation",
+        "thickness_m": 0.01
+      }
+    }
+  },
+  "parameters": {
+    "length_m": 1.5010000460610256,
+    "width_m": 0.32300406036172724,
+    "surface_height_m": 0.7,
+    "capacity": 1,
+    "resume_threshold": 0
+  },
+  "locations": {
+    "S1A.entry": {
+      "frame": "scene_world_m",
+      "position": [
+        -4.057962661373375,
+        0.7,
+        5.055796159287627
+      ],
+      "status": "mesh_bound_candidate"
+    },
+    "S1A.exit": {
+      "frame": "scene_world_m",
+      "position": [
+        -4.057962661373375,
+        0.7,
+        3.554796113226601
+      ],
+      "status": "mesh_bound_candidate"
+    }
+  }
+}

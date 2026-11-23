@@ -2,20 +2,58 @@
   "schema_version": "scene-device/0.2",
   "instance_id": "C4",
   "contract_ref": "../contracts/conveyor.json",
+  "node_binding": {
+    "status": "bound",
+    "node": "Conveyor_#4_00Hn",
+    "model_sha256": "9133e33ca8bc22852edaf3cbfef27fbfdbb00d504f516ae1f8d6d534a3f03ac4",
+    "geometry_nodes": [
+      "__Geometry___00Gc"
+    ]
+  },
+  "model": {
+    "calibration": {
+      "status": "pending"
+    },
+    "surface": {
+      "frame": "scene_world_m",
+      "flow_axis": [
+        -1,
+        0,
+        0
+      ],
+      "candidate_support_height_m": 0.2,
+      "collision_proxy": {
+        "kind": "box_surface",
+        "status": "requires_contact_validation",
+        "thickness_m": 0.01
+      }
+    }
+  },
   "parameters": {
-    "speed_mps": 0.2,
+    "length_m": 2.0010000235230923,
+    "width_m": 0.9259999640434984,
+    "surface_height_m": 0.2,
     "capacity": 1,
     "resume_threshold": 0
   },
-  "node_binding": {
-    "status": "unresolved"
-  },
   "locations": {
     "C4.entry": {
-      "geometry_status": "pending_calibration"
+      "frame": "scene_world_m",
+      "position": [
+        -6.40879153483945,
+        0.2,
+        0.7382925152778625
+      ],
+      "status": "mesh_bound_candidate"
     },
     "C4.exit": {
-      "geometry_status": "pending_calibration"
+      "frame": "scene_world_m",
+      "position": [
+        -8.409791558362542,
+        0.2,
+        0.7382925152778625
+      ],
+      "status": "mesh_bound_candidate"
     }
   }
 }

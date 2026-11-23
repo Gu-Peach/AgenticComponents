@@ -12,12 +12,12 @@
     },
     {
       "id": "S02",
-      "name": "S02：六托盘三工位成组并行拆垛与空盘出线",
+      "name": "S02：六托盘三工位分层装载",
       "bundleUrl": "/scene/S02/.generated/scene.bundle.json",
-      "bundleSha256": "7ab8ab104b7fe0df69c494aaf3f4882b5a279a4b39e4806b65b9ad8f70836cf7",
-      "deviceCount": 37,
-      "nodeCount": 995,
-      "blockerCount": 75
+      "bundleSha256": "7e83ea9b88cf00badec79db5a3bbc5b468097965b29609020d98217a6444f07b",
+      "deviceCount": 21,
+      "nodeCount": 1054,
+      "blockerCount": 45
     },
     {
       "id": "S03",

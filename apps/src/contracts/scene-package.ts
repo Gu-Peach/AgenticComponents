@@ -61,6 +61,7 @@ export const sceneBundleSchema = z
     model_url: sceneUrl,
     source_hashes: z.record(z.string(), hash),
     runtime_profile: z.literal("warehouse.virtual-linear@1").optional(),
+    initial: z.record(z.string(), z.unknown()).optional(),
     drive_groups: z
       .record(
         z.string(),

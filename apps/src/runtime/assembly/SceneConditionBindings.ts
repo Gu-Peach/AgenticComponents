@@ -15,9 +15,10 @@ import type { PositionTransportConfig } from "@/runtime/adapters/scene/PositionT
 import type { EnvironmentReceipt } from "@/runtime/services/FiniteSceneEnvironment";
 import { RobotKinematics } from "@/runtime/kinematics/RobotKinematics";
 import { CcdPositionIK } from "@/runtime/kinematics/CcdPositionIK";
+import { restJointTarget } from "@/runtime/kinematics/restJointTarget";
 import { DEFAULT_FEEDBACK_MAX_AGE_TICKS } from "@/domain/runtime/bindDeviceBehavior";
 
-interface World {
+export interface SceneConditionWorld {
   bodies: Record<
     string,
     { active: boolean; pose?: BodyPose; supports: string[]; held: boolean }
@@ -28,7 +29,14 @@ interface World {
     string,
     { handler: string; receiver: string; target: string }
   >;
+  /** Present for a finite loading manifest. Receipts are per run and slot. */
+  loading?: {
+    pallet: string | null;
+    slots: Record<string, string>;
+    fullAtExit: boolean;
+  };
 }
+type World = SceneConditionWorld;
 interface RobotObservation {
   q: number[];
   qdot: number[];
@@ -346,8 +354,11 @@ export function sceneConditionReader(
           (r) =>
             r.runId === c.frame.runId &&
             r.subjectId === subjectId &&
-            r.kind === "material_delivered" &&
-            w.deliveries[subjectId]?.receiver === deviceId,
+            (w.loading
+              ? r.kind === "carrier_departed" &&
+                compiled.loading?.exchange.leader === deviceId
+              : r.kind === "material_delivered" &&
+                w.deliveries[subjectId]?.receiver === deviceId),
         );
       const maxSpeed = (request = false) =>
         sample<{ maxSpeed: number }>(
@@ -388,6 +399,21 @@ export function sceneConditionReader(
       const destinationFree = (w: World) => {
         const dest = owner(resolved.target),
           support = dest.instance_id + "/surface";
+        if (w.loading && compiled.loading) {
+          const pallet = compiled.loading.pallets.find(
+            (p) => p.id === dest.instance_id,
+          );
+          return (
+            !!pallet &&
+            w.loading.pallet === pallet.id &&
+            pallet.items.some(
+              (i) => i.target === resolved.target && i.material === subjectId,
+            ) &&
+            !Object.hasOwn(w.loading.slots, String(resolved.target)) &&
+            maxMainlineSpeed() <=
+              configs.get(compiled.loading.exchange.leader)!.speedTolerance
+          );
+        }
         return !Object.entries(w.bodies).some(
           ([id, s]) =>
             id !== subjectId + "/body" &&
@@ -395,6 +421,10 @@ export function sceneConditionReader(
             s.supports.includes(support),
         );
       };
+      const maxMainlineSpeed = () =>
+        sample<{ maxSpeed: number }>(
+          compiled.loading!.exchange.leader + "/drive_state",
+        ).maxSpeed;
       const targetValid = (w: World) => {
         const target = config?.targets.find(
             (t) => t.id === String(resolved.target ?? deviceId + ".exit"),
@@ -430,11 +460,22 @@ export function sceneConditionReader(
         case "target_admissible":
           return good(destinationFree(world()));
         case "pose_plan_valid": {
-          const target = owner(resolved.target).locations[
+          const location = owner(resolved.target).locations[
               String(resolved.target)
-            ].position,
+            ],
+            target = location.position,
             base = compiled.robots.get(deviceId)!,
             w = world();
+          if (compiled.loading && location.reference === "robot_rest_pose") {
+            sources.add("kinematic-preflight/GLB-rest");
+            if (!location.rotation_quaternion)
+              return fail("location", "Missing rest orientation");
+            restJointTarget(base, {
+              position: target,
+              rotation: location.rotation_quaternion,
+            });
+            return good(!w.bodies[base.toolBodyId]?.held);
+          }
           const previous = c.observations?.samples[deviceId + "/robot_state"];
           const q = previous
             ? sample<RobotObservation>(deviceId + "/robot_state").q
@@ -467,6 +508,30 @@ export function sceneConditionReader(
         case "environment_ready": {
           const w = world(),
             p = compiled.task.pallets.find((p) => p.id === subjectId);
+          if (w.loading && compiled.loading) {
+            const admitted = w.receipts.some(
+              (r) =>
+                r.kind === "supply_confirmed" &&
+                r.runId === c.frame.runId &&
+                r.subjectId === subjectId,
+            );
+            if (!admitted || !robotsClear(w)) return good(false);
+            if (p)
+              return good(
+                p.id === w.loading.pallet &&
+                  (resolved.target !== compiled.loading.exchange.exit ||
+                    compiled.loading.pallets
+                      .find((x) => x.id === p.id)!
+                      .items.every(
+                        (i) => w.loading!.slots[i.target] === i.material,
+                      )),
+              );
+            return good(
+              compiled.loading.supplies.some(
+                (s) => s.leader === deviceId && s.materials.includes(subjectId),
+              ),
+            );
+          }
           return good(
             !!p &&
               w.receipts.some(
@@ -533,6 +598,8 @@ export function sceneConditionReader(
           const w = world(),
             s = load(w),
             target = config!.targets.find((t) => t.id === deviceId + ".exit")!;
+          if (w.loading)
+            return good(w.loading.pallet === subjectId && w.loading.fullAtExit);
           return good(
             supported(w) &&
               settled(w) &&
@@ -542,6 +609,12 @@ export function sceneConditionReader(
         }
         case "receiver_admissible": {
           const w = world();
+          if (w.loading)
+            return good(
+              w.loading.pallet === subjectId &&
+                w.loading.fullAtExit &&
+                !receipt(w),
+            );
           return good(
             compiled.outfeeds.includes(deviceId) &&
               compiled.goals.material_ids.includes(subjectId) &&
@@ -555,8 +628,11 @@ export function sceneConditionReader(
             receipts = w.receipts.filter(
               (r) =>
                 r.runId === c.frame.runId &&
-                r.kind === "material_delivered" &&
-                w.deliveries[r.subjectId]?.receiver === deviceId,
+                (w.loading
+                  ? r.kind === "carrier_departed" &&
+                    compiled.loading?.exchange.leader === deviceId
+                  : r.kind === "material_delivered" &&
+                    w.deliveries[r.subjectId]?.receiver === deviceId),
             );
           return good(
             name === "release_history_exists"
@@ -606,6 +682,12 @@ export function sceneConditionReader(
                           r.kind,
                         ),
                     ) ||
+                    (w.loading &&
+                      w.receipts.some(
+                        (r) =>
+                          r.kind === "carrier_departed" &&
+                          r.bodyIds.includes(s.bodyId),
+                      )) ||
                     compiled.devices.get(s.id)?.creation_policy ===
                       "clone_on_admission")
               );

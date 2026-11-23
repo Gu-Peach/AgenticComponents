@@ -100,9 +100,10 @@ export class SceneWorldStepper {
     }
   }
   /** Explicitly abandon a quiescent failed simulation, without a successful handoff receipt. */
-  discard() {
+  discard(programFaulted = false) {
     if (
-      this.state !== "attention_required" ||
+      (this.state !== "attention_required" &&
+        !(programFaulted && this.state === "stopped")) ||
       this.world.isMotionStopped?.() !== true
     )
       throw new Error(
