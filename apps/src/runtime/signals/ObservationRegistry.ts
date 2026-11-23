@@ -23,6 +23,7 @@ export class ObservationRegistry {
   private samples: Record<string, Readonly<ObservationSample>> =
     Object.create(null);
   private tick = 0;
+  private cached?: Readonly<ObservationFrame>;
   constructor(
     readonly runId: string,
     definitions: readonly ObservationDefinition[],
@@ -65,9 +66,11 @@ export class ObservationRegistry {
     }
     Object.assign(this.samples, next);
     this.tick = tick;
+    this.cached = undefined;
   }
   snapshot(tick = this.tick): Readonly<ObservationFrame> {
     if (tick < this.tick) throw new Error("Observation tick moved backwards");
+    if (this.cached?.tick === tick) return this.cached;
     const samples = Object.create(null) as Record<
       string,
       Readonly<ObservationSample>
@@ -78,10 +81,10 @@ export class ObservationRegistry {
         tick - s.sampledTick > this.definitions.get(key)!.maxAgeTicks
           ? Object.freeze({ ...s, quality: "stale" as const })
           : s;
-    return Object.freeze({
+    return (this.cached = Object.freeze({
       runId: this.runId,
       tick,
       samples: Object.freeze(samples),
-    });
+    }));
   }
 }

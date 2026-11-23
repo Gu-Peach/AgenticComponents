@@ -20,11 +20,14 @@ export const preview = new PreviewController(
   (message) => useWorkspace.getState().log(message),
   observations.read,
 );
+let previewOwnsDocument = false;
 preview.subscribe(() => {
-  const documentLocked =
-    isActive(preview.getSnapshot().status) || runtimeController.isBusy();
-  if (useWorkspace.getState().documentLocked !== documentLocked) {
-    useWorkspace.setState({ documentLocked });
+  const active = isActive(preview.getSnapshot().status);
+  if (active !== previewOwnsDocument) {
+    previewOwnsDocument = active;
+    useWorkspace.setState({
+      documentLocked: active || runtimeController.isBusy(),
+    });
   }
   if (preview.getSnapshot().status === "idle") observations.clear();
 });

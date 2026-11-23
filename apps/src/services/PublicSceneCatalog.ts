@@ -88,6 +88,11 @@ export async function importScenePackage(entry: SceneEntry) {
   }));
   useWorkspace.setState((s) => ({
     selectedId: id,
+    activeSceneId: id,
+    inspectorTarget: "scene",
+    selectedInterface: null,
+    dock: "plc",
+    dockOpen: true,
     focusToken: s.focusToken + 1,
   }));
   state.log(

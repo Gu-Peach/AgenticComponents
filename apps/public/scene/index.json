@@ -5,7 +5,7 @@
       "id": "S01",
       "name": "S01：三盘各十二件双臂分类拆垛",
       "bundleUrl": "/scene/S01/.generated/scene.bundle.json",
-      "bundleSha256": "0b1f2c016bd035b01e02d0cbeaa93bdb0f9a9589a1ee2ef7a1d45dc209d03c92",
+      "bundleSha256": "ff09c32b4d64e160d81e98f957073f657705a41af95480f097e9fad803c0d00b",
       "deviceCount": 9,
       "nodeCount": 488,
       "blockerCount": 22
@@ -50,7 +50,7 @@
       "id": "S07",
       "name": "S07：四件分层入库后按订单出库",
       "bundleUrl": "/scene/S07/.generated/scene.bundle.json",
-      "bundleSha256": "4873878fad6fad26f4f4420f57858de82d793ac68848ac279db2a638d27ab54a",
+      "bundleSha256": "bd3ea0d547e69254cc9d46cd012fb41fee4037546706280d1d0ea4080db422e5",
       "deviceCount": 9,
       "nodeCount": 440,
       "blockerCount": 20

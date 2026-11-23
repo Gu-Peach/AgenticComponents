@@ -3,41 +3,79 @@ import { SceneLadderPanel } from "./ladder/SceneLadderPanel";
 import { SceneModulePanel } from "./SceneModulePanel";
 import { FileCode2, Download, Upload, CircleOff } from "lucide-react";
 import { useWorkspace } from "@/stores/workspace";
+import { useActiveScene } from "@/hooks/useActiveScene";
+import type { ScenePackageInstance } from "@/contracts/scene-package";
 import { download } from "@/services/BrowserProjectRepository";
 export function PlcPanel() {
-  const { project, selectedId } = useWorkspace();
-  const input = useRef<HTMLInputElement>(null);
+  const scene = useActiveScene();
+  if (scene) return <ScenePlc key={scene.id} scene={scene} />;
+  return <PlcEditor />;
+}
+
+function ScenePlc({ scene }: { scene: ScenePackageInstance }) {
+  const scenes = useWorkspace((s) => s.project?.scenePackages);
+  const locked = useWorkspace((s) => s.documentLocked);
+  const setActiveScene = useWorkspace((s) => s.setActiveScene);
   const [sceneView, setSceneView] = useState<"ladder" | "devices">("ladder");
+  return (
+    <div className="plc-panel">
+      {scenes && scenes.length > 1 && (
+        <div className="panel-toolbar">
+          <label>
+            当前场景{" "}
+            <select
+              aria-label="当前 PLC 场景"
+              value={scene.id}
+              disabled={locked}
+              onChange={(e) => setActiveScene(e.currentTarget.value)}
+            >
+              {scenes.map((s, i) => (
+                <option key={s.id} value={s.id}>
+                  {i + 1}. {s.bundle.name}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+      )}
+      <div style={{ flex: 1, minHeight: 0 }}>
+        {sceneView === "ladder" ? (
+          <SceneLadderPanel
+            scene={scene}
+            onDevices={() => setSceneView("devices")}
+          />
+        ) : (
+          <div
+            style={{
+              height: "100%",
+              minHeight: 0,
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <button
+              onClick={() => setSceneView("ladder")}
+              style={{ alignSelf: "flex-start", margin: 8 }}
+            >
+              返回场景梯形图
+            </button>
+            <div style={{ flex: 1, minHeight: 0 }}>
+              <SceneModulePanel scene={scene} />
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function PlcEditor() {
+  const project = useWorkspace((s) => s.project);
+  const selectedId = useWorkspace((s) => s.selectedId);
+  const input = useRef<HTMLInputElement>(null);
   const lines = useRef<HTMLDivElement>(null);
   const instance = project?.instances.find((i) => i.instanceId === selectedId);
   const def = project?.definitions.find((d) => d.specId === instance?.specId);
-  const scene = project?.scenePackages?.find((s) => s.id === selectedId);
-  if (scene)
-    return sceneView === "ladder" ? (
-      <SceneLadderPanel
-        scene={scene}
-        onDevices={() => setSceneView("devices")}
-      />
-    ) : (
-      <div
-        style={{
-          height: "100%",
-          minHeight: 0,
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <button
-          onClick={() => setSceneView("ladder")}
-          style={{ alignSelf: "flex-start", margin: 8 }}
-        >
-          返回场景梯形图
-        </button>
-        <div style={{ flex: 1, minHeight: 0 }}>
-          <SceneModulePanel scene={scene} />
-        </div>
-      </div>
-    );
   return (
     <div className="plc-panel">
       <div className="panel-toolbar">

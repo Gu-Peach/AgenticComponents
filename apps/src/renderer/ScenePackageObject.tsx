@@ -18,6 +18,7 @@ export function ScenePackageObject({ scene }: { scene: ScenePackageInstance }) {
       }}
     >
       <ImportedModel
+        scenePackage
         assetId={scene.assetId}
         instanceId={scene.id}
         selected={selected}

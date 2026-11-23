@@ -10,7 +10,9 @@ test("warehouse import, physical preparation, pause, stop and reset", async ({
   await page
     .getByRole("button", { name: /S07：四件分层入库后按订单出库/ })
     .click();
-  await page.getByRole("tab", { name: "PLC", exact: true }).click();
+  await expect(
+    page.getByRole("tab", { name: "PLC", exact: true }),
+  ).toHaveAttribute("aria-selected", "true");
   await page.getByRole("button", { name: "准备候选仿真", exact: true }).click();
   const panel = page.getByRole("region", { name: "场景运行" });
   await expect(panel).toContainText("ready", { timeout: 30000 });

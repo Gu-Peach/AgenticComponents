@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { Object3D } from "three";
+import { Box3, type Object3D } from "three";
 import { Html } from "@react-three/drei";
 import { acquireModel } from "@/services/ModelRepository";
 import { useWorkspace } from "@/stores/workspace";
@@ -10,14 +10,19 @@ export function ImportedModel({
   assetId,
   instanceId,
   selected,
+  scenePackage = false,
 }: {
   assetId: string;
   instanceId: string;
   selected: boolean;
+  scenePackage?: boolean;
 }) {
   const [failure, setFailure] = useState("");
   const [retry, setRetry] = useState(0);
-  const [model, setModel] = useState<Object3D | null>(null);
+  const [asset, setAsset] = useState<{ model: Object3D; bounds?: Box3 } | null>(
+    null,
+  );
+  const model = asset?.model;
   useEffect(() => {
     let disposed = false;
     let release: (() => void) | undefined;
@@ -40,7 +45,12 @@ export function ImportedModel({
       useWorkspace.setState((s) => ({
         modelNodes: { ...s.modelNodes, [instanceId]: nodes },
       }));
-      setModel(owned);
+      // The imported package is still detached. Its bounds are in parent-local
+      // coordinates and remain the selection envelope while its children move.
+      setAsset({
+        model: owned,
+        bounds: scenePackage ? new Box3().setFromObject(owned) : undefined,
+      });
     })().catch((e) => {
       if (!disposed) {
         setFailure(String(e.message));
@@ -54,7 +64,7 @@ export function ImportedModel({
       disposed = true;
       release?.();
     };
-  }, [assetId, instanceId, retry]);
+  }, [assetId, instanceId, retry, scenePackage]);
   useEffect(() => {
     if (model && useWorkspace.getState().selectedId === instanceId)
       useWorkspace.setState((s) => ({ focusToken: s.focusToken + 1 }));
@@ -76,9 +86,16 @@ export function ImportedModel({
   return model ? (
     <>
       <primitive object={model} dispose={null} />
-      <RobotSceneBridge model={model} instanceId={instanceId} />
-      <ScenePhysicsBridge model={model} instanceId={instanceId} />
-      <SelectionHighlight model={model} selected={selected} />
+      {scenePackage ? (
+        <ScenePhysicsBridge model={model} instanceId={instanceId} />
+      ) : (
+        <RobotSceneBridge model={model} instanceId={instanceId} />
+      )}
+      <SelectionHighlight
+        model={model}
+        selected={selected}
+        packageBounds={asset?.bounds}
+      />
     </>
   ) : (
     <Html center>

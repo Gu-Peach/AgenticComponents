@@ -3697,6 +3697,7 @@
       },
       "position_targets": {
         "C1.entry": {
+          "reference": "carrier_origin",
           "frame": "scene_world_m",
           "position": [
             0.11946160644392209,
@@ -3704,10 +3705,10 @@
             2.8016481718666024
           ],
           "status": "candidate",
-          "owner": "C1",
-          "reference": "carrier_origin"
+          "owner": "C1"
         },
         "C1.exit": {
+          "reference": "carrier_origin",
           "frame": "scene_world_m",
           "position": [
             0.11946160644392209,
@@ -3715,8 +3716,7 @@
             1.9016480462008056
           ],
           "status": "candidate",
-          "owner": "C1",
-          "reference": "carrier_origin"
+          "owner": "C1"
         }
       }
     },
@@ -6795,6 +6795,7 @@
       },
       "position_targets": {
         "C2.entry": {
+          "reference": "carrier_origin",
           "frame": "scene_world_m",
           "position": [
             -1.8766833513965286,
@@ -6802,10 +6803,10 @@
             -3.444811349982688
           ],
           "status": "candidate",
-          "owner": "C2",
-          "reference": "carrier_origin"
+          "owner": "C2"
         },
         "C2.exit": {
+          "reference": "carrier_origin",
           "frame": "scene_world_m",
           "position": [
             -1.8766833513965286,
@@ -6813,8 +6814,7 @@
             -4.344811400150588
           ],
           "status": "candidate",
-          "owner": "C2",
-          "reference": "carrier_origin"
+          "owner": "C2"
         }
       }
     },

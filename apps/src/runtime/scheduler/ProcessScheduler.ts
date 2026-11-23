@@ -506,6 +506,9 @@ export class ProcessScheduler {
     }
     return Object.freeze([...this.effects]);
   }
+  get currentStatus() {
+    return this.status;
+  }
   snapshot(): Readonly<SchedulerSnapshot> {
     return immutable({
       runId: this.runId,

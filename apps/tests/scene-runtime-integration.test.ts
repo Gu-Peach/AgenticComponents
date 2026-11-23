@@ -236,6 +236,17 @@ describe("scene scheduling and signal loop", () => {
     controller.subscribe(listener);
     controller.attach(f.program);
     controller.start("S");
+    const initial = controller.snapshot("S")!;
+    controller.step("S", 1 / 60);
+    const visual = controller.visualFrame("S")!;
+    expect(visual.previous.tick).toBe(0);
+    expect(visual.current.tick).toBe(1);
+    expect(controller.snapshot("S")).toBe(initial);
+    controller.pause("S");
+    expect(controller.visualFrame("S")?.previous).toBe(
+      controller.visualFrame("S")?.current,
+    );
+    controller.resume("S");
     for (
       let i = 0;
       i < 8 && controller.snapshot("S")?.status !== "succeeded";
@@ -246,6 +257,7 @@ describe("scene scheduling and signal loop", () => {
     expect(listener).toHaveBeenCalled();
     controller.detach("S");
     expect(controller.snapshot("S")).toBeUndefined();
+    expect(controller.visualFrame("S")).toBeUndefined();
   });
   it("keeps observations separate, immutable and freshness checked", () => {
     const observations = new ObservationRegistry("run", [

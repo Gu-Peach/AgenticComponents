@@ -17,6 +17,9 @@ import {
 } from "lucide-react";
 import { runtimeController } from "@/services/RuntimeController";
 import { RuntimeTransport } from "@/features/runtime/RuntimeTransport";
+import { ScenePlaybackControls } from "@/features/runtime/ScenePlaybackControls";
+import { useActiveScene } from "@/hooks/useActiveScene";
+import { isActive as isPreviewActive } from "@/contracts/preview";
 import { ProjectMark } from "@/components/ui/ProjectMark";
 import { useWorkspace } from "@/stores/workspace";
 import { usePreview } from "@/hooks/usePreview";
@@ -33,6 +36,7 @@ export function TopBar() {
   const dirty = useWorkspace((s) => s.dirty);
   const saving = useWorkspace((s) => s.saving);
   const state = usePreview();
+  const scene = useActiveScene();
   const runtime = useSyncExternalStore(
     runtimeController.subscribe,
     runtimeController.snapshot,
@@ -151,7 +155,11 @@ export function TopBar() {
           }
         }}
       />
-      {runtime.status !== "idle" ? (
+      {scene &&
+      !isPreviewActive(state.status) &&
+      !runtimeController.isBusy() ? (
+        <ScenePlaybackControls key={scene.id} scene={scene} />
+      ) : runtime.status !== "idle" && !isPreviewActive(state.status) ? (
         <RuntimeTransport />
       ) : (
         <div className="transport-controls">

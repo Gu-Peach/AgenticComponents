@@ -25,6 +25,10 @@ export interface SceneRuntimeSnapshot {
   process: Readonly<SchedulerSnapshot>;
   conditions?: ConditionDiagnostics;
 }
+export type SceneVisualSnapshot = Pick<
+  SceneRuntimeSnapshot,
+  "runId" | "tick" | "status" | "observations"
+>;
 /** Scene composition root. A step consumes the last complete feedback frame. */
 export class SceneRuntimeProgram {
   readonly scheduler: ProcessScheduler;
@@ -90,12 +94,16 @@ export class SceneRuntimeProgram {
     this.stepper.stop();
   }
   step(dt: number): SceneRuntimeSnapshot {
+    this.advance(dt);
+    return this.snapshot();
+  }
+  /** The viewport needs poses on every tick; PLC diagnostics are sampled separately. */
+  advance(dt: number): void {
     if (this.disposed) throw new Error("Scene session disposed");
     if (!Number.isFinite(dt) || Math.abs(dt - 1 / 60) > 1e-8)
       throw new Error("Invalid scene timestep");
     const current = this.stepper.snapshot();
-    if (!["running", "stopping"].includes(current.status))
-      return this.snapshot();
+    if (!["running", "stopping"].includes(current.status)) return;
     try {
       const frame = this.signals.snapshot(current.tick);
       const proposed = this.scheduler.advance({
@@ -144,7 +152,7 @@ export class SceneRuntimeProgram {
       }
       if (
         ["succeeded", "failed", "cancelled", "attention_required"].includes(
-          this.scheduler.snapshot().status,
+          this.scheduler.currentStatus,
         )
       ) {
         this.signals.commitInputs(
@@ -175,17 +183,19 @@ export class SceneRuntimeProgram {
           .filter((f) => f.status === "accepted")
           .map((f) => [f.requestId, f]),
       );
-      const feedbackFrame = this.signals.snapshot(next.tick);
-      this.signals.commitInputs(
-        [...accepted.values()].flatMap((f) => [
-          ...(this.drivers.get(f.device)?.acknowledge?.(f, feedbackFrame) ??
-            []),
-        ]),
-        next.tick,
-      );
+      if (accepted.size) {
+        const feedbackFrame = this.signals.snapshot(next.tick);
+        this.signals.commitInputs(
+          [...accepted.values()].flatMap(
+            (f) =>
+              this.drivers.get(f.device)?.acknowledge?.(f, feedbackFrame) ?? [],
+          ),
+          next.tick,
+        );
+      }
       if (
         next.status === "stopped" &&
-        this.scheduler.snapshot().status === "stopping"
+        this.scheduler.currentStatus === "stopping"
       ) {
         const cleanup = this.scheduler.advance({
           frame: this.signals.snapshot(next.tick),
@@ -198,7 +208,7 @@ export class SceneRuntimeProgram {
             throw new Error("Cannot submit after world stop");
           this.drivers.get(e.request.device)!.cancel(e.request);
         }
-        if (this.scheduler.snapshot().status === "stopping")
+        if (this.scheduler.currentStatus === "stopping")
           throw new Error(
             "World stopped without correlated request stop confirmation",
           );
@@ -207,13 +217,10 @@ export class SceneRuntimeProgram {
       this.error ??= e instanceof Error ? e.message : String(e);
       this.stop();
     }
-    return this.snapshot();
   }
-  snapshot(): SceneRuntimeSnapshot {
-    const world = this.stepper.snapshot(),
-      process = this.scheduler.snapshot();
+  visualSnapshot(): SceneVisualSnapshot {
+    const world = this.stepper.snapshot();
     return Object.freeze({
-      sceneInstanceId: this.sceneInstanceId,
       runId: this.runId,
       tick: world.tick,
       status: this.disposed
@@ -221,11 +228,19 @@ export class SceneRuntimeProgram {
         : this.error
           ? "attention_required"
           : world.status === "stopped"
-            ? process.status
+            ? this.scheduler.currentStatus
             : world.status,
-      error: this.error ?? world.error ?? process.error,
-      signals: this.signals.snapshot(world.tick),
       observations: this.observations.snapshot(world.tick),
+    });
+  }
+  snapshot(): SceneRuntimeSnapshot {
+    const visual = this.visualSnapshot(),
+      process = this.scheduler.snapshot();
+    return Object.freeze({
+      ...visual,
+      sceneInstanceId: this.sceneInstanceId,
+      error: this.error ?? this.stepper.snapshot().error ?? process.error,
+      signals: this.signals.snapshot(visual.tick),
       process,
       conditions: this.process.providers.diagnostics?.(),
     });

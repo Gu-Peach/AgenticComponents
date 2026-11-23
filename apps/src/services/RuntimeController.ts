@@ -14,6 +14,7 @@ import type { ProjectDocument, DeviceInstance } from "@/contracts/device";
 import type { RuntimeSnapshot } from "@/contracts/runtime";
 import { useWorkspace } from "@/stores/workspace";
 export class RuntimeController {
+  private ownsDocumentLock = false;
   private value = emptySnapshot();
   private listeners = new Set<() => void>();
   private session?: SimulationSession;
@@ -46,6 +47,7 @@ export class RuntimeController {
     );
     this.reset();
     const generation = ++this.generation;
+    this.ownsDocumentLock = true;
     useWorkspace.setState({ documentLocked: true });
     this.publish({
       ...emptySnapshot(),
@@ -151,7 +153,10 @@ export class RuntimeController {
     this.clock = undefined;
     if (this.session) this.publish(this.session.stop());
     else this.publish({ ...this.value, status: "stopped" });
-    useWorkspace.setState({ documentLocked: false });
+    if (this.ownsDocumentLock) {
+      this.ownsDocumentLock = false;
+      useWorkspace.setState({ documentLocked: false });
+    }
   }
   reset() {
     this.stop();

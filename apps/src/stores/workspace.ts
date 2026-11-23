@@ -23,6 +23,8 @@ interface WorkspaceState {
   selectAsset(id: string): void;
   project: ProjectDocument | null;
   selectedId: string | null;
+  activeSceneId: string | null;
+  setActiveScene(id: string): void;
   selectedAsset: string | null;
   dock: "assets" | "plc" | "terminal";
   dockOpen: boolean;
@@ -60,6 +62,7 @@ export const useWorkspace = create<WorkspaceState>((set, get) => ({
   },
   project: null,
   selectedId: null,
+  activeSceneId: null,
   selectedAsset: null,
   dock: "assets",
   dockOpen: true,
@@ -72,8 +75,12 @@ export const useWorkspace = create<WorkspaceState>((set, get) => ({
   modelNodes: {},
   modelErrors: {},
   initialize(project = createDemoProject()) {
+    const activeSceneId = project.scenePackages?.at(-1)?.id ?? null;
     set({
       project,
+      activeSceneId,
+      dock: activeSceneId ? "plc" : "assets",
+      dockOpen: true,
       inspectorTarget: "scene",
       selectedInterface: null,
       selectedId: project.instances[0]?.instanceId ?? null,
@@ -84,7 +91,25 @@ export const useWorkspace = create<WorkspaceState>((set, get) => ({
     });
   },
   select(id) {
-    set({ selectedId: id, inspectorTarget: "scene", selectedInterface: null });
+    set((s) => ({
+      selectedId: id,
+      inspectorTarget: "scene",
+      selectedInterface: null,
+      activeSceneId:
+        !s.documentLocked &&
+        s.project?.scenePackages?.some((scene) => scene.id === id)
+          ? id
+          : s.activeSceneId,
+    }));
+  },
+  setActiveScene(id) {
+    const s = get();
+    if (
+      !s.documentLocked &&
+      s.project?.scenePackages?.some((scene) => scene.id === id)
+    ) {
+      set({ activeSceneId: id });
+    }
   },
   updateProject(fn) {
     if (get().documentLocked) {
@@ -92,8 +117,19 @@ export const useWorkspace = create<WorkspaceState>((set, get) => ({
       return;
     }
     const p = get().project;
-    if (p)
-      set({ project: { ...fn(p), revision: p.revision + 1 }, dirty: true });
+    if (p) {
+      const project = { ...fn(p), revision: p.revision + 1 };
+      const { activeSceneId } = get();
+      set({
+        project,
+        dirty: true,
+        activeSceneId: project.scenePackages?.some(
+          (scene) => scene.id === activeSceneId,
+        )
+          ? activeSceneId
+          : (project.scenePackages?.at(-1)?.id ?? null),
+      });
+    }
   },
   updateInstance(id, patch) {
     get().updateProject((p) => ({

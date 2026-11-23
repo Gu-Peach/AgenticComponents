@@ -374,6 +374,24 @@ button.text-button {
 .transport-controls .stop {
   color: #e89086;
 }
+.scene-playback-rate {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  border-left: 1px solid var(--border);
+  padding-left: 6px;
+  color: var(--muted);
+  font: 11px var(--mono);
+}
+.scene-playback-rate input {
+  width: 5ch;
+  min-width: 40px;
+  padding: 2px;
+  text-align: center;
+}
+.scene-playback-rate input::-webkit-inner-spin-button {
+  appearance: none;
+}
 .clock-display {
   font: 10px var(--mono);
   padding: 0 8px;

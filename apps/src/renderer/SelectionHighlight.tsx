@@ -1,13 +1,23 @@
 import { useEffect } from "react";
-import { BoxHelper, Color, Mesh, MeshStandardMaterial, Object3D } from "three";
+import {
+  Box3Helper,
+  BoxHelper,
+  Color,
+  Mesh,
+  MeshStandardMaterial,
+  Object3D,
+  type Box3,
+} from "three";
 import { useThree, useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 export function SelectionHighlight({
   model,
   selected,
+  packageBounds,
 }: {
   model: Object3D;
   selected: boolean;
+  packageBounds?: Box3;
 }) {
   const scene = useThree((s) => s.scene);
   const helper = useRef<BoxHelper | null>(null);
@@ -29,21 +39,22 @@ export function SelectionHighlight({
             m.emissiveIntensity = 0.22;
           }
     });
-    const box = new BoxHelper(model, 0xf39a4b);
+    const box = packageBounds
+      ? new Box3Helper(packageBounds, 0xf39a4b)
+      : new BoxHelper(model, 0xf39a4b);
     box.raycast = () => {};
-    helper.current = box;
-    scene.add(box);
+    helper.current = box instanceof BoxHelper ? box : null;
+    (packageBounds ? (model.parent ?? scene) : scene).add(box);
     return () => {
       originals.forEach((v, m) => {
         m.emissive.copy(v.color);
         m.emissiveIntensity = v.intensity;
       });
-      scene.remove(box);
-      box.geometry.dispose();
-      box.material.dispose();
+      box.removeFromParent();
+      box.dispose();
       helper.current = null;
     };
-  }, [model, selected, scene]);
+  }, [model, selected, scene, packageBounds]);
   useFrame(() => helper.current?.update());
   return null;
 }

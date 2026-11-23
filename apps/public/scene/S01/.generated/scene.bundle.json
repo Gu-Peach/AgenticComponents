@@ -5086,6 +5086,7 @@
       },
       "position_targets": {
         "C1.entry": {
+          "reference": "carrier_origin",
           "frame": "scene_world_m",
           "position": [
             2.669077602466976,
@@ -5093,10 +5094,10 @@
             -1.1967112722261262
           ],
           "status": "mesh_bound_candidate",
-          "owner": "C1",
-          "reference": "carrier_origin"
+          "owner": "C1"
         },
         "C1.exit": {
+          "reference": "carrier_origin",
           "frame": "scene_world_m",
           "position": [
             0.6680775037660931,
@@ -5104,8 +5105,7 @@
             -1.1967112722261262
           ],
           "status": "mesh_bound_candidate",
-          "owner": "C1",
-          "reference": "carrier_origin"
+          "owner": "C1"
         }
       },
       "drive_group": {
@@ -9385,6 +9385,7 @@
       },
       "position_targets": {
         "C2.entry": {
+          "reference": "carrier_origin",
           "frame": "scene_world_m",
           "position": [
             0.6680735455364649,
@@ -9392,10 +9393,10 @@
             -1.1967109759622407
           ],
           "status": "mesh_bound_candidate",
-          "owner": "C2",
-          "reference": "carrier_origin"
+          "owner": "C2"
         },
         "C2.exit": {
+          "reference": "carrier_origin",
           "frame": "scene_world_m",
           "position": [
             -1.3329265531644179,
@@ -9403,8 +9404,7 @@
             -1.1967109759622407
           ],
           "status": "mesh_bound_candidate",
-          "owner": "C2",
-          "reference": "carrier_origin"
+          "owner": "C2"
         },
         "scene.sorting": {
           "frame": "scene_world_m",
@@ -13661,6 +13661,7 @@
       },
       "position_targets": {
         "C3.entry": {
+          "reference": "carrier_origin",
           "frame": "scene_world_m",
           "position": [
             -1.0428520925230245,
@@ -13668,10 +13669,10 @@
             -2.234896095325697
           ],
           "status": "mesh_bound_candidate",
-          "owner": "C3",
-          "reference": "carrier_origin"
+          "owner": "C3"
         },
         "C3.exit": {
+          "reference": "carrier_origin",
           "frame": "scene_world_m",
           "position": [
             -2.5438521499461118,
@@ -13679,8 +13680,7 @@
             -2.234896095325697
           ],
           "status": "mesh_bound_candidate",
-          "owner": "C3",
-          "reference": "carrier_origin"
+          "owner": "C3"
         }
       }
     },
@@ -17919,6 +17919,7 @@
       },
       "position_targets": {
         "C4.entry": {
+          "reference": "carrier_origin",
           "frame": "scene_world_m",
           "position": [
             -1.042851031153053,
@@ -17926,10 +17927,10 @@
             -0.1728751736184527
           ],
           "status": "mesh_bound_candidate",
-          "owner": "C4",
-          "reference": "carrier_origin"
+          "owner": "C4"
         },
         "C4.exit": {
+          "reference": "carrier_origin",
           "frame": "scene_world_m",
           "position": [
             -2.5438510885761403,
@@ -17937,8 +17938,7 @@
             -0.1728751736184527
           ],
           "status": "mesh_bound_candidate",
-          "owner": "C4",
-          "reference": "carrier_origin"
+          "owner": "C4"
         }
       }
     },

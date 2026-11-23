@@ -1,4 +1,5 @@
 import { runtimeController } from "@/services/RuntimeController";
+import { sceneRuntimeController } from "@/services/SceneRuntimeController";
 import type { CatalogEntry } from "@/contracts/catalog";
 import {
   fetchPublicCatalog,
@@ -16,6 +17,12 @@ import {
 import { normalizeDeviceSpec } from "@/domain/normalizeDeviceSpec";
 import { parseProject } from "@/validation/contracts";
 import { ZodError } from "zod";
+
+function requireSceneReleased() {
+  if (sceneRuntimeController.activeSessionId()) {
+    throw new Error("请先停止并重置场景仿真，再编辑工程");
+  }
+}
 export async function saveProject() {
   const { project } = useWorkspace.getState();
   if (!project) return;
@@ -39,6 +46,7 @@ export function exportProject() {
   log("已导出项目数据 JSON；不含模型文件，跨浏览器需重新关联 GLB");
 }
 export async function newProject() {
+  requireSceneReleased();
   if (
     useWorkspace.getState().dirty &&
     !window.confirm("当前项目有未保存修改，仍要新建吗？")
@@ -46,6 +54,7 @@ export async function newProject() {
     return;
   runtimeController.reset();
   await preview.reset();
+  requireSceneReleased();
   useWorkspace.getState().initialize();
   useWorkspace.setState((s) => ({
     project: {
@@ -61,6 +70,7 @@ export async function newProject() {
 }
 export async function importProject(file: File) {
   const project = parseProject(JSON.parse(await file.text()));
+  requireSceneReleased();
   if (
     useWorkspace.getState().dirty &&
     !window.confirm("导入将替换当前未保存项目，继续吗？")
@@ -68,6 +78,7 @@ export async function importProject(file: File) {
     return;
   runtimeController.reset();
   await preview.reset();
+  requireSceneReleased();
   useWorkspace.getState().initialize(project);
   useWorkspace.setState({ dirty: true });
   useWorkspace
@@ -98,6 +109,7 @@ export async function associateGlb(file: File) {
     throw new Error("请先选择现场设备，GLB 将关联至其设备定义");
   const bytes = await file.arrayBuffer();
   validateGlb(bytes);
+  requireSceneReleased();
   runtimeController.reset();
   await preview.reset();
   if (useWorkspace.getState().project !== p)
@@ -128,6 +140,7 @@ export async function associateGlb(file: File) {
 export async function removeSelected() {
   const id = useWorkspace.getState().selectedId;
   if (!id) return;
+  requireSceneReleased();
   runtimeController.reset();
   await preview.reset();
   useWorkspace.getState().updateProject((p) => ({
