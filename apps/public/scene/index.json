@@ -47,15 +47,6 @@
       "blockerCount": 22
     },
     {
-      "id": "S06",
-      "name": "S06：四件分度台批次与前后段流水",
-      "bundleUrl": "/scene/S06/.generated/scene.bundle.json",
-      "bundleSha256": "0c9391d5d7e5de443202aec05d5cd1c6885ead39a731a188de70ec65295a2da1",
-      "deviceCount": 12,
-      "nodeCount": 928,
-      "blockerCount": 24
-    },
-    {
       "id": "S07",
       "name": "S07：四件分层入库后按订单出库",
       "bundleUrl": "/scene/S07/.generated/scene.bundle.json",
