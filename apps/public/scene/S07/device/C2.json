@@ -8,14 +8,48 @@
     "resume_threshold": 0
   },
   "node_binding": {
-    "status": "unresolved"
+    "status": "bound",
+    "node": "Conveyor_#2_00Nn",
+    "model_sha256": "11bb5e2a0865c27e75836e23fc9a5cd7678216eea494aaf408b93c14d4b5d353"
   },
   "locations": {
     "C2.entry": {
-      "geometry_status": "pending_calibration"
+      "frame": "scene_world_m",
+      "position": [
+        -1.8766833513965286,
+        0.6999999843537817,
+        -3.444811349982688
+      ],
+      "status": "candidate"
     },
     "C2.exit": {
-      "geometry_status": "pending_calibration"
+      "frame": "scene_world_m",
+      "position": [
+        -1.8766833513965286,
+        0.6999999843537817,
+        -4.344811400150588
+      ],
+      "status": "candidate"
+    }
+  },
+  "model": {
+    "calibration": {
+      "status": "pending"
+    },
+    "flow_axis_candidate": [
+      0,
+      0,
+      -1
+    ],
+    "port_geometry_status": "pending_surface_and_dock_calibration",
+    "simulation": {
+      "profile": "warehouse.virtual-linear@1",
+      "support_mesh": "Mesh_05bg",
+      "flow_world": [
+        0,
+        0,
+        -1
+      ]
     }
   }
 }

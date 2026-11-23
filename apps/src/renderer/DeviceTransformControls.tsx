@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, type RefObject } from "react";
 import { TransformControls } from "@react-three/drei";
-import type { TransformControls as Controls } from "three-stdlib";
+import type { ComponentRef } from "react";
+type Controls = ComponentRef<typeof TransformControls>;
 import type { Group } from "three";
 import type {
   DeviceInstance,

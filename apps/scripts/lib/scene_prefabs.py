@@ -13,7 +13,20 @@ def instance_signals(device, prototype, instance):
 
 def expand_prefabs(ir, authored):
     request=ir['task'].get('prefab_request')
-    if request is None:return dict(authored)
+    if request is None:
+        devices=dict(authored)
+        prototypes=set()
+        for ordinal,job in enumerate(ir['task'].get('jobs',[]),1):
+            if 'prototype' not in job:continue
+            template=authored.get(job['prototype']);id=job['material']
+            if not template or template.get('asset_kind')!='material_prefab' or id in devices:raise ValueError('Invalid finite material prototype')
+            item=copy.deepcopy(template);item.update(instance_id=id,asset_kind='runtime_material',prototype_ref=job['prototype'])
+            item['creation_policy']='clone_on_admission' if job['prototype'] in prototypes else 'adopt_existing_glb'
+            item['node_binding']['status']='prototype' if job['prototype'] in prototypes else 'bound'
+            item['subject_id']=ordinal
+            instance_signals(item,job['prototype'],id)
+            devices[id]=item;prototypes.add(job['prototype'])
+        return devices
     template=authored.get(request['carrier_template'])
     if template is None or template.get('asset_kind')!='carrier_prefab':raise ValueError('Unknown carrier template')
     count=request['count'];slots=template['prefab']['slots']

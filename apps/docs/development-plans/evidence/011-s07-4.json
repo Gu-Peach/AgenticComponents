@@ -1,0 +1,1303 @@
+{
+  "count": 4,
+  "modelSha256": "11bb5e2a0865c27e75836e23fc9a5cd7678216eea494aaf408b93c14d4b5d353",
+  "sourceHashes": {
+    "process.py": "8ca27933ae0401b2ae8d4aa0254b5fb89ea77db2c4e9a26d4fcfc6002a425afe",
+    "task-spec.json": "598069f74e61ae53697ea9af96836087722e14417b4ead0c32acb3e769052c57",
+    "scene.json": "a5e3c4574f6da77ec39c71584c82604f503984b3401c8b9419c4981c559ab1c7",
+    "device/C1.json": "e3954998af053f031ab44b9a248a431edcbab094ca048416e75447a9a24b02d8",
+    "contracts/conveyor.json": "c0665f979efbd002046da16867bc4589a76f2aef4147b7402f6fb35dc9947140",
+    "device/C2.json": "f792ea91d2d842666459cd99f42b50d1e312c742a88aa0caa5d416954edd4e93",
+    "device/F1.json": "98458c2c390d2ff292e58af082ae65cff1f14ccd92f1a08da56c14423a74bc47",
+    "contracts/material_source_station.json": "c4409709898a2b809d13d17e1c8cc5dd15dfb6a7c45de3516f913f6079a7214c",
+    "device/T1.json": "ead96144073108350a141ec00ff928149a0198100716fed8f1e0089fdfe66c0f",
+    "contracts/linear_rail.json": "c72d4b82393084354b3f654f93a722551c0e65404f755f4631324a3ea203049b",
+    "device/L1.json": "3b22055588891734dd516fa5f85a76ded62852183f7afcdd28ec393e2072a0c4",
+    "contracts/lift_table.json": "dae0816841c4a0688d04fb6e74efa9c9e01e68f22f5428a28dd9bd455bb99636",
+    "device/T2.json": "3fbfb984b1b4a71dc7ff56d17a202996ccdfb6a14f4162b15181b2c8b599dc83",
+    "device/L2.json": "1f3886ec97f22d93d7b494c61387bb95989f543829d82ea1820572c72515cb1b",
+    "device/STORE.json": "41421b9549b8f3380a9a431c95a92797304b7065e99d870e2030d0c692ed9548",
+    "contracts/storage_rack.json": "a68041e074e6c7d27c88ddf6e1c65607068343c1064cef35679033a53e8b76dd",
+    "device/Workpiece.json": "4a60bbff3a8534236d0d1cfc75a426ed220e61937c8e9f37846e957855da653f",
+    "contracts/workpiece.json": "690b9b811887a14efdcbf884b271e5347c0a554478edf0ed85a841e32fad8448"
+  },
+  "scope": "original task, expected unreachable fourth level",
+  "status": "failed",
+  "error": "TARGET_UNREACHABLE: L1 loaded lift motion intersects L1/mast",
+  "ticks": 7706,
+  "process": {
+    "runId": "warehouse-run",
+    "tick": 7705,
+    "status": "failed",
+    "error": "TARGET_UNREACHABLE: L1 loaded lift motion intersects L1/mast",
+    "activations": [
+      {
+        "id": "warehouse-run/warehouse/1",
+        "node": "warehouse",
+        "state": "failed",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/store_orders/2",
+        "node": "store_orders",
+        "state": "failed",
+        "parentId": "warehouse-run/warehouse/1",
+        "iteration": 4,
+        "totalIterations": 4,
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/store_one/3",
+        "node": "store_one",
+        "state": "succeeded",
+        "parentId": "warehouse-run/store_orders/2",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/infeed_to_exit/4",
+        "node": "infeed_to_exit",
+        "state": "succeeded",
+        "requestId": "1",
+        "subjectId": "1",
+        "parentId": "warehouse-run/store_one/3",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/infeed_stop/5",
+        "node": "infeed_stop",
+        "state": "succeeded",
+        "requestId": "2",
+        "parentId": "warehouse-run/store_one/3",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/inbound_rail_to_dock/6",
+        "node": "inbound_rail_to_dock",
+        "state": "succeeded",
+        "requestId": "3",
+        "parentId": "warehouse-run/store_one/3",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/inbound_lift_to_dock/7",
+        "node": "inbound_lift_to_dock",
+        "state": "succeeded",
+        "requestId": "4",
+        "parentId": "warehouse-run/store_one/3",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/load_inbound_lift/8",
+        "node": "load_inbound_lift",
+        "state": "succeeded",
+        "requestId": "5",
+        "subjectId": "M01",
+        "parentId": "warehouse-run/store_one/3",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/inbound_rail_to_slot/9",
+        "node": "inbound_rail_to_slot",
+        "state": "succeeded",
+        "requestId": "6",
+        "parentId": "warehouse-run/store_one/3",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/inbound_lift_to_slot/10",
+        "node": "inbound_lift_to_slot",
+        "state": "succeeded",
+        "requestId": "7",
+        "parentId": "warehouse-run/store_one/3",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/store_material/11",
+        "node": "store_material",
+        "state": "succeeded",
+        "requestId": "8",
+        "subjectId": "M01",
+        "parentId": "warehouse-run/store_one/3",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/store_one/12",
+        "node": "store_one",
+        "state": "succeeded",
+        "parentId": "warehouse-run/store_orders/2",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/infeed_to_exit/13",
+        "node": "infeed_to_exit",
+        "state": "succeeded",
+        "requestId": "9",
+        "subjectId": "2",
+        "parentId": "warehouse-run/store_one/12",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/infeed_stop/14",
+        "node": "infeed_stop",
+        "state": "succeeded",
+        "requestId": "10",
+        "parentId": "warehouse-run/store_one/12",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/inbound_rail_to_dock/15",
+        "node": "inbound_rail_to_dock",
+        "state": "succeeded",
+        "requestId": "11",
+        "parentId": "warehouse-run/store_one/12",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/inbound_lift_to_dock/16",
+        "node": "inbound_lift_to_dock",
+        "state": "succeeded",
+        "requestId": "12",
+        "parentId": "warehouse-run/store_one/12",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/load_inbound_lift/17",
+        "node": "load_inbound_lift",
+        "state": "succeeded",
+        "requestId": "13",
+        "subjectId": "M02",
+        "parentId": "warehouse-run/store_one/12",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/inbound_rail_to_slot/18",
+        "node": "inbound_rail_to_slot",
+        "state": "succeeded",
+        "requestId": "14",
+        "parentId": "warehouse-run/store_one/12",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/inbound_lift_to_slot/19",
+        "node": "inbound_lift_to_slot",
+        "state": "succeeded",
+        "requestId": "15",
+        "parentId": "warehouse-run/store_one/12",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/store_material/20",
+        "node": "store_material",
+        "state": "succeeded",
+        "requestId": "16",
+        "subjectId": "M02",
+        "parentId": "warehouse-run/store_one/12",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/store_one/21",
+        "node": "store_one",
+        "state": "succeeded",
+        "parentId": "warehouse-run/store_orders/2",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/infeed_to_exit/22",
+        "node": "infeed_to_exit",
+        "state": "succeeded",
+        "requestId": "17",
+        "subjectId": "3",
+        "parentId": "warehouse-run/store_one/21",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/infeed_stop/23",
+        "node": "infeed_stop",
+        "state": "succeeded",
+        "requestId": "18",
+        "parentId": "warehouse-run/store_one/21",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/inbound_rail_to_dock/24",
+        "node": "inbound_rail_to_dock",
+        "state": "succeeded",
+        "requestId": "19",
+        "parentId": "warehouse-run/store_one/21",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/inbound_lift_to_dock/25",
+        "node": "inbound_lift_to_dock",
+        "state": "succeeded",
+        "requestId": "20",
+        "parentId": "warehouse-run/store_one/21",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/load_inbound_lift/26",
+        "node": "load_inbound_lift",
+        "state": "succeeded",
+        "requestId": "21",
+        "subjectId": "M03",
+        "parentId": "warehouse-run/store_one/21",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/inbound_rail_to_slot/27",
+        "node": "inbound_rail_to_slot",
+        "state": "succeeded",
+        "requestId": "22",
+        "parentId": "warehouse-run/store_one/21",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/inbound_lift_to_slot/28",
+        "node": "inbound_lift_to_slot",
+        "state": "succeeded",
+        "requestId": "23",
+        "parentId": "warehouse-run/store_one/21",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/store_material/29",
+        "node": "store_material",
+        "state": "succeeded",
+        "requestId": "24",
+        "subjectId": "M03",
+        "parentId": "warehouse-run/store_one/21",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/store_one/30",
+        "node": "store_one",
+        "state": "failed",
+        "parentId": "warehouse-run/store_orders/2",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/infeed_to_exit/31",
+        "node": "infeed_to_exit",
+        "state": "succeeded",
+        "requestId": "25",
+        "subjectId": "4",
+        "parentId": "warehouse-run/store_one/30",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/infeed_stop/32",
+        "node": "infeed_stop",
+        "state": "succeeded",
+        "requestId": "26",
+        "parentId": "warehouse-run/store_one/30",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/inbound_rail_to_dock/33",
+        "node": "inbound_rail_to_dock",
+        "state": "succeeded",
+        "requestId": "27",
+        "parentId": "warehouse-run/store_one/30",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/inbound_lift_to_dock/34",
+        "node": "inbound_lift_to_dock",
+        "state": "succeeded",
+        "requestId": "28",
+        "parentId": "warehouse-run/store_one/30",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/load_inbound_lift/35",
+        "node": "load_inbound_lift",
+        "state": "succeeded",
+        "requestId": "29",
+        "subjectId": "M04",
+        "parentId": "warehouse-run/store_one/30",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/inbound_rail_to_slot/36",
+        "node": "inbound_rail_to_slot",
+        "state": "succeeded",
+        "requestId": "30",
+        "parentId": "warehouse-run/store_one/30",
+        "blockedBy": []
+      },
+      {
+        "id": "warehouse-run/inbound_lift_to_slot/37",
+        "node": "inbound_lift_to_slot",
+        "state": "failed",
+        "requestId": "31",
+        "parentId": "warehouse-run/store_one/30",
+        "blockedBy": []
+      }
+    ],
+    "resources": {}
+  },
+  "world": {
+    "bodies": {
+      "C1/surface": {
+        "active": true,
+        "pose": {
+          "position": [
+            0.11946160346269608,
+            0.6949999928474426,
+            2.3516480922698975
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "velocity": [
+            0,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ]
+        },
+        "supports": []
+      },
+      "C2/surface": {
+        "active": true,
+        "pose": {
+          "position": [
+            -1.8766833543777466,
+            0.6949999928474426,
+            -3.8948113918304443
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "velocity": [
+            0,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ]
+        },
+        "supports": []
+      },
+      "F1/body": {
+        "active": true,
+        "pose": {
+          "position": [
+            0.11946187168359756,
+            0.35249999165534973,
+            3.251648187637329
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "velocity": [
+            0,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ]
+        },
+        "supports": []
+      },
+      "T1/body": {
+        "active": true,
+        "pose": {
+          "position": [
+            -1.8567500114440918,
+            0.08999998867511749,
+            0.617455005645752
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "velocity": [
+            0,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ]
+        },
+        "supports": []
+      },
+      "T2/body": {
+        "active": true,
+        "pose": {
+          "position": [
+            -1.8567500114440918,
+            0.08999998867511749,
+            -2.3329007625579834
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "velocity": [
+            0,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ]
+        },
+        "supports": []
+      },
+      "STORE/body": {
+        "active": true,
+        "pose": {
+          "position": [
+            -1.7760692834854126,
+            1.6999999284744263,
+            -0.8802610635757446
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "velocity": [
+            0,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ]
+        },
+        "supports": []
+      },
+      "M01/body": {
+        "active": true,
+        "pose": {
+          "position": [
+            -0.24607856571674347,
+            1.1999990940093994,
+            -0.7799213528633118
+          ],
+          "rotation": [
+            -0.000001982653429877246,
+            1.5602080391530215e-11,
+            -7.166055411289562e-7,
+            1
+          ],
+          "velocity": [
+            5.551115123125783e-17,
+            0,
+            6.938893903907228e-18
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ]
+        },
+        "supports": [
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body"
+        ]
+      },
+      "M02/body": {
+        "active": true,
+        "pose": {
+          "position": [
+            -0.24608084559440613,
+            1.7999992370605469,
+            -0.7799121141433716
+          ],
+          "rotation": [
+            -0.0000014256033864512574,
+            1.5333324887567557e-11,
+            -8.215452567128523e-7,
+            1
+          ],
+          "velocity": [
+            -8.881784197001252e-16,
+            0,
+            1.4210854715202004e-14
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ]
+        },
+        "supports": [
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body"
+        ]
+      },
+      "M03/body": {
+        "active": true,
+        "pose": {
+          "position": [
+            -0.2460714429616928,
+            2.399998664855957,
+            -0.779958963394165
+          ],
+          "rotation": [
+            -9.19949343369808e-7,
+            1.4819586530157025e-11,
+            -7.370760499725293e-7,
+            1
+          ],
+          "velocity": [
+            1.2875228661002325e-9,
+            9.313271265298795e-10,
+            6.895182202981687e-10
+          ],
+          "angularVelocity": [
+            3.447517826771218e-9,
+            1.8808630868061282e-14,
+            -6.437631316913439e-9
+          ]
+        },
+        "supports": [
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body",
+          "STORE/body"
+        ]
+      },
+      "M04/body": {
+        "active": true,
+        "pose": {
+          "position": [
+            -0.2457989752292633,
+            0.8999998569488525,
+            0.6177581548690796
+          ],
+          "rotation": [
+            -7.271410140674561e-9,
+            1.6584464704316737e-11,
+            -9.773191322892671e-8,
+            1
+          ],
+          "velocity": [
+            -0.0004389881796669215,
+            1.1840972023544704e-42,
+            -8.613165088880348e-40
+          ],
+          "angularVelocity": [
+            -1.057037434854562e-37,
+            -2.382207389352189e-43,
+            7.006492321624085e-45
+          ]
+        },
+        "supports": [
+          "L1/platform"
+        ]
+      },
+      "L1/platform": {
+        "active": true,
+        "pose": {
+          "position": [
+            -0.24579837918281555,
+            0.6799999475479126,
+            0.617455005645752
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "velocity": [
+            -0.0004389881796669215,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ]
+        },
+        "supports": []
+      },
+      "L1/mast": {
+        "active": true,
+        "pose": {
+          "position": [
+            -0.24579837918281555,
+            1.6475001573562622,
+            0.617455005645752
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "velocity": [
+            -0.0004389881796669215,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ]
+        },
+        "supports": []
+      },
+      "L1/transfer-tool": {
+        "active": true,
+        "pose": {
+          "position": [
+            0.11946159601211548,
+            0.9002764225006104,
+            0.6142711639404297
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "velocity": [
+            4.4703480739372026e-7,
+            0,
+            -0.0009834766387939453
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ]
+        },
+        "supports": []
+      },
+      "L2/platform": {
+        "active": true,
+        "pose": {
+          "position": [
+            0.13699999451637268,
+            0.7899999618530273,
+            -2.3329007625579834
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "velocity": [
+            0,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ]
+        },
+        "supports": []
+      },
+      "L2/mast": {
+        "active": true,
+        "pose": {
+          "position": [
+            0.13699999451637268,
+            1.6475001573562622,
+            -2.3329007625579834
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "velocity": [
+            0,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ]
+        },
+        "supports": []
+      },
+      "L2/transfer-tool": {
+        "active": true,
+        "pose": {
+          "position": [
+            0.13699999451637268,
+            5.809999942779541,
+            -2.3329007625579834
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "velocity": [
+            0,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ]
+        },
+        "supports": []
+      }
+    },
+    "owners": {
+      "M01": "STORE.slot1",
+      "M02": "STORE.slot2",
+      "M03": "STORE.slot3",
+      "M04": "L1.work"
+    },
+    "stopped": {
+      "T1": true,
+      "L1": true,
+      "T2": true,
+      "L2": true,
+      "C1": true,
+      "C2": true
+    },
+    "outcomes": {
+      "C1/1": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/infeed_to_exit/4",
+        "requestId": "1",
+        "device": "C1",
+        "behavior": "transport_to_exit",
+        "subjectId": "1",
+        "arguments": {
+          "subject_id": 1
+        },
+        "status": "succeeded"
+      },
+      "C1/2": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/infeed_stop/5",
+        "requestId": "2",
+        "device": "C1",
+        "behavior": "stop_conveying",
+        "arguments": {},
+        "status": "succeeded"
+      },
+      "T1/3": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/inbound_rail_to_dock/6",
+        "requestId": "3",
+        "device": "T1",
+        "behavior": "move_to_location",
+        "arguments": {
+          "target": "C1.exit"
+        },
+        "status": "succeeded"
+      },
+      "L1/4": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/inbound_lift_to_dock/7",
+        "requestId": "4",
+        "device": "L1",
+        "behavior": "lift_to_location",
+        "arguments": {
+          "target": "C1.exit"
+        },
+        "status": "succeeded"
+      },
+      "L1/5": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/load_inbound_lift/8",
+        "requestId": "5",
+        "device": "L1",
+        "behavior": "accept_material",
+        "subjectId": "M01",
+        "arguments": {},
+        "payload": {
+          "binding": "L1.accept_material",
+          "fields": {
+            "material": "M01",
+            "source": "C1.exit"
+          }
+        },
+        "status": "succeeded"
+      },
+      "T1/6": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/inbound_rail_to_slot/9",
+        "requestId": "6",
+        "device": "T1",
+        "behavior": "move_to_location",
+        "arguments": {
+          "target": "STORE.slot1"
+        },
+        "status": "succeeded"
+      },
+      "L1/7": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/inbound_lift_to_slot/10",
+        "requestId": "7",
+        "device": "L1",
+        "behavior": "lift_to_location",
+        "arguments": {
+          "target": "STORE.slot1"
+        },
+        "status": "succeeded"
+      },
+      "L1/8": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/store_material/11",
+        "requestId": "8",
+        "device": "L1",
+        "behavior": "release_material",
+        "subjectId": "M01",
+        "arguments": {},
+        "payload": {
+          "binding": "L1.release_material",
+          "fields": {
+            "material": "M01",
+            "target": "STORE.slot1"
+          }
+        },
+        "status": "succeeded"
+      },
+      "C1/9": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/infeed_to_exit/13",
+        "requestId": "9",
+        "device": "C1",
+        "behavior": "transport_to_exit",
+        "subjectId": "2",
+        "arguments": {
+          "subject_id": 2
+        },
+        "status": "succeeded"
+      },
+      "C1/10": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/infeed_stop/14",
+        "requestId": "10",
+        "device": "C1",
+        "behavior": "stop_conveying",
+        "arguments": {},
+        "status": "succeeded"
+      },
+      "T1/11": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/inbound_rail_to_dock/15",
+        "requestId": "11",
+        "device": "T1",
+        "behavior": "move_to_location",
+        "arguments": {
+          "target": "C1.exit"
+        },
+        "status": "succeeded"
+      },
+      "L1/12": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/inbound_lift_to_dock/16",
+        "requestId": "12",
+        "device": "L1",
+        "behavior": "lift_to_location",
+        "arguments": {
+          "target": "C1.exit"
+        },
+        "status": "succeeded"
+      },
+      "L1/13": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/load_inbound_lift/17",
+        "requestId": "13",
+        "device": "L1",
+        "behavior": "accept_material",
+        "subjectId": "M02",
+        "arguments": {},
+        "payload": {
+          "binding": "L1.accept_material",
+          "fields": {
+            "material": "M02",
+            "source": "C1.exit"
+          }
+        },
+        "status": "succeeded"
+      },
+      "T1/14": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/inbound_rail_to_slot/18",
+        "requestId": "14",
+        "device": "T1",
+        "behavior": "move_to_location",
+        "arguments": {
+          "target": "STORE.slot2"
+        },
+        "status": "succeeded"
+      },
+      "L1/15": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/inbound_lift_to_slot/19",
+        "requestId": "15",
+        "device": "L1",
+        "behavior": "lift_to_location",
+        "arguments": {
+          "target": "STORE.slot2"
+        },
+        "status": "succeeded"
+      },
+      "L1/16": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/store_material/20",
+        "requestId": "16",
+        "device": "L1",
+        "behavior": "release_material",
+        "subjectId": "M02",
+        "arguments": {},
+        "payload": {
+          "binding": "L1.release_material",
+          "fields": {
+            "material": "M02",
+            "target": "STORE.slot2"
+          }
+        },
+        "status": "succeeded"
+      },
+      "C1/17": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/infeed_to_exit/22",
+        "requestId": "17",
+        "device": "C1",
+        "behavior": "transport_to_exit",
+        "subjectId": "3",
+        "arguments": {
+          "subject_id": 3
+        },
+        "status": "succeeded"
+      },
+      "C1/18": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/infeed_stop/23",
+        "requestId": "18",
+        "device": "C1",
+        "behavior": "stop_conveying",
+        "arguments": {},
+        "status": "succeeded"
+      },
+      "T1/19": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/inbound_rail_to_dock/24",
+        "requestId": "19",
+        "device": "T1",
+        "behavior": "move_to_location",
+        "arguments": {
+          "target": "C1.exit"
+        },
+        "status": "succeeded"
+      },
+      "L1/20": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/inbound_lift_to_dock/25",
+        "requestId": "20",
+        "device": "L1",
+        "behavior": "lift_to_location",
+        "arguments": {
+          "target": "C1.exit"
+        },
+        "status": "succeeded"
+      },
+      "L1/21": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/load_inbound_lift/26",
+        "requestId": "21",
+        "device": "L1",
+        "behavior": "accept_material",
+        "subjectId": "M03",
+        "arguments": {},
+        "payload": {
+          "binding": "L1.accept_material",
+          "fields": {
+            "material": "M03",
+            "source": "C1.exit"
+          }
+        },
+        "status": "succeeded"
+      },
+      "T1/22": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/inbound_rail_to_slot/27",
+        "requestId": "22",
+        "device": "T1",
+        "behavior": "move_to_location",
+        "arguments": {
+          "target": "STORE.slot3"
+        },
+        "status": "succeeded"
+      },
+      "L1/23": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/inbound_lift_to_slot/28",
+        "requestId": "23",
+        "device": "L1",
+        "behavior": "lift_to_location",
+        "arguments": {
+          "target": "STORE.slot3"
+        },
+        "status": "succeeded"
+      },
+      "L1/24": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/store_material/29",
+        "requestId": "24",
+        "device": "L1",
+        "behavior": "release_material",
+        "subjectId": "M03",
+        "arguments": {},
+        "payload": {
+          "binding": "L1.release_material",
+          "fields": {
+            "material": "M03",
+            "target": "STORE.slot3"
+          }
+        },
+        "status": "succeeded"
+      },
+      "C1/25": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/infeed_to_exit/31",
+        "requestId": "25",
+        "device": "C1",
+        "behavior": "transport_to_exit",
+        "subjectId": "4",
+        "arguments": {
+          "subject_id": 4
+        },
+        "status": "succeeded"
+      },
+      "C1/26": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/infeed_stop/32",
+        "requestId": "26",
+        "device": "C1",
+        "behavior": "stop_conveying",
+        "arguments": {},
+        "status": "succeeded"
+      },
+      "T1/27": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/inbound_rail_to_dock/33",
+        "requestId": "27",
+        "device": "T1",
+        "behavior": "move_to_location",
+        "arguments": {
+          "target": "C1.exit"
+        },
+        "status": "succeeded"
+      },
+      "L1/28": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/inbound_lift_to_dock/34",
+        "requestId": "28",
+        "device": "L1",
+        "behavior": "lift_to_location",
+        "arguments": {
+          "target": "C1.exit"
+        },
+        "status": "succeeded"
+      },
+      "L1/29": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/load_inbound_lift/35",
+        "requestId": "29",
+        "device": "L1",
+        "behavior": "accept_material",
+        "subjectId": "M04",
+        "arguments": {},
+        "payload": {
+          "binding": "L1.accept_material",
+          "fields": {
+            "material": "M04",
+            "source": "C1.exit"
+          }
+        },
+        "status": "succeeded"
+      },
+      "T1/30": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/inbound_rail_to_slot/36",
+        "requestId": "30",
+        "device": "T1",
+        "behavior": "move_to_location",
+        "arguments": {
+          "target": "STORE.slot4"
+        },
+        "status": "succeeded"
+      }
+    },
+    "requests": {
+      "C1": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/infeed_stop/32",
+        "requestId": "26",
+        "device": "C1",
+        "behavior": "stop_conveying",
+        "arguments": {}
+      },
+      "T1": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/inbound_rail_to_slot/36",
+        "requestId": "30",
+        "device": "T1",
+        "behavior": "move_to_location",
+        "arguments": {
+          "target": "STORE.slot4"
+        }
+      },
+      "L1": {
+        "runId": "warehouse-run",
+        "activationId": "warehouse-run/load_inbound_lift/35",
+        "requestId": "29",
+        "device": "L1",
+        "behavior": "accept_material",
+        "subjectId": "M04",
+        "arguments": {},
+        "payload": {
+          "binding": "L1.accept_material",
+          "fields": {
+            "material": "M04",
+            "source": "C1.exit"
+          }
+        }
+      }
+    },
+    "mounts": {
+      "L1": {
+        "stopped": true,
+        "transferring": false,
+        "held": "M04",
+        "rail": -0.38279837369918823,
+        "lift": -0.11000001430511475
+      },
+      "L2": {
+        "stopped": true,
+        "transferring": false,
+        "rail": 0,
+        "lift": 0
+      }
+    },
+    "inventory": {
+      "occupancy": {
+        "STORE.slot1": "M01",
+        "STORE.slot2": "M02",
+        "STORE.slot3": "M03"
+      },
+      "reservations": {},
+      "events": [
+        {
+          "kind": "stored",
+          "slot": "STORE.slot1",
+          "material": "M01",
+          "request": "warehouse-run/8",
+          "tick": 1654
+        },
+        {
+          "kind": "stored",
+          "slot": "STORE.slot2",
+          "material": "M02",
+          "request": "warehouse-run/16",
+          "tick": 3669
+        },
+        {
+          "kind": "stored",
+          "slot": "STORE.slot3",
+          "material": "M03",
+          "request": "warehouse-run/24",
+          "tick": 6044
+        }
+      ]
+    },
+    "receipts": [],
+    "transfers": {
+      "L1": {
+        "material": "M04",
+        "target": "L1.work",
+        "phase": "committed",
+        "holding": false
+      }
+    }
+  }
+}

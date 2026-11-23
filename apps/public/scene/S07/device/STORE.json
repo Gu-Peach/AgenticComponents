@@ -3,26 +3,253 @@
   "instance_id": "STORE",
   "contract_ref": "../contracts/storage_rack.json",
   "node_binding": {
-    "status": "unresolved"
+    "status": "bound",
+    "node": "Warehouse_Shelf_00Ln",
+    "model_sha256": "11bb5e2a0865c27e75836e23fc9a5cd7678216eea494aaf408b93c14d4b5d353"
   },
   "locations": {
     "STORE.slot1": {
-      "geometry_status": "pending_calibration"
+      "frame": "scene_world_m",
+      "position": [
+        -0.24606932699680328,
+        0.9999999776482585,
+        -0.7802610397338865
+      ],
+      "status": "mesh_support_candidate",
+      "support_node": "Mesh_027g",
+      "column": 1,
+      "level": 1,
+      "capacity": 1
     },
     "STORE.slot2": {
-      "geometry_status": "pending_calibration"
+      "frame": "scene_world_m",
+      "position": [
+        -0.24606932699680328,
+        1.5999999642372136,
+        -0.7802610397338863
+      ],
+      "status": "mesh_support_candidate",
+      "support_node": "Mesh_02Eg",
+      "column": 1,
+      "level": 2,
+      "capacity": 1
     },
     "STORE.slot3": {
-      "geometry_status": "pending_calibration"
+      "frame": "scene_world_m",
+      "position": [
+        -0.24606932699680328,
+        2.199999950826168,
+        -0.7802610397338863
+      ],
+      "status": "mesh_support_candidate",
+      "support_node": "Mesh_02Lg",
+      "column": 1,
+      "level": 3,
+      "capacity": 1
     },
     "STORE.slot4": {
-      "geometry_status": "pending_calibration"
+      "frame": "scene_world_m",
+      "position": [
+        -0.24606932699680328,
+        2.799999937415123,
+        -0.780261039733886
+      ],
+      "status": "mesh_support_candidate",
+      "support_node": "Mesh_02Sg",
+      "column": 1,
+      "level": 4,
+      "capacity": 1
     },
     "STORE.slot5": {
-      "geometry_status": "pending_calibration"
+      "frame": "scene_world_m",
+      "position": [
+        -1.2660693041980267,
+        0.9999999776482585,
+        -0.7802610397338865
+      ],
+      "status": "mesh_support_candidate",
+      "support_node": "Mesh_02Zg",
+      "column": 2,
+      "level": 1,
+      "capacity": 1
     },
     "STORE.slot6": {
-      "geometry_status": "pending_calibration"
+      "frame": "scene_world_m",
+      "position": [
+        -1.2660693041980267,
+        1.5999999642372136,
+        -0.7802610397338863
+      ],
+      "status": "mesh_support_candidate",
+      "support_node": "Mesh_02gg",
+      "column": 2,
+      "level": 2,
+      "capacity": 1
+    },
+    "STORE.slot7": {
+      "frame": "scene_world_m",
+      "position": [
+        -1.2660693041980267,
+        2.199999950826168,
+        -0.7802610397338863
+      ],
+      "status": "mesh_support_candidate",
+      "support_node": "Mesh_02ng",
+      "column": 2,
+      "level": 3,
+      "capacity": 1
+    },
+    "STORE.slot8": {
+      "frame": "scene_world_m",
+      "position": [
+        -1.2660693041980267,
+        2.799999937415123,
+        -0.780261039733886
+      ],
+      "status": "mesh_support_candidate",
+      "support_node": "Mesh_02ug",
+      "column": 2,
+      "level": 4,
+      "capacity": 1
+    },
+    "STORE.slot9": {
+      "frame": "scene_world_m",
+      "position": [
+        -2.28606928139925,
+        0.9999999776482585,
+        -0.7802610397338865
+      ],
+      "status": "mesh_support_candidate",
+      "support_node": "Mesh_031g",
+      "column": 3,
+      "level": 1,
+      "capacity": 1
+    },
+    "STORE.slot10": {
+      "frame": "scene_world_m",
+      "position": [
+        -2.28606928139925,
+        1.5999999642372136,
+        -0.7802610397338863
+      ],
+      "status": "mesh_support_candidate",
+      "support_node": "Mesh_038g",
+      "column": 3,
+      "level": 2,
+      "capacity": 1
+    },
+    "STORE.slot11": {
+      "frame": "scene_world_m",
+      "position": [
+        -2.28606928139925,
+        2.199999950826168,
+        -0.7802610397338863
+      ],
+      "status": "mesh_support_candidate",
+      "support_node": "Mesh_03Fg",
+      "column": 3,
+      "level": 3,
+      "capacity": 1
+    },
+    "STORE.slot12": {
+      "frame": "scene_world_m",
+      "position": [
+        -2.28606928139925,
+        2.799999937415123,
+        -0.780261039733886
+      ],
+      "status": "mesh_support_candidate",
+      "support_node": "Mesh_03Mg",
+      "column": 3,
+      "level": 4,
+      "capacity": 1
+    },
+    "STORE.slot13": {
+      "frame": "scene_world_m",
+      "position": [
+        -3.3060692586004734,
+        0.9999999776482585,
+        -0.7802610397338865
+      ],
+      "status": "mesh_support_candidate",
+      "support_node": "Mesh_03Tg",
+      "column": 4,
+      "level": 1,
+      "capacity": 1
+    },
+    "STORE.slot14": {
+      "frame": "scene_world_m",
+      "position": [
+        -3.3060692586004734,
+        1.5999999642372136,
+        -0.7802610397338863
+      ],
+      "status": "mesh_support_candidate",
+      "support_node": "Mesh_03ag",
+      "column": 4,
+      "level": 2,
+      "capacity": 1
+    },
+    "STORE.slot15": {
+      "frame": "scene_world_m",
+      "position": [
+        -3.3060692586004734,
+        2.199999950826168,
+        -0.7802610397338863
+      ],
+      "status": "mesh_support_candidate",
+      "support_node": "Mesh_03hg",
+      "column": 4,
+      "level": 3,
+      "capacity": 1
+    },
+    "STORE.slot16": {
+      "frame": "scene_world_m",
+      "position": [
+        -3.3060692586004734,
+        2.799999937415123,
+        -0.780261039733886
+      ],
+      "status": "mesh_support_candidate",
+      "support_node": "Mesh_03og",
+      "column": 4,
+      "level": 4,
+      "capacity": 1
+    }
+  },
+  "parameters": {
+    "rows": 4,
+    "columns": 4,
+    "capacity_per_cell": 1,
+    "cell_width_m": 0.9,
+    "cell_depth_m": 1.1,
+    "cell_height_m": 0.6,
+    "cell_gap_x_m": 0.12,
+    "cell_gap_y_m": 0
+  },
+  "model": {
+    "calibration": {
+      "status": "pending"
+    },
+    "cells": {
+      "layout": "explicit_slots",
+      "count": 16,
+      "id_rule": "column_major_positive_x_to_negative_x_bottom_to_top",
+      "location_source": "device.locations",
+      "support_evidence": "evidence/s07-asset-binding.json"
+    },
+    "access": {
+      "inbound": "L1",
+      "outbound": "L2",
+      "status": "pending_handler_reach_validation"
+    },
+    "dimension_provenance": {
+      "cell_width_m": "support plate X envelope",
+      "cell_depth_m": "support plate Z envelope",
+      "cell_height_m": "vertical pitch, not validated usable clearance",
+      "cell_gap_x_m": "column pitch minus plate width",
+      "cell_gap_y_m": "pitch already included in cell_height_m",
+      "payload": "contract defaults are experimental, not GLB measurements"
     }
   }
 }

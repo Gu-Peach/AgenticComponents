@@ -1,0 +1,24 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "Workpiece",
+  "asset_kind": "material_prefab",
+  "contract_ref": "../contracts/workpiece.json",
+  "parameters": {
+    "mass_kg": 1,
+    "height_m": 0.3999999910593034
+  },
+  "node_binding": {
+    "status": "bound",
+    "node": "Visual_Components_Box_00Mn",
+    "model_sha256": "11bb5e2a0865c27e75836e23fc9a5cd7678216eea494aaf408b93c14d4b5d353"
+  },
+  "model": {
+    "calibration": {
+      "status": "pending"
+    },
+    "simulation": {
+      "profile": "warehouse.virtual-linear@1",
+      "provenance": "User-confirmed GLB box; geometry measured, 1 kg retained simulation mass"
+    }
+  }
+}

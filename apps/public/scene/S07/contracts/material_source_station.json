@@ -1,0 +1,1318 @@
+{
+  "contract_version": "1.1",
+  "schema_type": "DeviceSpec",
+  "schema_id": "standard.material_source_station",
+  "device_spec_id": "standard.material_source_station",
+  "version": "1.0.0",
+  "device_type": "material_source_station",
+  "display_name": "出料口／物料源工位：按需生产与节拍出料",
+  "asset": {
+    "model_format": "glb",
+    "model_key": "../Intelligent Storage and Logistics Line/PM Stacker Cranes.glb",
+    "sha256": "11bb5e2a0865c27e75836e23fc9a5cd7678216eea494aaf408b93c14d4b5d353"
+  },
+  "params_schema": {
+    "production_mode": {
+      "type": "enum",
+      "required": true,
+      "default": "on_demand",
+      "options": [
+        "on_demand",
+        "periodic"
+      ],
+      "mutability": "stopped_only",
+      "description": "按需单件或周期生产"
+    },
+    "cycle_time_s": {
+      "type": "number",
+      "required": true,
+      "default": 5,
+      "unit": "s",
+      "min": 0.01,
+      "max": 3600,
+      "mutability": "stopped_only",
+      "description": "一个生产周期的有效仿真时长"
+    },
+    "buffer_capacity": {
+      "type": "integer",
+      "required": true,
+      "default": 1,
+      "min": 1,
+      "max": 100,
+      "mutability": "stopped_only",
+      "description": "源端缓冲容量"
+    },
+    "product_spec": {
+      "type": "string",
+      "required": true,
+      "default": "workpiece_1",
+      "mutability": "stopped_only",
+      "description": "被生成物料定义的引用 ID"
+    },
+    "buffer_length_m": {
+      "type": "number",
+      "required": true,
+      "default": 0.6,
+      "unit": "m",
+      "min": 0.01,
+      "max": 10,
+      "mutability": "stopped_only",
+      "description": "缓冲有效长度"
+    },
+    "buffer_width_m": {
+      "type": "number",
+      "required": true,
+      "default": 0.4,
+      "unit": "m",
+      "min": 0.01,
+      "max": 10,
+      "mutability": "stopped_only",
+      "description": "缓冲有效宽度"
+    },
+    "fixed_interval": {
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "mutability": "stopped_only",
+      "description": "周期模式是否采用固定间隔",
+      "required_when": {
+        "parameter": "production_mode",
+        "equals": "periodic"
+      }
+    },
+    "interval_jitter_ratio": {
+      "type": "number",
+      "required": false,
+      "default": 0.5,
+      "unit": "ratio",
+      "min": 0,
+      "max": 0.99,
+      "mutability": "stopped_only",
+      "description": "随机周期相对扰动比例"
+    },
+    "random_seed": {
+      "type": "integer",
+      "required": false,
+      "default": 1,
+      "min": 0,
+      "max": 2147483647,
+      "mutability": "stopped_only",
+      "description": "可复现随机种子"
+    },
+    "vary_attribute": {
+      "type": "string",
+      "required": false,
+      "default": "",
+      "mutability": "stopped_only",
+      "description": "可选产品变化属性名"
+    }
+  },
+  "interfaces": [],
+  "signal_ports": [
+    {
+      "port_id": "runTag",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "持续生产许可；第一版关闭后暂停周期推进、拒绝新请求，保留已接受任务及容量预留，恢复后继续",
+      "signal_role": "continuous_command",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "produce_request",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "请求生产一件；持续 TRUE 不连续创建重复请求",
+      "signal_role": "request_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "request_id",
+      "direction": "input",
+      "value_type": "integer",
+      "plc_type": "DINT",
+      "description": "请求生产一件；持续 TRUE 不连续创建重复请求",
+      "signal_role": "request_parameter",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "reset",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "故障原因消失后请求复位",
+      "signal_role": "request_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "countTag",
+      "direction": "output",
+      "value_type": "integer",
+      "plc_type": "DINT",
+      "description": "本方案定义为实际成功生成／呈现的累计数量；与 Open-Industry 的生成请求计数区分",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "material_available",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "出口当前有可取物料，取走后清除；上层另发一次到料事件",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "empty",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "当前缓冲区无可取物料；不等同于永久耗尽原料",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "buffer_count",
+      "direction": "output",
+      "value_type": "integer",
+      "plc_type": "INT",
+      "description": "当前缓冲物料数量",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "accepted",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "按需生产的请求与结果反馈；连续生产使用每件物料的事件日志和计数",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "busy",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "按需生产的请求与结果反馈；连续生产使用每件物料的事件日志和计数",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "done",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "按需生产的请求与结果反馈；连续生产使用每件物料的事件日志和计数",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "error",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "按需生产的请求与结果反馈；连续生产使用每件物料的事件日志和计数",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "result_id",
+      "direction": "output",
+      "value_type": "integer",
+      "plc_type": "DINT",
+      "description": "按需生产的请求与结果反馈；连续生产使用每件物料的事件日志和计数",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "error_code",
+      "direction": "output",
+      "value_type": "integer",
+      "plc_type": "INT",
+      "description": "按需生产的请求与结果反馈；连续生产使用每件物料的事件日志和计数",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request"
+    }
+  ],
+  "transport_behaviors": [
+    {
+      "behavior_id": "produce_material",
+      "display_name": "生产物料",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "pending.material_source_station.produce_material",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "produce_request；节拍模式由到期事件创建一次内部请求",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "pending_model_specific_payload"
+      },
+      "input_signals": [
+        "produce_request",
+        "request_id",
+        "runTag"
+      ],
+      "output_signals": [
+        "accepted",
+        "buffer_count",
+        "busy",
+        "countTag",
+        "done",
+        "error",
+        "error_code",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "生产许可有效、未暂停、产品及参数合法、缓冲容量含预留足够",
+            "source": "observation",
+            "key": "produce_material.pre_1",
+            "equals": true
+          },
+          {
+            "id": "pre_2",
+            "label": "按需为新请求",
+            "source": "observation",
+            "key": "produce_material.pre_2",
+            "equals": true
+          },
+          {
+            "id": "pre_3",
+            "label": "节拍为计时到期",
+            "source": "observation",
+            "key": "produce_material.pre_3",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "produce_material.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "实际生成成功，更新缓冲数量并且仅计数一次；不是仅发出 spawn 请求",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "实际生成成功，更新缓冲数量并且仅计数一次；不是仅发出 spawn 请求",
+            "source": "observation",
+            "key": "produce_material.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "present_material",
+      "display_name": "呈现",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "pending.material_source_station.present_material",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "生成完成或呈现任务",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "pending_model_specific_payload"
+      },
+      "input_signals": [
+        "runTag"
+      ],
+      "output_signals": [
+        "accepted",
+        "buffer_count",
+        "busy",
+        "done",
+        "error",
+        "error_code",
+        "material_available",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "缓冲区有指定物料、出口空间可用、交接授权和可配置下游联锁有效",
+            "source": "authorization",
+            "key": "present_material.pre_1",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "present_material.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "物料到达出口并可取，更新 material_available；取走后再释放相应占用",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "物料到达出口并可取，更新 material_available；取走后再释放相应占用",
+            "source": "observation",
+            "key": "present_material.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "pause_production",
+      "display_name": "暂停生产",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "pending.material_source_station.pause_production",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "runTag=FALSE 或手动暂停",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "signal_or_external_event"
+      },
+      "input_signals": [
+        "runTag"
+      ],
+      "output_signals": [
+        "accepted",
+        "buffer_count",
+        "busy",
+        "done",
+        "error",
+        "error_code",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "适用于有无在途任务",
+            "source": "observation",
+            "key": "pause_production.pre_1",
+            "equals": true
+          },
+          {
+            "id": "pre_2",
+            "label": "拒绝新请求",
+            "source": "observation",
+            "key": "pause_production.pre_2",
+            "equals": true
+          },
+          {
+            "id": "pre_3",
+            "label": "保留已接受任务和预留",
+            "source": "observation",
+            "key": "pause_production.pre_3",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "pause_production.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "停止周期推进，不删除已有物料，也不把暂停当作生产完成",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "停止周期推进，不删除已有物料，也不把暂停当作生产完成",
+            "source": "observation",
+            "key": "pause_production.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "resume_production",
+      "display_name": "恢复生产",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "pending.material_source_station.resume_production",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "runTag 恢复且手动暂停已解除",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "signal_or_external_event"
+      },
+      "input_signals": [
+        "runTag"
+      ],
+      "output_signals": [
+        "accepted",
+        "buffer_count",
+        "busy",
+        "done",
+        "error",
+        "error_code",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "原任务或生产模式有效、设备无阻止恢复的故障、资源状态允许",
+            "source": "observation",
+            "key": "resume_production.pre_1",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "resume_production.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "继续保留的周期；重复恢复不新建同一生产任务",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "继续保留的周期；重复恢复不新建同一生产任务",
+            "source": "observation",
+            "key": "resume_production.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "schedule_production_cycle",
+      "display_name": "固定",
+      "behavior_type": "internal",
+      "schedulable": false,
+      "executor_ref": "pending.material_source_station.schedule_production_cycle",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "仿真时钟和生产许可变化",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "signal_or_external_event"
+      },
+      "input_signals": [
+        "runTag"
+      ],
+      "output_signals": [
+        "buffer_count",
+        "countTag"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "启用节拍模式、周期正且有限",
+            "source": "observation",
+            "key": "schedule_production_cycle.pre_1",
+            "equals": true
+          },
+          {
+            "id": "pre_2",
+            "label": "随机策略使用可复现随机源",
+            "source": "observation",
+            "key": "schedule_production_cycle.pre_2",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "schedule_production_cycle.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "continuous",
+        "description": "按节拍生成内部生产请求；暂停时冻结剩余时间，不补发停机欠账",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "按节拍生成内部生产请求；暂停时冻结剩余时间，不补发停机欠账",
+            "source": "observation",
+            "key": "schedule_production_cycle.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "publish_source_state",
+      "display_name": "发布源端状态",
+      "behavior_type": "observer",
+      "schedulable": false,
+      "executor_ref": "pending.material_source_station.publish_source_state",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "生成、呈现、取走或状态更新",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "signal_or_external_event"
+      },
+      "input_signals": [],
+      "output_signals": [
+        "accepted",
+        "buffer_count",
+        "busy",
+        "countTag",
+        "done",
+        "empty",
+        "error",
+        "error_code",
+        "material_available",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "统计来自实际成功生成和实际缓冲占用",
+            "source": "observation",
+            "key": "publish_source_state.pre_1",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "continuous",
+        "description": "更新 countTag、buffer_count、empty、material_available 及任务结果",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "更新 countTag、buffer_count、empty、material_available 及任务结果",
+            "source": "observation",
+            "key": "publish_source_state.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "conditions": []
+      }
+    }
+  ],
+  "type_specific_contract": {
+    "coordinate_system": {
+      "up_axis": "Y",
+      "length_unit": "m",
+      "time_unit": "s"
+    },
+    "production_policy": {
+      "mode_param": "production_mode",
+      "cycle_time_param": "cycle_time_s",
+      "fixed_interval_param": "fixed_interval",
+      "jitter_param": "interval_jitter_ratio",
+      "seed_param": "random_seed",
+      "pause_clock": "freeze_remaining",
+      "resume": "continue_same_cycle"
+    },
+    "buffer": {
+      "capacity_param": "buffer_capacity",
+      "length_param": "buffer_length_m",
+      "width_param": "buffer_width_m",
+      "release_policy": "after_confirmed_pick"
+    },
+    "output_material": {
+      "spec_param": "product_spec"
+    },
+    "presentation_geometry": {
+      "source_region": "buffer_area",
+      "output_process_port": "flow_output",
+      "placement_pattern": "validated_slots"
+    },
+    "attribute_variation": {
+      "enabled_if_nonempty": "vary_attribute",
+      "attribute_param": "vary_attribute",
+      "values": [],
+      "order": "cycle"
+    }
+  },
+  "runtime_contract": {
+    "observation_definitions": {
+      "produce_material.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "produce_request",
+          "request_id",
+          "runTag",
+          "accepted",
+          "buffer_count",
+          "busy",
+          "countTag",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ],
+        "expression_ref": "produce_material.pre_1"
+      },
+      "produce_material.pre_2": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "produce_request",
+          "request_id",
+          "runTag",
+          "accepted",
+          "buffer_count",
+          "busy",
+          "countTag",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ],
+        "expression_ref": "produce_material.pre_2"
+      },
+      "produce_material.pre_3": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "produce_request",
+          "request_id",
+          "runTag",
+          "accepted",
+          "buffer_count",
+          "busy",
+          "countTag",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ],
+        "expression_ref": "produce_material.pre_3"
+      },
+      "produce_material.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "produce_request",
+          "request_id",
+          "runTag",
+          "accepted",
+          "buffer_count",
+          "busy",
+          "countTag",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ],
+        "expression_ref": "produce_material.sustaining"
+      },
+      "produce_material.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "produce_request",
+          "request_id",
+          "runTag",
+          "accepted",
+          "buffer_count",
+          "busy",
+          "countTag",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ],
+        "expression_ref": "produce_material.completion"
+      },
+      "present_material.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "accepted",
+          "buffer_count",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "material_available",
+          "result_id"
+        ],
+        "expression_ref": "present_material.sustaining"
+      },
+      "present_material.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "accepted",
+          "buffer_count",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "material_available",
+          "result_id"
+        ],
+        "expression_ref": "present_material.completion"
+      },
+      "pause_production.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "accepted",
+          "buffer_count",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ],
+        "expression_ref": "pause_production.pre_1"
+      },
+      "pause_production.pre_2": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "accepted",
+          "buffer_count",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ],
+        "expression_ref": "pause_production.pre_2"
+      },
+      "pause_production.pre_3": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "accepted",
+          "buffer_count",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ],
+        "expression_ref": "pause_production.pre_3"
+      },
+      "pause_production.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "accepted",
+          "buffer_count",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ],
+        "expression_ref": "pause_production.sustaining"
+      },
+      "pause_production.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "accepted",
+          "buffer_count",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ],
+        "expression_ref": "pause_production.completion"
+      },
+      "resume_production.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "accepted",
+          "buffer_count",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ],
+        "expression_ref": "resume_production.pre_1"
+      },
+      "resume_production.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "accepted",
+          "buffer_count",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ],
+        "expression_ref": "resume_production.sustaining"
+      },
+      "resume_production.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "accepted",
+          "buffer_count",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id"
+        ],
+        "expression_ref": "resume_production.completion"
+      },
+      "schedule_production_cycle.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "buffer_count",
+          "countTag"
+        ],
+        "expression_ref": "schedule_production_cycle.pre_1"
+      },
+      "schedule_production_cycle.pre_2": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "buffer_count",
+          "countTag"
+        ],
+        "expression_ref": "schedule_production_cycle.pre_2"
+      },
+      "schedule_production_cycle.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "buffer_count",
+          "countTag"
+        ],
+        "expression_ref": "schedule_production_cycle.sustaining"
+      },
+      "schedule_production_cycle.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "buffer_count",
+          "countTag"
+        ],
+        "expression_ref": "schedule_production_cycle.completion"
+      },
+      "publish_source_state.pre_1": {
+        "value_type": "boolean",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "accepted",
+          "buffer_count",
+          "busy",
+          "countTag",
+          "done",
+          "empty",
+          "error",
+          "error_code",
+          "material_available",
+          "result_id"
+        ],
+        "expression_ref": "publish_source_state.pre_1"
+      },
+      "publish_source_state.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "accepted",
+          "buffer_count",
+          "busy",
+          "countTag",
+          "done",
+          "empty",
+          "error",
+          "error_code",
+          "material_available",
+          "result_id"
+        ],
+        "expression_ref": "publish_source_state.sustaining"
+      },
+      "publish_source_state.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "accepted",
+          "buffer_count",
+          "busy",
+          "countTag",
+          "done",
+          "empty",
+          "error",
+          "error_code",
+          "material_available",
+          "result_id"
+        ],
+        "expression_ref": "publish_source_state.completion"
+      }
+    },
+    "authorization_definitions": {
+      "present_material.pre_1": {
+        "value_type": "boolean",
+        "provider": "authorization_service",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "runTag",
+          "accepted",
+          "buffer_count",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "material_available",
+          "result_id"
+        ],
+        "expression_ref": "present_material.pre_1"
+      }
+    },
+    "condition_model": {
+      "schema_version": "ac-condition/0.1",
+      "execution_mode": "declaration_only",
+      "unknown_policy": "three_valued_fail_closed",
+      "bindings": {},
+      "expressions": {
+        "produce_material.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "produce_material.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "produce_material.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "produce_material.pre_2"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "produce_material.pre_3": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "produce_material.pre_3"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "produce_material.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "produce_material.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "produce_material.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "produce_material.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "present_material.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "present_material.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "present_material.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "present_material.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "pause_production.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "pause_production.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "pause_production.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "pause_production.pre_2"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "pause_production.pre_3": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "pause_production.pre_3"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "pause_production.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "pause_production.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "pause_production.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "pause_production.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "resume_production.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "resume_production.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "resume_production.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "resume_production.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "resume_production.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "resume_production.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "schedule_production_cycle.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "schedule_production_cycle.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "schedule_production_cycle.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "schedule_production_cycle.pre_2"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "schedule_production_cycle.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "schedule_production_cycle.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "schedule_production_cycle.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "schedule_production_cycle.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "publish_source_state.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "publish_source_state.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "publish_source_state.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "publish_source_state.sustaining"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "publish_source_state.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "publish_source_state.completion"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        },
+        "present_material.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "authorization",
+            "key": "present_material.pre_1"
+          },
+          "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+        }
+      }
+    }
+  },
+  "runtime_execution_contract": {
+    "signal_management": {
+      "owner": "simulation_engine",
+      "status": "pending_engine",
+      "namespace": "instance_id/port_id",
+      "definition_source": "signal_ports",
+      "spatial_binding": false,
+      "write_policy": "single_writer_per_input",
+      "plc_mapping": "instance_bindings",
+      "sampling": "simulation_step_snapshot",
+      "unknown_policy": "invalid_until_provider_ready"
+    },
+    "status": "pending_adapter",
+    "protocol": {
+      "basis": "schema.md公共请求协议",
+      "acceptance": "same request identity and frozen parameters",
+      "completion": "matching result_id plus observed completion checks",
+      "single_command_entry": true
+    },
+    "payload_binding_status": "requires_explicit_model_adapter",
+    "calibration_required": true,
+    "real_execution_available": false,
+    "raw_api_and_plc_simultaneous_writers": false
+  },
+  "description": "S07 有限物料出料口；供料按任务登记身份与容量准入。"
+}

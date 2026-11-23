@@ -234,4 +234,8 @@ export class SceneRuntimeProgram {
     this.stepper.dispose();
     this.disposed = true;
   }
+  discard() {
+    this.stepper.discard();
+    this.disposed = true;
+  }
 }

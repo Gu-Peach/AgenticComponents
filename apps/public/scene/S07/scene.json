@@ -1,22 +1,21 @@
 {
-  "schema_version": "scene-package/0.1",
+  "schema_version": "scene-package/0.2",
   "id": "S07",
   "name": "S07：四件分层入库后按订单出库",
-  "model": "Intelligent Storage and Logistics Line/Intelligent Storage and Logistics Line.glb",
-  "model_sha256": "8ec621bde391457832926e56d4ec9516ba36d8e9ffa43b4fa9f550e9250c12fa",
+  "model": "Intelligent Storage and Logistics Line/PM Stacker Cranes.glb",
+  "model_sha256": "11bb5e2a0865c27e75836e23fc9a5cd7678216eea494aaf408b93c14d4b5d353",
   "process": "process.py",
   "goal": "task-spec.json",
   "devices": [
-    "device/STORE.json",
-    "device/L1.json",
-    "device/L2.json",
     "device/C1.json",
     "device/C2.json",
-    "device/X1.json",
-    "device/M01.json",
-    "device/M02.json",
-    "device/M03.json",
-    "device/M04.json"
+    "device/F1.json",
+    "device/T1.json",
+    "device/L1.json",
+    "device/T2.json",
+    "device/L2.json",
+    "device/STORE.json",
+    "device/Workpiece.json"
   ],
   "lifecycle": {
     "task_specification": "task-spec.json",
@@ -55,16 +54,15 @@
   },
   "environment": [
     {
-      "kind": "external_infeed",
-      "location": "C1.entry",
-      "rule": "release_next_registered_job_only_when_entry_empty_and_owner_capacity_including_reservations_available",
-      "evidence": "subject_identity_and_actual_support",
-      "implementation_status": "pending"
+      "kind": "finite_material_supply",
+      "source_device": "F1",
+      "target": "C1.entry"
     },
     {
-      "kind": "external_takeaway",
-      "rule": "accept_only_materials_with_matching_completed_output_handoff_then_publish_departure",
-      "implementation_status": "pending"
+      "kind": "material_takeaway",
+      "sources": [
+        "C2.exit"
+      ]
     }
   ],
   "initial": {
@@ -77,31 +75,29 @@
     },
     "carriers": {},
     "devices": "idle_stopped_unclamped",
-    "robot_positions": {
-      "X1": "X1.home"
-    },
     "angles": {},
-    "heights": {
-      "L1": 0,
-      "L2": 0
-    }
+    "mechanism_pose": "GLB rest pose; not homed or calibrated"
   },
   "legacy_inputs": "not_loaded_by_scene_runtime",
   "assumptions": [
-    "X1是仓储抓放子模块的标准化能力适配，复用robot_arm接口，不声称模型中有六轴机械臂。",
-    "同类契约统一；实例几何、配方、观测和运动适配均待接入。",
-    "物料在有限外部缓冲区登记，真实入口交接证据到达后才可进入流程；await不创建或移动物料。",
-    "目标可用检查和容量预留必须在提交时原子复核；先前await不能代替当前授权。",
-    "home须在共享运动区之外，升降和转位仍需要真实运动区清空反馈。"
+    "16格位为4列×4层；列按世界X递减、层由低到高编号。",
+    "T1/L1负责入库，T2/L2负责出库；Handler伸缩与双侧交接可行性待标定。",
+    "四件任务和独立验收保持原身份与格位，物料几何仍待配置。"
   ],
   "motion_interlocks": {
     "status": "pending_provider",
-    "policy": "robot picks require actual stationary source/target; turn/lift motions require relevant robots clear; exclusive drive/robot ownership; next material admission respects capacity and prior handoff"
+    "policy": "rail and lift exclusive per assembly; handler retracted before axis motion; transfers require both axes settled and atomic source/target capacity authorization"
   },
   "execution_defaults": {
     "tick_hz": 60,
     "deadline_ticks": 72000,
     "scheduler": "fair_finite_jobs_with_atomic_resource_sets",
     "on_failure": "stop_admissions_cancel_siblings_confirm_stops_or_attention"
-  }
+  },
+  "coordinate_system": {
+    "frame": "scene_world_m",
+    "length_unit": "m",
+    "up_axis": "Y"
+  },
+  "runtime_profile": "warehouse.virtual-linear@1"
 }

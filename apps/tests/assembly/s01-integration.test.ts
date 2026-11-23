@@ -112,4 +112,6 @@ it("completes all three pallets and 36 deliveries with actual parallel robot exe
     `S01: ${last.tick} ticks, ${overlapTicks} overlapping robot ticks, ${compiled.goals.material_ids.length} deliveries`,
   );
   program.dispose();
-}, 120000);
+// Real Jolt replay is CPU-bound; slower desktop runs exceed two minutes.
+// Keep all physical/identity assertions while allowing four minutes wall time.
+}, 240000);

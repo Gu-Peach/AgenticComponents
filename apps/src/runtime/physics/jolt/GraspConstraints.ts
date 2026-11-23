@@ -76,7 +76,7 @@ export class GraspConstraints {
     if (
       !a.active ||
       !b.active ||
-      a.definition.role !== "carrier" ||
+      !["carrier", "support"].includes(a.definition.role) ||
       b.definition.role !== "material"
     )
       throw new Error("Invalid carrier constraint");
@@ -99,6 +99,28 @@ export class GraspConstraints {
   isCarriedBy(material: string, carrier?: string) {
     const c = this.carried.get(material);
     return !!c && (!carrier || c.carrier === carrier);
+  }
+  /** Switch at a world-step boundary; rollback leaves the old holder intact. */
+  bindLoad(carrier: string, material: string, fromGrasp?: string) {
+    const previous = fromGrasp ? this.constraints.get(fromGrasp) : undefined;
+    if (fromGrasp && (!previous || previous.material !== material))
+      throw new Error("Grasp handover identity differs");
+    const a = this.bodies.get(carrier),
+      b = this.bodies.get(material);
+    if (
+      !a.active ||
+      !b.active ||
+      !["carrier", "support"].includes(a.definition.role) ||
+      b.definition.role !== "material"
+    )
+      throw new Error("Invalid load receiver");
+    if (previous) this.remove(fromGrasp!);
+    try {
+      this.carry(carrier, material);
+    } catch (error) {
+      if (previous) this.create(fromGrasp!, previous.tool, material);
+      throw error;
+    }
   }
   hasCarrierBindings(id: string) {
     return (

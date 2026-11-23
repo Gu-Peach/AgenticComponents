@@ -1,0 +1,60 @@
+{
+  "date": "2026-11-17",
+  "profile": "warehouse.virtual-linear@1",
+  "material_node": "Visual_Components_Box_00Mn",
+  "material_size_m": [
+    0.45,
+    0.4,
+    0.45
+  ],
+  "independent_task_modified": false,
+  "user_decision": "preserve original task and reject fourth material as unreachable",
+  "typescript_tests": {
+    "files": 40,
+    "passed": 207,
+    "command": "node node_modules/vitest/vitest.mjs run --maxWorkers=2"
+  },
+  "python_tests": {
+    "passed": 37
+  },
+  "typecheck": "passed",
+  "lint": "passed without warnings",
+  "browser": {
+    "passed": 1,
+    "page_errors": [],
+    "scope": "import, prepare, run, pause/resume, stop, reset",
+    "screenshot": "011-browser-paused.png"
+  },
+  "s01": {
+    "deliveries": 36,
+    "ticks": 44874,
+    "overlap_ticks": 31263,
+    "timeout_ms": 240000
+  },
+  "s07": {
+    "single": {
+      "status": "succeeded",
+      "ticks": 3846
+    },
+    "three_item_fixture": {
+      "status": "succeeded",
+      "ticks": 14508
+    },
+    "original_four": {
+      "status": "failed as expected",
+      "error": "TARGET_UNREACHABLE: L1 loaded lift motion intersects L1/mast",
+      "ticks": 7706,
+      "stored": 3,
+      "delivered": 0,
+      "held": "M04"
+    }
+  },
+  "build": {
+    "exit_code": 1,
+    "compiled": true,
+    "typecheck": true,
+    "static_pages": true,
+    "blocker": "Next.js 16.4.3 SecurityFatalError advisory check; repeated after retry",
+    "bypassed": false
+  }
+}

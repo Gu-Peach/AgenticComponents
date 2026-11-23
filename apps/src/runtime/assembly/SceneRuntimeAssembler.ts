@@ -1,4 +1,5 @@
 import { Quaternion, Vector3 } from "three";
+import { assembleWarehouseRuntime } from "./WarehouseRuntimeAssembler";
 import type { CompiledSceneRuntime, Vec3 } from "@/contracts/scene-execution";
 import type { ActionRequest, ActionBinding } from "@/contracts/scheduler";
 import type {
@@ -78,6 +79,8 @@ export async function assembleSceneRuntime(
   compiled: CompiledSceneRuntime,
   options: { conditionMode?: ConditionDiagnostics["mode"] } = {},
 ): Promise<AssembledScene> {
+  if (compiled.warehouse)
+    return assembleWarehouseRuntime(sceneId, runId, compiled);
   const conditionMode = options.conditionMode ?? "expression";
   const drivers: DeviceActionPort[] = [],
     providers = new ConditionProviders(new ConditionTrace(conditionMode)),

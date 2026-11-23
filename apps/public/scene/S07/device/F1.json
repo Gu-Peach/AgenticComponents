@@ -1,0 +1,31 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "F1",
+  "contract_ref": "../contracts/material_source_station.json",
+  "node_binding": {
+    "status": "bound",
+    "node": "Feeder_00Kn",
+    "model_sha256": "11bb5e2a0865c27e75836e23fc9a5cd7678216eea494aaf408b93c14d4b5d353"
+  },
+  "locations": {
+    "F1.output": {
+      "frame": "scene_world_m",
+      "position": [
+        0.11946187168359756,
+        0.7049999842420213,
+        3.1016481125109725
+      ],
+      "status": "measured_mesh_boundary"
+    }
+  },
+  "model": {
+    "calibration": {
+      "status": "pending"
+    }
+  },
+  "supply": {
+    "target": "C1.entry",
+    "identity_source": "task.jobs",
+    "policy": "finite_exactly_once_after_capacity_admission"
+  }
+}

@@ -8,8 +8,8 @@
   "display_name": "传送带：连续输送与可选分区积放",
   "asset": {
     "model_format": "glb",
-    "model_key": "../Intelligent Storage and Logistics Line/Intelligent Storage and Logistics Line.glb",
-    "sha256": "8ec621bde391457832926e56d4ec9516ba36d8e9ffa43b4fa9f550e9250c12fa"
+    "model_key": "../Intelligent Storage and Logistics Line/PM Stacker Cranes.glb",
+    "sha256": "11bb5e2a0865c27e75836e23fc9a5cd7678216eea494aaf408b93c14d4b5d353"
   },
   "params_schema": {
     "speed_mps": {
@@ -1453,7 +1453,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "accept_material.sustaining"
       },
       "accept_material.completion": {
         "value_type": "boolean",
@@ -1469,31 +1470,36 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "accept_material.completion"
       },
       "advance_to_next_stop_point.pre_1": {
         "value_type": "boolean",
         "provider": "device_or_world_observer",
         "implementation_status": "pending_provider",
-        "signal_refs": []
+        "signal_refs": [],
+        "expression_ref": "advance_to_next_stop_point.pre_1"
       },
       "advance_to_next_stop_point.pre_2": {
         "value_type": "boolean",
         "provider": "device_or_world_observer",
         "implementation_status": "pending_provider",
-        "signal_refs": []
+        "signal_refs": [],
+        "expression_ref": "advance_to_next_stop_point.pre_2"
       },
       "advance_to_next_stop_point.sustaining": {
         "value_type": "boolean",
         "provider": "behavior_adapter",
         "implementation_status": "pending_provider",
-        "signal_refs": []
+        "signal_refs": [],
+        "expression_ref": "advance_to_next_stop_point.sustaining"
       },
       "advance_to_next_stop_point.completion": {
         "value_type": "boolean",
         "provider": "behavior_or_world_observer",
         "implementation_status": "pending_provider",
-        "signal_refs": []
+        "signal_refs": [],
+        "expression_ref": "advance_to_next_stop_point.completion"
       },
       "transport_to_exit.pre_1": {
         "value_type": "boolean",
@@ -1513,7 +1519,8 @@
           "part_ready",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "transport_to_exit.pre_1"
       },
       "transport_to_exit.pre_2": {
         "value_type": "boolean",
@@ -1533,7 +1540,8 @@
           "part_ready",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "transport_to_exit.pre_2"
       },
       "transport_to_exit.sustaining": {
         "value_type": "boolean",
@@ -1553,7 +1561,8 @@
           "part_ready",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "transport_to_exit.sustaining"
       },
       "transport_to_exit.completion": {
         "value_type": "boolean",
@@ -1573,7 +1582,8 @@
           "part_ready",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "transport_to_exit.completion"
       },
       "release_material.pre_1": {
         "value_type": "boolean",
@@ -1591,7 +1601,8 @@
           "error_code",
           "part_ready",
           "result_id"
-        ]
+        ],
+        "expression_ref": "release_material.pre_1"
       },
       "release_material.sustaining": {
         "value_type": "boolean",
@@ -1609,7 +1620,8 @@
           "error_code",
           "part_ready",
           "result_id"
-        ]
+        ],
+        "expression_ref": "release_material.sustaining"
       },
       "release_material.completion": {
         "value_type": "boolean",
@@ -1627,7 +1639,8 @@
           "error_code",
           "part_ready",
           "result_id"
-        ]
+        ],
+        "expression_ref": "release_material.completion"
       },
       "start_conveying.pre_1": {
         "value_type": "boolean",
@@ -1639,7 +1652,8 @@
           "actual_speed",
           "done",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "start_conveying.pre_1"
       },
       "start_conveying.pre_2": {
         "value_type": "boolean",
@@ -1651,7 +1665,8 @@
           "actual_speed",
           "done",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "start_conveying.pre_2"
       },
       "start_conveying.pre_3": {
         "value_type": "boolean",
@@ -1663,7 +1678,8 @@
           "actual_speed",
           "done",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "start_conveying.pre_3"
       },
       "start_conveying.sustaining": {
         "value_type": "boolean",
@@ -1675,7 +1691,8 @@
           "actual_speed",
           "done",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "start_conveying.sustaining"
       },
       "start_conveying.completion": {
         "value_type": "boolean",
@@ -1687,7 +1704,8 @@
           "actual_speed",
           "done",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "start_conveying.completion"
       },
       "set_speed.pre_1": {
         "value_type": "boolean",
@@ -1703,7 +1721,8 @@
           "error_code",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "set_speed.pre_1"
       },
       "set_speed.sustaining": {
         "value_type": "boolean",
@@ -1719,7 +1738,8 @@
           "error_code",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "set_speed.sustaining"
       },
       "set_speed.completion": {
         "value_type": "boolean",
@@ -1735,7 +1755,8 @@
           "error_code",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "set_speed.completion"
       },
       "stop_conveying.pre_1": {
         "value_type": "boolean",
@@ -1752,7 +1773,8 @@
           "error_code",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "stop_conveying.pre_1"
       },
       "stop_conveying.pre_2": {
         "value_type": "boolean",
@@ -1769,7 +1791,8 @@
           "error_code",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "stop_conveying.pre_2"
       },
       "stop_conveying.pre_3": {
         "value_type": "boolean",
@@ -1786,7 +1809,8 @@
           "error_code",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "stop_conveying.pre_3"
       },
       "stop_conveying.sustaining": {
         "value_type": "boolean",
@@ -1803,7 +1827,8 @@
           "error_code",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "stop_conveying.sustaining"
       },
       "stop_conveying.completion": {
         "value_type": "boolean",
@@ -1820,7 +1845,8 @@
           "error_code",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "stop_conveying.completion"
       },
       "reverse_conveying.pre_1": {
         "value_type": "boolean",
@@ -1837,7 +1863,8 @@
           "error_code",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "reverse_conveying.pre_1"
       },
       "reverse_conveying.pre_2": {
         "value_type": "boolean",
@@ -1854,7 +1881,8 @@
           "error_code",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "reverse_conveying.pre_2"
       },
       "reverse_conveying.pre_3": {
         "value_type": "boolean",
@@ -1871,7 +1899,8 @@
           "error_code",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "reverse_conveying.pre_3"
       },
       "reverse_conveying.sustaining": {
         "value_type": "boolean",
@@ -1888,7 +1917,8 @@
           "error_code",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "reverse_conveying.sustaining"
       },
       "reverse_conveying.completion": {
         "value_type": "boolean",
@@ -1905,7 +1935,8 @@
           "error_code",
           "result_id",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "reverse_conveying.completion"
       },
       "zone_accumulation.pre_1": {
         "value_type": "boolean",
@@ -1916,7 +1947,8 @@
           "capacity_available",
           "done",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "zone_accumulation.pre_1"
       },
       "zone_accumulation.pre_2": {
         "value_type": "boolean",
@@ -1927,7 +1959,8 @@
           "capacity_available",
           "done",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "zone_accumulation.pre_2"
       },
       "zone_accumulation.sustaining": {
         "value_type": "boolean",
@@ -1938,7 +1971,8 @@
           "capacity_available",
           "done",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "zone_accumulation.sustaining"
       },
       "zone_accumulation.completion": {
         "value_type": "boolean",
@@ -1949,7 +1983,8 @@
           "capacity_available",
           "done",
           "runningTag"
-        ]
+        ],
+        "expression_ref": "zone_accumulation.completion"
       },
       "meter_release.pre_1": {
         "value_type": "boolean",
@@ -1958,7 +1993,8 @@
         "signal_refs": [
           "blocked",
           "part_ready"
-        ]
+        ],
+        "expression_ref": "meter_release.pre_1"
       },
       "meter_release.pre_2": {
         "value_type": "boolean",
@@ -1967,7 +2003,8 @@
         "signal_refs": [
           "blocked",
           "part_ready"
-        ]
+        ],
+        "expression_ref": "meter_release.pre_2"
       },
       "meter_release.sustaining": {
         "value_type": "boolean",
@@ -1976,7 +2013,8 @@
         "signal_refs": [
           "blocked",
           "part_ready"
-        ]
+        ],
+        "expression_ref": "meter_release.sustaining"
       },
       "meter_release.completion": {
         "value_type": "boolean",
@@ -1985,7 +2023,8 @@
         "signal_refs": [
           "blocked",
           "part_ready"
-        ]
+        ],
+        "expression_ref": "meter_release.completion"
       },
       "publish_drive_feedback.pre_1": {
         "value_type": "boolean",
@@ -2006,7 +2045,8 @@
           "result_id",
           "runningTag",
           "velocityTag"
-        ]
+        ],
+        "expression_ref": "publish_drive_feedback.pre_1"
       },
       "publish_drive_feedback.pre_2": {
         "value_type": "boolean",
@@ -2027,7 +2067,8 @@
           "result_id",
           "runningTag",
           "velocityTag"
-        ]
+        ],
+        "expression_ref": "publish_drive_feedback.pre_2"
       },
       "publish_drive_feedback.sustaining": {
         "value_type": "boolean",
@@ -2048,7 +2089,8 @@
           "result_id",
           "runningTag",
           "velocityTag"
-        ]
+        ],
+        "expression_ref": "publish_drive_feedback.sustaining"
       },
       "publish_drive_feedback.completion": {
         "value_type": "boolean",
@@ -2069,31 +2111,36 @@
           "result_id",
           "runningTag",
           "velocityTag"
-        ]
+        ],
+        "expression_ref": "publish_drive_feedback.completion"
       },
       "entry_region_clear": {
         "value_type": "boolean",
         "provider": "physical_region_observer",
         "implementation_status": "pending_provider",
-        "signal_refs": []
+        "signal_refs": [],
+        "expression_ref": "entry_region_clear"
       },
       "subject_at_exit": {
         "value_type": "boolean",
         "provider": "physical_region_observer",
         "implementation_status": "pending_provider",
-        "signal_refs": []
+        "signal_refs": [],
+        "expression_ref": "subject_at_exit"
       },
       "exit_arrival_confirmed": {
         "value_type": "boolean",
         "provider": "physical_region_observer",
         "implementation_status": "pending_provider",
-        "signal_refs": []
+        "signal_refs": [],
+        "expression_ref": "exit_arrival_confirmed"
       },
       "subject_on_conveyor": {
         "value_type": "boolean",
         "provider": "physical_region_observer",
         "implementation_status": "pending_provider",
-        "signal_refs": []
+        "signal_refs": [],
+        "expression_ref": "subject_on_conveyor"
       },
       "move_by_distance.ready": {
         "value_type": "boolean",
@@ -2103,7 +2150,8 @@
           "encoderTag",
           "actual_speed",
           "error"
-        ]
+        ],
+        "expression_ref": "move_by_distance.ready"
       },
       "move_by_distance.sustaining": {
         "value_type": "boolean",
@@ -2113,7 +2161,8 @@
           "error",
           "actual_speed",
           "encoderTag"
-        ]
+        ],
+        "expression_ref": "move_by_distance.sustaining"
       },
       "move_by_distance.completion": {
         "value_type": "boolean",
@@ -2124,7 +2173,8 @@
           "result_id",
           "actual_speed",
           "encoderTag"
-        ]
+        ],
+        "expression_ref": "move_by_distance.completion"
       }
     },
     "authorization_definitions": {
@@ -2142,7 +2192,8 @@
           "error",
           "error_code",
           "result_id"
-        ]
+        ],
+        "expression_ref": "accept_material.pre_1"
       },
       "move_by_distance.motion_authorized": {
         "value_type": "boolean",
@@ -2151,7 +2202,432 @@
         "signal_refs": [
           "blocked",
           "capacity_available"
-        ]
+        ],
+        "expression_ref": "move_by_distance.motion_authorized"
+      }
+    },
+    "condition_model": {
+      "schema_version": "ac-condition/0.1",
+      "execution_mode": "declaration_only",
+      "unknown_policy": "three_valued_fail_closed",
+      "bindings": {},
+      "expressions": {
+        "accept_material.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "authorization",
+            "key": "accept_material.pre_1"
+          }
+        },
+        "accept_material.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "accept_material.sustaining"
+          }
+        },
+        "accept_material.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "accept_material.completion"
+          }
+        },
+        "advance_to_next_stop_point.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "advance_to_next_stop_point.pre_1"
+          }
+        },
+        "advance_to_next_stop_point.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "advance_to_next_stop_point.pre_2"
+          }
+        },
+        "advance_to_next_stop_point.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "advance_to_next_stop_point.sustaining"
+          }
+        },
+        "advance_to_next_stop_point.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "advance_to_next_stop_point.completion"
+          }
+        },
+        "move_by_distance.ready": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "move_by_distance.ready"
+          }
+        },
+        "move_by_distance.motion_authorized": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "authorization",
+            "key": "move_by_distance.motion_authorized"
+          }
+        },
+        "move_by_distance.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "move_by_distance.sustaining"
+          }
+        },
+        "move_by_distance.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "move_by_distance.completion"
+          }
+        },
+        "transport_to_exit.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "transport_to_exit.pre_1"
+          }
+        },
+        "transport_to_exit.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "transport_to_exit.pre_2"
+          }
+        },
+        "transport_to_exit.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "transport_to_exit.sustaining"
+          }
+        },
+        "transport_to_exit.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "transport_to_exit.completion"
+          }
+        },
+        "release_material.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "release_material.pre_1"
+          }
+        },
+        "release_material.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "release_material.sustaining"
+          }
+        },
+        "release_material.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "release_material.completion"
+          }
+        },
+        "start_conveying.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "start_conveying.pre_1"
+          }
+        },
+        "start_conveying.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "start_conveying.pre_2"
+          }
+        },
+        "start_conveying.pre_3": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "start_conveying.pre_3"
+          }
+        },
+        "start_conveying.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "start_conveying.sustaining"
+          }
+        },
+        "start_conveying.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "start_conveying.completion"
+          }
+        },
+        "set_speed.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "set_speed.pre_1"
+          }
+        },
+        "set_speed.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "set_speed.sustaining"
+          }
+        },
+        "set_speed.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "set_speed.completion"
+          }
+        },
+        "stop_conveying.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "stop_conveying.pre_1"
+          }
+        },
+        "stop_conveying.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "stop_conveying.pre_2"
+          }
+        },
+        "stop_conveying.pre_3": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "stop_conveying.pre_3"
+          }
+        },
+        "stop_conveying.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "stop_conveying.sustaining"
+          }
+        },
+        "stop_conveying.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "stop_conveying.completion"
+          }
+        },
+        "reverse_conveying.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "reverse_conveying.pre_1"
+          }
+        },
+        "reverse_conveying.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "reverse_conveying.pre_2"
+          }
+        },
+        "reverse_conveying.pre_3": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "reverse_conveying.pre_3"
+          }
+        },
+        "reverse_conveying.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "reverse_conveying.sustaining"
+          }
+        },
+        "reverse_conveying.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "reverse_conveying.completion"
+          }
+        },
+        "zone_accumulation.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "zone_accumulation.pre_1"
+          }
+        },
+        "zone_accumulation.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "zone_accumulation.pre_2"
+          }
+        },
+        "zone_accumulation.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "zone_accumulation.sustaining"
+          }
+        },
+        "zone_accumulation.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "zone_accumulation.completion"
+          }
+        },
+        "meter_release.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "meter_release.pre_1"
+          }
+        },
+        "meter_release.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "meter_release.pre_2"
+          }
+        },
+        "meter_release.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "meter_release.sustaining"
+          }
+        },
+        "meter_release.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "meter_release.completion"
+          }
+        },
+        "publish_drive_feedback.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "publish_drive_feedback.pre_1"
+          }
+        },
+        "publish_drive_feedback.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "publish_drive_feedback.pre_2"
+          }
+        },
+        "publish_drive_feedback.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "publish_drive_feedback.completion"
+          }
+        },
+        "publish_drive_feedback.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "publish_drive_feedback.sustaining"
+          }
+        },
+        "entry_region_clear": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "entry_region_clear"
+          }
+        },
+        "subject_at_exit": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "subject_at_exit"
+          }
+        },
+        "exit_arrival_confirmed": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "exit_arrival_confirmed"
+          }
+        },
+        "subject_on_conveyor": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "subject_on_conveyor"
+          }
+        }
       }
     }
   },

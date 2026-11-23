@@ -13,6 +13,7 @@ import type { DeviceType } from "@/contracts/device";
 export const icons = {
   conveyor: ArrowRightLeft,
   lift_table: MoveVertical,
+  linear_rail: ArrowRightLeft,
   material_source_station: Factory,
   robot_arm: Bot,
   rotary_table: Rotate3D,

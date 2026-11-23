@@ -9775,7 +9775,8 @@
           "unit": "1",
           "retention": "latched_until_ack_or_new_request"
         }
-      }
+      },
+      "position_targets": {}
     },
     {
       "schema_version": "scene-device/0.2",
@@ -12200,7 +12201,8 @@
           "unit": "1",
           "retention": "latched_until_ack_or_new_request"
         }
-      }
+      },
+      "position_targets": {}
     },
     {
       "schema_version": "scene-device/0.2",
@@ -14625,7 +14627,8 @@
           "unit": "1",
           "retention": "latched_until_ack_or_new_request"
         }
-      }
+      },
+      "position_targets": {}
     },
     {
       "schema_version": "scene-device/0.2",
@@ -17050,7 +17053,8 @@
           "unit": "1",
           "retention": "latched_until_ack_or_new_request"
         }
-      }
+      },
+      "position_targets": {}
     },
     {
       "schema_version": "scene-device/0.2",
@@ -56308,5 +56312,23 @@
   ],
   "executable": false,
   "authored_device_count": 37,
-  "runtime_instance_count": 37
+  "runtime_instance_count": 37,
+  "drive_groups": {},
+  "environment": [
+    {
+      "kind": "external_empty_carrier_takeaway",
+      "rule": "confirm_empty_carrier_at_main_exit_then_remove_to_registered_outfeed_buffer_before_next_wave",
+      "implementation_status": "pending"
+    },
+    {
+      "kind": "external_takeaway",
+      "rule": "accept_only_materials_with_matching_completed_output_handoff_then_publish_departure",
+      "implementation_status": "pending"
+    },
+    {
+      "kind": "external_loaded_carrier_infeed",
+      "rule": "admit only current frozen wave, at most one carrier at clear stopped entry per fill pitch; no infeed during drain",
+      "implementation_status": "pending"
+    }
+  ]
 }

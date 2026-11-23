@@ -161,5 +161,11 @@ export class SceneRuntimeController {
     this.values.delete(id);
     this.listeners.forEach((f) => f());
   }
+  discard(id: string) {
+    if (!this.compiled.get(id)?.warehouse)
+      throw new Error("当前场景不支持放弃故障仿真");
+    this.get(id).discard();
+    this.detach(id);
+  }
 }
 export const sceneRuntimeController = new SceneRuntimeController();

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { compileWarehouseRuntime } from "./compileWarehouseRuntime";
 import { PropertyBinding } from "three";
 import type { SceneBundle } from "@/contracts/scene-package";
 import type {
@@ -53,6 +54,8 @@ export function compileSceneRuntime(
   goal: unknown,
   mode: "run" | "validation" = "run",
 ): CompiledSceneRuntime {
+  if (bundle.runtime_profile === "warehouse.virtual-linear@1")
+    return compileWarehouseRuntime(bundle, modelBytes, goal, mode);
   const devices = new Map<string, SceneDevice>();
   const blockers: string[] = [],
     warnings: string[] = [];

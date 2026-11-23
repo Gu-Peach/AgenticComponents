@@ -2,6 +2,7 @@ import type { SpatialInterface } from "./spatial";
 export const deviceTypes = [
   "conveyor",
   "lift_table",
+  "linear_rail",
   "material_source_station",
   "robot_arm",
   "rotary_table",
@@ -119,6 +120,7 @@ export interface ProjectDocument {
 export const typeLabels: Record<DeviceType, string> = {
   conveyor: "传送带",
   lift_table: "升降台",
+  linear_rail: "直线滑轨",
   material_source_station: "出料口",
   robot_arm: "机械臂",
   rotary_table: "旋转台",

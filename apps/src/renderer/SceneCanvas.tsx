@@ -18,7 +18,8 @@ import {
 import { Canvas, useThree, useFrame } from "@react-three/fiber";
 import { OrbitControls, GizmoHelper, GizmoViewport } from "@react-three/drei";
 import { Box3, Group, Vector3 } from "three";
-import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
+import type { ComponentRef } from "react";
+type OrbitControlsImpl = ComponentRef<typeof OrbitControls>;
 import { InterfaceMarkers } from "./InterfaceMarkers";
 import { useWorkspace } from "@/stores/workspace";
 import type { DeviceDefinition, DeviceInstance } from "@/contracts/device";

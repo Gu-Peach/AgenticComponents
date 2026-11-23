@@ -5,14 +5,103 @@
   "parameters": {
     "min_height_m": 0.0,
     "max_height_m": 3.0,
-    "position_tolerance_m": 0.005
+    "position_tolerance_m": 0.005,
+    "transfer_module": true
   },
   "node_binding": {
-    "status": "unresolved"
+    "status": "bound",
+    "node": "CraneA_002n",
+    "model_sha256": "11bb5e2a0865c27e75836e23fc9a5cd7678216eea494aaf408b93c14d4b5d353"
   },
   "locations": {
     "L2.work": {
-      "geometry_status": "pending_calibration"
+      "node": "Z_005n",
+      "frame": "scene_world_m",
+      "status": "rest_frame_only_pending_dock_calibration"
     }
-  }
+  },
+  "calibrations": {},
+  "model": {
+    "calibration": {
+      "status": "pending"
+    },
+    "mounted_on": "T2",
+    "lift_motion": {
+      "joint_name": "lift_axis",
+      "joint_type": "prismatic",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "axis_frame": "scene_world_m",
+      "min_param": "min_height_m",
+      "max_param": "max_height_m",
+      "speed_param": "lift_speed_mps",
+      "acceleration_param": "lift_accel_mps2",
+      "platform_node": "Z_005n",
+      "limits_status": "pending_calibration"
+    },
+    "handler": {
+      "node": "Handler_006n",
+      "parent_platform": "Z_005n",
+      "axis": null,
+      "stroke_m": null,
+      "status": "visual_only_virtual_transfer"
+    },
+    "geometry_ownership": "whole crane subtree; platform and handler are articulated parts, not duplicate bodies",
+    "simulation": {
+      "profile": "warehouse.virtual-linear@1",
+      "platform_node": "Z_005n",
+      "anchor_local_m": [
+        0,
+        0,
+        0
+      ],
+      "support_size_m": [
+        0.65,
+        0.04,
+        1.0
+      ],
+      "limits_m": [
+        -0.11,
+        2.0
+      ],
+      "limits_source": "candidate vertical travel covering belt and four shelf levels",
+      "support_source": "declared support proxy at measured Handler top"
+    }
+  },
+  "transfer_routes": [
+    {
+      "sources": [
+        "STORE.slot1",
+        "STORE.slot2",
+        "STORE.slot3",
+        "STORE.slot4",
+        "STORE.slot5",
+        "STORE.slot6",
+        "STORE.slot7",
+        "STORE.slot8",
+        "STORE.slot9",
+        "STORE.slot10",
+        "STORE.slot11",
+        "STORE.slot12",
+        "STORE.slot13",
+        "STORE.slot14",
+        "STORE.slot15",
+        "STORE.slot16"
+      ],
+      "targets": [
+        "L2.work"
+      ]
+    },
+    {
+      "sources": [
+        "L2.work"
+      ],
+      "targets": [
+        "C2.entry"
+      ]
+    }
+  ]
 }

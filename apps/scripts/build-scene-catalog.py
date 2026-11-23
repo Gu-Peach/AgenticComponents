@@ -138,9 +138,11 @@ def build(root, scene=None, output=None):
             blockers.append({'code':'NODE_BINDING_REQUIRED','device':id}) if d['node_binding']['status']=='unresolved' else None
             blockers.append({'code':'PHYSICS_ADAPTER_REQUIRED','device':id})
             if d.get('required_confirmations'):blockers.extend({'code':'CALIBRATION_REQUIRED','device':id,'requirement':key} for key in d['required_confirmations'])
-            referenced={n['args'][0]['name']+'.'+n['args'][1]['value'] for n in walk(ir['body']) if n.get('kind')=='calibration'}
+            calibration_refs=[n for n in walk(ir['body']) if n.get('kind')=='calibration']
+            referenced={n['args'][0]['name']+'.'+n['args'][1]['value'] for n in calibration_refs if n['args'][1]['kind']=='literal' and isinstance(n['args'][1]['value'],str)}
+            dynamic_calibration=any(n['args'][0].get('name')==id and n['args'][1]['kind']!='literal' for n in calibration_refs)
             for key,calibration in d.get('calibrations',{}).items():
-                if key in referenced and calibration.get('status')=='pending_calibration':blockers.append({'code':'CALIBRATION_REQUIRED','device':id,'requirement':key})
+                if (key in referenced or dynamic_calibration) and calibration.get('status')=='pending_calibration':blockers.append({'code':'CALIBRATION_REQUIRED','device':id,'requirement':key})
         authored_count=len(devices)
         if sorting_station:blockers.append({'code':'SORTING_STATION_CALIBRATION_REQUIRED','device':sorting_station['support_device']})
         devices=expand_prefabs(ir,devices)
@@ -179,6 +181,8 @@ def build(root, scene=None, output=None):
             bundle['sorting_station']=sorting_station
         bundle['drive_groups']=manifest.get('drive_groups',{})
         bundle['environment']=manifest.get('environment',[])
+        if 'coordinate_system' in manifest:bundle['coordinate_system']=manifest['coordinate_system']
+        if 'runtime_profile' in manifest:bundle['runtime_profile']=manifest['runtime_profile']
         target=output/folder.name/'.generated/scene.bundle.json';write(target,bundle)
         entries.append({'id':manifest['id'],'name':manifest['name'],'bundleUrl':'/scene/'+folder.name+'/.generated/scene.bundle.json',
                         'bundleSha256':digest(target),'deviceCount':authored_count,'nodeCount':len(inventory),'blockerCount':len(blockers)})

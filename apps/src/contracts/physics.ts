@@ -21,6 +21,7 @@ export interface PhysicsConfig {
   carrierBindings?: { carrier: string; material: string }[];
 }
 export interface PhysicsPort {
+  isMotionStopped?(): boolean;
   setSurfaceSpeed(speed: number): void;
   setSurfaceSpeeds?(speeds: Readonly<Record<string, number>>): void;
   getSurfaceSpeed?(surfaceId: string): number;
@@ -34,6 +35,10 @@ export interface PhysicsPort {
   hasSupport(bodyId?: string, surfaceId?: string): boolean;
   readBody?(bodyId: string): BodyPose;
   moveTool?(bodyId: string, pose: BodyPose, dt: number): void;
+  moveKinematicBody?(bodyId: string, pose: BodyPose, dt: number): void;
+  placeEmptyTool?(bodyId: string, pose: BodyPose): void;
+  bindLoad?(carrier: string, material: string, fromGrasp?: string): void;
+  hasContactSupport?(bodyId: string, supportId: string): boolean;
   createGrasp?(id: string, tool: string, material: string): void;
   removeGrasp?(id: string): void;
   hasGrasp?(id: string): boolean;
@@ -41,6 +46,7 @@ export interface PhysicsPort {
 }
 
 export interface RuntimeBody {
+  sensor?: boolean;
   convexParts?: Vec3[][];
   initiallyActive?: boolean;
   id: string;

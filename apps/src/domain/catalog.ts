@@ -11,6 +11,7 @@ import { parameterSchema } from "@/validation/contracts";
 const actions: Record<DeviceType, [string, string]> = {
   conveyor: ["transport_to_exit", "输送至出口"],
   lift_table: ["lift_to_level", "升降至目标层"],
+  linear_rail: ["move_to_position", "沿轨道定位"],
   material_source_station: ["produce_material", "生成物料"],
   robot_arm: ["pick_and_place", "抓取与放置"],
   rotary_table: ["rotate_to_station", "旋转至工位"],
@@ -19,7 +20,11 @@ const actions: Record<DeviceType, [string, string]> = {
   workpiece_carrier: ["observe_slots", "载位状态观测"],
 };
 export function createCatalog(): DeviceDefinition[] {
-  return deviceTypes.map((type) => {
+  // Importable device kinds may precede a calibrated authoring template.
+  const templateTypes = deviceTypes.filter((type) =>
+    parameters.examples.some((p) => p.device_type === type),
+  );
+  return templateTypes.map((type) => {
     const example = parameters.examples.find((p) => p.device_type === type)!;
     const [id, label] = actions[type];
     const passive = ["workpiece", "workpiece_carrier"].includes(type);

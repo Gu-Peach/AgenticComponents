@@ -41,7 +41,7 @@ class Parser:
    self.need(self.language in ('ac-declarative/0.2','ac-declarative/0.3'),n,'payload需要ac-declarative/0.2及以上');self.literal(args[0])
   if name in ('calibration','subject_id'):
    self.need(self.language=='ac-declarative/0.3',n,'标定与身份引用需要ac-declarative/0.3')
-   if name=='calibration':self.literal(args[1])
+   if name=='calibration':self.need(isinstance(args[1],(ast.Constant,ast.Attribute)),n,'标定键须为字符串常量或有限任务字段')
   return {'kind':name,'args':[self.expr(a) for a in args],'kwargs':{k:self.expr(v) for k,v in kw.items()}}
  def header(self,n):
   self.need(isinstance(n,ast.With) and len(n.items)==1 and n.items[0].optional_vars is None,n,'只允许声明式with块，不允许as')

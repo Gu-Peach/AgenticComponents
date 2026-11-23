@@ -1,5 +1,6 @@
 /** Phase owner for a shared physical world; adapters must never step or dispose it. */
 export interface SceneWorld {
+  isMotionStopped?(): boolean;
   step(dt: number): void;
   dispose(): void;
 }
@@ -91,6 +92,22 @@ export class SceneWorldStepper {
     if (this.state === "disposed") return;
     if (!["ready", "stopped"].includes(this.state))
       throw new Error("Cannot dispose an unconfirmed moving world");
+    try {
+      for (const d of this.drivers) d.dispose();
+    } finally {
+      this.world.dispose();
+      this.state = "disposed";
+    }
+  }
+  /** Explicitly abandon a quiescent failed simulation, without a successful handoff receipt. */
+  discard() {
+    if (
+      this.state !== "attention_required" ||
+      this.world.isMotionStopped?.() !== true
+    )
+      throw new Error(
+        "Only a physically stopped faulted simulation can be discarded",
+      );
     try {
       for (const d of this.drivers) d.dispose();
     } finally {

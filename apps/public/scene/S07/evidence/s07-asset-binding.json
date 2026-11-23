@@ -1,0 +1,194 @@
+{
+  "model_sha256": "11bb5e2a0865c27e75836e23fc9a5cd7678216eea494aaf408b93c14d4b5d353",
+  "source": "user-confirmed device nodes and GLB mesh envelopes",
+  "slots": [
+    {
+      "id": "STORE.slot1",
+      "support_node_index": 178,
+      "position_m": [
+        -0.24606932699680328,
+        0.9999999776482585,
+        -0.7802610397338865
+      ],
+      "column": 1,
+      "level": 1
+    },
+    {
+      "id": "STORE.slot2",
+      "support_node_index": 185,
+      "position_m": [
+        -0.24606932699680328,
+        1.5999999642372136,
+        -0.7802610397338863
+      ],
+      "column": 1,
+      "level": 2
+    },
+    {
+      "id": "STORE.slot3",
+      "support_node_index": 192,
+      "position_m": [
+        -0.24606932699680328,
+        2.199999950826168,
+        -0.7802610397338863
+      ],
+      "column": 1,
+      "level": 3
+    },
+    {
+      "id": "STORE.slot4",
+      "support_node_index": 199,
+      "position_m": [
+        -0.24606932699680328,
+        2.799999937415123,
+        -0.780261039733886
+      ],
+      "column": 1,
+      "level": 4
+    },
+    {
+      "id": "STORE.slot5",
+      "support_node_index": 206,
+      "position_m": [
+        -1.2660693041980267,
+        0.9999999776482585,
+        -0.7802610397338865
+      ],
+      "column": 2,
+      "level": 1
+    },
+    {
+      "id": "STORE.slot6",
+      "support_node_index": 213,
+      "position_m": [
+        -1.2660693041980267,
+        1.5999999642372136,
+        -0.7802610397338863
+      ],
+      "column": 2,
+      "level": 2
+    },
+    {
+      "id": "STORE.slot7",
+      "support_node_index": 220,
+      "position_m": [
+        -1.2660693041980267,
+        2.199999950826168,
+        -0.7802610397338863
+      ],
+      "column": 2,
+      "level": 3
+    },
+    {
+      "id": "STORE.slot8",
+      "support_node_index": 227,
+      "position_m": [
+        -1.2660693041980267,
+        2.799999937415123,
+        -0.780261039733886
+      ],
+      "column": 2,
+      "level": 4
+    },
+    {
+      "id": "STORE.slot9",
+      "support_node_index": 234,
+      "position_m": [
+        -2.28606928139925,
+        0.9999999776482585,
+        -0.7802610397338865
+      ],
+      "column": 3,
+      "level": 1
+    },
+    {
+      "id": "STORE.slot10",
+      "support_node_index": 241,
+      "position_m": [
+        -2.28606928139925,
+        1.5999999642372136,
+        -0.7802610397338863
+      ],
+      "column": 3,
+      "level": 2
+    },
+    {
+      "id": "STORE.slot11",
+      "support_node_index": 248,
+      "position_m": [
+        -2.28606928139925,
+        2.199999950826168,
+        -0.7802610397338863
+      ],
+      "column": 3,
+      "level": 3
+    },
+    {
+      "id": "STORE.slot12",
+      "support_node_index": 255,
+      "position_m": [
+        -2.28606928139925,
+        2.799999937415123,
+        -0.780261039733886
+      ],
+      "column": 3,
+      "level": 4
+    },
+    {
+      "id": "STORE.slot13",
+      "support_node_index": 262,
+      "position_m": [
+        -3.3060692586004734,
+        0.9999999776482585,
+        -0.7802610397338865
+      ],
+      "column": 4,
+      "level": 1
+    },
+    {
+      "id": "STORE.slot14",
+      "support_node_index": 269,
+      "position_m": [
+        -3.3060692586004734,
+        1.5999999642372136,
+        -0.7802610397338863
+      ],
+      "column": 4,
+      "level": 2
+    },
+    {
+      "id": "STORE.slot15",
+      "support_node_index": 276,
+      "position_m": [
+        -3.3060692586004734,
+        2.199999950826168,
+        -0.7802610397338863
+      ],
+      "column": 4,
+      "level": 3
+    },
+    {
+      "id": "STORE.slot16",
+      "support_node_index": 283,
+      "position_m": [
+        -3.3060692586004734,
+        2.799999937415123,
+        -0.780261039733886
+      ],
+      "column": 4,
+      "level": 4
+    }
+  ],
+  "slot_numbering": "column-major; descending scene X, ascending Y",
+  "slot_pose_semantics": "top centre of support plate; not fork/TCP target",
+  "counts": {
+    "conveyor": 2,
+    "material_source_station": 1,
+    "linear_rail": 2,
+    "lift_table": 2,
+    "storage_rack": 1,
+    "slots": 16
+  },
+  "calibration_status": "pending",
+  "material_geometry": "unresolved; finite task identities only"
+}

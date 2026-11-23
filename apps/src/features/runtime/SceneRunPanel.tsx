@@ -69,6 +69,12 @@ export function SceneRunPanel({ scene }: { scene: ScenePackageInstance }) {
               重置
             </button>
           )}
+        {status === "attention_required" &&
+          controller.configuration(scene.id)?.warehouse && (
+            <button onClick={() => act(() => controller.discard(scene.id))}>
+              放弃本次仿真并恢复初态
+            </button>
+          )}
       </div>
       {(error || preparation?.error || runtime?.error) && (
         <p role="alert">{error || preparation?.error || runtime?.error}</p>

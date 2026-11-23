@@ -123,4 +123,33 @@ def load_scene_devices(folder,manifest,gltf):
             device['prefab']={**prefab,'slots':slots};device['node_binding']['excluded_subtrees']=[s['source_node']['index'] for s in slots]
         device['signal_bindings']=generated_signals(instance,contract)
         devices[instance]=device
+    def descendant(child,root):
+        while child!=root and child in geometry.parents:child=geometry.parents[child]
+        return child==root
+    for instance,device in devices.items():
+        specific=device['contract'].get('type_specific_contract',{})
+        if device['contract'].get('device_type')=='linear_rail':
+            mounted=devices.get(specific.get('mounted_device'))
+            if not mounted or mounted['contract'].get('device_type')!='lift_table':raise ValueError('Rail requires a declared mounted lift')
+            if mounted['contract']['type_specific_contract'].get('mounted_on')!=instance:raise ValueError('Rail/lift mounting references disagree')
+            moving=geometry.resolve(specific['moving_node'])
+            if moving!=mounted['node_binding']['root']['index']:raise ValueError('Rail moving node differs from mounted lift root')
+            if not descendant(moving,device['node_binding']['root']['index']):raise ValueError('Mounted lift is outside rail assembly')
+        if specific.get('transfer',{}).get('kind')=='platform_handler' or specific.get('transfer',{}).get('mode')=='virtual_linear':
+            root=device['node_binding'].get('root',{}).get('index')
+            platform=geometry.resolve(specific['lift_motion']['platform_node'])
+            handler=geometry.resolve(specific['handler']['node'])
+            if root is None or not descendant(platform,root) or not descendant(handler,platform):raise ValueError('Lift platform/handler hierarchy differs')
+        simulation=specific.get('simulation',{})
+        if simulation.get('profile')=='warehouse.virtual-linear@1' and device['node_binding'].get('root'):
+            root=device['node_binding']['root']['index']
+            simulation['root_rotation']=quaternion(geometry.world(root))
+            if 'platform_node' in simulation:
+                platform=geometry.resolve(simulation['platform_node'])
+                simulation['platform_geometry']=geometry.geometry(platform)
+                simulation['platform_meshes']=geometry.meshes([platform])
+            if 'support_mesh' in simulation:
+                index=geometry.resolve(simulation['support_mesh'])
+                if not descendant(index,root):raise ValueError('Support mesh outside device')
+                simulation['support_geometry']=geometry.geometry(index)
     return devices,inputs

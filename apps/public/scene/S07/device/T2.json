@@ -1,0 +1,72 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "T2",
+  "contract_ref": "../contracts/linear_rail.json",
+  "node_binding": {
+    "status": "bound",
+    "node": "Single_Rail_Transport_Controller_#3_000n",
+    "model_sha256": "11bb5e2a0865c27e75836e23fc9a5cd7678216eea494aaf408b93c14d4b5d353",
+    "geometry_nodes": [
+      "__Geometry___000c"
+    ]
+  },
+  "locations": {
+    "T2.home": {
+      "node": "CraneA_002n",
+      "frame": "scene_world_m",
+      "status": "rest_frame_only_pending_dock_calibration"
+    }
+  },
+  "calibrations": {},
+  "model": {
+    "calibration": {
+      "status": "pending"
+    },
+    "fixed_node": "__Geometry___000c",
+    "mounted_device": "L2",
+    "moving_node": "CraneA_002n",
+    "axis": [
+      1,
+      0,
+      0
+    ],
+    "axis_frame": "scene_world_m",
+    "axis_source": "rail long axis; sign is authored convention",
+    "travel_limits_m": null,
+    "simulation": {
+      "profile": "warehouse.virtual-linear@1",
+      "axis_local": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "limits_m": [
+        -4.0,
+        0.05
+      ],
+      "limits_source": "candidate stop envelope inside measured rail; not hardware limits"
+    }
+  },
+  "docking": {
+    "dock": "C2.entry",
+    "slots": [
+      "STORE.slot1",
+      "STORE.slot2",
+      "STORE.slot3",
+      "STORE.slot4",
+      "STORE.slot5",
+      "STORE.slot6",
+      "STORE.slot7",
+      "STORE.slot8",
+      "STORE.slot9",
+      "STORE.slot10",
+      "STORE.slot11",
+      "STORE.slot12",
+      "STORE.slot13",
+      "STORE.slot14",
+      "STORE.slot15",
+      "STORE.slot16"
+    ],
+    "status": "pending_reach_and_clearance_validation"
+  }
+}

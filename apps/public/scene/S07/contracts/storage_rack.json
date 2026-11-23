@@ -8,8 +8,8 @@
   "display_name": "仓储柜：库位预留与存取服务",
   "asset": {
     "model_format": "glb",
-    "model_key": "../Intelligent Storage and Logistics Line/Intelligent Storage and Logistics Line.glb",
-    "sha256": "8ec621bde391457832926e56d4ec9516ba36d8e9ffa43b4fa9f550e9250c12fa"
+    "model_key": "../Intelligent Storage and Logistics Line/PM Stacker Cranes.glb",
+    "sha256": "11bb5e2a0865c27e75836e23fc9a5cd7678216eea494aaf408b93c14d4b5d353"
   },
   "params_schema": {
     "rows": {

@@ -125,8 +125,11 @@ class JoltPhysicsBackend implements PhysicsPort {
           Math.abs(Math.hypot(...d.rotation) - 1) > 1e-5
         )
           throw new Error("刚体位姿或接触参数无效");
-        if (d.motionType === "kinematic" && d.role !== "tool")
-          throw new Error("当前运动学刚体只支持虚拟工具");
+        if (
+          d.motionType === "kinematic" &&
+          !["tool", "support", "carrier"].includes(d.role)
+        )
+          throw new Error("不支持的运动学刚体角色");
         if (
           d.size.some((n) => !Number.isFinite(n) || n <= 0) ||
           (d.motionType === "dynamic" && (!d.mass || d.mass <= 0))
@@ -244,6 +247,7 @@ class JoltPhysicsBackend implements PhysicsPort {
           d.motionType !== "static" ? 1 : 0,
         );
       settings.mFriction = d.friction;
+      settings.mIsSensor = d.sensor ?? false;
       settings.mRestitution = d.restitution;
       settings.mLinearDamping = 0;
       settings.mAllowSleeping = false;
@@ -398,6 +402,65 @@ class JoltPhysicsBackend implements PhysicsPort {
     if (r.definition.motionType !== "kinematic" || r.definition.role !== "tool")
       throw new Error("不是运动学工具");
     moveTool(this.J, this.bi, r.body, pose, dt);
+  }
+  moveKinematicBody(id: string, pose: BodyPose, dt: number) {
+    if (this.disposed) throw new Error("World disposed");
+    const r = this.registry.get(id);
+    if (
+      r.definition.motionType !== "kinematic" ||
+      !["support", "carrier"].includes(r.definition.role)
+    )
+      throw new Error("Not a kinematic support");
+    moveTool(this.J, this.bi, r.body, pose, dt);
+  }
+  placeEmptyTool(id: string, pose: BodyPose) {
+    const r = this.registry.get(id);
+    if (
+      this.disposed ||
+      this.hasGraspForBody(id) ||
+      r.definition.role !== "tool" ||
+      r.definition.motionType !== "kinematic" ||
+      ![...pose.position, ...pose.rotation].every(Number.isFinite) ||
+      Math.abs(Math.hypot(...pose.rotation) - 1) > 1e-5
+    )
+      throw new Error("Cannot place occupied/invalid tool");
+    const p = new this.J.RVec3(...pose.position),
+      q = new this.J.Quat(...pose.rotation),
+      zero = new this.J.Vec3(0, 0, 0);
+    try {
+      this.bi.SetPositionAndRotation(
+        r.body.GetID(),
+        p,
+        q,
+        this.J.EActivation_Activate,
+      );
+      this.bi.SetLinearAndAngularVelocity(r.body.GetID(), zero, zero);
+    } finally {
+      this.J.destroy(p);
+      this.J.destroy(q);
+      this.J.destroy(zero);
+    }
+  }
+  bindLoad(carrier: string, material: string, fromGrasp?: string) {
+    if (this.disposed || !this.grasps)
+      throw new Error("Constraint backend unavailable");
+    this.grasps.bindLoad(carrier, material, fromGrasp);
+  }
+  hasContactSupport(body: string, support: string) {
+    return this.contacts.hasSupport(body, support);
+  }
+  isMotionStopped() {
+    return (
+      !this.disposed &&
+      [...this.registry.values()].every((r) => {
+        if (!r.active || r.definition.motionType === "static") return true;
+        const p = this.readBody(r.definition.id);
+        return (
+          Math.hypot(...p.velocity) < 0.03 &&
+          Math.hypot(...(p.angularVelocity ?? [0, 0, 0])) < 0.05
+        );
+      })
+    );
   }
   createGrasp(id: string, tool: string, material: string) {
     if (this.disposed || !this.grasps) throw new Error("约束能力不可用");

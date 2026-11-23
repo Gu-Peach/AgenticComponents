@@ -39,6 +39,7 @@ export interface SceneReadiness {
   blockers: string[];
 }
 export interface CompiledSceneRuntime {
+  warehouse?: import("./warehouse").WarehouseConfig;
   bundle: SceneBundle;
   root: ProcessNode;
   task: { pallets: SceneLoad[]; [key: string]: unknown };

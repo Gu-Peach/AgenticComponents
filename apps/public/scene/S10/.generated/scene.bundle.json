@@ -4847,7 +4847,8 @@
           "unit": "1",
           "retention": "latched_until_ack_or_new_request"
         }
-      }
+      },
+      "position_targets": {}
     },
     {
       "schema_version": "scene-device/0.2",
@@ -23585,5 +23586,20 @@
   ],
   "executable": false,
   "authored_device_count": 17,
-  "runtime_instance_count": 17
+  "runtime_instance_count": 17,
+  "drive_groups": {},
+  "environment": [
+    {
+      "kind": "external_infeed",
+      "location": "C1.entry",
+      "rule": "release_next_registered_job_only_when_entry_empty_and_owner_capacity_including_reservations_available",
+      "evidence": "subject_identity_and_actual_support",
+      "implementation_status": "pending"
+    },
+    {
+      "kind": "external_pallet_exchange",
+      "rule": "provide_registered_empty_pallet_and_remove_only_after_all_manifest_items_loaded_and_robot_clear",
+      "implementation_status": "pending"
+    }
+  ]
 }

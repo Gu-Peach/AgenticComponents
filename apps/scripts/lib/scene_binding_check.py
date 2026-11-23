@@ -33,6 +33,7 @@ def validate_inputs(ir,devices,goal):
             need(type(args[0])in(int,float) and math.isfinite(args[0]),'Quantity requires finite number')
             return Quantity(args[0],args[1] if kind=='quantity' else 's' if kind=='seconds' else 'ms')
         if kind=='calibration':
+            need(type(args[1])is str,'Calibration key must be a string')
             d=devices[args[0]];record=d['calibrations'].get(args[0]+'.'+args[1]);need(record is not None,'Missing calibration')
             need(record['status']=='pending_calibration' and record['value'] is None or record['status']=='calibrated' and type(record['value'])in(int,float) and record['min']<=record['value']<=record['max'],'Invalid calibration value/status')
             return Quantity(record['value'],record['unit'])
@@ -88,6 +89,7 @@ def validate_inputs(ir,devices,goal):
             schema=behavior.get('arguments_schema',{p['id']:p for p in behavior.get('arguments',[])})
             for key,expr in n['arguments'].items():
                 p=schema[key];value=evaluate(expr,env);check(value,p['type'],p.get('unit','1'),p)
+                if p.get('semantic_type')=='location_ref':need(value in locations,'Unknown named location')
                 if n['behavior']=='transport_to_position' and key=='target':need(value in device.get('position_targets',{}),'Unknown scene transport target')
                 if p['type']=='recipe_ref':need(value in device.get('recipes',{}),'Unknown device recipe')
             if 'payload' in n:
@@ -95,6 +97,11 @@ def validate_inputs(ir,devices,goal):
                 need(record and record['instance']==id and record['behavior']==n['behavior'],'Payload redirects behavior')
                 need(set(record['fields'])==set(payload['kwargs']),'Payload fields differ')
                 for key,expr in payload['kwargs'].items():check(evaluate(expr,env),record['fields'][key])
+                routes=device.get('transfer_routes')
+                if n['behavior'] in ('transfer_material','accept_material','release_material') and routes is not None:
+                    source=evaluate(payload['kwargs']['source'],env) if 'source' in payload['kwargs'] else id+'.work'
+                    target=evaluate(payload['kwargs']['target'],env) if 'target' in payload['kwargs'] else id+'.work'
+                    need(any(source in route['sources'] and target in route['targets'] for route in routes),'Transfer route is not declared for this lift')
         elif kind=='delay':
             q=evaluate(n['duration'],env);need(isinstance(q,Quantity) and q.unit in ('s','ms') and q.value>=0,'Invalid delay')
         elif kind!='fail':raise ValueError('Unsupported scene operator: '+kind)
