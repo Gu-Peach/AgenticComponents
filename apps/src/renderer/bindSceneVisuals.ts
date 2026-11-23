@@ -11,7 +11,11 @@ type VisualFrame = {
   current: SceneVisualSnapshot;
   alpha: number;
 };
-type BodyState = { active: boolean; pose?: BodyPose };
+type BodyState = {
+  active: boolean;
+  pose?: BodyPose;
+  materialState?: "raw" | "finished";
+};
 
 function reading<T>(s: SceneVisualSnapshot, key: string): T | undefined {
   const sample = s.observations.samples[key];
@@ -23,7 +27,10 @@ function reading<T>(s: SceneVisualSnapshot, key: string): T | undefined {
 /** Binds immutable scene poses to Three objects for the lifetime of a prepared session. */
 export function bindSceneVisuals(
   model: Object3D,
-  config: Pick<CompiledSceneRuntime, "visualBodies" | "robots" | "robotNodes">,
+  config: Pick<
+    CompiledSceneRuntime,
+    "visualBodies" | "robots" | "robotNodes" | "hiddenMeshes"
+  >,
 ) {
   model.updateWorldMatrix(true, true);
   const nodes = new Map<number, Object3D>();
@@ -36,7 +43,10 @@ export function bindSceneVisuals(
   const inverseModel = model.matrixWorld.clone().invert();
   const templates = new Map<number, { node: Object3D; sceneMatrix: Matrix4 }>();
   for (const binding of config.visualBodies) {
-    for (const index of binding.meshes) {
+    for (const index of [
+      ...binding.meshes,
+      ...(binding.finishedVariant?.meshes ?? []),
+    ]) {
       const node = nodes.get(index);
       if (node && !templates.has(index))
         templates.set(index, {
@@ -51,6 +61,15 @@ export function bindSceneVisuals(
     local: Matrix4;
   }[] = [];
   const groups = new Map<string, Group>();
+  const variants = new Map<string, { raw: Group; finished: Group }>();
+  const hidden = new Map<Object3D, boolean>();
+  for (const index of config.hiddenMeshes ?? []) {
+    const node = nodes.get(index);
+    if (node && !hidden.has(node)) {
+      hidden.set(node, node.visible);
+      node.visible = false;
+    }
+  }
   const matrix = new Matrix4(),
     inverse = new Matrix4(),
     unit = new Vector3(1, 1, 1);
@@ -66,6 +85,8 @@ export function bindSceneVisuals(
     group.quaternion.fromArray(binding.initial.rotation);
     group.updateMatrix();
     inverse.compose(group.position, group.quaternion, unit).invert();
+    const raw = binding.finishedVariant ? new Group() : group;
+    if (raw !== group) group.add(raw);
     for (const index of binding.meshes) {
       const template = templates.get(index);
       if (!template) continue;
@@ -76,11 +97,37 @@ export function bindSceneVisuals(
           parent: node.parent,
           local: node.matrix.clone(),
         });
-      group.add(node);
+      raw.add(node);
       matrix
         .multiplyMatrices(inverse, template.sceneMatrix)
         .decompose(node.position, node.quaternion, node.scale);
       node.updateMatrix();
+    }
+    if (binding.finishedVariant) {
+      const finished = new Group();
+      const { meshes, initial } = binding.finishedVariant;
+      inverse
+        .compose(
+          position.fromArray(initial.position),
+          rotation.fromArray(initial.rotation),
+          unit,
+        )
+        .invert();
+      for (const index of meshes) {
+        const template = templates.get(index);
+        if (!template)
+          throw new Error("Missing finished material mesh " + index);
+        const node = template.node.clone(true);
+        node.visible = hidden.get(template.node) ?? template.node.visible;
+        matrix
+          .multiplyMatrices(inverse, template.sceneMatrix)
+          .decompose(node.position, node.quaternion, node.scale);
+        node.updateMatrix();
+        finished.add(node);
+      }
+      finished.visible = false;
+      group.add(finished);
+      variants.set(binding.bodyId, { raw, finished });
     }
     model.add(group);
     groups.set(binding.bodyId, group);
@@ -143,6 +190,11 @@ export function bindSceneVisuals(
         }
         if (!body.pose) continue;
         group ??= attach(binding);
+        const variant = variants.get(binding.bodyId);
+        if (variant) {
+          variant.finished.visible = body.materialState === "finished";
+          variant.raw.visible = !variant.finished.visible;
+        }
         if (!group.visible) {
           if (!group.parent) model.add(group);
           group.visible = true;
@@ -192,6 +244,7 @@ export function bindSceneVisuals(
     }
   }
   function dispose() {
+    for (const [node, visibility] of hidden) node.visible = visibility;
     for (const { node, parent, local } of originals) {
       if (parent) parent.add(node);
       else node.removeFromParent();

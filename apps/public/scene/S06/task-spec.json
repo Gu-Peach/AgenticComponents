@@ -1,0 +1,91 @@
+{
+  "schema_version": "ac-flow-task/0.2",
+  "id": "pallet_machining_goal",
+  "scene_id": "S06",
+  "description": "单盘九件，每件加工一次并返回各自原槽，整盘从第三段出口出线。",
+  "expected": {
+    "material_ids": [
+      "M01_01",
+      "M01_02",
+      "M01_03",
+      "M01_04",
+      "M01_05",
+      "M01_06",
+      "M01_07",
+      "M01_08",
+      "M01_09"
+    ],
+    "material_count": 9,
+    "pallet_ids": [
+      "P01"
+    ],
+    "pallet_count": 1
+  },
+  "all": [
+    {
+      "kind": "processed_and_returned",
+      "machine": "MC1",
+      "point": "MC1.work",
+      "items": [
+        {
+          "material": "M01_01",
+          "slot": "P01.slot1"
+        },
+        {
+          "material": "M01_02",
+          "slot": "P01.slot2"
+        },
+        {
+          "material": "M01_03",
+          "slot": "P01.slot3"
+        },
+        {
+          "material": "M01_04",
+          "slot": "P01.slot4"
+        },
+        {
+          "material": "M01_05",
+          "slot": "P01.slot5"
+        },
+        {
+          "material": "M01_06",
+          "slot": "P01.slot6"
+        },
+        {
+          "material": "M01_07",
+          "slot": "P01.slot7"
+        },
+        {
+          "material": "M01_08",
+          "slot": "P01.slot8"
+        },
+        {
+          "material": "M01_09",
+          "slot": "P01.slot9"
+        }
+      ]
+    },
+    {
+      "kind": "all_pallets_loaded_and_departed",
+      "ids": [
+        "P01"
+      ],
+      "manifest": "pallets.items"
+    },
+    {
+      "kind": "tools_empty"
+    },
+    {
+      "kind": "drives_stopped"
+    },
+    {
+      "kind": "no_active_requests"
+    },
+    {
+      "kind": "no_pending_jobs"
+    },
+    {
+      "kind": "operations_released"
+    }
+  ]
+}

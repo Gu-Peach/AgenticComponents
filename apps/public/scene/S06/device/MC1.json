@@ -1,0 +1,31 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "MC1",
+  "contract_ref": "../contracts/machine_tool.json",
+  "node_binding": {
+    "status": "bound",
+    "node": "Parametric_Vertical_Mill_00Kn",
+    "model_sha256": "8524e75af80d00a1a4a3fad32e20cb840ec95defb61a820a54145dd7424346c2"
+  },
+  "parameters": {
+    "cycle_time_s": 2
+  },
+  "model": {
+    "calibration": {
+      "status": "pending"
+    },
+    "support_geometry_node": "__Geometry___00Xc",
+    "support_mesh_node": "Mesh_05zg",
+    "support_meshes": [
+      457
+    ]
+  },
+  "locations": {
+    "MC1.work": {
+      "node": "Workpiece_00Zn",
+      "frame": "scene_world_m",
+      "reference": "workpiece_bottom_center",
+      "status": "mesh_bound_candidate"
+    }
+  }
+}

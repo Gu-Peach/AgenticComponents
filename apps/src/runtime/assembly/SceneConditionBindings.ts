@@ -21,7 +21,13 @@ import { DEFAULT_FEEDBACK_MAX_AGE_TICKS } from "@/domain/runtime/bindDeviceBehav
 export interface SceneConditionWorld {
   bodies: Record<
     string,
-    { active: boolean; pose?: BodyPose; supports: string[]; held: boolean }
+    {
+      active: boolean;
+      pose?: BodyPose;
+      supports: string[];
+      held: boolean;
+      materialState?: "raw" | "finished";
+    }
   >;
   robotClear: Record<string, boolean>;
   receipts: EnvironmentReceipt[];
@@ -34,6 +40,20 @@ export interface SceneConditionWorld {
     pallet: string | null;
     slots: Record<string, string>;
     fullAtExit: boolean;
+  };
+  machining?: {
+    pallet: string | null;
+    atStation: boolean;
+    fullAtExit: boolean;
+    completedLoad: boolean;
+    machineItem: string | null;
+    workSupported: boolean;
+    slots: Record<string, string>;
+    operations: ReadonlyArray<{
+      material: string;
+      request: string;
+      tick: number;
+    }>;
   };
 }
 type World = SceneConditionWorld;
@@ -354,9 +374,10 @@ export function sceneConditionReader(
           (r) =>
             r.runId === c.frame.runId &&
             r.subjectId === subjectId &&
-            (w.loading
+            (w.loading || w.machining
               ? r.kind === "carrier_departed" &&
-                compiled.loading?.exchange.leader === deviceId
+                (compiled.loading?.exchange.leader ??
+                  compiled.machining?.leader) === deviceId
               : r.kind === "material_delivered" &&
                 w.deliveries[subjectId]?.receiver === deviceId),
         );
@@ -379,9 +400,11 @@ export function sceneConditionReader(
         const src = owner(resolved.source),
           s = load(w),
           support =
-            src.contract.device_type === "workpiece_carrier"
-              ? src.instance_id + "/body"
-              : src.instance_id + "/surface";
+            src.contract.device_type === "machine_tool"
+              ? src.instance_id + "/support"
+              : src.contract.device_type === "workpiece_carrier"
+                ? src.instance_id + "/body"
+                : src.instance_id + "/surface";
         return (
           settled(w) &&
           s.supports.includes(support) &&
@@ -399,6 +422,29 @@ export function sceneConditionReader(
       const destinationFree = (w: World) => {
         const dest = owner(resolved.target),
           support = dest.instance_id + "/surface";
+        if (w.machining && compiled.machining) {
+          const { machineItem, atStation, slots, pallet } = w.machining;
+          const config = compiled.machining,
+            item = config.pallets
+              .find((p) => p.id === pallet)
+              ?.items.find((i) => i.material === subjectId);
+          if (!atStation || !item) return false;
+          const state = load(w).materialState;
+          if (resolved.target === config.point)
+            return (
+              state === "raw" &&
+              machineItem === null &&
+              resolved.source === item.source &&
+              slots[item.source] === subjectId
+            );
+          return (
+            resolved.target === item.source &&
+            resolved.source === config.point &&
+            machineItem === subjectId &&
+            state === "finished" &&
+            !slots[item.source]
+          );
+        }
         if (w.loading && compiled.loading) {
           const pallet = compiled.loading.pallets.find(
             (p) => p.id === dest.instance_id,
@@ -466,7 +512,10 @@ export function sceneConditionReader(
             target = location.position,
             base = compiled.robots.get(deviceId)!,
             w = world();
-          if (compiled.loading && location.reference === "robot_rest_pose") {
+          if (
+            (compiled.loading || compiled.machining) &&
+            location.reference === "robot_rest_pose"
+          ) {
             sources.add("kinematic-preflight/GLB-rest");
             if (!location.rotation_quaternion)
               return fail("location", "Missing rest orientation");
@@ -508,6 +557,19 @@ export function sceneConditionReader(
         case "environment_ready": {
           const w = world(),
             p = compiled.task.pallets.find((p) => p.id === subjectId);
+          if (w.machining && compiled.machining)
+            return good(
+              w.machining.pallet === subjectId &&
+                robotsClear(w) &&
+                w.receipts.some(
+                  (r) =>
+                    r.kind === "supply_confirmed" &&
+                    r.subjectId === subjectId &&
+                    r.runId === c.frame.runId,
+                ) &&
+                (resolved.target !== compiled.machining.exitTarget ||
+                  w.machining.completedLoad),
+            );
           if (w.loading && compiled.loading) {
             const admitted = w.receipts.some(
               (r) =>
@@ -598,6 +660,10 @@ export function sceneConditionReader(
           const w = world(),
             s = load(w),
             target = config!.targets.find((t) => t.id === deviceId + ".exit")!;
+          if (w.machining)
+            return good(
+              w.machining.pallet === subjectId && w.machining.fullAtExit,
+            );
           if (w.loading)
             return good(w.loading.pallet === subjectId && w.loading.fullAtExit);
           return good(
@@ -609,6 +675,12 @@ export function sceneConditionReader(
         }
         case "receiver_admissible": {
           const w = world();
+          if (w.machining)
+            return good(
+              w.machining.pallet === subjectId &&
+                w.machining.fullAtExit &&
+                !receipt(w),
+            );
           if (w.loading)
             return good(
               w.loading.pallet === subjectId &&
@@ -628,9 +700,10 @@ export function sceneConditionReader(
             receipts = w.receipts.filter(
               (r) =>
                 r.runId === c.frame.runId &&
-                (w.loading
+                (w.loading || w.machining
                   ? r.kind === "carrier_departed" &&
-                    compiled.loading?.exchange.leader === deviceId
+                    (compiled.loading?.exchange.leader ??
+                      compiled.machining?.leader) === deviceId
                   : r.kind === "material_delivered" &&
                     w.deliveries[r.subjectId]?.receiver === deviceId),
             );
@@ -682,7 +755,7 @@ export function sceneConditionReader(
                           r.kind,
                         ),
                     ) ||
-                    (w.loading &&
+                    ((w.loading || w.machining) &&
                       w.receipts.some(
                         (r) =>
                           r.kind === "carrier_departed" &&

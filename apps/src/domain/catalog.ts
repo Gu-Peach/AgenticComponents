@@ -16,6 +16,7 @@ const actions: Record<DeviceType, [string, string]> = {
   robot_arm: ["pick_and_place", "抓取与放置"],
   rotary_table: ["rotate_to_station", "旋转至工位"],
   storage_rack: ["reserve_cell", "预留储位"],
+  machine_tool: ["machine_material", "加工工件"],
   workpiece: ["observe_material", "物料状态观测"],
   workpiece_carrier: ["observe_slots", "载位状态观测"],
 };

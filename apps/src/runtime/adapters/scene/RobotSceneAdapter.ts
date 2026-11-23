@@ -341,8 +341,8 @@ export class RobotSceneAdapter implements DeviceActionPort {
   drainObservations() {
     return this.observations.splice(0);
   }
-  dispose() {
-    if (!this.isStopped() || this.runner?.grasp?.holding)
+  dispose(reason?: "discard") {
+    if (reason !== "discard" && !this.isStopped())
       throw new Error("Robot still moving or holding material");
     this.runner?.dispose();
   }

@@ -1,0 +1,115 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "R1",
+  "contract_ref": "../contracts/robot_arm.json",
+  "node_binding": {
+    "status": "bound",
+    "node": "RobotController_00bn",
+    "model_sha256": "8524e75af80d00a1a4a3fad32e20cb840ec95defb61a820a54145dd7424346c2"
+  },
+  "model": {
+    "calibration": {
+      "status": "pending",
+      "source": "模型六个关节和法兰的局部零位与 S02 同型机械臂一致。候选仿真采用 J2、J3、J5 局部 +Y 及无界转角。"
+    },
+    "urdf": {
+      "joints": [
+        {
+          "nodeName": "Axis_1_00en",
+          "axis": [
+            0,
+            0,
+            1
+          ],
+          "limit": null
+        },
+        {
+          "nodeName": "Axis_2_00fn",
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "limit": null
+        },
+        {
+          "nodeName": "Axis_3_00gn",
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "limit": null
+        },
+        {
+          "nodeName": "Axis_4_00hn",
+          "axis": [
+            0,
+            0,
+            1
+          ],
+          "limit": null
+        },
+        {
+          "nodeName": "Axis_5_00in",
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "limit": null
+        },
+        {
+          "nodeName": "Axis_6_00jn",
+          "axis": [
+            0,
+            0,
+            1
+          ],
+          "limit": null
+        }
+      ]
+    },
+    "tooling": {
+      "flange_node_name": "mountplate_00kn",
+      "tcp_local_frame": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation_quaternion": [
+          0,
+          0,
+          0,
+          1
+        ]
+      },
+      "simulation_tool": true
+    },
+    "gripper": {
+      "type": "virtual_fixed_grasp",
+      "capture_radius_m": 0.06,
+      "max_relative_speed_mps": 0.08,
+      "max_payload_param": "max_payload_kg",
+      "tool_size_m": [
+        0.025,
+        0.025,
+        0.025
+      ],
+      "constraint_tolerance_m": 0.015,
+      "orientation_policy": "spherical_virtual_capture"
+    }
+  },
+  "locations": {
+    "R1.home": {
+      "node": "mountplate_00kn",
+      "frame": "flange_pose_scene_world_m",
+      "reference": "robot_rest_pose",
+      "status": "rest_pose_only_clearance_unvalidated"
+    }
+  },
+  "parameters": {
+    "ik_position_tolerance_m": 0.005
+  }
+}

@@ -5,7 +5,8 @@ import {
 } from "./compileLoadingManifest";
 import { compileWarehouseRuntime } from "./compileWarehouseRuntime";
 import { compileHandoffManifest, materialPose } from "./compileHandoffManifest";
-import { PropertyBinding } from "three";
+import { compileMachiningManifest } from "./compileMachiningManifest";
+import { PropertyBinding, Quaternion, Vector3 } from "three";
 import type { SceneBundle } from "@/contracts/scene-package";
 import type {
   CompiledSceneRuntime,
@@ -91,6 +92,78 @@ export function compileSceneRuntime(
   }
   const root = decodeProcessNode(bundle.process.body);
   const leaders = compileDriveGroups(bundle, devices, blockers);
+  if (bundle.runtime_profile === "pallet-machining@1") {
+    if (mode !== "validation")
+      throw new Error("Machining requires candidate simulation");
+    if (blockers.length) throw new Error(blockers.join("\n"));
+    const { finishedByMaterial, ...manifest } = compileMachiningManifest(
+      bundle,
+      goal,
+      root,
+      devices,
+      leaders,
+    );
+    const world = compilePalletWorld(
+      bundle,
+      modelBytes,
+      devices,
+      mode,
+      warnings,
+      leaders,
+      new Map([[manifest.sourceDevice, manifest.entryDevice]]),
+      manifest.task.pallets,
+    );
+    // Loaded slot anchors may be projected onto the bound deck. Keep the
+    // original visual rest transform and place only the simulated body.
+    for (const pallet of manifest.task.pallets) {
+      const carrier = devices.get(pallet.id)!;
+      const rotation = new Quaternion(...carrier.geometry.world_rotation);
+      for (const item of pallet.items) {
+        const body = world.bodyMap.get(item.material + "/body")!;
+        const original = devices.get(item.material)!.geometry.world_position;
+        const offset = new Vector3(...carrier.locations[item.source].position)
+          .applyQuaternion(rotation)
+          .add(new Vector3(...carrier.geometry.world_position))
+          .sub(new Vector3(...original));
+        body.position = new Vector3(...body.position).add(offset).toArray();
+      }
+    }
+    const hidden = new Set<number>();
+    for (const binding of world.visualBodies) {
+      const finished = finishedByMaterial.get(binding.instanceId);
+      if (!finished) continue;
+      const bounds = finished.geometry.bounds;
+      binding.finishedVariant = {
+        meshes: finished.node_binding.owned_mesh_indices,
+        initial: {
+          position: bounds.min.map((v, i) => (v + bounds.max[i]) / 2) as Vec3,
+          rotation: [0, 0, 0, 1],
+          velocity: [0, 0, 0],
+        },
+      };
+      for (const index of binding.finishedVariant.meshes) hidden.add(index);
+    }
+    if (world.visualBodies.some((b) => b.meshes.some((i) => hidden.has(i))))
+      throw new Error("Finished template overlaps active load geometry");
+    const visibleMeshes = new Set(world.visualBodies.flatMap((b) => b.meshes));
+    for (const d of devices.values())
+      if (d.asset_kind === "material_prefab")
+        for (const i of d.node_binding.owned_mesh_indices)
+          if (!visibleMeshes.has(i)) hidden.add(i);
+    warnings.push(
+      "候选仿真采用机床台面碰撞代理。加工周期内保持同一工件刚体，完成时切换成品外观。",
+    );
+    return {
+      bundle,
+      root,
+      devices,
+      leaders,
+      ...manifest,
+      ...world,
+      hiddenMeshes: [...hidden],
+      readiness: { mode, warnings, blockers },
+    };
+  }
   if (bundle.runtime_profile === "robot-handoff@1") {
     if (mode !== "validation")
       throw new Error("Robot handoff requires candidate simulation");
@@ -371,7 +444,13 @@ function compileDriveGroups(
   }
   for (const call of bundle.calls) {
     const type = devices.get(call.device)?.contract.device_type;
-    if (!["conveyor", "robot_arm"].includes(String(type)))
+    if (
+      !["conveyor", "robot_arm"].includes(String(type)) &&
+      !(
+        bundle.runtime_profile === "pallet-machining@1" &&
+        type === "machine_tool"
+      )
+    )
       blockers.push(`${call.device}.${call.behavior}: no registered factory`);
     if (type === "conveyor" && !claimed.has(call.device))
       leaders.set(call.device, [call.device]);
@@ -459,6 +538,53 @@ function compilePalletWorld(
         bodyId: body.id,
         direction: profile.flow_axis,
         normal: [0, 1, 0],
+      });
+    } else if (
+      type === "machine_tool" &&
+      bundle.runtime_profile === "pallet-machining@1"
+    ) {
+      const spec = z
+        .object({
+          support_mesh_node: z.string(),
+          support_meshes: z.array(z.number().int().nonnegative()).length(1),
+        })
+        .parse(d.contract.type_specific_contract);
+      const index = spec.support_meshes[0];
+      if (
+        !d.node_binding.owned_mesh_indices.includes(index) ||
+        bundle.nodes[index]?.name !== spec.support_mesh_node
+      )
+        throw new Error(
+          "Machine table mesh is outside bound device: " + d.instance_id,
+        );
+      const [vertices] = geometry.convexParts([index], [0, 0, 0]);
+      if (!vertices) throw new Error("Missing machine table geometry");
+      const lo: Vec3 = [Infinity, Infinity, Infinity],
+        hi: Vec3 = [-Infinity, -Infinity, -Infinity];
+      for (const v of vertices)
+        for (let axis = 0; axis < 3; axis++) {
+          lo[axis] = Math.min(lo[axis], v[axis]);
+          hi[axis] = Math.max(hi[axis], v[axis]);
+        }
+      const anchor = Object.values(d.locations)[0].position;
+      if (
+        anchor[0] < lo[0] ||
+        anchor[0] > hi[0] ||
+        anchor[2] < lo[2] ||
+        anchor[2] > hi[2] ||
+        Math.abs(anchor[1] - hi[1]) > 0.002
+      )
+        throw new Error("Machining point does not lie on its bound support");
+      bodies.push({
+        id: d.instance_id + "/support",
+        instanceId: d.instance_id,
+        motionType: "static",
+        role: "support",
+        position: lo.map((v, i) => (v + hi[i]) / 2) as Vec3,
+        size: hi.map((v, i) => v - lo[i]) as Vec3,
+        rotation: [0, 0, 0, 1],
+        friction: Number(d.parameters.friction ?? 0.6),
+        restitution: 0,
       });
     } else if (feederEntries.has(d.instance_id)) {
       const body = makeBody(d, "conveying_support", false);

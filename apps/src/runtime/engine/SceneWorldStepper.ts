@@ -10,7 +10,7 @@ export interface SceneDeviceDriver {
   afterPhysics(dt: number, tick: number): void;
   requestStop(): void;
   isStopped(): boolean;
-  dispose(): void;
+  dispose(reason?: "discard"): void;
 }
 export class SceneWorldStepper {
   private tick = 0;
@@ -110,7 +110,7 @@ export class SceneWorldStepper {
         "Only a physically stopped faulted simulation can be discarded",
       );
     try {
-      for (const d of this.drivers) d.dispose();
+      for (const d of this.drivers) d.dispose("discard");
     } finally {
       this.world.dispose();
       this.state = "disposed";

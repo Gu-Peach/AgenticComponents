@@ -32,8 +32,7 @@ class JoltPhysicsBackend implements PhysicsPort {
     pairs.EnableCollision(0, 1);
     pairs.EnableCollision(1, 1);
     const broad = new J.BroadPhaseLayerInterfaceTable(2, 2);
-    const substeps = this.config.carrierBindings?.length ? 8 : 2;
-    for (let i = 0; i < substeps; i++) {
+    for (let i = 0; i < 2; i++) {
       const layer = new J.BroadPhaseLayer(i);
       broad.MapObjectToBroadPhaseLayer(i, layer);
       J.destroy(layer);
@@ -360,6 +359,25 @@ class JoltPhysicsBackend implements PhysicsPort {
       this.bi.RemoveBody(r.body.GetID());
       r.active = false;
     }
+  }
+  departLoadedCarrier(carrier: string, materials: readonly string[]) {
+    const ids = [carrier, ...materials];
+    if (
+      this.disposed ||
+      !this.grasps ||
+      new Set(ids).size !== ids.length ||
+      ids.some((id) => {
+        const r = this.registry.get(id);
+        return (
+          !r.active ||
+          r.definition.motionType !== "dynamic" ||
+          this.hasGraspForBody(id)
+        );
+      })
+    )
+      throw new Error("Cannot depart a held or incomplete carrier");
+    this.grasps.releaseLoadForDeparture(carrier, materials);
+    this.deactivateBodies(ids);
   }
   step(dt: number) {
     if (this.disposed) throw new Error("物理世界已释放");

@@ -208,7 +208,7 @@ def build(root, scene=None, output=None):
         bundle['environment']=manifest.get('environment',[])
         if 'prefab_request' in ir['task']:
             carrier_template=devices[ir['task']['prefab_request']['carrier_template']]
-            if carrier_template['prefab']['kind']=='empty_carrier':
+            if carrier_template['prefab']['kind']=='empty_carrier' or manifest.get('runtime_profile')=='pallet-machining@1':
                 bundle['initial']=manifest['initial']
         if 'coordinate_system' in manifest:bundle['coordinate_system']=manifest['coordinate_system']
         if 'runtime_profile' in manifest:bundle['runtime_profile']=manifest['runtime_profile']

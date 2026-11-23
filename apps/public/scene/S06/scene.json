@@ -1,0 +1,70 @@
+{
+  "schema_version": "scene-package/0.2",
+  "coordinate_system": {
+    "frame": "scene_world_m",
+    "length_unit": "m",
+    "up_axis": "Y"
+  },
+  "initial": {
+    "existing_carrier": "P01",
+    "carrier_template": "Pallet",
+    "placement": "from_glb"
+  },
+  "execution": {
+    "tick_hz": 60,
+    "deadline_ticks": 72000,
+    "timeouts_s": {
+      "preconditions": 30,
+      "acceptance": 30,
+      "execution": 120,
+      "stop": 30,
+      "collection": 30,
+      "finalization": 30
+    },
+    "unknown_policy": "block_then_fail_on_deadline",
+    "on_failure": "stop_admissions_cancel_siblings_stop_drives_confirm_or_attention"
+  },
+  "id": "S06",
+  "name": "S06：托盘九件逐件加工回位",
+  "model": "PM Assembly Pallet Recycling/PM Assembly Pallet Recycling.glb",
+  "model_sha256": "8524e75af80d00a1a4a3fad32e20cb840ec95defb61a820a54145dd7424346c2",
+  "process": "process.py",
+  "goal": "task-spec.json",
+  "runtime_profile": "pallet-machining@1",
+  "devices": [
+    "device/C1.json",
+    "device/C2.json",
+    "device/C3.json",
+    "device/R1.json",
+    "device/F1.json",
+    "device/MC1.json",
+    "device/Pallet.json",
+    "device/Workpiece.json",
+    "device/Finished.json"
+  ],
+  "drive_groups": {
+    "mainline": {
+      "members": [
+        "C1",
+        "C2",
+        "C3"
+      ],
+      "mode": "coupled_motion",
+      "status": "candidate"
+    }
+  },
+  "environment": [
+    {
+      "kind": "finite_loaded_carrier_supply",
+      "carrier_template": "Pallet",
+      "source_device": "F1",
+      "target": "C1.entry",
+      "task_source": "process",
+      "spawn_policy": "on_admission"
+    },
+    {
+      "kind": "loaded_carrier_takeaway",
+      "source": "C3.exit"
+    }
+  ]
+}

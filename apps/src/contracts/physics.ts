@@ -29,6 +29,7 @@ export interface PhysicsPort {
   isBodyActive?(bodyId: string): boolean;
   activateBodies?(placements: readonly { id: string; pose: BodyPose }[]): void;
   deactivateBodies?(ids: readonly string[]): void;
+  departLoadedCarrier?(carrier: string, materials: readonly string[]): void;
   hasGraspForBody?(id: string): boolean;
   isCarriedBy?(material: string, carrier?: string): boolean;
   step(dt: number): void;

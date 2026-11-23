@@ -1,0 +1,89 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "Pallet",
+  "contract_ref": "../contracts/workpiece_carrier.json",
+  "asset_kind": "carrier_prefab",
+  "parameters": {
+    "length_m": 1.1999999731779099,
+    "width_m": 0.7999999821186066,
+    "height_m": 0.15999999642372145,
+    "empty_mass_kg": 2.0,
+    "slot_pitch_x_m": 0.19,
+    "slot_pitch_z_m": 0.189014
+  },
+  "node_binding": {
+    "status": "bound",
+    "node": "AssemblyBaseComponent_007n",
+    "model_sha256": "8524e75af80d00a1a4a3fad32e20cb840ec95defb61a820a54145dd7424346c2",
+    "geometry_nodes": [
+      "__Geometry___007c",
+      "__Geometry___008c"
+    ]
+  },
+  "model": {
+    "calibration": {
+      "status": "pending"
+    }
+  },
+  "prefab": {
+    "kind": "loaded_carrier",
+    "material_template": "Workpiece",
+    "slot_support_node": "__Geometry___008c",
+    "slots": [
+      {
+        "id": "slot1",
+        "node": "Lathe_Comp_1_00An",
+        "category": "raw",
+        "variant": "raw"
+      },
+      {
+        "id": "slot2",
+        "node": "Lathe_Comp_1_00Bn",
+        "category": "raw",
+        "variant": "raw"
+      },
+      {
+        "id": "slot3",
+        "node": "Lathe_Comp_1_00Cn",
+        "category": "raw",
+        "variant": "raw"
+      },
+      {
+        "id": "slot4",
+        "node": "Lathe_Comp_1_00Dn",
+        "category": "raw",
+        "variant": "raw"
+      },
+      {
+        "id": "slot5",
+        "node": "Lathe_Comp_1_00En",
+        "category": "raw",
+        "variant": "raw"
+      },
+      {
+        "id": "slot6",
+        "node": "Lathe_Comp_1_00Fn",
+        "category": "raw",
+        "variant": "raw"
+      },
+      {
+        "id": "slot7",
+        "node": "Lathe_Comp_1_00Gn",
+        "category": "raw",
+        "variant": "raw"
+      },
+      {
+        "id": "slot8",
+        "node": "Lathe_Comp_1_00Hn",
+        "category": "raw",
+        "variant": "raw"
+      },
+      {
+        "id": "slot9",
+        "node": "Lathe_Comp_1_00In",
+        "category": "raw",
+        "variant": "raw"
+      }
+    ]
+  }
+}

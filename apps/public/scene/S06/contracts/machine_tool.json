@@ -1,0 +1,345 @@
+{
+  "contract_version": "1.1",
+  "schema_type": "DeviceSpec",
+  "schema_id": "standard.machine_tool",
+  "device_spec_id": "standard.machine_tool",
+  "version": "1.0.0",
+  "device_type": "machine_tool",
+  "display_name": "立式加工设备",
+  "description": "以一个加工点接收工件并执行有限加工周期。",
+  "asset": {
+    "model_format": "glb",
+    "model_key": "../PM Assembly Pallet Recycling/PM Assembly Pallet Recycling.glb",
+    "sha256": "8524e75af80d00a1a4a3fad32e20cb840ec95defb61a820a54145dd7424346c2"
+  },
+  "params_schema": {
+    "cycle_time_s": {
+      "type": "number",
+      "required": true,
+      "default": 2.0,
+      "unit": "s",
+      "min": 0.016666666666666666,
+      "max": 120,
+      "mutability": "stopped_only",
+      "description": "候选仿真的单件加工时长"
+    }
+  },
+  "interfaces": [
+    {
+      "interface_id": "work",
+      "name": "加工点",
+      "local_frame": {
+        "position": [
+          -5.682480352930952e-08,
+          0.6499999854713678,
+          0.7879999747574331
+        ],
+        "forward": [
+          0,
+          1,
+          0
+        ],
+        "up": [
+          0,
+          0,
+          1
+        ]
+      },
+      "capabilities": {
+        "snap": {
+          "role": "machining_station",
+          "accepts": [
+            "workpiece"
+          ]
+        }
+      }
+    }
+  ],
+  "signal_ports": [
+    {
+      "port_id": "execute",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "signal_role": "request_latched",
+      "retention": "latched_until_ack_or_new_request",
+      "description": "提交本次加工请求"
+    },
+    {
+      "port_id": "request_id",
+      "direction": "input",
+      "value_type": "integer",
+      "plc_type": "DINT",
+      "signal_role": "request_parameter",
+      "retention": "latched_until_ack_or_new_request",
+      "description": "本轮加工请求号"
+    },
+    {
+      "port_id": "subject_id",
+      "direction": "input",
+      "value_type": "integer",
+      "plc_type": "DINT",
+      "signal_role": "request_parameter",
+      "retention": "latched_until_ack_or_new_request",
+      "description": "请求指定的物料登记号"
+    },
+    {
+      "port_id": "accepted",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request",
+      "description": "当前请求已接受"
+    },
+    {
+      "port_id": "busy",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state",
+      "description": "机床正在加工"
+    },
+    {
+      "port_id": "done",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request",
+      "description": "当前请求已完成且成品状态已提交"
+    },
+    {
+      "port_id": "result_id",
+      "direction": "output",
+      "value_type": "integer",
+      "plc_type": "DINT",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request",
+      "description": "本次结果对应的请求号"
+    },
+    {
+      "port_id": "error",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state",
+      "description": "加工、互锁或停止期间发生故障"
+    }
+  ],
+  "transport_behaviors": [
+    {
+      "behavior_id": "machine_material",
+      "display_name": "加工指定物料",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "machine_tool.machine_material@1",
+      "implementation_status": "implemented",
+      "arguments_schema": {
+        "subject_id": {
+          "type": "integer",
+          "required": true,
+          "min": 1,
+          "max": 2147483647,
+          "mutability": "stopped_only",
+          "description": "加工物料的运行身份登记号"
+        }
+      },
+      "trigger": {
+        "description": "冻结 request_id 和 subject_id，由调度器提交本次加工请求。",
+        "authority": "single_gateway_or_declared_continuous_writer"
+      },
+      "input_signals": [
+        "execute",
+        "request_id",
+        "subject_id"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "result_id",
+        "error"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "ready",
+            "label": "指定毛坯在加工点稳定支承，机床空闲，机械臂空手且已归位。",
+            "source": "observation",
+            "key": "machine_material.ready",
+            "equals": true
+          },
+          {
+            "id": "authorized",
+            "label": "本请求独占机床、工位、物料及必要的机械臂互锁资源。",
+            "source": "authorization",
+            "key": "machine_material.authorized",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "指定物料由加工点持续支承，机械臂保持退位。",
+            "source": "observation",
+            "key": "machine_material.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "同一物料完成加工周期，实际状态已成为 finished，并仍由加工点支承。",
+        "checks": [
+          {
+            "id": "completion",
+            "label": "同一物料完成加工周期，实际状态已成为 finished，并仍由加工点支承。",
+            "source": "observation",
+            "key": "machine_material.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      }
+    }
+  ],
+  "type_specific_contract": {},
+  "runtime_contract": {
+    "observation_definitions": {
+      "machine_material.ready": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "execute",
+          "request_id",
+          "subject_id",
+          "accepted",
+          "busy",
+          "done",
+          "result_id",
+          "error"
+        ],
+        "expression_ref": "machine_material.ready"
+      },
+      "machine_material.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "execute",
+          "request_id",
+          "subject_id",
+          "accepted",
+          "busy",
+          "done",
+          "result_id",
+          "error"
+        ],
+        "expression_ref": "machine_material.sustaining"
+      },
+      "machine_material.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "execute",
+          "request_id",
+          "subject_id",
+          "accepted",
+          "busy",
+          "done",
+          "result_id",
+          "error"
+        ],
+        "expression_ref": "machine_material.completion"
+      }
+    },
+    "authorization_definitions": {
+      "machine_material.authorized": {
+        "value_type": "boolean",
+        "provider": "authorization_service",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "execute",
+          "request_id",
+          "subject_id",
+          "accepted",
+          "busy",
+          "done",
+          "result_id",
+          "error"
+        ],
+        "expression_ref": "machine_material.authorized"
+      }
+    },
+    "condition_model": {
+      "schema_version": "ac-condition/0.1",
+      "execution_mode": "declaration_only",
+      "unknown_policy": "three_valued_fail_closed",
+      "bindings": {},
+      "expressions": {
+        "machine_material.ready": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "machine_material.ready"
+          }
+        },
+        "machine_material.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "machine_material.sustaining"
+          }
+        },
+        "machine_material.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "machine_material.completion"
+          }
+        },
+        "machine_material.authorized": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "authorization",
+            "key": "machine_material.authorized"
+          }
+        }
+      }
+    }
+  },
+  "runtime_execution_contract": {
+    "signal_management": {
+      "owner": "simulation_engine",
+      "status": "pending_engine",
+      "namespace": "instance_id/port_id",
+      "definition_source": "signal_ports",
+      "spatial_binding": false,
+      "write_policy": "single_writer_per_input",
+      "plc_mapping": "instance_bindings",
+      "sampling": "simulation_step_snapshot",
+      "unknown_policy": "invalid_until_provider_ready"
+    },
+    "status": "implemented",
+    "protocol": {
+      "basis": "schema.md公共请求协议",
+      "acceptance": "same request identity and frozen parameters",
+      "completion": "matching result_id plus observed completion checks",
+      "single_command_entry": true
+    },
+    "payload_binding_status": "requires_explicit_model_adapter",
+    "calibration_required": true,
+    "real_execution_available": false,
+    "raw_api_and_plc_simultaneous_writers": false
+  }
+}

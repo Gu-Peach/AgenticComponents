@@ -83,7 +83,8 @@ export async function assembleSceneRuntime(
 ): Promise<AssembledScene> {
   if (compiled.warehouse)
     return assembleWarehouseRuntime(sceneId, runId, compiled);
-  if (compiled.loading) return assembleLoadingRuntime(sceneId, runId, compiled);
+  if (compiled.loading || compiled.machining)
+    return assembleLoadingRuntime(sceneId, runId, compiled);
   if (compiled.handoff) return assembleHandoffRuntime(sceneId, runId, compiled);
   const conditionMode = options.conditionMode ?? "expression";
   const drivers: DeviceActionPort[] = [],

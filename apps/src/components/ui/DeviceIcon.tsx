@@ -18,6 +18,7 @@ export const icons = {
   robot_arm: Bot,
   rotary_table: Rotate3D,
   storage_rack: Container,
+  machine_tool: Factory,
   workpiece: Box,
   workpiece_carrier: Layers3,
 };

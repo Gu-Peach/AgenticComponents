@@ -73,7 +73,7 @@ const slotSchema = z.object({
   category: name,
 });
 
-function sameIds(a: readonly string[], b: readonly string[]) {
+export function sameIds(a: readonly string[], b: readonly string[]) {
   const expected = new Set(b);
   return (
     a.length === b.length &&
@@ -83,12 +83,14 @@ function sameIds(a: readonly string[], b: readonly string[]) {
   );
 }
 
-function checkCalls(
+export function checkCarrierCalls(
   bundle: SceneBundle,
   root: ProcessNode,
   devices: Map<string, SceneDevice>,
+  additionalCapabilities: Record<string, Set<string>> = {},
 ) {
   const capabilities: Record<string, Set<string>> = {
+    ...additionalCapabilities,
     "conveyor@1.2.0": new Set([
       "transport_to_position",
       "release_material",
@@ -113,14 +115,14 @@ function checkCalls(
           c.behavior,
         )
       )
-        throw new Error("Unsupported/unbound loading action: " + n.id);
+        throw new Error("Unsupported/unbound carrier action: " + n.id);
       visited++;
     }
     childrenOf(n).forEach(check);
   }
   check(root);
   if (visited !== bundle.calls.length)
-    throw new Error("Loading call catalog differs from DSL");
+    throw new Error("Carrier action catalog differs from DSL");
 }
 
 export function compileLoadingManifest(
@@ -161,7 +163,7 @@ export function compileLoadingManifest(
     .parse(goal.all.find((g) => g.kind === "all_pallets_loaded_and_departed"));
   if (!sameIds(departure.ids, palletIds))
     throw new Error("Loading departure identities differ");
-  checkCalls(bundle, root, devices);
+  checkCarrierCalls(bundle, root, devices);
   for (const device of devices.values()) {
     const type = String(device.contract.device_type);
     if (

@@ -7,6 +7,7 @@ export const deviceTypes = [
   "robot_arm",
   "rotary_table",
   "storage_rack",
+  "machine_tool",
   "workpiece",
   "workpiece_carrier",
 ] as const;
@@ -125,6 +126,7 @@ export const typeLabels: Record<DeviceType, string> = {
   robot_arm: "机械臂",
   rotary_table: "旋转台",
   storage_rack: "仓储柜",
+  machine_tool: "加工机床",
   workpiece: "物料",
   workpiece_carrier: "物料托盘",
 };

@@ -115,8 +115,21 @@ def load_scene_devices(folder,manifest,gltf):
             raise ValueError('Unknown carrier prefab kind')
         if authored.get('asset_kind')=='carrier_prefab' and authored['prefab']['kind']=='loaded_carrier':
             prefab=authored['prefab'];slots=[]
+            support_bounds=None
+            if 'slot_support_node' in prefab:
+                support_meshes=geometry.meshes([geometry.resolve(prefab['slot_support_node'])])
+                if not support_meshes or not set(support_meshes)<=set(resolved['owned_mesh_indices']):
+                    raise ValueError('Slot support must belong to its carrier geometry')
+                support_bounds=geometry.bounds(support_meshes)
             for slot in prefab['slots']:
-                index=geometry.resolve(slot['node']);position,_=relative_pose(geometry.world(root_index),geometry.world(index))
+                index=geometry.resolve(slot['node'])
+                anchor=geometry.world(index)
+                if support_bounds is not None:
+                    if any(not support_bounds['min'][i]<=anchor[12+i]<=support_bounds['max'][i] for i in (0,2)):
+                        raise ValueError('Slot is outside its declared support')
+                    anchor=list(anchor)
+                    anchor[13]=support_bounds['max'][1]
+                position,_=relative_pose(geometry.world(root_index),anchor)
                 normalized={'id':slot['id'],'source_node':geometry.selector(index),'source_mesh_indices':geometry.meshes([index]),
                     'source_world':geometry.geometry(index),'carrier_relative_position_m':position,'material_template':prefab['material_template'],
                     'appearance':{'semantic_category':slot['category'],'visual_variant':slot['variant']}}

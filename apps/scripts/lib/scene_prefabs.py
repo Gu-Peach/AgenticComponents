@@ -49,7 +49,9 @@ def expand_prefabs(ir, authored):
             if material is None or material.get('asset_kind')!='material_prefab':raise ValueError('Unknown material template')
             if name in devices:raise ValueError('Generated material identity collision')
             category=slot['appearance']['semantic_category']
-            if category not in ('A','B'):raise ValueError('Work allocation is not confirmed')
+            processing=material['contract']['type_specific_contract'].get('processing',{})
+            if category not in ('A','B') and (not isinstance(category,str) or category!=processing.get('initial_state')):
+                raise ValueError('Work allocation is not confirmed')
             item=copy.deepcopy(material);item['instance_id']=name;item['asset_kind']='runtime_material';item['prototype_ref']=slot['material_template']
             item['subject_id']=(batch-1)*len(slots)+ordinal
             instance_signals(item,material['instance_id'],name)

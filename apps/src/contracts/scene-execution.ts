@@ -72,6 +72,18 @@ export interface VisualBodyBinding {
   meshes: number[];
   initial: BodyPose;
   future: boolean;
+  finishedVariant?: { meshes: number[]; initial: BodyPose };
+}
+export interface MachiningConfig {
+  machine: string;
+  point: string;
+  robot: string;
+  leader: string;
+  stationTarget: string;
+  exitTarget: string;
+  cycleTicks: number;
+  pallets: { id: string; items: { material: string; source: string }[] }[];
+  targets: LoadingConfig["targets"];
 }
 export interface SceneReadiness {
   mode: "run" | "validation";
@@ -79,6 +91,8 @@ export interface SceneReadiness {
   blockers: string[];
 }
 export interface CompiledSceneRuntime {
+  machining?: MachiningConfig;
+  hiddenMeshes?: number[];
   handoff?: import("./robot-handoff").HandoffConfig;
   loading?: LoadingConfig;
   warehouse?: import("./warehouse").WarehouseConfig;

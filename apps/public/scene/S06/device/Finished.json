@@ -1,0 +1,33 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "Finished",
+  "contract_ref": "../contracts/workpiece.json",
+  "node_binding": {
+    "status": "bound",
+    "node": "Lathe_Comp_3_004n",
+    "model_sha256": "8524e75af80d00a1a4a3fad32e20cb840ec95defb61a820a54145dd7424346c2"
+  },
+  "model": {
+    "calibration": {
+      "status": "pending"
+    },
+    "loading_pose": {
+      "grasp_reference": "top_center",
+      "placement_reference": "bottom_center",
+      "rotation_axis_frame": "scene_world_m",
+      "rotation_axis": [
+        0,
+        1,
+        0
+      ],
+      "placement_yaw_rad": 0
+    }
+  },
+  "asset_kind": "material_prefab",
+  "parameters": {
+    "height_m": 0.1999999955296517,
+    "shape": "cylinder",
+    "diameter_m": 0.17999999597668648,
+    "mass_kg": 1.0
+  }
+}

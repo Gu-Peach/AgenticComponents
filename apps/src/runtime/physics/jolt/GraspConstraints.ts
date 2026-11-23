@@ -148,6 +148,20 @@ export class GraspConstraints {
       [...this.carried.values()].some((c) => c.carrier === id)
     );
   }
+  releaseLoadForDeparture(carrier: string, materials: readonly string[]) {
+    const members = [...this.carried].filter(
+      ([, value]) => value.carrier === carrier,
+    );
+    if (
+      members.length !== materials.length ||
+      new Set(materials).size !== materials.length ||
+      materials.some((id) => !this.isCarriedBy(id, carrier))
+    )
+      throw new Error(
+        "Loaded carrier contents differ from the departure manifest",
+      );
+    for (const [id] of members) this.releaseCarrier(id);
+  }
   private releaseCarrier(material: string) {
     const c = this.carried.get(material);
     if (!c) return;

@@ -47,6 +47,15 @@
       "blockerCount": 22
     },
     {
+      "id": "S06",
+      "name": "S06：托盘九件逐件加工回位",
+      "bundleUrl": "/scene/S06/.generated/scene.bundle.json",
+      "bundleSha256": "1c97d572dc3cc785fe7de6b3532009853d841fd762b25466496e9b71c029bccc",
+      "deviceCount": 9,
+      "nodeCount": 584,
+      "blockerCount": 20
+    },
+    {
       "id": "S07",
       "name": "S07：四件分层入库后按订单出库",
       "bundleUrl": "/scene/S07/.generated/scene.bundle.json",
