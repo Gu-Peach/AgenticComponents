@@ -1,6 +1,6 @@
 # 015 通用设备行为与工艺信号连接
 
-本文规定十类设备的通用行为和信号适配方案。建模时以 [设备接口与行为契约规范](../../../test1/docs/schema.md) 为信号与协议基准，按[设备契约](../../../test1/docs/设备契约.md)落入 DeviceSpec。已有型号文件用于核对迁移差异。目录、迁移顺序与分支验收见 [开发计划](015-2026-11-24-device-contract-library.md)。
+本文规定十类设备的通用行为和信号适配方案。建模时以 [设备接口与行为契约规范](../../../test1/docs/schema.md) 为信号与协议基准，按[设备契约](../../../test1/docs/设备契约.md)落入 DeviceSpec。已有型号文件用于核对迁移差异。逐行为条件绑定见[机械臂](#bind-robot-arm)、[加工机床](#bind-machine-tool)、[出料口](#bind-material-source-station)等设备标题下的第一张表。目录、迁移顺序与分支验收见 [开发计划](015-2026-11-24-device-contract-library.md)。
 
 ## 信号契约与按能力裁剪
 
@@ -119,9 +119,49 @@
 
 ## 2. 十类设备的通用行为
 
-表内中文名称是设备行为的语义分组。括号或反引号中的 ID 是兼容入口，同组入口仍保有各自的参数、方向与结束条件。有限动作按上述协议及设备的合法专用入口核对。以下各表聚焦动作判据，完整信号元数据、各类型适用端口和握手时序见前文。每一行的前置与完成栏同时给出逻辑信号或对应的实测来源。
+按类型直接查 **条件 → 数据来源 → 比较值 → 完成证据**：[机械臂](#bind-robot-arm)、[传送带](#bind-conveyor)、[旋转台](#bind-rotary-table)、[加工机床](#bind-machine-tool)、[出料口](#bind-material-source-station)、[物料](#bind-workpiece)、[滑轨](#bind-linear-rail)、[升降台](#bind-lift-table)、[仓储柜](#bind-storage-rack)、[搬运人员](#bind-human-operator)。
+
+**同名的条件、端口和观测怎样对应？** 下面每一类先列绑定表，再给出动作语义。绑定表里的“入／出”均从设备视角读，`= false`、`≤` 等是要计算的判据。一项条件可以同时读多个来源。端口的方向／PLC 类型见上文端口表；物理观测、参数、授权和请求账本在表内点名。采用公共有限动作协议时，结果用同一次请求的 `done`、`result_id` 发布。持续动作看实时反馈，被动动作看外部交接证据。仅作为目标或参考模板的绑定要在准备时找到提供者才可启用。
+
+以已运行的机械臂 `pick_and_place` 为例，可以从契约一直追到实值。下面列出三个条件叶子，单个叶子满足仅证明其所代表的子条件。
+
+| 行为阶段／条件 | 契约里怎样绑定 | 求值时读什么 |
+| --- | --- | --- |
+| 前置 `pick_and_place.pre_1` 中的“机械臂未忙” | `not ref(pick_and_place.busy_run)` → `kind=signal, device=self, port=busy, scope=run` | 当前运行该机械臂的**输出** `busy: BOOL = false`，且质量为 good。此条件还合取无故障、夹具空、来源可抓和目的地可接等叶子。 |
+| 完成 `pick_and_place.completion` 中的“夹具已空” | `not ref(pick_and_place.holding_material_request_subject)` → `kind=signal, port=holding_material, scope=request_subject` | **输出** `holding_material: BOOL = false`，并核对本轮、激活、请求和物料身份。 |
+| 同一完成条件中的“已经放好”与“执行器确认成功” | `ref(pick_and_place.placement_confirmed)` → 已登记的放置观测；`ref(pick_and_place.matching_success)` → 本次请求账本 | 物理放置观测为 true，并且同一请求已接受且成功。与上一行合取后，调度器才能完成该工步。 |
+
+模板的查找顺序为 **行为阶段的 `source/key` → 同名条件定义的 `expression_ref` → 表达式叶子的 `binding` → 实例端口或指定提供者**。例如上表第一行最终定位到场景信号表的 `<scene>/<instance>/busy`。原生条件（`opaque`）按注册的条件键调用专用判定，相关章节列明该判定实际读取哪些字段。`signal_refs` 是相关端口清单，单凭清单无法推出与／或、取反和请求范围。这些写法是对现有 `ac-condition/0.1` 的阅读说明。[抓放契约](../../public/scene/S01/contracts/robot_arm.json) · [表达式与绑定类型](../../src/contracts/condition-expression.ts) · [场景绑定读取器](../../src/runtime/assembly/SceneConditionBindings.ts)
+
+<a id="bind-robot-arm"></a>
 
 ### 机械臂 `robot_arm`
+
+**逐条件绑定（按行为和执行模式）**
+
+“入／出”为设备端口，BOOL 判断写出电平值。场景观测以样本键加字段表示（例如 `R/robot_state.qdot`），`r` 为本次请求。表内的“成功回执”均由请求账本核对本轮、激活、设备和请求号；顶层有限任务另发布 **出** `done: BOOL`、`result_id: DINT`。内部步骤的结束用于推进原任务。
+
+| 行为／模式 | 前置条件 → 输入、反馈或观测判定 | 完成条件 → 证据或信号值 |
+| --- | --- | --- |
+| `move_to_pose`（通用场景） | `move_to_pose.pre_1` 读 **出** `busy == false AND error == false`，且 `pose_plan_valid == true`：工具刚体未持件，目标位姿通过规划预检。普通位置目标由 IK 收敛判定，配置的归位目标校核 GLB 零位。 | `move_to_pose.completion` 读成功回执，`R/robot_state.targetError ≤ ik_position_tolerance_m`、各 `abs(qdot) ≤ settle_speed_rad_s`、`orientationSatisfied == true`。S04 仅接受归位目标，其原生判定读取 `handoff/state.arms[R].atHome`。 |
+| `move_joints`（UR10 单设备命令／步骤） | **入** `enableTag == true`；载荷 `steps[].q` 为六个有限关节目标且在各自限位内，接单校验实例、请求号、空闲和无故障。 | 轨迹结束且各关节角误差的最大值 ≤ 该执行器容差、各 `abs(qdot) ≤ settleSpeed`。关节值和速度来自运行状态，单步结束由任务执行器确认。 |
+| `grip`（UR10） | **入** `enableTag == true`；运行观测 `tool_empty == true`、`material_in_capture == true`、`payload_compatible == true`，核对本件身份、来源授权与相对速度上限。 | 物理抓持约束实际存在且挂接本件，产生 `grip.succeeded` 步骤观测；**出** `holding_material == true`。手动夹具模式另可使用 `gripperTag` 作命令。 |
+| `release`（UR10 物理放置） | **入** `enableTag == true`；观测 `holdingMaterialId == M`、`release_pose_valid == true`，且会话已选目标支承（`target_reserved`）。 | 夹持约束解除、`GraspService.placed() == true`，即目标支承、落点与速度等条件成立，输出 `holding_material == false`。只允许自由释放的型号可单独声明解除约束证据。 |
+| `pick_and_place`（通用场景） | `pick_and_place.pre_1` 读 **出** `busy/error/holding_material` 均为 false，`source_pickable` 要求 `world/state.bodies[M + "/body"].supports` 含源支承、同件已稳且质量 ≤ 最大载荷，移动源还读带组 `drive_state.maxSpeed ≤ speedTolerance`；`target_admissible` 从当前目标占用或槽位台账判断可接。 | `pick_and_place.completion` 读成功回执、与本次物料关联的 **出** `holding_material == false`，以及 `R/robot_state.placementConfirmed == true`。 |
+| `pick_and_handoff`（S04） | `pick_and_handoff.ready` 读 `handoff/state.active == M`、`pickReady == true`、双方 `arms[臂].atHome && !held`，**出** 入口带 `abs(actual_speed) ≤ 0.02 m/s`。授权要求本次取得两台机械臂、入口带和工件资源。 | `pick_and_handoff.complete` 读成功回执，`arms[接方].held == M`、供方空手、`transfers` 有同件供方到接方的移交记录。 |
+| `place_held_material`（S04） | `place_held_material.ready` 读接方 `held == M && stopped`、供方退回且空手、**出** 出口带 `abs(actual_speed) ≤ 0.02 m/s`，当前主体匹配。 | `place_held_material.complete` 读成功回执、接方空手、`handoff/state.onOutfeed == true` 且 `placed` 记录含 M；落带时核对本件倒置姿态与支承。 |
+| `process_material`（S11） | `process_material.ready` 从 `indexing/state` 读 `active == tableMaterial == M`、人已退位、台已在加工角停稳、未有该件加工记录。工件已固定，载荷指定的工具与工件加工口匹配，资源获准后写 **入** `start_process=true`、`request_id`。 | 在加工阶段以实测枪尖 `positionError ≤ process_position_tolerance_m`、`angleErrorDeg ≤ process_angle_tolerance_deg` 且工具静止累计有效时长。退回后 `process_material.completion` 读 `robotHome == true`、匹配本件和请求的 `operations` 记录以及成功回执。 |
+| `execute_job`（UR10 顶层） | **入** `enableTag == true`、无故障、账本无忙请求，步骤载荷通过校验和规划。含抓取的任务还查 `pause_pick != true`。网关提交 `start_pick`、`request_id`。 | `RobotJobRunner.finished == true` 且相应账本请求成功，运行观测 `execute_job.succeeded == true`，投影该请求的 `done/result_id`。 |
+| `wait_time`、`wait_signal`（内部步骤） | 等待时长／超时有限、**入** `enableTag == true`；等待信号还要选定可读的一个 **入** `in1Tag` 至 `in4Tag` 和期望 BOOL。 | 前者按已使能步骤的有效仿真时间达到设定秒数；后者 `signals.peek(portId) == expected`，超过步骤超时走失败。 |
+| `set_output`（内部步骤） | **入** `enableTag == true`；载荷选定一个可写 **出** `out1Tag` 至 `out4Tag` 和合法 BOOL。 | 当前仿真步成功提交 `outNTag = requestedValue` 后推进步骤。 |
+| `pause_pick_intake`、`resume_pick_intake`（接单控制） | UR10 由接单许可输入 `pause_pick` 控制；原有兼容 `resume_pick` 入口须清除同一暂停锁存。 | 暂停／恢复状态观测分别读取 **入** `pause_pick == true / false`；暂停接单并不表示在途运动已停稳。 |
+| `hold_motion`、`resume_motion`（在途控制） | **入** `enableTag == false / true` 控制原任务的减速保持与恢复。 | 保持读取运行状态 `holding == true` 且各 `abs(qdot) ≤ settleSpeed`；恢复读取 `holding == false AND enableTag == true`。这里的 holding 是运动保持状态，夹具有件另读 `holding_material`。 |
+| `publish_robot_state`（持续观测） | 本实例状态、信号表及任务账本可读。 | 将实际抓持、当前请求和故障状态投影到 **出** `holding_material`、`accepted/busy/done/result_id/error/error_code` 及阶段输出。不为发布动作生成单次完成。 |
+
+[抓放条件绑定](../../src/runtime/assembly/SceneConditionBindings.ts) · [双臂交接](../../src/runtime/assembly/HandoffRuntimeAssembler.ts) · [加工条件](../../src/runtime/assembly/IndexedProcessingRuntimeAssembler.ts) · [UR10 信号与状态](../../src/runtime/programs/RobotProgram.ts) · [机械臂步骤执行](../../src/runtime/templates/robot/RobotJobRunner.ts)
+
+<details>
+<summary>通用行为语义与兼容入口</summary>
 
 | 通用行为及已有入口 | 固有前置条件与信号 | 完成条件及可输出的证据 |
 | --- | --- | --- |
@@ -133,7 +173,34 @@
 | 执行程序和内部步骤：`execute_job`、`wait_time`、`wait_signal`、`set_output` | 程序和参数合法，接单时设备就绪。等待时长有效；等待端口可读且类型匹配；输出端口可写且写入权归当前执行器。 | 程序的所有必需步骤和终态均确认。等待时长按有效仿真时间，等待信号按新鲜采样与期望值，写输出按已提交的对应端口值。保留独立命令网关与任务步骤的调用边界。 |
 | 接单许可与运动保持：`pause_pick_intake`、`resume_pick_intake`、`hold_motion`、`resume_motion`、`publish_robot_state` | 按控制意图核对接单开关或当前运动／保持任务及使能条件；状态发布读取当前设备快照。 | 暂停／恢复接单以接单状态为证。保持以减速停稳和保留原任务为证，恢复以同一任务继续原阶段为证。状态发布持续输出关节、夹持和任务反馈。 |
 
+</details>
+
+<a id="bind-conveyor"></a>
+
 ### 传送带 `conveyor`
+
+**逐条件绑定（传送带）。** 下表中的 `transport` 表示物理观测流 `<输送实例>/transport`，`drive_state` 表示同设备的驱动组观测。比较前核对运行、请求、主体 M 和目标。分区、定距、反转及节拍行是规范定义的可选能力，须由所选型号提供对应的观测和驱动。
+
+| 行为 | 前置条件 ← 读取与比较 | 完成条件／持续反馈 ← 读取与比较 |
+| --- | --- | --- |
+| `transport_to_position` | 配置 `transport_mode == continuous`，世界观测中 M 活跃、已受支承且静止，目标可解、路径及运动区可用；授权读取本请求的驱动组和 M 的资源归属。 | `transport.subject == M`、`transport.target == 请求目标`、`distance ≤ positionTolerance`、`supported == true`、`stationary == true` 连续满足 `settleTicks`。驱动据此返回成功，调度器再核对本次请求的匹配回执。 |
+| `transport_to_exit` | 观测同件已接入本带、出口路径可走、所经区可放行。 | M 的参考点进入已配置出口检测区且仍受支承，输出 `part_ready == true`。使用定位适配器的型号另核对出口距离及停稳观测。 |
+| `move_by_distance` | 选配定距驱动与载荷位置观测齐备；`target_distance`（输入，m）和速度设定有效，记录本次 `encoderTag` 起值与 M 起姿。 | 带面有符号累计行程增量达到设定、`abs(actual_speed) ≤ 停稳阈值`，同时实测 M 在预期目标容差内且受支承。 |
+| `accept_material` | `capacity_available == true`，入口检测可接 M，交接服务核实来源持有该件、资源获准。 | 入口检测区实测主体为 M，支承及接管成立，占用／归属登记已提交。 |
+| `release_material` | M 实际在出口且接收方可接，检查接收方容量／预留与 `release_gap_s`。使用末段放行许可的型号在交接期间读 `release_waiting_material == true`。若该位由本次提交写入，授权阶段先取资源与环境许可。 | 接收服务返回匹配 M 的交付记录，源端观测确认该件已离开并释放占用。按物料请求返回成功。 |
+| `start_conveying` | `runTag == true`、已选速度输入有效；分区模式另读对应分区许可。 | 持续发布 `actual_speed` 与 `runningTag`，后者取实际带速超过静止阈值。允许空带运行。 |
+| `set_speed` | `speedTag`（或已选英制输入换算值）为有限有效设定，限定唯一写入者及合法模式。 | `abs(actual_speed − 本次目标速度) ≤ 到速容差`。 |
+| `reverse_conveying` | 配置 `allow_reverse == true`，反向路径及分区策略有效，本次冻结反向设定速度。 | 实速采样先经过零速容差，再达到反向目标速度容差；保留本次动作的过零记录。 |
+| `stop_conveying` | 读 `drive_state.maxSpeed`；已静止，或减速配置有效且物料可追踪，就可受理制停。停止指令按模式取 `runTag == false` 或零速度设定。 | 驱动组最大实速≤速度容差，实际已停稳、在带件仍可追踪。定位驱动还核对活动主体速度。 |
+| `advance_to_next_stop_point` | 分区启用，`stop_point_occupied_i == true`，下一区可接收且驱动获准。 | 持续跟踪同件进入下一检测区，更新两区的 `stop_point_occupied_i`；按型号可产生带身份的释放通知。 |
+| `zone_accumulation` | 已配置独立驱动与区段检测。每步读本区／下一区占用、下一区运行状态和下游许可。 | 持续驱动：下一已占用区停机时，当前有件区停止，报告 `blocked`；检测变化后重算速度与 `capacity_available`。 |
+| `meter_release` | 出口检测到该件、`release_waiting_material == true`；首件或距上次实际放行的仿真时间≥`release_gap_s`。 | 持续门控；每件通过检测点只记录一次实际放行并更新计时，最终接收由交接回执确认。 |
+| `publish_drive_feedback` | 每步读取已配置的带面速度、支承及检测区观测。 | 持续输出 `actual_speed`、`runningTag`、`part_ready` 等有效采样；启用编码器时按实际速度与步长累计 `encoderTag`。 |
+
+[输送适配器与到位判定](../../src/runtime/adapters/scene/PositionTransportAdapter.ts) · [条件键与实际观测](../../src/runtime/assembly/SceneConditionBindings.ts) · [输送带契约](../../../test1/docs/schema.md)
+
+<details>
+<summary>通用行为语义与兼容入口</summary>
 
 | 通用行为及已有入口 | 固有前置条件与信号 | 完成条件及可输出的证据 |
 | --- | --- | --- |
@@ -142,7 +209,28 @@
 | 驱动与速度：`start_conveying`、`set_speed`、`reverse_conveying`、`stop_conveying` | 启动／调速核对驱动就绪、方向和速度范围；反转需已启用反转能力。停止允许对已静止设备幂等确认。输入按型号取 `runTag`、`speedTag`。 | 启动为持续驱动；调速以 `actual_speed` 进入新设定容差为证；反向到速还须有过零过程；停止以实测速度进入静止阈值为证。 |
 | 分区与节拍：`advance_to_next_stop_point`、`zone_accumulation`、`meter_release`、`publish_drive_feedback` | 适用模式启用，各区占用、下一区可用性及节拍依据有效；反馈读取驱动和检测区快照。 | 持续动作分别输出同件进入下一检测区、各区占用／`blocked`、单件放行和间隔记录、以及实际带速与行程。最终交付按交接行为取证。 |
 
+</details>
+
+<a id="bind-rotary-table"></a>
+
 ### 旋转台 `rotary_table`
+
+**逐条件绑定（旋转台）。** `actual_angle` 为设备输出（REAL，°），`rotating`、`at_station`、`occupied` 为设备输出（BOOL）。S11 已接入带载分度，其余入口按启用的型号能力绑定。
+
+| 行为 | 前置条件 ← 读取与比较 | 完成条件／持续反馈 ← 读取与比较 |
+| --- | --- | --- |
+| `rotate_to_station` | 角度模式取输入 `angleTag`，工位模式取 `target_station` 经工位表解析目标。轴停稳、目标有效、转动区安全许可成立。带载配置加读工装实测约束对应 M；S11 取 `indexing/state.tableMaterial == M`，并检查人员和机械臂撤离。启动由 `rotate_to_station`、`request_id` 提交。 | 以转子刚体求目标角误差≤`angle_tolerance_deg`，轨迹速度和刚体角速度（换算同单位）≤`settle_speed_deg_s`，带载约束持续有效。S11 连续两次到站采样，`rotations` 中本请求的 `measuredAngleDeg` 匹配目标，`stopped[台] == true`；对外投影 `actual_angle`、`at_station`、`rotating`。 |
+| `accept_material` | `rotating == false`，实测台面和来源端点对齐，台面支承位空闲、容量及授权有效。 | 物理观测确认 M 在指定台面受支承、归属已接入，更新该区域 `occupied`。需夹持的型号另验同件约束。 |
+| `release_material` | `rotating == false`，出口对齐；本台实际持有 M、接收端可接且已获所需预留。 | 交接服务确认同一 M 在目标接收，原台面登记和占用随该次交接更新。 |
+| `hold_rotation` | 启用在途保持，`enableTag` 按控制模式失能，现有载荷支承与任务资源仍有效。 | `rotating == false`、角速度进入静止阈值，原任务目标与持件保留。 |
+| `resume_rotation` | `enableTag == true`，读取保留的任务与原目标，故障已解除且资源仍归该任务。 | 任务状态从保持回到原分度执行阶段。到站仍由定位动作的实测终点确认。 |
+| `convey_on_deck` | 台面输送模块启用，`rotating == false`、与接收端对齐，`transfer_enable == true` 且已选速度输入有效。 | 持续发布实际输送及占用状态。物料离台后由接收端确认 `release_material`。 |
+| `publish_turntable_state` | 每步读取转子角度、角速度与支承区占用。 | 持续更新 `actual_angle`、`rotating`、`at_station`、`occupied`。空载定位允许时不要求 `occupied == true`。 |
+
+[转台实测角度与制停](../../src/runtime/mechanisms/RotaryIndexMotion.ts) · [分度请求与回执](../../src/runtime/assembly/IndexedProcessingRuntimeAssembler.ts) · [其余转台型号声明](../../public/scene/S12/contracts/rotary_table.json)
+
+<details>
+<summary>通用行为语义与兼容入口</summary>
 
 | 通用行为及已有入口 | 固有前置条件与信号 | 完成条件及可输出的证据 |
 | --- | --- | --- |
@@ -150,20 +238,100 @@
 | 台面交接：`accept_material`、`release_material` | 台面已在交接姿态且静止。接入需空位，释放需实际持有该件及下游可接。 | 同件进入并建立相应支承／固定，或目标接收并清除台面占用。分别输出 `SupportedAt`／`RetainedAt` 或 `Transferred`；`occupied` 为设备级反馈。 |
 | 保持、恢复及持续功能：`hold_rotation`、`resume_rotation`、`convey_on_deck`、`publish_turntable_state` | 可控转动或同一已保持任务；台面输送还需对应机构和输送许可。 | 保持以实测停稳且目标保留为证，恢复以同一目标的分度继续为证。台面输送与状态发布持续报告占用、角度和运动状态。 |
 
+</details>
+
+<a id="bind-machine-tool"></a>
+
 ### 加工机床 `machine_tool`
+
+**逐条件绑定（`machine_material`）**
+
+通用模板的设备就绪项可绑定机床输出 `busy: BOOL == false` 与 `error: BOOL == false`，再合取工件与工位条件。S06 采用原生条件提供者，以下按其真实读取路径展开，表明每个端口是命令、反馈还是判断输入。设 `M` 为通过登记表解析的物料 ID，`r` 为当前请求，`w` 为本轮、质量为 `good` 的 `world/state` 观测，`m = w.machining`。写作 `m.workSupported` 的字段属于引擎观测；机床外部端口以“入／出”标明。
+
+| 阶段／条件键 | 绑定到哪一项，怎样判真 |
+| --- | --- |
+| 提交前／设备可接单 | 驱动读取自身 `state != running`、未处于停止流程，核对请求的设备、运行代次及已登记行为；`busy`、`error` 是出 BOOL 状态反馈。当前 S06 的 `machine_material.ready` 取值见下三行。 |
+| 前置／`machine_material.ready`：工位有本件毛坯 | **身份＋观测**：从请求参数 `subject_id` 查得 `M`；`m.machineItem == M` 且 `w.bodies[M + "/body"].materialState == "raw"`。 |
+| 前置／同一 `ready`：稳定支承 | **物理观测**：`m.workSupported == true`。当前提供者实际检查刚体在场、无抓持约束、与机床支承面接触，中心位置误差 ≤ 0.025 m、转角误差 ≤ 0.07 rad、线速度 ≤ 0.04 m/s、角速度 ≤ 0.12 rad/s。这些数值是 S06 候选仿真的判据。 |
+| 前置／同一 `ready`：作业互锁 | **区域与位置观测**：S06 绑定为 `w.robotClear[R] == true AND m.atStation == true`，即机器人空手退位、停稳且托盘停在加工站。其他型号的作业区许可需绑定各自的现场提供者。 |
+| 授权／`machine_material.authorized` | **资源仲裁**：上列前置均真，且本次激活同时持有机床、物料、加工点、作业区关联机械臂的资源。 |
+| 启动／命令网关 | **入** `execute: BOOL = true`、`request_id: DINT = Number(r.requestId)`、`subject_id: DINT = 工件 M 的登记号`。网关在前置与授权成立后提交并冻结本次参数。 |
+| 持续／`machine_material.sustaining` | **每个有效物理步**：指定件、支承与作业区互锁持续成立，状态维持 `raw` 或已提交本请求的完成记录。机床驱动在加工期间逐步复核工件支承与退位条件，累计至 `ceil(cycle_time_s × 60)` 步才提交状态。 |
+| 完成／`machine_material.completion` | **请求账本＋观测**：`requestState.outcome == "succeeded"`；`m.operations` 有 `material == M AND request == r.requestId` 的记录；本件 `materialState == "finished"`。同时保持同件在加工点、有效支承、区域清空及加工站到位。 |
+| 结果／PLC 投影 | **出** `accepted`、`busy`、`done`、`error`（BOOL）和 `result_id`（DINT）。消费者只将本次成功回执、上行完成证据与匹配结果号合在一起解释为成功。停稳条件另读有效的 `busy == false`。 |
+
+[机床条件提供者](../../src/runtime/assembly/LoadingRuntimeAssembler.ts) · [支承判据与容差](../../src/runtime/assembly/machiningDevices.ts) · [状态与加工记录](../../src/runtime/services/MachiningLineEnvironment.ts) · [命令端口及实际周期](../../src/runtime/adapters/scene/MachineToolAdapter.ts)
+
+<details>
+<summary>通用行为语义与兼容入口</summary>
 
 | 通用行为 | 固有前置条件与信号 | 完成条件及可输出的证据 |
 | --- | --- | --- |
 | 工位加工：`machine_material` | `Ready(机床)`、`SupportedAt(M,加工点)`，指定件静止且处于工艺允许的输入状态，工艺区清空、机床与工件资源获准。需夹紧的型号再绑定夹紧观测。 | 支承和互锁在有效周期内保持，按同一物料、工艺和请求提交一次 `Processed`，实测输出状态与结果一致。单工序可绑定 raw → finished。加工期间取消保留最后确认的状态。 |
 
+</details>
+
+<a id="bind-material-source-station"></a>
+
 ### 出料口 `material_source_station`
+
+**逐条件绑定（出料口）。** 表中的 `.pre_n`、`.completion` 均以本行行为 ID 为前缀。入／出指 PLC 方向，参数、仿真时钟、授权和库存台账是引擎数据源。下表给出模板应采用的绑定；现有有限批次环境已经能出具供料回执，六项独立生产动作仍按型号接入。
+
+| 行为／触发 | 前置条件 ← 读取数据及判定 | 完成或持续反馈 ← 实测依据；端口投影 |
+| --- | --- | --- |
+| `produce_material` | `.pre_1` ← 入 `runTag=TRUE`、未手动暂停，`product_spec` 已登记，台账的占用数＋预留数小于参数 `buffer_capacity`。按需模式 `.pre_2` 核对外部入 `produce_request=TRUE` 携带的新 `request_id`（PLC 主动请求入口）。若由 DSL 网关发命令，预检取待派发请求身份，网关在预检通过后写启动位；节拍模式 `.pre_3` ← 当前周期到期。两种触发按 `production_mode` 选择。 | `.completion` ← 本请求对应的新工件 ID 已实际入场且仅登记一次；出 `countTag` 对该次成功只加一，`buffer_count` 取实际在缓冲的数量。有限请求再投影 `done=TRUE`、`result_id=本请求号`。 |
+| `present_material` | `.pre_1` ← 入 `runTag=TRUE`，台账包含指定件，出口检测区可用，交接授权有效；型号配置下游联锁时其许可必须为真。 | `.completion` ← 出口区域检测到本件且支承有效、允许取走；出 `material_available=TRUE`。该件被接走后重算出口占用。 |
+| `pause_production` | 入 `runTag=FALSE` 或收到授权的暂停命令。有无在途任务均可进入暂停；执行中停止新准入并保留已接受请求及预留。 | `.completion` ← 周期时钟已冻结且新生产请求关闭；本次暂停不增加 `countTag`，不清空 `buffer_count`。按请求模式仅回报暂停请求的结果。 |
+| `resume_production` | `.pre_1` ← 入 `runTag=TRUE`，手动暂停已解除，出 `error=FALSE` 或不存在阻止恢复的故障，原任务／模式及预留有效。 | `.completion` ← 原任务身份和剩余周期恢复推进；相同恢复请求不产生第二件物料。按请求模式回报恢复请求的结果。 |
+| `schedule_production_cycle` | `.pre_1` ← 参数 `production_mode=periodic`、`cycle_time_s>0` 且有限；`.pre_2` ← 随机策略配置了可复现随机源。入 `runTag` 控制周期推进。 | 持续机制：有效仿真时钟到期只派发一次内部生产请求；暂停冻结剩余时间。出 `countTag`、`buffer_count` 分别读取成功登记数和实际缓冲数。 |
+| `publish_source_state` | `.pre_1` ← 本运行的供料记录、缓存和出口观测有效；无新增命令输入。 | 持续观测：`countTag=累计成功数`、`buffer_count=实际缓冲数`、`empty=当前无可取物料`、`material_available=出口存在可取物料`。已有任务的协议位从账本投影。 |
+
+有限批次的实际证据示例为同一运行、主体的 `receipts[].kind == "supply_confirmed"`。它须在入场后经实际支承／停稳检查产生，`supply_requested` 仅表示请求。[出料口契约](../../public/scene/S01/contracts/material_source_station.json) · [供料确认实现](../../src/runtime/services/FiniteSceneEnvironment.ts)
+
+<details>
+<summary>通用行为语义与兼容入口</summary>
 
 | 通用行为及已有入口 | 固有前置条件与信号 | 完成条件及可输出的证据 |
 | --- | --- | --- |
 | 生成与呈送：`produce_material`、`present_material` | 生成要求已登记物料型号、本次供料额度、可用缓冲及生产许可；呈送要求缓冲有目标物料、出口可用。 | 生成以唯一物料实际被接纳、缓冲与 `countTag` 更新一次为证；呈送以 `At(M,出口)`、可拾取及 `material_available` 为证。 |
 | 生产节拍：`pause_production`、`resume_production`、`schedule_production_cycle`、`publish_source_state` | 控制当前周期或所保留的任务，读取缓冲、生产许可与实例时钟。 | 暂停冻结进度并保留存料；恢复继续原周期。调度和发布持续输出实际缓冲数、节拍或逐件接纳事件。现有环境供料可提供这些事实。 |
 
+</details>
+
+<a id="bind-workpiece"></a>
+
 ### 物料 `workpiece`（含托盘）
+
+**逐条件绑定（物料）。** 被动响应没有物料侧命令输入。表内“归属”“约束”“支承”读取当前运行中同一工件的物理或交接记录。右列列出在启用相应观测的型号上向外发布的值。实体刚体可按物料 ID 查询记录。
+
+| 被动响应／观测 | 前置或触发 ← 读取数据及判定 | 成立或持续有效 ← 物理证据；物料输出 |
+| --- | --- | --- |
+| `be_picked` | 源工件已激活、可被该夹具接管，无冲突约束或预留。核对质量不超夹具载荷，捕获距离及相对速度在型号阈值以内。 | 本件与抓具的物理约束已建立；出 `picked=TRUE`（关联本次抓取的锁存通知）、`carried=TRUE`、`holder_id=抓具持有者的映射号`。 |
+| `be_carried` | 约束仍存在，约束双方与当前物料、持有者一致。 | 连续读取持件关系及相对位姿，发布 `carried=TRUE`、对应 `holder_id`，已确认区域变化时更新 `location_id`。 |
+| `be_conveyed` | 本件刚体与指定输送面实际接触／受支承，且没有冲突的工具约束。 | 连续采样实际刚体位姿，区域服务确认后出 `location_id=登记区域号`；离开有效区域按型号标记未知。 |
+| `be_placed` | 同件与目标兼容、容量可用；核对目标区域、支承、速度与放置容差，要求堆放时检查参数 `can_stack`。 | 抓具解除，目标支承确定，放置判据成立；出 `placed=TRUE`、`location_id=目标映射号`。 |
+| `be_released` | 触发方等于本件当前持有者，释放获准。定点放置另核对接收端，自由释放按其独立模式处理。 | 原持有约束解除；重新求 `carried` 和 `holder_id`（无持有者时为 `FALSE`、`0`）。自由释放后在落稳前保持 `placed=FALSE`；真实接收后再更新放置状态。 |
+| `respond_to_physics` | 刚体处于激活状态，质量、形状、约束和本步物理采样有效。 | 每个物理步更新姿态、接触和支承，按已确认区域投影 `location_id`，无一次性结束位。 |
+| `publish_material_state` | 读取同件同运行有效快照；区分抓取事件和当前持件状态。 | 按实际约束、稳定支承及区域登记发布 `picked`、`carried`、`placed`、`holder_id`、`location_id`，抓取通知采用确认锁存或关联记录。 |
+| `observe_material` | 旧编辑器观测模板的前置列表为空，无输入端口。 | 旧预览读取 `observation.completed == true`，无独立输出端口；只用于预览验收。 |
+
+**带承载属性的托盘。** 旧七个行为 ID 和一个示意观测均无托盘主动命令输入。服务调用通过 API 上下文传入托盘、槽位、工件及任务身份。S02 可从 `world/state.loading.slots` 读实际装载，S06 可从 `world/state.machining.slots` 读原槽与物料的对应关系；通用预留服务和 PLC 投影随型号接入。下列结果属于信号已配置时的约定。
+
+| 旧入口 | 前置或触发 ← 承载服务或物理数据 | 完成或持续反馈 ← 证据；承载属性输出 |
+| --- | --- | --- |
+| `reserve_carrier_slot` | 槽位已登记，`slot_available=TRUE` 且剩余容量足够，物料兼容，调用携带有效任务身份；原子复核当前占用与预留。 | 台账出现本槽属于该任务的预留；重算 `slot_available`、`free_slots`，`load_count` 不变。 |
+| `cancel_carrier_reservation` | 台账所记预留属于本任务，本件尚未完成该槽装载。 | 本次预留已撤销，实际载荷仍保留；重算 `free_slots`、所查槽的 `slot_available`。 |
+| `confirm_load` | 槽位空闲或已为本任务预留，尺寸／载荷满足，物料无归属冲突。 | 指定件实际落在该槽并确认承载，预留转为实际占用；`load_count` 对本件只增一次，`loaded=(load_count>0)`、`unloaded=(load_count==0)`。 |
+| `carry_material` | 台账确认本件归属该盘，或该型号选择的物理支承关系持续有效。 | 按载荷约束／支承持续核实工件与托盘的相对位姿，发布托盘的 `in_transport`、`holder_id`；各工件保持各自身份。 |
+| `release_material` | 槽位确有指定件，接收方、权限和交接端点有效。 | 接收方确认同件且旧槽已解除占用后，`load_count` 对本件减一次并重算 `free_slots`、`loaded`、`unloaded`。 |
+| `be_transported_loaded` | 承载关系逐件有效，托盘与装载物总质量和外形满足外部搬运设备限制。 | 持续核对整盘和载荷同步移动，由外部执行器反馈运输进度；托盘发布 `in_transport` 和托盘持有者的 `holder_id`。 |
+| `publish_carrier_state` | 当前盘的占用、有效预留、运输状态来自同一版本的台账／观测。 | `load_count=已确认件数`，`free_slots=扣除占用及有效预留的槽数`，`slot_available` 按所查槽位求值；同步 `loaded`、`unloaded`、`in_transport`、`holder_id`。 |
+| `observe_slots` | 旧编辑器观测模板的前置列表为空，无指令输入。 | 旧预览读取 `observation.completed == true`，无独立输出端口；实际工艺须读取上述槽位台账。 |
+
+[抓取约束与放置确认](../../src/runtime/services/GraspService.ts) · [装载槽位快照](../../src/runtime/services/LoadingLineEnvironment.ts) · [加工托盘槽位与承载验证](../../src/runtime/services/MachiningLineEnvironment.ts) · [旧预览观测](../../src/domain/catalog.ts)
+
+<details>
+<summary>通用行为语义与兼容入口</summary>
 
 | 被动响应或服务 | 固有触发／前置证据 | 可供其他行为消费的结果 |
 | --- | --- | --- |
@@ -173,14 +341,53 @@
 
 旧托盘的 `reserve_carrier_slot`、`cancel_carrier_reservation`、`confirm_load` 对应预留、取消和装载确认；`carry_material`、`release_material`、`be_transported_loaded` 对应被动随动、卸载和整盘运输；`publish_carrier_state`、`observe_slots` 对应状态查询或观测。物料和载具原有的触发、返回值和执行范围按相应旧型号契约保留，托盘状态端口按 schema.md 第八类映射到承载属性。
 
+</details>
+
+<a id="bind-linear-rail"></a>
+
 ### 滑轨 `linear_rail`
+
+**逐条件绑定（滑轨）。** S07 设备输出 `actual_position`（REAL，m）和 `actual_speed`（REAL，m/s）。通用型号以标定容差为准；以下数值是当前 S07 装配实现。位置读数取立柱相对初始位置在轨道轴上的投影，另以 Jolt 刚体速度核对停稳。
+
+| 行为 | 前置条件 ← 读取与比较 | 完成条件 ← 读取与比较 |
+| --- | --- | --- |
+| `move_to_location` | `stopped[轨] == true`、挂载轴组停稳且无在途转移；从请求 `target` 的端点或格位通过 `resolveDock(...).rail` 求目标轴坐标，核对行程和带载扫掠路径。 | 轴轨迹已收敛、`abs(actual_position − 解算目标) < 0.005 m` 且立柱实测速率 < 0.01 m/s；本请求返回成功。 |
+| `move_to_position` | 轴组停稳；S07 适配器取请求参数 `position_m.value`、单位 m，检查有限、限位和带载路径。设备契约另有 PLC 目标口 `target_position`，映射由输入模式选定。 | 同一到位判定，比较对象为冻结的数值目标。 |
+| `stop_motion` | 校验目标设备及制停能力，速度可读。S07 独立停止动作的预检要求装配停稳；运行中取消走驱动 `requestStop()` 的制动路径。 | 读取轨迹 `settled`：轴速度绝对值 < 0.001 m/s 且已制停或剩余误差 < 0.001 m。保持既有载荷归属；停止回执只关联本次停止。 |
+
+S07 驱动使用 `execute`、`request_id` 的请求握手；`actual_position`、`actual_speed` 是设备级输出。授权阶段由资源仲裁器复核当前请求持有的运动资源。[轨道适配器](../../src/runtime/adapters/scene/LinearRailSceneAdapter.ts) · [轴位姿与阈值](../../src/runtime/services/DeviceMountService.ts) · [仓储条件提供者](../../src/runtime/assembly/WarehouseRuntimeAssembler.ts)
+
+<details>
+<summary>通用行为语义与兼容入口</summary>
 
 | 通用行为及已有入口 | 固有前置条件与信号 | 完成条件及可输出的证据 |
 | --- | --- | --- |
 | 轴定位：`move_to_position`、`move_to_location` | 轴可用且处于可接单状态；数值目标或由端点投影出的轴坐标在行程内，带载路径允许。 | `actual_position` 的目标误差及 `actual_speed` 均在容差内，产生 `AtTarget(轨,T)` 和 `Stopped(轨)`。 |
 | 制停：`stop_motion` | 能控制目标轴并取得有效速度反馈。 | 制动后 `Stopped(轨)` 成立，加载物的支承与归属保持。中途制停只发布停止结果。 |
 
+</details>
+
+<a id="bind-lift-table"></a>
+
 ### 升降台 `lift_table`
+
+**逐条件绑定（升降台）。** 设备输出 `actual_height`（REAL，m）、`moving` 和 `at_level`（BOOL）。S07 的轴组停稳由 `mount.stopped` 取值，即轨道与升降轴均停稳且无在途物料转移。位置和速度判断使用实际刚体采样。下文“接收确认”指同件在目标的偏差 < 0.02 m、速率 < 0.03 m/s 且存在目标接触支承，连续 4 个仿真步后提交本次交接（S07 实现）。
+
+| 行为 | 前置条件 ← 读取与比较 | 完成条件 ← 读取与比较 |
+| --- | --- | --- |
+| `lift_to_location` | 轴组停稳；请求的具名 `target` 由 `resolveDock(...).lift` 解出轴位移，检查负载、行程、带载路径及授权。 | 轨迹已收敛、`abs(实测升降轴位移 − 目标位移) < 0.005 m` 且平台刚体速率 < 0.01 m/s。反馈 `actual_height = restHeight + 实测位移`。 |
+| `lift_to_level` | 高度模式从 `move_to_level`（m）取目标；层号模式须先把 `target_level` 经层高表换算。S07 取米制请求并扣除 `restHeight`，轴组停稳且目标在行程内。 | 将 `actual_height` 与本次目标高度比较并检查实速，阈值同上；`at_level == true` 只报告到位状态。 |
+| `accept_material` | 交接源实际支承 M，`owners[M] == 来源`，平台可接；检查轴组与来源端点对位、载荷／尺寸和预留。S07 源位偏差≤0.04 m、速率≤0.03 m/s。 | 接收确认后建立平台与 M 的承载约束，`mount.held == M`，按本次请求提交平台归属。 |
+| `release_material` | `mount.held == M` 且来源归属匹配，双轴对齐目的地，目标支承、容量、预留与路径有效。 | 目标接收确认，`owners[M] == 目标`、平台解除该件的承载。目标为格位时同时核对同请求的存取记录。 |
+| `transfer_material` | S07 从载荷取 M／来源／目标，核对已声明路线、稳定支承、目标可用、轴对位、净空和虚拟交接距离。横移模块型号另要求 `transfer_ready == true`。 | 同件通过接收确认并提交目的地交接回执；传到平台时建立承载约束。 |
+| `hold_lift` | 参考型号按 `enableTag` 请求保持，要求保有载荷与原任务资源；S07 按轴保持命令及本模式准入核验。 | 升降轴 `settled == true`、`moving == false`。对在途保持型号还需读取原目标与任务身份，保持后不得作为原升降任务已到位。 |
+| `resume_lift`（参考型号） | `enableTag == true`、保留任务仍有效，故障解除、资源有效、目标未覆盖。 | 读取任务状态转入原任务运行阶段，最终到位由原定位请求另行核对。 |
+| `raise_transfer_chains`、`lower_transfer_chains`（参考型号） | 均要求 `transfer_module == true`。抬升命令 `popupTag == true`，检查主轴停稳和辅助行程；下降命令 `popupTag == false`，检查载荷支承与交接归属可保留。 | 抬升／下降分别绑定辅助机构实测上位／下位。该型号需提供位置或限位观测；`popupTag` 是命令，`transfer_ready` 是交接就绪反馈，两者都不能独立证明到达上下位。 |
+
+S07 虚拟交接与参考型号的辅助链属于不同配置。S07 的物理完成回执匹配 `runId`、`activationId` 和 `requestId`。[升降适配器](../../src/runtime/adapters/scene/LiftSceneAdapter.ts) · [物料接触与归属提交](../../src/runtime/services/MaterialTransferService.ts) · [选配横移接口](../../../test1/dsl_new/asset_contracts/assets/lift_transport.json)
+
+<details>
+<summary>通用行为语义与兼容入口</summary>
 
 | 通用行为及已有入口 | 固有前置条件与信号 | 完成条件及可输出的证据 |
 | --- | --- | --- |
@@ -188,7 +395,27 @@
 | 对接转移：`accept_material`、`release_material`、`transfer_material` | 指定件在来源稳定受支承，源与目标已对位并停稳，接收端容量与必要预留有效，转移行程和路径可用。 | 目标实际支承同一件，来源交出、接收方登记。当平台接料时建立承载绑定；平台放料时核对目的支承并释放原绑定。按本次交接产生 `Transferred`。 |
 | 保持、恢复和选配机构：`hold_lift`、`resume_lift`、`raise_transfer_chains`、`lower_transfer_chains` | 保持／恢复针对同一在途任务；辅助链要求配置有效、主平台安全停稳，降链时有可靠支承。 | 保持为减速停稳并保留原任务，恢复为原任务继续；辅助链动作需对应上位／下位的实际观测。控制量 `popupTag` 只发命令。 |
 
+</details>
+
+<a id="bind-storage-rack"></a>
+
 ### 仓储柜 `storage_rack`
+
+**逐条件绑定（仓储服务）。** PLC 用 `cell_id: INT` 选择格位，将 `material_id`、`owner_task_id` 的 DINT 值映射为本次物料和任务。记 C 为解析后的格位、M 为物料。S07 已由升降台的交接调用库存服务：`world/state.inventory.occupancy[C]`、`reservations[C]`、`events[]` 是当前可查的引擎观测，内部预留身份采用 `runId/requestId`。以下 PLC 端口是独立仓储服务的契约投影；S07 的内部调用未证明各独立 PLC 操作入口已经接通。
+
+| 服务／触发输入 | 前置条件 ← 输入、反馈或台账判定 | 完成条件 ← 数据判定；输出端口 |
+| --- | --- | --- |
+| `reserve_cell`：入 `reserve_request=TRUE`、本次 `request_id` | C、M、任务号有效，格位容量与形状合适；`cell_available=TRUE` 所据的是所查格位尚能预留且无他人有效预留。申请时原子复核台账。 | 台账中出现本次请求对 C 的预留，出 `reservation_granted=TRUE`、对应 `reservation_id`，重算 `cell_available` 与 `free_cells`。 |
+| `store_to_cell`：入 `store_request=TRUE`、本次 `request_id` | `reservations[C]` 与当前任务／申请身份匹配，运输方实际持有 M，质量／尺寸允许，C 可接收。 | 搬运设备已确认 M 在 C 得到支承，台账提交后占用指向 M，出现关联同件、同槽、同请求的 `kind=stored` 事件。出 `stored=TRUE` 并关联 `result_id`；`cell_full` 按容量计算。 |
+| `release_from_cell`：入 `release_request=TRUE`、本次 `request_id` | `occupancy[C] == M`，任务身份和出库授权有效；接收方可接收 M，确认适用预留。 | 确认 M 实际离开、接收方取得同件，台账移除该件并记录 `kind=retrieved`；出 `released=TRUE` 并关联 `result_id`，重算 `cell_available`、`cell_full`、`free_cells`。 |
+| `cancel_cell_reservation`：入 `cancel_reservation=TRUE`、本次 `request_id` | 所查格位的预留与当前任务／原预留身份匹配，交接尚可撤销。 | 仅匹配的预留消失，实际占用保持；撤销成功后重算 `reservation_granted`、`cell_available` 和 `free_cells`，结果归于取消请求。 |
+| `query_cell_state`：入 `cell_id`，服务查询 | C 在注册槽位集合内，当前库存／预留快照有效。 | 返回该槽同一版本的占用、可预留性和预留归属，映射 `cell_full`、`cell_available`、`reservation_granted`、`reservation_id` 与 `free_cells`。 |
+| `publish_storage_state`：库存、预留或回执更新触发 | 读取有效的当前占用、预留和与请求相关联的服务反馈。 | 持续更新 `cell_available`、`cell_full`、`free_cells`、`reservation_granted`、`reservation_id`。仅已提交的相应事件锁存 `stored` 或 `released`，并关联 `result_id`。 |
+
+[仓储服务契约](../../public/scene/S07/contracts/storage_rack.json) · [预留与提交台账](../../src/runtime/services/StorageRackRuntime.ts) · [S07 交接与物理观测绑定](../../src/runtime/assembly/WarehouseRuntimeAssembler.ts)
+
+<details>
+<summary>通用行为语义与兼容入口</summary>
 
 | 通用服务及已有入口 | 固有前置条件与信号 | 完成条件及可输出的证据 |
 | --- | --- | --- |
@@ -196,13 +423,46 @@
 | 入库／出库：`store_to_cell`、`release_from_cell` | 入库需有效格位授权和待放入的指定件；出库需格内确有同件、出库授权和可用接收方。 | 入库以同件实际放稳与格位占用提交为证；出库以接方实收、格位腾空与出库记录为证。支持由搬运设备的交接事务调用库存服务。 |
 | 查询／发布：`query_cell_state`、`publish_storage_state` | 指定格位有效，库存记录可读。 | 查询返回当前格位与预留身份的有效快照；持续发布空位、占用及最近交接事件。 |
 
+</details>
+
+<a id="bind-human-operator"></a>
+
 ### 搬运人员 `human_operator`
+
+**逐条件绑定（`carry_material`）**
+
+设 `M/S/D` 来自该行为载荷的 `material/source/target`，`w` 表示本轮、质量为 `good` 的引擎观测 `indexing/state`。下列给出已接入的 S11 提供者，装卸侧、工装及退避区均是这个型号的绑定。
+
+| 阶段／条件键 | 信号或观测绑定、判定与结果 |
+| --- | --- |
+| 前置／`carry_material.ready`：空手、同件和区域 | **观测**：`w.active == M`、`w.holding == null`、`w.humanHome == true`、`w.robotHome == true`、`w.stopped[台] == true`，`w.measuredAngleDeg` 在装卸角容差内。**出** `holding_material: BOOL` 投影自 `w.holding`，物料 ID 由观测给出。 |
+| 前置／同一 `ready`：源可取、目标可接 | 上料时 `w.onSource == true` 且 `w.tableMaterial == null`；下料时 `w.tableMaterial == M` 且物理约束指向该工装。动作核对载荷指定的抓口 ID、已声明路线、源支承和静止位置；该工艺另核对加工记录及分度次数。实际吸附前再次检查掌面到同件抓取点的距离 ≤ 人物参数 `position_tolerance_m`。 |
+| 授权／`carry_material.authorized` | **仲裁**：就绪仍为真，且此激活持有人物、转台、机器人、装卸位与本件资源。**入** `execute: BOOL` 和 `request_id: DINT` 由网关在授权后提交；物料和源／目标端点通过冻结载荷传入。 |
+| 持续／`carry_material.sustaining` | **出反馈＋观测**：人物 `error == false` 的样本有效，`w.robotHome && w.stopped[台]`。持件阶段另查本次吸附约束存在，掌面与抓取点的距离保持在容差内。 |
+| 完成／`carry_material.completion` | **物理＋账本**：放下时先确认 D 的实际支承、同件落点和静止，退回时再次确认。要求 `w.humanHome && w.holding == null`、`requestState.outcome == "succeeded"`，且 `w.transfers` 中同一记录匹配 `r.requestId/M/S/D`。反馈为 **出** `holding_material == false` 和本次请求的 `done/result_id`。 |
+
+[条件和资源](../../src/runtime/assembly/IndexedProcessingRuntimeAssembler.ts) · [实际支承与交接记录](../../src/runtime/services/IndexingCellMotion.ts) · [掌面吸附与撤离](../../src/runtime/mechanisms/HumanCarryMotion.ts)
+
+<details>
+<summary>通用行为语义与兼容入口</summary>
 
 | 通用行为 | 固有前置条件与信号 | 完成条件及可输出的证据 |
 | --- | --- | --- |
 | 搬运：`carry_material` | `Ready(人)`、`Empty(手)`，同件 `At(M,S)` 且可拾取，源抓取口匹配，路线可通过，`CanReceive(D,M)`。捕获瞬间核对可达、距离与吸附约束。 | 指定物料在 D 稳定受支承、手已释放，接收登记成立并按请求撤到安全位置。对外输出 `SupportedAt(M,D)`、`Transferred(M,S,D,…)`、`Empty(手)`，以及有实测依据的撤离状态。 |
 
-**实验兼容。** 旧 `processing_station` 的 `clamp` 与 `unclamp` 分别以同件实际夹紧、解除夹紧后仍有支承为完成条件；其 `process_material` 按已装夹工件、匹配配方、工艺就绪与互锁准入，以周期结束、同件同配方操作记录和工艺停止为证。继续按[旧实验工站协议](../../public/scene/S05/contracts/processing_station.json)解析。
+</details>
+
+### 历史实验兼容 `processing_station`
+
+以下是旧 `request_v1` 的实际绑定，保留为历史实验协议。三种动作的共同准入项是入 `enable=true`、出 `busy=false` 且 `error=false`、授权 `operation_allowed=true`、观测 `subject_present(M)=true` 且 `material_mass(M) ≤ max_payload_kg`。执行中保持使能和授权，命令载荷携带同一 `material_id`。
+
+| 行为 | 附加前置／持续条件读取 | 本次完成条件读取 |
+| --- | --- | --- |
+| `clamp`，入 `command_code=1` | 共同准入项 | 物理夹持观测 `subject_clamped(M)=true`。 |
+| `process_material`，入 `command_code=2`、`recipe_id` | 夹持和配方观测 `subject_clamped(M)=true`、`recipe_available(M,recipe)=true`，出 `process_ready=true` 且 `interlock_ok=true`。加工中保持夹持和互锁。 | 出 `cycle_finished=true` **且**同工件同配方的观测 `operation_recorded(M,recipe)=true` **且** `process_stopped=true`。 |
+| `unclamp`，入 `command_code=3` | 另读观测 `process_stopped=true` | 物理观测 `subject_unclamped(M)=true` 且 `subject_present(M)=true`，工件仍在位。 |
+
+[旧实验工站协议](../../public/scene/S05/contracts/processing_station.json)
 
 ## 3. DSL 怎样自动连信号
 
