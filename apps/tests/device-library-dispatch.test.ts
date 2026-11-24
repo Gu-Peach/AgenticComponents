@@ -90,3 +90,16 @@ it("accepts a distinct model selecting a compatible subset and rejects an unregi
     /signature/,
   );
 });
+
+it("retains the required pick/place ABI and rejects an incompatible optional grip field", () => {
+  const spec = read("public/scene/S06/contracts/robot_arm.json");
+  const payload =
+    spec.runtime_execution_contract.payload_templates.pick_and_place;
+  expect(payload.optional_fields).toEqual({ grasp: "grasp_frame_ref" });
+  payload.optional_fields.grasp = "location_ref";
+  expect(() => resolveDeviceAction(spec, "pick_and_place")).toThrow(
+    /signature/,
+  );
+  delete payload.optional_fields;
+  expect(resolveDeviceAction(spec, "pick_and_place").type).toBe("robot_arm");
+});

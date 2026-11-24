@@ -1,5 +1,4 @@
-/** 根据工单、工装占用和实测位姿构建搬运、分度与加工任务，记录每件物料的交接、转角和工具对准结果。 */
-
+/** 将已装配的工装、物料与设备行为绑定，按请求读取端点和实测约束并保留完成回执。 */
 import { getDeviceModule } from "@/devices/registry";
 import { Quaternion, Vector3 } from "three";
 import type { BodyPose, PhysicsPort } from "@/contracts/physics";
@@ -14,13 +13,20 @@ function isStable(p: BodyPose) {
   );
 }
 
-export class IndexingCellMotion {
+export function requestFields(r: ActionRequest): Record<string, string> {
+  return (
+    (r.payload as { fields?: Record<string, string> } | undefined)?.fields ?? {}
+  );
+}
+
+export class IndexedFixtureBindings {
   private readonly config;
   private readonly human;
   private readonly table;
   private readonly robot;
   private readonly tolerance: number;
   private tableMaterial: string | null = null;
+  private boundOrientation?: Quaternion;
   private transfers: {
     material: string;
     source: string;
@@ -76,6 +82,7 @@ export class IndexingCellMotion {
       parameter(c.table, "rotate_accel_deg_s2"),
       parameter(c.table, "angle_tolerance_deg"),
       parameter(c.table, "settle_speed_deg_s"),
+      c.indexing.home,
     );
     this.robot = getDeviceModule("robot_arm").createProcessingMotion(
       getDeviceModule("robot_arm").createArticulatedArm(
@@ -87,12 +94,6 @@ export class IndexingCellMotion {
       parameter(c.robot, "process_position_tolerance_m"),
       parameter(c.robot, "process_angle_tolerance_deg"),
     );
-  }
-  private task(id: string) {
-    return this.config.jobs.find((j) => j.material === id);
-  }
-  private finished(id: string) {
-    return this.operations.some((op) => op.material === id);
   }
   private body(id: string) {
     return this.compiled.bodyMap.get(id + "/body")!;
@@ -119,7 +120,7 @@ export class IndexingCellMotion {
           );
     return bottom.add(new Vector3(0, this.body(id).size[1] / 2, 0));
   }
-  private on(id: string, location: string, allowCarry = true) {
+  supportedAt(id: string, location: string, allowCarry = true) {
     const b = this.body(id);
     if (
       !b ||
@@ -146,12 +147,10 @@ export class IndexingCellMotion {
     )
       return false;
     const p = this.physics.readBody!(b.id);
-    const expected = new Quaternion()
-      .setFromAxisAngle(
-        new Vector3(...this.config.axis),
-        (this.table.angleDeg * Math.PI) / 180,
-      )
-      .multiply(new Quaternion(...b.rotation));
+    const rotor = this.physics.readBody!(this.config.tableBody);
+    const expected = new Quaternion(...rotor.rotation).multiply(
+      this.boundOrientation!,
+    );
     return (
       expected.angleTo(new Quaternion(...p.rotation)) <= 0.065 &&
       new Vector3(...p.position).distanceTo(
@@ -159,118 +158,83 @@ export class IndexingCellMotion {
       ) <= 0.025
     );
   }
-  private fields(r: ActionRequest) {
-    const p = r.payload as
-      { binding?: string; fields?: Record<string, string> } | undefined;
-    return p?.binding === r.device + "." + r.behavior ? p.fields : undefined;
-  }
-  private angle(r: ActionRequest) {
-    const quantity = r.arguments.angleTag as
-      { value?: number; unit?: string } | undefined;
-    return quantity?.unit === "°" ? quantity.value : undefined;
-  }
-  ready(r: ActionRequest) {
-    const c = this.config;
-    if (r.device === c.table && r.behavior === "rotate_to_station") {
-      const id = this.tableMaterial,
-        target = this.angle(r);
-      return (
-        !!id &&
-        this.human.atHome &&
-        this.robot.arm.atHome &&
-        this.retained(id) &&
-        ((target === 180 && this.table.at(0) && !this.finished(id)) ||
-          (target === 0 && this.table.at(180) && this.finished(id)))
-      );
-    }
-    const f = this.fields(r),
-      id = f?.material;
+  index(r: ActionRequest) {
+    const { value, unit } = r.arguments.angleTag as {
+      value: number;
+      unit: string;
+    };
+    const material = this.tableMaterial;
+    if (unit !== "°" || !this.config.indexing.stations.includes(value))
+      throw new Error("Indexing request requires a configured station");
     if (
-      !f ||
-      !id ||
-      !this.task(id) ||
-      !this.physics.isBodyActive!(this.body(id).id)
+      !material ||
+      !this.table.stopped ||
+      !this.human.atHome ||
+      !this.robot.arm.atHome ||
+      !this.retained(material)
     )
-      return false;
-    const frames = c.materialFrames.get(id)!,
-      task = this.task(id)!;
-    if (r.device === c.robot && r.behavior === "process_material") {
-      return (
-        this.human.atHome &&
-        this.robot.arm.atHome &&
-        this.table.at(180) &&
-        this.retained(id) &&
-        !this.finished(id) &&
-        f.tool === c.toolInterface &&
-        f.process === frames.processInterface &&
-        f.station === c.slot
-      );
-    }
-    if (r.device === c.human && r.behavior === "carry_material") {
-      return (
-        this.human.atHome &&
-        this.robot.arm.atHome &&
-        this.table.at(0) &&
-        f.grasp === frames.graspInterface &&
-        ((f.source === task.input &&
-          f.target === c.slot &&
-          !this.tableMaterial &&
-          !this.finished(id) &&
-          this.on(id, f.source)) ||
-          (f.source === c.slot &&
-            f.target === task.target &&
-            this.finished(id) &&
-            this.retained(id) &&
-            this.on(id, f.source)))
-      );
-    }
-    return false;
+      throw new Error("Indexing requires a secured load and cleared work area");
+    return this.table.job(
+      value,
+      () =>
+        this.human.atHome && this.robot.arm.atHome && this.retained(material),
+      (tick, fromDeg, toDeg) =>
+        this.rotations.push({
+          material,
+          fromDeg,
+          toDeg,
+          measuredAngleDeg: this.table.measuredAngleDeg,
+          tick,
+          request: r.requestId,
+        }),
+    );
   }
-  job(r: ActionRequest) {
-    if (!this.ready(r))
+  process(r: ActionRequest) {
+    const c = this.config;
+    const { material, tool, process, station } = requestFields(r);
+    if (
+      !this.robot.arm.atHome ||
+      !this.human.atHome ||
+      !this.table.at(c.indexing.process) ||
+      !this.retained(material) ||
+      this.operations.some((op) => op.material === material)
+    )
       throw new Error(
-        "Indexed action lacks physical admission: " +
-          r.device +
-          "." +
-          r.behavior,
+        "Processing requires a secured raw workpiece at the tool dock",
       );
-    const c = this.config,
-      f = this.fields(r);
-    if (r.device === c.table) {
-      const material = this.tableMaterial!;
-      return this.table.job(
-        this.angle(r)!,
-        () =>
-          this.human.atHome && this.robot.arm.atHome && this.retained(material),
-        (tick, fromDeg, toDeg) =>
-          this.rotations.push({
-            material,
-            fromDeg,
-            toDeg,
-            measuredAngleDeg: this.table.measuredAngleDeg,
-            tick,
-            request: r.requestId,
-          }),
-      );
-    }
-    const { material, source, target } = f!;
-    if (r.device === c.robot)
-      return this.robot.job(
-        () => this.port(material, "process"),
-        () =>
-          this.human.atHome && this.table.at(180) && this.retained(material),
-        (tick, evidence) =>
-          this.operations.push({
-            material,
-            robot: r.device,
-            recipe: c.recipe,
-            station: f!.station,
-            tool: f!.tool,
-            process: f!.process,
-            request: r.requestId,
-            tick,
-            ...evidence,
-          }),
+    return this.robot.job(
+      () => this.port(material, "process"),
+      () =>
+        this.human.atHome &&
+        this.table.at(c.indexing.process) &&
+        this.retained(material),
+      (tick, evidence) =>
+        this.operations.push({
+          material,
+          robot: r.device,
+          recipe: c.recipe,
+          station,
+          tool,
+          process,
+          request: r.requestId,
+          tick,
+          ...evidence,
+        }),
+    );
+  }
+  carry(r: ActionRequest) {
+    const c = this.config;
+    const { material, source, target } = requestFields(r);
+    if (
+      !this.human.atHome ||
+      !this.robot.arm.atHome ||
+      !this.table.at(c.indexing.home) ||
+      !this.supportedAt(material, source) ||
+      (target === c.slot && this.tableMaterial) ||
+      (source === c.slot && !this.retained(material))
+    )
+      throw new Error(
+        "Carry requires the specified workpiece and an available dock",
       );
     const body = this.body(material),
       pickup = () => this.port(material, "grasp").position;
@@ -284,19 +248,33 @@ export class IndexingCellMotion {
         new Vector3(...this.physics.readBody!(body.id).position),
       ),
       sourceReady: () =>
-        this.table.at(0) && this.robot.arm.atHome && this.on(material, source),
+        this.table.at(c.indexing.home) &&
+        this.robot.arm.atHome &&
+        this.supportedAt(material, source),
       captured: () => {
-        if (!loading) this.tableMaterial = null;
+        if (source === c.slot) {
+          this.tableMaterial = null;
+          this.boundOrientation = undefined;
+        }
       },
       receiverReady: () =>
-        this.table.at(0) && this.robot.arm.atHome && !this.tableMaterial,
-      placed: () => this.on(material, target),
+        this.table.at(c.indexing.home) &&
+        this.robot.arm.atHome &&
+        !this.tableMaterial,
+      placed: () => this.supportedAt(material, target),
       accept: () => {
         if (loading) {
-          if (!this.on(material, target, false))
+          if (!this.supportedAt(material, target, false))
             throw new Error("Placement lacks physical table contact");
           this.physics.bindLoad!(c.tableBody, body.id);
           this.tableMaterial = material;
+          this.boundOrientation = new Quaternion(
+            ...this.physics.readBody!(c.tableBody).rotation,
+          )
+            .invert()
+            .multiply(
+              new Quaternion(...this.physics.readBody!(body.id).rotation),
+            );
         }
       },
       complete: (tick) =>
@@ -325,6 +303,7 @@ export class IndexingCellMotion {
       robotHome: this.robot.arm.atHome,
       holding: this.human.holding,
       tableMaterial: this.tableMaterial,
+      retained: !!this.tableMaterial && this.retained(this.tableMaterial),
       phase: {
         [c.human]: this.human.phase,
         [c.table]: this.table.phase,

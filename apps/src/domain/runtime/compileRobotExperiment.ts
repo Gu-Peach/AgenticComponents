@@ -1,3 +1,5 @@
+import { compileGraspFrames } from "./materialGraspFrames";
+import { identityTransform, matrixOf } from "@/domain/spatial/transforms";
 import { Quaternion, Vector3 } from "three";
 import type { ProjectDocument } from "@/contracts/device";
 import type { CompiledRobotScene } from "@/contracts/robot";
@@ -54,6 +56,19 @@ export function compileRobotExperiment(
     bodyLocalMatrix: c.bodyLocal.toArray(),
     materialBodyId: c.body.id,
     materialSize: c.body.size,
+    materialGraspFrames: (
+      cargo.d.typeSpecificContract.grasping as { frames?: unknown } | undefined
+    )?.frames
+      ? compileGraspFrames(
+          cargo.d.typeSpecificContract.grasping,
+          c.bodyLocal
+            .clone()
+            .invert()
+            .multiply(
+              matrixOf(cargo.d.asset.importTransform ?? identityTransform),
+            ),
+        )
+      : undefined,
     materialMass: c.body.mass,
     placementCenter: drop.toArray(),
     placementRotation: s.body.rotation,

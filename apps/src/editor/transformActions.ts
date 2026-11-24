@@ -1,3 +1,4 @@
+import { projectMountParents } from "@/domain/spatial/mounts";
 import type { ProjectDocument, Transform } from "@/contracts/device";
 import { useWorkspace } from "@/stores/workspace";
 import type { SnapCandidate } from "@/domain/spatial/snap";
@@ -23,28 +24,35 @@ export function commitTransform(
     JSON.stringify(instance.transform) === JSON.stringify(transform)
   )
     return true;
+  const instances = project.instances.map((i) =>
+    i.instanceId === id ? { ...i, transform } : i,
+  );
+  const connections = (project.connections ?? []).filter(
+    (c) => c.a.instanceId !== id && c.b.instanceId !== id,
+  );
+  if (candidate) {
+    connections.push({
+      id: crypto.randomUUID(),
+      a: { instanceId: id, interfaceId: candidate.sourceInterface },
+      b: {
+        instanceId: candidate.targetInstance,
+        interfaceId: candidate.targetInterface,
+      },
+    });
+    try {
+      projectMountParents({ ...project, instances, connections });
+    } catch (error) {
+      state.log(
+        error instanceof Error ? error.message : String(error),
+        "warning",
+      );
+      return false;
+    }
+  }
   state.updateProject((p) => ({
     ...p,
-    instances: p.instances.map((i) =>
-      i.instanceId === id ? { ...i, transform } : i,
-    ),
-    connections: [
-      ...(p.connections ?? []).filter(
-        (c) => c.a.instanceId !== id && c.b.instanceId !== id,
-      ),
-      ...(candidate
-        ? [
-            {
-              id: crypto.randomUUID(),
-              a: { instanceId: id, interfaceId: candidate.sourceInterface },
-              b: {
-                instanceId: candidate.targetInstance,
-                interfaceId: candidate.targetInterface,
-              },
-            },
-          ]
-        : []),
-    ],
+    instances,
+    connections,
   }));
   state.log(
     candidate

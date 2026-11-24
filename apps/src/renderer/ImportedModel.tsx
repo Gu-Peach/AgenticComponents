@@ -1,3 +1,4 @@
+import { MountedAxisBridge } from "./MountedAxisBridge";
 import { useEffect, useState } from "react";
 import { Box3, type Object3D } from "three";
 import { Html } from "@react-three/drei";
@@ -86,6 +87,9 @@ export function ImportedModel({
   return model ? (
     <>
       <primitive object={model} dispose={null} />
+      {!scenePackage && (
+        <MountedAxisBridge instanceId={instanceId} model={model} />
+      )}
       {scenePackage ? (
         <ScenePhysicsBridge model={model} instanceId={instanceId} />
       ) : (

@@ -31,13 +31,14 @@ export class RotaryIndexMotion {
     acceleration: number,
     private angleTolerance: number,
     private settleSpeed: number,
+    private readonly restAngle = 0,
   ) {
     const initial = physics.readBody!(body);
     this.center = new Vector3(...pivot);
     this.origin = new Vector3(...initial.position).sub(this.center);
     this.axis = new Vector3(...axis).normalize();
     this.rotation = new Quaternion(...initial.rotation);
-    this.motion = new LinearAxisTrajectory(0, speed, acceleration, [
+    this.motion = new LinearAxisTrajectory(restAngle, speed, acceleration, [
       -Number.MAX_SAFE_INTEGER,
       Number.MAX_SAFE_INTEGER,
     ]);
@@ -53,7 +54,9 @@ export class RotaryIndexMotion {
     const twist = new Vector3(relative.x, relative.y, relative.z).dot(
       this.axis,
     );
-    return normalAngle((2 * Math.atan2(twist, relative.w)) / rad);
+    return normalAngle(
+      this.restAngle + (2 * Math.atan2(twist, relative.w)) / rad,
+    );
   }
   get stopped() {
     const p = this.physics.readBody!(this.body);
@@ -65,7 +68,7 @@ export class RotaryIndexMotion {
   at(angle: number) {
     const pose = this.physics.readBody!(this.body);
     const expected = new Quaternion()
-      .setFromAxisAngle(this.axis, angle * rad)
+      .setFromAxisAngle(this.axis, (angle - this.restAngle) * rad)
       .multiply(this.rotation);
     return (
       this.stopped &&
@@ -90,9 +93,8 @@ export class RotaryIndexMotion {
   ): WarehouseJob {
     const from = this.motion.target;
     const turn = normalAngle(target - normalAngle(from));
-    if (turn <= this.angleTolerance)
-      throw new Error("Rotary table already at requested station");
-    const to = from + turn;
+    // Repeated absolute setpoints still require measured settling and load feedback.
+    const to = this.at(target) ? from : from + turn;
     let settledSamples = 0;
     let done = false,
       cancelled = false;
@@ -109,7 +111,7 @@ export class RotaryIndexMotion {
         }
         const delta = new Quaternion().setFromAxisAngle(
           this.axis,
-          this.angleDeg * rad,
+          (this.angleDeg - this.restAngle) * rad,
         );
         this.physics.moveKinematicBody!(
           this.body,

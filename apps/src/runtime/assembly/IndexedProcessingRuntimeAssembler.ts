@@ -16,7 +16,10 @@ import { compileConditions } from "@/domain/runtime/compileConditions";
 import type { DeviceActionPort } from "@/runtime/adapters/scene/DeviceActionPort";
 import { SceneRuntimeProgram } from "@/runtime/engine/SceneRuntimeProgram";
 import { createJoltBackend } from "@/runtime/physics/jolt/JoltPhysicsBackend";
-import { IndexingCellMotion } from "@/runtime/services/IndexingCellMotion";
+import {
+  IndexedFixtureBindings,
+  requestFields,
+} from "./indexedFixtureBindings";
 import {
   ConditionProviders,
   ObservationRegistry,
@@ -24,16 +27,11 @@ import {
 } from "@/runtime/signals";
 import { ConditionTrace } from "@/runtime/signals/ConditionTrace";
 
-type MotionState = ReturnType<IndexingCellMotion["snapshot"]>;
-interface CellState extends MotionState {
+type MotionState = ReturnType<IndexedFixtureBindings["snapshot"]>;
+export interface CellState extends MotionState {
   active: string | null;
   onSource: boolean;
   delivered: { material: string; target: string; tick: number }[];
-}
-function fields(r: ActionRequest) {
-  return (
-    (r.payload as { fields?: Record<string, string> } | undefined)?.fields ?? {}
-  );
 }
 function requestedAngle(r: ActionRequest) {
   return (r.arguments.angleTag as { value: number; unit: string } | undefined)
@@ -51,27 +49,16 @@ export async function assembleIndexedProcessingRuntime(
   const cfg = compiled.indexedProcessing!;
   const physics = await createJoltBackend(compiled.physics);
   try {
-    const motion = new IndexingCellMotion(compiled, physics);
+    const motion = new IndexedFixtureBindings(compiled, physics);
     const { human, table, robot } = cfg;
+    const sourceLocations = new Set(
+      Object.keys(compiled.devices.get(cfg.source)!.locations),
+    );
     let cursor = 0,
       closing = false;
     const delivered: CellState["delivered"] = [];
     const current = () => cfg.jobs[cursor];
     const body = (id: string) => compiled.bodyMap.get(id + "/body")!;
-    const onSource = (id: string) => {
-      const b = body(id);
-      if (
-        !physics.isBodyActive!(b.id) ||
-        physics.hasGraspForBody!(b.id) ||
-        !physics.hasContactSupport!(b.id, cfg.sourceBody)
-      )
-        return false;
-      const pose = physics.readBody!(b.id);
-      return (
-        Math.hypot(...pose.velocity) < 0.03 &&
-        Math.hypot(...(pose.angularVelocity ?? [])) < 0.1
-      );
-    };
     const angleTolerance = Number(
       compiled.devices.get(table)!.parameters.angle_tolerance_deg,
     );
@@ -85,13 +72,12 @@ export async function assembleIndexedProcessingRuntime(
           signalLayoutFromContract(sceneId, d.instance_id, d.contract),
         ),
     );
-    const plan = (request: ActionRequest) => motion.job(request);
     const actors = [
       getDeviceModule("human_operator").createDriver(
         sceneId,
         runId,
         human,
-        plan,
+        (request) => motion.carry(request),
         () => motion.stopped(human),
         () => !!motion.snapshot().holding,
       ),
@@ -99,7 +85,7 @@ export async function assembleIndexedProcessingRuntime(
         sceneId,
         runId,
         table,
-        plan,
+        (request) => motion.index(request),
         () => motion.stopped(table),
         () => {
           const state = motion.snapshot();
@@ -108,14 +94,14 @@ export async function assembleIndexedProcessingRuntime(
             occupied: !!state.tableMaterial,
           };
         },
-        [0, 180],
+        cfg.indexing.stations,
         angleTolerance,
       ),
       getDeviceModule("robot_arm").createProcessingDriver(
         sceneId,
         runId,
         robot,
-        plan,
+        (request) => motion.process(request),
         () => motion.stopped(robot),
       ),
     ];
@@ -165,8 +151,7 @@ export async function assembleIndexedProcessingRuntime(
           m.robotHome &&
           !m.holding &&
           !m.tableMaterial &&
-          onSource(job.material) &&
-          m.operations.some((op) => op.material === job.material)
+          motion.supportedAt(job.material, job.target)
         ) {
           physics.deactivateBodies!([body(job.material).id]);
           delivered.push({ material: job.material, target: job.target, tick });
@@ -176,7 +161,7 @@ export async function assembleIndexedProcessingRuntime(
         const value: CellState = {
           ...m,
           active,
-          onSource: !!active && onSource(active),
+          onSource: !!active && motion.supportedAt(active, current()!.input),
           delivered,
         };
         const bodies = Object.fromEntries(
@@ -234,7 +219,7 @@ export async function assembleIndexedProcessingRuntime(
     const actions: ActionBinding[] = [];
     const providers = new ConditionProviders(new ConditionTrace("expression"));
     const resources = (r: ActionRequest, w: CellState) => {
-      const material = fields(r).material ?? w.tableMaterial;
+      const material = requestFields(r).material ?? w.tableMaterial;
       return [
         "device/" + human,
         "device/" + table,
@@ -244,7 +229,7 @@ export async function assembleIndexedProcessingRuntime(
       ];
     };
     const ready = (r: ActionRequest, w: CellState) => {
-      const p = fields(r),
+      const p = requestFields(r),
         active = w.active;
       if (
         !active ||
@@ -254,36 +239,23 @@ export async function assembleIndexedProcessingRuntime(
         !w.stopped[table]
       )
         return false;
-      const rotations = w.rotations.filter((x) => x.material === active).length;
-      const processed = w.operations.some((op) => op.material === active);
-      if (r.device === table) {
-        return (
-          w.tableMaterial === active &&
-          ((requestedAngle(r) === 180 &&
-            rotations === 0 &&
-            !processed &&
-            atAngle(w.measuredAngleDeg, 0)) ||
-            (requestedAngle(r) === 0 &&
-              rotations === 1 &&
-              processed &&
-              atAngle(w.measuredAngleDeg, 180)))
-        );
-      }
+      // The DSL orders work. Admission depends only on the request, occupancy and physical docks.
+      if (r.device === table) return w.tableMaterial === active && w.retained;
       if (p.material !== active) return false;
       if (r.device === robot)
         return (
           w.tableMaterial === active &&
-          rotations === 1 &&
-          !processed &&
-          atAngle(w.measuredAngleDeg, 180)
+          w.retained &&
+          !w.operations.some((op) => op.material === active) &&
+          atAngle(w.measuredAngleDeg, cfg.indexing.process)
         );
-      if (!atAngle(w.measuredAngleDeg, 0)) return false;
-      return p.target === cfg.slot
-        ? w.onSource && !w.tableMaterial && rotations === 0 && !processed
-        : w.tableMaterial === active && rotations === 2 && processed;
+      if (!atAngle(w.measuredAngleDeg, cfg.indexing.home)) return false;
+      return p.source === cfg.slot
+        ? w.tableMaterial === active && w.retained
+        : w.onSource && !w.tableMaterial;
     };
     const complete = (r: ActionRequest, w: CellState) => {
-      const p = fields(r);
+      const p = requestFields(r);
       if (r.device === table)
         return (
           w.stopped[table] &&
@@ -353,11 +325,12 @@ export async function assembleIndexedProcessingRuntime(
               return false;
             if (device === human) return w.robotHome && w.stopped[table];
             if (device === table)
-              return w.humanHome && w.robotHome && !!w.tableMaterial;
+              return w.humanHome && w.robotHome && w.retained;
             return (
               w.humanHome &&
               w.stopped[table] &&
-              w.tableMaterial === fields(r).material
+              w.tableMaterial === requestFields(r).material &&
+              w.retained
             );
           },
         );
@@ -384,10 +357,8 @@ export async function assembleIndexedProcessingRuntime(
               p = v?.fields;
             if (v?.binding !== device + "." + behavior || !p)
               throw new Error("Unbound cell action payload");
-            const job = cfg.jobs.find((j) => j.material === p.material),
-              frames = cfg.materialFrames.get(p.material);
-            if (!job || !frames)
-              throw new Error("Unknown workpiece " + p.material);
+            const frames = cfg.materialFrames.get(p.material);
+            if (!frames) throw new Error("Unknown workpiece " + p.material);
             if (device === robot) {
               if (
                 Object.keys(p).length !== 4 ||
@@ -400,8 +371,8 @@ export async function assembleIndexedProcessingRuntime(
               Object.keys(p).length !== 4 ||
               p.grasp !== frames.graspInterface ||
               !(
-                (p.source === job.input && p.target === cfg.slot) ||
-                (p.source === cfg.slot && p.target === job.target)
+                (sourceLocations.has(p.source) && p.target === cfg.slot) ||
+                (p.source === cfg.slot && sourceLocations.has(p.target))
               )
             )
               throw new Error("Invalid carry route");
@@ -421,47 +392,22 @@ export async function assembleIndexedProcessingRuntime(
           w.humanHome &&
           w.robotHome &&
           w.stopped[table] &&
-          atAngle(w.measuredAngleDeg, 0) &&
           cfg.jobs.every((j) => {
-            const operations = w.operations.filter(
-              (op) => op.material === j.material,
-            );
-            const turns = w.rotations.filter((r) => r.material === j.material);
-            const carries = w.transfers.filter(
-              (r) => r.material === j.material,
-            );
+            const ops = w.operations.filter((op) => op.material === j.material);
             const receipts = w.delivered.filter(
               (r) => r.material === j.material && r.target === j.target,
             );
-            if (
-              operations.length !== 1 ||
-              turns.length !== 2 ||
-              carries.length !== 2 ||
-              receipts.length !== 1
-            )
-              return false;
-            const [op] = operations;
+            const op = ops[0];
             return (
+              ops.length === 1 &&
+              receipts.length === 1 &&
               op.robot === robot &&
               op.recipe === cfg.recipe &&
               op.station === cfg.slot &&
               op.tool === cfg.toolInterface &&
               op.process ===
                 cfg.materialFrames.get(j.material)!.processInterface &&
-              carries[0].source === j.input &&
-              carries[0].target === cfg.slot &&
-              carries[1].source === cfg.slot &&
-              carries[1].target === j.target &&
-              atAngle(turns[0].measuredAngleDeg, 180) &&
-              atAngle(turns[1].measuredAngleDeg, 0) &&
-              turns.every(
-                (t) => Math.abs(t.toDeg - t.fromDeg - 180) <= angleTolerance,
-              ) &&
-              carries[0].tick < turns[0].tick &&
-              turns[0].tick < op.startTick &&
-              op.tick < turns[1].tick &&
-              turns[1].tick < carries[1].tick &&
-              carries[1].tick <= receipts[0].tick
+              op.tick <= receipts[0].tick
             );
           })
         );
@@ -478,7 +424,10 @@ export async function assembleIndexedProcessingRuntime(
       scope,
       finalization: [goal],
     });
-    const present = () => current() && onSource(current().material);
+    const present = () => {
+      const job = current();
+      return job && motion.supportedAt(job.material, job.input);
+    };
     for (let i = 0; i < 120 && !present(); i++) {
       drivers.forEach((d) => d.beforePhysics(1 / 60, 0));
       physics.step(1 / 60);

@@ -1,6 +1,10 @@
 import type { SignalConnection } from "./semantic-ports";
 import type { ProcessNode } from "./process-ir";
-import type { Vec3, Quat } from "./physics";
+import type { Vec3 } from "./physics";
+import type {
+  MaterialGraspFrames,
+  TransportPosePolicy,
+} from "@/contracts/material-frames";
 
 export interface HandoffConfig {
   /** Each invoked instance/behavior selects exactly one declared request profile. */
@@ -14,15 +18,11 @@ export interface HandoffConfig {
   giver: string;
   receiver: string;
   rendezvous: string;
-  outfeedAxis: Vec3;
-  maxTiltRad: number;
-  materialFrames: Map<
-    string,
-    {
-      rest: Quat;
-      points: Record<string, { offset: Vec3; outward: Vec3 }>;
-    }
-  >;
+  pickup: string;
+  placement: string;
+  delivery: string;
+  transportPoses: Map<string, TransportPosePolicy>;
+  materialFrames: Map<string, MaterialGraspFrames>;
   approachAxes: Map<string, Vec3>;
 }
 

@@ -26,7 +26,15 @@ describe("public model packages", () => {
     const d = await fetchPublicDefinition(entry);
     expect(d.specId).toBe("Conveyor_aankws");
     expect(d.asset.importTransform?.scale).toEqual([1, 1, 1]);
-    expect(d.spatialInterfaces).toHaveLength(2);
+    expect(d.spatialInterfaces?.map((p) => p.interface_id)).toEqual([
+      "end_negative_x",
+      "end_positive_x",
+      "mount_base",
+    ]);
+    expect(
+      d.spatialInterfaces?.find((p) => p.interface_id === "mount_base")
+        ?.local_frame,
+    ).toBeDefined();
   });
   it("rejects traversal and duplicate IDs", () => {
     expect(() =>

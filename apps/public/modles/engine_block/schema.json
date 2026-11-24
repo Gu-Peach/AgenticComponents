@@ -91,7 +91,37 @@
       "description": "物料恢复系数，仿真实验设定"
     }
   },
-  "interfaces": [],
+  "interfaces": [
+    {
+      "interface_id": "mount_base",
+      "name": "设备底部安装面",
+      "capabilities": {
+        "snap": {
+          "role": "mount_base",
+          "accepts": [
+            "carriage_mount"
+          ]
+        }
+      },
+      "local_frame": {
+        "position": [
+          0.0,
+          5.303413672663737e-07,
+          0.0
+        ],
+        "forward": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    }
+  ],
   "signal_ports": [],
   "transport_behaviors": [],
   "type_specific_contract": {

@@ -137,6 +137,15 @@ def load_scene_devices(folder,manifest,gltf,published=None):
                 slots.append(normalized)
                 device['locations'][instance+'.'+slot['id']]={'owner':instance,'frame':'carrier_local_m','position':position,'status':'measured_explicit_slot'}
             device['prefab']={**prefab,'slots':slots};device['node_binding']['excluded_subtrees']=[s['source_node']['index'] for s in slots]
+        for port in contract.get('interfaces',[]):
+            if port['interface_id']=='mount_base' and root_index is not None:
+                frame=geometry.mount_base(root_index,resolved['owned_mesh_indices'])
+            elif port['interface_id']=='carriage_mount':
+                frame=model.get('carriage_mount')
+            else:continue
+            if frame:
+                port.pop('local_frame_pending',None)
+                port['local_frame']=frame
         device['signal_bindings']=generated_signals(instance,contract)
         devices[instance]=device
     def descendant(child,root):
@@ -144,13 +153,11 @@ def load_scene_devices(folder,manifest,gltf,published=None):
         return child==root
     for instance,device in devices.items():
         specific=device['contract'].get('type_specific_contract',{})
-        if device['contract'].get('device_type')=='linear_rail':
-            mounted=devices.get(specific.get('mounted_device'))
-            if not mounted or mounted['contract'].get('device_type')!='lift_table':raise ValueError('Rail requires a declared mounted lift')
-            if mounted['contract']['type_specific_contract'].get('mounted_on')!=instance:raise ValueError('Rail/lift mounting references disagree')
-            moving=geometry.resolve(specific['moving_node'])
-            if moving!=mounted['node_binding']['root']['index']:raise ValueError('Rail moving node differs from mounted lift root')
-            if not descendant(moving,device['node_binding']['root']['index']):raise ValueError('Mounted lift is outside rail assembly')
+        # Archived packages identified their child by paired instance fields.
+        if device['contract'].get('device_type')=='linear_rail' and specific.get('mounted_device'):
+            mounted=devices.get(specific['mounted_device'])
+            if not mounted or mounted['contract']['type_specific_contract'].get('mounted_on')!=instance:
+                raise ValueError('Mounting references disagree')
         if specific.get('transfer',{}).get('kind')=='platform_handler' or specific.get('transfer',{}).get('mode')=='virtual_linear':
             root=device['node_binding'].get('root',{}).get('index')
             platform=geometry.resolve(specific['lift_motion']['platform_node'])
@@ -168,4 +175,36 @@ def load_scene_devices(folder,manifest,gltf,published=None):
                 index=geometry.resolve(simulation['support_mesh'])
                 if not descendant(index,root):raise ValueError('Support mesh outside device')
                 simulation['support_geometry']=geometry.geometry(index)
+    if 'connections' in manifest:
+        validate_mounts(manifest['connections'],devices)
     return devices,inputs
+
+def validate_mounts(connections, devices):
+    """Validate installation topology independently of the production task."""
+    parents={};used=set();ids=set()
+    for link in connections:
+        if link['id'] in ids:raise ValueError('Duplicate connection: '+link['id'])
+        ids.add(link['id'])
+        ends=[];roles=[]
+        for endpoint in (link['a'],link['b']):
+            key=(endpoint['instanceId'],endpoint['interfaceId'])
+            ports=devices.get(key[0],{}).get('contract',{}).get('interfaces',[])
+            port=next((p for p in ports if p['interface_id']==key[1]),None)
+            if port is None or key in used:raise ValueError('Unknown or occupied connection endpoint: '+str(key))
+            used.add(key);ends.append(key[0]);roles.append(port)
+        r=[p['capabilities']['snap'] for p in roles]
+        if not any(p['role'] in ('mount_base','carriage_mount') for p in r):continue
+        if ({p['role'] for p in r}!={'mount_base','carriage_mount'} or r[0]['role'] not in r[1]['accepts']
+                or r[1]['role'] not in r[0]['accepts'] or any(not p.get('local_frame') for p in roles)):
+            raise ValueError('Incompatible or uncalibrated mount: '+link['id'])
+        parent,child=ends if r[0]['role']=='carriage_mount' else reversed(ends)
+        if child in parents:raise ValueError('Multiple mount parents: '+child)
+        parents[child]=parent
+        legacy_parent=devices[child]['contract']['type_specific_contract'].get('mounted_on')
+        legacy_child=devices[parent]['contract']['type_specific_contract'].get('mounted_device')
+        if legacy_parent not in (None,parent) or legacy_child not in (None,child):raise ValueError('Conflicting mount declarations')
+    for child in parents:
+        seen=set()
+        while child in parents:
+            if child in seen:raise ValueError('Cyclic mount: '+child)
+            seen.add(child);child=parents[child]

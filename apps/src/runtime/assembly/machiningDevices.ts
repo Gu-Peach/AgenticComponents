@@ -1,5 +1,6 @@
 /** 为托盘加工线创建输送带和机械臂适配器，生成原槽与机床加工点之间的抓放动作，并核对工件的落点和支承。 */
 
+import { pickGraspForDevice } from "@/domain/runtime/materialGraspFrames";
 import { getDeviceModule } from "@/devices/registry";
 import { Quaternion, Vector3 } from "three";
 import type { PhysicsPort } from "@/contracts/physics";
@@ -29,10 +30,8 @@ function location(
       support: machining.machine + "/support",
     };
   }
-  if (!pallet.items.some((i) => i.material === material && i.source === target))
-    throw new Error(
-      "Material does not own the requested pallet slot: " + target,
-    );
+  if (c.devices.get(pallet.id)!.locations[target]?.frame !== "carrier_local_m")
+    throw new Error("Unknown carrier slot: " + target);
   const { center, rotation } = getDeviceModule("workpiece").carrierPlacement(
     c,
     physics,
@@ -125,10 +124,6 @@ export function createMachiningDevices(
           base,
           c.devices.get(m.robot)!.locations[p.target],
         );
-      if ((p.target === m.point) === (p.source === m.point))
-        throw new Error(
-          "Machining transfer requires a pallet slot and a work point",
-        );
       if (!fitsMachiningLocation(c, physics, p.material, p.source))
         throw new Error(
           "Machining part has not settled at its declared source: " + p.source,
@@ -143,6 +138,7 @@ export function createMachiningDevices(
         pose,
         target.center,
         target.rotation,
+        pickGraspForDevice(c.devices.get(p.material)!, p.grasp),
       );
     },
     (request) => {

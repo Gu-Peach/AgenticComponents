@@ -1,4 +1,5 @@
 /** 从独立添加的输送带、工件、支承与机械臂编译输送抓放工艺，共用场景 DSL 的控制树及 DeviceSpec。 */
+import { selectGraspFrame } from "./materialGraspFrames";
 import { Vector3 } from "three";
 import { observeRegions } from "@/runtime/engine/RegionObserver";
 import type { ProjectDocument, DeviceDefinition } from "@/contracts/device";
@@ -206,12 +207,22 @@ export function compileTransferWorkcell(
       ) ||
       !fields ||
       Object.keys(node.arguments).length ||
-      Object.keys(fields).length !== 3 ||
+      Object.keys(fields).some(
+        (key) => !["material", "source", "target", "grasp"].includes(key),
+      ) ||
+      (fields.grasp !== undefined && typeof fields.grasp !== "string") ||
       typeof fields.material !== "string" ||
       typeof fields.source !== "string" ||
       fields.target !== destination
     )
       throw new Error("抓放请求与型号、物料或放料点不匹配：" + node.id);
+    if (robot.materialGraspFrames)
+      selectGraspFrame(
+        robot.materialGraspFrames,
+        fields.grasp as string | undefined,
+      );
+    else if (fields.grasp !== undefined)
+      throw new Error("物料未声明抓取接口: " + fields.grasp);
     placements.add(node.id);
     steps.set(
       node.id,

@@ -1,3 +1,8 @@
+import {
+  childrenOf,
+  processNodeSchema,
+  type ProcessNode,
+} from "../../src/contracts/process-ir";
 import { readFileSync } from "node:fs";
 import { expect, it, vi } from "vitest";
 import { compileSceneRuntime } from "../../src/domain/runtime/compileSceneRuntime";
@@ -197,8 +202,94 @@ it("keeps a suspended part until an explicit discard of the stopped cell", async
     snapshot = program.step(1 / 60);
   expect(snapshot.status).toBe("attention_required");
   expect(snapshot.signals.samples[holding]?.value).toBe(true);
-  const world = snapshot.observations.samples["world/state"].value as SceneConditionWorld;
+  const world = snapshot.observations.samples["world/state"]
+    .value as SceneConditionWorld;
   expect(world.machining!.operations).toEqual([]);
   program.discard();
   expect(program.snapshot().status).toBe("disposed");
 });
+
+it("obeys a DSL destination on the carrier other than the original slot", async () => {
+  const { bundle, bytes, goal } = sceneFixture("S06");
+  const first = goal.all[0].items[0];
+  const carrier = bundle.devices.find((d) => d.instance_id === "P01")!;
+  const locations = carrier.locations as Record<
+    string,
+    { position: number[]; frame: string }
+  >;
+  const spare = "P01.spare";
+  const original = structuredClone(locations[first.slot]);
+  original.position[0] += 0.1;
+  locations[spare] = original;
+  first.slot = spare;
+
+  // The alternate branch expresses a single different delivery while leaving all other rows untouched.
+  function redirect(node: ProcessNode): ProcessNode {
+    if (
+      node.id === "return_to_slot" &&
+      node.kind === "invoke" &&
+      node.payload?.kind === "payload"
+    ) {
+      const alternate = structuredClone(node);
+      alternate.id = "deliver_first_to_spare";
+      if (alternate.payload?.kind !== "payload")
+        throw new Error("missing command payload");
+      alternate.payload.kwargs.target = { kind: "literal", value: spare };
+      return {
+        id: "choose_output",
+        kind: "branch",
+        mode: "exclusive",
+        timeout: {
+          kind: "seconds",
+          args: [{ kind: "literal", value: 1 }],
+          kwargs: {},
+        },
+        cases: [
+          {
+            condition: {
+              kind: "eq",
+              args: [
+                node.payload.kwargs.material,
+                { kind: "literal", value: first.material },
+              ],
+              kwargs: {},
+            },
+            body: alternate,
+          },
+        ],
+        otherwise: node,
+      };
+    }
+    if (node.kind === "seq")
+      return { ...node, children: childrenOf(node).map(redirect) };
+    if (node.kind === "repeat") return { ...node, body: redirect(node.body) };
+    return node;
+  }
+  bundle.process.body = redirect(processNodeSchema.parse(bundle.process.body));
+  bundle.calls.push({
+    ...bundle.calls.find((x) => x.node === "return_to_slot")!,
+    node: "deliver_first_to_spare",
+  });
+  const compiled = compileSceneRuntime(bundle, bytes, goal, "validation");
+  const { program } = await assembleSceneRuntime(
+    "alternate",
+    "delivery-slot",
+    compiled,
+  );
+  try {
+    program.start();
+    let snapshot = program.snapshot();
+    for (let i = 0; i < 72000 && program.needsStep(); i++)
+      snapshot = program.step(1 / 60);
+    expect(snapshot.status, snapshot.error).toBe("succeeded");
+    const world = snapshot.observations.samples["world/state"]
+      .value as SceneConditionWorld;
+    expect(world.machining?.slots[spare], snapshot.error).toBe(first.material);
+    expect(world.machining?.slots["P01.slot1"]).toBeUndefined();
+    expect(world.machining?.operations.map((o) => o.material)).toContain(
+      first.material,
+    );
+  } finally {
+    program.dispose();
+  }
+}, 60000);

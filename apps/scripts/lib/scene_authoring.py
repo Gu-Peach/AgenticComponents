@@ -66,7 +66,7 @@ def compact_device(old,reference,core):
     templates=core.get('runtime_execution_contract',{}).get('payload_templates',{})
     payloads=compact.get('command_payloads',{})
     if payloads and all(key==old['instance_id']+'.'+value['behavior'] and value['behavior'] in templates and
-                        value['fields']==templates[value['behavior']]['fields'] and value['status']==templates[value['behavior']]['status']
+                        value['fields']==templates[value['behavior']]['fields'] and value.get('optional_fields',{})==templates[value['behavior']].get('optional_fields',{}) and value['status']==templates[value['behavior']]['status']
                         for key,value in payloads.items()):compact.pop('command_payloads')
     robot=old.get('robot_geometry');model={}
     if robot:
@@ -107,7 +107,7 @@ def compact_scene(folder):
         raw=device['contract'];name=raw.get('device_type','processing_station')
         if not re.fullmatch(r'[a-z][a-z0-9_]*',name):raise ValueError('Invalid shared contract name')
         core=contract_core(raw,manifest)
-        payloads={p['behavior']:{k:p.get(k) for k in ('fields','status','target_payload_schema')} for p in device.get('command_payloads',{}).values()}
+        payloads={p['behavior']:{**{k:p.get(k) for k in ('fields','status','target_payload_schema')}, **({'optional_fields':p['optional_fields']} if 'optional_fields' in p else {})} for p in device.get('command_payloads',{}).values()}
         if payloads:core.setdefault('runtime_execution_contract',{})['payload_templates']=payloads
         if name in cores and core!=cores[name]:raise ValueError('Different contracts cannot silently share a profile: '+name)
         # A scene shares the behavior definition; model binding is always per instance.

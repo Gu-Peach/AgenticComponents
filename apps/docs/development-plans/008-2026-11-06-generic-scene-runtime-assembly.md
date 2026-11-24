@@ -34,7 +34,7 @@ S02若使用的设备能力已经支持，只需提供有效配置与DSL即可�
 | [PositionTransportAdapter](../../src/devices/conveyor/behavior.ts)、[bindPositionTransport](../../src/domain/runtime/bindPositionTransport.ts) | 位置目标输送、统一控制组成员、实际位置/速度/支承反馈及请求握手 | 从场景自动生成目标表、主体参考点、资源及下游交接回调 |
 | [compileTransportTargets](../../src/domain/runtime/compileTransportTargets.ts)、[mergeCoupledConveyors](../../src/domain/runtime/mergeCoupledConveyors.ts) | 目标坐标解析，严格校验后的连续共面联合支承代理 | 由驱动组声明选择使用；几何不兼容时拒绝合并，不任意补平间隙 |
 | [JoltPhysicsBackend](../../src/runtime/physics/jolt/JoltPhysicsBackend.ts) | 多输送面、载具支承、寻址刚体、预分配实例启用/移除 | 从整个场景生成可靠的body/surface/tool配置，不能用未验证代理冒充真实几何 |
-| [FiniteSceneEnvironment](../../src/runtime/services/FiniteSceneEnvironment.ts) | 有限供盘、支承确认、物料交接、空盘移除与回执 | 接入每轮准入、出料行为和独立验收，按场景声明驱动而非测试直接调用 |
+| [FiniteSceneEnvironment](../../src/runtime/engine/FiniteBatchLifecycle.ts) | 有限供盘、支承确认、物料交接、空盘移除与回执 | 接入每轮准入、出料行为和独立验收，按场景声明驱动而非测试直接调用 |
 | [SceneRuntimeController](../../src/services/SceneRuntimeController.ts) | attach/start/step/pause/stop/detach及快照订阅 | 当前没有自动prepare入口；尚未从选中的场景包创建完整会话并接运行按钮 |
 
 因此本阶段主要是装配、生命周期和应用接入。DSL与契约以当前版本为基线；发现具体接口缺口时局部修正，不重写已经清楚表达的工艺。

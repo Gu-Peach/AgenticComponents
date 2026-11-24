@@ -34,13 +34,52 @@ export interface EnvironmentReceipt {
   bodyIds: string[];
   position: [number, number, number];
 }
+/** A finite batch reports each physical lifecycle event once, in its original run. */
+export class BatchReceipts {
+  private readonly entries: EnvironmentReceipt[] = [];
+  private readonly seen = new Map<EnvironmentReceipt["kind"], Set<string>>();
+  constructor(private runId: string) {}
+  has(kind: EnvironmentReceipt["kind"], id: string) {
+    return this.seen.get(kind)?.has(id) ?? false;
+  }
+  record(
+    kind: EnvironmentReceipt["kind"],
+    id: string,
+    bodyIds: string[],
+    tick: number,
+    position: EnvironmentReceipt["position"],
+  ) {
+    if (this.has(kind, id)) return;
+    if (!Number.isSafeInteger(tick) || tick < (this.entries.at(-1)?.tick ?? 0))
+      throw new Error("Invalid batch receipt tick");
+    let subjects = this.seen.get(kind);
+    if (!subjects) this.seen.set(kind, (subjects = new Set()));
+    subjects.add(id);
+    this.entries.push({
+      sequence: this.entries.length + 1,
+      runId: this.runId,
+      tick,
+      kind,
+      subjectId: id,
+      bodyIds: [...bodyIds],
+      position: [...position],
+    });
+  }
+  snapshot() {
+    return structuredClone(this.entries);
+  }
+  /** Entries are immutable after append. The observation publisher copies each frame. */
+  current() {
+    return [...this.entries];
+  }
+}
 /** Operates finite preallocated bodies; only actual contact/identity checks produce receipts. */
-export class FiniteSceneEnvironment {
+export class FiniteBatchLifecycle {
   private admitted = new Set<string>();
   private confirmed = new Set<string>();
   private delivered = new Set<string>();
   private departed = new Set<string>();
-  private receipts: EnvironmentReceipt[] = [];
+  private receipts: BatchReceipts;
   private lastTick = 0;
   private readonly supply;
   constructor(
@@ -48,6 +87,7 @@ export class FiniteSceneEnvironment {
     private physics: PhysicsPort,
     private loads: readonly CarrierLoad[],
   ) {
+    this.receipts = new BatchReceipts(runId);
     this.loads = structuredClone(loads);
     this.supply = getDeviceModule("material_source_station").createSupply(
       physics,
@@ -71,23 +111,6 @@ export class FiniteSceneEnvironment {
     if (!Number.isSafeInteger(tick) || tick < this.lastTick)
       throw new Error("Invalid environment tick");
     this.lastTick = tick;
-  }
-  private receipt(
-    kind: EnvironmentReceipt["kind"],
-    subjectId: string,
-    bodies: EnvironmentBody[],
-    tick: number,
-    position: [number, number, number],
-  ) {
-    this.receipts.push({
-      sequence: this.receipts.length + 1,
-      runId: this.runId,
-      tick,
-      kind,
-      subjectId,
-      bodyIds: bodies.map((b) => b.bodyId),
-      position: [...position],
-    });
   }
   private load(id: string) {
     const l = this.loads.find((l) => l.carrier.id === id);
@@ -146,10 +169,10 @@ export class FiniteSceneEnvironment {
       );
     }
     this.admitted.add(id);
-    this.receipt(
+    this.receipts.record(
       "supply_requested",
       id,
-      bodies,
+      bodies.map((b) => b.bodyId),
       tick,
       this.physics.readBody!(load.carrier.bodyId).position,
     );
@@ -174,10 +197,10 @@ export class FiniteSceneEnvironment {
     )
       return false;
     this.confirmed.add(id);
-    this.receipt(
+    this.receipts.record(
       "supply_confirmed",
       id,
-      bodies,
+      bodies.map((b) => b.bodyId),
       tick,
       this.physics.readBody!(load.carrier.bodyId).position,
     );
@@ -221,7 +244,13 @@ export class FiniteSceneEnvironment {
     const position = this.physics.readBody!(body.bodyId).position;
     this.physics.deactivateBodies!([body.bodyId]);
     this.delivered.add(id);
-    this.receipt("material_delivered", id, [body], tick, position);
+    this.receipts.record(
+      "material_delivered",
+      id,
+      [body.bodyId],
+      tick,
+      position,
+    );
     return true;
   }
   takeCarrier(id: string, target: HandoffTarget, tick: number) {
@@ -237,7 +266,13 @@ export class FiniteSceneEnvironment {
     const position = this.physics.readBody!(load.carrier.bodyId).position;
     this.physics.deactivateBodies!([load.carrier.bodyId]);
     this.departed.add(id);
-    this.receipt("carrier_departed", id, [load.carrier], tick, position);
+    this.receipts.record(
+      "carrier_departed",
+      id,
+      [load.carrier.bodyId],
+      tick,
+      position,
+    );
     return true;
   }
   complete() {
@@ -248,6 +283,6 @@ export class FiniteSceneEnvironment {
     );
   }
   snapshot() {
-    return structuredClone(this.receipts);
+    return this.receipts.snapshot();
   }
 }

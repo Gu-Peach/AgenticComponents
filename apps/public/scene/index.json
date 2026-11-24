@@ -5,7 +5,7 @@
       "id": "S01",
       "name": "S01：三盘各十二件双臂分类拆垛",
       "bundleUrl": "/scene/S01/.generated/scene.bundle.json",
-      "bundleSha256": "ff09c32b4d64e160d81e98f957073f657705a41af95480f097e9fad803c0d00b",
+      "bundleSha256": "c049e7c506be4b1890042df1e26d38b3675a9106a7f2e6a637c43b2614e36887",
       "deviceCount": 9,
       "nodeCount": 488,
       "blockerCount": 22
@@ -14,7 +14,7 @@
       "id": "S02",
       "name": "S02：六托盘三工位分层装载",
       "bundleUrl": "/scene/S02/.generated/scene.bundle.json",
-      "bundleSha256": "7e83ea9b88cf00badec79db5a3bbc5b468097965b29609020d98217a6444f07b",
+      "bundleSha256": "7dc60cee334f515ebd866a7a3774339a3a4c62f93a3b2102e04e2faa3a16655f",
       "deviceCount": 21,
       "nodeCount": 1054,
       "blockerCount": 45
@@ -23,7 +23,7 @@
       "id": "S03",
       "name": "S03：六件入环输送与双机械臂出环流水",
       "bundleUrl": "/scene/S03/.generated/scene.bundle.json",
-      "bundleSha256": "e498486e3af28f1417136b9da6c10a731770df28ac8de6c288263df2c6d66d6f",
+      "bundleSha256": "d1b7a643489b65e7bc44627079f049e4c362db9d7e876b93030ea429f0803c72",
       "deviceCount": 11,
       "nodeCount": 760,
       "blockerCount": 22
@@ -32,7 +32,7 @@
       "id": "S04",
       "name": "S04：双臂瓶体交接与倒置输送",
       "bundleUrl": "/scene/S04/.generated/scene.bundle.json",
-      "bundleSha256": "ab4c6d5593283fae741d097942c674cde4dda9c12395d4973d3472067f4e50cb",
+      "bundleSha256": "aa9f397418bdbbb5a1e153cab671534d55af2798d14f6f20b3533e2189016e28",
       "deviceCount": 6,
       "nodeCount": 208,
       "blockerCount": 14
@@ -41,7 +41,7 @@
       "id": "S05",
       "name": "S05：四件双机器人去毛刺闭环",
       "bundleUrl": "/scene/S05/.generated/scene.bundle.json",
-      "bundleSha256": "fc9cc3e3674c64193550855fcaebbdf6e768dc530fced7d755750645a0e61417",
+      "bundleSha256": "b521c2e6b5cfc010a4c7b2dfb23a0393da3a030edcbbe63ebd9028d36bcf2293",
       "deviceCount": 9,
       "nodeCount": 423,
       "blockerCount": 22
@@ -50,7 +50,7 @@
       "id": "S06",
       "name": "S06：托盘九件逐件加工回位",
       "bundleUrl": "/scene/S06/.generated/scene.bundle.json",
-      "bundleSha256": "1c97d572dc3cc785fe7de6b3532009853d841fd762b25466496e9b71c029bccc",
+      "bundleSha256": "55fe439b378359b1cea404654204f69e9e0cf769f454f01990f192d66b5e6ea4",
       "deviceCount": 9,
       "nodeCount": 584,
       "blockerCount": 20
@@ -59,7 +59,7 @@
       "id": "S07",
       "name": "S07：四件分层入库后按订单出库",
       "bundleUrl": "/scene/S07/.generated/scene.bundle.json",
-      "bundleSha256": "bd3ea0d547e69254cc9d46cd012fb41fee4037546706280d1d0ea4080db422e5",
+      "bundleSha256": "230f0ec56751e3deda59f9bb9dd935d47a561e1eff37d02f84c570590b2df93c",
       "deviceCount": 9,
       "nodeCount": 440,
       "blockerCount": 20
@@ -68,7 +68,7 @@
       "id": "S08",
       "name": "S08：四件L形加工工位流水",
       "bundleUrl": "/scene/S08/.generated/scene.bundle.json",
-      "bundleSha256": "e4b75fd9b027867ce66d4e7fee900efab32ffd701a1f4fa5f2fee0cb85406d4f",
+      "bundleSha256": "38ab0cc9f5f8f85f50639bd85a010c058d827ecb84972a2fc72878b0b6e19f9e",
       "deviceCount": 8,
       "nodeCount": 429,
       "blockerCount": 19
@@ -77,7 +77,7 @@
       "id": "S09",
       "name": "S09：六件双机加工与单机器人互斥服务",
       "bundleUrl": "/scene/S09/.generated/scene.bundle.json",
-      "bundleSha256": "53212b76f3ad67b948dbedb2d89275061cd0c65a57447b71dba9cab37cd98d82",
+      "bundleSha256": "0d84ae906fec9172b8646b8912f3ed5156934eef17e67dc2fbf7c183255a8448",
       "deviceCount": 11,
       "nodeCount": 655,
       "blockerCount": 28
@@ -86,7 +86,7 @@
       "id": "S10",
       "name": "S10：三托盘各四件的批次码垛与换盘",
       "bundleUrl": "/scene/S10/.generated/scene.bundle.json",
-      "bundleSha256": "be00b35e48c62ba22f11d4de5fa0390c9cd616c252da6cc04d2c2159d1fdf63a",
+      "bundleSha256": "1dd542dd4cc5b18fc168b28f628125f6d116512a47dd49bea8d201d29c4d4c91",
       "deviceCount": 17,
       "nodeCount": 385,
       "blockerCount": 34
@@ -95,7 +95,7 @@
       "id": "S11",
       "name": "S11：人工搬运与转台分度焊接",
       "bundleUrl": "/scene/S11/.generated/scene.bundle.json",
-      "bundleSha256": "2c6622d6e801ba42d9eba02f4b4b61fec4c424c8309bcc71d1dc029add5bbeec",
+      "bundleSha256": "cdf45bcd755d5c3e9e6317543bce3a773ec36eed77a84bc494fe2cb0704b35bc",
       "deviceCount": 5,
       "nodeCount": 991,
       "blockerCount": 8
@@ -104,7 +104,7 @@
       "id": "S12",
       "name": "S12：四件双侧加工与转位交接流水",
       "bundleUrl": "/scene/S12/.generated/scene.bundle.json",
-      "bundleSha256": "7e24b18f9d23a81e0a7606e6c87a0ee941b0713539cc83465ce04016aa040715",
+      "bundleSha256": "0e2a5771ac1838ad5313d141d9ed77695a0392318a20b6d6ba0daafc6f66a496",
       "deviceCount": 11,
       "nodeCount": 809,
       "blockerCount": 28

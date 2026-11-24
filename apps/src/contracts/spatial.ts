@@ -56,3 +56,15 @@ export const spatialInterfaceSchema = z
     "接口必须且只能声明固定坐标、派生规则或待标定状态",
   );
 export type SpatialInterface = z.infer<typeof spatialInterfaceSchema>;
+
+export const spatialConnectionSchema = z.object({
+  id: z.string().min(1),
+  a: z.object({
+    instanceId: z.string().min(1),
+    interfaceId: z.string().min(1),
+  }),
+  b: z.object({
+    instanceId: z.string().min(1),
+    interfaceId: z.string().min(1),
+  }),
+});

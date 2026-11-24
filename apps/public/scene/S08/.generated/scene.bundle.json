@@ -9,14 +9,14 @@
     "task-spec.json": "5effd5e01bbbf39a51126ef80c42efec6f5785b0bdac8500b34bd3d777606b9d",
     "scene.json": "14669ce4a3793cea73e6de4a2766d4532a3b0b6b7c961a0012e2ae082835d1b5",
     "device/R1.json": "f5ee0aa2f86ab7789338ecdc0291148d7dbe78c7397ff044a1289f45571defe5",
-    "contracts/robot_arm.json": "6d7306f0d1d8ca4cf38deacd8fd83e86db7df561ca7b811126fc9dc3358222f2",
+    "contracts/robot_arm.json": "58ac5860ace1c29dddb1c665787dc2e4cbdc4b5d8e182c3628de2b1dea98e316",
     "device/C1.json": "7aa0f13889e949f2525818b5c58ec6aa15403b66476dd362b72f504eb29d33e3",
-    "contracts/conveyor.json": "b94fa2792bc896d23f9d3b8b81d189a9a72d02804c9a0b7080111ba83d5b9bf7",
+    "contracts/conveyor.json": "236941e6f51703bc3ee0bbccbebf068430016f10920ad2bf21fbff4407f49d73",
     "device/C2.json": "b99a0fc4b7eb8e15e8cee5c40085913fbab6880f90b09dba1760b8715e59a2bc",
     "device/MC1.json": "b852a81c80ad2511ab51c0c32ad393881847aa15a170c26c306b64ea9ffb76f5",
     "contracts/processing_station.json": "95382a9ea143387ea774fe0e456c7b783df17d3339a7fabdc7d7d32915ca2b0b",
     "device/M01.json": "8fd96d27d0196204673f972331e74e34a9ac1dcc4ea88ad35b7199f2895a5e15",
-    "contracts/workpiece.json": "6981a5151a98dbef5ceacba293b76d9474921b6bdda162a05ddf7168580634ea",
+    "contracts/workpiece.json": "3bfe1666b8b9c336d474346569d4608b1e6cef9bf65579db635595895ffe2d73",
     "device/M02.json": "ecefe531d32422e6f9e6fcfc2bf4161d7041263cd9f028a9656ff574dec549fd",
     "device/M03.json": "18bafe2158cbfcd55ff3e85ad76e1b1abf934f8c032fbb7fa971bd377075d794",
     "device/M04.json": "e600ce6b78da85c722da28610e305d88a1ffaeaecdb870a98f2911b092358243"
@@ -689,7 +689,21 @@
             "description": "精确停稳完成时的关节速度阈值"
           }
         },
-        "interfaces": [],
+        "interfaces": [
+          {
+            "interface_id": "mount_base",
+            "name": "设备底部安装面",
+            "local_frame_pending": true,
+            "capabilities": {
+              "snap": {
+                "role": "mount_base",
+                "accepts": [
+                  "carriage_mount"
+                ]
+              }
+            }
+          }
+        ],
         "signal_ports": [
           {
             "port_id": "commandTag",
@@ -2462,7 +2476,10 @@
                 "target": "location_ref"
               },
               "status": "pending_model_adapter",
-              "target_payload_schema": null
+              "target_payload_schema": null,
+              "optional_fields": {
+                "grasp": "grasp_frame_ref"
+              }
             },
             "move_to_pose": {
               "fields": {
@@ -2496,7 +2513,10 @@
             "target": "location_ref"
           },
           "status": "pending_model_adapter",
-          "target_payload_schema": null
+          "target_payload_schema": null,
+          "optional_fields": {
+            "grasp": "grasp_frame_ref"
+          }
         },
         "R1.move_to_pose": {
           "instance": "R1",
@@ -2878,6 +2898,19 @@
                 "role": "conveyor_end",
                 "accepts": [
                   "conveyor_end"
+                ]
+              }
+            }
+          },
+          {
+            "interface_id": "mount_base",
+            "name": "设备底部安装面",
+            "local_frame_pending": true,
+            "capabilities": {
+              "snap": {
+                "role": "mount_base",
+                "accepts": [
+                  "carriage_mount"
                 ]
               }
             }
@@ -5304,6 +5337,19 @@
                 "role": "conveyor_end",
                 "accepts": [
                   "conveyor_end"
+                ]
+              }
+            }
+          },
+          {
+            "interface_id": "mount_base",
+            "name": "设备底部安装面",
+            "local_frame_pending": true,
+            "capabilities": {
+              "snap": {
+                "role": "mount_base",
+                "accepts": [
+                  "carriage_mount"
                 ]
               }
             }
@@ -8568,7 +8614,21 @@
             "description": "是否允许作为合法堆叠对象"
           }
         },
-        "interfaces": [],
+        "interfaces": [
+          {
+            "interface_id": "mount_base",
+            "name": "设备底部安装面",
+            "local_frame_pending": true,
+            "capabilities": {
+              "snap": {
+                "role": "mount_base",
+                "accepts": [
+                  "carriage_mount"
+                ]
+              }
+            }
+          }
+        ],
         "signal_ports": [
           {
             "port_id": "picked",
@@ -9589,7 +9649,21 @@
             "description": "是否允许作为合法堆叠对象"
           }
         },
-        "interfaces": [],
+        "interfaces": [
+          {
+            "interface_id": "mount_base",
+            "name": "设备底部安装面",
+            "local_frame_pending": true,
+            "capabilities": {
+              "snap": {
+                "role": "mount_base",
+                "accepts": [
+                  "carriage_mount"
+                ]
+              }
+            }
+          }
+        ],
         "signal_ports": [
           {
             "port_id": "picked",
@@ -10610,7 +10684,21 @@
             "description": "是否允许作为合法堆叠对象"
           }
         },
-        "interfaces": [],
+        "interfaces": [
+          {
+            "interface_id": "mount_base",
+            "name": "设备底部安装面",
+            "local_frame_pending": true,
+            "capabilities": {
+              "snap": {
+                "role": "mount_base",
+                "accepts": [
+                  "carriage_mount"
+                ]
+              }
+            }
+          }
+        ],
         "signal_ports": [
           {
             "port_id": "picked",
@@ -11631,7 +11719,21 @@
             "description": "是否允许作为合法堆叠对象"
           }
         },
-        "interfaces": [],
+        "interfaces": [
+          {
+            "interface_id": "mount_base",
+            "name": "设备底部安装面",
+            "local_frame_pending": true,
+            "capabilities": {
+              "snap": {
+                "role": "mount_base",
+                "accepts": [
+                  "carriage_mount"
+                ]
+              }
+            }
+          }
+        ],
         "signal_ports": [
           {
             "port_id": "picked",

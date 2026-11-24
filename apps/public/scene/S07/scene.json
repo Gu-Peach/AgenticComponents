@@ -99,5 +99,29 @@
     "length_unit": "m",
     "up_axis": "Y"
   },
-  "runtime_profile": "warehouse.virtual-linear@1"
+  "runtime_profile": "warehouse.virtual-linear@1",
+  "connections": [
+    {
+      "id": "install-L1",
+      "a": {
+        "instanceId": "T1",
+        "interfaceId": "carriage_mount"
+      },
+      "b": {
+        "instanceId": "L1",
+        "interfaceId": "mount_base"
+      }
+    },
+    {
+      "id": "install-L2",
+      "a": {
+        "instanceId": "T2",
+        "interfaceId": "carriage_mount"
+      },
+      "b": {
+        "instanceId": "L2",
+        "interfaceId": "mount_base"
+      }
+    }
+  ]
 }

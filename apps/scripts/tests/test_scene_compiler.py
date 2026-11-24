@@ -44,9 +44,44 @@ class SceneCompiler(unittest.TestCase):
         devices=compiler.expand_prefabs(ir,devices)
         return ir,devices,compiler.read(p/'task-spec.json')
 
+    def test_loading_quantities_are_driven_by_dsl_and_checked_against_physical_slots(self):
+        source = (APPS/'public/scene/S02/process.py').read_text(encoding='utf-8')
+        _, devices, _ = self.scene('S02')
+        authored = {k:v for k,v in devices.items() if not v.get('asset_kind','').startswith('runtime_')}
+        def expand(source):
+            ir = compiler.SceneParser(source).compile()
+            devices = compiler.expand_prefabs(ir,authored)
+            return ir['task'], devices
+        small, subjects = expand(source.replace('count=6','count=2').replace("'upper': 12", "'upper': 4"))
+        self.assertEqual((small['pallet_count'],small['material_count']),(2,34))
+        self.assertEqual(len(subjects['P01']['locations']),25)
+        self.assertEqual([i['category'] for i in small['pallets'][0]['items']].count('upper'),4)
+        self.assertNotIn('M01_18',subjects)
+        with self.assertRaisesRegex(ValueError,'exceed compatible slot capacity'):
+            expand(source.replace("'upper': 12", "'upper': 13"))
+        with self.assertRaisesRegex(ValueError,'support layer'):
+            expand(source.replace("'cover': 1", "'cover': 0"))
+        authored['Pallet']['parameters']['allow_partial_load'] = False
+        with self.assertRaisesRegex(ValueError,'partial loading'):
+            expand(source.replace("'upper': 12", "'upper': 2"))
+        authored['Pallet']['prefab']['slots'][1]['id'] = authored['Pallet']['prefab']['slots'][0]['id']
+        with self.assertRaisesRegex(ValueError,'Duplicate carrier slot'):
+            expand(source)
+
     def test_twelve_compile_without_legacy_inputs(self):
         for p in sorted((APPS/'public/scene').glob('S[0-9][0-9]')):
             with self.subTest(scene=p.name):validate_inputs(*self.scene(p.name))
+
+    def test_table_index_uses_model_stations_and_dsl_setpoint(self):
+        ir, devices, goal = self.scene('S11')
+        action = next(n for n in compiler.walk(ir['body']) if n.get('id') == 'index_to_robot')
+        target = action['arguments']['angleTag']['args'][0]
+        target['value'] = 90
+        with self.assertRaisesRegex(ValueError, 'Unknown indexing station at index_to_robot'):
+            validate_inputs(ir, devices, goal)
+        policy = devices['T1']['contract']['type_specific_contract']['indexing_policy']
+        policy.update(process_deg=90, stations_deg=[0, 90])
+        validate_inputs(ir, devices, goal)
 
     def test_bottle_handoff_binds_two_material_frames_and_distinct_robots(self):
         ir, devices, goal = self.scene('S04')
@@ -67,6 +102,24 @@ class SceneCompiler(unittest.TestCase):
                         validate_inputs(ir, devices, goal)
                 finally:
                     fields[field] = saved
+
+    def test_optional_robot_grip_resolves_the_material_port_in_ordinary_loading(self):
+        for scene, step in [('S02','place_lower'),('S06','load_machine')]:
+            with self.subTest(scene=scene):
+                ir,devices,goal=self.scene(scene)
+                node=next(n for n in compiler.walk(ir['body']) if n.get('id')==step)
+                params=node['payload']['kwargs']
+                validate_inputs(ir,devices,goal)
+                params['grasp']={'kind':'literal','value':'fixture_port'}
+                with self.assertRaisesRegex(ValueError,'Unknown material grasp frame'):
+                    validate_inputs(ir,devices,goal)
+                for d in devices.values():
+                    if d.get('asset_kind')=='runtime_material':
+                        d['contract']['type_specific_contract']['grasping']['frames']={'fixture_port':{'position_m':[0,.1,0],'approach_axis':[0,-1,0]}}
+                validate_inputs(ir,devices,goal)
+                params['invented']={'kind':'literal','value':'fixture_port'}
+                with self.assertRaisesRegex(ValueError,'Payload fields differ'):
+                    validate_inputs(ir,devices,goal)
 
     def test_s04_material_orientation_is_defined_on_the_second_belt(self):
         ir, devices, _ = self.scene('S04')

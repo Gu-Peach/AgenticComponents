@@ -310,8 +310,8 @@ src/runtime/engine/
   SignalRegistry.ts                    # 已有，改为实例/端口注册与类型/写权校验
   ActionGateway.ts                     # 已有，收敛运输专属逻辑，复用 RequestLedger
   RunOwnership.ts                      # 已有，运行对象与写权限；不替代工艺授权
-src/runtime/services/
-  GraspService.ts                      # 持有/释放事务、约束引用及交接确认
+src/devices/robot_arm/
+  behavior.ts                          # 持有/释放事务、约束引用及交接确认
 src/runtime/physics/jolt/
   KinematicToolDriver.ts               # 工具目标世界位姿、速度与 Jolt 更新
   GraspConstraints.ts                  # 固定约束和成对碰撞过滤的创建/回收

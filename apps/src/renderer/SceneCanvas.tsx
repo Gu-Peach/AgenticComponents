@@ -46,13 +46,20 @@ function Device({
       ? s.drag.transform
       : instance.transform,
   );
-  const live =
-    (["ready", "running", "paused"].includes(runtime.status) ||
-      !!runtime.workcell) &&
-    runtime.subjectId === instance.instanceId &&
-    runtime.materialInstanceId &&
-    runtime.pose &&
-    runtime.bodyLocalMatrix
+  const offset = runtime.mounted?.offsets[instance.instanceId];
+  const live = offset
+    ? {
+        ...authored,
+        position: new Vector3(...authored.position)
+          .add(new Vector3(...offset))
+          .toArray(),
+      }
+    : (["ready", "running", "paused"].includes(runtime.status) ||
+          !!runtime.workcell) &&
+        runtime.subjectId === instance.instanceId &&
+        runtime.materialInstanceId &&
+        runtime.pose &&
+        runtime.bodyLocalMatrix
       ? bodyVisualPose(runtime.pose, runtime.bodyLocalMatrix)
       : authored;
   const locked = useWorkspace((s) => s.documentLocked);

@@ -10,6 +10,37 @@ export interface MachiningWorkpoint {
   finish(material: string, requestId: string, tick: number): void;
 }
 
+/** 机床实例只在真实工位及安全区持续满足时提交一次工件状态变化。 */
+export class MachineWorkpoint implements MachiningWorkpoint {
+  private readonly finished = new Set<string>();
+  private readonly operations: {
+    material: string;
+    request: string;
+    tick: number;
+  }[] = [];
+
+  constructor(private observedReady: (material: string) => boolean) {}
+  stateOf(material: string): "raw" | "finished" {
+    return this.finished.has(material) ? "finished" : "raw";
+  }
+  ready(material: string) {
+    return !this.finished.has(material) && this.observedReady(material);
+  }
+  finish(material: string, request: string, tick: number) {
+    const previous = this.operations.find((op) => op.request === request);
+    if (previous?.material === material) return;
+    if (previous || !this.ready(material))
+      throw new Error(
+        "Lost machining interlock or invalid request: " + material,
+      );
+    this.finished.add(material);
+    this.operations.push({ material, request, tick });
+  }
+  snapshot() {
+    return [...this.operations];
+  }
+}
+
 /** The machine owns the timed operation. Losing custody or stopping leaves the workpiece raw. */
 export class MachineToolAdapter extends WarehouseActionAdapter {
   constructor(

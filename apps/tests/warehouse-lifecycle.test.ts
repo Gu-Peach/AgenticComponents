@@ -120,3 +120,64 @@ it("runs with the entire physical configuration rotated from world X to Z and tr
   expect(s.status, s.error).toBe("succeeded");
   program.dispose();
 }, 30000);
+
+it("checks the measured dock even when a legal numeric DSL target is changed", async () => {
+  const f = warehouseFixture(1);
+  (
+    f.bundle.process.task.jobs as { in_slot_height: number }[]
+  )[0].in_slot_height += 0.06;
+  const compiled = compileSceneRuntime(f.bundle, f.bytes, f.goal, "validation");
+  const { program } = await assembleSceneRuntime(
+    "numeric",
+    "numeric-run",
+    compiled,
+  );
+  program.start();
+  let state = program.snapshot();
+  for (let i = 0; i < 15000 && program.needsStep(); i++)
+    state = program.step(1 / 60);
+  expect(state.error).toContain("aligned");
+  const w = state.observations.samples["world/state"].value as {
+    inventory: { events: unknown[] };
+    mounts: Record<string, { held?: string }>;
+  };
+  expect(w.inventory.events).toHaveLength(0);
+  expect(w.mounts.L1.held).toBe("M01");
+  program.discard();
+});
+it("rejects detached and misaligned slide installations during preparation", () => {
+  const f = warehouseFixture(1);
+  const links = f.bundle.connections!;
+  expect(links).toHaveLength(2);
+  f.bundle.connections = links.slice(1);
+  expect(() =>
+    compileSceneRuntime(f.bundle, f.bytes, f.goal, "validation"),
+  ).toThrow(/mounted lift/i);
+  f.bundle.connections = links;
+  const rail = f.bundle.devices.find((d) => d.instance_id === "T1")!;
+  const port = (
+    rail.contract.interfaces as {
+      interface_id: string;
+      local_frame: { position: number[] };
+    }[]
+  ).find((p) => p.interface_id === "carriage_mount")!;
+  port.local_frame.position[1] += 0.1;
+  expect(() =>
+    compileSceneRuntime(f.bundle, f.bytes, f.goal, "validation"),
+  ).toThrow(/not aligned/i);
+});
+
+it("accepts an archived rail/lift pair while giving an explicit disconnection precedence", () => {
+  const f = warehouseFixture(1);
+  const links = f.bundle.connections!;
+  for (const { a, b } of links) {
+    const rail = f.bundle.devices.find(d => d.instance_id === a.instanceId)!;
+    const lift = f.bundle.devices.find(d => d.instance_id === b.instanceId)!;
+    (rail.contract.type_specific_contract as Record<string,unknown>).mounted_device = b.instanceId;
+    (lift.contract.type_specific_contract as Record<string,unknown>).mounted_on = a.instanceId;
+  }
+  delete f.bundle.connections;
+  expect(compileSceneRuntime(f.bundle,f.bytes,f.goal,"validation").warehouse!.assemblies).toHaveLength(2);
+  f.bundle.connections = [];
+  expect(() => compileSceneRuntime(f.bundle,f.bytes,f.goal,"validation")).toThrow(/mounted lift/i);
+});

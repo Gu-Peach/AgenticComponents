@@ -2,15 +2,161 @@
 
 import { Vector3 } from "three";
 import type { ActionRequest } from "@/contracts/scheduler";
-import type { BodyPose, PhysicsPort } from "@/contracts/physics";
-import type { WarehouseLocation, WarehouseConfig } from "@/contracts/warehouse";
-import {
-  axisJob,
-  type DeviceMountService,
-} from "@/runtime/services/DeviceMountService";
-import { LinearAxisTrajectory } from "@/runtime/mechanisms/LinearAxisTrajectory";
+import type { BodyPose, PhysicsPort, RuntimeBody } from "@/contracts/physics";
+import type { WarehouseLocation, WarehouseConfig, WarehouseAssembly } from "@/contracts/warehouse";
+import { MountedAxisMotion } from "@/runtime/engine/MountedAxisMotion";
+import { sweptLoadBlocker } from "@/domain/runtime/warehouseClearance";
+import { axisJob, LinearAxisTrajectory } from "@/runtime/mechanisms/LinearAxisTrajectory";
 import { resolveDock } from "@/domain/runtime/DockingTargetResolver";
 import { WarehouseActionAdapter } from "@/runtime/adapters/scene/WarehouseActionAdapter";
+export class RailMountedLift {
+  readonly rail: LinearAxisTrajectory;
+  readonly lift: LinearAxisTrajectory;
+  transferring = false;
+  held?: string;
+  private motion: MountedAxisMotion;
+  private mastRest: BodyPose;
+  private platformRest: BodyPose;
+  constructor(
+    readonly config: WarehouseAssembly,
+    readonly physics: PhysicsPort,
+  ) {
+    this.rail = new LinearAxisTrajectory(
+      0,
+      config.railSpeed,
+      config.railAccel,
+      config.railLimits,
+    );
+    this.lift = new LinearAxisTrajectory(
+      0,
+      config.liftSpeed,
+      config.liftAccel,
+      config.liftLimits,
+    );
+    this.motion = new MountedAxisMotion(physics);
+    const rail = { direction: config.axis, drive: this.rail };
+    const lift = { direction: config.vertical, drive: this.lift };
+    this.mastRest = this.motion.bind(config.mast, [rail]);
+    this.platformRest = this.motion.bind(config.platform, [rail, lift]);
+  }
+  get anchor() {
+    return new Vector3(...this.config.anchor)
+      .addScaledVector(new Vector3(...this.config.axis), this.rail.position)
+      .addScaledVector(new Vector3(...this.config.vertical), this.lift.position)
+      .toArray();
+  }
+  get stopped() {
+    return this.rail.settled && this.lift.settled && !this.transferring;
+  }
+  move(axis: "rail" | "lift", target: number) {
+    if (!this.stopped) throw new Error("Mounted axes/transfer busy");
+    this[axis].command(target);
+  }
+  stop() {
+    this.rail.stop();
+    this.lift.stop();
+  }
+  beforePhysics(dt: number) {
+    this.motion.step(dt);
+  }
+  actual(axis: "rail" | "lift") {
+    const mast = this.physics.readBody!(this.config.mast),
+      platform = this.physics.readBody!(this.config.platform);
+    return axis === "rail"
+      ? new Vector3(...mast.position)
+          .sub(new Vector3(...this.mastRest.position))
+          .dot(new Vector3(...this.config.axis))
+      : new Vector3(...platform.position)
+          .sub(new Vector3(...this.platformRest.position))
+          .dot(new Vector3(...this.config.vertical));
+  }
+  at(axis: "rail" | "lift", target: number) {
+    return (
+      this[axis].settled &&
+      Math.abs(this.actual(axis) - target) < 0.005 &&
+      Math.hypot(
+        ...this.physics.readBody!(
+          axis === "rail" ? this.config.mast : this.config.platform,
+        ).velocity,
+      ) < 0.01
+    );
+  }
+  checkLoadedPath(
+    axis: "rail" | "lift",
+    target: number,
+    material: { body: string; size: [number, number, number] } | undefined,
+    bodies: readonly RuntimeBody[],
+    poses: Readonly<Record<string, { active: boolean; pose?: BodyPose }>>,
+  ) {
+    if (!material) return;
+    const from = poses[material.body]?.pose?.position;
+    if (!from) throw new Error("Missing held load observation");
+    const direction = axis === "rail" ? this.config.axis : this.config.vertical;
+    const to = new Vector3(...from)
+      .addScaledVector(new Vector3(...direction), target - this.actual(axis))
+      .toArray();
+    const ignored = new Set([
+      material.body,
+      this.config.platform,
+      this.config.tool,
+      ...(axis === "rail" ? [this.config.mast] : []),
+    ]);
+    const blocker = sweptLoadBlocker(
+      from,
+      to,
+      material.size,
+      bodies,
+      poses,
+      ignored,
+    );
+    if (blocker)
+      throw new Error(
+        `TARGET_UNREACHABLE: ${this.config.lift} loaded ${axis} motion intersects ${blocker}`,
+      );
+  }
+}
+
+/** 为独立安装的升降轴绑定高度设定、实测到位与停止协议。 */
+export function createLiftAxisDriver(
+  sceneId: string,
+  runId: string,
+  id: string,
+  drive: LinearAxisTrajectory,
+  rest: number,
+  actual: () => number,
+  stopped: () => boolean,
+  at: (displacement: number) => boolean,
+  move: (displacement: number) => void,
+) {
+  return new WarehouseActionAdapter(
+    id,
+    sceneId,
+    runId,
+    ["lift_to_level"],
+    (request) => {
+      const value = request.arguments.move_to_level as {
+        value: number;
+        unit: string;
+      };
+      const displacement = value.value - rest;
+      if (
+        value.unit !== "m" ||
+        !Number.isFinite(displacement) ||
+        displacement < drive.limits[0] ||
+        displacement > drive.limits[1]
+      )
+        throw new Error("Invalid lift target");
+      return axisJob(drive, displacement, false, move, at, () => drive.stop());
+    },
+    stopped,
+    () => ({
+      actual_height: rest + actual(),
+      moving: !stopped(),
+      at_level: stopped(),
+    }),
+  );
+}
+
 export interface TransferRequest {
   material: string;
   source: string;
@@ -54,7 +200,7 @@ export class LiftSceneAdapter extends WarehouseActionAdapter {
   constructor(
     scene: string,
     run: string,
-    mount: DeviceMountService,
+    mount: RailMountedLift,
     config: WarehouseConfig,
     physics: PhysicsPort,
     lifecycle: TransferLifecycle,
@@ -96,7 +242,14 @@ export class LiftSceneAdapter extends WarehouseActionAdapter {
             target > mount.config.liftLimits[1]
           )
             throw new Error("Invalid lift target");
-          return axisJob(mount, "lift", target, stop);
+          return axisJob(
+            mount.lift,
+            target,
+            stop,
+            () => mount.move("lift", target),
+            () => mount.at("lift", target),
+            () => mount.stop(),
+          );
         }
         const t = transferFields(mount.config.lift, r);
         lifecycle.validate(t);
@@ -187,7 +340,7 @@ export class MaterialTransferService {
     readonly material: string,
     readonly body: string,
     readonly target: TransferEndpoint,
-    readonly mount: DeviceMountService,
+    readonly mount: RailMountedLift,
     private physics: PhysicsPort,
     private onCommit: (tick: number) => void,
   ) {

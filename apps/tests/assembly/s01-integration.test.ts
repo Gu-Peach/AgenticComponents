@@ -3,7 +3,7 @@ import { it, expect } from "vitest";
 import { compileSceneRuntime } from "../../src/domain/runtime/compileSceneRuntime";
 import { assembleSceneRuntime } from "../../src/runtime/assembly/SceneRuntimeAssembler";
 import { sceneFixture } from "./fixtures";
-import type { EnvironmentReceipt } from "../../src/runtime/services/FiniteSceneEnvironment";
+import type { EnvironmentReceipt } from "../../src/runtime/engine/FiniteBatchLifecycle";
 
 it("completes all three pallets and 36 deliveries with actual parallel robot execution", async () => {
   const { bundle, bytes, goal } = sceneFixture();

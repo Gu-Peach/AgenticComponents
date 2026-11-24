@@ -30,7 +30,11 @@ def expand_prefabs(ir, authored):
     template=authored.get(request['carrier_template'])
     if template is None or template.get('asset_kind')!='carrier_prefab':raise ValueError('Unknown carrier template')
     if template['prefab']['kind']=='empty_carrier':
-        return expand_empty_carriers(ir,authored,template,request['count'])
+        if 'per_carrier' in request and not isinstance(request['per_carrier'],dict):
+            raise ValueError('Per-carrier quantities require a category/count map')
+        return expand_empty_carriers(ir,authored,template,request['count'],request.get('per_carrier'))
+    if 'per_carrier' in request:
+        raise ValueError('Per-carrier loading quantities require an empty carrier')
     count=request['count'];slots=template['prefab']['slots']
     if type(count)is not int or not 1<=count<=10000 or not slots or count*len(slots)>10000:raise ValueError('Invalid finite prefab production')
     devices=dict(authored);pallets=[]
@@ -42,7 +46,11 @@ def expand_prefabs(ir, authored):
         instance_signals(carrier,template['instance_id'],id)
         carrier['prototype_ref']=request['carrier_template'];carrier['creation_policy']='adopt_existing_glb' if batch==1 else 'clone_on_admission'
         carrier['node_binding']['status']='bound' if batch==1 else 'prototype'
-        carrier['locations']={};items=[]
+        # Preserve unoccupied, authored destinations as well as the load's initial slots.
+        carrier['locations']={id+key[len(template['instance_id']):]:{**loc, 'owner':id}
+            for key,loc in template['locations'].items()
+            if key.startswith(template['instance_id']+'.') and loc.get('frame')=='carrier_local_m'}
+        items=[]
         for ordinal,slot in enumerate(slots,1):
             name=f'M{batch:02d}_{ordinal:02d}'
             material=authored.get(slot['material_template'])
@@ -69,11 +77,34 @@ def expand_prefabs(ir, authored):
     ir['task'].update(jobs=[],pallets=pallets,material_count=count*len(slots),pallet_count=count,job_count=0,max_items_per_pallet=len(slots))
     return devices
 
-def expand_empty_carriers(ir, authored, template, count):
+def expand_empty_carriers(ir, authored, template, count, quantities=None):
     """A loading manifest describes future deliveries, never initial occupancy."""
-    slots = template['prefab']['slots']
+    capacity = template['prefab']['slots']
+    slots = capacity
+    if quantities is not None:
+        if not isinstance(quantities, dict) or not quantities or any(type(k) is not str or type(n) is not int or n < 0 for k,n in quantities.items()):
+            raise ValueError('Per-carrier quantities must specify nonnegative integer counts')
+        categories = {s['category'] for s in capacity}
+        if set(quantities) - categories or any(n > sum(s['category'] == k for s in capacity) for k,n in quantities.items()):
+            raise ValueError('Per-carrier quantities exceed compatible slot capacity')
+        remaining = quantities.copy()
+        slots = []
+        for slot in capacity:
+            category = slot['category']
+            if remaining.get(category, 0) > 0:
+                slots.append(slot)
+                remaining[category] -= 1
+        if len(slots) != len(capacity) and template.get('parameters', {}).get('allow_partial_load') is False:
+            raise ValueError('Carrier does not permit partial loading')
+    if len({s['id'] for s in capacity}) != len(capacity):
+        raise ValueError('Duplicate carrier slot')
     if type(count) is not int or count < 1 or not slots or len(slots)*count > 10000 or len({s['id'] for s in slots}) != len(slots):
         raise ValueError('Invalid empty-carrier loading manifest')
+    categories = {s['category'] for s in slots}
+    for slot in slots:
+        support = template['locations'].get(template['instance_id']+'.'+slot['id'], {}).get('support_layer')
+        if support != 'deck' and support not in categories:
+            raise ValueError('No allocated support layer for carrier slot: '+slot['id'])
     devices = dict(authored)
     adopted = set()
     pallets = []
@@ -94,6 +125,11 @@ def expand_empty_carriers(ir, authored, template, count):
         pallet = f'P{number:02d}'
         carrier = instantiate(template,pallet,'runtime_carrier',count*len(slots)+number)
         carrier['locations'] = {}
+        for slot in capacity:
+            origin = template['instance_id']+'.'+slot['id']
+            if origin not in template['locations'] or template['locations'][origin].get('frame')!='carrier_local_m':
+                raise ValueError('Missing carrier-local loading target: '+origin)
+            carrier['locations'][pallet+'.'+slot['id']] = {**template['locations'][origin], 'owner':pallet}
         carrier['initial_inventory'] = {'contents':[]}
         items = []
         for ordinal, slot in enumerate(slots,1):
@@ -107,10 +143,6 @@ def expand_empty_carriers(ir, authored, template, count):
             obj = instantiate(prototype,identity,'runtime_material',(number-1)*len(slots)+ordinal)
             obj['initial_supply'] = feeder['instance_id']
             target = pallet+'.'+slot['id']
-            origin = template['instance_id']+'.'+slot['id']
-            if origin not in template['locations'] or template['locations'][origin].get('frame')!='carrier_local_m':
-                raise ValueError('Missing carrier-local loading target: '+origin)
-            carrier['locations'][target] = {**template['locations'][origin],'owner':pallet}
             items.append({'material':identity,'category':slot['category'],'target':target})
         pallets.append({'id':pallet,'prototype_ref':template['instance_id'],'items':items})
     ir['task'].update(jobs=[],job_count=0,pallets=pallets,pallet_count=count,

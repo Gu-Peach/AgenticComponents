@@ -30,6 +30,14 @@ class DeviceLibraryContracts(unittest.TestCase):
                     self.assertEqual(entry["snapshot_sha256"], digest(contents))
                     self.assertTrue(entry["inputs"])
 
+    def test_every_template_and_published_profile_supplies_a_base_mount(self):
+        library = DeviceLibrary()
+        for spec in [*library.templates.values(), *(library.profile(name) for name in library.catalog["profiles"])]:
+            ports = {p["interface_id"]: p for p in spec["interfaces"]}
+            self.assertEqual(ports["mount_base"]["capabilities"]["snap"]["role"], "mount_base")
+            if spec["device_type"] == "linear_rail":
+                self.assertIn("mount_base", ports["carriage_mount"]["capabilities"]["snap"]["accepts"])
+
     def test_dispatch_index_is_derived_from_every_checked_profile(self):
         library = DeviceLibrary()
         manifest = library.dispatch_index()

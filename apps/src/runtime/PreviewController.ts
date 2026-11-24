@@ -95,7 +95,15 @@ export class PreviewController {
     if (request.mode === "real") {
       if (hasPendingContactModel(definition.typeSpecificContract))
         issues.push("接触式输送模型与引擎尚未标定接入");
-      if (definition.spatialInterfaces?.some((p) => p.local_frame_pending))
+      if (
+        definition.spatialInterfaces?.some(
+          (p) =>
+            p.local_frame_pending &&
+            !["mount_base", "carriage_mount"].includes(
+              p.capabilities.snap.role,
+            ),
+        )
+      )
         issues.push("接口坐标待提供，禁止真实执行");
       if (behavior.implementationStatus === "pending_adapter")
         issues.push("行为执行器尚未完成接入");

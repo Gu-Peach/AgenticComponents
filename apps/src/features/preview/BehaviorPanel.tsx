@@ -56,7 +56,11 @@ export function BehaviorPanel({
   const blocked =
     !mock &&
     (hasPendingContactModel(definition.typeSpecificContract) ||
-      definition.spatialInterfaces?.some((p) => p.local_frame_pending) ||
+      definition.spatialInterfaces?.some(
+        (p) =>
+          p.local_frame_pending &&
+          !["mount_base", "carriage_mount"].includes(p.capabilities.snap.role),
+      ) ||
       behavior?.implementationStatus === "pending_adapter" ||
       Boolean(behavior?.sustainingConditions?.length) ||
       !registered ||

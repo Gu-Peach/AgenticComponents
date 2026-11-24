@@ -1,3 +1,4 @@
+import { withModelMount } from "@/domain/spatial/modelMount";
 import { runtimeController } from "@/services/RuntimeController";
 import { sceneRuntimeController } from "@/services/SceneRuntimeController";
 import type { CatalogEntry } from "@/contracts/catalog";
@@ -39,9 +40,10 @@ export async function saveProject() {
     useWorkspace.setState({ saving: false });
   }
 }
-export function exportProject() {
+export async function exportProject() {
   const { project, log } = useWorkspace.getState();
   if (!project) return;
+  await projectRepository.persistDraftAssets(project);
   download(`${project.name}.json`, JSON.stringify(project, null, 2));
   log("已导出项目数据 JSON；不含模型文件，跨浏览器需重新关联 GLB");
 }
@@ -109,6 +111,10 @@ export async function associateGlb(file: File) {
     throw new Error("请先选择现场设备，GLB 将关联至其设备定义");
   const bytes = await file.arrayBuffer();
   validateGlb(bytes);
+  const measured = withModelMount(
+    p.definitions.find((d) => d.specId === instance.specId)!,
+    bytes,
+  );
   requireSceneReleased();
   runtimeController.reset();
   await preview.reset();
@@ -125,8 +131,17 @@ export async function associateGlb(file: File) {
     ...p,
     definitions: p.definitions.map((d) =>
       d.specId === instance.specId
-        ? { ...d, asset: { ...d.asset, assetId: id } }
+        ? { ...measured, asset: { ...d.asset, assetId: id } }
         : d,
+    ),
+    connections: p.connections?.filter(
+      (link) =>
+        ![link.a, link.b].some((end) =>
+          p.instances.some(
+            (i) =>
+              i.specId === instance.specId && i.instanceId === end.instanceId,
+          ),
+        ),
     ),
     assets: [
       ...p.assets,

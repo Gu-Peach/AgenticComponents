@@ -5,24 +5,24 @@
   "model_sha256": "11bb5e2a0865c27e75836e23fc9a5cd7678216eea494aaf408b93c14d4b5d353",
   "model_url": "/scene/S07/Intelligent%20Storage%20and%20Logistics%20Line/PM%20Stacker%20Cranes.glb",
   "source_hashes": {
-    "process.py": "8ca27933ae0401b2ae8d4aa0254b5fb89ea77db2c4e9a26d4fcfc6002a425afe",
+    "process.py": "25a7923d47187f7f757355569bef5f70cfc53df4682a01ae33a8a54111a0741a",
     "task-spec.json": "598069f74e61ae53697ea9af96836087722e14417b4ead0c32acb3e769052c57",
-    "scene.json": "a5e3c4574f6da77ec39c71584c82604f503984b3401c8b9419c4981c559ab1c7",
+    "scene.json": "8c85e97f12836cb8f5afe961db25f0d65eed06ba9a1c423a0a6f353eba58260a",
     "device/C1.json": "e3954998af053f031ab44b9a248a431edcbab094ca048416e75447a9a24b02d8",
-    "contracts/conveyor.json": "c0665f979efbd002046da16867bc4589a76f2aef4147b7402f6fb35dc9947140",
+    "contracts/conveyor.json": "c5fa669e5cf8452b7cf4ff15a46239cf43ff36fbf11152b8451b6bf71d645441",
     "device/C2.json": "f792ea91d2d842666459cd99f42b50d1e312c742a88aa0caa5d416954edd4e93",
     "device/F1.json": "98458c2c390d2ff292e58af082ae65cff1f14ccd92f1a08da56c14423a74bc47",
-    "contracts/material_source_station.json": "c4409709898a2b809d13d17e1c8cc5dd15dfb6a7c45de3516f913f6079a7214c",
-    "device/T1.json": "ead96144073108350a141ec00ff928149a0198100716fed8f1e0089fdfe66c0f",
-    "contracts/linear_rail.json": "c72d4b82393084354b3f654f93a722551c0e65404f755f4631324a3ea203049b",
-    "device/L1.json": "3b22055588891734dd516fa5f85a76ded62852183f7afcdd28ec393e2072a0c4",
-    "contracts/lift_table.json": "dae0816841c4a0688d04fb6e74efa9c9e01e68f22f5428a28dd9bd455bb99636",
-    "device/T2.json": "3fbfb984b1b4a71dc7ff56d17a202996ccdfb6a14f4162b15181b2c8b599dc83",
-    "device/L2.json": "1f3886ec97f22d93d7b494c61387bb95989f543829d82ea1820572c72515cb1b",
+    "contracts/material_source_station.json": "7f70b1a416aa9b84fdf11958de4877105252484cad792a9c2c6556f35e3c3129",
+    "device/T1.json": "bff8c87a8b62b7ad0e0b36f44226718605c5934ecbbf88350051d4b82befc61a",
+    "contracts/linear_rail.json": "9876716de4056f337c73706ed215b5f0de2c3937e38ec8f9000823d211b75698",
+    "device/L1.json": "35047e96f5a45d4db7f498be637de53bc6a0659ee714882ce2346ebbc247266c",
+    "contracts/lift_table.json": "ce4b82e4d94828db4465be62b12ae538896dfd6eb7d6ea3fa3238944b48c4a0e",
+    "device/T2.json": "978204cc9e296885d2fdb1149c9d2d92374237f359426afba52e7d8debf25741",
+    "device/L2.json": "2e6fec81621816c6011fab6ef5115f2d4ea8306529657e8955cf5bcbcc4dd5cc",
     "device/STORE.json": "41421b9549b8f3380a9a431c95a92797304b7065e99d870e2030d0c692ed9548",
-    "contracts/storage_rack.json": "a68041e074e6c7d27c88ddf6e1c65607068343c1064cef35679033a53e8b76dd",
+    "contracts/storage_rack.json": "a18bfa438f5c80d5fcc4225a8e325fee2e416fc789db225b9742ccb86e56d52c",
     "device/Workpiece.json": "4a60bbff3a8534236d0d1cfc75a426ed220e61937c8e9f37846e957855da653f",
-    "contracts/workpiece.json": "690b9b811887a14efdcbf884b271e5347c0a554478edf0ed85a841e32fad8448"
+    "contracts/workpiece.json": "3ae4fafdb7c9e4828e793ddfc3e33c00a3076cd8f475c83b3a8e999b42a0d3d3"
   },
   "process": {
     "schema_version": "ac-coordination-ir/0.4",
@@ -36,7 +36,11 @@
           "prototype": "Workpiece",
           "input": "C1.entry",
           "slot": "STORE.slot1",
-          "target": "C2.exit"
+          "target": "C2.exit",
+          "in_slot_position": -0.38306933,
+          "in_slot_height": 0.84,
+          "out_slot_position": -0.38306933,
+          "out_slot_height": 0.84
         },
         {
           "id": "J02",
@@ -44,7 +48,11 @@
           "prototype": "Workpiece",
           "input": "C1.entry",
           "slot": "STORE.slot2",
-          "target": "C2.exit"
+          "target": "C2.exit",
+          "in_slot_position": -0.38306933,
+          "in_slot_height": 1.44,
+          "out_slot_position": -0.38306933,
+          "out_slot_height": 1.44
         },
         {
           "id": "J03",
@@ -52,7 +60,11 @@
           "prototype": "Workpiece",
           "input": "C1.entry",
           "slot": "STORE.slot3",
-          "target": "C2.exit"
+          "target": "C2.exit",
+          "in_slot_position": -0.38306933,
+          "in_slot_height": 2.04,
+          "out_slot_position": -0.38306933,
+          "out_slot_height": 2.04
         },
         {
           "id": "J04",
@@ -60,7 +72,11 @@
           "prototype": "Workpiece",
           "input": "C1.entry",
           "slot": "STORE.slot4",
-          "target": "C2.exit"
+          "target": "C2.exit",
+          "in_slot_position": -0.38306933,
+          "in_slot_height": 2.64,
+          "out_slot_position": -0.38306933,
+          "out_slot_height": 2.64
         }
       ],
       "pallets": [],
@@ -74,7 +90,7 @@
       "kind": "seq",
       "source": {
         "file": "process.py",
-        "line": 3,
+        "line": 8,
         "column": 5
       },
       "children": [
@@ -83,7 +99,7 @@
           "kind": "repeat",
           "source": {
             "file": "process.py",
-            "line": 4,
+            "line": 9,
             "column": 9
           },
           "over": {
@@ -108,7 +124,7 @@
             "kind": "seq",
             "source": {
               "file": "process.py",
-              "line": 5,
+              "line": 10,
               "column": 13
             },
             "children": [
@@ -117,7 +133,7 @@
                 "kind": "invoke",
                 "source": {
                   "file": "process.py",
-                  "line": 6,
+                  "line": 11,
                   "column": 17
                 },
                 "device": {
@@ -147,7 +163,7 @@
                 "kind": "invoke",
                 "source": {
                   "file": "process.py",
-                  "line": 7,
+                  "line": 12,
                   "column": 17
                 },
                 "device": {
@@ -162,22 +178,28 @@
                 "kind": "invoke",
                 "source": {
                   "file": "process.py",
-                  "line": 8,
+                  "line": 13,
                   "column": 17
                 },
                 "device": {
                   "kind": "ref",
                   "name": "T1"
                 },
-                "behavior": "move_to_location",
+                "behavior": "move_to_position",
                 "arguments": {
-                  "target": {
-                    "kind": "field",
-                    "base": {
-                      "kind": "ref",
-                      "name": "C1"
-                    },
-                    "field": "exit"
+                  "position_m": {
+                    "kind": "quantity",
+                    "args": [
+                      {
+                        "kind": "literal",
+                        "value": -0.01753839
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "m"
+                      }
+                    ],
+                    "kwargs": {}
                   }
                 }
               },
@@ -186,22 +208,28 @@
                 "kind": "invoke",
                 "source": {
                   "file": "process.py",
-                  "line": 9,
+                  "line": 14,
                   "column": 17
                 },
                 "device": {
                   "kind": "ref",
                   "name": "L1"
                 },
-                "behavior": "lift_to_location",
+                "behavior": "lift_to_level",
                 "arguments": {
-                  "target": {
-                    "kind": "field",
-                    "base": {
-                      "kind": "ref",
-                      "name": "C1"
-                    },
-                    "field": "exit"
+                  "move_to_level": {
+                    "kind": "quantity",
+                    "args": [
+                      {
+                        "kind": "literal",
+                        "value": 0.54
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "m"
+                      }
+                    ],
+                    "kwargs": {}
                   }
                 }
               },
@@ -210,7 +238,7 @@
                 "kind": "invoke",
                 "source": {
                   "file": "process.py",
-                  "line": 10,
+                  "line": 15,
                   "column": 17
                 },
                 "payload": {
@@ -252,22 +280,32 @@
                 "kind": "invoke",
                 "source": {
                   "file": "process.py",
-                  "line": 11,
+                  "line": 16,
                   "column": 17
                 },
                 "device": {
                   "kind": "ref",
                   "name": "T1"
                 },
-                "behavior": "move_to_location",
+                "behavior": "move_to_position",
                 "arguments": {
-                  "target": {
-                    "kind": "field",
-                    "base": {
-                      "kind": "ref",
-                      "name": "job"
-                    },
-                    "field": "slot"
+                  "position_m": {
+                    "kind": "quantity",
+                    "args": [
+                      {
+                        "kind": "field",
+                        "base": {
+                          "kind": "ref",
+                          "name": "job"
+                        },
+                        "field": "in_slot_position"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "m"
+                      }
+                    ],
+                    "kwargs": {}
                   }
                 }
               },
@@ -276,22 +314,32 @@
                 "kind": "invoke",
                 "source": {
                   "file": "process.py",
-                  "line": 12,
+                  "line": 17,
                   "column": 17
                 },
                 "device": {
                   "kind": "ref",
                   "name": "L1"
                 },
-                "behavior": "lift_to_location",
+                "behavior": "lift_to_level",
                 "arguments": {
-                  "target": {
-                    "kind": "field",
-                    "base": {
-                      "kind": "ref",
-                      "name": "job"
-                    },
-                    "field": "slot"
+                  "move_to_level": {
+                    "kind": "quantity",
+                    "args": [
+                      {
+                        "kind": "field",
+                        "base": {
+                          "kind": "ref",
+                          "name": "job"
+                        },
+                        "field": "in_slot_height"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "m"
+                      }
+                    ],
+                    "kwargs": {}
                   }
                 }
               },
@@ -300,7 +348,7 @@
                 "kind": "invoke",
                 "source": {
                   "file": "process.py",
-                  "line": 13,
+                  "line": 18,
                   "column": 17
                 },
                 "payload": {
@@ -345,7 +393,7 @@
           "kind": "repeat",
           "source": {
             "file": "process.py",
-            "line": 14,
+            "line": 19,
             "column": 9
           },
           "over": {
@@ -370,7 +418,7 @@
             "kind": "seq",
             "source": {
               "file": "process.py",
-              "line": 15,
+              "line": 20,
               "column": 13
             },
             "children": [
@@ -379,22 +427,32 @@
                 "kind": "invoke",
                 "source": {
                   "file": "process.py",
-                  "line": 16,
+                  "line": 21,
                   "column": 17
                 },
                 "device": {
                   "kind": "ref",
                   "name": "T2"
                 },
-                "behavior": "move_to_location",
+                "behavior": "move_to_position",
                 "arguments": {
-                  "target": {
-                    "kind": "field",
-                    "base": {
-                      "kind": "ref",
-                      "name": "job"
-                    },
-                    "field": "slot"
+                  "position_m": {
+                    "kind": "quantity",
+                    "args": [
+                      {
+                        "kind": "field",
+                        "base": {
+                          "kind": "ref",
+                          "name": "job"
+                        },
+                        "field": "out_slot_position"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "m"
+                      }
+                    ],
+                    "kwargs": {}
                   }
                 }
               },
@@ -403,22 +461,32 @@
                 "kind": "invoke",
                 "source": {
                   "file": "process.py",
-                  "line": 17,
+                  "line": 22,
                   "column": 17
                 },
                 "device": {
                   "kind": "ref",
                   "name": "L2"
                 },
-                "behavior": "lift_to_location",
+                "behavior": "lift_to_level",
                 "arguments": {
-                  "target": {
-                    "kind": "field",
-                    "base": {
-                      "kind": "ref",
-                      "name": "job"
-                    },
-                    "field": "slot"
+                  "move_to_level": {
+                    "kind": "quantity",
+                    "args": [
+                      {
+                        "kind": "field",
+                        "base": {
+                          "kind": "ref",
+                          "name": "job"
+                        },
+                        "field": "out_slot_height"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "m"
+                      }
+                    ],
+                    "kwargs": {}
                   }
                 }
               },
@@ -427,7 +495,7 @@
                 "kind": "invoke",
                 "source": {
                   "file": "process.py",
-                  "line": 18,
+                  "line": 23,
                   "column": 17
                 },
                 "payload": {
@@ -469,22 +537,28 @@
                 "kind": "invoke",
                 "source": {
                   "file": "process.py",
-                  "line": 19,
+                  "line": 24,
                   "column": 17
                 },
                 "device": {
                   "kind": "ref",
                   "name": "T2"
                 },
-                "behavior": "move_to_location",
+                "behavior": "move_to_position",
                 "arguments": {
-                  "target": {
-                    "kind": "field",
-                    "base": {
-                      "kind": "ref",
-                      "name": "C2"
-                    },
-                    "field": "entry"
+                  "position_m": {
+                    "kind": "quantity",
+                    "args": [
+                      {
+                        "kind": "literal",
+                        "value": -2.01368335
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "m"
+                      }
+                    ],
+                    "kwargs": {}
                   }
                 }
               },
@@ -493,22 +567,28 @@
                 "kind": "invoke",
                 "source": {
                   "file": "process.py",
-                  "line": 20,
+                  "line": 25,
                   "column": 17
                 },
                 "device": {
                   "kind": "ref",
                   "name": "L2"
                 },
-                "behavior": "lift_to_location",
+                "behavior": "lift_to_level",
                 "arguments": {
-                  "target": {
-                    "kind": "field",
-                    "base": {
-                      "kind": "ref",
-                      "name": "C2"
-                    },
-                    "field": "entry"
+                  "move_to_level": {
+                    "kind": "quantity",
+                    "args": [
+                      {
+                        "kind": "literal",
+                        "value": 0.54
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "m"
+                      }
+                    ],
+                    "kwargs": {}
                   }
                 }
               },
@@ -517,7 +597,7 @@
                 "kind": "invoke",
                 "source": {
                   "file": "process.py",
-                  "line": 21,
+                  "line": 26,
                   "column": 17
                 },
                 "payload": {
@@ -559,7 +639,7 @@
                 "kind": "invoke",
                 "source": {
                   "file": "process.py",
-                  "line": 22,
+                  "line": 27,
                   "column": 17
                 },
                 "device": {
@@ -589,7 +669,7 @@
                 "kind": "invoke",
                 "source": {
                   "file": "process.py",
-                  "line": 23,
+                  "line": 28,
                   "column": 17
                 },
                 "device": {
@@ -619,7 +699,7 @@
                 "kind": "invoke",
                 "source": {
                   "file": "process.py",
-                  "line": 24,
+                  "line": 29,
                   "column": 17
                 },
                 "device": {
@@ -915,6 +995,35 @@
                   "conveyor_end"
                 ]
               }
+            }
+          },
+          {
+            "interface_id": "mount_base",
+            "name": "设备底部安装面",
+            "capabilities": {
+              "snap": {
+                "role": "mount_base",
+                "accepts": [
+                  "carriage_mount"
+                ]
+              }
+            },
+            "local_frame": {
+              "position": [
+                0.7505000101357457,
+                -0.0985000016130557,
+                -1.4432899320127035e-15
+              ],
+              "forward": [
+                -4.440892098500626e-16,
+                2.220446049250313e-16,
+                -1.0000000000000002
+              ],
+              "up": [
+                0.0,
+                1.0,
+                2.220446049250313e-16
+              ]
             }
           }
         ],
@@ -4014,6 +4123,35 @@
                 ]
               }
             }
+          },
+          {
+            "interface_id": "mount_base",
+            "name": "设备底部安装面",
+            "capabilities": {
+              "snap": {
+                "role": "mount_base",
+                "accepts": [
+                  "carriage_mount"
+                ]
+              }
+            },
+            "local_frame": {
+              "position": [
+                0.7689999944634223,
+                -0.09850000161305189,
+                -1.582067810090848e-15
+              ],
+              "forward": [
+                -2.220446049250313e-16,
+                0.0,
+                -1.0
+              ],
+              "up": [
+                0.0,
+                1.0,
+                0.0
+              ]
+            }
           }
         ],
         "signal_ports": [
@@ -6975,7 +7113,37 @@
             "description": "可选产品变化属性名"
           }
         },
-        "interfaces": [],
+        "interfaces": [
+          {
+            "interface_id": "mount_base",
+            "name": "设备底部安装面",
+            "capabilities": {
+              "snap": {
+                "role": "mount_base",
+                "accepts": [
+                  "carriage_mount"
+                ]
+              }
+            },
+            "local_frame": {
+              "position": [
+                -8.326672684688677e-17,
+                3.0814879110195774e-33,
+                -3.33067074201568e-17
+              ],
+              "forward": [
+                -4.440892098500626e-16,
+                2.220446049250313e-16,
+                -1.0000000000000002
+              ],
+              "up": [
+                0.0,
+                1.0,
+                2.220446049250313e-16
+              ]
+            }
+          }
+        ],
         "signal_ports": [
           {
             "port_id": "runTag",
@@ -8473,7 +8641,66 @@
             "description": "停稳速度阈值，待标定"
           }
         },
-        "interfaces": [],
+        "interfaces": [
+          {
+            "interface_id": "mount_base",
+            "name": "设备底部安装面",
+            "capabilities": {
+              "snap": {
+                "role": "mount_base",
+                "accepts": [
+                  "carriage_mount"
+                ]
+              }
+            },
+            "local_frame": {
+              "position": [
+                2.4687499448191375,
+                1.3877787807814466e-17,
+                -5.551114999048691e-17
+              ],
+              "forward": [
+                0.0,
+                2.220446049250313e-16,
+                -1.0
+              ],
+              "up": [
+                0.0,
+                1.0,
+                2.220446049250313e-16
+              ]
+            }
+          },
+          {
+            "interface_id": "carriage_mount",
+            "name": "滑座移动安装面",
+            "capabilities": {
+              "snap": {
+                "role": "carriage_mount",
+                "accepts": [
+                  "mount_base"
+                ]
+              }
+            },
+            "local_frame": {
+              "position": [
+                0.475,
+                0,
+                0.13500039
+              ],
+              "forward": [
+                0,
+                0,
+                1
+              ],
+              "up": [
+                0,
+                1,
+                0
+              ]
+            }
+          }
+        ],
         "signal_ports": [
           {
             "port_id": "target_position",
@@ -8841,7 +9068,6 @@
             "status": "pending"
           },
           "fixed_node": "__Geometry___008c",
-          "mounted_device": "L1",
           "moving_node": "CraneA_00Bn",
           "axis": [
             1,
@@ -8868,6 +9094,23 @@
               0.7071067811865475,
               0.7071067811865476,
               0.0
+            ]
+          },
+          "carriage_mount": {
+            "position": [
+              0.475,
+              0,
+              0.13500039
+            ],
+            "forward": [
+              0,
+              0,
+              1
+            ],
+            "up": [
+              0,
+              1,
+              0
             ]
           }
         },
@@ -9506,7 +9749,37 @@
             "description": "Explicit candidate simulation parameter; not a hardware measurement"
           }
         },
-        "interfaces": [],
+        "interfaces": [
+          {
+            "interface_id": "mount_base",
+            "name": "设备底部安装面",
+            "capabilities": {
+              "snap": {
+                "role": "mount_base",
+                "accepts": [
+                  "carriage_mount"
+                ]
+              }
+            },
+            "local_frame": {
+              "position": [
+                0.0,
+                1.1622647289044608e-16,
+                -0.024999610818931317
+              ],
+              "forward": [
+                0.0,
+                2.220446049250313e-16,
+                -1.0
+              ],
+              "up": [
+                0.0,
+                1.0,
+                2.220446049250313e-16
+              ]
+            }
+          }
+        ],
         "signal_ports": [
           {
             "port_id": "move_to_level",
@@ -10149,7 +10422,6 @@
           "calibration": {
             "status": "pending"
           },
-          "mounted_on": "T1",
           "handler": {
             "node": "Handler_00Fn",
             "parent_platform": "Z_00En",
@@ -11025,7 +11297,66 @@
             "description": "停稳速度阈值，待标定"
           }
         },
-        "interfaces": [],
+        "interfaces": [
+          {
+            "interface_id": "mount_base",
+            "name": "设备底部安装面",
+            "capabilities": {
+              "snap": {
+                "role": "mount_base",
+                "accepts": [
+                  "carriage_mount"
+                ]
+              }
+            },
+            "local_frame": {
+              "position": [
+                2.4687499448191375,
+                1.3877787807814466e-17,
+                -5.551114999048691e-17
+              ],
+              "forward": [
+                0.0,
+                2.220446049250313e-16,
+                -1.0
+              ],
+              "up": [
+                0.0,
+                1.0,
+                2.220446049250313e-16
+              ]
+            }
+          },
+          {
+            "interface_id": "carriage_mount",
+            "name": "滑座移动安装面",
+            "capabilities": {
+              "snap": {
+                "role": "carriage_mount",
+                "accepts": [
+                  "mount_base"
+                ]
+              }
+            },
+            "local_frame": {
+              "position": [
+                0.475,
+                0,
+                0.13500039
+              ],
+              "forward": [
+                0,
+                0,
+                1
+              ],
+              "up": [
+                0,
+                1,
+                0
+              ]
+            }
+          }
+        ],
         "signal_ports": [
           {
             "port_id": "target_position",
@@ -11393,7 +11724,6 @@
             "status": "pending"
           },
           "fixed_node": "__Geometry___000c",
-          "mounted_device": "L2",
           "moving_node": "CraneA_002n",
           "axis": [
             1,
@@ -11420,6 +11750,23 @@
               0.7071067811865475,
               0.7071067811865476,
               0.0
+            ]
+          },
+          "carriage_mount": {
+            "position": [
+              0.475,
+              0,
+              0.13500039
+            ],
+            "forward": [
+              0,
+              0,
+              1
+            ],
+            "up": [
+              0,
+              1,
+              0
             ]
           }
         },
@@ -12057,7 +12404,37 @@
             "description": "Explicit candidate simulation parameter; not a hardware measurement"
           }
         },
-        "interfaces": [],
+        "interfaces": [
+          {
+            "interface_id": "mount_base",
+            "name": "设备底部安装面",
+            "capabilities": {
+              "snap": {
+                "role": "mount_base",
+                "accepts": [
+                  "carriage_mount"
+                ]
+              }
+            },
+            "local_frame": {
+              "position": [
+                0.0,
+                5.204170427930421e-18,
+                -0.024999610818931314
+              ],
+              "forward": [
+                0.0,
+                2.220446049250313e-16,
+                -1.0
+              ],
+              "up": [
+                0.0,
+                1.0,
+                2.220446049250313e-16
+              ]
+            }
+          }
+        ],
         "signal_ports": [
           {
             "port_id": "move_to_level",
@@ -12700,7 +13077,6 @@
           "calibration": {
             "status": "pending"
           },
-          "mounted_on": "T2",
           "handler": {
             "node": "Handler_006n",
             "parent_platform": "Z_005n",
@@ -13975,7 +14351,37 @@
             "description": "每库位最多存放的物料／载荷单元数"
           }
         },
-        "interfaces": [],
+        "interfaces": [
+          {
+            "interface_id": "mount_base",
+            "name": "设备底部安装面",
+            "capabilities": {
+              "snap": {
+                "role": "mount_base",
+                "accepts": [
+                  "carriage_mount"
+                ]
+              }
+            },
+            "local_frame": {
+              "position": [
+                1.529999965801835,
+                -0.09999999776482582,
+                -2.4345410271076062e-08
+              ],
+              "forward": [
+                0.0,
+                2.220446049250313e-16,
+                -1.0
+              ],
+              "up": [
+                0.0,
+                1.0,
+                2.220446049250313e-16
+              ]
+            }
+          }
+        ],
         "signal_ports": [
           {
             "port_id": "cell_id",
@@ -15535,7 +15941,37 @@
             "description": "是否允许作为合法堆叠对象"
           }
         },
-        "interfaces": [],
+        "interfaces": [
+          {
+            "interface_id": "mount_base",
+            "name": "设备底部安装面",
+            "capabilities": {
+              "snap": {
+                "role": "mount_base",
+                "accepts": [
+                  "carriage_mount"
+                ]
+              }
+            },
+            "local_frame": {
+              "position": [
+                0.0,
+                4.1633363423443376e-17,
+                -4.9960034991438205e-17
+              ],
+              "forward": [
+                0.0,
+                2.220446049250313e-16,
+                -1.0
+              ],
+              "up": [
+                0.0,
+                1.0,
+                2.220446049250313e-16
+              ]
+            }
+          }
+        ],
         "signal_ports": [
           {
             "port_id": "picked",
@@ -16617,7 +17053,37 @@
             "description": "是否允许作为合法堆叠对象"
           }
         },
-        "interfaces": [],
+        "interfaces": [
+          {
+            "interface_id": "mount_base",
+            "name": "设备底部安装面",
+            "capabilities": {
+              "snap": {
+                "role": "mount_base",
+                "accepts": [
+                  "carriage_mount"
+                ]
+              }
+            },
+            "local_frame": {
+              "position": [
+                0.0,
+                4.1633363423443376e-17,
+                -4.9960034991438205e-17
+              ],
+              "forward": [
+                0.0,
+                2.220446049250313e-16,
+                -1.0
+              ],
+              "up": [
+                0.0,
+                1.0,
+                2.220446049250313e-16
+              ]
+            }
+          }
+        ],
         "signal_ports": [
           {
             "port_id": "picked",
@@ -17703,7 +18169,37 @@
             "description": "是否允许作为合法堆叠对象"
           }
         },
-        "interfaces": [],
+        "interfaces": [
+          {
+            "interface_id": "mount_base",
+            "name": "设备底部安装面",
+            "capabilities": {
+              "snap": {
+                "role": "mount_base",
+                "accepts": [
+                  "carriage_mount"
+                ]
+              }
+            },
+            "local_frame": {
+              "position": [
+                0.0,
+                4.1633363423443376e-17,
+                -4.9960034991438205e-17
+              ],
+              "forward": [
+                0.0,
+                2.220446049250313e-16,
+                -1.0
+              ],
+              "up": [
+                0.0,
+                1.0,
+                2.220446049250313e-16
+              ]
+            }
+          }
+        ],
         "signal_ports": [
           {
             "port_id": "picked",
@@ -18789,7 +19285,37 @@
             "description": "是否允许作为合法堆叠对象"
           }
         },
-        "interfaces": [],
+        "interfaces": [
+          {
+            "interface_id": "mount_base",
+            "name": "设备底部安装面",
+            "capabilities": {
+              "snap": {
+                "role": "mount_base",
+                "accepts": [
+                  "carriage_mount"
+                ]
+              }
+            },
+            "local_frame": {
+              "position": [
+                0.0,
+                4.1633363423443376e-17,
+                -4.9960034991438205e-17
+              ],
+              "forward": [
+                0.0,
+                2.220446049250313e-16,
+                -1.0
+              ],
+              "up": [
+                0.0,
+                1.0,
+                2.220446049250313e-16
+              ]
+            }
+          }
+        ],
         "signal_ports": [
           {
             "port_id": "picked",
@@ -19875,7 +20401,37 @@
             "description": "是否允许作为合法堆叠对象"
           }
         },
-        "interfaces": [],
+        "interfaces": [
+          {
+            "interface_id": "mount_base",
+            "name": "设备底部安装面",
+            "capabilities": {
+              "snap": {
+                "role": "mount_base",
+                "accepts": [
+                  "carriage_mount"
+                ]
+              }
+            },
+            "local_frame": {
+              "position": [
+                0.0,
+                4.1633363423443376e-17,
+                -4.9960034991438205e-17
+              ],
+              "forward": [
+                0.0,
+                2.220446049250313e-16,
+                -1.0
+              ],
+              "up": [
+                0.0,
+                1.0,
+                2.220446049250313e-16
+              ]
+            }
+          }
+        ],
         "signal_ports": [
           {
             "port_id": "picked",
@@ -20827,13 +21383,13 @@
     {
       "node": "inbound_rail_to_dock",
       "device": "T1",
-      "behavior": "move_to_location",
+      "behavior": "move_to_position",
       "experimental": false
     },
     {
       "node": "inbound_lift_to_dock",
       "device": "L1",
-      "behavior": "lift_to_location",
+      "behavior": "lift_to_level",
       "experimental": false
     },
     {
@@ -20845,13 +21401,13 @@
     {
       "node": "inbound_rail_to_slot",
       "device": "T1",
-      "behavior": "move_to_location",
+      "behavior": "move_to_position",
       "experimental": false
     },
     {
       "node": "inbound_lift_to_slot",
       "device": "L1",
-      "behavior": "lift_to_location",
+      "behavior": "lift_to_level",
       "experimental": false
     },
     {
@@ -20863,13 +21419,13 @@
     {
       "node": "outbound_rail_to_slot",
       "device": "T2",
-      "behavior": "move_to_location",
+      "behavior": "move_to_position",
       "experimental": false
     },
     {
       "node": "outbound_lift_to_slot",
       "device": "L2",
-      "behavior": "lift_to_location",
+      "behavior": "lift_to_level",
       "experimental": false
     },
     {
@@ -20881,13 +21437,13 @@
     {
       "node": "outbound_rail_to_dock",
       "device": "T2",
-      "behavior": "move_to_location",
+      "behavior": "move_to_position",
       "experimental": false
     },
     {
       "node": "outbound_lift_to_dock",
       "device": "L2",
-      "behavior": "lift_to_location",
+      "behavior": "lift_to_level",
       "experimental": false
     },
     {
@@ -24156,6 +24712,30 @@
       "sources": [
         "C2.exit"
       ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "install-L1",
+      "a": {
+        "instanceId": "T1",
+        "interfaceId": "carriage_mount"
+      },
+      "b": {
+        "instanceId": "L1",
+        "interfaceId": "mount_base"
+      }
+    },
+    {
+      "id": "install-L2",
+      "a": {
+        "instanceId": "T2",
+        "interfaceId": "carriage_mount"
+      },
+      "b": {
+        "instanceId": "L2",
+        "interfaceId": "mount_base"
+      }
     }
   ],
   "coordinate_system": {

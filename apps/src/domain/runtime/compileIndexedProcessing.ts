@@ -30,9 +30,13 @@ const ports = z.array(
   }),
 );
 function port(d: SceneDevice, role: string) {
-  const found = ports
-    .parse(d.contract.interfaces)
-    .filter((p) => p.capabilities.snap.role === role);
+  const roleOf = z.object({
+    capabilities: z.object({ snap: z.object({ role: name }) }),
+  });
+  const declared = z.array(z.unknown()).parse(d.contract.interfaces);
+  const found = ports.parse(
+    declared.filter((p) => roleOf.parse(p).capabilities.snap.role === role),
+  );
   if (
     found.length !== 1 ||
     Math.abs(
@@ -156,7 +160,7 @@ export function compileIndexedProcessing(
     .parse(goal.all.find((g) => g.kind === "required_operations")!.recipes);
   if (Object.keys(recipes).length !== 1)
     throw new Error("Expected one interface-bound processing recipe");
-  const [[recipe, operation]] = Object.entries(recipes);
+  const [[expectedRecipe, operation]] = Object.entries(recipes);
 
   const one = (type: string) => {
     const found = [...devices.values()].filter(
@@ -176,6 +180,14 @@ export function compileIndexedProcessing(
   const takeaway = z
     .object({ sources: z.array(name).length(1) })
     .parse(env.find((e) => e.kind === "material_takeaway")).sources[0];
+  const fixture = port(table, "fixture");
+  const slot = table.instance_id + "." + fixture.interface_id;
+  const prototype = devices.get(supply.material_template);
+  const { recipe, interface: processInterface } = z
+    .object({
+      processing: z.object({ recipe: name, interface: name }),
+    })
+    .parse(prototype?.contract.type_specific_contract).processing;
   if (
     env.length !== 2 ||
     supply.source_device !== source.instance_id ||
@@ -185,7 +197,10 @@ export function compileIndexedProcessing(
     operation.station !== robot.instance_id ||
     operation.table !== table.instance_id ||
     Object.keys(table.locations).length !== 1 ||
-    !table.locations[operation.point] ||
+    !table.locations[slot] ||
+    operation.point !== slot ||
+    expectedRecipe !== recipe ||
+    operation.interface !== processInterface ||
     task.jobs.some(
       (j) =>
         j.prototype !== supply.material_template ||
@@ -195,6 +210,34 @@ export function compileIndexedProcessing(
   )
     throw new Error(
       "Indexed-processing resource or station binding differs from goal",
+    );
+  const angle = z.number().finite().min(0).lt(360);
+  const { simulation, indexing_policy: policy } = z
+    .object({
+      indexing_policy: z.object({
+        direction: z.literal("positive"),
+        angle_reference: z.literal("normalized_degrees"),
+        home_deg: angle,
+        process_deg: angle,
+        stations_deg: z.array(angle).min(1).optional(),
+      }),
+      simulation: z.object({
+        rotor_node: name,
+        support_node: name,
+        axis_world: unit,
+      }),
+    })
+    .parse(table.contract.type_specific_contract);
+  const stations = policy.stations_deg ?? [
+    ...new Set([policy.home_deg, policy.process_deg]),
+  ];
+  if (
+    new Set(stations).size !== stations.length ||
+    !stations.includes(policy.home_deg) ||
+    !stations.includes(policy.process_deg)
+  )
+    throw new Error(
+      "Load and processing docks must be configured indexing stations",
     );
   const supported = new Map([
     [human.instance_id, "carry_material"],
@@ -216,29 +259,24 @@ export function compileIndexedProcessing(
         visited.has(node.id)
       )
         throw new Error("Unbound indexed-processing call " + node.id);
+      if (node.behavior === "rotate_to_station") {
+        const expr = node.arguments.angleTag;
+        if (
+          expr?.kind === "quantity" &&
+          expr.args[0]?.kind === "literal" &&
+          (typeof expr.args[0].value !== "number" ||
+            !stations.includes(expr.args[0].value))
+        )
+          throw new Error("Unknown indexing station at " + node.id);
+      }
       visited.add(node.id);
     }
     childrenOf(node).forEach(visit);
   }
   visit(root);
-  if (
-    visited.size !== bundle.calls.length ||
-    [...supported].some(
-      ([id, behavior]) =>
-        !bundle.calls.some((c) => c.device === id && c.behavior === behavior),
-    )
-  )
+  if (visited.size !== bundle.calls.length)
     throw new Error("Incomplete indexed-processing calls");
 
-  const simulation = z
-    .object({
-      simulation: z.object({
-        rotor_node: name,
-        support_node: name,
-        axis_world: unit,
-      }),
-    })
-    .parse(table.contract.type_specific_contract).simulation;
   const hand = z
     .object({
       simulation: z.object({
@@ -299,9 +337,8 @@ export function compileIndexedProcessing(
       lo.min(new Vector3(...v));
       hi.max(new Vector3(...v));
     }
-  const location = table.locations[operation.point];
-  const handPort = port(human, "human_gripper"),
-    fixture = port(table, "fixture");
+  const location = table.locations[slot];
+  const handPort = port(human, "human_gripper");
   const handPosition = interfacePosition(human, handPort);
   const palmParts = geometry.convexParts(
     human.node_binding.owned_mesh_indices.filter((id) =>
@@ -320,7 +357,6 @@ export function compileIndexedProcessing(
     !palmParts.length ||
     palmLo.toArray().some((n) => n > 0.002) ||
     palmHi.toArray().some((n) => n < -0.002) ||
-    operation.point !== table.instance_id + "." + fixture.interface_id ||
     interfacePosition(table, fixture).distanceTo(
       new Vector3(...location.position),
     ) > 0.001
@@ -358,7 +394,8 @@ export function compileIndexedProcessing(
     table: table.instance_id,
     source: source.instance_id,
     robot: robot.instance_id,
-    slot: operation.point,
+    slot,
+    indexing: { home: policy.home_deg, process: policy.process_deg, stations },
     pivot,
     axis: simulation.axis_world,
     slotOffset: slotOffset.toArray(),
@@ -493,7 +530,7 @@ export function compileIndexedProcessing(
       .parse(material.contract.type_specific_contract).processing;
     if (
       process.interface_id !== state.interface ||
-      process.interface_id !== operation.interface ||
+      process.interface_id !== processInterface ||
       state.recipe !== recipe ||
       grasp.interface_id === process.interface_id ||
       !compatible(grasp, handPort) ||

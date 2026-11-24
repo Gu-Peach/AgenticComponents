@@ -54,7 +54,34 @@
       "description": "停稳速度阈值，待标定"
     }
   },
-  "interfaces": [],
+  "interfaces": [
+    {
+      "interface_id": "mount_base",
+      "name": "设备底部安装面",
+      "local_frame_pending": true,
+      "capabilities": {
+        "snap": {
+          "role": "mount_base",
+          "accepts": [
+            "carriage_mount"
+          ]
+        }
+      }
+    },
+    {
+      "interface_id": "carriage_mount",
+      "name": "滑座移动安装面",
+      "local_frame_pending": true,
+      "capabilities": {
+        "snap": {
+          "role": "carriage_mount",
+          "accepts": [
+            "mount_base"
+          ]
+        }
+      }
+    }
+  ],
   "signal_ports": [
     {
       "port_id": "target_position",

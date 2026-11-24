@@ -68,3 +68,22 @@ export class LinearAxisTrajectory {
     );
   }
 }
+
+/** 将一个定位/停止请求绑定到轴驱动和独立实测到位反馈。 */
+export function axisJob(
+  drive: LinearAxisTrajectory,
+  target: number,
+  stop: boolean,
+  move: (target: number) => void,
+  at: (target: number) => boolean,
+  cancel: () => void,
+) {
+  return {
+    begin: () => (stop ? drive.stop() : move(target)),
+    before: () => {},
+    after: () => {},
+    cancel,
+    complete: () => (stop ? drive.settled : at(target)),
+    stopped: () => drive.settled,
+  };
+}

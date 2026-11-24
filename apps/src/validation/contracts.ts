@@ -1,3 +1,5 @@
+import { projectMountParents } from "@/domain/spatial/mounts";
+import { spatialConnectionSchema } from "@/contracts/spatial";
 import { normalizeWorkpieceDefinition } from "@/devices/workpiece/behavior";
 import { spatialInterfaceSchema } from "@/contracts/spatial";
 import { sceneInstanceSchema } from "@/contracts/scene-package";
@@ -103,7 +105,9 @@ const deviceFields = z.object({
   source: z.record(z.string(), z.unknown()).optional(),
   diagnostics: z.array(z.string()),
 });
-export const definitionSchema = deviceFields.transform(normalizeWorkpieceDefinition);
+export const definitionSchema = deviceFields.transform(
+  normalizeWorkpieceDefinition,
+);
 const vec = z.tuple([
   z.number().finite(),
   z.number().finite(),
@@ -141,15 +145,7 @@ export const projectSchema = z.object({
       size: z.number().nonnegative(),
     }),
   ),
-  connections: z
-    .array(
-      z.object({
-        id: z.string().min(1),
-        a: z.object({ instanceId: z.string(), interfaceId: z.string() }),
-        b: z.object({ instanceId: z.string(), interfaceId: z.string() }),
-      }),
-    )
-    .optional(),
+  connections: z.array(spatialConnectionSchema).optional(),
   plc: z.string(),
 });
 export function resolveParameters(
@@ -373,5 +369,6 @@ export function parseProject(raw: unknown) {
       used.add(key);
     }
   }
+  projectMountParents(project);
   return project;
 }

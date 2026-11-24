@@ -84,6 +84,7 @@ export interface MachiningConfig {
   stationTarget: string;
   exitTarget: string;
   cycleTicks: number;
+  deliverySlots: ReadonlyMap<string, string>;
   pallets: { id: string; items: { material: string; source: string }[] }[];
   targets: LoadingConfig["targets"];
 }

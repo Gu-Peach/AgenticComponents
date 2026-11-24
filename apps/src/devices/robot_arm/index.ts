@@ -7,6 +7,7 @@ import {
   RobotProgram,
   RobotSceneAdapter,
   HandoffArm,
+  RobotTransferActions,
   RobotProcessingMotion,
   PickPlaceMotion,
   homeAction,
@@ -29,6 +30,9 @@ const robotArmModule = {
   ) => new RobotSceneAdapter(...args),
   createArticulatedArm: (...args: ConstructorParameters<typeof HandoffArm>) =>
     new HandoffArm(...args),
+  createTransferActions: (
+    ...args: ConstructorParameters<typeof RobotTransferActions>
+  ) => new RobotTransferActions(...args),
   createProcessingMotion: (
     ...args: ConstructorParameters<typeof RobotProcessingMotion>
   ) => new RobotProcessingMotion(...args),

@@ -15,7 +15,7 @@ import type {
 import type { BodyPose } from "@/contracts/physics";
 import type { ActionBinding } from "@/contracts/scheduler";
 import type { PositionTransportConfig } from "@/devices/conveyor/behavior";
-import type { EnvironmentReceipt } from "@/runtime/services/FiniteSceneEnvironment";
+import type { EnvironmentReceipt } from "@/runtime/engine/FiniteBatchLifecycle";
 import { RobotKinematics } from "@/runtime/kinematics/RobotKinematics";
 import { CcdPositionIK } from "@/runtime/kinematics/CcdPositionIK";
 import { restJointTarget } from "@/runtime/kinematics/restJointTarget";
@@ -432,21 +432,16 @@ export function sceneConditionReader(
               .find((p) => p.id === pallet)
               ?.items.find((i) => i.material === subjectId);
           if (!atStation || !item) return false;
-          const state = load(w).materialState;
-          if (resolved.target === config.point)
-            return (
-              state === "raw" &&
-              machineItem === null &&
-              resolved.source === item.source &&
-              slots[item.source] === subjectId
-            );
-          return (
-            resolved.target === item.source &&
-            resolved.source === config.point &&
-            machineItem === subjectId &&
-            state === "finished" &&
-            !slots[item.source]
-          );
+          const source = String(resolved.source);
+          const target = String(resolved.target);
+          const carrier = compiled.devices.get(pallet!)!;
+          const occupiesSource = source === config.point
+            ? machineItem === subjectId
+            : slots[source] === subjectId;
+          const available = target === config.point
+            ? machineItem === null
+            : carrier.locations[target]?.frame === "carrier_local_m" && !slots[target];
+          return occupiesSource && available;
         }
         if (w.loading && compiled.loading) {
           const pallet = compiled.loading.pallets.find(

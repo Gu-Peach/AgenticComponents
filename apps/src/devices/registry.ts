@@ -121,7 +121,10 @@ const schema = z.object({
     payload_templates: z
       .record(
         z.string(),
-        z.object({ fields: z.record(z.string(), z.string()) }),
+        z.object({
+          fields: z.record(z.string(), z.string()),
+          optional_fields: z.record(z.string(), z.string()).optional(),
+        }),
       )
       .optional(),
   }),
@@ -137,6 +140,13 @@ const signatureIndex: Readonly<Record<string, SignatureIndex>> =
 const signatures = dispatch.signatures.map((signature) =>
   JSON.stringify(signature),
 );
+// A previously published declaration without the optional extension accepts the same required wire format.
+const requiredOnlySignatures = dispatch.signatures.map((signature) => {
+  const last: unknown = signature.at(-1);
+  return last && typeof last === "object" && "optional_fields" in last
+    ? JSON.stringify(signature.slice(0, -1))
+    : undefined;
+});
 const published = Object.entries(catalog.profiles).map(([name, p]) => ({
   name,
   type: p.type,
@@ -240,6 +250,10 @@ function signatureOf(
       }
       return [...prefix, orderedJson([entry.expr, sources])];
     });
+  const optional = orderedEntries(
+    spec.runtime_execution_contract.payload_templates?.[id]?.optional_fields ??
+      {},
+  );
   return JSON.stringify([
     action.behavior_type,
     action.schedulable,
@@ -262,6 +276,7 @@ function signatureOf(
     predicates(action.condition_contract.preconditions),
     predicates(action.condition_contract.sustaining_conditions),
     predicates(action.completion_contract.checks),
+    ...(optional.length ? [{ optional_fields: optional }] : []),
   ]);
 }
 
@@ -323,7 +338,9 @@ export function resolveDeviceAction(
         return false;
     }
     return actual.every(
-      ([id, signature]) => signatures[profile.behaviors[id]] === signature,
+      ([id, signature]) =>
+        signatures[profile.behaviors[id]] === signature ||
+        requiredOnlySignatures[profile.behaviors[id]] === signature,
     );
   });
   if (!matches)

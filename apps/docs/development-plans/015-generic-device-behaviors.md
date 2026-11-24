@@ -285,7 +285,7 @@
 | 完成／`machine_material.completion` | **请求账本＋观测**：`requestState.outcome == "succeeded"`；`m.operations` 有 `material == M AND request == r.requestId` 的记录；本件 `materialState == "finished"`。同时保持同件在加工点、有效支承、区域清空及加工站到位。 |
 | 结果／PLC 投影 | **出** `accepted`、`busy`、`done`、`error`（BOOL）和 `result_id`（DINT）。消费者只将本次成功回执、上行完成证据与匹配结果号合在一起解释为成功。停稳条件另读有效的 `busy == false`。 |
 
-[机床条件提供者](../../src/runtime/assembly/LoadingRuntimeAssembler.ts) · [支承判据与容差](../../src/runtime/assembly/machiningDevices.ts) · [状态与加工记录](../../src/runtime/services/MachiningLineEnvironment.ts) · [命令端口及实际周期](../../src/devices/machine_tool/behavior.ts)
+[机床条件提供者](../../src/runtime/assembly/LoadingRuntimeAssembler.ts) · [支承判据与容差](../../src/runtime/assembly/machiningDevices.ts) · [状态与加工记录](../../src/runtime/engine/CarrierBatchRuntime.ts) · [命令端口及实际周期](../../src/devices/machine_tool/behavior.ts)
 
 <details>
 <summary>通用行为语义与兼容入口</summary>
@@ -311,7 +311,7 @@
 | `schedule_production_cycle` | 在节拍模式下跟踪生产周期，到期时派发一次内部生产请求。 | `.pre_1` ← 参数 `production_mode=periodic`、`cycle_time_s>0` 且有限；`.pre_2` ← 随机策略配置了可复现随机源。入 `runTag` 控制周期推进。 | 持续机制：有效仿真时钟到期只派发一次内部生产请求；暂停冻结剩余时间。出 `countTag`、`buffer_count` 分别读取成功登记数和实际缓冲数。 |
 | `publish_source_state` | 持续发布出料口的可取状态、缓冲数量及实际生产计数。 | `.pre_1` ← 本运行的供料记录、缓存和出口观测有效；无新增命令输入。 | 持续观测：`countTag=累计成功数`、`buffer_count=实际缓冲数`、`empty=当前无可取物料`、`material_available=出口存在可取物料`。已有任务的协议位从账本投影。 |
 
-有限批次的实际证据示例为同一运行、主体的 `receipts[].kind == "supply_confirmed"`。它须在入场后经实际支承／停稳检查产生，`supply_requested` 仅表示请求。[出料口契约](../../public/scene/S01/contracts/material_source_station.json) · [供料确认实现](../../src/runtime/services/FiniteSceneEnvironment.ts)
+有限批次的实际证据示例为同一运行、主体的 `receipts[].kind == "supply_confirmed"`。它须在入场后经实际支承／停稳检查产生，`supply_requested` 仅表示请求。[出料口契约](../../public/scene/S01/contracts/material_source_station.json) · [供料确认实现](../../src/runtime/engine/FiniteBatchLifecycle.ts)
 
 <details>
 <summary>通用行为语义与兼容入口</summary>
@@ -353,7 +353,7 @@
 | `publish_carrier_state` | 发布托盘实际装载数、可用槽位、运输状态与持有者，供装卸任务读取。 | 当前盘的占用、有效预留、运输状态来自同一版本的台账／观测。 | `load_count=已确认件数`，`free_slots=扣除占用及有效预留的槽数`，`slot_available` 按所查槽位求值；同步 `loaded`、`unloaded`、`in_transport`、`holder_id`。 |
 | `observe_slots` | 在旧编辑器预览中读取托盘槽位的观测结果。 | 旧编辑器观测模板的前置列表为空，无指令输入。 | 旧预览读取 `observation.completed == true`，无独立输出端口；实际工艺须读取上述槽位台账。 |
 
-[抓取约束与放置确认](../../src/runtime/services/GraspService.ts) · [装载槽位快照](../../src/runtime/services/LoadingLineEnvironment.ts) · [加工托盘槽位与承载验证](../../src/runtime/services/MachiningLineEnvironment.ts) · [旧预览观测](../../src/domain/catalog.ts)
+[抓取约束与放置确认](../../src/devices/robot_arm/behavior.ts) · [装载槽位快照](../../src/runtime/engine/CarrierBatchRuntime.ts) · [加工托盘槽位与承载验证](../../src/runtime/engine/CarrierBatchRuntime.ts) · [旧预览观测](../../src/domain/catalog.ts)
 
 <details>
 <summary>通用行为语义与兼容入口</summary>
@@ -380,7 +380,7 @@
 | `move_to_position` | 直接按给定的米制轴坐标移动滑座及其搭载设备。 | 轴组停稳；S07 适配器取请求参数 `position_m.value`、单位 m，检查有限、限位和带载路径。设备契约另有 PLC 目标口 `target_position`，映射由输入模式选定。 | 同一到位判定，比较对象为冻结的数值目标。 |
 | `stop_motion` | 使轨道受控制动并确认滑座静止，同时保持既有载荷关系。 | 校验目标设备及制停能力，速度可读。S07 独立停止动作的预检要求装配停稳；运行中取消走驱动 `requestStop()` 的制动路径。 | 读取轨迹 `settled`：轴速度绝对值 < 0.001 m/s 且已制停或剩余误差 < 0.001 m。保持既有载荷归属；停止回执只关联本次停止。 |
 
-S07 驱动使用 `execute`、`request_id` 的请求握手；`actual_position`、`actual_speed` 是设备级输出。授权阶段由资源仲裁器复核当前请求持有的运动资源。[轨道适配器](../../src/devices/linear_rail/behavior.ts) · [轴位姿与阈值](../../src/runtime/services/DeviceMountService.ts) · [仓储条件提供者](../../src/runtime/assembly/WarehouseRuntimeAssembler.ts)
+S07 驱动使用 `execute`、`request_id` 的请求握手；`actual_position`、`actual_speed` 是设备级输出。授权阶段由资源仲裁器复核当前请求持有的运动资源。[轨道适配器](../../src/devices/linear_rail/behavior.ts) · [轴位姿与阈值](../../src/runtime/engine/MountedAxisMotion.ts) · [仓储条件提供者](../../src/runtime/assembly/WarehouseRuntimeAssembler.ts)
 
 <details>
 <summary>通用行为语义与兼容入口</summary>
@@ -410,7 +410,7 @@ S07 驱动使用 `execute`、`request_id` 的请求握手；`actual_position`、
 | `raise_transfer_chains` | 抬起选配的辅助横移链，使链条到达上工作位，准备接托或横移工件。 | `transfer_module == true`、主轴停稳、行程与资源允许；入 `popupTag == true`。 | 辅助机构实测到上位。按型号提供的实际位置或限位观测确认，启动命令和 `transfer_ready` 单独均不足以证明到位。 |
 | `lower_transfer_chains` | 将选配的辅助横移链降至下工作位，同时维持工件已建立的支承关系。 | `transfer_module == true`、主轴停稳、工件有可靠支承或已交接；入 `popupTag == false`。 | 辅助机构实测到下位，工件原有持有或支承关系仍有效。 |
 
-S07 虚拟交接与参考型号的辅助链属于不同配置。S07 的物理完成回执匹配 `runId`、`activationId` 和 `requestId`。[升降适配器](../../src/devices/lift_table/behavior.ts) · [物料接触与归属提交](../../src/runtime/services/MaterialTransferService.ts) · [选配横移接口](../../../test1/dsl_new/asset_contracts/assets/lift_transport.json)
+S07 虚拟交接与参考型号的辅助链属于不同配置。S07 的物理完成回执匹配 `runId`、`activationId` 和 `requestId`。[升降适配器](../../src/devices/lift_table/behavior.ts) · [物料接触与归属提交](../../src/devices/lift_table/behavior.ts) · [选配横移接口](../../../test1/dsl_new/asset_contracts/assets/lift_transport.json)
 
 <details>
 <summary>通用行为语义与兼容入口</summary>
@@ -438,7 +438,7 @@ S07 虚拟交接与参考型号的辅助链属于不同配置。S07 的物理完
 | `query_cell_state`：入 `cell_id`，服务查询 | 响应一次针对指定格位的查询，返回当前占用、可用性和预留归属。 | C 在注册槽位集合内，当前库存／预留快照有效。 | 返回该槽同一版本的占用、可预留性和预留归属，映射 `cell_full`、`cell_available`、`reservation_granted`、`reservation_id` 与 `free_cells`。 |
 | `publish_storage_state`：库存、预留或回执更新触发 | 持续发布货架容量、格位占用和存取结果，供其他设备及调度器订阅。 | 读取有效的当前占用、预留和与请求相关联的服务反馈。 | 持续更新 `cell_available`、`cell_full`、`free_cells`、`reservation_granted`、`reservation_id`。仅已提交的相应事件锁存 `stored` 或 `released`，并关联 `result_id`。 |
 
-[仓储服务契约](../../public/scene/S07/contracts/storage_rack.json) · [预留与提交台账](../../src/runtime/services/StorageRackRuntime.ts) · [S07 交接与物理观测绑定](../../src/runtime/assembly/WarehouseRuntimeAssembler.ts)
+[仓储服务契约](../../public/scene/S07/contracts/storage_rack.json) · [预留与提交台账](../../src/devices/storage_rack/behavior.ts) · [S07 交接与物理观测绑定](../../src/runtime/assembly/WarehouseRuntimeAssembler.ts)
 
 <details>
 <summary>通用行为语义与兼容入口</summary>
@@ -471,7 +471,7 @@ S07 虚拟交接与参考型号的辅助链属于不同配置。S07 的物理完
 | 持续／`carry_material.sustaining` | **出反馈＋观测**：人物 `error == false` 的样本有效，`w.robotHome && w.stopped[台]`。持件阶段另查本次吸附约束存在，掌面与抓取点的距离保持在容差内。 |
 | 完成／`carry_material.completion` | **物理＋账本**：放下时先确认 D 的实际支承、同件落点和静止，退回时再次确认。要求 `w.humanHome && w.holding == null`、`requestState.outcome == "succeeded"`，且 `w.transfers` 中同一记录匹配 `r.requestId/M/S/D`。反馈为 **出** `holding_material == false` 和本次请求的 `done/result_id`。 |
 
-[条件和资源](../../src/runtime/assembly/IndexedProcessingRuntimeAssembler.ts) · [实际支承与交接记录](../../src/runtime/services/IndexingCellMotion.ts) · [掌面吸附与撤离](../../src/devices/human_operator/behavior.ts)
+[条件和资源](../../src/runtime/assembly/IndexedProcessingRuntimeAssembler.ts) · [实际支承与交接记录](../../src/runtime/assembly/indexedFixtureBindings.ts) · [掌面吸附与撤离](../../src/devices/human_operator/behavior.ts)
 
 <details>
 <summary>通用行为语义与兼容入口</summary>

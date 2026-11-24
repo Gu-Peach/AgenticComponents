@@ -6,7 +6,7 @@
       "profile": "conveyor/declarative",
       "template_revision": "1.2.0",
       "inputs": {
-        "conveyor/contract.json": "ed0ed89a0ed5d12c06a708566fc429378c1b6f89d820c591ff0b7c2c3ca85efd",
+        "conveyor/contract.json": "7bdc290a9c6ad04ba939a94a566b4d5ac0f5ee85fcd5380b3cbc9723a09e2744",
         "catalog.json#conveyor/position": "bb7ddea52bf70d5b663f2b5670e2f2b5ee0866cc284851770ef797040f94cd83",
         "public/scene/S01/contract-overrides.json#conveyor/position": "08ff52caf105e04bd40b5571d1e6ab8a7af853f0ac4b601c7a11eab09681fc04",
         "catalog.json#conveyor/handoff": "2fccd0f4661a26711dcc0e00dad881ee548e67cf9b89d723136ce3cfc9827f2a",
@@ -16,14 +16,14 @@
         "catalog.json#publications/scene/S08/contracts/conveyor.json": "a35ead3e79186f8b19398fbaf153c35de0455b65f92dc9707e68c8525492cadc",
         "scene.json#asset": "827675246890f064ec2edfdb0e204ad03389cee573f3c2126a5286d544b1665d"
       },
-      "snapshot_sha256": "b94fa2792bc896d23f9d3b8b81d189a9a72d02804c9a0b7080111ba83d5b9bf7"
+      "snapshot_sha256": "236941e6f51703bc3ee0bbccbebf068430016f10920ad2bf21fbff4407f49d73"
     },
     "contracts/robot_arm.json": {
       "type": "robot_arm",
       "profile": "robot_arm/declarative",
       "template_revision": "1.1.0",
       "inputs": {
-        "robot_arm/contract.json": "d77ffd45bc8ef826977e485320b42ab38c3d3c44087e1e313845cdddce0ceaae",
+        "robot_arm/contract.json": "458c32afa4e0266a128450d2fb3b47d882828a0a5a5dca6f88acc0375a4fa647",
         "catalog.json#robot_arm/indexed": "7a6dbe83dfa2fb387e3c366afc091987ed4e2e1728a18b77559c52140bdf0e66",
         "public/scene/S11/contract-overrides.json#robot_arm/indexed": "e0a12d62e4b71ef7596641226675bb7dddea0185e79a73907c583d4ec7ba4f26",
         "catalog.json#robot_arm/handoff": "2de7452e532e094fd93cdbd250ab433c3d52a5571d5a6f453acb65e692fb2937",
@@ -33,21 +33,21 @@
         "catalog.json#publications/scene/S08/contracts/robot_arm.json": "415a0a3baa3ec733fab51bc2c340fe6db173133d37f02d5bc4af04a0fdff8503",
         "scene.json#asset": "827675246890f064ec2edfdb0e204ad03389cee573f3c2126a5286d544b1665d"
       },
-      "snapshot_sha256": "6d7306f0d1d8ca4cf38deacd8fd83e86db7df561ca7b811126fc9dc3358222f2"
+      "snapshot_sha256": "58ac5860ace1c29dddb1c665787dc2e4cbdc4b5d8e182c3628de2b1dea98e316"
     },
     "contracts/workpiece.json": {
       "type": "workpiece",
       "profile": "workpiece/declarative",
       "template_revision": "1.0.0",
       "inputs": {
-        "workpiece/contract.json": "87ec1fc471d0bf0c473155298b46baa414b85d90a67b30cba7f791c7ecd7d249",
+        "workpiece/contract.json": "07ea7d8e110704154b42640b1f344d82ac46363d55f6c6f404376a3207dac3b4",
         "catalog.json#workpiece/position": "5ef73c4a096aabd02fffcd4bfef81eb385f15121a7decfacbaba90fe34c1dd52",
         "catalog.json#workpiece/declarative": "dba7305756d804d87292fbcf619b8dc0655cecc8a2c4f672edd76e1825047264",
         "public/scene/S03/contract-overrides.json#workpiece/declarative": "703a21ddc4b893fe3ec42a5b887b7dcdf3a6f22c4ee62d53007af1d606681d4b",
         "catalog.json#publications/scene/S08/contracts/workpiece.json": "b4dcd5e999bb7a67b3af8c775ecb267629f1833c2ed75fb2f2cbb47dd6e55fb1",
         "scene.json#asset": "827675246890f064ec2edfdb0e204ad03389cee573f3c2126a5286d544b1665d"
       },
-      "snapshot_sha256": "6981a5151a98dbef5ceacba293b76d9474921b6bdda162a05ddf7168580634ea"
+      "snapshot_sha256": "3bfe1666b8b9c336d474346569d4608b1e6cef9bf65579db635595895ffe2d73"
     }
   }
 }

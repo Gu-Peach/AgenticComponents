@@ -36,14 +36,19 @@ class WarehouseAuthoring(unittest.TestCase):
 
     def test_wrong_unit_and_cross_lift_transfer_rejected(self):
         broken = copy.deepcopy(self.devices)
-        call = next(n for n in support.compiler.walk(self.ir) if n.get('kind') == 'invoke' and n.get('behavior') == 'move_to_location')
-        call['arguments']['target'] = {'kind':'quantity','args':[{'kind':'literal','value':1},{'kind':'literal','value':'s'}],'kwargs':{}}
-        with self.assertRaisesRegex(ValueError, 'Expected string'):
+        call = next(n for n in support.compiler.walk(self.ir) if n.get('kind') == 'invoke' and n.get('behavior') == 'move_to_position')
+        call['arguments']['position_m'] = {'kind':'quantity','args':[{'kind':'literal','value':1},{'kind':'literal','value':'s'}],'kwargs':{}}
+        with self.assertRaisesRegex(ValueError, 'Argument unit mismatch'):
             support.validate_inputs(self.ir, broken, self.goal)
         self.ir, self.devices, self.goal = support.SceneCompiler().scene('S07')
         self.ir['task']['jobs'][0]['slot'] = 'C2.entry'
         with self.assertRaisesRegex(ValueError, 'Transfer route'):
             support.validate_inputs(self.ir, self.devices, self.goal)
+
+    def test_numeric_axis_limits_apply_to_each_order(self):
+        self.ir['task']['jobs'][2]['in_slot_position'] = -100
+        with self.assertRaisesRegex(ValueError, r'T1.inbound_rail_to_slot.position_m'):
+            support.validate_inputs(self.ir,self.devices,self.goal)
 
     def test_wrong_platform_hierarchy_rejected(self):
         manifest = support.compiler.read(self.folder / 'scene.json')

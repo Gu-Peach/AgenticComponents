@@ -1,3 +1,10 @@
+import type { MaterialGraspFrames } from "@/contracts/material-frames";
+import { handoffBehavior } from "@/contracts/robot-handoff";
+import {
+  worldGraspFrame,
+  selectGraspFrame,
+} from "@/domain/runtime/materialGraspFrames";
+import type { MaterialPoseObserver } from "@/runtime/engine/MaterialPoseObserver";
 /** 机械臂的单机命令、关节轨迹、抓放、双臂交接与工具加工。驱动状态按实例及运行会话创建。 */
 import { Matrix4, Quaternion, Vector3 } from "three";
 import type { CompiledRobotScene } from "@/contracts/robot";
@@ -57,6 +64,23 @@ export class RobotState {
 }
 
 /** 根据物料身份、载荷、捕获距离和相对速度建立抓取约束，检测持件偏移，释放后核实物料是否稳定放置。 */
+function captureFrame(
+  scene: CompiledRobotScene,
+  pose: BodyPose,
+  name?: string,
+) {
+  if (scene.materialGraspFrames)
+    return worldGraspFrame(scene.materialGraspFrames, name, pose, 0.025);
+  if (name !== undefined) throw new Error("物料未声明抓取接口: " + name);
+  const rotation = new Quaternion(...pose.rotation);
+  return {
+    outward: new Vector3(0, 1, 0).applyQuaternion(rotation),
+    tcp: new Vector3(0, scene.materialSize![1] / 2 + 0.025, 0)
+      .applyQuaternion(rotation)
+      .add(new Vector3(...pose.position)),
+  };
+}
+
 export class GraspService {
   private binding?: Matrix4;
   private constraintId: string;
@@ -73,7 +97,7 @@ export class GraspService {
   get relative() {
     return this.binding?.clone();
   }
-  grip(tcp: BodyPose, materialId: string) {
+  grip(tcp: BodyPose, materialId: string, frame?: string) {
     const s = this.scene,
       g = s.model.gripper;
     if (
@@ -85,10 +109,19 @@ export class GraspService {
       throw new Error("抓取身份或载荷不合法");
     if (this.holding) throw new Error("夹具已经持有物料");
     const p = this.physics.readMaterial(),
-      capture = new Vector3(0, s.materialSize![1] / 2 + 0.025, 0)
-        .applyQuaternion(new Quaternion(...p.rotation))
-        .add(new Vector3(...p.position));
-    if (capture.distanceTo(new Vector3(...tcp.position)) > g.capture_radius_m)
+      capture = captureFrame(s, p, frame);
+    const axis = s.model.tooling.approach_axis_local;
+    if (
+      s.materialGraspFrames &&
+      axis &&
+      new Vector3(...axis)
+        .applyQuaternion(new Quaternion(...tcp.rotation))
+        .dot(capture.outward) > -0.985
+    )
+      throw new Error("工具未沿选定抓取接口对准");
+    if (
+      capture.tcp.distanceTo(new Vector3(...tcp.position)) > g.capture_radius_m
+    )
       throw new Error("物料不在捕获区域");
     if (
       new Vector3(...p.velocity).sub(new Vector3(...tcp.velocity)).length() >
@@ -192,7 +225,15 @@ export class RobotJobRunner {
     this.previousTCP = this.fk.forward(state.q).tcp;
     if (physics) this.grasp = new GraspService(scene, physics, placementCheck);
   }
+  captureSelection?: string;
   plan(steps: RobotStep[]) {
+    for (const step of steps)
+      if (step.kind === "grip") {
+        if (this.scene.materialGraspFrames)
+          selectGraspFrame(this.scene.materialGraspFrames, step.grasp);
+        else if (step.grasp !== undefined)
+          throw new Error("物料未声明抓取接口: " + step.grasp);
+      }
     let seed = [...this.state.q];
     let carrying = this.grasp?.relative;
     const visited = new Map<string, number[]>();
@@ -300,6 +341,7 @@ export class RobotJobRunner {
       } else if (step.kind === "release") carrying = undefined;
       return { step };
     });
+    this.captureSelection = steps.find((step) => step.kind === "grip")?.grasp;
     this.steps = planned;
     this.index = 0;
     this.elapsed = 0;
@@ -403,7 +445,7 @@ export class RobotJobRunner {
       this.next();
     } else if (step.kind === "grip") {
       if (!this.gripStarted) {
-        this.grasp!.grip(this.previousTCP, step.materialId);
+        this.grasp!.grip(this.previousTCP, step.materialId, step.grasp);
         this.gripStarted = true;
       } else if (this.grasp!.holding && this.elapsed >= 0.05) this.next();
     } else if (step.kind === "release") {
@@ -547,7 +589,7 @@ export class RobotProgram implements RuntimeProgram {
       throw new Error("任务握手由统一命令网关写入");
     this.signals.command(id, value);
   }
-  pickPlaceCommand(requestId: number): RobotCommand {
+  pickPlaceCommand(requestId: number, grasp?: string): RobotCommand {
     if (!this.physics) throw new Error("请选择物料和目标支承并准备物理实验");
     return {
       requestId,
@@ -557,6 +599,7 @@ export class RobotProgram implements RuntimeProgram {
         this.scene,
         this.physics.readMaterial(),
         "joint_ptp",
+        grasp,
       ),
     };
   }
@@ -624,11 +667,18 @@ export class RobotProgram implements RuntimeProgram {
       this.signals.publish(id, value, this.tick);
     const tcp = this.script.runner.tcp;
     const material = this.physics?.readMaterial();
+    const selected = this.ledger.request
+      ? this.script.runner.captureSelection
+      : undefined;
+    const frames = this.scene.materialGraspFrames;
+    const hasTarget =
+      !frames ||
+      selected ||
+      frames.preferred ||
+      Object.keys(frames.points).length === 1;
     const capture =
-      material && this.scene.materialSize
-        ? new Vector3(0, this.scene.materialSize[1] / 2 + 0.025, 0)
-            .applyQuaternion(new Quaternion(...material.rotation))
-            .add(new Vector3(...material.position))
+      material && this.scene.materialSize && hasTarget
+        ? captureFrame(this.scene, material, selected).tcp
         : null;
     const authorization =
       !!this.scene.materialBodyId && !!this.scene.supportSurfaceId;
@@ -952,6 +1002,26 @@ export class RobotSceneAdapter implements DeviceActionPort {
       this.state.qdot.every((v) => Math.abs(v) <= this.base.settleSpeed) &&
       Math.hypot(...this.physics.readBody!(this.base.toolBodyId).velocity) <=
         0.02
+    );
+  }
+  /** 读取关节、工具刚体和夹持状态，核实绑定的归位目标。 */
+  isAtHome(
+    home: Pick<
+      SceneDevice["locations"][string],
+      "position" | "reference" | "rotation_quaternion"
+    >,
+  ) {
+    if (!this.isStopped() || !home) return false;
+    const pose = this.physics.readBody!(this.base.toolBodyId);
+    return (
+      new Vector3(...pose.position).distanceTo(new Vector3(...home.position)) <=
+        2 * this.base.tolerance &&
+      (!home.rotation_quaternion ||
+        new Quaternion(...pose.rotation).angleTo(
+          new Quaternion(...home.rotation_quaternion),
+        ) <= 0.05) &&
+      (home.reference !== "robot_rest_pose" ||
+        this.state.q.every((q) => Math.abs(q) <= this.base.tolerance))
     );
   }
   beforePhysics(dt: number, tick: number) {
@@ -1398,32 +1468,45 @@ export function topPickAndPlace(
   pose: BodyPose,
   center: Vec3,
   rotation: Quat,
+  grasp?: { frames: MaterialGraspFrames; name?: string },
 ): PreparedRobotAction {
   const at = new Vector3(...pose.position),
     to = new Vector3(...center).add(new Vector3(0, 0.008, 0));
   const materialRotation = new Quaternion(...pose.rotation);
-  const topNormal = new Vector3(0, 1, 0).applyQuaternion(materialRotation);
-  const captureOffset = topNormal
-    .clone()
-    .multiplyScalar(load.size[1] / 2 + 0.025);
-  const capture = at.clone().add(captureOffset);
+  const selected = grasp
+    ? worldGraspFrame(grasp.frames, grasp.name, pose, 0.025)
+    : undefined;
+  const topNormal =
+    selected?.outward ?? new Vector3(0, 1, 0).applyQuaternion(materialRotation);
+  const capture =
+    selected?.tcp ??
+    at.clone().addScaledVector(topNormal, load.size[1] / 2 + 0.025);
+  const captureOffset = capture.clone().sub(at);
   // On the GLB wrist the last roll axis passes through the flange. Choose its
   // outward end from the penultimate wrist pivot, then point it at the top face.
   const rest = new RobotKinematics(base).forward(
     base.model.urdf.joints.map(() => 0),
   );
-  const rollAxis = rest.joints.at(-1)!.axis.clone();
-  const wristToFlange = new Vector3(...rest.tcp.position).sub(
-    rest.joints.at(-2)!.pivot,
-  );
-  const extension = rollAxis.dot(wristToFlange);
-  if (Math.abs(extension) < 1e-6)
-    throw new Error(
-      "Cannot resolve the tool approach direction from the GLB wrist",
+  const declaredAxis = base.model.tooling.approach_axis_local;
+  let approach: Vector3;
+  if (declaredAxis) {
+    approach = new Vector3(...declaredAxis).applyQuaternion(
+      new Quaternion(...rest.tcp.rotation),
     );
-  rollAxis.multiplyScalar(Math.sign(extension));
+  } else {
+    approach = rest.joints.at(-1)!.axis.clone();
+    const wristToFlange = new Vector3(...rest.tcp.position).sub(
+      rest.joints.at(-2)!.pivot,
+    );
+    const extension = approach.dot(wristToFlange);
+    if (Math.abs(extension) < 1e-6)
+      throw new Error(
+        "Cannot resolve the tool approach direction from the GLB wrist",
+      );
+    approach.multiplyScalar(Math.sign(extension));
+  }
   const graspRotation = new Quaternion()
-    .setFromUnitVectors(rollAxis, topNormal.clone().negate())
+    .setFromUnitVectors(approach, topNormal.clone().negate())
     .multiply(new Quaternion(...rest.tcp.rotation));
   // Preserve the tool/material relationship when retracting after a rotated placement.
   const materialTurn = new Quaternion(...rotation).multiply(
@@ -1463,7 +1546,11 @@ export function topPickAndPlace(
       graspRotation,
     ),
     move(capture, graspRotation),
-    { kind: "grip", materialId: material },
+    {
+      kind: "grip",
+      materialId: material,
+      ...(grasp?.name ? { grasp: grasp.name } : {}),
+    },
     ...held(at, raised, pose.rotation, pose.rotation),
     ...held(raised, above, pose.rotation, rotation),
     ...held(above, to, rotation, rotation),
@@ -1480,6 +1567,7 @@ export function topPickAndPlace(
       subjectId: material,
       materialBodyId: load.id,
       materialSize: load.size,
+      materialGraspFrames: grasp?.frames,
       materialMass: load.mass,
       placementCenter: center,
       placementRotation: rotation,
@@ -1494,8 +1582,22 @@ export function pickAndPlaceOnBelt(
   material: string,
   pose: BodyPose,
   place: Vector3,
-  capture: Vector3,
+  grasp?: string,
 ): PreparedRobotAction {
+  const capture = captureFrame(scene, pose, grasp);
+  const axis = scene.model.tooling.approach_axis_local;
+  const orientation =
+    scene.materialGraspFrames && axis
+      ? new Quaternion()
+          .setFromUnitVectors(
+            new Vector3(...axis),
+            capture.outward.clone().negate(),
+          )
+          .toArray()
+      : undefined;
+  // The legacy top-surface approach retracts vertically in the cell frame.
+  // A declared material port instead supplies its own approach normal.
+  const approach = scene.materialGraspFrames ? capture.outward : new Vector3(0, 1, 0);
   const safeY = Math.max(pose.position[1], place.y) + scene.liftHeight;
   const move = (
     position: Vector3,
@@ -1534,9 +1636,19 @@ export function pickAndPlaceOnBelt(
   return {
     scene,
     steps: [
-      move(capture.clone().add(new Vector3(0, scene.liftHeight, 0))),
-      move(capture),
-      { kind: "grip", materialId: material },
+      {
+        ...move(
+          capture.tcp
+            .clone()
+            .addScaledVector(approach, scene.liftHeight),
+        ),
+        ...(orientation ? { world_rotation: orientation } : {}),
+      },
+      {
+        ...move(capture.tcp),
+        ...(orientation ? { world_rotation: orientation } : {}),
+      },
+      { kind: "grip", materialId: material, ...(grasp ? { grasp } : {}) },
       ...lift,
       ...segment(raised, clear),
       ...segment(clear, above),
@@ -1552,18 +1664,32 @@ export function pickPlaceSteps(
   s: CompiledRobotScene,
   p: BodyPose,
   carryMode: "joint_ptp" | "preserve_orientation" = "preserve_orientation",
+  grasp?: string,
 ): RobotStep[] {
   if (!s.materialInstanceId || !s.placementCenter || !s.materialSize)
     throw new Error("请选择物料和目标支承并准备物理实验");
-  const offset = new Vector3(0, s.materialSize[1] / 2 + 0.025, 0),
-    pick = new Vector3(...p.position).add(
-      offset.clone().applyQuaternion(new Quaternion(...p.rotation)),
-    );
-  const move = (v: Vector3, label: string): RobotStep => ({
+  const capture = captureFrame(s, p, grasp),
+    pick = capture.tcp;
+  const axis = s.model.tooling.approach_axis_local;
+  const orientation =
+    s.materialGraspFrames && axis
+      ? new Quaternion()
+          .setFromUnitVectors(
+            new Vector3(...axis),
+            capture.outward.clone().negate(),
+          )
+          .toArray()
+      : undefined;
+  const move = (
+    v: Vector3,
+    label: string,
+    worldRotation?: Quat,
+  ): RobotStep => ({
     kind: "move_to_pose",
     position: v.toArray(),
     frame: "world",
     label,
+    ...(worldRotation ? { world_rotation: worldRotation } : {}),
   });
   const center = new Vector3(...p.position),
     place = new Vector3(...s.placementCenter);
@@ -1606,9 +1732,17 @@ export function pickPlaceSteps(
     }));
   };
   return [
-    move(pick.clone().add(new Vector3(0, s.liftHeight, 0)), "取料接近"),
-    move(pick, "下降取料"),
-    { kind: "grip", materialId: s.materialInstanceId },
+    move(
+      pick.clone().addScaledVector(capture.outward, s.liftHeight),
+      "取料接近",
+      orientation,
+    ),
+    move(pick, "下降取料", orientation),
+    {
+      kind: "grip",
+      materialId: s.materialInstanceId,
+      ...(grasp ? { grasp } : {}),
+    },
     ...carry(center, raised, "抓取后抬升"),
     ...carry(raised, above, "转运至放料上方"),
     ...carry(above, place, "下降放料", true),
@@ -2102,4 +2236,105 @@ export function bindPickPlaceConditions<W extends PickPlaceReading>(
     );
   });
   port.register("stopped", () => arm.isStopped());
+}
+
+/** 按命令中的物料、接口和接收端建立抓放任务；接放许可由实时支承与持有关系提供。 */
+export class RobotTransferActions {
+  readonly placed = new Set<string>();
+  readonly transfers: {
+    material: string;
+    from: string;
+    to: string;
+    tick: number;
+  }[] = [];
+  private motion: PickPlaceMotion;
+  private owners: Map<string, SceneDevice>;
+  constructor(
+    readonly arms: Map<string, HandoffArm>,
+    devices: ReadonlyMap<string, SceneDevice>,
+    private observed: MaterialPoseObserver,
+    physics: PhysicsPort,
+  ) {
+    this.owners = new Map(
+      [...devices.values()].flatMap((d) =>
+        Object.keys(d.locations).map((key) => [key, d] as const),
+      ),
+    );
+    this.motion = new PickPlaceMotion(
+      physics,
+      (id) => observed.body(id),
+      (id, frame, pose) =>
+        worldGraspFrame(observed.frames.get(id)!, frame, pose, 0.017),
+    );
+  }
+  arm(id: string) {
+    const a = this.arms.get(id);
+    if (!a) throw new Error("Unknown robot: " + id);
+    return a;
+  }
+  prepare(r: ActionRequest) {
+    const arm = this.arm(r.device);
+    const p = r.payload as { binding: string; fields: Record<string, string> };
+    const f = p.fields,
+      mode = handoffBehavior(r.device, r.behavior, p.binding);
+    const target = this.owners.get(f.target);
+    if (!target) throw new Error("Unknown target: " + f.target);
+    if (mode === "move_to_pose") {
+      if (target.instance_id !== r.device)
+        throw new Error("Foreign retreat target");
+      return this.motion.home(arm, target.locations[f.target]);
+    }
+    if (mode === "pick_and_handoff") {
+      const source = this.owners.get(f.source),
+        receiver = this.arm(f.receiver);
+      if (!source || f.giver_grasp === f.receiver_grasp)
+        throw new Error("Invalid handoff interfaces");
+      return this.motion.prepare(
+        arm,
+        f.material,
+        {
+          kind: "pick",
+          frame: f.giver_grasp,
+          sourceReady: () =>
+            this.observed.checkPose(f.material, source.instance_id, f.source),
+        },
+        {
+          kind: "gripper",
+          receiver,
+          frame: f.receiver_grasp,
+          pose: this.observed.targetPose(
+            f.material,
+            target.instance_id,
+            f.target,
+            [f.giver_grasp, f.receiver_grasp],
+          ),
+          commit: (tick) =>
+            this.transfers.push({
+              material: f.material,
+              from: r.device,
+              to: receiver.scene.instanceId,
+              tick,
+            }),
+        },
+      );
+    }
+    if (mode !== "place_held_material")
+      throw new Error("Unknown transfer action: " + mode);
+    return this.motion.prepare(
+      arm,
+      f.material,
+      { kind: "held", frame: f.grasp },
+      {
+        kind: "support",
+        pose: this.observed.targetPose(
+          f.material,
+          target.instance_id,
+          f.target,
+        ),
+        placed: () =>
+          this.observed.checkPose(f.material, target.instance_id, f.target),
+        commit: () => this.placed.add(f.material),
+      },
+    );
+  }
 }

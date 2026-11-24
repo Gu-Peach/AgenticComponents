@@ -1,6 +1,7 @@
 # 六盘顺序入线；每盘在三个工位分别装下层料、盖板和上层料。
 with process('S02', version='ac-declarative/0.4', devices='./device',
-             task=production(carrier_template='Pallet', count=6), goal='./task-spec.json'):
+             task=production(carrier_template='Pallet', count=6,
+                             per_carrier={'lower': 12, 'cover': 1, 'upper': 12}), goal='./task-spec.json'):
     with seq('batch'):
         with repeat('pallet_cycles', over=task.pallets, bind='pallet', limit=task.pallet_count):
             with seq('load_pallet'):

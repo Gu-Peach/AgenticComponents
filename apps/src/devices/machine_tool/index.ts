@@ -2,6 +2,7 @@
 import contract from "./contract.json";
 import {
   MachineToolAdapter,
+  MachineWorkpoint,
   evaluateMachiningCondition,
   machiningConditions,
 } from "./behavior";
@@ -11,6 +12,8 @@ const machineToolModule = {
   contract,
   conditions: machiningConditions,
   evaluateCondition: evaluateMachiningCondition,
+  createWorkpoint: (observedReady: (material: string) => boolean) =>
+    new MachineWorkpoint(observedReady),
   createDriver: (...args: ConstructorParameters<typeof MachineToolAdapter>) =>
     new MachineToolAdapter(...args),
 };

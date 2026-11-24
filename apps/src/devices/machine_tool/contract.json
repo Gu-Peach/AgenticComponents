@@ -37,6 +37,19 @@
         }
       },
       "local_frame_pending": true
+    },
+    {
+      "interface_id": "mount_base",
+      "name": "设备底部安装面",
+      "local_frame_pending": true,
+      "capabilities": {
+        "snap": {
+          "role": "mount_base",
+          "accepts": [
+            "carriage_mount"
+          ]
+        }
+      }
     }
   ],
   "signal_ports": [

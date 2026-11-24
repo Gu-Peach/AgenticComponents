@@ -8,6 +8,7 @@ import type {
   ObservationDefinition,
 } from "@/contracts/conditions";
 import type { DeviceActionPort } from "@/runtime/adapters/scene/DeviceActionPort";
+import { pickGraspForDevice } from "@/domain/runtime/materialGraspFrames";
 import { compileConditions } from "@/domain/runtime/compileConditions";
 import {
   bindDeviceBehavior,
@@ -22,8 +23,7 @@ import {
   SignalRegistry,
 } from "@/runtime/signals";
 import { ConditionTrace } from "@/runtime/signals/ConditionTrace";
-import { LoadingLineEnvironment } from "@/runtime/services/LoadingLineEnvironment";
-import { MachiningLineEnvironment } from "@/runtime/services/MachiningLineEnvironment";
+import { CarrierBatchRuntime } from "@/runtime/engine/CarrierBatchRuntime";
 import {
   createMachiningDevices,
   fitsMachiningLocation,
@@ -97,27 +97,70 @@ export async function assembleLoadingRuntime(
           environment.releasePallet(id, target, tick),
       },
     );
-    const environment: LoadingLineEnvironment | MachiningLineEnvironment =
-      machining
-        ? new MachiningLineEnvironment(
-            runId,
-            compiled,
-            physics,
-            devices.configs.get(machining.leader)!,
-            (id, target) =>
-              fitsMachiningLocation(compiled, physics, id, target),
-            () => devices.robots.get(machining.robot)!.isStopped(),
-          )
-        : new LoadingLineEnvironment(
-            runId,
-            compiled,
-            physics,
-            devices.configs,
-            (id) => fitsLoadedSlot(compiled, physics, id),
-          );
-    const machiningSlots = new Map(
+    const pallets = machining?.pallets ?? loading!.pallets;
+    const environment: CarrierBatchRuntime = new CarrierBatchRuntime(
+      runId,
+      physics,
+      {
+        carriers: pallets.map((p) => ({
+          ...p,
+          bindLoads:
+            compiled.physics.carrierBindings?.some(
+              (binding) =>
+                binding.carrier === compiled.bodyMap.get(p.id + "/body")!.id,
+            ) ?? false,
+          slots: Object.entries(compiled.devices.get(p.id)!.locations)
+            .filter(([, loc]) => loc.frame === "carrier_local_m")
+            .map(([id]) => id),
+        })),
+        feeders: loading?.supplies ?? [],
+        drive: devices.configs.get(
+          machining?.leader ?? loading!.exchange.leader,
+        )!,
+        entrySupport:
+          (machining ? compiled.sourceDevice : compiled.entryDevice) +
+          "/surface",
+        entryDrive: machining ? compiled.entryDevice + "/surface" : undefined,
+        exit: machining?.exitTarget ?? loading!.exchange.exit,
+        workpoint: machining
+          ? {
+              location: machining.point,
+              station: machining.stationTarget,
+              robot: machining.robot,
+            }
+          : undefined,
+      },
+      {
+        bodies: compiled.bodyMap,
+        subjectIds: compiled.subjectIds,
+        supports: [
+          ...compiled.physics.surfaces!.flatMap((s) => [
+            s.id,
+            ...(s.aliases ?? []),
+          ]),
+          ...(machining
+            ? [
+                machining.machine + "/support",
+                ...pallets.map((p) => p.id + "/body"),
+              ]
+            : []),
+        ],
+        robotHome: () =>
+          Object.fromEntries(
+            [...devices.robots].map(([id, robot]) => [
+              id,
+              robot.isAtHome(compiled.devices.get(id)!.locations[id + ".home"]),
+            ]),
+          ),
+        fits: (material, target) =>
+          machining
+            ? fitsMachiningLocation(compiled, physics, material, target)
+            : fitsLoadedSlot(compiled, physics, material, target),
+      },
+    );
+    const machiningCarriers = new Map(
       machining?.pallets.flatMap((p) =>
-        p.items.map((i) => [i.material, i.source] as const),
+        p.items.map((i) => [i.material, p.id] as const),
       ),
     );
     const materialByNumber = new Map(
@@ -126,14 +169,14 @@ export async function assembleLoadingRuntime(
     const subject = (args: Readonly<Record<string, unknown>>) =>
       materialByNumber.get(Number(args.subject_id)) ?? "";
     const machineDriver =
-      machining && environment instanceof MachiningLineEnvironment
+      machining && environment.workpoint
         ? getDeviceModule("machine_tool").createDriver(
             machining.machine,
             sceneId,
             runId,
             machining.cycleTicks,
             (r) => subject(r.arguments),
-            environment,
+            environment.workpoint!,
           )
         : undefined;
     const drivers: DeviceActionPort[] = [
@@ -283,6 +326,17 @@ export async function assembleLoadingRuntime(
         });
         registered.add(stopped);
       }
+      const commands = compiled.bundle.devices.find(
+        (instance) => instance.instance_id === device,
+      )?.command_payloads as
+        | Record<
+            string,
+            {
+              fields: Record<string, string>;
+              optional_fields?: Record<string, string>;
+            }
+          >
+        | undefined;
       actions.push(
         bindDeviceBehavior(device, d.contract, behavior, {
           contractVersion: String(d.contract.version),
@@ -310,7 +364,8 @@ export async function assembleLoadingRuntime(
               return [
                 "subject/" + f.material,
                 "location/" + machining.point,
-                "location/" + machiningSlots.get(f.material),
+                "location/" + f.source,
+                "location/" + f.target,
                 "device/" + machining.machine,
                 "device/" + machining.leader,
               ];
@@ -341,15 +396,41 @@ export async function assembleLoadingRuntime(
                 throw new Error("Unknown robot retreat target");
               return;
             }
-            if (machining) {
-              const slot = machiningSlots.get(f.material);
+            const signature = commands?.[payload.binding];
+            if (
+              !signature ||
+              Object.keys(signature.fields).some(
+                (key) => !Object.hasOwn(f, key),
+              ) ||
+              Object.keys(f).some(
+                (key) =>
+                  !Object.hasOwn(signature.fields, key) &&
+                  !Object.hasOwn(signature.optional_fields ?? {}, key),
+              )
+            )
+              throw new Error("Invalid pick/place command fields");
+            if (f.grasp !== undefined) {
+              const material = compiled.devices.get(f.material);
               if (
-                Object.keys(f).length !== 3 ||
-                !slot ||
-                !(
-                  (f.source === slot && f.target === machining.point) ||
-                  (f.source === machining.point && f.target === slot)
-                )
+                !material ||
+                (signature.fields.grasp ?? signature.optional_fields?.grasp) !==
+                  "grasp_frame_ref"
+              )
+                throw new Error("Unknown material grasp binding");
+              pickGraspForDevice(material, f.grasp);
+            }
+            if (machining) {
+              const carrier = compiled.devices.get(
+                machiningCarriers.get(f.material) ?? "",
+              );
+              const allowed = (endpoint: string) =>
+                endpoint === machining.point ||
+                carrier?.locations[endpoint]?.frame === "carrier_local_m";
+              if (
+                !carrier ||
+                f.source === f.target ||
+                !allowed(f.source) ||
+                !allowed(f.target)
               )
                 throw new Error(
                   "Machining transfer differs from the declared slot: " +
@@ -361,7 +442,6 @@ export async function assembleLoadingRuntime(
               (s) => s.device === loading!.materialSupply.get(f.material),
             );
             if (
-              Object.keys(f).length !== 3 ||
               !line ||
               materialTargets.get(f.material) !== f.target ||
               !devices.configs
@@ -402,7 +482,9 @@ export async function assembleLoadingRuntime(
               (i) =>
                 ("target" in i
                   ? w.loading?.slots[i.target] === i.material
-                  : w.machining?.slots[i.source] === i.material &&
+                  : w.machining?.slots[
+                      machining!.deliverySlots.get(i.material)!
+                    ] === i.material &&
                     w.bodies[i.material + "/body"].materialState ===
                       "finished" &&
                     w.machining.operations.filter(

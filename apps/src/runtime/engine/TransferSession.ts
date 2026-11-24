@@ -16,20 +16,7 @@ export class TransferSession {
     const r = s.observations.samples[c.selection.robot + "/robot_state"]
       ?.value as ArmReading | undefined;
     const request = s.process.activations.filter((a) => a.requestId).at(-1);
-    const terminal = [
-      "succeeded",
-      "failed",
-      "cancelled",
-      "attention_required",
-    ].includes(s.status);
-    const status =
-      s.status === "ready" || s.status === "paused"
-        ? s.status
-        : terminal
-          ? s.status === "failed" || s.status === "attention_required"
-            ? "failed"
-            : "stopped"
-          : "running";
+    const status = workcellStatus(s.status);
     return {
       kind: "assembled_transfer",
       status,
@@ -80,10 +67,17 @@ export class TransferSession {
     };
   }
   reset() {
-    const p = this.program;
-    if (p.needsStep() || p.visualSnapshot().status === "paused") p.stop();
-    for (let i = 0; i <= 1801 && p.needsStep(); i++) p.advance(1 / 60);
-    if (p.visualSnapshot().status === "attention_required") p.discard();
-    else p.dispose();
+    disposeWorkcellProgram(this.program);
   }
+}
+export function workcellStatus(status: string): RuntimeSnapshot["status"] {
+  if (status === "failed" || status === "attention_required") return "failed";
+  if (status === "cancelled" || status === "succeeded") return "stopped";
+  return status === "ready" || status === "paused" ? status : "running";
+}
+export function disposeWorkcellProgram(p: SceneRuntimeProgram) {
+  if (p.needsStep() || p.visualSnapshot().status === "paused") p.stop();
+  for (let i = 0; i <= 1801 && p.needsStep(); i++) p.advance(1 / 60);
+  if (p.visualSnapshot().status === "attention_required") p.discard();
+  else p.dispose();
 }

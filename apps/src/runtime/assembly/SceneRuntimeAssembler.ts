@@ -1,7 +1,9 @@
 /** 场景运行时的装配入口，根据编译配置选择专用装配器，或在共享物理世界中组装输送带、机械臂及有限供收料流程。 */
+import { pickGraspForDevice } from "@/domain/runtime/materialGraspFrames";
 
-import { getDeviceModule,resolveDeviceAction } from "@/devices/registry";
-import { Quaternion, Vector3 } from "three";
+
+import { getDeviceModule, resolveDeviceAction } from "@/devices/registry";
+import { Vector3 } from "three";
 import { assembleWarehouseRuntime } from "./WarehouseRuntimeAssembler";
 import { assembleLoadingRuntime } from "./LoadingRuntimeAssembler";
 import { assembleHandoffRuntime } from "./HandoffRuntimeAssembler";
@@ -24,10 +26,10 @@ import type {
 import type { RobotSceneAdapter } from "@/devices/robot_arm/behavior";
 import type { DeviceActionPort } from "@/runtime/adapters/scene/DeviceActionPort";
 import {
-  FiniteSceneEnvironment,
+  FiniteBatchLifecycle,
   type CarrierLoad,
   type HandoffTarget,
-} from "@/runtime/services/FiniteSceneEnvironment";
+} from "@/runtime/engine/FiniteBatchLifecycle";
 import {
   ConditionProviders,
   SignalRegistry,
@@ -57,7 +59,7 @@ interface BodyObservation {
 }
 interface WorldObservation {
   bodies: Record<string, BodyObservation>;
-  receipts: ReturnType<FiniteSceneEnvironment["snapshot"]>;
+  receipts: ReturnType<FiniteBatchLifecycle["snapshot"]>;
   robotClear: Record<string, boolean>;
   deliveries: Record<
     string,
@@ -84,10 +86,10 @@ export async function assembleSceneRuntime(
   compiled: CompiledSceneRuntime,
   options: { conditionMode?: ConditionDiagnostics["mode"] } = {},
 ): Promise<AssembledScene> {
-  for (const {device,behavior} of compiled.bundle.calls) {
+  for (const { device, behavior } of compiled.bundle.calls) {
     const selected = compiled.devices.get(device);
     if (!selected) throw new Error("Unknown action device " + device);
-    resolveDeviceAction(selected.contract,behavior);
+    resolveDeviceAction(selected.contract, behavior);
   }
   if (compiled.indexedProcessing)
     return assembleIndexedProcessingRuntime(sceneId, runId, compiled);
@@ -188,7 +190,7 @@ export async function assembleSceneRuntime(
   }));
   const physics = await createJoltBackend(compiled.physics);
   try {
-    const environment = new FiniteSceneEnvironment(runId, physics, loads);
+    const environment = new FiniteBatchLifecycle(runId, physics, loads);
     const carrier = (id: string) =>
       getDeviceModule("workpiece").isCarryingWorkpiece(device(id).contract);
     const pointFor = (id: string, target: string): TransportTarget => {
@@ -361,10 +363,11 @@ export async function assembleSceneRuntime(
           const load = body(p.material),
             targetDevice = owner(p.target),
             support = supportBody(surface(targetDevice.instance_id));
-          const pose = physics.readBody!(load.id),
-            capture = new Vector3(0, load.size[1] / 2 + 0.025, 0)
-              .applyQuaternion(new Quaternion(...pose.rotation))
-              .add(new Vector3(...pose.position));
+          const pose = physics.readBody!(load.id);
+          const grasp = pickGraspForDevice(
+            compiled.devices.get(p.material)!,
+            p.grasp,
+          );
           const flow = (
             targetDevice.contract.type_specific_contract as {
               surface: { flow_axis: Vec3 };
@@ -394,6 +397,7 @@ export async function assembleSceneRuntime(
             materialSize: load.size,
             materialMass: load.mass,
             supportSurfaceId: surface(targetDevice.instance_id),
+            materialGraspFrames: grasp?.frames,
             placementCenter: place.toArray(),
           };
           return getDeviceModule("robot_arm").pickAndPlaceOnBelt(
@@ -401,7 +405,7 @@ export async function assembleSceneRuntime(
             p.material,
             pose,
             place,
-            capture,
+            grasp?.name,
           );
         },
       );
@@ -845,15 +849,8 @@ export async function assembleSceneRuntime(
           };
         }
         const robotClear: Record<string, boolean> = {};
-        for (const [id, robot] of compiled.robots) {
-          const pose = physics.readBody!(robot.toolBodyId),
-            home = location(id + ".home");
-          robotClear[id] =
-            new Vector3(...pose.position).distanceTo(new Vector3(...home)) <=
-              robot.tolerance * 2 &&
-            Math.hypot(...pose.velocity) <= 0.03 &&
-            !physics.hasGraspForBody!(robot.toolBodyId);
-        }
+        for (const [id, robot] of robotDrivers)
+          robotClear[id] = robot.isAtHome({ position: location(id + ".home") });
         envObservations.push({
           key: "world/state",
           provider: "physics",

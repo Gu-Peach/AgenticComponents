@@ -1,3 +1,4 @@
+import { MountedAxisPanel } from "@/features/runtime/MountedAxisPanel";
 import { RobotSimulationPanel } from "@/features/runtime/RobotSimulationPanel";
 import { SimulationPanel } from "@/features/runtime/SimulationPanel";
 import { RuntimeSignalsPanel } from "@/features/runtime/RuntimeSignalsPanel";
@@ -141,6 +142,11 @@ export function Inspector() {
             {def.template ? "待配置模板" : "定义已加载"}
           </span>
         </div>
+        {def.deviceType === "linear_rail" && !def.template && (
+          <Section title="挂载定位">
+            <MountedAxisPanel rail={instance.instanceId} />
+          </Section>
+        )}
         {def.deviceType === "conveyor" && !def.template && (
           <Section title="接触式运行">
             <SimulationPanel />

@@ -29,7 +29,11 @@ export const robotStepSchema = z.discriminatedUnion("kind", [
       )
       .optional(),
   }),
-  z.object({ kind: z.literal("grip"), materialId: z.string().min(1) }),
+  z.object({
+    kind: z.literal("grip"),
+    materialId: z.string().min(1),
+    grasp: z.string().min(1).optional(),
+  }),
   z.object({ kind: z.literal("release"), materialId: z.string().min(1) }),
   z.object({
     kind: z.literal("wait_time"),

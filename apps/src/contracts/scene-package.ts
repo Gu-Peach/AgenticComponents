@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { spatialConnectionSchema } from "./spatial";
 
 export function isSceneUrl(value: string) {
   try {
@@ -79,6 +80,7 @@ export const sceneBundleSchema = z
         }),
       )
       .optional(),
+    connections: z.array(spatialConnectionSchema).optional(),
     environment: z.array(z.record(z.string(), z.unknown())).optional(),
     coordinate_system: z
       .object({

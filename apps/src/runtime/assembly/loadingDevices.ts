@@ -1,5 +1,6 @@
 /** 为托盘装载线创建输送带和机械臂适配器，根据当前托盘位姿和支承层计算放置位置，检查物料是否落入指定槽位。 */
 
+import { pickGraspForDevice } from "@/domain/runtime/materialGraspFrames";
 import { getDeviceModule } from "@/devices/registry";
 import { Quaternion, Vector3 } from "three";
 
@@ -26,6 +27,7 @@ export function palletPlacement(
   c: CompiledSceneRuntime,
   physics: PhysicsPort,
   material: string,
+  target?: string,
 ) {
   const pallet = c.loading!.pallets.find((p) =>
     p.items.some((item) => item.material === material),
@@ -43,13 +45,14 @@ export function palletPlacement(
     c,
     physics,
     pallet.id,
-    item.target,
+    target ?? item.target,
     load.size[1],
   );
   const layer = local.support_layer;
   if (!layer) throw new Error("Missing declared support layer: " + item.target);
-  const { loading_pose: policy } = c.devices.get(material)!.contract
+  const { loading_pose: policy, grasping } = c.devices.get(material)!.contract
     .type_specific_contract as {
+    grasping?: { frames?: unknown };
     loading_pose?: {
       placement_yaw_rad: number;
       grasp_reference: string;
@@ -60,18 +63,24 @@ export function palletPlacement(
   };
   if (
     !policy ||
-    policy.grasp_reference !== "top_center" ||
+    (!grasping?.frames && policy.grasp_reference !== "top_center") ||
     policy.placement_reference !== "bottom_center" ||
     policy.rotation_axis_frame !== "scene_world_m" ||
     !Array.isArray(policy.rotation_axis) ||
     policy.rotation_axis.length !== 3 ||
-    policy.rotation_axis.some((v, i) => v !== (i === 1 ? 1 : 0)) ||
+    !policy.rotation_axis.every(Number.isFinite) ||
+    Math.abs(Math.hypot(...policy.rotation_axis) - 1) > 1e-6 ||
     !Number.isFinite(policy.placement_yaw_rad)
   )
     throw new Error("Unsupported loading grasp/placement policy: " + material);
   const yaw = policy.placement_yaw_rad;
   const rotation = q
-    .multiply(new Quaternion().setFromAxisAngle(new Vector3(0, 1, 0), yaw))
+    .premultiply(
+      new Quaternion().setFromAxisAngle(
+        new Vector3().fromArray(policy.rotation_axis),
+        yaw,
+      ),
+    )
     .toArray();
   const supports =
     layer === "deck"
@@ -85,7 +94,7 @@ export function palletPlacement(
     throw new Error("Declared support layer has no material: " + item.target);
   return {
     palletId: pallet.id,
-    target: item.target,
+    target: target ?? item.target,
     materialId: material,
     center,
     rotation,
@@ -98,11 +107,12 @@ export function fitsLoadedSlot(
   c: CompiledSceneRuntime,
   physics: PhysicsPort,
   material: string,
+  target?: string,
 ): boolean {
   const load = getDeviceModule("workpiece").bodyOf(c, material);
   if (!physics.isBodyActive?.(load.id) || physics.hasGraspForBody?.(load.id))
     return false;
-  const slot = palletPlacement(c, physics, material);
+  const slot = palletPlacement(c, physics, material, target);
   const pose = physics.readBody!(load.id);
   return (
     slot.supports.some((support) =>
@@ -170,6 +180,7 @@ function robotAction(
     pose,
     slot.center,
     slot.rotation,
+    pickGraspForDevice(c.devices.get(p.material)!, p.grasp),
   );
 }
 

@@ -27,6 +27,14 @@ const taskSchema = z
     material_count: z.number().int().positive(),
     jobs: z.array(z.unknown()).length(0),
     job_count: z.literal(0),
+    prefab_request: z
+      .object({
+        per_carrier: z
+          .record(z.string().min(1), z.number().int().nonnegative())
+          .optional(),
+      })
+      .passthrough()
+      .optional(),
     max_items_per_pallet: z.number().int().positive(),
   })
   .passthrough();
@@ -315,18 +323,38 @@ export function compileLoadingManifest(
     const slots = new Map(prefab.slots.map((s) => [p.id + "." + s.id, s]));
     if (
       slots.size !== prefab.slots.length ||
-      !sameIds(
-        p.items.map((i) => i.target),
-        [...slots.keys()],
-      )
+      new Set(p.items.map((i) => i.target)).size !== p.items.length ||
+      p.items.some((i) => !slots.has(i.target))
     )
       throw new Error("Empty-carrier target manifest differs: " + p.id);
+    const requested = task.prefab_request?.per_carrier;
+    if (requested) {
+      const categories = new Set(prefab.slots.map((slot) => slot.category));
+      const allocated = new Map<string, number>();
+      for (const item of p.items)
+        allocated.set(item.category, (allocated.get(item.category) ?? 0) + 1);
+      if (
+        Object.keys(requested).some((category) => !categories.has(category)) ||
+        [...categories].some(
+          (category) =>
+            (allocated.get(category) ?? 0) !== (requested[category] ?? 0),
+        )
+      )
+        throw new Error(
+          "Carrier allocation differs from DSL quantities: " + p.id,
+        );
+    }
+    const loadedCategories = new Set(p.items.map((item) => item.category));
     for (const item of p.items) {
       const m = subject(item.material, "runtime_material"),
         slot = slots.get(item.target)!,
         s = byFeeder.get(slot.source_device);
       if (
         carrier.locations[item.target]?.frame !== "carrier_local_m" ||
+        (carrier.locations[item.target].support_layer !== "deck" &&
+          !loadedCategories.has(
+            carrier.locations[item.target].support_layer ?? "",
+          )) ||
         slot.category !== item.category ||
         !s ||
         m.initial_supply !== s.device ||
@@ -365,7 +393,8 @@ export function compileLoadingManifest(
   if (initial.existing_carrier !== palletIds[0])
     throw new Error("Initial empty carrier differs from first batch admission");
   checkAdmissions(palletIds, initial.existing_carrier);
-  for (const s of supplies) checkAdmissions(s.materials, s.materials[0]);
+  for (const s of supplies)
+    if (s.materials.length) checkAdmissions(s.materials, s.materials[0]);
   const owned = new Set<number>();
   for (const d of devices.values()) {
     if (

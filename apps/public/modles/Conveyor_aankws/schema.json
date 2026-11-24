@@ -1793,6 +1793,35 @@
           0
         ]
       }
+    },
+    {
+      "interface_id": "mount_base",
+      "name": "设备底部安装面",
+      "capabilities": {
+        "snap": {
+          "role": "mount_base",
+          "accepts": [
+            "carriage_mount"
+          ]
+        }
+      },
+      "local_frame": {
+        "position": [
+          2.682209014892578e-07,
+          0.0,
+          -8.344650268554688e-07
+        ],
+        "forward": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
     }
   ]
 }

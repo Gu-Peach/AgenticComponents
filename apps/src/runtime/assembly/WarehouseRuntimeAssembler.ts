@@ -16,7 +16,7 @@ import type {
   LiftSceneAdapter,
   TransferRequest,
 } from "@/devices/lift_table/behavior";
-import { DeviceMountService } from "@/runtime/services/DeviceMountService";
+import { RailMountedLift } from "@/devices/lift_table/behavior";
 import type { StorageRackRuntime } from "@/devices/storage_rack/behavior";
 import { createJoltBackend } from "@/runtime/physics/jolt/JoltPhysicsBackend";
 import { SceneRuntimeProgram } from "@/runtime/engine/SceneRuntimeProgram";
@@ -72,7 +72,7 @@ export async function assembleWarehouseRuntime(
   const physics = await createJoltBackend(compiled.physics);
   try {
     const mounts = config.assemblies.map(
-      (a) => new DeviceMountService(a, physics),
+      (a) => new RailMountedLift(a, physics),
     );
     const mountByDevice = new Map(
       mounts.flatMap(
@@ -182,12 +182,20 @@ export async function assembleWarehouseRuntime(
     };
     for (const m of mounts) {
       drivers.push(
-        getDeviceModule("linear_rail").createDriver(
-          sceneId,
-          runId,
-          m,
-          config.locations,
-        ),
+        getDeviceModule("linear_rail").createDriver(sceneId, runId, {
+          id: m.config.rail,
+          drive: m.rail,
+          namedTarget: (key) => {
+            const location = config.locations.get(key);
+            if (!location) throw new Error("Unknown rail location: " + key);
+            return resolveDock(m.config, location).rail;
+          },
+          move: (q) => m.move("rail", q),
+          at: (q) => m.at("rail", q),
+          cancel: () => m.stop(),
+          stopped: () => m.stopped,
+          actual: () => m.actual("rail"),
+        }),
       );
       const liftDriver = liftModule.createDriver(
         sceneId,

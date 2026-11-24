@@ -1,4 +1,5 @@
-import { getDeviceModule } from "@/devices/registry";
+import { sceneGraspFrames, selectGraspFrame } from "./materialGraspFrames";
+import { getDeviceModule, resolveDeviceAction } from "@/devices/registry";
 import {
   bindFactRoles,
   compileSignalConnections,
@@ -7,7 +8,7 @@ import {
 import { Quaternion, Vector3 } from "three";
 import { z } from "zod";
 import type { SceneBundle } from "@/contracts/scene-package";
-import type { SceneDevice, Vec3 } from "@/contracts/scene-execution";
+import type { SceneDevice } from "@/contracts/scene-execution";
 import {
   handoffCallBehavior,
   type HandoffConfig,
@@ -120,7 +121,6 @@ export function compileHandoffManifest(
     infeed === outfeed ||
     infeed.contract.device_type !== "conveyor" ||
     outfeed.contract.device_type !== "conveyor" ||
-    outfeed.instance_id + ".exit" !== end ||
     task.jobs.some(
       (j) =>
         j.input !== supply.target ||
@@ -134,21 +134,20 @@ export function compileHandoffManifest(
       device: name,
       material_axis_local: unitVector,
       required_axis_world: unitVector,
-      contact_frame: z.literal("head"),
+      contact_frame: name,
     })
     .parse(deliveryGoal.required_transport_pose);
+  const transportPolicy = z.object({
+    reference_frame: z.literal("scene_world_m"),
+    material_axis_local: unitVector,
+    required_axis_world: unitVector,
+    contact_frame: name,
+    verify_throughout: z.literal(true),
+    loss_policy: z.literal("controlled_stop"),
+    max_tilt_deg: z.number().positive().lt(90),
+  });
   const posePolicy = z
-    .object({
-      transport_pose: z.object({
-        reference_frame: z.literal("scene_world_m"),
-        material_axis_local: unitVector,
-        required_axis_world: unitVector,
-        contact_frame: z.literal("head"),
-        verify_throughout: z.literal(true),
-        loss_policy: z.literal("controlled_stop"),
-        max_tilt_deg: z.number().positive().max(10),
-      }),
-    })
+    .object({ transport_pose: transportPolicy })
     .parse(outfeed.contract.type_specific_contract).transport_pose;
   const materialAxis = new Vector3(...poseGoal.material_axis_local);
   const outfeedAxis = new Vector3(...poseGoal.required_axis_world);
@@ -156,22 +155,9 @@ export function compileHandoffManifest(
     poseGoal.device !== outfeed.instance_id ||
     !materialAxis.equals(new Vector3(...posePolicy.material_axis_local)) ||
     !outfeedAxis.equals(new Vector3(...posePolicy.required_axis_world)) ||
-    outfeedAxis.y > -0.999
+    poseGoal.contact_frame !== posePolicy.contact_frame
   )
-    throw new Error(
-      "Inverted transport pose differs from the independent goal",
-    );
-  for (const key of [outfeed.instance_id + ".entry", end]) {
-    const pose = outfeed.locations[key]?.material_pose;
-    if (
-      pose?.contact_frame !== "head" ||
-      materialAxis
-        .clone()
-        .applyQuaternion(new Quaternion(...pose.orientation_quaternion))
-        .dot(outfeedAxis) < 0.999
-    )
-      throw new Error("Missing head-down endpoint: " + key);
-  }
+    throw new Error("Transport pose differs from the independent goal");
   const calls: Extract<ProcessNode, { kind: "invoke" }>[] = [];
   const jobBinding = new Map<string, string>();
   const visit = (n: ProcessNode, boundJob?: string) => {
@@ -244,13 +230,68 @@ export function compileHandoffManifest(
     throw new Error("Handoff requires a giver and receiver");
   const giver = pick[0].device.name,
     receiver = place[0].device.name;
-  const rendezvous = Object.keys(devices.get(giver)?.locations ?? {}).find(
-    (l) =>
-      devices.get(giver)!.locations[l].material_pose?.reference ===
-      "grasp_frame_midpoint",
+  // These endpoints belong to this DSL call; resolve their owners and point references at compile time.
+  function endpoint(call: (typeof calls)[number], field: string) {
+    const expr = call.payload?.kind === "payload" && call.payload.kwargs[field];
+    if (expr && expr.kind === "literal" && typeof expr.value === "string")
+      return expr.value;
+    if (
+      expr &&
+      expr.kind === "field" &&
+      expr.base.kind === "ref" &&
+      devices.has(expr.base.name)
+    )
+      return expr.base.name + "." + expr.field;
+    throw new Error("Unresolved transfer endpoint: " + call.id + "." + field);
+  }
+  const pickup = endpoint(pick[0], "source"),
+    rendezvous = endpoint(pick[0], "target"),
+    placement = endpoint(place[0], "target");
+  if (
+    owner(pickup) !== infeed ||
+    owner(placement) !== outfeed ||
+    owner(rendezvous)?.instance_id !== giver ||
+    owner(rendezvous)?.locations[rendezvous].material_pose?.reference !==
+      "grasp_frame_midpoint" ||
+    giver === receiver
+  )
+    throw new Error("Invalid transfer endpoints or receiving device");
+  const incoming = materialPose.parse(
+    infeed.locations[pickup]?.material_pose ??
+      infeed.locations[supply.target]?.material_pose,
   );
-  if (!rendezvous || giver === receiver)
-    throw new Error("Handoff midpoint is missing");
+  if (!incoming.contact_frame)
+    throw new Error("Incoming conveyor requires a material support frame");
+  for (const key of [placement, end]) {
+    const pose = outfeed.locations[key]?.material_pose;
+    if (
+      pose?.contact_frame !== posePolicy.contact_frame ||
+      materialAxis
+        .clone()
+        .applyQuaternion(new Quaternion(...pose.orientation_quaternion))
+        .dot(outfeedAxis) < 0.999
+    )
+      throw new Error(
+        "Conveyor endpoint differs from its declared transport pose: " + key,
+      );
+  }
+  const sourcePolicy = z
+    .object({ transport_pose: transportPolicy.optional() })
+    .parse(infeed.contract.type_specific_contract).transport_pose;
+  // Historical input belts declare their support face and orientation only at the supply endpoint.
+  const incomingAxis: [number, number, number] =
+    sourcePolicy?.material_axis_local ?? [0, 1, 0];
+  const incomingWorld = new Vector3(...incomingAxis).applyQuaternion(
+    new Quaternion(...incoming.orientation_quaternion),
+  );
+  if (
+    sourcePolicy &&
+    (sourcePolicy.contact_frame !== incoming.contact_frame ||
+      incomingWorld.dot(new Vector3(...sourcePolicy.required_axis_world)) <
+        0.999)
+  )
+    throw new Error("Incoming endpoint differs from its transport pose");
+  const maxTiltRad = (posePolicy.max_tilt_deg * Math.PI) / 180;
   const armPorts: Readonly<Record<string, unknown>> =
     getDeviceModule("robot_arm").contract.runtime_execution_contract
       .semantic_ports;
@@ -297,7 +338,10 @@ export function compileHandoffManifest(
               : role(payload.material);
         if (material !== undefined && material !== job.material)
           throw new Error("Material role differs from indexed job: " + call.id);
-        const roles: Record<string, string> = { self, exit: self + ".exit" };
+        const roles: Record<string, string> = {
+          self,
+          exit: self === infeed.instance_id ? pickup : end,
+        };
         if (material) roles.material = material;
         for (const [name, e] of Object.entries({
           source: payload.source,
@@ -326,8 +370,29 @@ export function compileHandoffManifest(
     giver,
     receiver,
     rendezvous,
-    outfeedAxis: outfeedAxis.toArray(),
-    maxTiltRad: (posePolicy.max_tilt_deg * Math.PI) / 180,
+    pickup,
+    placement,
+    delivery: end,
+    transportPoses: new Map([
+      [
+        infeed.instance_id,
+        {
+          contactFrame: incoming.contact_frame,
+          axisLocal: incomingAxis,
+          axisWorld: incomingWorld.toArray(),
+          maxTiltRad: ((sourcePolicy?.max_tilt_deg ?? 10) * Math.PI) / 180,
+        },
+      ],
+      [
+        outfeed.instance_id,
+        {
+          contactFrame: posePolicy.contact_frame,
+          axisLocal: posePolicy.material_axis_local,
+          axisWorld: posePolicy.required_axis_world,
+          maxTiltRad,
+        },
+      ],
+    ]),
     materialFrames: new Map(),
     approachAxes: new Map(),
   };
@@ -346,62 +411,28 @@ export function compileHandoffManifest(
       device.creation_policy !==
       (i === 0 ? "adopt_existing_glb" : "clone_on_admission")
     )
-      throw new Error("Handoff scene must admit one bottle at a time");
-    const { geometry } = device;
-    const center = geometry.bounds.min.map(
-      (v, j) => (v + geometry.bounds.max[j]) / 2,
-    ) as Vec3;
-    const rest = new Quaternion(...geometry.world_rotation);
-    const frames = z
-      .object({
-        grasping: z.object({
-          frame_source: z.literal("material_local_m"),
-          frames: z.record(
-            name,
-            z.object({ position_m: vector, approach_axis: unitVector }),
-          ),
-        }),
-      })
-      .parse(device.contract.type_specific_contract).grasping.frames;
-    const points = Object.fromEntries(
-      Object.entries(frames).map(([key, f]) => [
-        key,
-        {
-          offset: new Vector3(...f.position_m)
-            .applyQuaternion(rest)
-            .add(new Vector3(...geometry.world_position))
-            .sub(new Vector3(...center))
-            .toArray(),
-          outward: new Vector3(...f.approach_axis)
-            .negate()
-            .applyQuaternion(rest)
-            .normalize()
-            .toArray(),
-        },
-      ]),
-    );
-    if (
-      !points.head ||
-      !points.tail ||
-      materialAxis
-        .clone()
-        .applyQuaternion(rest)
-        .dot(new Vector3(...points.head.outward)) < 0.999 ||
-      new Vector3(...points.head.outward).dot(
-        new Vector3(...points.tail.outward),
-      ) > -0.999
-    )
-      throw new Error("Opposed bottle grasp frames required");
-    handoff.materialFrames.set(id, { rest: geometry.world_rotation, points });
+      throw new Error("Unexpected material admission policy");
+    const frames = sceneGraspFrames(device);
+    for (const policy of handoff.transportPoses.values())
+      selectGraspFrame(frames, policy.contactFrame);
+    for (const call of [...pick, ...place]) {
+      if (call.payload?.kind !== "payload")
+        throw new Error("Missing robot payload");
+      for (const key of call === pick[0]
+        ? ["giver_grasp", "receiver_grasp"]
+        : ["grasp"]) {
+        const e = call.payload.kwargs[key];
+        if (e?.kind === "literal" && typeof e.value === "string")
+          selectGraspFrame(frames, e.value);
+      }
+    }
+    handoff.materialFrames.set(id, frames);
     subjectIds.set(id, i + 1);
   }
   for (const id of [giver, receiver]) {
     const device = devices.get(id);
-    if (
-      device?.contract.device_type !== "robot_arm" ||
-      device.contract.version !== "1.1.0"
-    )
-      throw new Error("Unsupported handoff arm");
+    if (device?.contract.device_type !== "robot_arm") throw new Error("Unsupported transfer device: " + id);
+    resolveDeviceAction(device.contract, id === giver ? "pick_and_handoff" : "place_held_material");
     const axis = z
       .object({ tooling: z.object({ approach_axis_local: vector }) })
       .parse(device.contract.type_specific_contract)

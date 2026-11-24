@@ -25,7 +25,6 @@
     "calibration": {
       "status": "pending"
     },
-    "mounted_on": "T1",
     "lift_motion": {
       "joint_name": "lift_axis",
       "joint_type": "prismatic",

@@ -27,7 +27,7 @@ it("imports the rail contract and exposes the real S07 device modules", () => {
   expect(bundle.calls.some((c) => c.device === "X1")).toBe(false);
   expect(
     bundle.calls.some(
-      (c) => c.device === "T1" && c.behavior === "move_to_location",
+      (c) => c.device === "T1" && c.behavior === "move_to_position",
     ),
   ).toBe(true);
 });

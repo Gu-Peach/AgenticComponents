@@ -124,11 +124,13 @@ export async function assembleTransferWorkcell(
       runId,
       c.robot,
       physics,
-      () => ({
+      (request) => ({
         scene: c.robot,
         steps: robotModule.pickPlaceSteps(
           c.robot,
           physics.readBody!(c.materialBody),
+          "preserve_orientation",
+          (request.payload as { fields: { grasp?: string } }).fields.grasp,
         ),
       }),
       () => atDestination(physics.readBody!(c.materialBody)),

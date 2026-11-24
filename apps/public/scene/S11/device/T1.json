@@ -21,6 +21,13 @@
     }
   },
   "model": {
+    "indexing_policy": {
+      "direction": "positive",
+      "angle_reference": "normalized_degrees",
+      "home_deg": 0,
+      "process_deg": 180,
+      "stations_deg": [0, 180]
+    },
     "simulation": {
       "rotor_node": "Link1_005n",
       "support_node": "Mesh_03dg",

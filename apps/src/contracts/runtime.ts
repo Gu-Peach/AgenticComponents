@@ -52,7 +52,15 @@ export interface RuntimeSnapshot {
   atExit: boolean;
   request: RuntimeRequest | null;
   error?: string;
-  kind?: "conveyor_experiment" | "robot_experiment" | "assembled_transfer";
+  kind?:
+    | "conveyor_experiment"
+    | "robot_experiment"
+    | "assembled_transfer"
+    | "mounted_axes";
+  mounted?: import("@/runtime/assembly/MountedWorkcell").MountedReading & {
+    status: string;
+    step?: string;
+  };
   workcell?: {
     status: string;
     step?: string;

@@ -2,6 +2,11 @@ import {
   compileTransferWorkcell,
   type TransferSelection,
 } from "@/domain/runtime/compileTransferWorkcell";
+import { MountedSession } from "@/runtime/engine/MountedSession";
+import {
+  compileMountedWorkcell,
+  visibleMountedWorldDevices,
+} from "@/domain/runtime/compileMountedWorkcell";
 import { TransferSession } from "@/runtime/engine/TransferSession";
 import type { RobotCommand } from "@/contracts/robot-command";
 import type { RobotExperimentOptions } from "@/domain/runtime/compileRobotExperiment";
@@ -23,7 +28,7 @@ export class RuntimeController {
   private value = emptySnapshot();
   private listeners = new Set<() => void>();
   private session?: SimulationSession;
-  private transfer?: TransferSession;
+  private transfer?: TransferSession | MountedSession;
   private clock?: () => void;
   private generation = 0;
   snapshot = () => this.value;
@@ -134,19 +139,7 @@ export class RuntimeController {
     if (useWorkspace.getState().documentLocked)
       throw new Error("请先停止当前仿真");
     const compiled = compileTransferWorkcell(project, selection, ir);
-    this.reset();
-    const generation = ++this.generation;
-    this.ownsDocumentLock = true;
-    useWorkspace.setState({ documentLocked: true });
-    this.publish({
-      ...emptySnapshot(),
-      status: "preparing",
-      instanceId: selection.robot,
-    });
-    const stale = () =>
-      generation !== this.generation ||
-      useWorkspace.getState().project !== project;
-    try {
+    return this.prepareWorkcell(project, selection.robot, async () => {
       for (const id of new Set(Object.values(selection))) {
         const spec = project.instances.find((i) => i.instanceId === id)!.specId;
         const definition = project.definitions.find((d) => d.specId === spec)!;
@@ -164,10 +157,6 @@ export class RuntimeController {
           validateRobotAsset(compiled.robot, bytes);
         }
       }
-      if (stale()) {
-        if (generation === this.generation) this.reset();
-        return;
-      }
       const { assembleTransferWorkcell } =
         await import("@/runtime/assembly/TransferWorkcell");
       const program = await assembleTransferWorkcell(
@@ -175,12 +164,68 @@ export class RuntimeController {
         project.id,
         crypto.randomUUID(),
       );
+      return new TransferSession(compiled, program);
+    });
+  }
+  async prepareMounted(project: ProjectDocument, rail: string, ir: unknown) {
+    return this.prepareWorkcell(project, rail, async () => {
+      const assets = new Map<string, ArrayBuffer>();
+      for (const i of visibleMountedWorldDevices(project)) {
+        const id = i.instanceId;
+        const d = project.definitions.find(
+          (v) => v.specId === i?.specId && v.revision === i?.specRevision,
+        );
+        const blob =
+          d?.asset.assetId &&
+          (await projectRepository.getAsset(d.asset.assetId));
+        if (!blob)
+          throw new Error(
+            "可见设备模型缺失，无法校验运动净空：" +
+              id +
+              "。请关联 GLB、隐藏该实例或在空项目中装配。",
+          );
+        const bytes = await blob.arrayBuffer();
+        if (d.asset.sha256 && (await sha256(bytes)) !== d.asset.sha256)
+          throw new Error("挂载设备模型哈希不符：" + id);
+        assets.set(id, bytes);
+      }
+      const c = compileMountedWorkcell(project, rail, assets, ir);
+      const { assembleMountedWorkcell } =
+        await import("@/runtime/assembly/MountedWorkcell");
+      return new MountedSession(
+        rail,
+        await assembleMountedWorkcell(c, project.id, crypto.randomUUID()),
+      );
+    });
+  }
+  private async prepareWorkcell(
+    project: ProjectDocument,
+    instanceId: string,
+    create: () => Promise<TransferSession | MountedSession>,
+  ) {
+    if (useWorkspace.getState().documentLocked)
+      throw new Error("请先停止当前仿真");
+    this.reset();
+    const generation = ++this.generation;
+    this.ownsDocumentLock = true;
+    useWorkspace.setState({ documentLocked: true });
+    this.publish({
+      ...emptySnapshot(),
+      status: "preparing",
+      instanceId,
+    });
+    const stale = () =>
+      generation !== this.generation ||
+      useWorkspace.getState().project !== project;
+    try {
+      const session = await create();
       if (stale()) {
-        program.dispose();
+        session.program.dispose();
         if (generation === this.generation) this.reset();
         return;
       }
-      this.transfer = new TransferSession(compiled, program);
+      this.transfer = session;
+      const program = session.program;
       program.start();
       this.publish(this.transfer.snapshot());
       this.clock = startRuntimeClock(
@@ -227,9 +272,9 @@ export class RuntimeController {
     this.session.kernel.submitAction(command);
     this.publish(this.session.snapshot());
   }
-  pickAndPlace(requestId: number) {
+  pickAndPlace(requestId: number, grasp?: string) {
     if (!this.session || !this.isBusy()) throw new Error("会话未准备");
-    this.submitAction(this.session.kernel.pickPlaceCommand(requestId));
+    this.submitAction(this.session.kernel.pickPlaceCommand(requestId, grasp));
   }
   pause() {
     if (this.transfer) {

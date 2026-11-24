@@ -1,3 +1,8 @@
+import {
+  mountedPairs,
+  extractMountedDevices,
+} from "@/services/extractMountedDevices";
+import { useWorkspace } from "@/stores/workspace";
 import { useState, useSyncExternalStore } from "react";
 import type { ScenePackageInstance } from "@/contracts/scene-package";
 import { sceneRuntimeController as controller } from "@/services/SceneRuntimeController";
@@ -21,6 +26,8 @@ export function SceneRunPanel({ scene }: { scene: ScenePackageInstance }) {
       .catch((e) => setError(String(e.message ?? e)));
   };
   const status = runtime?.status;
+  const locked = useWorkspace((s) => s.documentLocked);
+  const [extracting, setExtracting] = useState(false);
   return (
     <section
       aria-label="场景运行"
@@ -29,6 +36,24 @@ export function SceneRunPanel({ scene }: { scene: ScenePackageInstance }) {
       <strong>场景运行 · {status ?? preparation?.status ?? "未准备"}</strong>
       <p>候选仿真使用真实物理与契约反馈；通过准入不代表整场工艺已验收。</p>
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+        {mountedPairs(scene.bundle).map(({ rail, child }) => (
+          <button
+            key={rail.instanceId}
+            disabled={locked || extracting}
+            onClick={() =>
+              act(async () => {
+                setExtracting(true);
+                try {
+                  await extractMountedDevices(scene, rail.instanceId);
+                } finally {
+                  setExtracting(false);
+                }
+              })
+            }
+          >
+            提取独立设备 · {rail.instanceId} / {child.instanceId}
+          </button>
+        ))}
         {!runtime && preparation?.status !== "preparing" && (
           <button
             onClick={() => act(() => controller.prepare(scene, "validation"))}

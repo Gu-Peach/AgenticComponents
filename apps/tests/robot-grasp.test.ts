@@ -110,52 +110,72 @@ describe("Jolt fixed grasp", () => {
   });
 });
 
-it("runs actual robot FK/IK and engine_block fixed-grasp job through support confirmation", async () => {
-  const { project, scene } = robotSetup(),
-    load = (name: string) =>
-      normalizeDeviceSpec(
-        JSON.parse(readFileSync(`public/modles/${name}/schema.json`, "utf8")),
-      ),
-    belt = load("Conveyor_aankws"),
-    material = load("engine_block"),
-    a = instantiate(belt, 1),
-    b = instantiate(material, 2);
-  a.instanceId = "belt";
-  b.instanceId = "block";
-  const tcp = new RobotKinematics(scene).forward([0, 0, 0, 0, 0, 0]).tcp
-    .position;
-  a.transform.position = [tcp[0] - 0.0005, 0, tcp[2]];
-  b.transform.position = [tcp[0] - 0.12, 0.7, tcp[2]];
-  b.transform.rotation = [0, Math.PI / 2, 0];
-  b.paramOverrides.mass_kg = 1;
-  project.definitions.push(belt, material);
-  project.instances.push(a, b);
-  const before = JSON.stringify(project),
-    c = compileRobotExperiment(project, "robot", {
-      materialId: "block",
-      supportId: "belt",
-    }),
-    physics = await createJoltBackend(c.physics!),
-    k = new RuntimeKernel(c, physics);
-  try {
-    for (let i = 0; i < 30; i++) k.step(1 / 60);
-    k.submitAction(k.pickPlaceCommand(10));
-    let held = false;
-    for (let i = 0; i < 3600; i++) {
-      const snap = k.step(1 / 60);
-      held ||= !!snap.robot?.holdingMaterialId;
-      if (snap.request?.status !== "busy") break;
+it.each([false, true])(
+  "runs the actual robot FK/IK and confirmed grasp (named interface=%s)",
+  async (named) => {
+    const { project, scene } = robotSetup(),
+      load = (name: string) =>
+        normalizeDeviceSpec(
+          JSON.parse(readFileSync(`public/modles/${name}/schema.json`, "utf8")),
+        ),
+      belt = load("Conveyor_aankws"),
+      material = load("engine_block"),
+      a = instantiate(belt, 1),
+      b = instantiate(material, 2);
+    a.instanceId = "belt";
+    b.instanceId = "block";
+    const tcp = new RobotKinematics(scene).forward([0, 0, 0, 0, 0, 0]).tcp
+      .position;
+    a.transform.position = [tcp[0] - 0.0005, 0, tcp[2]];
+    b.transform.position = [tcp[0] - 0.12, 0.7, tcp[2]];
+    b.transform.rotation = [0, Math.PI / 2, 0];
+    b.paramOverrides.mass_kg = 1;
+    if (named)
+      material.typeSpecificContract.grasping = {
+        frame_source: "material_local_m",
+        frames: {
+          fixture_port: {
+            position_m: [0.004, 0.3000005, 0],
+            approach_axis: [0, -1, 0],
+          },
+          side_port: { position_m: [0.12, 0.15, 0], approach_axis: [-1, 0, 0] },
+        },
+      };
+    project.definitions.push(belt, material);
+    project.instances.push(a, b);
+    const before = JSON.stringify(project),
+      c = compileRobotExperiment(project, "robot", {
+        materialId: "block",
+        supportId: "belt",
+      }),
+      physics = await createJoltBackend(c.physics!),
+      k = new RuntimeKernel(c, physics);
+    try {
+      for (let i = 0; i < 30; i++) k.step(1 / 60);
+      if (named) {
+        expect(() => k.pickPlaceCommand(9)).toThrow(/抓取接口/);
+        expect(() => k.pickPlaceCommand(9, "unknown_port")).toThrow(/抓取接口/);
+      }
+      k.submitAction(
+        k.pickPlaceCommand(10, named ? "fixture_port" : undefined),
+      );
+      let held = false;
+      for (let i = 0; i < 3600; i++) {
+        const snap = k.step(1 / 60);
+        held ||= !!snap.robot?.holdingMaterialId;
+        if (snap.request?.status !== "busy") break;
+      }
+      expect(held).toBe(true);
+      expect(k.snapshot().request, JSON.stringify(k.snapshot())).toMatchObject({
+        status: "succeeded",
+      });
+      expect(k.snapshot().robot?.holdingMaterialId).toBeNull();
+      expect(JSON.stringify(project)).toBe(before);
+    } finally {
+      k.stop();
     }
-    expect(held).toBe(true);
-    expect(k.snapshot().request, JSON.stringify(k.snapshot())).toMatchObject({
-      status: "succeeded",
-    });
-    expect(k.snapshot().robot?.holdingMaterialId).toBeNull();
-    expect(JSON.stringify(project)).toBe(before);
-  } finally {
-    k.stop();
-  }
-});
+  },
+);
 
 it("rejects default distant belt center with the failing phase before accepting a grip", async () => {
   const { project, instance } = robotSetup();

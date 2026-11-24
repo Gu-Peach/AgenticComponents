@@ -1,3 +1,4 @@
+import type { MaterialGraspFrames } from "@/contracts/material-frames";
 import { z } from "zod";
 import type { Vec3 } from "./device";
 import type { BodyPose, PhysicsConfig, Quat } from "./physics";
@@ -64,6 +65,9 @@ export const robotModelSchema = z.object({
     rest_position: vec,
     rest_quaternion: quat,
     simulation_tool: z.literal(true),
+    approach_axis_local: vec
+      .refine((a) => Math.abs(Math.hypot(...a) - 1) < 1e-5)
+      .optional(),
   }),
   ik: z.object({
     solver: z.literal("ccd_position"),
@@ -107,6 +111,7 @@ export interface CompiledRobotScene {
   bodyLocalMatrix?: number[];
   materialBodyId?: string;
   materialSize?: Vec3;
+  materialGraspFrames?: MaterialGraspFrames;
   toolBodyId: string;
   supportSurfaceId?: string;
   materialMass?: number;

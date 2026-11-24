@@ -59,7 +59,7 @@ class SceneParser(Parser):
         self.need(self.literal(kw['version'])=='ac-declarative/0.4',root,'Scene process version must be 0.4')
         self.need(self.literal(kw['devices'])=='./device' and self.literal(kw['goal'])=='./task-spec.json',root,'Unsupported scene entry paths')
         constructor,pa,pk=self.call(kw['task'])
-        self.need(constructor=='production' and not pa and set(pk) in ({'jobs','pallets'},{'carrier_template','count'}),root,'Production accepts finite jobs/pallets or carrier_template/count')
+        self.need(constructor=='production' and not pa and set(pk) in ({'jobs','pallets'},{'carrier_template','count'},{'carrier_template','count','per_carrier'}),root,'Production accepts finite jobs/pallets or carrier_template/count with optional per_carrier quantities')
         request={k:ast.literal_eval(v) for k,v in pk.items()}
         if 'carrier_template' in request:
             self.need(type(request['carrier_template'])is str and type(request['count'])is int and 1<=request['count']<=10000,root,'Invalid prefab production')
@@ -215,6 +215,7 @@ def build(root, scene=None, output=None):
             bundle['sorting_station']=sorting_station
         bundle['drive_groups']=manifest.get('drive_groups',{})
         bundle['environment']=manifest.get('environment',[])
+        if 'connections' in manifest:bundle['connections']=manifest['connections']
         if 'prefab_request' in ir['task']:
             carrier_template=devices[ir['task']['prefab_request']['carrier_template']]
             if carrier_template['prefab']['kind']=='empty_carrier' or manifest.get('runtime_profile')=='pallet-machining@1':

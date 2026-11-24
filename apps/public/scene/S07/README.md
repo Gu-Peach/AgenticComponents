@@ -23,7 +23,7 @@ F1 由有限供料环境服务按 task.jobs 身份和 C1 容量准入供料，DS
 
 `linear_rail@1.1.0` 支持 move_to_location(target)、move_to_position(position_m) 和 stop_motion。`lift_table@1.2.0` 支持 accept_material、release_material、lift_to_location、lift_to_level、hold_lift，保留 transfer_material 兼容入口。允许路线在实例 transfer_routes 中声明。交接完成检查实际物料位置、接触支承、速度和库存事务；不要求未模拟的 Handler 回执。
 
-DSL 直接引用 C1.exit、C2.entry、job.slot。轴目标由设备局部轴、装配偏移、平台承载点和目标位置解析，不在订单里重复保存行程。simulation 中的行程和支承是明确的候选配置，不能作为硬件标定。带载运动和交接使用各凸包的保守扫掠包围盒检查净空；未知或超限目标拒绝执行。
+两条滑轨的 `carriage_mount` 分别连接升降机的 `mount_base`，见 scene.json 的 connections。每组在 process.py 先调用 move_to_position 再调用 lift_to_level，两者均以米计。入、出料带的轨道对接坐标分别约 −0.017538 和 −2.013683，平台目标高度均为 0.54。第一列格位的轨道坐标约 −0.383069，四个基座相对高度依次为 0.84、1.44、2.04 和 2.64。改动装配或格位后须重新标定这些目标。接放料继续对照实测端点、支承和净空。
 
 **正式四件任务的预期结果是第四件不可达。** 第四层板面约 2.80 m，箱体顶面会到 3.20 m，而升降机横梁下沿约 3.11 m。用户要求保留原任务，因此运行在第四件升降前报告 TARGET_UNREACHABLE，前三件保持入库状态、第四件保持低位平台承载，随后受控停止。没有改写 task-spec 或改存其他格位。
 

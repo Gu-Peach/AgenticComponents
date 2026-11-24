@@ -186,13 +186,13 @@
 | 模块 | 责任 | 单独验收 |
 | --- | --- | --- |
 | runtime/mechanisms/LinearAxisTrajectory.ts | 标量轨迹和停止 | 正负向、限位、速度/加速度与停止距离 |
-| runtime/services/MaterialTransferService.ts | 虚拟直线转移、事务与承载切换 | 接料、放料、错身份、重复回执和途中取消 |
-| runtime/services/DeviceMountService.ts | 装配链、组合运动与唯一位姿写入 | 轨道移动机架，升降仅移动平台，物料正确随动 |
+| devices/lift_table/behavior.ts | 虚拟直线转移、事务与承载切换 | 接料、放料、错身份、重复回执和途中取消 |
+| runtime/engine/MountedAxisMotion.ts | 装配链、组合运动与唯一位姿写入 | 轨道移动机架，升降仅移动平台，物料正确随动 |
 | runtime/templates/lift/LiftTableRuntime.ts | 升降状态与接放料协调 | 接料→升降→放料完整生命周期 |
 | runtime/adapters/scene/LiftSceneAdapter.ts | DeviceActionPort、信号和条件证据 | 接受、完成、停止、超时及身份关联 |
 | runtime/templates/rail/LinearRailRuntime.ts | 沿声明轴定位 | 世界 X/Z 放置下同一实现 |
 | runtime/adapters/scene/LinearRailSceneAdapter.ts | 数值/具名目标统一请求入口 | 限位拒绝、挂载互锁和实际到位 |
-| runtime/services/StorageRackRuntime.ts | 格位预留、占用和历史账本 | 同一格位互斥、重复提交、存取时序 |
+| devices/storage_rack/behavior.ts | 格位预留、占用和历史账本 | 同一格位互斥、重复提交、存取时序 |
 | runtime/adapters/scene/StorageRackSceneAdapter.ts | 仅在 DSL 显式调用仓储服务行为时提供请求适配 | 服务请求不驱动物料、不与交接事务重复提交 |
 
 仓储服务始终参与观察与终验；没有显式仓储 invoke 时，不为每个格位创建主动运动循环。

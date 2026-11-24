@@ -250,6 +250,9 @@ export class CarrierInventory {
   at(slot: string) {
     return this.occupants.get(slot);
   }
+  slotOf(material: string) {
+    return this.materialSlot.get(material);
+  }
   reserve(slot: string, material: string, request: string) {
     if (
       !this.known.has(slot) ||

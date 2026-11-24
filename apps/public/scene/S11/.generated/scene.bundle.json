@@ -9,15 +9,15 @@
     "task-spec.json": "636fc8b4b7b2bdab27daa049e87d2d570c631263645301fe866d0e506a44f912",
     "scene.json": "73ab298cfccaa84bee38faa810d32641635443a7e808288827227d7bc0269060",
     "device/H1.json": "30417ae84d4daed52eedd1bdb18375fca81f4cfc2e0f0d62ba37c5f0df02195d",
-    "contracts/human_operator.json": "66ac8e150405c6c3aaf67e6cbb038360c7cc1da5702d08feebf1d1ed05601aad",
-    "device/T1.json": "999f0f1143c9a113fe383a6ef7eb0843388e44af8c3f9d189e0817312a1e5b0a",
-    "contracts/rotary_table.json": "32d8a46f14cab8118ebc3e55aa2bbf9e0e77ac6f1df68ca58d9ef5aeecc1f881",
+    "contracts/human_operator.json": "192288357560d9199e75ca5fb51c7f963cfc841df749c0fbfe0e5f2cedd75120",
+    "device/T1.json": "3fd48de4f59e7b000abeea1a080a43362e1168e02024a6819802e770189bc8fd",
+    "contracts/rotary_table.json": "3b5acb54c4ad58a2bf5034076ea51e9c0918ba209e7f96626f5c8c838565c292",
     "device/R1.json": "984d17b50b12b109a11fc6591718572118e82a9fc36aa12ea8ea66bcfc168c53",
-    "contracts/robot_arm.json": "f75a87e09dfcca07287179ca49684c934a5f18111dc68ae83ad12d34dcdeb9af",
+    "contracts/robot_arm.json": "9599b08af90796ef8a2ea2c9b30ce6978bf57da5aeb79f9d5743ce2907ffe6b0",
     "device/F1.json": "1cfbb6ac290bfa9af51d73e51683813b61793881334163b0422cae4bf852f9ac",
-    "contracts/material_source_station.json": "67362ae2f70cac3f6f8347c2600360f51417798947e380729447e457490ca0b6",
+    "contracts/material_source_station.json": "0433d0018b7d56bc992d164527e3c3b423047ef43cb9ab30104194983838c32d",
     "device/Workpiece.json": "2641a77bb1b13377129a1d1a3ae081ab0f1232086e31d193d668ac7bd2e8d9df",
-    "contracts/workpiece.json": "aaebdfb86958df64c7c8b1e86f324e8976db29bd448f0fdf23f7113bbc451eaa"
+    "contracts/workpiece.json": "4da459332746bb12143e8eec8f51e9a941b46c47006dfac8a5fd8d2d48f9d5e6"
   },
   "process": {
     "schema_version": "ac-coordination-ir/0.4",
@@ -583,6 +583,35 @@
                 ]
               }
             }
+          },
+          {
+            "interface_id": "mount_base",
+            "name": "设备底部安装面",
+            "capabilities": {
+              "snap": {
+                "role": "mount_base",
+                "accepts": [
+                  "carriage_mount"
+                ]
+              }
+            },
+            "local_frame": {
+              "position": [
+                0.0477180320469068,
+                -0.0037797635495862712,
+                0.006040830023003264
+              ],
+              "forward": [
+                0.0,
+                -1.0000000000000002,
+                -0.0
+              ],
+              "up": [
+                6.617444900424222e-24,
+                0.0,
+                1.0
+              ]
+            }
           }
         ],
         "signal_ports": [
@@ -1141,6 +1170,35 @@
                 ]
               }
             }
+          },
+          {
+            "interface_id": "mount_base",
+            "name": "设备底部安装面",
+            "capabilities": {
+              "snap": {
+                "role": "mount_base",
+                "accepts": [
+                  "carriage_mount"
+                ]
+              }
+            },
+            "local_frame": {
+              "position": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "forward": [
+                0.0,
+                -1.0000000000000002,
+                -0.0
+              ],
+              "up": [
+                6.617444900424222e-24,
+                0.0,
+                1.0
+              ]
+            }
           }
         ],
         "signal_ports": [
@@ -1343,7 +1401,11 @@
             "direction": "positive",
             "angle_reference": "normalized_degrees",
             "home_deg": 0,
-            "process_deg": 180
+            "process_deg": 180,
+            "stations_deg": [
+              0,
+              180
+            ]
           },
           "capacity_model": {
             "capacity_param": "capacity"
@@ -1991,6 +2053,35 @@
                   "process_target"
                 ]
               }
+            }
+          },
+          {
+            "interface_id": "mount_base",
+            "name": "设备底部安装面",
+            "capabilities": {
+              "snap": {
+                "role": "mount_base",
+                "accepts": [
+                  "carriage_mount"
+                ]
+              }
+            },
+            "local_frame": {
+              "position": [
+                -0.15129683897731644,
+                0.0,
+                -0.18473155332831354
+              ],
+              "forward": [
+                0.0,
+                -1.0000000000000002,
+                -0.0
+              ],
+              "up": [
+                6.617444900424222e-24,
+                0.0,
+                1.0
+              ]
             }
           }
         ],
@@ -5124,7 +5215,10 @@
                 "target": "location_ref"
               },
               "status": "pending_model_adapter",
-              "target_payload_schema": null
+              "target_payload_schema": null,
+              "optional_fields": {
+                "grasp": "grasp_frame_ref"
+              }
             },
             "move_to_pose": {
               "fields": {
@@ -5179,7 +5273,10 @@
             "target": "location_ref"
           },
           "status": "pending_model_adapter",
-          "target_payload_schema": null
+          "target_payload_schema": null,
+          "optional_fields": {
+            "grasp": "grasp_frame_ref"
+          }
         },
         "R1.move_to_pose": {
           "instance": "R1",
@@ -5812,7 +5909,37 @@
             "description": "可选产品变化属性名"
           }
         },
-        "interfaces": [],
+        "interfaces": [
+          {
+            "interface_id": "mount_base",
+            "name": "设备底部安装面",
+            "capabilities": {
+              "snap": {
+                "role": "mount_base",
+                "accepts": [
+                  "carriage_mount"
+                ]
+              }
+            },
+            "local_frame": {
+              "position": [
+                0.3629995179512875,
+                -0.00031262866453911353,
+                -0.44402825778771693
+              ],
+              "forward": [
+                0.0,
+                -1.0,
+                0.0
+              ],
+              "up": [
+                -1.1102230246251565e-16,
+                0.0,
+                1.0
+              ]
+            }
+          }
+        ],
         "signal_ports": [
           {
             "port_id": "runTag",
@@ -7177,6 +7304,35 @@
                 ]
               }
             }
+          },
+          {
+            "interface_id": "mount_base",
+            "name": "设备底部安装面",
+            "capabilities": {
+              "snap": {
+                "role": "mount_base",
+                "accepts": [
+                  "carriage_mount"
+                ]
+              }
+            },
+            "local_frame": {
+              "position": [
+                -0.03413228912355848,
+                -1.1359534729152136e-06,
+                -0.02038335754610543
+              ],
+              "forward": [
+                0.0,
+                -1.0,
+                0.0
+              ],
+              "up": [
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
           }
         ],
         "signal_ports": [
@@ -8370,6 +8526,35 @@
                   "fixture"
                 ]
               }
+            }
+          },
+          {
+            "interface_id": "mount_base",
+            "name": "设备底部安装面",
+            "capabilities": {
+              "snap": {
+                "role": "mount_base",
+                "accepts": [
+                  "carriage_mount"
+                ]
+              }
+            },
+            "local_frame": {
+              "position": [
+                -0.03413228912355848,
+                -1.1359534729152136e-06,
+                -0.02038335754610543
+              ],
+              "forward": [
+                0.0,
+                -1.0,
+                0.0
+              ],
+              "up": [
+                0.0,
+                0.0,
+                1.0
+              ]
             }
           }
         ],
@@ -9569,6 +9754,35 @@
                 ]
               }
             }
+          },
+          {
+            "interface_id": "mount_base",
+            "name": "设备底部安装面",
+            "capabilities": {
+              "snap": {
+                "role": "mount_base",
+                "accepts": [
+                  "carriage_mount"
+                ]
+              }
+            },
+            "local_frame": {
+              "position": [
+                -0.03413228912355848,
+                -1.1359534729152136e-06,
+                -0.02038335754610543
+              ],
+              "forward": [
+                0.0,
+                -1.0,
+                0.0
+              ],
+              "up": [
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
           }
         ],
         "signal_ports": [
@@ -10767,6 +10981,35 @@
                 ]
               }
             }
+          },
+          {
+            "interface_id": "mount_base",
+            "name": "设备底部安装面",
+            "capabilities": {
+              "snap": {
+                "role": "mount_base",
+                "accepts": [
+                  "carriage_mount"
+                ]
+              }
+            },
+            "local_frame": {
+              "position": [
+                -0.03413228912355848,
+                -1.1359534729152136e-06,
+                -0.02038335754610543
+              ],
+              "forward": [
+                0.0,
+                -1.0,
+                0.0
+              ],
+              "up": [
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
           }
         ],
         "signal_ports": [
@@ -11964,6 +12207,35 @@
                   "fixture"
                 ]
               }
+            }
+          },
+          {
+            "interface_id": "mount_base",
+            "name": "设备底部安装面",
+            "capabilities": {
+              "snap": {
+                "role": "mount_base",
+                "accepts": [
+                  "carriage_mount"
+                ]
+              }
+            },
+            "local_frame": {
+              "position": [
+                -0.03413228912355848,
+                -1.1359534729152136e-06,
+                -0.02038335754610543
+              ],
+              "forward": [
+                0.0,
+                -1.0,
+                0.0
+              ],
+              "up": [
+                0.0,
+                0.0,
+                1.0
+              ]
             }
           }
         ],

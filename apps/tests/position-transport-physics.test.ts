@@ -3,9 +3,9 @@ import { createJoltBackend } from "../src/runtime/physics/jolt/JoltPhysicsBacken
 import { getDeviceModule } from "@/devices/registry";
 import { mergeCoupledConveyors } from "../src/domain/runtime/mergeCoupledConveyors";
 import {
-  FiniteSceneEnvironment,
+  FiniteBatchLifecycle,
   type CarrierLoad,
-} from "../src/runtime/services/FiniteSceneEnvironment";
+} from "../src/runtime/engine/FiniteBatchLifecycle";
 import type {
   PhysicsConfig,
   RuntimeBody,
@@ -322,7 +322,7 @@ describe("position transport with real Jolt contact physics", () => {
         sourceSupport: "left",
       };
     });
-    const service = new FiniteSceneEnvironment("run", p, loads);
+    const service = new FiniteBatchLifecycle("run", p, loads);
     const target = {
       position: [-0.7, 0.05, 0] as [number, number, number],
       referenceOffset: [0, 0, 0] as [number, number, number],

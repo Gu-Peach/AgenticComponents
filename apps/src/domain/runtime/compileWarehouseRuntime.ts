@@ -1,4 +1,6 @@
-import { Quaternion, Vector3 } from "three";
+import { alignedMountFrames, mountParents } from "@/domain/spatial/mounts";
+import { spatialInterfaceSchema } from "@/contracts/spatial";
+import { Matrix4, Quaternion, Vector3 } from "three";
 import { z } from "zod";
 import type { SceneBundle } from "@/contracts/scene-package";
 import type {
@@ -35,13 +37,15 @@ const simulationSchema = z.object({
   support_geometry: geometrySchema.optional(),
   flow_world: vec.optional(),
 });
-const jobSchema = z.object({
-  id: z.string(),
-  material: z.string(),
-  input: z.string(),
-  slot: z.string(),
-  target: z.string(),
-});
+const jobSchema = z
+  .object({
+    id: z.string(),
+    material: z.string(),
+    input: z.string(),
+    slot: z.string(),
+    target: z.string(),
+  })
+  .passthrough();
 export function compileWarehouseRuntime(
   bundle: SceneBundle,
   bytes: ArrayBuffer,
@@ -330,19 +334,65 @@ export function compileWarehouseRuntime(
     } else if (type !== "lift_table")
       throw new Error("Unsupported warehouse type");
   }
+  // An explicit empty connection list means disconnected. Old snapshots use the paired instance fields.
+  const ports = new Map(
+    [...devices].map(([id, d]) => [
+      id,
+      z.array(spatialInterfaceSchema).parse(d.contract.interfaces ?? []),
+    ]),
+  );
+  const portAt = (e: { instanceId: string; interfaceId: string }) =>
+    ports.get(e.instanceId)?.find((p) => p.interface_id === e.interfaceId);
+  const parents =
+    bundle.connections && mountParents(bundle.connections, portAt);
+  for (const link of bundle.connections ?? []) {
+    const first = portAt(link.a),
+      second = portAt(link.b);
+    if (
+      !first?.local_frame ||
+      !second?.local_frame ||
+      ![first, second].some(
+        (p) => p.capabilities.snap.role === "carriage_mount",
+      )
+    )
+      continue;
+    const world = (id: string) => {
+      const g = devices.get(id)!.geometry;
+      return new Matrix4().compose(
+        new Vector3(...g.world_position),
+        new Quaternion(...g.world_rotation),
+        new Vector3(1, 1, 1),
+      );
+    };
+    if (
+      !alignedMountFrames(
+        first.local_frame,
+        world(link.a.instanceId),
+        second.local_frame,
+        world(link.b.instanceId),
+      )
+    )
+      throw new Error("Installed mount frames are not aligned: " + link.id);
+  }
   for (const [id, d] of devices) {
     if (d.contract.device_type !== "lift_table") continue;
     if (d.contract.version !== "1.2.0")
       throw new Error("Unsupported lift version");
     const s = simulations.get(id)!,
       sp = specific(id),
-      rail = String(sp.mounted_on),
+      rail = parents
+        ? (parents.get(id)?.instanceId ?? "")
+        : String(sp.mounted_on),
       rd = devices.get(rail),
       rs = simulations.get(rail);
     if (
       !rd ||
       !rs ||
-      specific(rail).mounted_device !== id ||
+      rd.contract.device_type !== "linear_rail" ||
+      (!parents && specific(rail).mounted_device !== id) ||
+      (sp.mounted_on !== undefined && sp.mounted_on !== rail) ||
+      (specific(rail).mounted_device !== undefined &&
+        specific(rail).mounted_device !== id) ||
       !s.platform_geometry ||
       !s.platform_meshes ||
       !s.support_size_m ||

@@ -121,6 +121,7 @@ export class SceneGeometryReader {
   convexParts(
     indices: readonly number[],
     center: readonly number[],
+    minimumPoints = 4,
   ): [number, number, number][][] {
     return indices.flatMap((i) => {
       const n = this.data.nodes[i];
@@ -154,7 +155,7 @@ export class SceneGeometryReader {
         }
       }
       const points = [...unique.values()];
-      return points.length >= 4 ? [points] : [];
+      return points.length >= minimumPoints ? [points] : [];
     });
   }
 }

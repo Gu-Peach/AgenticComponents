@@ -37,10 +37,10 @@ export class RuntimeKernel {
       throw new Error("不是机械臂会话");
     this.program.submitAction(command);
   }
-  pickPlaceCommand(id: number) {
+  pickPlaceCommand(id: number, grasp?: string) {
     if (!(this.program instanceof RobotProgram))
       throw new Error("不是机械臂会话");
-    return this.program.pickPlaceCommand(id);
+    return this.program.pickPlaceCommand(id, grasp);
   }
   snapshot() {
     return this.program.snapshot();

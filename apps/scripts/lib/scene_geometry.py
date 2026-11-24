@@ -72,10 +72,11 @@ class SceneGeometry:
             for child in self.nodes[i].get('children',[]):visit(child)
         for i in roots:self.world(i);visit(i)
         return sorted(result)
-    def bounds(self,mesh_nodes):
+    def bounds(self,mesh_nodes,relative_to=None):
         points=[]
         for index in mesh_nodes:
             node=self.nodes[index];matrix=self.world(index)
+            if relative_to is not None:matrix=multiply(relative_to,matrix)
             for primitive in self.gltf['meshes'][node['mesh']]['primitives']:
                 accessor=self.gltf['accessors'][primitive['attributes']['POSITION']]
                 if 'min'not in accessor or 'max'not in accessor:raise ValueError('POSITION bounds missing')
@@ -87,3 +88,28 @@ class SceneGeometry:
     def geometry(self,index,owned=None):
         matrix=self.world(index)
         return {'world_position':matrix[12:15],'world_rotation':quaternion(matrix),'bounds':self.bounds(self.meshes([index]) if owned is None else owned)}
+
+    def mount_base(self, root, owned, installation=None):
+        # Measure in a rest frame with model up and a heading fixed to the device.
+        installation=installation or compose({})
+        world=multiply(installation,self.world(root)) if root is not None else installation
+        q=quaternion(world)
+        inv=[-q[0],-q[1],-q[2],q[3]]
+        def rotate(rotation,v):
+            return qmul(qmul(rotation,[*v,0]),[-rotation[0],-rotation[1],-rotation[2],rotation[3]])[:3]
+        heading=rotate(q,[0,0,1]) if root is not None else [0,0,1]
+        if math.hypot(heading[0],heading[2])<1e-6:heading=rotate(q,[0,1,0])
+        length=math.hypot(heading[0],heading[2])
+        hx,hz=heading[0]/length,heading[2]/length
+        x,y,z=world[12:15]
+        basis=[hz,0,hx,0, 0,1,0,0, -hx,0,hz,0, -hz*x+hx*z,-y,-hx*x-hz*z,1]
+        bounds=self.bounds(owned,multiply(basis,installation))
+        if not bounds:return None
+        lo,hi=bounds['min'],bounds['max']
+        a,b=(lo[0]+hi[0])/2,(lo[2]+hi[2])/2
+        position=rotate(inv,[hz*a+hx*b,lo[1],-hx*a+hz*b])
+        if root is None:
+            # Model snap coordinates are consumed before the asset import scale is applied.
+            scale=[math.hypot(*installation[4*c:4*c+3]) for c in range(3)]
+            position=[v/s for v,s in zip(position,scale)]
+        return {'position':position,'forward':rotate(inv,[0,-1,0]),'up':rotate(inv,[hx,0,hz])}

@@ -6,48 +6,48 @@
       "profile": "conveyor/machining",
       "template_revision": "1.2.0",
       "inputs": {
-        "conveyor/contract.json": "ed0ed89a0ed5d12c06a708566fc429378c1b6f89d820c591ff0b7c2c3ca85efd",
+        "conveyor/contract.json": "7bdc290a9c6ad04ba939a94a566b4d5ac0f5ee85fcd5380b3cbc9723a09e2744",
         "catalog.json#conveyor/position": "bb7ddea52bf70d5b663f2b5670e2f2b5ee0866cc284851770ef797040f94cd83",
         "public/scene/S01/contract-overrides.json#conveyor/position": "08ff52caf105e04bd40b5571d1e6ab8a7af853f0ac4b601c7a11eab09681fc04",
         "catalog.json#conveyor/machining": "b8d9bdf677c5608105852b62a2b7d46ca231c3fd784a7969eb6b200f3d426eaa",
         "catalog.json#publications/scene/S06/contracts/conveyor.json": "87badabb77469083f45acaf7f0a78d919d9ba01640b717f307c8fb92a0a232ff",
         "scene.json#asset": "46e06f1e71868b1b1a1450dd90ff7445b9424890d14c09d3e11d81f8da0d1d1e"
       },
-      "snapshot_sha256": "d52e1eed5312bbe325e05be29755102a2129b31a8d502287228ae1d918988959"
+      "snapshot_sha256": "7e24454f1d466239d2644b0d091aadce304bdb536cb3229d58c3592b3d81935b"
     },
     "contracts/machine_tool.json": {
       "type": "machine_tool",
       "profile": "machine_tool/machining",
       "template_revision": "1.0.0",
       "inputs": {
-        "machine_tool/contract.json": "2218513a1470b9ac4f28e932fd055a20ca1e4f8121d02d170d4d7f6f115f5587",
+        "machine_tool/contract.json": "e9172bf9352953b7a0bcca931c623cb5989cef7c7af1b58051d4460186a7cf34",
         "catalog.json#machine_tool/machining": "3df7f8db57638d367429cdaceef59575a81aaef58f83ff1fb5b867909221c99f",
         "public/scene/S06/contract-overrides.json#machine_tool/machining": "42d2a46ded9ee55752ada5bbfa819bb46a01118447e75690d6dee43dca965a4d",
         "catalog.json#publications/scene/S06/contracts/machine_tool.json": "4adc2b64af8c245a1a08e23ad501cbaaf54b91a8a0e0b3c1fb5dcc83ab545c9d",
         "scene.json#asset": "46e06f1e71868b1b1a1450dd90ff7445b9424890d14c09d3e11d81f8da0d1d1e"
       },
-      "snapshot_sha256": "59b9391330e2696641793c7f74b04e5e6a5ee30bf32e466139fb2e9830c8c3c9"
+      "snapshot_sha256": "d4fe028bfd0ad2ff1b0e46c624d70a2d216f8066a2214341494163c940c60652"
     },
     "contracts/material_source_station.json": {
       "type": "material_source_station",
       "profile": "material_source_station/machining",
       "template_revision": "1.0.0",
       "inputs": {
-        "material_source_station/contract.json": "a921147b264840567d5f48d3eb8bec5bfd0c7d43d935bca8e33b939382013966",
+        "material_source_station/contract.json": "5a4bd3356117de1aa228d6569c57cd63d8aadb7747b04f4167efd5a1f3cc7489",
         "catalog.json#material_source_station/position": "3ad92f6d4622d6c289bf084cc3100fc89e41715670d6938d23dfab1067bc6a5c",
         "public/scene/S01/contract-overrides.json#material_source_station/position": "7c83d3054f6a0173f586f422e7faa54afbf0e44d4cab197dfdfabf8cbc9373fb",
         "catalog.json#material_source_station/machining": "39da2bb6867c35b225d7597141dda10617ae915bfb82f4f5d78d86833560feb5",
         "catalog.json#publications/scene/S06/contracts/material_source_station.json": "bac36b5ed57a5682548ba5f378b240330586c528b47b8820b074deaacadbc496",
         "scene.json#asset": "46e06f1e71868b1b1a1450dd90ff7445b9424890d14c09d3e11d81f8da0d1d1e"
       },
-      "snapshot_sha256": "86a96520a12959601a503336b3f123dc6b18b6fe9ed76e697b475cbaa0ad4010"
+      "snapshot_sha256": "546d77e8025b5b1da90e2369be3a940980d5641cceb368004718961d27c6025c"
     },
     "contracts/robot_arm.json": {
       "type": "robot_arm",
       "profile": "robot_arm/machining",
       "template_revision": "1.1.0",
       "inputs": {
-        "robot_arm/contract.json": "d77ffd45bc8ef826977e485320b42ab38c3d3c44087e1e313845cdddce0ceaae",
+        "robot_arm/contract.json": "458c32afa4e0266a128450d2fb3b47d882828a0a5a5dca6f88acc0375a4fa647",
         "catalog.json#robot_arm/indexed": "7a6dbe83dfa2fb387e3c366afc091987ed4e2e1728a18b77559c52140bdf0e66",
         "public/scene/S11/contract-overrides.json#robot_arm/indexed": "e0a12d62e4b71ef7596641226675bb7dddea0185e79a73907c583d4ec7ba4f26",
         "catalog.json#robot_arm/handoff": "2de7452e532e094fd93cdbd250ab433c3d52a5571d5a6f453acb65e692fb2937",
@@ -58,27 +58,27 @@
         "catalog.json#publications/scene/S06/contracts/robot_arm.json": "de8fbcd298cc6598618bec6e01aa9be36be1464b812788420e27317ebb6a9761",
         "scene.json#asset": "46e06f1e71868b1b1a1450dd90ff7445b9424890d14c09d3e11d81f8da0d1d1e"
       },
-      "snapshot_sha256": "65c1a5d2f201a479347b9ebc0c5d2edda6118445838ca2367725f441c35ace22"
+      "snapshot_sha256": "ba55f178537fe65c8da4949f8bd27315767f77253f85c56893b4840bdbe9aa80"
     },
     "contracts/workpiece.json": {
       "type": "workpiece",
       "profile": "workpiece/machining",
       "template_revision": "1.0.0",
       "inputs": {
-        "workpiece/contract.json": "87ec1fc471d0bf0c473155298b46baa414b85d90a67b30cba7f791c7ecd7d249",
+        "workpiece/contract.json": "07ea7d8e110704154b42640b1f344d82ac46363d55f6c6f404376a3207dac3b4",
         "catalog.json#workpiece/position": "5ef73c4a096aabd02fffcd4bfef81eb385f15121a7decfacbaba90fe34c1dd52",
         "catalog.json#workpiece/machining": "73e59418bcc15289024e28784fe9ec7b6e6930cd8073cc4e781441f8d4f7862f",
         "catalog.json#publications/scene/S06/contracts/workpiece.json": "e35afafbbceafb0e7635f69fbb513f4a34283d25036187a623dcc7fd4a0d8be7",
         "scene.json#asset": "46e06f1e71868b1b1a1450dd90ff7445b9424890d14c09d3e11d81f8da0d1d1e"
       },
-      "snapshot_sha256": "5cae03c520640b40be1e7fc66652233902be8222fe939f6e60531f8299d6cdb3"
+      "snapshot_sha256": "c4d4014eb608fbc18b11a1ac26646d5dc3734e8ccd156441ae04356603e121ed"
     },
     "contracts/workpiece_carrier.json": {
       "type": "workpiece",
       "profile": "workpiece_carrier/machining",
       "template_revision": "1.0.0",
       "inputs": {
-        "workpiece/contract.json": "87ec1fc471d0bf0c473155298b46baa414b85d90a67b30cba7f791c7ecd7d249",
+        "workpiece/contract.json": "07ea7d8e110704154b42640b1f344d82ac46363d55f6c6f404376a3207dac3b4",
         "catalog.json#workpiece_carrier/pallets": "f77333bc1842a4f78fc51ea80488abb126c3fd3cc9811025616693c2017ecf1c",
         "public/scene/S10/contract-overrides.json#workpiece_carrier/pallets": "3cd72c456dcd706aec174e7f2812f3a2880fe7d6a045636ca7ceabe1bac54585",
         "catalog.json#workpiece_carrier/position": "49fdc914beba866ca4a53fd2c4ac8b4df0c44ca3e6679df6ab4d5796b6cc36dd",
@@ -87,7 +87,7 @@
         "catalog.json#publications/scene/S06/contracts/workpiece_carrier.json": "1834ad879fa08091ba3da0ac04f4cad6b9ca55f50bb9ed740c7b0beecfdd3c31",
         "scene.json#asset": "46e06f1e71868b1b1a1450dd90ff7445b9424890d14c09d3e11d81f8da0d1d1e"
       },
-      "snapshot_sha256": "c48471f9207680c345863064ceff74906fb3e7869d4badb29531545fd9ccdd4d"
+      "snapshot_sha256": "b36dfca97fa76e763fe61211c68715471733b1415a9be33daa11440a5939c3a6"
     }
   }
 }

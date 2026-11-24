@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { expect, it, vi } from "vitest";
 import { sceneFixture } from "./fixtures";
-import { BottleHandoffLine } from "../../src/runtime/services/BottleHandoffLine";
+import { bindRobotTransfers } from "../../src/runtime/assembly/HandoffRuntimeAssembler";
 import { createJoltBackend } from "../../src/runtime/physics/jolt/JoltPhysicsBackend";
 import {
   childrenOf,
@@ -26,12 +26,13 @@ const read = (path: string) => JSON.parse(readFileSync(path, "utf8"));
 
 it.each([
   { count: 1, canonical: false },
+  { count: 1, canonical: false, reconfigured: true },
   { count: 4, canonical: false },
   { count: 1, canonical: true },
   { count: 4, canonical: true },
 ])(
-  "transfers $count bottle(s) and delivers them inverted in Jolt (canonical=$canonical)",
-  async ({ count, canonical }) => {
+  "transfers $count material(s) in Jolt (canonical=$canonical, alternate interfaces and pose=$reconfigured)",
+  async ({ count, canonical, reconfigured }) => {
     const bundle = sceneBundleSchema.parse(
       read(folder + "/.generated/scene.bundle.json"),
     );
@@ -53,6 +54,50 @@ it.each([
       goal.expected.material_ids = ["M01"];
       goal.expected.material_count = 1;
       goal.all[0].items = goal.all[0].items.slice(0, 1);
+    }
+    if (reconfigured) {
+      // Change the actual interface references throughout the fixture, including the DSL and independent goal.
+      const rename = (key: string, value: unknown) => {
+        if (
+          key === "frames" &&
+          value &&
+          typeof value === "object" &&
+          "head" in value &&
+          "tail" in value
+        )
+          return { cap_port: value.head, base_port: value.tail };
+        return value === "head"
+          ? "cap_port"
+          : value === "tail"
+            ? "base_port"
+            : value;
+      };
+      Object.assign(bundle, JSON.parse(JSON.stringify(bundle, rename)));
+      Object.assign(goal, JSON.parse(JSON.stringify(goal, rename)));
+      const output = bundle.devices.find((d) => d.instance_id === "C2")!;
+      // Keep the same stable support face, turn 15° about its normal and monitor a transverse
+      // material axis. Both actual release yaw and the measured conveyor direction now matter.
+      const yaw = Math.PI / 12;
+      const posePolicy = {
+        material_axis_local: [1, 0, 0],
+        required_axis_world: [Math.cos(yaw), 0, -Math.sin(yaw)],
+      };
+      const policy = (
+        output.contract.type_specific_contract as {
+          transport_pose: Record<string, unknown>;
+        }
+      ).transport_pose;
+      Object.assign(policy, posePolicy);
+      Object.assign(goal.all[0].required_transport_pose, posePolicy);
+      for (const endpoint of Object.values(
+        output.locations as Record<string, unknown>,
+      )) {
+        const pose = (endpoint as { material_pose: Record<string, unknown> })
+          .material_pose;
+        Object.assign(pose, {
+          orientation_quaternion: [Math.cos(yaw / 2), 0, -Math.sin(yaw / 2), 0],
+        });
+      }
     }
     if (canonical) {
       const root = decodeProcessNode(bundle.process.body);
@@ -191,11 +236,11 @@ it("checks the actual receiver grip and frame before a held-start request", asyn
     compiled = compileSceneRuntime(bundle, bytes, goal, "validation");
   const physics = await createJoltBackend(compiled.physics);
   try {
-    const line = new BottleHandoffLine(compiled, physics),
+    const { actions: line, observed } = bindRobotTransfers(compiled, physics),
       cfg = compiled.handoff!,
       arm = line.arm(cfg.receiver);
     const material = cfg.jobs[0].material,
-      body = line.body(material);
+      body = observed.body(material);
     if (!physics.isBodyActive!(body.id))
       physics.activateBodies!([
         {

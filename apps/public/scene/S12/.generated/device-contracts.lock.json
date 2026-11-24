@@ -6,7 +6,7 @@
       "profile": "conveyor/declarative",
       "template_revision": "1.2.0",
       "inputs": {
-        "conveyor/contract.json": "ed0ed89a0ed5d12c06a708566fc429378c1b6f89d820c591ff0b7c2c3ca85efd",
+        "conveyor/contract.json": "7bdc290a9c6ad04ba939a94a566b4d5ac0f5ee85fcd5380b3cbc9723a09e2744",
         "catalog.json#conveyor/position": "bb7ddea52bf70d5b663f2b5670e2f2b5ee0866cc284851770ef797040f94cd83",
         "public/scene/S01/contract-overrides.json#conveyor/position": "08ff52caf105e04bd40b5571d1e6ab8a7af853f0ac4b601c7a11eab09681fc04",
         "catalog.json#conveyor/handoff": "2fccd0f4661a26711dcc0e00dad881ee548e67cf9b89d723136ce3cfc9827f2a",
@@ -16,14 +16,14 @@
         "catalog.json#publications/scene/S12/contracts/conveyor.json": "a35ead3e79186f8b19398fbaf153c35de0455b65f92dc9707e68c8525492cadc",
         "scene.json#asset": "8d366b45394c08ca4a518ab86b47cc435d754ccb567398a7c644fb34f261c6db"
       },
-      "snapshot_sha256": "d2ab82fdad1e09f8563471547a00886412964afc0307453b84966c046e1110c4"
+      "snapshot_sha256": "d8acf7b18b3a093c8c184b263c0180553e5c4df489ba2898e7e46aac2471561c"
     },
     "contracts/robot_arm.json": {
       "type": "robot_arm",
       "profile": "robot_arm/declarative",
       "template_revision": "1.1.0",
       "inputs": {
-        "robot_arm/contract.json": "d77ffd45bc8ef826977e485320b42ab38c3d3c44087e1e313845cdddce0ceaae",
+        "robot_arm/contract.json": "458c32afa4e0266a128450d2fb3b47d882828a0a5a5dca6f88acc0375a4fa647",
         "catalog.json#robot_arm/indexed": "7a6dbe83dfa2fb387e3c366afc091987ed4e2e1728a18b77559c52140bdf0e66",
         "public/scene/S11/contract-overrides.json#robot_arm/indexed": "e0a12d62e4b71ef7596641226675bb7dddea0185e79a73907c583d4ec7ba4f26",
         "catalog.json#robot_arm/handoff": "2de7452e532e094fd93cdbd250ab433c3d52a5571d5a6f453acb65e692fb2937",
@@ -33,34 +33,34 @@
         "catalog.json#publications/scene/S12/contracts/robot_arm.json": "415a0a3baa3ec733fab51bc2c340fe6db173133d37f02d5bc4af04a0fdff8503",
         "scene.json#asset": "8d366b45394c08ca4a518ab86b47cc435d754ccb567398a7c644fb34f261c6db"
       },
-      "snapshot_sha256": "e357d2131c460c02213979e1aebbdc181a858c9be13d986f8ab4908c87e589d3"
+      "snapshot_sha256": "5eea9fb6b456be2e91893e75bb4100a50a31ae9f4e5666c5ba22184b0cded852"
     },
     "contracts/rotary_table.json": {
       "type": "rotary_table",
       "profile": "rotary_table/indexed-conveying",
       "template_revision": "1.0.0",
       "inputs": {
-        "rotary_table/contract.json": "61bfb74e1973fbab98878f9a59a42a7757a20b8ef2fece8ce5071706ea9e3b12",
+        "rotary_table/contract.json": "c3bdc48f317dcb370616a3d591d7c9e81c935c2072abeac9e70eefd0975be000",
         "catalog.json#rotary_table/indexed-conveying": "5a0de2073ff2f335d01537413979120f574c42b87b2cf94d36366f1cb44428ee",
         "public/scene/S12/contract-overrides.json#rotary_table/indexed-conveying": "29adf1093ef61eb8c6f11b745369843c00decee89358b08657c8abec82c3ef66",
         "catalog.json#publications/scene/S12/contracts/rotary_table.json": "de098565e3cc1ef66e8b321cf53d1fd0b98c73cc61b834be7cdb39efe670baac",
         "scene.json#asset": "8d366b45394c08ca4a518ab86b47cc435d754ccb567398a7c644fb34f261c6db"
       },
-      "snapshot_sha256": "bb4b43a284dbd2b5d466c5b2f3370bc6ff1e5f87d711caaa5fbde72ec7c8fcac"
+      "snapshot_sha256": "a737f5f5f8068175544b6595834bb5de3e74cc8bd3e06f6c2d69d8fa39770510"
     },
     "contracts/workpiece.json": {
       "type": "workpiece",
       "profile": "workpiece/declarative",
       "template_revision": "1.0.0",
       "inputs": {
-        "workpiece/contract.json": "87ec1fc471d0bf0c473155298b46baa414b85d90a67b30cba7f791c7ecd7d249",
+        "workpiece/contract.json": "07ea7d8e110704154b42640b1f344d82ac46363d55f6c6f404376a3207dac3b4",
         "catalog.json#workpiece/position": "5ef73c4a096aabd02fffcd4bfef81eb385f15121a7decfacbaba90fe34c1dd52",
         "catalog.json#workpiece/declarative": "dba7305756d804d87292fbcf619b8dc0655cecc8a2c4f672edd76e1825047264",
         "public/scene/S03/contract-overrides.json#workpiece/declarative": "703a21ddc4b893fe3ec42a5b887b7dcdf3a6f22c4ee62d53007af1d606681d4b",
         "catalog.json#publications/scene/S12/contracts/workpiece.json": "b4dcd5e999bb7a67b3af8c775ecb267629f1833c2ed75fb2f2cbb47dd6e55fb1",
         "scene.json#asset": "8d366b45394c08ca4a518ab86b47cc435d754ccb567398a7c644fb34f261c6db"
       },
-      "snapshot_sha256": "d0c6c6860e19266ab79a22e3627cd5c2a56adf88c0cf2120d17b27cd1b2833b7"
+      "snapshot_sha256": "481409711deb259f05fba57da131aef6046a9c3a11b18fecb89151978e5b186f"
     }
   }
 }

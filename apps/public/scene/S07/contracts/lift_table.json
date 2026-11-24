@@ -164,7 +164,21 @@
       "description": "Explicit candidate simulation parameter; not a hardware measurement"
     }
   },
-  "interfaces": [],
+  "interfaces": [
+    {
+      "interface_id": "mount_base",
+      "name": "设备底部安装面",
+      "local_frame_pending": true,
+      "capabilities": {
+        "snap": {
+          "role": "mount_base",
+          "accepts": [
+            "carriage_mount"
+          ]
+        }
+      }
+    }
+  ],
   "signal_ports": [
     {
       "port_id": "move_to_level",

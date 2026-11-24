@@ -8,7 +8,8 @@ describe("robot contracts", () => {
   it("loads and saves a simulation-labelled real model without physical arm bodies", () => {
     const { project, def, scene } = robotSetup();
     expect(parseProject(project)).toEqual(project);
-    expect(def.spatialInterfaces).toEqual([]);
+    expect(def.spatialInterfaces?.map(p => p.interface_id)).toEqual(["mount_base"]);
+    expect(def.spatialInterfaces?.[0].local_frame?.forward).toEqual([0, -1, 0]);
     expect(scene.physics).toBeUndefined();
     expect(scene.model.calibration.source).toContain("simulation");
   });

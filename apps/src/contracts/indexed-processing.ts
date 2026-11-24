@@ -7,6 +7,8 @@ export interface IndexedProcessingConfig {
   robot: string;
   source: string;
   slot: string;
+  /** Encoder coordinates for the fixture at the two declared docking stations. */
+  indexing: { home: number; process: number; stations: readonly number[] };
   pivot: Vec3;
   axis: Vec3;
   humanBody: string;

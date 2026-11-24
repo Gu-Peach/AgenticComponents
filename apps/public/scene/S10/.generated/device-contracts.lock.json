@@ -6,7 +6,7 @@
       "profile": "conveyor/declarative",
       "template_revision": "1.2.0",
       "inputs": {
-        "conveyor/contract.json": "ed0ed89a0ed5d12c06a708566fc429378c1b6f89d820c591ff0b7c2c3ca85efd",
+        "conveyor/contract.json": "7bdc290a9c6ad04ba939a94a566b4d5ac0f5ee85fcd5380b3cbc9723a09e2744",
         "catalog.json#conveyor/position": "bb7ddea52bf70d5b663f2b5670e2f2b5ee0866cc284851770ef797040f94cd83",
         "public/scene/S01/contract-overrides.json#conveyor/position": "08ff52caf105e04bd40b5571d1e6ab8a7af853f0ac4b601c7a11eab09681fc04",
         "catalog.json#conveyor/handoff": "2fccd0f4661a26711dcc0e00dad881ee548e67cf9b89d723136ce3cfc9827f2a",
@@ -16,14 +16,14 @@
         "catalog.json#publications/scene/S10/contracts/conveyor.json": "a35ead3e79186f8b19398fbaf153c35de0455b65f92dc9707e68c8525492cadc",
         "scene.json#asset": "7ef3db59a262df086b6fa49c3b01495e1a5bb73807015051f98168399d7628e7"
       },
-      "snapshot_sha256": "b0432e1394b84153bd55088033c6b1d6fff7a3ce2beb0014140021b024769779"
+      "snapshot_sha256": "365c6146914289e150e3d2875bfc4079f538ac36c0e80e3ea88845c32687270c"
     },
     "contracts/robot_arm.json": {
       "type": "robot_arm",
       "profile": "robot_arm/declarative",
       "template_revision": "1.1.0",
       "inputs": {
-        "robot_arm/contract.json": "d77ffd45bc8ef826977e485320b42ab38c3d3c44087e1e313845cdddce0ceaae",
+        "robot_arm/contract.json": "458c32afa4e0266a128450d2fb3b47d882828a0a5a5dca6f88acc0375a4fa647",
         "catalog.json#robot_arm/indexed": "7a6dbe83dfa2fb387e3c366afc091987ed4e2e1728a18b77559c52140bdf0e66",
         "public/scene/S11/contract-overrides.json#robot_arm/indexed": "e0a12d62e4b71ef7596641226675bb7dddea0185e79a73907c583d4ec7ba4f26",
         "catalog.json#robot_arm/handoff": "2de7452e532e094fd93cdbd250ab433c3d52a5571d5a6f453acb65e692fb2937",
@@ -33,34 +33,34 @@
         "catalog.json#publications/scene/S10/contracts/robot_arm.json": "415a0a3baa3ec733fab51bc2c340fe6db173133d37f02d5bc4af04a0fdff8503",
         "scene.json#asset": "7ef3db59a262df086b6fa49c3b01495e1a5bb73807015051f98168399d7628e7"
       },
-      "snapshot_sha256": "910af8c0dba8c9a3bed7a1e4316600ea46a35376dfcd2274bc216df200c225b1"
+      "snapshot_sha256": "5d26bceac0142d0e4f3cd6029c5c6a9847d39a7856a47b9fa02f7a4976a66ee6"
     },
     "contracts/workpiece.json": {
       "type": "workpiece",
       "profile": "workpiece/declarative",
       "template_revision": "1.0.0",
       "inputs": {
-        "workpiece/contract.json": "87ec1fc471d0bf0c473155298b46baa414b85d90a67b30cba7f791c7ecd7d249",
+        "workpiece/contract.json": "07ea7d8e110704154b42640b1f344d82ac46363d55f6c6f404376a3207dac3b4",
         "catalog.json#workpiece/position": "5ef73c4a096aabd02fffcd4bfef81eb385f15121a7decfacbaba90fe34c1dd52",
         "catalog.json#workpiece/declarative": "dba7305756d804d87292fbcf619b8dc0655cecc8a2c4f672edd76e1825047264",
         "public/scene/S03/contract-overrides.json#workpiece/declarative": "703a21ddc4b893fe3ec42a5b887b7dcdf3a6f22c4ee62d53007af1d606681d4b",
         "catalog.json#publications/scene/S10/contracts/workpiece.json": "b4dcd5e999bb7a67b3af8c775ecb267629f1833c2ed75fb2f2cbb47dd6e55fb1",
         "scene.json#asset": "7ef3db59a262df086b6fa49c3b01495e1a5bb73807015051f98168399d7628e7"
       },
-      "snapshot_sha256": "c85378fe7effbbdb11e80c455043748982057eb277dde582540206f1bf1a66a2"
+      "snapshot_sha256": "fe5fe29573bed9a3cce5aaf046baf8bbc10574dabbc00c8b30c290a4ed23dbfb"
     },
     "contracts/workpiece_carrier.json": {
       "type": "workpiece",
       "profile": "workpiece_carrier/pallets",
       "template_revision": "1.0.0",
       "inputs": {
-        "workpiece/contract.json": "87ec1fc471d0bf0c473155298b46baa414b85d90a67b30cba7f791c7ecd7d249",
+        "workpiece/contract.json": "07ea7d8e110704154b42640b1f344d82ac46363d55f6c6f404376a3207dac3b4",
         "catalog.json#workpiece_carrier/pallets": "f77333bc1842a4f78fc51ea80488abb126c3fd3cc9811025616693c2017ecf1c",
         "public/scene/S10/contract-overrides.json#workpiece_carrier/pallets": "3cd72c456dcd706aec174e7f2812f3a2880fe7d6a045636ca7ceabe1bac54585",
         "catalog.json#publications/scene/S10/contracts/workpiece_carrier.json": "a9d5c1c229cddbd4d34c26f2f644f4955af7888a87744797c2077808f9f94052",
         "scene.json#asset": "7ef3db59a262df086b6fa49c3b01495e1a5bb73807015051f98168399d7628e7"
       },
-      "snapshot_sha256": "799c37935117b6f341dee67a053d64581196b73b7d654bef5113785f3caaf4d2"
+      "snapshot_sha256": "63ccd945564975053949df216447056d838b1d2d7feb4a301bd3c7cf53c82b53"
     }
   }
 }

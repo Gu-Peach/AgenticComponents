@@ -23,7 +23,6 @@
       "status": "pending"
     },
     "fixed_node": "__Geometry___008c",
-    "mounted_device": "L1",
     "moving_node": "CraneA_00Bn",
     "axis": [
       1,
@@ -45,6 +44,23 @@
         0.05
       ],
       "limits_source": "candidate stop envelope inside measured rail; not hardware limits"
+    },
+    "carriage_mount": {
+      "position": [
+        0.475,
+        0,
+        0.13500039
+      ],
+      "forward": [
+        0,
+        0,
+        1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
     }
   },
   "docking": {

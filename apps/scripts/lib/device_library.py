@@ -8,10 +8,13 @@ import copy
 import hashlib
 import json
 import os
+import struct
+import math
 from pathlib import Path
 from tempfile import NamedTemporaryFile
 
 from condition_model import validate_condition_model
+from scene_geometry import SceneGeometry, compose, qmul
 
 
 APPS = Path(__file__).resolve().parents[2]
@@ -157,7 +160,10 @@ def dispatch_signature(contract, behavior):
     """The device call's executable ABI. Exclude geometry and descriptive labels."""
     ports = {p["port_id"]: p for p in contract["signal_ports"]}
     name = behavior["behavior_id"]
-    payload = contract["runtime_execution_contract"].get("payload_templates", {}).get(name, {}).get("fields", {})
+    declaration = contract["runtime_execution_contract"].get("payload_templates", {}).get(name, {})
+    payload, optional = declaration.get("fields", {}), declaration.get("optional_fields", {})
+    if set(payload) & set(optional) or any(not isinstance(v, str) for v in optional.values()):
+        raise ValueError("Invalid optional payload field for " + name)
     def io(direction):
         return [[id, ports[id]["plc_type"], ports[id].get("unit", "1")]
                 for id in sorted(behavior[direction + "_signals"])]
@@ -196,7 +202,7 @@ def dispatch_signature(contract, behavior):
         [[k, v] for k, v in sorted(payload.items())], io("input"), io("output"),
         predicates(condition["preconditions"]), predicates(condition["sustaining_conditions"]),
         predicates(result["checks"]),
-    ]
+    ] + ([{"optional_fields": sorted([k, v] for k, v in optional.items())}] if optional else [])
 
 
 class DeviceLibrary:
@@ -244,6 +250,10 @@ class DeviceLibrary:
         else:
             patch = record.get("overrides", {})
         result = apply_override(base, patch)
+        existing = {port["interface_id"] for port in result["interfaces"]}
+        for port in self.templates[kind]["interfaces"]:
+            if port["interface_id"] in {"mount_base", "carriage_mount"} and port["interface_id"] not in existing:
+                result["interfaces"].append(copy.deepcopy(port))
         result["transport_behaviors"] = select_entries(result["transport_behaviors"], "behavior_id", record["behaviors"])
         result["signal_ports"] = select_entries(result["signal_ports"], "port_id", record["ports"])
         canonical_type = self.catalog["legacy_types"].get(result["device_type"], result["device_type"])
@@ -320,6 +330,31 @@ class DeviceLibrary:
                                  "sha256": manifest["model_sha256"]}
             elif category != "modles" or len(parts) != 3 or parts[2] != "schema.json":
                 raise ValueError(f"Invalid model contract destination: {filename}")
+            if category == "modles":
+                model = confined(source.parent, spec["asset"]["model_key"])
+                glb = model.read_bytes()
+                model_hash = digest(glb)
+                if spec["asset"].get("sha256") not in (None,model_hash):
+                    raise ValueError(f"Stale model geometry: {model}")
+                size, kind = struct.unpack_from("<II", glb, 12)
+                if glb[:4] != b"glTF" or kind != 0x4e4f534a or size > len(glb)-20:
+                    raise ValueError("Invalid model for mount frame")
+                geometry = SceneGeometry(json.loads(glb[20:20+size]))
+                roots = geometry.gltf["scenes"][geometry.gltf.get("scene", 0)]["nodes"]
+                imported = spec["asset"].get("import_transform", {})
+                angles = imported.get("rotation_euler",[0,0,0])
+                rotation = [0,0,0,1]
+                for axis, angle in enumerate(angles):
+                    turn = [0,0,0,math.cos(angle/2)]
+                    turn[axis] = math.sin(angle/2)
+                    rotation = qmul(rotation,turn)
+                placement = compose({"translation":imported.get("position",[0,0,0]),
+                                     "rotation":rotation,"scale":imported.get("scale",[1,1,1])})
+                frame = geometry.mount_base(None, geometry.meshes(roots), placement)
+                if frame:
+                    port = next(p for p in spec["interfaces"] if p["interface_id"] == "mount_base")
+                    port.pop("local_frame_pending", None)
+                    port["local_frame"] = frame
             contents = json_bytes(spec)
             # Keep identical releases usable when an existing checkout has LF
             # instead of CRLF. A package's public hash identifies exact bytes.
@@ -335,6 +370,8 @@ class DeviceLibrary:
             input_hashes["catalog.json#publications/" + filename] = semantic_hash(profile_name)
             if category == "scene":
                 input_hashes["scene.json#asset"] = semantic_hash(spec["asset"])
+            else:
+                input_hashes[spec["asset"]["model_key"]] = model_hash
             locks.setdefault(package, {})[snapshot] = {
                 "type": record["type"], "profile": profile_name,
                 "template_revision": self.templates[record["type"]]["version"],

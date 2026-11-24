@@ -3,44 +3,51 @@
 import { WarehouseActionAdapter } from "@/runtime/adapters/scene/WarehouseActionAdapter";
 import {
   axisJob,
-  type DeviceMountService,
-} from "@/runtime/services/DeviceMountService";
-import type { WarehouseLocation } from "@/contracts/warehouse";
-import { resolveDock } from "@/domain/runtime/DockingTargetResolver";
+  type LinearAxisTrajectory,
+} from "@/runtime/mechanisms/LinearAxisTrajectory";
+export interface RailDriveBinding {
+  id: string;
+  drive: LinearAxisTrajectory;
+  namedTarget: (key: string) => number;
+  move: (position: number) => void;
+  at: (position: number) => boolean;
+  cancel: () => void;
+  stopped: () => boolean;
+  actual: () => number;
+}
 export class LinearRailSceneAdapter extends WarehouseActionAdapter {
-  constructor(
-    scene: string,
-    run: string,
-    mount: DeviceMountService,
-    locations: ReadonlyMap<string, WarehouseLocation>,
-  ) {
+  constructor(scene: string, run: string, binding: RailDriveBinding) {
     super(
-      mount.config.rail,
+      binding.id,
       scene,
       run,
       ["move_to_location", "move_to_position", "stop_motion"],
       (r) => {
-        const stop = r.behavior === "stop_motion",
-          l = locations.get(String(r.arguments.target));
+        const stop = r.behavior === "stop_motion";
         const target = stop
-          ? mount.rail.position
+          ? binding.drive.position
           : r.behavior === "move_to_location"
-            ? l
-              ? resolveDock(mount.config, l).rail
-              : NaN
+            ? binding.namedTarget(String(r.arguments.target))
             : Number((r.arguments.position_m as { value: number })?.value);
         if (
           !Number.isFinite(target) ||
-          target < mount.config.railLimits[0] ||
-          target > mount.config.railLimits[1]
+          target < binding.drive.limits[0] ||
+          target > binding.drive.limits[1]
         )
           throw new Error("Invalid rail target");
-        return axisJob(mount, "rail", target, stop);
+        return axisJob(
+          binding.drive,
+          target,
+          stop,
+          binding.move,
+          binding.at,
+          binding.cancel,
+        );
       },
-      () => mount.stopped,
+      binding.stopped,
       () => ({
-        actual_position: mount.actual("rail"),
-        actual_speed: mount.rail.velocity,
+        actual_position: binding.actual(),
+        actual_speed: binding.drive.velocity,
       }),
     );
   }

@@ -8,7 +8,13 @@ import {
 import { prepareScenePackage } from "../../src/services/prepareScenePackage";
 import { projectRepository } from "../../src/services/BrowserProjectRepository";
 import { useWorkspace } from "../../src/stores/workspace";
-import type { IndexingCellMotion } from "../../src/runtime/services/IndexingCellMotion";
+import { sceneFixture } from "./fixtures";
+import { compileSceneRuntime } from "../../src/domain/runtime/compileSceneRuntime";
+import { processNodeSchema } from "../../src/contracts/process-ir";
+import {
+  assembleIndexedProcessingRuntime,
+  type CellState,
+} from "../../src/runtime/assembly/IndexedProcessingRuntimeAssembler";
 import type { SceneRuntimeSnapshot } from "../../src/runtime/engine/SceneRuntimeProgram";
 
 async function prepare() {
@@ -46,13 +52,7 @@ async function prepare() {
   }
 }
 function state(s: SceneRuntimeSnapshot) {
-  return s.observations.samples["indexing/state"].value as ReturnType<
-    IndexingCellMotion["snapshot"]
-  > & {
-    active: string | null;
-    onSource: boolean;
-    delivered: { material: string; target: string; tick: number }[];
-  };
+  return s.observations.samples["indexing/state"].value as CellState;
 }
 
 it("imports the S11 cell and completes two positive half turns and a measured tool operation per identity", async () => {
@@ -228,3 +228,78 @@ it("retains a suspended human load on stop and restores the initial batch after 
   expect(initial.delivered).toEqual([]);
   reset.dispose();
 }, 60000);
+
+it("executes the configured process angle and an extra DSL index without assuming two turns", async () => {
+  const { bundle, bytes, goal } = sceneFixture("S11");
+  const table = bundle.devices.find(
+    (d) => d.contract.device_type === "rotary_table",
+  )!;
+  const specific = table.contract.type_specific_contract as {
+    indexing_policy: {
+      home_deg: number;
+      process_deg: number;
+      stations_deg?: number[];
+    };
+  };
+  const processAngle = 90;
+  specific.indexing_policy.process_deg = processAngle;
+  specific.indexing_policy.stations_deg = [0, 30, processAngle];
+  const root = processNodeSchema.parse(bundle.process.body);
+  if (root.kind !== "repeat" || root.body.kind !== "seq")
+    throw new Error("Expected workpiece sequence");
+  const sequence = root.body.children;
+  const index = sequence.findIndex(
+    (n) => n.kind === "invoke" && n.behavior === "rotate_to_station",
+  );
+  const toProcess = sequence[index];
+  if (toProcess.kind !== "invoke") throw new Error("Missing index request");
+  const angle = toProcess.arguments.angleTag;
+  if (angle.kind !== "quantity") throw new Error("Missing DSL quantity");
+  angle.args[0] = { kind: "literal", value: processAngle };
+  const intermediate = structuredClone(toProcess);
+  intermediate.id = "inspection_dock";
+  const target = intermediate.arguments.angleTag;
+  if (target.kind !== "quantity") throw new Error("Missing DSL quantity");
+  target.args[0] = { kind: "literal", value: 30 };
+  sequence.splice(index, 0, intermediate);
+  bundle.calls.push({
+    ...bundle.calls.find((c) => c.node === toProcess.id)!,
+    node: intermediate.id,
+  });
+  bundle.process.body = root;
+  const compiled = compileSceneRuntime(bundle, bytes, goal, "validation");
+  const { program } = await assembleIndexedProcessingRuntime(
+    "S11",
+    "alternative-docks",
+    compiled,
+  );
+  try {
+    program.start();
+    let s = program.snapshot();
+    for (let i = 0; i < 72000 && program.needsStep(); i++)
+      s = program.step(1 / 60);
+    expect(
+      s.status,
+      JSON.stringify({
+        error: s.error,
+        recent: s.process.activations.slice(-2),
+      }),
+    ).toBe("succeeded");
+    const w = state(s);
+    expect(w.delivered).toHaveLength(compiled.indexedProcessing!.jobs.length);
+    for (const job of compiled.indexedProcessing!.jobs) {
+      const turns = w.rotations.filter((r) => r.material === job.material);
+      expect(turns.map((r) => r.toDeg - r.fromDeg)).toEqual([
+        30,
+        processAngle - 30,
+        360 - processAngle,
+      ]);
+      expect(turns[1].measuredAngleDeg).toBeCloseTo(processAngle, 1);
+      expect(
+        w.operations.filter((op) => op.material === job.material),
+      ).toHaveLength(1);
+    }
+  } finally {
+    program.dispose();
+  }
+}, 120000);

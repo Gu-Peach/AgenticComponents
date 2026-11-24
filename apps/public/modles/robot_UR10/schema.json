@@ -94,7 +94,37 @@
       "max": 0.4
     }
   },
-  "interfaces": [],
+  "interfaces": [
+    {
+      "interface_id": "mount_base",
+      "name": "设备底部安装面",
+      "capabilities": {
+        "snap": {
+          "role": "mount_base",
+          "accepts": [
+            "carriage_mount"
+          ]
+        }
+      },
+      "local_frame": {
+        "position": [
+          -0.03616900436077361,
+          0.0,
+          -0.31574428489347284
+        ],
+        "forward": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    }
+  ],
   "signal_ports": [
     {
       "port_id": "commandTag",

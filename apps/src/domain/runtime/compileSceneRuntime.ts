@@ -222,7 +222,7 @@ export function compileSceneRuntime(
       [manifest.sourceDevice, manifest.entryDevice],
     ]);
     warnings.push(
-      "双臂交接使用候选 UR10 运动学及虚拟夹具，倒置稳定性由 Jolt 接触和姿态验证。",
+      "双臂交接采用候选运动学和虚拟夹具；输送姿态和支承由 Jolt 实测验证。",
     );
     return {
       bundle,

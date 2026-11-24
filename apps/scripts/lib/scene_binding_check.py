@@ -93,7 +93,28 @@ def validate_inputs(ir,devices,goal,runtime_profile=None):
                 p=schema[key];value=evaluate(expr,env);check(value,p['type'],p.get('unit','1'),p)
                 if p.get('semantic_type')=='location_ref':need(value in locations,'Unknown named location')
                 if n['behavior']=='transport_to_position' and key=='target':need(value in device.get('position_targets',{}),'Unknown scene transport target')
+                if n['behavior']=='rotate_to_station' and key=='angleTag':
+                    policy=contract.get('type_specific_contract',{}).get('indexing_policy',{})
+                    if 'home_deg' in policy and 'process_deg' in policy:
+                        stations=policy.get('stations_deg',[policy['home_deg'],policy['process_deg']])
+                        need(isinstance(stations,list) and all(type(v) in (float,int) and 0<=v<360 for v in stations)
+                             and policy['home_deg'] in stations and policy['process_deg'] in stations,'Invalid indexing stations on '+id)
+                        need(value.value is None or value.value in stations,'Unknown indexing station at '+n['id'])
                 if p['type']=='recipe_ref':need(value in device.get('recipes',{}),'Unknown device recipe')
+                if ((n['behavior'],key) in {('move_to_position','position_m'),('lift_to_level','move_to_level')}
+                        and isinstance(value,Quantity) and value.value is not None):
+                    sim=contract.get('type_specific_contract',{}).get('simulation',{})
+                    if sim.get('limits_m'):
+                        offset=0
+                        if n['behavior']=='lift_to_level':
+                            geom=sim.get('platform_geometry')
+                            if geom and 'geometry' in device:
+                                from scene_geometry import qmul
+                                q=geom['world_rotation']
+                                anchor=qmul(qmul(q,[*sim['anchor_local_m'],0]),[-q[0],-q[1],-q[2],q[3]])
+                                offset=geom['world_position'][1]+anchor[1]-device['geometry']['world_position'][1]
+                        lo,hi=sim['limits_m']
+                        need(lo<=value.value-offset<=hi,f"{id}.{n['id']}.{key}: axis target outside travel limits")
             if 'payload' in n:
                 payload=n['payload'];key=payload['args'][0]['value'];record=device['command_payloads'].get(key)
                 allowed={n['behavior']}
@@ -101,9 +122,13 @@ def validate_inputs(ir,devices,goal,runtime_profile=None):
                     # Explicit existing signatures choose the acquire/handoff or held/place phase.
                     allowed.update(b['behavior_id'] for b in bs if b.get('behavior_id') in ('pick_and_handoff','place_held_material') and key==id+'.'+b['behavior_id'])
                 need(record and record['instance']==id and record['behavior'] in allowed,'Payload redirects behavior')
-                need(set(record['fields'])==set(payload['kwargs']),'Payload fields differ')
+                required=record['fields'];optional=record.get('optional_fields',{})
+                need(not (required.keys() & optional.keys()),'Ambiguous required and optional payload fields')
+                need(required.keys() <= payload['kwargs'].keys() <= (required.keys() | optional.keys()),'Payload fields differ')
+                types={**required,**optional}
                 fields={key:evaluate(expr,env) for key,expr in payload['kwargs'].items()}
-                for key,typ in record['fields'].items():
+                for key in fields:
+                    typ=types[key]
                     if typ=='grasp_frame_ref':
                         material=devices.get(fields.get('material'),{})
                         grasping=material.get('contract',{}).get('type_specific_contract',{}).get('grasping',{})

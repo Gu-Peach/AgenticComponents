@@ -101,15 +101,18 @@ export function compileMachiningManifest(
       items: z.array(z.object({ material: name, slot: name })),
     })
     .parse(goal.all.find((g) => g.kind === "processed_and_returned"));
-  const slots = new Map(items.map((i) => [i.material, i.source]));
+  const deliverySlots = new Map(
+    processed.items.map((i) => [i.material, i.slot]),
+  );
+  const sourceSlots = new Set(items.map((i) => i.source));
   if (
     !sameIds(departure.ids, palletIds) ||
     !sameIds(
       processed.items.map((i) => i.material),
       materialIds,
     ) ||
-    processed.items.some((i) => slots.get(i.material) !== i.slot) ||
-    new Set(slots.values()).size !== slots.size
+    new Set(deliverySlots.values()).size !== items.length ||
+    sourceSlots.size !== items.length
   )
     throw new Error(
       "Machining return-slot or departure goal differs from production",
@@ -260,6 +263,9 @@ export function compileMachiningManifest(
       const d = devices.get(i.material)!,
         l = carrier.locations[i.source];
       if (
+        carrier.locations[deliverySlots.get(i.material)!]?.frame !==
+          "carrier_local_m" ||
+        carrier.locations[deliverySlots.get(i.material)!]?.owner !== p.id ||
         !l ||
         l.owner !== p.id ||
         l.frame !== "carrier_local_m" ||
@@ -299,6 +305,7 @@ export function compileMachiningManifest(
     stationTarget,
     exitTarget,
     cycleTicks: Math.ceil(cycleSeconds * 60),
+    deliverySlots,
     pallets,
     targets,
   };

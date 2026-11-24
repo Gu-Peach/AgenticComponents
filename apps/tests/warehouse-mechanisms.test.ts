@@ -1,6 +1,6 @@
 import { expect, it } from "vitest";
 import { LinearAxisTrajectory } from "../src/runtime/mechanisms/LinearAxisTrajectory";
-import { StorageRackRuntime } from "../src/runtime/services/StorageRackRuntime";
+import { StorageRackRuntime } from "../src/devices/storage_rack/behavior";
 import { resolveDock } from "../src/domain/runtime/DockingTargetResolver";
 import { compileSceneRuntime } from "../src/domain/runtime/compileSceneRuntime";
 import { warehouseFixture } from "./warehouse-fixtures";
