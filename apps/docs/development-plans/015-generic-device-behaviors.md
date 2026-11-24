@@ -123,7 +123,7 @@
 
 **同名的条件、端口和观测怎样对应？** 每个设备的表格先用“行为说明”说明动作的对象和用途，再列出前置与完成条件的具体绑定。绑定表里的“入／出”均从设备视角读，`= false`、`≤` 等是要计算的判据。一项条件可以同时读多个来源。端口的方向／PLC 类型见上文端口表；物理观测、参数、授权和请求账本在表内点名。采用公共有限动作协议时，结果用同一次请求的 `done`、`result_id` 发布。持续动作看实时反馈，被动动作看外部交接证据。仅作为目标或参考模板的绑定要在准备时找到提供者才可启用。
 
-以已运行的机械臂 `pick_and_place` 为例，可以从契约一直追到实值。下面列出三个条件叶子，单个叶子满足仅证明其所代表的子条件。
+以当前从空夹具取件的机械臂 `pick_and_place` 入口为例，可以从契约一直追到实值。下面列出三个条件叶子，单个叶子满足仅证明其所代表的子条件。
 
 | 行为阶段／条件 | 契约里怎样绑定 | 求值时读什么 |
 | --- | --- | --- |
@@ -137,29 +137,47 @@
 
 ### 机械臂 `robot_arm`
 
-**逐条件绑定（按行为和执行模式）**
+**通用行为及条件绑定**
 
-“入／出”为设备端口，BOOL 判断写出电平值。场景观测以样本键加字段表示（例如 `R/robot_state.qdot`），`r` 为本次请求。表内的“成功回执”均由请求账本核对本轮、激活、设备和请求号；顶层有限任务另发布 **出** `done: BOOL`、`result_id: DINT`。内部步骤的结束用于推进原任务。
+下表采用拟议设备库的通用名称。现行独立命令和整场景入口的支持范围仍按已验证的型号配置选择。“入／出”为设备端口，BOOL 判断写出电平值。场景观测以样本键加字段表示（例如 `R/robot_state.qdot`），`r` 为本次请求。表内的“成功回执”均由请求账本核对本轮、激活、设备和请求号；顶层有限任务另发布 **出** `done: BOOL`、`result_id: DINT`。内部步骤的结束用于推进原任务。
 
-| 行为／模式 | 行为说明 | 前置条件 → 输入、反馈或观测判定 | 完成条件 → 证据或信号值 |
+| 行为 | 行为说明 | 前置条件 → 输入、反馈或观测判定 | 完成条件 → 证据或信号值 |
 | --- | --- | --- | --- |
-| `move_to_pose`（通用场景） | 把工具中心点移到指定位置和姿态。回位时，目标取自该机械臂绑定的初始姿态。 | `move_to_pose.pre_1` 读 **出** `busy == false AND error == false`，且 `pose_plan_valid == true`：工具刚体未持件，目标位姿通过规划预检。普通位置目标由 IK 收敛判定，配置的归位目标校核 GLB 零位。 | `move_to_pose.completion` 读成功回执，`R/robot_state.targetError ≤ ik_position_tolerance_m`、各 `abs(qdot) ≤ settle_speed_rad_s`、`orientationSatisfied == true`。S04 仅接受归位目标，其原生判定读取 `handoff/state.arms[R].atHome`。 |
-| `move_joints`（UR10 单设备命令／步骤） | 把六个关节分别转到指定角度，让各轴同步到达目标关节配置。 | **入** `enableTag == true`；载荷 `steps[].q` 为六个有限关节目标且在各自限位内，接单校验实例、请求号、空闲和无故障。 | 轨迹结束且各关节角误差的最大值 ≤ 该执行器容差、各 `abs(qdot) ≤ settleSpeed`。关节值和速度来自运行状态，单步结束由任务执行器确认。 |
-| `grip`（UR10） | 用夹具抓住指定工件，建立工件随工具一起运动的持有关系。 | **入** `enableTag == true`；运行观测 `tool_empty == true`、`material_in_capture == true`、`payload_compatible == true`，核对本件身份、来源授权与相对速度上限。 | 物理抓持约束实际存在且挂接本件，产生 `grip.succeeded` 步骤观测；**出** `holding_material == true`。手动夹具模式另可使用 `gripperTag` 作命令。 |
-| `release`（UR10 物理放置） | 解除夹具对当前工件的持有。UR10 的物理放置模式还会等工件在目标支承面放稳。 | **入** `enableTag == true`；观测 `holdingMaterialId == M`、`release_pose_valid == true`，且会话已选目标支承（`target_reserved`）。 | 夹持约束解除、`GraspService.placed() == true`，即目标支承、落点与速度等条件成立，输出 `holding_material == false`。只允许自由释放的型号可单独声明解除约束证据。 |
-| `pick_and_place`（通用场景） | 完成一次取放任务：从源点抓起指定工件，搬到目标点，放稳、松开并按任务要求撤离。 | `pick_and_place.pre_1` 读 **出** `busy/error/holding_material` 均为 false，`source_pickable` 要求 `world/state.bodies[M + "/body"].supports` 含源支承、同件已稳且质量 ≤ 最大载荷，移动源还读带组 `drive_state.maxSpeed ≤ speedTolerance`；`target_admissible` 从当前目标占用或槽位台账判断可接。 | `pick_and_place.completion` 读成功回执、与本次物料关联的 **出** `holding_material == false`，以及 `R/robot_state.placementConfirmed == true`。 |
-| `pick_and_handoff`（S04） | 由供方机械臂抓起工件并送到交接位，两臂对准各自的抓取口后，将同一件工件的持有关系移交给接方。 | `pick_and_handoff.ready` 读 `handoff/state.active == M`、`pickReady == true`、双方 `arms[臂].atHome && !held`，**出** 入口带 `abs(actual_speed) ≤ 0.02 m/s`。授权要求本次取得两台机械臂、入口带和工件资源。 | `pick_and_handoff.complete` 读成功回执，`arms[接方].held == M`、供方空手、`transfers` 有同件供方到接方的移交记录。 |
-| `place_held_material`（S04） | 从接方已经持件的状态开始，将手中的工件按指定朝向放到目标支承面并松手。 | `place_held_material.ready` 读接方 `held == M && stopped`、供方退回且空手、**出** 出口带 `abs(actual_speed) ≤ 0.02 m/s`，当前主体匹配。 | `place_held_material.complete` 读成功回执、接方空手、`handoff/state.onOutfeed == true` 且 `placed` 记录含 M；落带时核对本件倒置姿态与支承。 |
-| `process_material`（S11） | 用装在机械臂上的工具对准工件加工口，执行要求的工艺并退位。例如 S11 用焊枪尖对准焊接点并保持规定时长。 | `process_material.ready` 从 `indexing/state` 读 `active == tableMaterial == M`、人已退位、台已在加工角停稳、未有该件加工记录。工件已固定，载荷指定的工具与工件加工口匹配，资源获准后写 **入** `start_process=true`、`request_id`。 | 在加工阶段以实测枪尖 `positionError ≤ process_position_tolerance_m`、`angleErrorDeg ≤ process_angle_tolerance_deg` 且工具静止累计有效时长。退回后 `process_material.completion` 读 `robotHome == true`、匹配本件和请求的 `operations` 记录以及成功回执。 |
-| `execute_job`（UR10 顶层） | 按载荷给出的顺序执行一组机械臂步骤，所有步骤归属同一个顶层请求。 | **入** `enableTag == true`、无故障、账本无忙请求，步骤载荷通过校验和规划。含抓取的任务还查 `pause_pick != true`。网关提交 `start_pick`、`request_id`。 | `RobotJobRunner.finished == true` 且相应账本请求成功，运行观测 `execute_job.succeeded == true`，投影该请求的 `done/result_id`。 |
-| `wait_time`（内部步骤） | 让当前任务在本步骤等待指定的有效仿真时长，然后继续下一步。 | 等待时长有效，入 `enableTag == true`，开始累计该步骤的仿真时间。 | 本步骤有效累计时间达到指定秒数，推进原任务。 |
-| `wait_signal`（内部步骤） | 让当前任务停在本步骤，直到所选输入达到期望值；超过约定等待时限时报告超时。 | 等待时限有效。入 `enableTag == true`，选定一个可读的入 `in1Tag` 至 `in4Tag` 并给出期望 BOOL。 | `signals.peek(portId) == expected` 时推进步骤；超过步骤时限报告失败。 |
-| `set_output`（内部步骤） | 在任务运行到本步骤时，将选定的工艺输出写为指定布尔值，供外部设备读取。 | **入** `enableTag == true`；载荷选定一个可写 **出** `out1Tag` 至 `out4Tag` 和合法 BOOL。 | 当前仿真步成功提交 `outNTag = requestedValue` 后推进步骤。 |
-| `pause_pick_intake`（接单控制） | 关闭新抓取任务的接单入口，在途任务按原阶段继续。 | UR10 接单许可输入 `pause_pick == true`。 | 暂停锁存生效，新抓取请求被拒绝；当前运动仍按原任务推进。 |
-| `resume_pick_intake`（接单控制） | 重新开放抓取接单入口，后续新请求可以按正常条件申请执行。 | UR10 撤销入 `pause_pick`，或通过支持的兼容入口 `resume_pick` 清除同一锁存。 | 读到 `pause_pick == false`，重新接受符合条件的新抓取请求。 |
-| `hold_motion`（在途控制） | 让正在运动的机械臂减速停稳，保留当前任务、阶段和持件关系。 | 入 `enableTag == false`，使在途任务进入减速保持。 | `holding == true` 且各关节 `abs(qdot) ≤ settleSpeed`。holding 指运动保持；持件反馈为 `holding_material`。 |
-| `resume_motion`（在途控制） | 让已保持的机械臂从当前关节状态继续执行同一任务的剩余步骤。 | 入 `enableTag == true`，原任务与步骤仍有效。 | 保持状态 `holding == false` 且 `enableTag == true`，继续执行保留的阶段。 |
-| `publish_robot_state`（持续观测） | 持续发布机械臂当前任务、关节、夹持与故障状态，供监视和工艺判断读取。 | 本实例状态、信号表及任务账本可读。 | 将实际抓持、当前请求和故障状态投影到 **出** `holding_material`、`accepted/busy/done/result_id/error/error_code` 及阶段输出。不为发布动作生成单次完成。 |
+| `move_to_pose` | 把工具中心点移到指定位置和姿态。回位时，目标取自该机械臂绑定的初始姿态。 | `move_to_pose.pre_1` 读 **出** `busy == false AND error == false`，且 `pose_plan_valid == true`：工具刚体未持件，目标位姿通过规划预检。普通位置目标由 IK 收敛判定，配置的归位目标校核 GLB 零位。 | `move_to_pose.completion` 读成功回执，`R/robot_state.targetError ≤ ik_position_tolerance_m`、各 `abs(qdot) ≤ settle_speed_rad_s`、`orientationSatisfied == true`。S04 仅接受归位目标，其原生判定读取 `handoff/state.arms[R].atHome`。 |
+| `move_joints` | 把六个关节分别转到指定角度，让各轴同步到达目标关节配置。 | **入** `enableTag == true`；载荷 `steps[].q` 为六个有限关节目标且在各自限位内，接单校验实例、请求号、空闲和无故障。 | 轨迹结束且各关节角误差的最大值 ≤ 该执行器容差、各 `abs(qdot) ≤ settleSpeed`。关节值和速度来自运行状态，单步结束由任务执行器确认。 |
+| `grip` | 用夹具抓住指定工件，建立工件随工具一起运动的持有关系。 | **入** `enableTag == true`；运行观测 `tool_empty == true`、`material_in_capture == true`、`payload_compatible == true`，核对本件身份、来源授权与相对速度上限。 | 物理抓持约束实际存在且挂接本件，产生 `grip.succeeded` 步骤观测；**出** `holding_material == true`。手动夹具模式另可使用 `gripperTag` 作命令。 |
+| `release` | 解除夹具对当前工件的持有。UR10 的物理放置模式还会等工件在目标支承面放稳。 | **入** `enableTag == true`；观测 `holdingMaterialId == M`、`release_pose_valid == true`，且会话已选目标支承（`target_reserved`）。 | 夹持约束解除、`GraspService.placed() == true`，即目标支承、落点与速度等条件成立，输出 `holding_material == false`。只允许自由释放的型号可单独声明解除约束证据。 |
+| `pick_and_place` | 将指定工件移至目标并完成交付。完整取放从空手取件开始，持件续行从搬运与放置阶段开始。抓取口、目标类型和放置姿态由型号与本次任务绑定。 | 完整取放沿用现有 `pick_and_place.pre_1`：出 `busy/error/holding_material` 均为 false，`source_pickable`、`target_admissible` 成立。迁移后的持件续行要求显式选定该起点，夹具约束的持有者、工件 ID 和抓取口均与本次请求匹配。持有其他工件或缺少有效约束时拒绝。 | 目标为支承面时，核对同件在目标实际放稳、本臂已松手及本次成功回执；已有抓放入口读取 `holding_material == false`、`placementConfirmed == true`。目标为另一夹具时，核对同件约束已移交、供方空手及匹配的双臂交接回执。要求退位时再核验该终态。 |
+| `process_material` | 用装在机械臂上的工具对准工件加工口，执行要求的工艺并退位。例如 S11 用焊枪尖对准焊接点并保持规定时长。 | `process_material.ready` 从 `indexing/state` 读 `active == tableMaterial == M`、人已退位、台已在加工角停稳、未有该件加工记录。工件已固定，载荷指定的工具与工件加工口匹配，资源获准后写 **入** `start_process=true`、`request_id`。 | 在加工阶段以实测枪尖 `positionError ≤ process_position_tolerance_m`、`angleErrorDeg ≤ process_angle_tolerance_deg` 且工具静止累计有效时长。退回后 `process_material.completion` 读 `robotHome == true`、匹配本件和请求的 `operations` 记录以及成功回执。 |
+| `wait_time` | 让当前任务在本步骤等待指定的有效仿真时长，然后继续下一步。 | 等待时长有效，入 `enableTag == true`，开始累计该步骤的仿真时间。 | 本步骤有效累计时间达到指定秒数，推进原任务。 |
+| `wait_signal` | 让当前任务停在本步骤，直到所选输入达到期望值；超过约定等待时限时报告超时。 | 等待时限有效。入 `enableTag == true`，选定一个可读的入 `in1Tag` 至 `in4Tag` 并给出期望 BOOL。 | `signals.peek(portId) == expected` 时推进步骤；超过步骤时限报告失败。 |
+| `set_output` | 在任务运行到本步骤时，将选定的工艺输出写为指定布尔值，供外部设备读取。 | **入** `enableTag == true`；载荷选定一个可写 **出** `out1Tag` 至 `out4Tag` 和合法 BOOL。 | 当前仿真步成功提交 `outNTag = requestedValue` 后推进步骤。 |
+| `pause_pick_intake` | 关闭新抓取任务的接单入口，在途任务按原阶段继续。 | UR10 接单许可输入 `pause_pick == true`。 | 暂停锁存生效，新抓取请求被拒绝；当前运动仍按原任务推进。 |
+| `resume_pick_intake` | 重新开放抓取接单入口，后续新请求可以按正常条件申请执行。 | UR10 撤销入 `pause_pick`，或通过支持的兼容入口 `resume_pick` 清除同一锁存。 | 读到 `pause_pick == false`，重新接受符合条件的新抓取请求。 |
+| `hold_motion` | 让正在运动的机械臂减速停稳，保留当前任务、阶段和持件关系。 | 入 `enableTag == false`，使在途任务进入减速保持。 | `holding == true` 且各关节 `abs(qdot) ≤ settleSpeed`。holding 指运动保持；持件反馈为 `holding_material`。 |
+| `resume_motion` | 让已保持的机械臂从当前关节状态继续执行同一任务的剩余步骤。 | 入 `enableTag == true`，原任务与步骤仍有效。 | 保持状态 `holding == false` 且 `enableTag == true`，继续执行保留的阶段。 |
+| `publish_robot_state` | 持续发布机械臂当前任务、关节、夹持与故障状态，供监视和工艺判断读取。 | 本实例状态、信号表及任务账本可读。 | 将实际抓持、当前请求和故障状态投影到 **出** `holding_material`、`accepted/busy/done/result_id/error/error_code` 及阶段输出。不为发布动作生成单次完成。 |
+
+**抓放的已用入口与迁移方式**
+
+抓瓶头或瓶尾决定工具对接工件的哪个位置。抓放从哪一步开始，由该工件此刻的真实持有者和本次请求共同决定。在 S04，R1 从输送带抓瓶头；双方对准后，交接服务把同一瓶子的抓持约束转给抓瓶尾的 R2。随后 R2 已经持瓶，直接将瓶子按目标姿态放到出口带。两段任务保留各自的请求身份和完成证据。
+
+统一行为脚本时，这两个旧 ID 分别映射到抓放流程中的“抓取并向接方交付”和“从已持件开始放置”。下表保留当前执行契约。现行单设备命令校验仍要求完整的 `pick_and_place` 依次包含抓取和释放，持件续行是后续迁移设计。
+
+| 抓放兼容入口 | 行为说明 | 原前置条件绑定 | 原完成条件绑定 |
+| --- | --- | --- | --- |
+| `pick_and_handoff` | 由供方机械臂抓起工件并送到交接位，两臂对准各自的抓取口后，将同一件工件的持有关系移交给接方。 | `pick_and_handoff.ready` 读 `handoff/state.active == M`、`pickReady == true`、双方 `arms[臂].atHome && !held`，**出** 入口带 `abs(actual_speed) ≤ 0.02 m/s`。授权要求本次取得两台机械臂、入口带和工件资源。 | `pick_and_handoff.complete` 读成功回执，`arms[接方].held == M`、供方空手、`transfers` 有同件供方到接方的移交记录。 |
+| `place_held_material` | 从接方已经持件的状态开始，将手中的工件按指定朝向放到目标支承面并松手。 | `place_held_material.ready` 读接方 `held == M && stopped`、供方退回且空手、**出** 出口带 `abs(actual_speed) ≤ 0.02 m/s`，当前主体匹配。 | `place_held_material.complete` 读成功回执、接方空手、`handoff/state.onOutfeed == true` 且 `placed` 记录含 M；落带时核对本件倒置姿态与支承。 |
+
+**单台机械臂任务入口**
+
+`execute_job` 提交一份有序步骤清单，由一台机械臂在一个请求号下执行。典型用途是把移动、等待设备就绪和写工艺输出组合成一个设备任务；跨设备的顺序由场景 DSL 编排。直接提交抓放任务时可走 `pick_and_place`，两种入口均只接受一次顶层请求。
+
+| 任务入口 | 行为说明 | 接受条件 | 完成条件 |
+| --- | --- | --- | --- |
+| `execute_job` | 按载荷给出的顺序执行一组机械臂步骤，所有步骤归属同一个顶层请求。 | **入** `enableTag == true`、无故障、账本无忙请求，步骤载荷通过校验和规划。含抓取的任务还查 `pause_pick != true`。网关提交 `start_pick`、`request_id`。 | `RobotJobRunner.finished == true` 且相应账本请求成功，运行观测 `execute_job.succeeded == true`，投影该请求的 `done/result_id`。 |
+
+现有测试示例：等待 `in1Tag == true`（超时 1 仿真秒），随后写 `out1Tag = true`，再等待 0.03 仿真秒。三步执行完毕，才回报这一个请求成功。当前十二个发布场景的 DSL 都没有直接调用此入口。[命令载荷](../../src/contracts/robot-command.ts) · [实际执行用例](../../tests/robot-runtime.test.ts)
 
 [抓放条件绑定](../../src/runtime/assembly/SceneConditionBindings.ts) · [双臂交接](../../src/runtime/assembly/HandoffRuntimeAssembler.ts) · [加工条件](../../src/runtime/assembly/IndexedProcessingRuntimeAssembler.ts) · [UR10 信号与状态](../../src/runtime/programs/RobotProgram.ts) · [机械臂步骤执行](../../src/runtime/templates/robot/RobotJobRunner.ts)
 
@@ -170,8 +188,8 @@
 | --- | --- | --- |
 | 定位或回位：`move_to_pose`、`move_joints` | `Ready(臂)`，目标坐标或关节角有效、可达、行程合法；带件时核对载荷。回位以配置的静止姿态为目标。 | 位姿目标按 TCP 位置及指定的朝向核验，关节目标按各关节角核验，再检查关节速度。产生 `AtTarget(臂,T)`、`Stopped(臂)`。 |
 | 抓取：`grip` | `Empty(臂)`、指定件可接管，抓取接口兼容且达到捕获距离、相对速度及载荷要求。可用 `gripperTag` 请求夹持。 | 指定工具与同件实际建立约束，产生 `HeldBy(M,臂)`，同步 `holding_material`。 |
-| 放开或放置：`release`、`place_held_material` | `HeldBy(M,臂)`。定点放置还要求 `CanReceive(D,M)`、目标可达；松手阶段核对到位与接收条件。 | 自由放开只证明夹具已解除与该件的约束。定点放置另需 `SupportedAt(M,D)` 或接方实际持件，生成 `Transferred(M,S,D,…)`；所选任务若含退位，再核对目标退位姿态。 |
-| 抓放或持件交接：`pick_and_place`、`pick_and_handoff` | 空手、源有指定件且可取、搬运路径可行；放置目标可接或接方抓具可用，资源可获准。 | 抓放以目标端同件支承、供方空手及约定撤离为证；双臂交接以接方 `HeldBy(M,接方)`、供方空手及原子移交记录为证。 |
+| 夹具释放：`release` | 本臂实际持有指定件；约定稳定放置时检查目标和支承。 | 确认原夹持解除，物理放置模式另需确认同件在目标放稳。 |
+| 通用抓放：`pick_and_place` | 按请求绑定的起始状态检查空夹具与可取来源，或检查本臂确实持有同一工件。按目标类型核验支承面或接方夹具。 | 分别以同件稳定放置或接方实收为终点；持件续行复用搬运和放置阶段。 |
 | 工具加工：`process_material` | 指定工件在工位稳定且满足工艺所需固定方式；工具、物料端口与配方匹配，目标可达，作业区许可。对准是进入加工阶段的门槛。 | 在 `Aligned(tool,port,M)` 和工艺互锁持续有效期间累计周期，得到 `Processed(M,…)`；约定退位时还需 `AtTarget(臂,退位点)`。工艺可保留工件外形。 |
 | 执行程序和内部步骤：`execute_job`、`wait_time`、`wait_signal`、`set_output` | 程序和参数合法，接单时设备就绪。等待时长有效；等待端口可读且类型匹配；输出端口可写且写入权归当前执行器。 | 程序的所有必需步骤和终态均确认。等待时长按有效仿真时间，等待信号按新鲜采样与期望值，写输出按已提交的对应端口值。保留独立命令网关与任务步骤的调用边界。 |
 | 接单许可与运动保持：`pause_pick_intake`、`resume_pick_intake`、`hold_motion`、`resume_motion`、`publish_robot_state` | 按控制意图核对接单开关或当前运动／保持任务及使能条件；状态发布读取当前设备快照。 | 暂停／恢复接单以接单状态为证。保持以减速停稳和保留原任务为证，恢复以同一任务继续原阶段为证。状态发布持续输出关节、夹持和任务反馈。 |
@@ -388,9 +406,9 @@ S07 驱动使用 `execute`、`request_id` 的请求握手；`actual_position`、
 | `release_material` | 把平台上的工件交到目标支承位置，接收确认后解除平台对它的承载关系。 | `mount.held == M` 且来源归属匹配，双轴对齐目的地，目标支承、容量、预留与路径有效。 | 目标接收确认，`owners[M] == 目标`、平台解除该件的承载。目标为格位时同时核对同请求的存取记录。 |
 | `transfer_material` | 沿已声明的对接路线转移指定工件。S07 的源或目标必须是本平台，并用短程直线移动模拟交接；带横移机构的型号按配置输送。 | S07 从载荷取 M／来源／目标，核对已声明路线、稳定支承、目标可用、轴对位、净空和虚拟交接距离。横移模块型号另要求 `transfer_ready == true`。 | 同件通过接收确认并提交目的地交接回执；传到平台时建立承载约束。 |
 | `hold_lift` | 让升降轴受控停在当前位置并保持平台；支持在途保持的型号同时保存原任务。 | 参考型号按 `enableTag` 请求保持，要求保有载荷与原任务资源；S07 按轴保持命令及本模式准入核验。 | 升降轴 `settled == true`、`moving == false`。对在途保持型号还需读取原目标与任务身份，保持后不得作为原升降任务已到位。 |
-| `resume_lift`（参考型号） | 让支持恢复的型号退出保持状态，继续同一升降任务的原目标。 | `enableTag == true`、保留任务仍有效，故障解除、资源有效、目标未覆盖。 | 读取任务状态转入原任务运行阶段，最终到位由原定位请求另行核对。 |
-| `raise_transfer_chains`（参考型号） | 抬起选配的辅助横移链，使链条到达上工作位，准备接托或横移工件。 | `transfer_module == true`、主轴停稳、行程与资源允许；入 `popupTag == true`。 | 辅助机构实测到上位。按型号提供的实际位置或限位观测确认，启动命令和 `transfer_ready` 单独均不足以证明到位。 |
-| `lower_transfer_chains`（参考型号） | 将选配的辅助横移链降至下工作位，同时维持工件已建立的支承关系。 | `transfer_module == true`、主轴停稳、工件有可靠支承或已交接；入 `popupTag == false`。 | 辅助机构实测到下位，工件原有持有或支承关系仍有效。 |
+| `resume_lift` | 让支持恢复的型号退出保持状态，继续同一升降任务的原目标。 | `enableTag == true`、保留任务仍有效，故障解除、资源有效、目标未覆盖。 | 读取任务状态转入原任务运行阶段，最终到位由原定位请求另行核对。 |
+| `raise_transfer_chains` | 抬起选配的辅助横移链，使链条到达上工作位，准备接托或横移工件。 | `transfer_module == true`、主轴停稳、行程与资源允许；入 `popupTag == true`。 | 辅助机构实测到上位。按型号提供的实际位置或限位观测确认，启动命令和 `transfer_ready` 单独均不足以证明到位。 |
+| `lower_transfer_chains` | 将选配的辅助横移链降至下工作位，同时维持工件已建立的支承关系。 | `transfer_module == true`、主轴停稳、工件有可靠支承或已交接；入 `popupTag == false`。 | 辅助机构实测到下位，工件原有持有或支承关系仍有效。 |
 
 S07 虚拟交接与参考型号的辅助链属于不同配置。S07 的物理完成回执匹配 `runId`、`activationId` 和 `requestId`。[升降适配器](../../src/runtime/adapters/scene/LiftSceneAdapter.ts) · [物料接触与归属提交](../../src/runtime/services/MaterialTransferService.ts) · [选配横移接口](../../../test1/dsl_new/asset_contracts/assets/lift_transport.json)
 

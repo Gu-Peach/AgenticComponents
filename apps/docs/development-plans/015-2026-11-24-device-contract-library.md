@@ -82,6 +82,8 @@ apps/src/devices/
 | `workpiece_carrier` | — | `be_transported_loaded`、`cancel_carrier_reservation`、`carry_material`、`confirm_load`、`publish_carrier_state`、`release_material`、`reserve_carrier_slot` |
 | `processing_station` | — | `clamp`、`process_material`、`unclamp` |
 
+**机械臂名称的迁移口径。** 上表按原 ID 盘点。统一设备库把取件接口、起始持有状态和交付目标分别绑定到通用 `pick_and_place`。`pick_and_handoff` 保留供方交件及双臂移交的兼容绑定，`place_held_material` 保留接方已持同件时的放置入口。`execute_job` 单列为提交单台机械臂步骤序列的任务入口。原有请求载荷、资源互锁和各自的完成证据继续回归。
+
 ### 3.2 场景包清单以外的入口
 
 | 来源 | 还需保留的内容 |
