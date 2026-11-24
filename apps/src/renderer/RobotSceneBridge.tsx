@@ -44,13 +44,16 @@ export function RobotSceneBridge({
     const s = runtimeController.snapshot(),
       active =
         s.instanceId === instanceId &&
-        !!s.robot &&
-        ["ready", "running", "paused"].includes(s.status);
+        !!(s.robot || s.workcell) &&
+        (["ready", "running", "paused"].includes(s.status) || !!s.workcell);
     bindings.forEach((b, i) => {
       b.node.quaternion.copy(b.rest);
       if (active)
         b.node.quaternion.multiply(
-          new Quaternion().setFromAxisAngle(b.axis, s.robot!.q[i]),
+          new Quaternion().setFromAxisAngle(
+            b.axis,
+            (s.workcell?.q ?? s.robot!.q)[i],
+          ),
         );
     });
     if (bindings.length) model.updateMatrixWorld(true);

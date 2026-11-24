@@ -1,0 +1,684 @@
+{
+  "contract_version": "1.1",
+  "schema_type": "DeviceSpec",
+  "schema_id": "standard.linear_rail",
+  "device_spec_id": "standard.linear_rail",
+  "version": "1.1.0",
+  "device_type": "linear_rail",
+  "display_name": "直线滑轨：搭载设备水平定位",
+  "description": "滑轨类型契约。设备型号选择适用行为并绑定真实模型、参数与条件提供者。",
+  "asset": {
+    "model_format": "glb",
+    "model_key": "unbound/linear_rail",
+    "binding_status": "requires_instance_asset_mapping"
+  },
+  "params_schema": {
+    "travel_speed_mps": {
+      "type": "number",
+      "required": true,
+      "default": 0.2,
+      "unit": "m/s",
+      "min": 0.001,
+      "max": 2,
+      "mutability": "stopped_only",
+      "description": "实验速度上限，待标定"
+    },
+    "travel_accel_mps2": {
+      "type": "number",
+      "required": true,
+      "default": 0.4,
+      "unit": "m/s²",
+      "min": 0.001,
+      "max": 5,
+      "mutability": "stopped_only",
+      "description": "实验加速度，待标定"
+    },
+    "position_tolerance_m": {
+      "type": "number",
+      "required": true,
+      "default": 0.005,
+      "unit": "m",
+      "min": 0.0001,
+      "max": 0.1,
+      "mutability": "stopped_only",
+      "description": "定位容差，待标定"
+    },
+    "settle_speed_mps": {
+      "type": "number",
+      "required": true,
+      "default": 0.001,
+      "unit": "m/s",
+      "min": 0,
+      "max": 0.05,
+      "mutability": "stopped_only",
+      "description": "停稳速度阈值，待标定"
+    }
+  },
+  "interfaces": [],
+  "signal_ports": [
+    {
+      "port_id": "target_position",
+      "direction": "input",
+      "value_type": "number",
+      "plc_type": "REAL",
+      "unit": "m",
+      "description": "target_position；必须关联当前运行与请求",
+      "signal_role": "request_parameter",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "execute",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "unit": "1",
+      "description": "execute；必须关联当前运行与请求",
+      "signal_role": "request_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "request_id",
+      "direction": "input",
+      "value_type": "integer",
+      "plc_type": "DINT",
+      "unit": "1",
+      "description": "正 DINT 请求号，接单前保持稳定，接单时与参数一同冻结。",
+      "signal_role": "request_identity",
+      "retention": "stable_through_acceptance"
+    },
+    {
+      "port_id": "stop",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "unit": "1",
+      "description": "stop；必须关联当前运行与请求",
+      "signal_role": "request_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "enable",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "unit": "1",
+      "description": "enable；必须关联当前运行与请求",
+      "signal_role": "request_parameter",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "actual_position",
+      "direction": "output",
+      "value_type": "number",
+      "plc_type": "REAL",
+      "unit": "m",
+      "description": "actual_position；必须关联当前运行与请求",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "actual_speed",
+      "direction": "output",
+      "value_type": "number",
+      "plc_type": "REAL",
+      "unit": "m/s",
+      "description": "actual_speed；必须关联当前运行与请求",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "accepted",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "unit": "1",
+      "description": "当前请求已接受，保持到启动请求撤销。",
+      "signal_role": "acceptance",
+      "retention": "until_request_retracted"
+    },
+    {
+      "port_id": "busy",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "unit": "1",
+      "description": "busy；必须关联当前运行与请求",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "done",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "unit": "1",
+      "description": "本请求的成功结果，与 result_id 关联，保持到下一次请求被接受。持续动作不生成单次完成。",
+      "signal_role": "latched_result",
+      "retention": "until_next_request_accepted"
+    },
+    {
+      "port_id": "result_id",
+      "direction": "output",
+      "value_type": "integer",
+      "plc_type": "DINT",
+      "unit": "1",
+      "description": "本次成功或失败结果对应的请求编号。",
+      "signal_role": "result_identity",
+      "retention": "until_next_request_accepted"
+    },
+    {
+      "port_id": "error",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "unit": "1",
+      "description": "error；必须关联当前运行与请求",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "error_code",
+      "direction": "output",
+      "value_type": "integer",
+      "plc_type": "INT",
+      "unit": "1",
+      "description": "error_code；必须关联当前运行与请求",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "reset",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "unit": "1",
+      "signal_role": "reset_request",
+      "retention": "latched_until_ack_or_new_request",
+      "description": "在故障原因解除并允许恢复时请求复位，保留尚未交接的载荷。"
+    }
+  ],
+  "transport_behaviors": [
+    {
+      "behavior_id": "move_to_location",
+      "display_name": "move_to_location",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "linear_rail.warehouse@1",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {
+        "target": {
+          "type": "string",
+          "required": true,
+          "semantic_type": "location_ref",
+          "description": "Named scene endpoint"
+        }
+      },
+      "trigger": {
+        "authority": "single_gateway",
+        "request_context": "run/instance/activation/request/subject"
+      },
+      "input_signals": [
+        "execute",
+        "request_id"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "ready",
+            "label": "Valid named target, stopped axes and source/receiver availability",
+            "source": "observation",
+            "key": "move_to_location.ready",
+            "equals": true
+          },
+          {
+            "id": "authorized",
+            "label": "All movement, material and endpoint resources owned",
+            "source": "authorization",
+            "key": "move_to_location.authorized",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "Current run and active transfer remain valid",
+            "source": "observation",
+            "key": "move_to_location.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "Correlated actual pose, support and ownership evidence",
+        "checks": [
+          {
+            "id": "completion",
+            "label": "This request has confirmed physical completion",
+            "source": "observation",
+            "key": "move_to_location.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      }
+    },
+    {
+      "behavior_id": "move_to_position",
+      "display_name": "move_to_position",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "linear_rail.warehouse@1",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {
+        "position_m": {
+          "type": "number",
+          "unit": "m",
+          "required": true
+        }
+      },
+      "trigger": {
+        "authority": "single_gateway",
+        "request_context": "run/instance/activation/request/subject"
+      },
+      "input_signals": [
+        "execute",
+        "request_id"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "ready",
+            "label": "Valid named target, stopped axes and source/receiver availability",
+            "source": "observation",
+            "key": "move_to_position.ready",
+            "equals": true
+          },
+          {
+            "id": "authorized",
+            "label": "All movement, material and endpoint resources owned",
+            "source": "authorization",
+            "key": "move_to_position.authorized",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "Current run and active transfer remain valid",
+            "source": "observation",
+            "key": "move_to_position.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "Correlated actual pose, support and ownership evidence",
+        "checks": [
+          {
+            "id": "completion",
+            "label": "This request has confirmed physical completion",
+            "source": "observation",
+            "key": "move_to_position.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      }
+    },
+    {
+      "behavior_id": "stop_motion",
+      "display_name": "stop_motion",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "linear_rail.warehouse@1",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "authority": "single_gateway",
+        "request_context": "run/instance/activation/request/subject"
+      },
+      "input_signals": [
+        "execute",
+        "request_id"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "ready",
+            "label": "Valid named target, stopped axes and source/receiver availability",
+            "source": "observation",
+            "key": "stop_motion.ready",
+            "equals": true
+          },
+          {
+            "id": "authorized",
+            "label": "All movement, material and endpoint resources owned",
+            "source": "authorization",
+            "key": "stop_motion.authorized",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "Current run and active transfer remain valid",
+            "source": "observation",
+            "key": "stop_motion.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "Correlated actual pose, support and ownership evidence",
+        "checks": [
+          {
+            "id": "completion",
+            "label": "This request has confirmed physical completion",
+            "source": "observation",
+            "key": "stop_motion.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      }
+    }
+  ],
+  "type_specific_contract": {
+    "motion": {
+      "joint_type": "prismatic",
+      "axis_frame": "scene_world_m",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "position_reference": "mounted_device_root_displacement_from_glb_rest",
+      "limits_status": "pending_calibration"
+    },
+    "ownership": {
+      "fixed_geometry": "rail device only",
+      "moving_geometry": "mounted lift only",
+      "composition": "rail displacement followed by lift and handler local motion",
+      "single_writer": true
+    }
+  },
+  "runtime_contract": {
+    "observation_definitions": {
+      "move_to_location.ready": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "Valid named target, stopped axes and source/receiver availability",
+        "expression_ref": "move_to_location.ready"
+      },
+      "move_to_location.sustaining": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "Current run and active transfer remain valid",
+        "expression_ref": "move_to_location.sustaining"
+      },
+      "move_to_location.completion": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "This request has confirmed physical completion",
+        "expression_ref": "move_to_location.completion"
+      },
+      "move_to_position.ready": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "Valid named target, stopped axes and source/receiver availability",
+        "expression_ref": "move_to_position.ready"
+      },
+      "move_to_position.sustaining": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "Current run and active transfer remain valid",
+        "expression_ref": "move_to_position.sustaining"
+      },
+      "move_to_position.completion": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "This request has confirmed physical completion",
+        "expression_ref": "move_to_position.completion"
+      },
+      "stop_motion.ready": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "Valid named target, stopped axes and source/receiver availability",
+        "expression_ref": "stop_motion.ready"
+      },
+      "stop_motion.sustaining": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "Current run and active transfer remain valid",
+        "expression_ref": "stop_motion.sustaining"
+      },
+      "stop_motion.completion": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "This request has confirmed physical completion",
+        "expression_ref": "stop_motion.completion"
+      }
+    },
+    "authorization_definitions": {
+      "move_to_location.authorized": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "All movement, material and endpoint resources owned",
+        "expression_ref": "move_to_location.authorized"
+      },
+      "move_to_position.authorized": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "All movement, material and endpoint resources owned",
+        "expression_ref": "move_to_position.authorized"
+      },
+      "stop_motion.authorized": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "All movement, material and endpoint resources owned",
+        "expression_ref": "stop_motion.authorized"
+      }
+    },
+    "condition_model": {
+      "schema_version": "ac-condition/0.1",
+      "execution_mode": "declaration_only",
+      "unknown_policy": "three_valued_fail_closed",
+      "bindings": {},
+      "expressions": {
+        "move_to_location.ready": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "move_to_location.ready"
+          }
+        },
+        "move_to_location.authorized": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "authorization",
+            "key": "move_to_location.authorized"
+          }
+        },
+        "move_to_location.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "move_to_location.sustaining"
+          }
+        },
+        "move_to_location.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "move_to_location.completion"
+          }
+        },
+        "move_to_position.ready": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "move_to_position.ready"
+          }
+        },
+        "move_to_position.authorized": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "authorization",
+            "key": "move_to_position.authorized"
+          }
+        },
+        "move_to_position.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "move_to_position.sustaining"
+          }
+        },
+        "move_to_position.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "move_to_position.completion"
+          }
+        },
+        "stop_motion.ready": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "stop_motion.ready"
+          }
+        },
+        "stop_motion.authorized": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "authorization",
+            "key": "stop_motion.authorized"
+          }
+        },
+        "stop_motion.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "stop_motion.sustaining"
+          }
+        },
+        "stop_motion.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "stop_motion.completion"
+          }
+        }
+      }
+    }
+  },
+  "runtime_execution_contract": {
+    "signal_management": {
+      "owner": "simulation_engine",
+      "status": "pending_engine",
+      "namespace": "instance_id/port_id",
+      "definition_source": "signal_ports",
+      "spatial_binding": false,
+      "write_policy": "single_writer_per_input",
+      "plc_mapping": "instance_bindings",
+      "sampling": "simulation_step_snapshot",
+      "unknown_policy": "invalid_until_provider_ready"
+    },
+    "status": "pending_adapter",
+    "protocol": {
+      "basis": "schema.md公共请求协议",
+      "acceptance": "same request identity and frozen parameters",
+      "completion": "matching result_id plus observed completion checks",
+      "single_command_entry": true
+    },
+    "payload_binding_status": "requires_explicit_model_adapter",
+    "calibration_required": true,
+    "real_execution_available": false,
+    "raw_api_and_plc_simultaneous_writers": false,
+    "execution_mode": "declaration_only",
+    "target_encoding": "signed displacement in metres from mounted-device rest root",
+    "stop_policy": "decelerate, confirm actual speed and correlated stop receipt; retain load and leases if unconfirmed",
+    "profile": "warehouse.virtual-linear@1",
+    "payload_templates": {},
+    "semantic_ports": {
+      "move_to_location": {
+        "requires": [],
+        "provides": [
+          {
+            "semantic": "at",
+            "subject": "self",
+            "endpoint": "target"
+          },
+          {
+            "semantic": "stopped",
+            "subject": "self",
+            "endpoint": "self"
+          }
+        ]
+      }
+    }
+  }
+}

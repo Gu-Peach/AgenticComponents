@@ -1,0 +1,23 @@
+{
+  "schema_version": "device-publication/1",
+  "entries": {
+    "schema.json": {
+      "type": "conveyor",
+      "profile": "conveyor/Conveyor_aankws",
+      "template_revision": "1.2.0",
+      "inputs": {
+        "conveyor/contract.json": "ed0ed89a0ed5d12c06a708566fc429378c1b6f89d820c591ff0b7c2c3ca85efd",
+        "catalog.json#conveyor/position": "bb7ddea52bf70d5b663f2b5670e2f2b5ee0866cc284851770ef797040f94cd83",
+        "public/scene/S01/contract-overrides.json#conveyor/position": "08ff52caf105e04bd40b5571d1e6ab8a7af853f0ac4b601c7a11eab09681fc04",
+        "catalog.json#conveyor/handoff": "2fccd0f4661a26711dcc0e00dad881ee548e67cf9b89d723136ce3cfc9827f2a",
+        "public/scene/S04/contract-overrides.json#conveyor/handoff": "6b845dc60262d34986fa0610dfbbd3d010aef33bf17e7101366f4124c9e0675f",
+        "catalog.json#conveyor/declarative": "76c6719d6a8d088d6504fa2b8622f002200d63694ca8fc2e36311f5657e3a1ec",
+        "public/scene/S03/contract-overrides.json#conveyor/declarative": "b87827cc19ff7b023ea1ebead71a68247ec2f908ec9fbf0378be40e38ab679b1",
+        "catalog.json#conveyor/Conveyor_aankws": "e9d5bc475eb3188fb5e6c1dc4e5be6a78c1b7b95d31ea8235ab271745d549e77",
+        "public/modles/Conveyor_aankws/contract-overrides.json#conveyor/Conveyor_aankws": "cfa5d7d88bab35bb0c6f4d4ef2b0cc931b26067d24340472774b9fe9a694de70",
+        "catalog.json#publications/modles/Conveyor_aankws/schema.json": "01433c2bd309cfdd85a1bc2937b9834768a47605b608c2704579c830cb26cc63"
+      },
+      "snapshot_sha256": "e353ca4a3687901c8325c0ccf8acf7eecaae233bea9f8a4fb6789a93a764b5ad"
+    }
+  }
+}

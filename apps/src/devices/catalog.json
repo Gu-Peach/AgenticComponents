@@ -1,0 +1,1361 @@
+{
+  "schema_version": "device-library/1",
+  "devices": {
+    "robot_arm": {
+      "template": "robot_arm/contract.json"
+    },
+    "conveyor": {
+      "template": "conveyor/contract.json"
+    },
+    "linear_rail": {
+      "template": "linear_rail/contract.json"
+    },
+    "lift_table": {
+      "template": "lift_table/contract.json"
+    },
+    "storage_rack": {
+      "template": "storage_rack/contract.json"
+    },
+    "human_operator": {
+      "template": "human_operator/contract.json"
+    },
+    "machine_tool": {
+      "template": "machine_tool/contract.json"
+    },
+    "workpiece": {
+      "template": "workpiece/contract.json"
+    },
+    "material_source_station": {
+      "template": "material_source_station/contract.json"
+    },
+    "rotary_table": {
+      "template": "rotary_table/contract.json"
+    }
+  },
+  "legacy_types": {
+    "workpiece_carrier": "workpiece"
+  },
+  "profiles": {
+    "conveyor/position": {
+      "type": "conveyor",
+      "legacy_signature": "c712ed63f34fa824bb7608d4b97caec633b815d1d270057f08f9802c4cc7dfb2",
+      "source": "scene/S01/contract-overrides.json",
+      "behaviors": [
+        "accept_material",
+        "advance_to_next_stop_point",
+        "move_by_distance",
+        "transport_to_exit",
+        "release_material",
+        "start_conveying",
+        "set_speed",
+        "stop_conveying",
+        "reverse_conveying",
+        "zone_accumulation",
+        "meter_release",
+        "publish_drive_feedback",
+        "transport_to_position"
+      ],
+      "ports": [
+        "runTag",
+        "target_distance",
+        "speedTag",
+        "speedFpmTag",
+        "release_waiting_material",
+        "runningTag",
+        "actual_speed",
+        "velocityTag",
+        "pulseTag",
+        "encoderTag",
+        "blocked",
+        "part_ready",
+        "capacity_available",
+        "done",
+        "request_id",
+        "execute",
+        "reset",
+        "accepted",
+        "busy",
+        "result_id",
+        "error",
+        "error_code",
+        "target_location"
+      ],
+      "spec_id": "standard.conveyor",
+      "version": "1.2.0",
+      "contract_version": "1.1"
+    },
+    "conveyor/machining": {
+      "type": "conveyor",
+      "legacy_signature": "3595ceec61898cfc3ce14d1ce028516b9f18d2dde07ea1c9a0a4996f0f274b5d",
+      "extends": "conveyor/position",
+      "overrides": {
+        "description": "主线三段同步输送托盘。"
+      },
+      "behaviors": [
+        "accept_material",
+        "advance_to_next_stop_point",
+        "move_by_distance",
+        "transport_to_exit",
+        "release_material",
+        "start_conveying",
+        "set_speed",
+        "stop_conveying",
+        "reverse_conveying",
+        "zone_accumulation",
+        "meter_release",
+        "publish_drive_feedback",
+        "transport_to_position"
+      ],
+      "ports": [
+        "runTag",
+        "target_distance",
+        "speedTag",
+        "speedFpmTag",
+        "release_waiting_material",
+        "runningTag",
+        "actual_speed",
+        "velocityTag",
+        "pulseTag",
+        "encoderTag",
+        "blocked",
+        "part_ready",
+        "capacity_available",
+        "done",
+        "request_id",
+        "execute",
+        "reset",
+        "accepted",
+        "busy",
+        "result_id",
+        "error",
+        "error_code",
+        "target_location"
+      ],
+      "spec_id": "standard.conveyor",
+      "version": "1.2.0",
+      "contract_version": "1.1"
+    },
+    "conveyor/handoff": {
+      "type": "conveyor",
+      "legacy_signature": "c8b001d4aa52fa979a7aa89989a9928f52044d1dc58350ea4430693930507fe8",
+      "extends": "conveyor/position",
+      "source": "scene/S04/contract-overrides.json",
+      "behaviors": [
+        "accept_material",
+        "advance_to_next_stop_point",
+        "move_by_distance",
+        "transport_to_exit",
+        "release_material",
+        "start_conveying",
+        "set_speed",
+        "stop_conveying",
+        "reverse_conveying",
+        "zone_accumulation",
+        "meter_release",
+        "publish_drive_feedback",
+        "transport_to_position"
+      ],
+      "ports": [
+        "runTag",
+        "target_distance",
+        "speedTag",
+        "speedFpmTag",
+        "release_waiting_material",
+        "runningTag",
+        "actual_speed",
+        "velocityTag",
+        "pulseTag",
+        "encoderTag",
+        "blocked",
+        "part_ready",
+        "capacity_available",
+        "done",
+        "request_id",
+        "execute",
+        "reset",
+        "accepted",
+        "busy",
+        "result_id",
+        "error",
+        "error_code",
+        "target_location"
+      ],
+      "spec_id": "standard.conveyor",
+      "version": "1.2.0",
+      "contract_version": "1.1"
+    },
+    "conveyor/declarative": {
+      "type": "conveyor",
+      "legacy_signature": "9dc53222f189bc2d3935ba05bf0b44fd7c2edd7b9e71a16ea94da0d94d77e372",
+      "extends": "conveyor/handoff",
+      "source": "scene/S03/contract-overrides.json",
+      "behaviors": [
+        "accept_material",
+        "advance_to_next_stop_point",
+        "move_by_distance",
+        "transport_to_exit",
+        "release_material",
+        "start_conveying",
+        "set_speed",
+        "stop_conveying",
+        "reverse_conveying",
+        "zone_accumulation",
+        "meter_release",
+        "publish_drive_feedback"
+      ],
+      "ports": [
+        "runTag",
+        "target_distance",
+        "speedTag",
+        "speedFpmTag",
+        "release_waiting_material",
+        "runningTag",
+        "actual_speed",
+        "velocityTag",
+        "pulseTag",
+        "encoderTag",
+        "blocked",
+        "part_ready",
+        "capacity_available",
+        "done",
+        "request_id",
+        "execute",
+        "reset",
+        "accepted",
+        "busy",
+        "result_id",
+        "error",
+        "error_code"
+      ],
+      "spec_id": "standard.conveyor",
+      "version": "1.1.0",
+      "contract_version": "1.1"
+    },
+    "conveyor/warehouse": {
+      "type": "conveyor",
+      "legacy_signature": "3460d7c676ad3ed005379de233a67abf6f82e11f3bc2d390baf4103443d53fb6",
+      "extends": "conveyor/handoff",
+      "source": "scene/S07/contract-overrides.json",
+      "behaviors": [
+        "accept_material",
+        "advance_to_next_stop_point",
+        "move_by_distance",
+        "transport_to_exit",
+        "release_material",
+        "start_conveying",
+        "set_speed",
+        "stop_conveying",
+        "reverse_conveying",
+        "zone_accumulation",
+        "meter_release",
+        "publish_drive_feedback"
+      ],
+      "ports": [
+        "runTag",
+        "target_distance",
+        "speedTag",
+        "speedFpmTag",
+        "release_waiting_material",
+        "runningTag",
+        "actual_speed",
+        "velocityTag",
+        "pulseTag",
+        "encoderTag",
+        "blocked",
+        "part_ready",
+        "capacity_available",
+        "done",
+        "request_id",
+        "execute",
+        "reset",
+        "accepted",
+        "busy",
+        "result_id",
+        "error",
+        "error_code"
+      ],
+      "spec_id": "standard.conveyor",
+      "version": "1.1.0",
+      "contract_version": "1.1"
+    },
+    "conveyor/Conveyor_aankws": {
+      "type": "conveyor",
+      "legacy_signature": "ceebd3ac0cb86f67026aa94d33e40a5b7c40658cb69297d22845c78db5fe32a5",
+      "extends": "conveyor/declarative",
+      "source": "modles/Conveyor_aankws/contract-overrides.json",
+      "behaviors": [
+        "accept_material",
+        "transport_to_exit",
+        "release_material",
+        "start_conveying",
+        "set_speed",
+        "stop_conveying",
+        "publish_drive_feedback"
+      ],
+      "ports": [
+        "runTag",
+        "speedTag",
+        "release_waiting_material",
+        "runningTag",
+        "actual_speed",
+        "blocked",
+        "part_ready",
+        "capacity_available",
+        "pulseTag",
+        "encoderTag",
+        "request_id",
+        "behavior_code",
+        "subject_id",
+        "execute",
+        "reset",
+        "accepted",
+        "busy",
+        "done",
+        "result_id",
+        "error",
+        "error_code"
+      ],
+      "spec_id": "Conveyor_aankws",
+      "version": "0.6.0",
+      "contract_version": "1.3"
+    },
+    "human_operator/indexed": {
+      "type": "human_operator",
+      "legacy_signature": "24e51e7108286e502db222939e183484a4054f1c1495cbbad25a8815336b09bf",
+      "source": "scene/S11/contract-overrides.json",
+      "behaviors": [
+        "carry_material"
+      ],
+      "ports": [
+        "execute",
+        "request_id",
+        "accepted",
+        "busy",
+        "done",
+        "result_id",
+        "error",
+        "holding_material"
+      ],
+      "spec_id": "standard.human_operator",
+      "version": "1.0.0",
+      "contract_version": "1.1"
+    },
+    "lift_table/warehouse": {
+      "type": "lift_table",
+      "legacy_signature": "0df354e8c84d188fa4e2467dbcfbc65f9c10acfd2ea308f5326be77a314372be",
+      "source": "scene/S07/contract-overrides.json",
+      "behaviors": [
+        "accept_material",
+        "release_material",
+        "transfer_material",
+        "lift_to_location",
+        "lift_to_level",
+        "hold_lift"
+      ],
+      "ports": [
+        "move_to_level",
+        "target_level",
+        "execute",
+        "request_id",
+        "enableTag",
+        "reset",
+        "actual_height",
+        "moving",
+        "at_level",
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "result_id",
+        "error_code",
+        "popupTag",
+        "speedTag",
+        "speedFpmTag",
+        "transfer_ready"
+      ],
+      "spec_id": "standard.lift_table",
+      "version": "1.2.0",
+      "contract_version": "1.1"
+    },
+    "linear_rail/warehouse": {
+      "type": "linear_rail",
+      "legacy_signature": "9e9d7e20a2da970f94d942c20a0c4dd480e62a8e82764092bb7ad3f80d1711b2",
+      "source": "scene/S07/contract-overrides.json",
+      "behaviors": [
+        "move_to_location",
+        "move_to_position",
+        "stop_motion"
+      ],
+      "ports": [
+        "target_position",
+        "execute",
+        "request_id",
+        "stop",
+        "enable",
+        "actual_position",
+        "actual_speed",
+        "accepted",
+        "busy",
+        "done",
+        "result_id",
+        "error",
+        "error_code"
+      ],
+      "spec_id": "standard.linear_rail",
+      "version": "1.1.0",
+      "contract_version": "1.1"
+    },
+    "machine_tool/machining": {
+      "type": "machine_tool",
+      "legacy_signature": "2dc666f335d26e6227f986e9fb3f6931fe7c83472474eb460650567bbc3d8473",
+      "source": "scene/S06/contract-overrides.json",
+      "behaviors": [
+        "machine_material"
+      ],
+      "ports": [
+        "execute",
+        "request_id",
+        "subject_id",
+        "accepted",
+        "busy",
+        "done",
+        "result_id",
+        "error"
+      ],
+      "spec_id": "standard.machine_tool",
+      "version": "1.0.0",
+      "contract_version": "1.1"
+    },
+    "material_source_station/position": {
+      "type": "material_source_station",
+      "legacy_signature": "c06b284bbc83fa9d9b5e66bc43d0e44531b32b14653c2daa7232a72c2fe1b12f",
+      "source": "scene/S01/contract-overrides.json",
+      "behaviors": [
+        "produce_material",
+        "present_material",
+        "pause_production",
+        "resume_production",
+        "schedule_production_cycle",
+        "publish_source_state"
+      ],
+      "ports": [
+        "runTag",
+        "produce_request",
+        "request_id",
+        "reset",
+        "countTag",
+        "material_available",
+        "empty",
+        "buffer_count",
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "result_id",
+        "error_code"
+      ],
+      "spec_id": "standard.material_source_station",
+      "version": "1.0.0",
+      "contract_version": "1.1"
+    },
+    "material_source_station/machining": {
+      "type": "material_source_station",
+      "legacy_signature": "6508168809d9a8f86ca269d1df26230d4c83103f28c53053307e29f2dd0b94fd",
+      "extends": "material_source_station/position",
+      "overrides": {
+        "description": "在供料台提供一盘预装毛坯。"
+      },
+      "behaviors": [
+        "produce_material",
+        "present_material",
+        "pause_production",
+        "resume_production",
+        "schedule_production_cycle",
+        "publish_source_state"
+      ],
+      "ports": [
+        "runTag",
+        "produce_request",
+        "request_id",
+        "reset",
+        "countTag",
+        "material_available",
+        "empty",
+        "buffer_count",
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "result_id",
+        "error_code"
+      ],
+      "spec_id": "standard.material_source_station",
+      "version": "1.0.0",
+      "contract_version": "1.1"
+    },
+    "material_source_station/warehouse": {
+      "type": "material_source_station",
+      "legacy_signature": "aaff49f8f928d4518889301034e2d056bae9e8c36152fe71ae1c6dbdb141aac6",
+      "extends": "material_source_station/machining",
+      "overrides": {
+        "description": "S07 有限物料出料口；供料按任务登记身份与容量准入。"
+      },
+      "behaviors": [
+        "produce_material",
+        "present_material",
+        "pause_production",
+        "resume_production",
+        "schedule_production_cycle",
+        "publish_source_state"
+      ],
+      "ports": [
+        "runTag",
+        "produce_request",
+        "request_id",
+        "reset",
+        "countTag",
+        "material_available",
+        "empty",
+        "buffer_count",
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "result_id",
+        "error_code"
+      ],
+      "spec_id": "standard.material_source_station",
+      "version": "1.0.0",
+      "contract_version": "1.1"
+    },
+    "material_source_station/machining-cell": {
+      "type": "material_source_station",
+      "legacy_signature": "28ca2fb6d7a14c63efdafaaf3b6e322f0031aa140eac5c730c842c7010b64566",
+      "extends": "material_source_station/position",
+      "source": "scene/S05/contract-overrides.json",
+      "behaviors": [
+        "produce_material",
+        "present_material",
+        "pause_production",
+        "resume_production",
+        "schedule_production_cycle",
+        "publish_source_state"
+      ],
+      "ports": [
+        "runTag",
+        "produce_request",
+        "request_id",
+        "reset",
+        "countTag",
+        "material_available",
+        "empty",
+        "buffer_count",
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "result_id",
+        "error_code"
+      ],
+      "spec_id": "standard.material_source_station",
+      "version": "1.0.0",
+      "contract_version": "1.1"
+    },
+    "robot_arm/indexed": {
+      "type": "robot_arm",
+      "legacy_signature": "2e9ea40c2a66f23963a2034ef28af442ce62167031fa54865fe404845901b9f6",
+      "source": "scene/S11/contract-overrides.json",
+      "behaviors": [
+        "execute_job",
+        "pick_and_place",
+        "move_to_pose",
+        "grip",
+        "release",
+        "wait_time",
+        "wait_signal",
+        "set_output",
+        "pause_pick_intake",
+        "resume_pick_intake",
+        "hold_motion",
+        "resume_motion",
+        "publish_robot_state",
+        "pick_and_handoff",
+        "place_held_material",
+        "process_material"
+      ],
+      "ports": [
+        "commandTag",
+        "start_pick",
+        "request_id",
+        "pause_pick",
+        "resume_pick",
+        "enableTag",
+        "gripperTag",
+        "in1Tag",
+        "in2Tag",
+        "in3Tag",
+        "in4Tag",
+        "reset",
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "result_id",
+        "error_code",
+        "out1Tag",
+        "out2Tag",
+        "out3Tag",
+        "out4Tag",
+        "holding_material",
+        "start_process"
+      ],
+      "spec_id": "standard.robot_arm",
+      "version": "1.1.0",
+      "contract_version": "1.1"
+    },
+    "robot_arm/handoff": {
+      "type": "robot_arm",
+      "legacy_signature": "726a0f8b082fdd30612bd7134296ebbb8eb0c8139712f35bf840e9b45d995128",
+      "extends": "robot_arm/indexed",
+      "source": "scene/S04/contract-overrides.json",
+      "behaviors": [
+        "execute_job",
+        "pick_and_place",
+        "move_to_pose",
+        "grip",
+        "release",
+        "wait_time",
+        "wait_signal",
+        "set_output",
+        "pause_pick_intake",
+        "resume_pick_intake",
+        "hold_motion",
+        "resume_motion",
+        "publish_robot_state",
+        "pick_and_handoff",
+        "place_held_material"
+      ],
+      "ports": [
+        "commandTag",
+        "start_pick",
+        "request_id",
+        "pause_pick",
+        "resume_pick",
+        "enableTag",
+        "gripperTag",
+        "in1Tag",
+        "in2Tag",
+        "in3Tag",
+        "in4Tag",
+        "reset",
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "result_id",
+        "error_code",
+        "out1Tag",
+        "out2Tag",
+        "out3Tag",
+        "out4Tag",
+        "holding_material"
+      ],
+      "spec_id": "standard.robot_arm",
+      "version": "1.1.0",
+      "contract_version": "1.1"
+    },
+    "robot_arm/declarative": {
+      "type": "robot_arm",
+      "legacy_signature": "376a41cf467884b43484446c3aae1d1621d18383c5c76936b272ac8d071fd7b3",
+      "extends": "robot_arm/handoff",
+      "source": "scene/S03/contract-overrides.json",
+      "behaviors": [
+        "execute_job",
+        "pick_and_place",
+        "move_to_pose",
+        "grip",
+        "release",
+        "wait_time",
+        "wait_signal",
+        "set_output",
+        "pause_pick_intake",
+        "resume_pick_intake",
+        "hold_motion",
+        "resume_motion",
+        "publish_robot_state"
+      ],
+      "ports": [
+        "commandTag",
+        "start_pick",
+        "request_id",
+        "pause_pick",
+        "resume_pick",
+        "enableTag",
+        "gripperTag",
+        "in1Tag",
+        "in2Tag",
+        "in3Tag",
+        "in4Tag",
+        "reset",
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "result_id",
+        "error_code",
+        "out1Tag",
+        "out2Tag",
+        "out3Tag",
+        "out4Tag",
+        "holding_material"
+      ],
+      "spec_id": "standard.robot_arm",
+      "version": "1.0.0",
+      "contract_version": "1.1"
+    },
+    "robot_arm/position": {
+      "type": "robot_arm",
+      "legacy_signature": "d8c1d1cbd4b4c2ba3abe0e93b2cc3c8dae962bd782c2d485cf3d0c12e9c9cf61",
+      "extends": "robot_arm/handoff",
+      "source": "scene/S01/contract-overrides.json",
+      "behaviors": [
+        "execute_job",
+        "pick_and_place",
+        "move_to_pose",
+        "grip",
+        "release",
+        "wait_time",
+        "wait_signal",
+        "set_output",
+        "pause_pick_intake",
+        "resume_pick_intake",
+        "hold_motion",
+        "resume_motion",
+        "publish_robot_state"
+      ],
+      "ports": [
+        "commandTag",
+        "start_pick",
+        "request_id",
+        "pause_pick",
+        "resume_pick",
+        "enableTag",
+        "gripperTag",
+        "in1Tag",
+        "in2Tag",
+        "in3Tag",
+        "in4Tag",
+        "reset",
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "result_id",
+        "error_code",
+        "out1Tag",
+        "out2Tag",
+        "out3Tag",
+        "out4Tag",
+        "holding_material"
+      ],
+      "spec_id": "standard.robot_arm",
+      "version": "1.0.0",
+      "contract_version": "1.1"
+    },
+    "robot_arm/machining": {
+      "type": "robot_arm",
+      "legacy_signature": "0bb296357a216811abaefc5365e4d1685d54880920ac646ff044f7cac2f9d464",
+      "extends": "robot_arm/position",
+      "overrides": {
+        "description": "六轴机械臂执行抓放和归位。"
+      },
+      "behaviors": [
+        "execute_job",
+        "pick_and_place",
+        "move_to_pose",
+        "grip",
+        "release",
+        "wait_time",
+        "wait_signal",
+        "set_output",
+        "pause_pick_intake",
+        "resume_pick_intake",
+        "hold_motion",
+        "resume_motion",
+        "publish_robot_state"
+      ],
+      "ports": [
+        "commandTag",
+        "start_pick",
+        "request_id",
+        "pause_pick",
+        "resume_pick",
+        "enableTag",
+        "gripperTag",
+        "in1Tag",
+        "in2Tag",
+        "in3Tag",
+        "in4Tag",
+        "reset",
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "result_id",
+        "error_code",
+        "out1Tag",
+        "out2Tag",
+        "out3Tag",
+        "out4Tag",
+        "holding_material"
+      ],
+      "spec_id": "standard.robot_arm",
+      "version": "1.0.0",
+      "contract_version": "1.1"
+    },
+    "robot_arm/robot_UR10": {
+      "type": "robot_arm",
+      "legacy_signature": "b6385bfcba5cf9ec9b216bb7d21850ed1345529131aefd544f5054a46c2e1b11",
+      "extends": "robot_arm/declarative",
+      "source": "modles/robot_UR10/contract-overrides.json",
+      "behaviors": [
+        "execute_job",
+        "pick_and_place",
+        "move_to_pose",
+        "grip",
+        "release",
+        "wait_time",
+        "wait_signal",
+        "set_output",
+        "pause_pick_intake",
+        "resume_pick_intake",
+        "hold_motion",
+        "resume_motion",
+        "publish_robot_state"
+      ],
+      "ports": [
+        "commandTag",
+        "start_pick",
+        "request_id",
+        "enableTag",
+        "pause_pick",
+        "reset",
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "result_id",
+        "error_code",
+        "holding_material",
+        "in1Tag",
+        "out1Tag",
+        "in2Tag",
+        "out2Tag",
+        "in3Tag",
+        "out3Tag",
+        "in4Tag",
+        "out4Tag"
+      ],
+      "spec_id": "robot_UR10",
+      "version": "0.1.0",
+      "contract_version": "1.4"
+    },
+    "rotary_table/indexed-conveying": {
+      "type": "rotary_table",
+      "legacy_signature": "423e72232225a70966a3b504d6611538a151a427af3cdac5d441f286526d061e",
+      "source": "scene/S12/contract-overrides.json",
+      "behaviors": [
+        "accept_material",
+        "rotate_to_station",
+        "release_material",
+        "hold_rotation",
+        "resume_rotation",
+        "convey_on_deck",
+        "publish_turntable_state"
+      ],
+      "ports": [
+        "target_station",
+        "angleTag",
+        "rotate_to_station",
+        "request_id",
+        "enableTag",
+        "reset",
+        "actual_angle",
+        "occupied",
+        "rotating",
+        "at_station",
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "result_id",
+        "error_code",
+        "speedTag",
+        "speedFpmTag",
+        "transfer_enable"
+      ],
+      "spec_id": "standard.rotary_table",
+      "version": "1.0.0",
+      "contract_version": "1.1"
+    },
+    "rotary_table/indexed": {
+      "type": "rotary_table",
+      "legacy_signature": "9aa020fb1fdac9b773239104fb3698d424bc099f99956fb932ea8d2335bb46c7",
+      "extends": "rotary_table/indexed-conveying",
+      "source": "scene/S11/contract-overrides.json",
+      "behaviors": [
+        "rotate_to_station"
+      ],
+      "ports": [
+        "angleTag",
+        "rotate_to_station",
+        "request_id",
+        "actual_angle",
+        "occupied",
+        "rotating",
+        "at_station",
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "result_id"
+      ],
+      "spec_id": "standard.rotary_table",
+      "version": "1.0.0",
+      "contract_version": "1.1"
+    },
+    "storage_rack/warehouse": {
+      "type": "storage_rack",
+      "legacy_signature": "b57d872fda4ebb62ffdaa5dbeb321e9c3e86f78e5572ce795171bc5690341cdd",
+      "source": "scene/S07/contract-overrides.json",
+      "behaviors": [
+        "reserve_cell",
+        "store_to_cell",
+        "release_from_cell",
+        "cancel_cell_reservation",
+        "query_cell_state",
+        "publish_storage_state"
+      ],
+      "ports": [
+        "cell_id",
+        "material_id",
+        "owner_task_id",
+        "reserve_request",
+        "store_request",
+        "release_request",
+        "cancel_reservation",
+        "request_id",
+        "reset",
+        "reservation_granted",
+        "reservation_id",
+        "cell_available",
+        "cell_full",
+        "free_cells",
+        "stored",
+        "released",
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "result_id",
+        "error_code"
+      ],
+      "spec_id": "standard.storage_rack",
+      "version": "1.0.0",
+      "contract_version": "1.1"
+    },
+    "workpiece/position": {
+      "type": "workpiece",
+      "legacy_signature": "0c6fee76d8de1f09f3f8509214ed90761c96ca9097e419dd646d878dafa3b13d",
+      "overrides": {
+        "$remove": [
+          "description"
+        ],
+        "type_specific_contract": {
+          "$remove": [
+            "optional_properties"
+          ]
+        }
+      },
+      "behaviors": [
+        "be_picked",
+        "be_conveyed",
+        "be_carried",
+        "be_placed",
+        "be_released",
+        "respond_to_physics",
+        "publish_material_state"
+      ],
+      "ports": [
+        "picked",
+        "carried",
+        "placed",
+        "holder_id",
+        "location_id"
+      ],
+      "spec_id": "standard.workpiece",
+      "version": "1.0.0",
+      "contract_version": "1.1"
+    },
+    "workpiece/machining": {
+      "type": "workpiece",
+      "legacy_signature": "aa7ddf3eb786a10d81f8db7c88ee883dcd48e2133ec125d3c4658faf2ace26a9",
+      "extends": "workpiece/position",
+      "overrides": {
+        "description": "物料以同一身份记录持有、支承和加工状态。"
+      },
+      "behaviors": [
+        "be_picked",
+        "be_conveyed",
+        "be_carried",
+        "be_placed",
+        "be_released",
+        "respond_to_physics",
+        "publish_material_state"
+      ],
+      "ports": [
+        "picked",
+        "carried",
+        "placed",
+        "holder_id",
+        "location_id"
+      ],
+      "spec_id": "standard.workpiece",
+      "version": "1.0.0",
+      "contract_version": "1.1"
+    },
+    "workpiece/declarative": {
+      "type": "workpiece",
+      "legacy_signature": "346165828942c6685bd537abd9724f869d5b826aec95f5906fbec19d5a4ac601",
+      "extends": "workpiece/position",
+      "source": "scene/S03/contract-overrides.json",
+      "behaviors": [
+        "be_picked",
+        "be_conveyed",
+        "be_carried",
+        "be_placed",
+        "be_released",
+        "respond_to_physics",
+        "publish_material_state"
+      ],
+      "ports": [
+        "picked",
+        "carried",
+        "placed",
+        "holder_id",
+        "location_id"
+      ],
+      "spec_id": "standard.workpiece",
+      "version": "1.0.0",
+      "contract_version": "1.1"
+    },
+    "workpiece/handoff": {
+      "type": "workpiece",
+      "legacy_signature": "d87ed335ecf1ee67601818a6ccb2d27aa6e0970d88666e1767c124f861cc751f",
+      "extends": "workpiece/declarative",
+      "overrides": {
+        "type_specific_contract": {
+          "process_geometry": {
+            "regions": [
+              {
+                "region_id": "head",
+                "placement_rule": "top_center_from_geometry"
+              },
+              {
+                "region_id": "tail",
+                "placement_rule": "bottom_center_from_geometry"
+              }
+            ]
+          },
+          "grasping": {
+            "allowed_grasp_regions": [
+              "head",
+              "tail"
+            ],
+            "preferred_grasp": "head",
+            "frame_source": "material_local_m",
+            "frames": {
+              "head": {
+                "position_m": [
+                  0,
+                  0.21499999519437551,
+                  0
+                ],
+                "approach_axis": [
+                  0,
+                  -1,
+                  0
+                ],
+                "reference": "cap_top_center"
+              },
+              "tail": {
+                "position_m": [
+                  0,
+                  0,
+                  0
+                ],
+                "approach_axis": [
+                  0,
+                  1,
+                  0
+                ],
+                "reference": "base_center"
+              }
+            }
+          },
+          "placement": {
+            "stable_regions": [
+              "tail"
+            ],
+            "candidate_contact_regions": [
+              "head"
+            ]
+          }
+        }
+      },
+      "behaviors": [
+        "be_picked",
+        "be_conveyed",
+        "be_carried",
+        "be_placed",
+        "be_released",
+        "respond_to_physics",
+        "publish_material_state"
+      ],
+      "ports": [
+        "picked",
+        "carried",
+        "placed",
+        "holder_id",
+        "location_id"
+      ],
+      "spec_id": "standard.workpiece",
+      "version": "1.0.0",
+      "contract_version": "1.1"
+    },
+    "workpiece/indexed": {
+      "type": "workpiece",
+      "legacy_signature": "3ce8c8a2aba9f8a29bc9473a05221ecd9398c17c1dcf187b17b7670e6522fa05",
+      "extends": "workpiece/declarative",
+      "source": "scene/S11/contract-overrides.json",
+      "behaviors": [
+        "be_picked",
+        "be_conveyed",
+        "be_carried",
+        "be_placed",
+        "be_released",
+        "respond_to_physics",
+        "publish_material_state"
+      ],
+      "ports": [
+        "picked",
+        "carried",
+        "placed",
+        "holder_id",
+        "location_id"
+      ],
+      "spec_id": "standard.workpiece",
+      "version": "1.0.0",
+      "contract_version": "1.1"
+    },
+    "workpiece/engine_block": {
+      "type": "workpiece",
+      "legacy_signature": "855e9a53ce0155c20fd704f16128e91c4ec1853daec89750a379c8cbc9a3d6ae",
+      "extends": "workpiece/declarative",
+      "source": "modles/engine_block/contract-overrides.json",
+      "behaviors": [],
+      "ports": [],
+      "spec_id": "engine_block",
+      "version": "0.1.0",
+      "contract_version": "1.3"
+    },
+    "workpiece_carrier/pallets": {
+      "type": "workpiece",
+      "legacy_signature": "33244a281194c50d7b34587d50189dd753b2c319ac97034e48f12d0ded97ef2c",
+      "source": "scene/S10/contract-overrides.json",
+      "behaviors": [
+        "reserve_carrier_slot",
+        "cancel_carrier_reservation",
+        "confirm_load",
+        "carry_material",
+        "release_material",
+        "be_transported_loaded",
+        "publish_carrier_state"
+      ],
+      "ports": [
+        "loaded",
+        "unloaded",
+        "load_count",
+        "free_slots",
+        "slot_available",
+        "in_transport",
+        "holder_id"
+      ],
+      "spec_id": "standard.workpiece_carrier",
+      "version": "1.0.0",
+      "contract_version": "1.1"
+    },
+    "workpiece_carrier/position": {
+      "type": "workpiece",
+      "legacy_signature": "c56b4d0c09bad169ba80414d42d43ad73ee6ef62509e463c8096948036db7977",
+      "extends": "workpiece_carrier/pallets",
+      "source": "scene/S01/contract-overrides.json",
+      "behaviors": [
+        "reserve_carrier_slot",
+        "cancel_carrier_reservation",
+        "confirm_load",
+        "carry_material",
+        "release_material",
+        "be_transported_loaded",
+        "publish_carrier_state"
+      ],
+      "ports": [
+        "loaded",
+        "unloaded",
+        "load_count",
+        "free_slots",
+        "slot_available",
+        "in_transport",
+        "holder_id"
+      ],
+      "spec_id": "standard.workpiece_carrier",
+      "version": "1.0.0",
+      "contract_version": "1.1"
+    },
+    "workpiece_carrier/machining": {
+      "type": "workpiece",
+      "legacy_signature": "082134c24c73cfd553123c1bb823f805b3426faccb66c1684d2b25fc47e37abf",
+      "extends": "workpiece_carrier/position",
+      "overrides": {
+        "description": "托盘保留九个来自模型的原位槽。"
+      },
+      "behaviors": [
+        "reserve_carrier_slot",
+        "cancel_carrier_reservation",
+        "confirm_load",
+        "carry_material",
+        "release_material",
+        "be_transported_loaded",
+        "publish_carrier_state"
+      ],
+      "ports": [
+        "loaded",
+        "unloaded",
+        "load_count",
+        "free_slots",
+        "slot_available",
+        "in_transport",
+        "holder_id"
+      ],
+      "spec_id": "standard.workpiece_carrier",
+      "version": "1.0.0",
+      "contract_version": "1.1"
+    }
+  },
+  "publications": {
+    "modles/Conveyor_aankws/schema.json": "conveyor/Conveyor_aankws",
+    "modles/engine_block/schema.json": "workpiece/engine_block",
+    "modles/robot_UR10/schema.json": "robot_arm/robot_UR10",
+    "scene/S01/contracts/conveyor.json": "conveyor/position",
+    "scene/S01/contracts/material_source_station.json": "material_source_station/position",
+    "scene/S01/contracts/robot_arm.json": "robot_arm/position",
+    "scene/S01/contracts/workpiece.json": "workpiece/position",
+    "scene/S01/contracts/workpiece_carrier.json": "workpiece_carrier/position",
+    "scene/S02/contracts/conveyor.json": "conveyor/position",
+    "scene/S02/contracts/material_source_station.json": "material_source_station/position",
+    "scene/S02/contracts/robot_arm.json": "robot_arm/position",
+    "scene/S02/contracts/workpiece.json": "workpiece/position",
+    "scene/S02/contracts/workpiece_carrier.json": "workpiece_carrier/position",
+    "scene/S03/contracts/conveyor.json": "conveyor/declarative",
+    "scene/S03/contracts/robot_arm.json": "robot_arm/declarative",
+    "scene/S03/contracts/workpiece.json": "workpiece/declarative",
+    "scene/S04/contracts/conveyor.json": "conveyor/handoff",
+    "scene/S04/contracts/material_source_station.json": "material_source_station/position",
+    "scene/S04/contracts/robot_arm.json": "robot_arm/handoff",
+    "scene/S04/contracts/workpiece.json": "workpiece/handoff",
+    "scene/S05/contracts/conveyor.json": "conveyor/declarative",
+    "scene/S05/contracts/material_source_station.json": "material_source_station/machining-cell",
+    "scene/S05/contracts/robot_arm.json": "robot_arm/declarative",
+    "scene/S05/contracts/workpiece.json": "workpiece/declarative",
+    "scene/S06/contracts/conveyor.json": "conveyor/machining",
+    "scene/S06/contracts/machine_tool.json": "machine_tool/machining",
+    "scene/S06/contracts/material_source_station.json": "material_source_station/machining",
+    "scene/S06/contracts/robot_arm.json": "robot_arm/machining",
+    "scene/S06/contracts/workpiece.json": "workpiece/machining",
+    "scene/S06/contracts/workpiece_carrier.json": "workpiece_carrier/machining",
+    "scene/S07/contracts/conveyor.json": "conveyor/warehouse",
+    "scene/S07/contracts/lift_table.json": "lift_table/warehouse",
+    "scene/S07/contracts/linear_rail.json": "linear_rail/warehouse",
+    "scene/S07/contracts/material_source_station.json": "material_source_station/warehouse",
+    "scene/S07/contracts/storage_rack.json": "storage_rack/warehouse",
+    "scene/S07/contracts/workpiece.json": "workpiece/declarative",
+    "scene/S08/contracts/conveyor.json": "conveyor/declarative",
+    "scene/S08/contracts/robot_arm.json": "robot_arm/declarative",
+    "scene/S08/contracts/workpiece.json": "workpiece/declarative",
+    "scene/S09/contracts/conveyor.json": "conveyor/declarative",
+    "scene/S09/contracts/robot_arm.json": "robot_arm/declarative",
+    "scene/S09/contracts/workpiece.json": "workpiece/declarative",
+    "scene/S10/contracts/conveyor.json": "conveyor/declarative",
+    "scene/S10/contracts/robot_arm.json": "robot_arm/declarative",
+    "scene/S10/contracts/workpiece.json": "workpiece/declarative",
+    "scene/S10/contracts/workpiece_carrier.json": "workpiece_carrier/pallets",
+    "scene/S11/contracts/human_operator.json": "human_operator/indexed",
+    "scene/S11/contracts/material_source_station.json": "material_source_station/machining-cell",
+    "scene/S11/contracts/robot_arm.json": "robot_arm/indexed",
+    "scene/S11/contracts/rotary_table.json": "rotary_table/indexed",
+    "scene/S11/contracts/workpiece.json": "workpiece/indexed",
+    "scene/S12/contracts/conveyor.json": "conveyor/declarative",
+    "scene/S12/contracts/robot_arm.json": "robot_arm/declarative",
+    "scene/S12/contracts/rotary_table.json": "rotary_table/indexed-conveying",
+    "scene/S12/contracts/workpiece.json": "workpiece/declarative"
+  },
+  "compatibility": {
+    "single_device": {
+      "robot_arm": {
+        "commands": [
+          "move_joints",
+          "move_to_pose",
+          "execute_job",
+          "pick_and_place",
+          "grip",
+          "release"
+        ],
+        "steps": [
+          "move_joints",
+          "move_to_pose",
+          "grip",
+          "release",
+          "wait_time",
+          "wait_signal",
+          "set_output"
+        ]
+      }
+    },
+    "preview_observers": {
+      "workpiece": [
+        "observe_material"
+      ],
+      "workpiece_carrier": [
+        "observe_slots"
+      ]
+    },
+    "carrier_services": {
+      "workpiece_carrier": [
+        "reserve_carrier_slot",
+        "cancel_carrier_reservation",
+        "confirm_load",
+        "carry_material",
+        "release_material",
+        "be_transported_loaded",
+        "publish_carrier_state"
+      ]
+    },
+    "experimental": {
+      "processing_station": [
+        "clamp",
+        "process_material",
+        "unclamp"
+      ]
+    }
+  }
+}

@@ -1,3 +1,4 @@
+import { TransferWorkcellPanel } from "./TransferWorkcellPanel";
 import { placeMaterial } from "@/domain/runtime/placeMaterial";
 import { ParameterField } from "@/components/ui/ParameterField";
 import { resolveParameters } from "@/validation/contracts";
@@ -49,7 +50,7 @@ export function SimulationPanel() {
     <div className="simulation-panel">
       <strong>接触式输送实验</strong>
       <small>
-        仅选中输送面与所选物料参与物理；质量需明确填写，其他场景设备不参与本次运行。
+        单带实验使用所选输送面与物料。组合工艺可再选择机械臂和放料支承。
       </small>
       {version === "1.3" && (
         <>
@@ -122,6 +123,15 @@ export function SimulationPanel() {
           )}
         </>
       )}
+      {project && selected && material && version === "1.3" && (
+        <TransferWorkcellPanel
+          project={project}
+          conveyor={selected}
+          material={material}
+          locked={documentLocked}
+          state={state}
+        />
+      )}
       <div className="row">
         <button
           disabled={
@@ -173,7 +183,11 @@ export function SimulationPanel() {
       </label>
       <div className="row">
         <button
-          disabled={!runtimeController.isBusy() || state.status === "preparing"}
+          disabled={
+            !!state.workcell ||
+            !runtimeController.isBusy() ||
+            state.status === "preparing"
+          }
           onClick={() => {
             try {
               runtimeController.command("speedTag", Number(speed));
@@ -186,7 +200,11 @@ export function SimulationPanel() {
           应用运行速度
         </button>
         <button
-          disabled={!runtimeController.isBusy() || state.status === "preparing"}
+          disabled={
+            !!state.workcell ||
+            !runtimeController.isBusy() ||
+            state.status === "preparing"
+          }
           onClick={() => runtimeController.command("runTag", false)}
         >
           受控停带

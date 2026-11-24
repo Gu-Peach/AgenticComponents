@@ -1,0 +1,1926 @@
+{
+  "contract_version": "1.1",
+  "schema_type": "DeviceSpec",
+  "schema_id": "standard.lift_table",
+  "device_spec_id": "standard.lift_table",
+  "version": "1.2.0",
+  "device_type": "lift_table",
+  "display_name": "升降台：高度定位与可选横移模块",
+  "asset": {
+    "model_format": "glb",
+    "model_key": "unbound/lift_table",
+    "binding_status": "requires_instance_asset_mapping"
+  },
+  "params_schema": {
+    "lift_speed_mps": {
+      "type": "number",
+      "required": true,
+      "default": 0.2,
+      "unit": "m/s",
+      "min": 0.001,
+      "max": 1,
+      "mutability": "runtime_setpoint",
+      "description": "主升降速度上限"
+    },
+    "lift_accel_mps2": {
+      "type": "number",
+      "required": true,
+      "default": 0.4,
+      "unit": "m/s²",
+      "min": 0.001,
+      "max": 5,
+      "mutability": "stopped_only",
+      "description": "升降加减速能力"
+    },
+    "min_height_m": {
+      "type": "number",
+      "required": true,
+      "default": 0.3,
+      "unit": "m",
+      "min": 0,
+      "max": 10,
+      "mutability": "stopped_only",
+      "description": "最低允许平台高度"
+    },
+    "max_height_m": {
+      "type": "number",
+      "required": true,
+      "default": 2,
+      "unit": "m",
+      "min": 0.01,
+      "max": 10,
+      "mutability": "stopped_only",
+      "description": "最高允许平台高度"
+    },
+    "upper_level_m": {
+      "type": "number",
+      "required": true,
+      "default": 1.8,
+      "unit": "m",
+      "min": 0,
+      "max": 10,
+      "mutability": "stopped_only",
+      "description": "本示例上层工位高度"
+    },
+    "platform_length_m": {
+      "type": "number",
+      "required": true,
+      "default": 1.2,
+      "unit": "m",
+      "min": 0.1,
+      "max": 5,
+      "mutability": "stopped_only",
+      "description": "平台长度"
+    },
+    "platform_width_m": {
+      "type": "number",
+      "required": true,
+      "default": 1,
+      "unit": "m",
+      "min": 0.1,
+      "max": 5,
+      "mutability": "stopped_only",
+      "description": "平台宽度"
+    },
+    "max_payload_kg": {
+      "type": "number",
+      "required": true,
+      "default": 100,
+      "unit": "kg",
+      "min": 0.1,
+      "max": 5000,
+      "mutability": "stopped_only",
+      "description": "允许载荷上限，需设备依据"
+    },
+    "position_tolerance_m": {
+      "type": "number",
+      "required": true,
+      "default": 0.02,
+      "unit": "m",
+      "min": 0.0001,
+      "max": 0.1,
+      "mutability": "stopped_only",
+      "description": "层高及定位误差界"
+    },
+    "settle_speed_mps": {
+      "type": "number",
+      "required": true,
+      "default": 0.001,
+      "unit": "m/s",
+      "min": 0,
+      "max": 0.05,
+      "mutability": "stopped_only",
+      "description": "到位时允许的剩余速度"
+    },
+    "transfer_module": {
+      "type": "boolean",
+      "required": true,
+      "default": false,
+      "mutability": "stopped_only",
+      "description": "是否有独立辅助横移机构"
+    },
+    "transfer_speed_mps": {
+      "type": "number",
+      "required": true,
+      "default": 0.35,
+      "unit": "m/s",
+      "min": 0.001,
+      "max": 2,
+      "mutability": "stopped_only",
+      "description": "Explicit candidate simulation parameter; not a hardware measurement"
+    },
+    "popup_stroke_m": {
+      "type": "number",
+      "required": false,
+      "default": 0.08,
+      "unit": "m",
+      "min": 0.001,
+      "max": 0.5,
+      "mutability": "stopped_only",
+      "description": "辅助机构行程",
+      "required_when": {
+        "parameter": "transfer_module",
+        "equals": true
+      }
+    },
+    "transfer_accel_mps2": {
+      "type": "number",
+      "required": true,
+      "default": 0.7,
+      "unit": "m/s²",
+      "min": 0.001,
+      "max": 5,
+      "mutability": "stopped_only",
+      "description": "Explicit candidate simulation parameter; not a hardware measurement"
+    },
+    "transfer_max_distance_m": {
+      "type": "number",
+      "required": true,
+      "default": 2,
+      "unit": "m",
+      "min": 0.01,
+      "max": 5,
+      "mutability": "stopped_only",
+      "description": "Explicit candidate simulation parameter; not a hardware measurement"
+    }
+  },
+  "interfaces": [],
+  "signal_ports": [
+    {
+      "port_id": "move_to_level",
+      "direction": "input",
+      "value_type": "number",
+      "plc_type": "REAL",
+      "description": "保留手稿 REAL 改型，明确表示目标高度，m；不再同时携带字符串 target",
+      "signal_role": "continuous_command",
+      "retention": "sampled_state",
+      "unit": "m"
+    },
+    {
+      "port_id": "target_level",
+      "direction": "input",
+      "value_type": "integer",
+      "plc_type": "INT",
+      "description": "目标层编号，由 height_levels 映射到高度；配置选择层号或高度模式，二者不同时驱动",
+      "signal_role": "continuous_command",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "execute",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "目标参数写好后发起一次升降请求，采用公共握手",
+      "signal_role": "request_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "request_id",
+      "direction": "input",
+      "value_type": "integer",
+      "plc_type": "DINT",
+      "description": "正 DINT 请求号，接单前保持稳定，接单时与参数一同冻结。",
+      "signal_role": "request_identity",
+      "retention": "stable_through_acceptance"
+    },
+    {
+      "port_id": "enableTag",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "主升降动作使能；失能时拒绝新请求，运行中按已实现的减速保持策略处理",
+      "signal_role": "continuous_command",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "reset",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "符合恢复条件时复位故障，不直接使平台瞬移或释放载荷",
+      "signal_role": "request_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "actual_height",
+      "direction": "output",
+      "value_type": "number",
+      "plc_type": "REAL",
+      "description": "实际平台高度，m",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state",
+      "unit": "m"
+    },
+    {
+      "port_id": "moving",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "平台当前是否仍在运动；不同于任务是否未完成",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "at_level",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "实际高度在目标容差内且速度已稳定；空闲状态也可能成立",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "accepted",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "当前请求已接受，保持到启动请求撤销。",
+      "signal_role": "acceptance",
+      "retention": "until_request_retracted"
+    },
+    {
+      "port_id": "busy",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "公共动作反馈；done 必须对应本次已接受任务",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "done",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "本请求的成功结果，与 result_id 关联，保持到下一次请求被接受。持续动作不生成单次完成。",
+      "signal_role": "latched_result",
+      "retention": "until_next_request_accepted"
+    },
+    {
+      "port_id": "error",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "公共动作反馈；done 必须对应本次已接受任务",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "result_id",
+      "direction": "output",
+      "value_type": "integer",
+      "plc_type": "DINT",
+      "description": "本次成功或失败结果对应的请求编号。",
+      "signal_role": "result_identity",
+      "retention": "until_next_request_accepted"
+    },
+    {
+      "port_id": "error_code",
+      "direction": "output",
+      "value_type": "integer",
+      "plc_type": "INT",
+      "description": "公共动作反馈；done 必须对应本次已接受任务",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request"
+    },
+    {
+      "port_id": "popupTag",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "辅助链条机构抬升／下降；不能同时作为主高度轴的第二个控制来源",
+      "signal_role": "continuous_command",
+      "retention": "sampled_state"
+    },
+    {
+      "port_id": "speedTag",
+      "direction": "input",
+      "value_type": "number",
+      "plc_type": "REAL",
+      "description": "横向输送速度，按单位模式选择；不是升降轴速度",
+      "signal_role": "continuous_command",
+      "retention": "sampled_state",
+      "unit": "m/s"
+    },
+    {
+      "port_id": "speedFpmTag",
+      "direction": "input",
+      "value_type": "number",
+      "plc_type": "REAL",
+      "description": "横向输送速度，按单位模式选择；不是升降轴速度",
+      "signal_role": "continuous_command",
+      "retention": "sampled_state",
+      "unit": "ft/min"
+    },
+    {
+      "port_id": "transfer_ready",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "description": "主平台和辅助机构满足交接位置，且允许横移",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state"
+    }
+  ],
+  "transport_behaviors": [
+    {
+      "behavior_id": "accept_material",
+      "display_name": "accept_material",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "lift_table.warehouse@1",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "authority": "single_gateway",
+        "request_context": "run/instance/activation/request/subject"
+      },
+      "input_signals": [
+        "execute",
+        "request_id"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "ready",
+            "label": "Valid named target, stopped axes and source/receiver availability",
+            "source": "observation",
+            "key": "accept_material.ready",
+            "equals": true
+          },
+          {
+            "id": "authorized",
+            "label": "All movement, material and endpoint resources owned",
+            "source": "authorization",
+            "key": "accept_material.authorized",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "Current run and active transfer remain valid",
+            "source": "observation",
+            "key": "accept_material.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "Correlated actual pose, support and ownership evidence",
+        "checks": [
+          {
+            "id": "completion",
+            "label": "This request has confirmed physical completion",
+            "source": "observation",
+            "key": "accept_material.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      }
+    },
+    {
+      "behavior_id": "release_material",
+      "display_name": "release_material",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "lift_table.warehouse@1",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "authority": "single_gateway",
+        "request_context": "run/instance/activation/request/subject"
+      },
+      "input_signals": [
+        "execute",
+        "request_id"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "ready",
+            "label": "Valid named target, stopped axes and source/receiver availability",
+            "source": "observation",
+            "key": "release_material.ready",
+            "equals": true
+          },
+          {
+            "id": "authorized",
+            "label": "All movement, material and endpoint resources owned",
+            "source": "authorization",
+            "key": "release_material.authorized",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "Current run and active transfer remain valid",
+            "source": "observation",
+            "key": "release_material.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "Correlated actual pose, support and ownership evidence",
+        "checks": [
+          {
+            "id": "completion",
+            "label": "This request has confirmed physical completion",
+            "source": "observation",
+            "key": "release_material.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      }
+    },
+    {
+      "behavior_id": "transfer_material",
+      "display_name": "transfer_material",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "lift_table.warehouse@1",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "authority": "single_gateway",
+        "request_context": "run/instance/activation/request/subject"
+      },
+      "input_signals": [
+        "execute",
+        "request_id"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "ready",
+            "label": "Valid named target, stopped axes and source/receiver availability",
+            "source": "observation",
+            "key": "transfer_material.ready",
+            "equals": true
+          },
+          {
+            "id": "authorized",
+            "label": "All movement, material and endpoint resources owned",
+            "source": "authorization",
+            "key": "transfer_material.authorized",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "Current run and active transfer remain valid",
+            "source": "observation",
+            "key": "transfer_material.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "Correlated actual pose, support and ownership evidence",
+        "checks": [
+          {
+            "id": "completion",
+            "label": "This request has confirmed physical completion",
+            "source": "observation",
+            "key": "transfer_material.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      }
+    },
+    {
+      "behavior_id": "lift_to_location",
+      "display_name": "lift_to_location",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "lift_table.warehouse@1",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {
+        "target": {
+          "type": "string",
+          "required": true,
+          "semantic_type": "location_ref",
+          "description": "Named scene endpoint"
+        }
+      },
+      "trigger": {
+        "authority": "single_gateway",
+        "request_context": "run/instance/activation/request/subject"
+      },
+      "input_signals": [
+        "execute",
+        "request_id"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "ready",
+            "label": "Valid named target, stopped axes and source/receiver availability",
+            "source": "observation",
+            "key": "lift_to_location.ready",
+            "equals": true
+          },
+          {
+            "id": "authorized",
+            "label": "All movement, material and endpoint resources owned",
+            "source": "authorization",
+            "key": "lift_to_location.authorized",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "Current run and active transfer remain valid",
+            "source": "observation",
+            "key": "lift_to_location.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "Correlated actual pose, support and ownership evidence",
+        "checks": [
+          {
+            "id": "completion",
+            "label": "This request has confirmed physical completion",
+            "source": "observation",
+            "key": "lift_to_location.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      }
+    },
+    {
+      "behavior_id": "lift_to_level",
+      "display_name": "lift_to_level",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "lift_table.warehouse@1",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {
+        "move_to_level": {
+          "type": "number",
+          "unit": "m",
+          "required": true
+        }
+      },
+      "trigger": {
+        "authority": "single_gateway",
+        "request_context": "run/instance/activation/request/subject"
+      },
+      "input_signals": [
+        "execute",
+        "request_id"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "ready",
+            "label": "Valid named target, stopped axes and source/receiver availability",
+            "source": "observation",
+            "key": "lift_to_level.ready",
+            "equals": true
+          },
+          {
+            "id": "authorized",
+            "label": "All movement, material and endpoint resources owned",
+            "source": "authorization",
+            "key": "lift_to_level.authorized",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "Current run and active transfer remain valid",
+            "source": "observation",
+            "key": "lift_to_level.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "Correlated actual pose, support and ownership evidence",
+        "checks": [
+          {
+            "id": "completion",
+            "label": "This request has confirmed physical completion",
+            "source": "observation",
+            "key": "lift_to_level.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      }
+    },
+    {
+      "behavior_id": "hold_lift",
+      "display_name": "hold_lift",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "lift_table.warehouse@1",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "authority": "single_gateway",
+        "request_context": "run/instance/activation/request/subject"
+      },
+      "input_signals": [
+        "execute",
+        "request_id"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "ready",
+            "label": "Valid named target, stopped axes and source/receiver availability",
+            "source": "observation",
+            "key": "hold_lift.ready",
+            "equals": true
+          },
+          {
+            "id": "authorized",
+            "label": "All movement, material and endpoint resources owned",
+            "source": "authorization",
+            "key": "hold_lift.authorized",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "Current run and active transfer remain valid",
+            "source": "observation",
+            "key": "hold_lift.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "Correlated actual pose, support and ownership evidence",
+        "checks": [
+          {
+            "id": "completion",
+            "label": "This request has confirmed physical completion",
+            "source": "observation",
+            "key": "hold_lift.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      }
+    },
+    {
+      "behavior_id": "resume_lift",
+      "display_name": "恢复升降",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "pending.lift_table.resume_lift",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "enableTag 恢复且存在被保持任务",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "signal_or_external_event"
+      },
+      "input_signals": [
+        "enableTag"
+      ],
+      "output_signals": [
+        "accepted",
+        "actual_height",
+        "busy",
+        "done",
+        "error",
+        "error_code",
+        "moving",
+        "result_id"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "原任务有效、故障条件解除、资源仍获准、目标未被覆盖",
+            "source": "authorization",
+            "key": "resume_lift.pre_1",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "resume_lift.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "进入原任务执行阶段；最终到位由 lift_to_level 判断",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "进入原任务执行阶段；最终到位由 lift_to_level 判断",
+            "source": "observation",
+            "key": "resume_lift.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "source": {
+        "document": "schema.md",
+        "section_start_line": 95,
+        "behavior_row": "resume_lift"
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "description": "仅在文档要求的模块、模式、接口和执行器存在时启用；可选模块默认不授予额外能力。",
+        "conditions": []
+      }
+    },
+    {
+      "behavior_id": "raise_transfer_chains",
+      "display_name": "抬升辅助链条",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "pending.lift_table.raise_transfer_chains",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "可选模块 popupTag=TRUE",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "signal_or_external_event"
+      },
+      "input_signals": [
+        "popupTag"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "error_code",
+        "result_id",
+        "transfer_ready"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "启用独立横移模块",
+            "source": "observation",
+            "key": "raise_transfer_chains.pre_1",
+            "equals": true
+          },
+          {
+            "id": "pre_2",
+            "label": "主平台停稳、辅助行程及资源允许",
+            "source": "observation",
+            "key": "raise_transfer_chains.pre_2",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "raise_transfer_chains.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "辅助机构实际到达上位，不仅按计时推断",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "辅助机构实际到达上位，不仅按计时推断",
+            "source": "observation",
+            "key": "raise_transfer_chains.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "source": {
+        "document": "schema.md",
+        "section_start_line": 95,
+        "behavior_row": "raise_transfer_chains"
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "description": "仅在文档要求的模块、模式、接口和执行器存在时启用；可选模块默认不授予额外能力。",
+        "conditions": [
+          {
+            "parameter": "transfer_module",
+            "equals": true
+          }
+        ]
+      }
+    },
+    {
+      "behavior_id": "lower_transfer_chains",
+      "display_name": "下降辅助链条",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "pending.lift_table.lower_transfer_chains",
+      "implementation_status": "pending_adapter",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "可选模块 popupTag=FALSE",
+        "authority": "single_gateway_or_declared_continuous_writer",
+        "request_context": "run/instance/request and registry mappings",
+        "payload_binding_status": "signal_or_external_event"
+      },
+      "input_signals": [
+        "popupTag"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "error_code",
+        "result_id",
+        "transfer_ready"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "pre_1",
+            "label": "启用横移模块",
+            "source": "observation",
+            "key": "lower_transfer_chains.pre_1",
+            "equals": true
+          },
+          {
+            "id": "pre_2",
+            "label": "物料已满足支承／交接条件",
+            "source": "observation",
+            "key": "lower_transfer_chains.pre_2",
+            "equals": true
+          },
+          {
+            "id": "pre_3",
+            "label": "下降不会破坏持有关系",
+            "source": "observation",
+            "key": "lower_transfer_chains.pre_3",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "持续条件与阶段身份",
+            "source": "observation",
+            "key": "lower_transfer_chains.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "辅助机构实际到达下位",
+        "checks": [
+          {
+            "id": "completion_evidence",
+            "label": "辅助机构实际到达下位",
+            "source": "observation",
+            "key": "lower_transfer_chains.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      },
+      "source": {
+        "document": "schema.md",
+        "section_start_line": 95,
+        "behavior_row": "lower_transfer_chains"
+      },
+      "applicability": {
+        "status": "must_check_configuration",
+        "description": "仅在文档要求的模块、模式、接口和执行器存在时启用；可选模块默认不授予额外能力。",
+        "conditions": [
+          {
+            "parameter": "transfer_module",
+            "equals": true
+          }
+        ]
+      }
+    }
+  ],
+  "type_specific_contract": {
+    "coordinate_system": {
+      "up_axis": "Y",
+      "length_unit": "m",
+      "angle_unit": "rad",
+      "height_reference": "device_base"
+    },
+    "platform_geometry": {
+      "length_param": "platform_length_m",
+      "width_param": "platform_width_m"
+    },
+    "lift_motion": {
+      "joint_name": "lift_axis",
+      "joint_type": "prismatic",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "axis_frame": "device_local",
+      "min_param": "min_height_m",
+      "max_param": "max_height_m",
+      "speed_param": "lift_speed_mps",
+      "acceleration_param": "lift_accel_mps2",
+      "platform_node": "platform"
+    },
+    "height_levels": [
+      {
+        "level_id": "lower",
+        "height_param": "min_height_m"
+      },
+      {
+        "level_id": "upper",
+        "height_param": "upper_level_m"
+      }
+    ],
+    "dock_policy": {
+      "requires_level_match": true,
+      "tolerance_param": "position_tolerance_m",
+      "settle_speed_param": "settle_speed_mps"
+    },
+    "load_limits": {
+      "max_payload_param": "max_payload_kg",
+      "max_active_materials": 1
+    },
+    "transfer": {
+      "mode": "virtual_linear",
+      "orientation_policy": "preserve",
+      "load_anchor_ref": "platform.load_anchor"
+    }
+  },
+  "runtime_contract": {
+    "observation_definitions": {
+      "accept_material.ready": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "Valid named target, stopped axes and source/receiver availability",
+        "expression_ref": "accept_material.ready"
+      },
+      "accept_material.sustaining": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "Current run and active transfer remain valid",
+        "expression_ref": "accept_material.sustaining"
+      },
+      "accept_material.completion": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "This request has confirmed physical completion",
+        "expression_ref": "accept_material.completion"
+      },
+      "release_material.ready": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "Valid named target, stopped axes and source/receiver availability",
+        "expression_ref": "release_material.ready"
+      },
+      "release_material.sustaining": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "Current run and active transfer remain valid",
+        "expression_ref": "release_material.sustaining"
+      },
+      "release_material.completion": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "This request has confirmed physical completion",
+        "expression_ref": "release_material.completion"
+      },
+      "transfer_material.ready": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "Valid named target, stopped axes and source/receiver availability",
+        "expression_ref": "transfer_material.ready"
+      },
+      "transfer_material.sustaining": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "Current run and active transfer remain valid",
+        "expression_ref": "transfer_material.sustaining"
+      },
+      "transfer_material.completion": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "This request has confirmed physical completion",
+        "expression_ref": "transfer_material.completion"
+      },
+      "lift_to_location.ready": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "Valid named target, stopped axes and source/receiver availability",
+        "expression_ref": "lift_to_location.ready"
+      },
+      "lift_to_location.sustaining": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "Current run and active transfer remain valid",
+        "expression_ref": "lift_to_location.sustaining"
+      },
+      "lift_to_location.completion": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "This request has confirmed physical completion",
+        "expression_ref": "lift_to_location.completion"
+      },
+      "lift_to_level.ready": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "Valid named target, stopped axes and source/receiver availability",
+        "expression_ref": "lift_to_level.ready"
+      },
+      "lift_to_level.sustaining": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "Current run and active transfer remain valid",
+        "expression_ref": "lift_to_level.sustaining"
+      },
+      "lift_to_level.completion": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "This request has confirmed physical completion",
+        "expression_ref": "lift_to_level.completion"
+      },
+      "hold_lift.ready": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "Valid named target, stopped axes and source/receiver availability",
+        "expression_ref": "hold_lift.ready"
+      },
+      "hold_lift.sustaining": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "Current run and active transfer remain valid",
+        "expression_ref": "hold_lift.sustaining"
+      },
+      "hold_lift.completion": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "This request has confirmed physical completion",
+        "expression_ref": "hold_lift.completion"
+      },
+      "resume_lift.sustaining": {
+        "value_type": "boolean",
+        "description": "执行期间持续核查适用互锁、使能与身份；取料等阶段条件按阶段适用，不把已消费的前置状态持续要求为真。",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "enableTag",
+          "accepted",
+          "actual_height",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "moving",
+          "result_id"
+        ],
+        "source_requirement": "原任务有效、故障条件解除、资源仍获准、目标未被覆盖",
+        "expression_ref": "resume_lift.sustaining"
+      },
+      "resume_lift.completion": {
+        "value_type": "boolean",
+        "description": "进入原任务执行阶段；最终到位由 lift_to_level 判断",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "enableTag",
+          "accepted",
+          "actual_height",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "moving",
+          "result_id"
+        ],
+        "semantic_source": {
+          "document": "schema.md",
+          "section": "lift_table",
+          "behavior": "resume_lift"
+        },
+        "identity": "run/instance/subject/request as applicable; passive uses external transaction context",
+        "expression_ref": "resume_lift.completion"
+      },
+      "raise_transfer_chains.pre_1": {
+        "value_type": "boolean",
+        "description": "启用独立横移模块",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "popupTag",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id",
+          "transfer_ready"
+        ],
+        "semantic_source": {
+          "document": "schema.md",
+          "section": "lift_table",
+          "behavior": "raise_transfer_chains"
+        },
+        "evaluation": "provider_must_implement_this_predicate; no_eval_of_description",
+        "expression_ref": "raise_transfer_chains.pre_1"
+      },
+      "raise_transfer_chains.pre_2": {
+        "value_type": "boolean",
+        "description": "主平台停稳、辅助行程及资源允许",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "popupTag",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id",
+          "transfer_ready"
+        ],
+        "semantic_source": {
+          "document": "schema.md",
+          "section": "lift_table",
+          "behavior": "raise_transfer_chains"
+        },
+        "evaluation": "provider_must_implement_this_predicate; no_eval_of_description",
+        "expression_ref": "raise_transfer_chains.pre_2"
+      },
+      "raise_transfer_chains.sustaining": {
+        "value_type": "boolean",
+        "description": "执行期间持续核查适用互锁、使能与身份；取料等阶段条件按阶段适用，不把已消费的前置状态持续要求为真。",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "popupTag",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id",
+          "transfer_ready"
+        ],
+        "source_requirement": "启用独立横移模块；主平台停稳、辅助行程及资源允许",
+        "expression_ref": "raise_transfer_chains.sustaining"
+      },
+      "raise_transfer_chains.completion": {
+        "value_type": "boolean",
+        "description": "辅助机构实际到达上位，不仅按计时推断",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "popupTag",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id",
+          "transfer_ready"
+        ],
+        "semantic_source": {
+          "document": "schema.md",
+          "section": "lift_table",
+          "behavior": "raise_transfer_chains"
+        },
+        "identity": "run/instance/subject/request as applicable; passive uses external transaction context",
+        "expression_ref": "raise_transfer_chains.completion"
+      },
+      "lower_transfer_chains.pre_1": {
+        "value_type": "boolean",
+        "description": "启用横移模块",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "popupTag",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id",
+          "transfer_ready"
+        ],
+        "semantic_source": {
+          "document": "schema.md",
+          "section": "lift_table",
+          "behavior": "lower_transfer_chains"
+        },
+        "evaluation": "provider_must_implement_this_predicate; no_eval_of_description",
+        "expression_ref": "lower_transfer_chains.pre_1"
+      },
+      "lower_transfer_chains.pre_2": {
+        "value_type": "boolean",
+        "description": "物料已满足支承／交接条件",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "popupTag",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id",
+          "transfer_ready"
+        ],
+        "semantic_source": {
+          "document": "schema.md",
+          "section": "lift_table",
+          "behavior": "lower_transfer_chains"
+        },
+        "evaluation": "provider_must_implement_this_predicate; no_eval_of_description",
+        "expression_ref": "lower_transfer_chains.pre_2"
+      },
+      "lower_transfer_chains.pre_3": {
+        "value_type": "boolean",
+        "description": "下降不会破坏持有关系",
+        "provider": "device_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "popupTag",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id",
+          "transfer_ready"
+        ],
+        "semantic_source": {
+          "document": "schema.md",
+          "section": "lift_table",
+          "behavior": "lower_transfer_chains"
+        },
+        "evaluation": "provider_must_implement_this_predicate; no_eval_of_description",
+        "expression_ref": "lower_transfer_chains.pre_3"
+      },
+      "lower_transfer_chains.sustaining": {
+        "value_type": "boolean",
+        "description": "执行期间持续核查适用互锁、使能与身份；取料等阶段条件按阶段适用，不把已消费的前置状态持续要求为真。",
+        "provider": "behavior_adapter",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "popupTag",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id",
+          "transfer_ready"
+        ],
+        "source_requirement": "启用横移模块；物料已满足支承／交接条件，下降不会破坏持有关系",
+        "expression_ref": "lower_transfer_chains.sustaining"
+      },
+      "lower_transfer_chains.completion": {
+        "value_type": "boolean",
+        "description": "辅助机构实际到达下位",
+        "provider": "behavior_or_world_observer",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "popupTag",
+          "accepted",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "result_id",
+          "transfer_ready"
+        ],
+        "semantic_source": {
+          "document": "schema.md",
+          "section": "lift_table",
+          "behavior": "lower_transfer_chains"
+        },
+        "identity": "run/instance/subject/request as applicable; passive uses external transaction context",
+        "expression_ref": "lower_transfer_chains.completion"
+      }
+    },
+    "authorization_definitions": {
+      "accept_material.authorized": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "All movement, material and endpoint resources owned",
+        "expression_ref": "accept_material.authorized"
+      },
+      "release_material.authorized": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "All movement, material and endpoint resources owned",
+        "expression_ref": "release_material.authorized"
+      },
+      "transfer_material.authorized": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "All movement, material and endpoint resources owned",
+        "expression_ref": "transfer_material.authorized"
+      },
+      "lift_to_location.authorized": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "All movement, material and endpoint resources owned",
+        "expression_ref": "lift_to_location.authorized"
+      },
+      "lift_to_level.authorized": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "All movement, material and endpoint resources owned",
+        "expression_ref": "lift_to_level.authorized"
+      },
+      "hold_lift.authorized": {
+        "value_type": "boolean",
+        "provider": "warehouse_runtime",
+        "implementation_status": "pending_provider",
+        "signal_refs": [],
+        "description": "All movement, material and endpoint resources owned",
+        "expression_ref": "hold_lift.authorized"
+      },
+      "resume_lift.pre_1": {
+        "value_type": "boolean",
+        "description": "原任务有效、故障条件解除、资源仍获准、目标未被覆盖",
+        "provider": "authorization_service",
+        "implementation_status": "pending_provider",
+        "signal_refs": [
+          "enableTag",
+          "accepted",
+          "actual_height",
+          "busy",
+          "done",
+          "error",
+          "error_code",
+          "moving",
+          "result_id"
+        ],
+        "semantic_source": {
+          "document": "schema.md",
+          "section": "lift_table",
+          "behavior": "resume_lift"
+        },
+        "evaluation": "provider_must_implement_this_predicate; no_eval_of_description",
+        "expression_ref": "resume_lift.pre_1"
+      }
+    },
+    "condition_model": {
+      "schema_version": "ac-condition/0.1",
+      "execution_mode": "declaration_only",
+      "unknown_policy": "three_valued_fail_closed",
+      "bindings": {},
+      "expressions": {
+        "accept_material.ready": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "accept_material.ready"
+          }
+        },
+        "accept_material.authorized": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "authorization",
+            "key": "accept_material.authorized"
+          }
+        },
+        "accept_material.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "accept_material.sustaining"
+          }
+        },
+        "accept_material.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "accept_material.completion"
+          }
+        },
+        "release_material.ready": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "release_material.ready"
+          }
+        },
+        "release_material.authorized": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "authorization",
+            "key": "release_material.authorized"
+          }
+        },
+        "release_material.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "release_material.sustaining"
+          }
+        },
+        "release_material.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "release_material.completion"
+          }
+        },
+        "transfer_material.ready": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "transfer_material.ready"
+          }
+        },
+        "transfer_material.authorized": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "authorization",
+            "key": "transfer_material.authorized"
+          }
+        },
+        "transfer_material.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "transfer_material.sustaining"
+          }
+        },
+        "transfer_material.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "transfer_material.completion"
+          }
+        },
+        "lift_to_location.ready": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "lift_to_location.ready"
+          }
+        },
+        "lift_to_location.authorized": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "authorization",
+            "key": "lift_to_location.authorized"
+          }
+        },
+        "lift_to_location.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "lift_to_location.sustaining"
+          }
+        },
+        "lift_to_location.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "lift_to_location.completion"
+          }
+        },
+        "lift_to_level.ready": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "lift_to_level.ready"
+          }
+        },
+        "lift_to_level.authorized": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "authorization",
+            "key": "lift_to_level.authorized"
+          }
+        },
+        "lift_to_level.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "lift_to_level.sustaining"
+          }
+        },
+        "lift_to_level.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "lift_to_level.completion"
+          }
+        },
+        "hold_lift.ready": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "hold_lift.ready"
+          }
+        },
+        "hold_lift.authorized": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "authorization",
+            "key": "hold_lift.authorized"
+          }
+        },
+        "hold_lift.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "hold_lift.sustaining"
+          }
+        },
+        "hold_lift.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "hold_lift.completion"
+          }
+        },
+        "resume_lift.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "authorization",
+            "key": "resume_lift.pre_1"
+          }
+        },
+        "resume_lift.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "resume_lift.sustaining"
+          }
+        },
+        "resume_lift.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "resume_lift.completion"
+          }
+        },
+        "raise_transfer_chains.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "raise_transfer_chains.pre_1"
+          }
+        },
+        "raise_transfer_chains.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "raise_transfer_chains.pre_2"
+          }
+        },
+        "raise_transfer_chains.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "raise_transfer_chains.sustaining"
+          }
+        },
+        "raise_transfer_chains.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "raise_transfer_chains.completion"
+          }
+        },
+        "lower_transfer_chains.pre_1": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "lower_transfer_chains.pre_1"
+          }
+        },
+        "lower_transfer_chains.pre_2": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "lower_transfer_chains.pre_2"
+          }
+        },
+        "lower_transfer_chains.pre_3": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "lower_transfer_chains.pre_3"
+          }
+        },
+        "lower_transfer_chains.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "lower_transfer_chains.sustaining"
+          }
+        },
+        "lower_transfer_chains.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "lower_transfer_chains.completion"
+          }
+        }
+      }
+    }
+  },
+  "runtime_execution_contract": {
+    "signal_management": {
+      "owner": "simulation_engine",
+      "status": "pending_engine",
+      "namespace": "instance_id/port_id",
+      "definition_source": "signal_ports",
+      "spatial_binding": false,
+      "write_policy": "single_writer_per_input",
+      "plc_mapping": "instance_bindings",
+      "sampling": "simulation_step_snapshot",
+      "unknown_policy": "invalid_until_provider_ready"
+    },
+    "status": "pending_adapter",
+    "protocol": {
+      "basis": "schema.md公共请求协议",
+      "acceptance": "same request identity and frozen parameters",
+      "completion": "matching result_id plus observed completion checks",
+      "single_command_entry": true
+    },
+    "payload_binding_status": "requires_explicit_model_adapter",
+    "calibration_required": true,
+    "real_execution_available": false,
+    "raw_api_and_plc_simultaneous_writers": false,
+    "target_encoding": "height_m; level-number adapter remains explicit",
+    "payload_templates": {
+      "accept_material": {
+        "fields": {
+          "material": "material_ref",
+          "source": "location_ref"
+        },
+        "status": "pending_model_adapter",
+        "encoding": "typed_references"
+      },
+      "release_material": {
+        "fields": {
+          "material": "material_ref",
+          "target": "location_ref"
+        },
+        "status": "pending_model_adapter",
+        "encoding": "typed_references"
+      },
+      "transfer_material": {
+        "fields": {
+          "material": "material_ref",
+          "source": "location_ref",
+          "target": "location_ref"
+        },
+        "status": "pending_model_adapter",
+        "encoding": "typed_references"
+      }
+    },
+    "transfer_policy": {
+      "completion": "actual arrival, contact support, settled velocity and ownership commit",
+      "stop": "retain in-flight grasp and reservation; require attention",
+      "handler_motion": "not simulated"
+    },
+    "profile": "warehouse.virtual-linear@1",
+    "semantic_ports": {
+      "lift_to_location": {
+        "requires": [],
+        "provides": [
+          {
+            "semantic": "at",
+            "subject": "self",
+            "endpoint": "target"
+          },
+          {
+            "semantic": "stopped",
+            "subject": "self",
+            "endpoint": "self"
+          }
+        ]
+      },
+      "accept_material": {
+        "requires": [
+          {
+            "semantic": "supported_at",
+            "subject": "material",
+            "endpoint": "source"
+          }
+        ],
+        "provides": [
+          {
+            "semantic": "supported_at",
+            "subject": "material",
+            "endpoint": "platform"
+          },
+          {
+            "semantic": "retained_at",
+            "subject": "material",
+            "endpoint": "platform"
+          }
+        ]
+      },
+      "release_material": {
+        "requires": [
+          {
+            "semantic": "retained_at",
+            "subject": "material",
+            "endpoint": "platform"
+          }
+        ],
+        "provides": [
+          {
+            "semantic": "supported_at",
+            "subject": "material",
+            "endpoint": "target"
+          }
+        ]
+      }
+    }
+  },
+  "description": "升降台类型契约。设备型号选择适用行为并绑定真实模型、参数与条件提供者。"
+}

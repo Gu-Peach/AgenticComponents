@@ -1,0 +1,269 @@
+{
+  "conveyor/handoff": {
+    "runtime_contract": {
+      "condition_model": {
+        "bindings": {
+          "$remove": [
+            "transport_to_position.transport_mode",
+            "transport_to_position.target_and_subject_valid",
+            "transport_to_position.environment_ready",
+            "transport_to_position.resources_granted",
+            "transport_to_position.motion_interlocks_clear",
+            "transport_to_position.matching_accepted",
+            "transport_to_position.transport_integrity",
+            "transport_to_position.target_error_m",
+            "transport_to_position.target_supported",
+            "transport_to_position.subject_and_drives_stationary",
+            "transport_to_position.matching_success",
+            "transport_to_position.position_tolerance_m",
+            "release_material.subject_at_exit",
+            "release_material.receiver_admissible",
+            "release_material.release_history_exists",
+            "release_material.elapsed_since_release_s",
+            "release_material.release_gap_s",
+            "release_material.matching_accepted",
+            "release_material.release_waiting_material_run",
+            "release_material.handoff_ownership_valid",
+            "release_material.matching_success",
+            "release_material.receiver_receipt",
+            "release_material.subject_on_device",
+            "stop_conveying.already_stationary",
+            "stop_conveying.controlled_stop_supported",
+            "stop_conveying.decel_time_s",
+            "stop_conveying.load_tracking_available",
+            "stop_conveying.matching_accepted",
+            "stop_conveying.stop_retains_loads",
+            "stop_conveying.matching_success",
+            "stop_conveying.max_drive_speed_mps",
+            "stop_conveying.speed_tolerance_mps"
+          ]
+        },
+        "expressions": {
+          "release_material.pre_1": {
+            "status": "opaque",
+            "expr": {
+              "$remove": [
+                "args"
+              ],
+              "op": "opaque",
+              "key": "release_material.pre_1",
+              "source": "observation"
+            }
+          },
+          "release_material.sustaining": {
+            "status": "opaque",
+            "expr": {
+              "$remove": [
+                "args"
+              ],
+              "op": "opaque",
+              "key": "release_material.sustaining",
+              "source": "observation"
+            }
+          },
+          "release_material.completion": {
+            "status": "opaque",
+            "expr": {
+              "$remove": [
+                "args"
+              ],
+              "op": "opaque",
+              "key": "release_material.completion",
+              "source": "observation"
+            }
+          },
+          "stop_conveying.pre_1": {
+            "status": "opaque",
+            "expr": {
+              "$remove": [
+                "args"
+              ],
+              "op": "opaque",
+              "key": "stop_conveying.pre_1",
+              "source": "observation"
+            }
+          },
+          "stop_conveying.pre_2": {
+            "status": "opaque",
+            "expr": {
+              "$remove": [
+                "operator",
+                "left",
+                "right"
+              ],
+              "op": "opaque",
+              "key": "stop_conveying.pre_2",
+              "source": "observation"
+            }
+          },
+          "stop_conveying.pre_3": {
+            "status": "opaque",
+            "expr": {
+              "$remove": [
+                "binding"
+              ],
+              "op": "opaque",
+              "key": "stop_conveying.pre_3",
+              "source": "observation"
+            }
+          },
+          "stop_conveying.sustaining": {
+            "status": "opaque",
+            "expr": {
+              "$remove": [
+                "args"
+              ],
+              "op": "opaque",
+              "key": "stop_conveying.sustaining",
+              "source": "observation"
+            }
+          },
+          "stop_conveying.completion": {
+            "status": "opaque",
+            "expr": {
+              "$remove": [
+                "args"
+              ],
+              "op": "opaque",
+              "key": "stop_conveying.completion",
+              "source": "observation"
+            }
+          },
+          "transport_to_position.ready": {
+            "status": "opaque",
+            "expr": {
+              "$remove": [
+                "args"
+              ],
+              "op": "opaque",
+              "key": "transport_to_position.ready",
+              "source": "observation"
+            }
+          },
+          "transport_to_position.sustaining": {
+            "status": "opaque",
+            "expr": {
+              "$remove": [
+                "args"
+              ],
+              "op": "opaque",
+              "key": "transport_to_position.sustaining",
+              "source": "observation"
+            }
+          },
+          "transport_to_position.completion": {
+            "status": "opaque",
+            "expr": {
+              "$remove": [
+                "args"
+              ],
+              "op": "opaque",
+              "key": "transport_to_position.completion",
+              "source": "observation"
+            }
+          },
+          "transport_to_position.motion_authorized": {
+            "status": "opaque",
+            "expr": {
+              "$remove": [
+                "args"
+              ],
+              "op": "opaque",
+              "key": "transport_to_position.motion_authorized",
+              "source": "authorization"
+            }
+          }
+        }
+      }
+    }
+  },
+  "robot_arm/handoff": {
+    "params_schema": {
+      "$remove": [
+        "process_time_s",
+        "process_position_tolerance_m",
+        "process_angle_tolerance_deg"
+      ]
+    },
+    "interfaces": [],
+    "signal_ports": {
+      "$list": "port_id",
+      "select": [
+        "commandTag",
+        "start_pick",
+        "request_id",
+        "pause_pick",
+        "resume_pick",
+        "enableTag",
+        "gripperTag",
+        "in1Tag",
+        "in2Tag",
+        "in3Tag",
+        "in4Tag",
+        "reset",
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "result_id",
+        "error_code",
+        "out1Tag",
+        "out2Tag",
+        "out3Tag",
+        "out4Tag",
+        "holding_material"
+      ]
+    },
+    "transport_behaviors": {
+      "$list": "behavior_id",
+      "select": [
+        "execute_job",
+        "pick_and_place",
+        "move_to_pose",
+        "grip",
+        "release",
+        "wait_time",
+        "wait_signal",
+        "set_output",
+        "pause_pick_intake",
+        "resume_pick_intake",
+        "hold_motion",
+        "resume_motion",
+        "publish_robot_state",
+        "pick_and_handoff",
+        "place_held_material"
+      ]
+    },
+    "runtime_contract": {
+      "observation_definitions": {
+        "$remove": [
+          "process_material.ready",
+          "process_material.sustaining",
+          "process_material.completion"
+        ]
+      },
+      "authorization_definitions": {
+        "$remove": [
+          "process_material.authorized"
+        ]
+      },
+      "condition_model": {
+        "expressions": {
+          "$remove": [
+            "process_material.ready",
+            "process_material.authorized",
+            "process_material.sustaining",
+            "process_material.completion"
+          ]
+        }
+      }
+    },
+    "runtime_execution_contract": {
+      "payload_templates": {
+        "$remove": [
+          "process_material"
+        ]
+      }
+    }
+  }
+}

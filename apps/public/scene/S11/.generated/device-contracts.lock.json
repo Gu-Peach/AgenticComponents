@@ -1,0 +1,77 @@
+{
+  "schema_version": "device-publication/1",
+  "entries": {
+    "contracts/human_operator.json": {
+      "type": "human_operator",
+      "profile": "human_operator/indexed",
+      "template_revision": "1.0.0",
+      "inputs": {
+        "human_operator/contract.json": "ae3a3d21cd03deeaf01f1f787a66e804f9b53c8674246af9dbbf5e656c02fbfe",
+        "catalog.json#human_operator/indexed": "26dba3fdc4b25d350457606734cfe8e3803201c1db8aba8caafcb63cdecb8f9d",
+        "public/scene/S11/contract-overrides.json#human_operator/indexed": "edec3d772a22f803f456bc49b0c93b96f6fffa8f23133dad80f6999c6e7335a1",
+        "catalog.json#publications/scene/S11/contracts/human_operator.json": "262e175a5743b3f0c6ac8c564c32466b8ec5d37dcac99846cb09fdf1a6396f93",
+        "scene.json#asset": "73c1e7f28eea1eff2dce3ae6c499faf1aa6e30af251b3a6c6e60bed43cc42853"
+      },
+      "snapshot_sha256": "66ac8e150405c6c3aaf67e6cbb038360c7cc1da5702d08feebf1d1ed05601aad"
+    },
+    "contracts/material_source_station.json": {
+      "type": "material_source_station",
+      "profile": "material_source_station/machining-cell",
+      "template_revision": "1.0.0",
+      "inputs": {
+        "material_source_station/contract.json": "a921147b264840567d5f48d3eb8bec5bfd0c7d43d935bca8e33b939382013966",
+        "catalog.json#material_source_station/position": "3ad92f6d4622d6c289bf084cc3100fc89e41715670d6938d23dfab1067bc6a5c",
+        "public/scene/S01/contract-overrides.json#material_source_station/position": "7c83d3054f6a0173f586f422e7faa54afbf0e44d4cab197dfdfabf8cbc9373fb",
+        "catalog.json#material_source_station/machining-cell": "c8c2f37c9dc8c72d3d23f59a7900551b694b0f8644f5cb51ce84224bf520ab59",
+        "public/scene/S05/contract-overrides.json#material_source_station/machining-cell": "acf5b432658df9f2867b757577e116726ab01e513f49b065b3dc4a347979c385",
+        "catalog.json#publications/scene/S11/contracts/material_source_station.json": "ed904d99a40890347aa50634bfb4b9356cf0104221b972219c51a10861ccc269",
+        "scene.json#asset": "73c1e7f28eea1eff2dce3ae6c499faf1aa6e30af251b3a6c6e60bed43cc42853"
+      },
+      "snapshot_sha256": "67362ae2f70cac3f6f8347c2600360f51417798947e380729447e457490ca0b6"
+    },
+    "contracts/robot_arm.json": {
+      "type": "robot_arm",
+      "profile": "robot_arm/indexed",
+      "template_revision": "1.1.0",
+      "inputs": {
+        "robot_arm/contract.json": "d77ffd45bc8ef826977e485320b42ab38c3d3c44087e1e313845cdddce0ceaae",
+        "catalog.json#robot_arm/indexed": "7a6dbe83dfa2fb387e3c366afc091987ed4e2e1728a18b77559c52140bdf0e66",
+        "public/scene/S11/contract-overrides.json#robot_arm/indexed": "e0a12d62e4b71ef7596641226675bb7dddea0185e79a73907c583d4ec7ba4f26",
+        "catalog.json#publications/scene/S11/contracts/robot_arm.json": "e67e0046f7f4f86e4027eb6eed8b170e6c99047dce65f8f89af663688e16c2ae",
+        "scene.json#asset": "73c1e7f28eea1eff2dce3ae6c499faf1aa6e30af251b3a6c6e60bed43cc42853"
+      },
+      "snapshot_sha256": "f75a87e09dfcca07287179ca49684c934a5f18111dc68ae83ad12d34dcdeb9af"
+    },
+    "contracts/rotary_table.json": {
+      "type": "rotary_table",
+      "profile": "rotary_table/indexed",
+      "template_revision": "1.0.0",
+      "inputs": {
+        "rotary_table/contract.json": "61bfb74e1973fbab98878f9a59a42a7757a20b8ef2fece8ce5071706ea9e3b12",
+        "catalog.json#rotary_table/indexed-conveying": "5a0de2073ff2f335d01537413979120f574c42b87b2cf94d36366f1cb44428ee",
+        "public/scene/S12/contract-overrides.json#rotary_table/indexed-conveying": "29adf1093ef61eb8c6f11b745369843c00decee89358b08657c8abec82c3ef66",
+        "catalog.json#rotary_table/indexed": "c79143223bc56c89e02d1a31533522708b4665acbf8c399f5d4216a373f251da",
+        "public/scene/S11/contract-overrides.json#rotary_table/indexed": "5bfdec8e881d38553f2ba6313ec8ae74236512ff192e2cf0829113289087cf5e",
+        "catalog.json#publications/scene/S11/contracts/rotary_table.json": "b474be8bbbe23b40172db30b7baadf7265e137337fa435db200ced502349712b",
+        "scene.json#asset": "73c1e7f28eea1eff2dce3ae6c499faf1aa6e30af251b3a6c6e60bed43cc42853"
+      },
+      "snapshot_sha256": "32d8a46f14cab8118ebc3e55aa2bbf9e0e77ac6f1df68ca58d9ef5aeecc1f881"
+    },
+    "contracts/workpiece.json": {
+      "type": "workpiece",
+      "profile": "workpiece/indexed",
+      "template_revision": "1.0.0",
+      "inputs": {
+        "workpiece/contract.json": "87ec1fc471d0bf0c473155298b46baa414b85d90a67b30cba7f791c7ecd7d249",
+        "catalog.json#workpiece/position": "5ef73c4a096aabd02fffcd4bfef81eb385f15121a7decfacbaba90fe34c1dd52",
+        "catalog.json#workpiece/declarative": "dba7305756d804d87292fbcf619b8dc0655cecc8a2c4f672edd76e1825047264",
+        "public/scene/S03/contract-overrides.json#workpiece/declarative": "703a21ddc4b893fe3ec42a5b887b7dcdf3a6f22c4ee62d53007af1d606681d4b",
+        "catalog.json#workpiece/indexed": "ebeea7c1966af3ce16d3b4ea924a5b2ff81d76c5ee71ec72e0fa857dddf715e6",
+        "public/scene/S11/contract-overrides.json#workpiece/indexed": "776abe9315ddd0cb6977b4d0bb6d6ec5c6799c8b56db884e9567518514f3012b",
+        "catalog.json#publications/scene/S11/contracts/workpiece.json": "64e264d027e31a4e60afdfc03accf90fb225c6308238cec6ef42b304d1e52b2d",
+        "scene.json#asset": "73c1e7f28eea1eff2dce3ae6c499faf1aa6e30af251b3a6c6e60bed43cc42853"
+      },
+      "snapshot_sha256": "aaebdfb86958df64c7c8b1e86f324e8976db29bd448f0fdf23f7113bbc451eaa"
+    }
+  }
+}

@@ -1,3 +1,4 @@
+import { isCarryingWorkpiece } from "@/devices/workpiece/behavior";
 /** 把设备契约中的条件绑定到当前调度步的信号、物理观测、请求和资源状态，供调度器判定动作能否开始或完成。 */
 
 import { Quaternion, Vector3 } from "three";
@@ -404,7 +405,7 @@ export function sceneConditionReader(
           support =
             src.contract.device_type === "machine_tool"
               ? src.instance_id + "/support"
-              : src.contract.device_type === "workpiece_carrier"
+              : isCarryingWorkpiece(src.contract)
                 ? src.instance_id + "/body"
                 : src.instance_id + "/surface";
         return (

@@ -14,6 +14,8 @@ import type { ConditionProviders } from "@/runtime/signals/ConditionProviders";
 import { immutable } from "@/runtime/scheduler/expressions";
 export interface BindProcessOptions {
   scope: Record<string, unknown>;
+  /** DSL symbols resolve to actual instance IDs, including imported UUID-based IDs. */
+  deviceInstances?: Readonly<Record<string, string>>;
   actions: readonly ActionBinding[];
   providers: ConditionProviders;
   readers?: Record<string, ExpressionReader>;
@@ -113,6 +115,21 @@ export function bindProcess(
     } else if (e.kind === "map") Object.values(e.items).forEach(expr);
     else if (e.kind === "list") e.items.forEach(expr);
   };
+  if (options.deviceInstances) {
+    const instances = options.deviceInstances;
+    const resolveDevice = (node: ProcessNode) => {
+      if (node.kind === "invoke" || node.kind === "with-control") {
+        if (
+          node.device.kind !== "ref" ||
+          !Object.hasOwn(instances, node.device.name)
+        )
+          throw new Error("Unbound process device in " + node.id);
+        node.device = { kind: "ref", name: instances[node.device.name] };
+      }
+      childrenOf(node).forEach(resolveDevice);
+    };
+    resolveDevice(root);
+  }
   const visit = (n: ProcessNode) => {
     ids.add(n.id);
     if (n.kind === "invoke" || n.kind === "with-control") {

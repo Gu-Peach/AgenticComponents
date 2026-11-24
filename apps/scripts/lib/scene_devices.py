@@ -44,15 +44,16 @@ def generated_signals(instance,contract):
     return {p['port_id']:{'logical_signal':instance+'/'+p['port_id'],'direction':p['direction'],'plc_type':p['plc_type'],
                          'unit':p.get('unit','1'),'retention':p['retention']} for p in contract.get('signal_ports',[])}
 
-def load_scene_devices(folder,manifest,gltf):
+def load_scene_devices(folder,manifest,gltf,published=None):
     folder=Path(folder).resolve();geometry=SceneGeometry(gltf);devices={};inputs={}
     def path(value,base=folder):
         result=(base/value).resolve()
         if folder not in result.parents:raise ValueError('Device reference escapes scene package')
         return result
     def read(file):
-        inputs[file.relative_to(folder).as_posix()]=hashlib.sha256(file.read_bytes()).hexdigest()
-        return json.loads(file.read_text(encoding='utf-8-sig'))
+        data = published[file] if published and file in published else file.read_bytes()
+        inputs[file.relative_to(folder).as_posix()] = hashlib.sha256(data).hexdigest()
+        return json.loads(data)
     for file in manifest['devices']:
         filename=path(file);authored=read(filename)
         if authored.get('schema_version')!='scene-device/0.2':raise ValueError('Compact scene-device/0.2 required')

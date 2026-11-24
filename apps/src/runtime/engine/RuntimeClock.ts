@@ -25,7 +25,9 @@ export function startRuntimeClock(
     last = undefined;
     acc = 0;
   };
+  let active = true;
   const next = (now: number) => {
+    if (!active) return;
     if (!document.hidden && isRunning()) {
       const elapsed = last === undefined ? 0 : Math.max(0, (now - last) / 1000);
       const rate = options?.rate() ?? 1;
@@ -47,7 +49,7 @@ export function startRuntimeClock(
       options?.onFrame(isRunning() ? acc / fixedStep : 1);
       last = now;
     } else reset();
-    frame = requestAnimationFrame(next);
+    if (active) frame = requestAnimationFrame(next);
   };
   const hidden = () => {
     reset();
@@ -57,6 +59,7 @@ export function startRuntimeClock(
   frame = requestAnimationFrame(next);
   return Object.assign(
     () => {
+      active = false;
       cancelAnimationFrame(frame);
       document.removeEventListener("visibilitychange", hidden);
     },

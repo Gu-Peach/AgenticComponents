@@ -47,7 +47,8 @@ function Device({
       : instance.transform,
   );
   const live =
-    ["ready", "running", "paused"].includes(runtime.status) &&
+    (["ready", "running", "paused"].includes(runtime.status) ||
+      !!runtime.workcell) &&
     runtime.subjectId === instance.instanceId &&
     runtime.materialInstanceId &&
     runtime.pose &&
@@ -101,7 +102,14 @@ function Device({
                 selected={selected}
               />
             ) : (
-              <DeviceShape type={definition.deviceType} />
+              <DeviceShape
+                type={
+                  definition.deviceType === "workpiece" &&
+                  definition.typeSpecificContract.carrying
+                    ? "workpiece_carrier"
+                    : definition.deviceType
+                }
+              />
             )}
           </group>
           {selected && (

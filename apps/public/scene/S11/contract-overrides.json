@@ -1,0 +1,670 @@
+{
+  "human_operator/indexed": {
+    "description": "移动至抓取口，吸附同一件物料，搬至目标支承面后释放并撤离。",
+    "interfaces": [
+      {
+        "interface_id": "hand",
+        "name": "右手吸附点",
+        "local_frame": {
+          "position": [
+            0.005268146982747525,
+            0.7104844476897586,
+            0.2653434688320012
+          ],
+          "forward": [
+            0,
+            -1,
+            0
+          ],
+          "up": [
+            0,
+            0,
+            1
+          ]
+        },
+        "capabilities": {
+          "snap": {
+            "role": "human_gripper",
+            "accepts": [
+              "grasp_target"
+            ]
+          }
+        }
+      }
+    ],
+    "signal_ports": {
+      "$list": "port_id",
+      "select": [
+        "execute",
+        "request_id",
+        "accepted",
+        "busy",
+        "done",
+        "result_id",
+        "error",
+        "holding_material"
+      ],
+      "entries": {
+        "request_id": {
+          "signal_role": "request_parameter",
+          "retention": "latched_until_ack_or_new_request",
+          "description": "本轮加工请求号"
+        },
+        "accepted": {
+          "signal_role": "result_latched",
+          "retention": "latched_until_ack_or_new_request",
+          "description": "当前请求已接受"
+        },
+        "done": {
+          "signal_role": "result_latched",
+          "retention": "latched_until_ack_or_new_request",
+          "description": "当前请求已完成且成品状态已提交"
+        },
+        "result_id": {
+          "signal_role": "result_latched",
+          "retention": "latched_until_ack_or_new_request",
+          "description": "本次结果对应的请求号"
+        }
+      }
+    },
+    "transport_behaviors": {
+      "$list": "behavior_id",
+      "entries": {
+        "carry_material": {
+          "output_signals": [
+            "accepted",
+            "busy",
+            "done",
+            "result_id",
+            "error",
+            "holding_material"
+          ]
+        }
+      }
+    },
+    "runtime_execution_contract": {
+      "$remove": [
+        "semantic_ports"
+      ]
+    }
+  },
+  "robot_arm/indexed": {
+    "$remove": [
+      "description"
+    ],
+    "interfaces": {
+      "$list": "interface_id",
+      "entries": {
+        "torch": {
+          "$remove": [
+            "local_frame_pending"
+          ],
+          "$order": [
+            "interface_id",
+            "name",
+            "local_frame",
+            "capabilities"
+          ],
+          "local_frame": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "forward": [
+              0,
+              1,
+              0
+            ],
+            "up": [
+              0,
+              0,
+              1
+            ]
+          }
+        }
+      }
+    },
+    "signal_ports": {
+      "$list": "port_id",
+      "entries": {
+        "request_id": {
+          "description": "原 start_pick 事件的 PLC 投影；作为公共 execute 角色，默认选择抓放任务，或执行 commandTag 指定任务",
+          "signal_role": "request_parameter",
+          "retention": "sampled_state"
+        },
+        "accepted": {
+          "description": "公共握手；本方案 done 表示当前任务成功，不沿用 Blend 提前可接命令的含义",
+          "signal_role": "result_latched",
+          "retention": "latched_until_ack_or_new_request"
+        },
+        "done": {
+          "description": "公共握手；本方案 done 表示当前任务成功，不沿用 Blend 提前可接命令的含义",
+          "signal_role": "result_latched",
+          "retention": "latched_until_ack_or_new_request"
+        },
+        "result_id": {
+          "description": "公共握手；本方案 done 表示当前任务成功，不沿用 Blend 提前可接命令的含义",
+          "signal_role": "result_latched",
+          "retention": "latched_until_ack_or_new_request"
+        }
+      }
+    },
+    "runtime_execution_contract": {
+      "$remove": [
+        "semantic_ports"
+      ]
+    }
+  },
+  "rotary_table/indexed": {
+    "$order": [
+      "contract_version",
+      "schema_type",
+      "schema_id",
+      "device_spec_id",
+      "version",
+      "device_type",
+      "display_name",
+      "description",
+      "asset",
+      "params_schema",
+      "interfaces",
+      "signal_ports",
+      "transport_behaviors",
+      "type_specific_contract",
+      "runtime_contract",
+      "runtime_execution_contract"
+    ],
+    "display_name": "带载分度转台",
+    "description": "通过同一个装卸接口承载工件，围绕竖直轴正向分度。",
+    "params_schema": {
+      "$remove": [
+        "deck_radius_m",
+        "position_mode",
+        "transfer_module",
+        "deck_speed_mps"
+      ],
+      "$order": [
+        "rotate_speed_deg_s",
+        "rotate_accel_deg_s2",
+        "angle_tolerance_deg",
+        "settle_speed_deg_s",
+        "capacity",
+        "max_payload_kg"
+      ],
+      "capacity": {
+        "default": 1
+      }
+    },
+    "interfaces": [
+      {
+        "interface_id": "slot1",
+        "name": "装卸承载点",
+        "local_frame": {
+          "position": [
+            0.47999998927116394,
+            0.7000002513825834,
+            -4.1962931823791294e-08
+          ],
+          "forward": [
+            0,
+            1,
+            0
+          ],
+          "up": [
+            0,
+            0,
+            1
+          ]
+        },
+        "capabilities": {
+          "snap": {
+            "role": "fixture",
+            "accepts": [
+              "workpiece"
+            ]
+          }
+        }
+      }
+    ],
+    "signal_ports": {
+      "$list": "port_id",
+      "select": [
+        "angleTag",
+        "rotate_to_station",
+        "request_id",
+        "actual_angle",
+        "occupied",
+        "rotating",
+        "at_station",
+        "accepted",
+        "busy",
+        "done",
+        "error",
+        "result_id"
+      ]
+    },
+    "transport_behaviors": {
+      "$list": "behavior_id",
+      "select": [
+        "rotate_to_station"
+      ],
+      "entries": {
+        "rotate_to_station": {
+          "$remove": [
+            "applicability"
+          ],
+          "display_name": "带载转位",
+          "executor_ref": "rotary_table.rotate_to_station@1",
+          "implementation_status": "implemented",
+          "arguments_schema": {
+            "$remove": [
+              "target_station"
+            ],
+            "angleTag": {
+              "$order": [
+                "type",
+                "unit",
+                "min",
+                "max",
+                "required",
+                "description",
+                "mutability"
+              ],
+              "min": 0,
+              "max": 360,
+              "required": true,
+              "description": "正向旋转到的归一化角度"
+            }
+          },
+          "trigger": {
+            "$remove": [
+              "request_context",
+              "payload_binding_status"
+            ],
+            "description": "冻结请求身份、动作参数和载荷后，由调度器提交一次请求。"
+          },
+          "input_signals": [
+            "rotate_to_station",
+            "angleTag",
+            "request_id"
+          ],
+          "output_signals": [
+            "accepted",
+            "busy",
+            "done",
+            "result_id",
+            "error",
+            "actual_angle",
+            "occupied",
+            "rotating",
+            "at_station"
+          ],
+          "condition_contract": {
+            "preconditions": [
+              {
+                "id": "ready",
+                "label": "本件已固定于唯一工装，转台静止，人员撤离，机器人退位。",
+                "source": "observation",
+                "key": "rotate_to_station.ready",
+                "equals": true
+              },
+              {
+                "id": "authorized",
+                "label": "请求已获得转台及其载荷的控制权。",
+                "source": "authorization",
+                "key": "rotate_to_station.authorized",
+                "equals": true
+              }
+            ],
+            "sustaining_conditions": {
+              "$list": "id",
+              "entries": {
+                "sustaining": {
+                  "label": "载荷固定于同一工装，人员和机器人持续位于转位区外。"
+                }
+              }
+            }
+          },
+          "completion_contract": {
+            "description": "同件载荷仍在工装上，实际角度进入目标容差并停稳。",
+            "checks": [
+              {
+                "id": "completion",
+                "label": "同件载荷仍在工装上，实际角度进入目标容差并停稳。",
+                "source": "observation",
+                "key": "rotate_to_station.completion",
+                "equals": true
+              }
+            ]
+          }
+        }
+      }
+    },
+    "type_specific_contract": {
+      "$remove": [
+        "coordinate_system",
+        "rotary_geometry",
+        "rotation_axis",
+        "stations",
+        "transfer",
+        "derived_values"
+      ],
+      "indexing_policy": {
+        "$remove": [
+          "mode_param",
+          "speed_param",
+          "acceleration_param",
+          "tolerance_param",
+          "settle_speed_param",
+          "angle_wrap"
+        ],
+        "direction": "positive",
+        "angle_reference": "normalized_degrees",
+        "home_deg": 0,
+        "process_deg": 180
+      },
+      "capacity_model": {
+        "$remove": [
+          "max_payload_param"
+        ]
+      }
+    },
+    "runtime_contract": {
+      "observation_definitions": {
+        "$remove": [
+          "accept_material.sustaining",
+          "accept_material.completion",
+          "rotate_to_station.pre_1",
+          "release_material.pre_1",
+          "release_material.sustaining",
+          "release_material.completion",
+          "hold_rotation.pre_1",
+          "hold_rotation.pre_2",
+          "hold_rotation.sustaining",
+          "hold_rotation.completion",
+          "resume_rotation.sustaining",
+          "resume_rotation.completion",
+          "convey_on_deck.pre_1",
+          "convey_on_deck.sustaining",
+          "convey_on_deck.completion",
+          "publish_turntable_state.pre_1",
+          "publish_turntable_state.sustaining",
+          "publish_turntable_state.completion"
+        ],
+        "$order": [
+          "rotate_to_station.ready",
+          "rotate_to_station.sustaining",
+          "rotate_to_station.completion"
+        ],
+        "rotate_to_station.ready": {
+          "value_type": "boolean",
+          "provider": "behavior_adapter",
+          "implementation_status": "implemented",
+          "signal_refs": [
+            "rotate_to_station",
+            "angleTag",
+            "request_id",
+            "accepted",
+            "busy",
+            "done",
+            "result_id",
+            "error",
+            "actual_angle",
+            "occupied",
+            "rotating",
+            "at_station"
+          ],
+          "expression_ref": "rotate_to_station.ready"
+        },
+        "rotate_to_station.sustaining": {
+          "implementation_status": "implemented",
+          "signal_refs": [
+            "rotate_to_station",
+            "angleTag",
+            "request_id",
+            "accepted",
+            "busy",
+            "done",
+            "result_id",
+            "error",
+            "actual_angle",
+            "occupied",
+            "rotating",
+            "at_station"
+          ],
+          "expression_ref": "rotate_to_station.sustaining"
+        },
+        "rotate_to_station.completion": {
+          "provider": "behavior_adapter",
+          "implementation_status": "implemented",
+          "signal_refs": [
+            "rotate_to_station",
+            "angleTag",
+            "request_id",
+            "accepted",
+            "busy",
+            "done",
+            "result_id",
+            "error",
+            "actual_angle",
+            "occupied",
+            "rotating",
+            "at_station"
+          ],
+          "expression_ref": "rotate_to_station.completion"
+        }
+      },
+      "authorization_definitions": {
+        "$remove": [
+          "accept_material.pre_1",
+          "resume_rotation.pre_1"
+        ],
+        "rotate_to_station.authorized": {
+          "value_type": "boolean",
+          "provider": "authorization_service",
+          "implementation_status": "implemented",
+          "signal_refs": [
+            "rotate_to_station",
+            "angleTag",
+            "request_id",
+            "accepted",
+            "busy",
+            "done",
+            "result_id",
+            "error",
+            "actual_angle",
+            "occupied",
+            "rotating",
+            "at_station"
+          ],
+          "expression_ref": "rotate_to_station.authorized"
+        }
+      },
+      "condition_model": {
+        "schema_version": "ac-condition/0.1",
+        "execution_mode": "declaration_only",
+        "unknown_policy": "three_valued_fail_closed",
+        "bindings": {},
+        "expressions": {
+          "rotate_to_station.ready": {
+            "status": "opaque",
+            "expr": {
+              "op": "opaque",
+              "source": "observation",
+              "key": "rotate_to_station.ready"
+            }
+          },
+          "rotate_to_station.authorized": {
+            "status": "opaque",
+            "expr": {
+              "op": "opaque",
+              "source": "authorization",
+              "key": "rotate_to_station.authorized"
+            }
+          },
+          "rotate_to_station.sustaining": {
+            "status": "opaque",
+            "expr": {
+              "op": "opaque",
+              "source": "observation",
+              "key": "rotate_to_station.sustaining"
+            }
+          },
+          "rotate_to_station.completion": {
+            "status": "opaque",
+            "expr": {
+              "op": "opaque",
+              "source": "observation",
+              "key": "rotate_to_station.completion"
+            }
+          }
+        }
+      }
+    },
+    "runtime_execution_contract": {
+      "$remove": [
+        "argument_variants"
+      ],
+      "status": "implemented"
+    }
+  },
+  "workpiece/indexed": {
+    "interfaces": [
+      {
+        "interface_id": "handle",
+        "name": "搬运吸附点",
+        "local_frame": {
+          "position": [
+            -0.006725,
+            0.0574991,
+            0.0153417
+          ],
+          "forward": [
+            0,
+            1,
+            0
+          ],
+          "up": [
+            0,
+            0,
+            1
+          ]
+        },
+        "capabilities": {
+          "snap": {
+            "role": "grasp_target",
+            "accepts": [
+              "human_gripper"
+            ]
+          }
+        }
+      },
+      {
+        "interface_id": "weld",
+        "name": "焊接加工点",
+        "local_frame": {
+          "position": [
+            0.1423738,
+            0.109999,
+            -0.1180373
+          ],
+          "forward": [
+            0,
+            1,
+            0
+          ],
+          "up": [
+            0,
+            0,
+            1
+          ]
+        },
+        "capabilities": {
+          "snap": {
+            "role": "process_target",
+            "accepts": [
+              "weld_tool"
+            ]
+          }
+        }
+      },
+      {
+        "interface_id": "base",
+        "name": "工装承载面",
+        "local_frame": {
+          "position": [
+            -0.03413228912355848,
+            -1.1359534729526999e-06,
+            -0.02038335754610543
+          ],
+          "forward": [
+            0,
+            -1,
+            0
+          ],
+          "up": [
+            0,
+            0,
+            1
+          ]
+        },
+        "capabilities": {
+          "snap": {
+            "role": "workpiece",
+            "accepts": [
+              "fixture"
+            ]
+          }
+        }
+      }
+    ],
+    "type_specific_contract": {
+      "coordinate_system": {
+        "origin": "glb_material_root"
+      },
+      "process_geometry": {
+        "regions": [
+          {
+            "region_id": "weld",
+            "placement_rule": "mesh_036g_top_face"
+          }
+        ]
+      },
+      "grasping": {
+        "$order": [
+          "preferred_grasp",
+          "allowed_grasp_regions",
+          "frame_source",
+          "frames"
+        ],
+        "preferred_grasp": "handle",
+        "allowed_grasp_regions": [
+          "handle"
+        ],
+        "frame_source": "material_local_m",
+        "frames": {
+          "handle": {
+            "position_m": [
+              -0.006725,
+              0.0574991,
+              0.0153417
+            ],
+            "approach_axis": [
+              0,
+              -1,
+              0
+            ],
+            "reference": "mesh_038g_top_face"
+          }
+        }
+      },
+      "processing": {
+        "initial_state": "raw",
+        "finished_state": "finished",
+        "interface": "weld",
+        "recipe": "welding"
+      }
+    }
+  }
+}

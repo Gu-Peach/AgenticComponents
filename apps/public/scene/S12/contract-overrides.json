@@ -1,0 +1,37 @@
+{
+  "rotary_table/indexed-conveying": {
+    "$remove": [
+      "description"
+    ],
+    "signal_ports": {
+      "$list": "port_id",
+      "entries": {
+        "request_id": {
+          "description": "原 command 的 PLC 投影；参数先写入，再请求一次定位，映射公共 execute 角色",
+          "signal_role": "request_parameter",
+          "retention": "sampled_state"
+        },
+        "accepted": {
+          "description": "公共任务反馈，done 关联当前定位请求",
+          "signal_role": "result_latched",
+          "retention": "latched_until_ack_or_new_request"
+        },
+        "done": {
+          "description": "公共任务反馈，done 关联当前定位请求",
+          "signal_role": "result_latched",
+          "retention": "latched_until_ack_or_new_request"
+        },
+        "result_id": {
+          "description": "公共任务反馈，done 关联当前定位请求",
+          "signal_role": "result_latched",
+          "retention": "latched_until_ack_or_new_request"
+        }
+      }
+    },
+    "runtime_execution_contract": {
+      "$remove": [
+        "semantic_ports"
+      ]
+    }
+  }
+}

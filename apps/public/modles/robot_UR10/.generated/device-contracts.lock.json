@@ -1,0 +1,23 @@
+{
+  "schema_version": "device-publication/1",
+  "entries": {
+    "schema.json": {
+      "type": "robot_arm",
+      "profile": "robot_arm/robot_UR10",
+      "template_revision": "1.1.0",
+      "inputs": {
+        "robot_arm/contract.json": "d77ffd45bc8ef826977e485320b42ab38c3d3c44087e1e313845cdddce0ceaae",
+        "catalog.json#robot_arm/indexed": "7a6dbe83dfa2fb387e3c366afc091987ed4e2e1728a18b77559c52140bdf0e66",
+        "public/scene/S11/contract-overrides.json#robot_arm/indexed": "e0a12d62e4b71ef7596641226675bb7dddea0185e79a73907c583d4ec7ba4f26",
+        "catalog.json#robot_arm/handoff": "2de7452e532e094fd93cdbd250ab433c3d52a5571d5a6f453acb65e692fb2937",
+        "public/scene/S04/contract-overrides.json#robot_arm/handoff": "dad9aca5d1fba775f7f956a7f9431adf196d26f89f53ea2af65c5e06567f9f88",
+        "catalog.json#robot_arm/declarative": "98ceaf4ca92bafae9a627d614e250eef10449b0e2a2e05663af13e3e5c60d785",
+        "public/scene/S03/contract-overrides.json#robot_arm/declarative": "4986ae435d127cbe298a47c4b34bd04b7ce76056c08bc13d7159f647b6d644fe",
+        "catalog.json#robot_arm/robot_UR10": "9362fa30f6271415947333fa8dee27a595b86c68603a7141f1be50c638a91e81",
+        "public/modles/robot_UR10/contract-overrides.json#robot_arm/robot_UR10": "c663492ea70b80d690f60701ea769814d924e53d3dec13ef08e7c5f927dc7b0c",
+        "catalog.json#publications/modles/robot_UR10/schema.json": "94f36faac2725760f155e9099fd98b8a81bcab1bdff87a50aec418288e798486"
+      },
+      "snapshot_sha256": "8ea961a9700821dc9743b58af6e6fa395917718095eb2c54d0b07015bf71c9cd"
+    }
+  }
+}

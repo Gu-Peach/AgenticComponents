@@ -1,0 +1,628 @@
+{
+  "conveyor/warehouse": {
+    "version": "1.1.0",
+    "signal_ports": {
+      "$list": "port_id",
+      "select": [
+        "runTag",
+        "target_distance",
+        "speedTag",
+        "speedFpmTag",
+        "release_waiting_material",
+        "runningTag",
+        "actual_speed",
+        "velocityTag",
+        "pulseTag",
+        "encoderTag",
+        "blocked",
+        "part_ready",
+        "capacity_available",
+        "done",
+        "request_id",
+        "execute",
+        "reset",
+        "accepted",
+        "busy",
+        "result_id",
+        "error",
+        "error_code"
+      ]
+    },
+    "transport_behaviors": {
+      "$list": "behavior_id",
+      "select": [
+        "accept_material",
+        "advance_to_next_stop_point",
+        "move_by_distance",
+        "transport_to_exit",
+        "release_material",
+        "start_conveying",
+        "set_speed",
+        "stop_conveying",
+        "reverse_conveying",
+        "zone_accumulation",
+        "meter_release",
+        "publish_drive_feedback"
+      ]
+    },
+    "runtime_contract": {
+      "observation_definitions": {
+        "$remove": [
+          "transport_to_position.ready",
+          "transport_to_position.sustaining",
+          "transport_to_position.completion"
+        ]
+      },
+      "authorization_definitions": {
+        "$remove": [
+          "transport_to_position.motion_authorized"
+        ]
+      },
+      "condition_model": {
+        "bindings": {
+          "$remove": [
+            "transport_to_exit.subject_admitted",
+            "transport_to_exit.exit_path_valid",
+            "transport_to_exit.path_unblocked",
+            "transport_to_exit.matching_accepted",
+            "transport_to_exit.error_run",
+            "transport_to_exit.transport_integrity",
+            "transport_to_exit.target_error_m",
+            "transport_to_exit.target_supported",
+            "transport_to_exit.subject_and_drives_stationary",
+            "transport_to_exit.matching_success",
+            "transport_to_exit.position_tolerance_m"
+          ]
+        },
+        "expressions": {
+          "$remove": [
+            "transport_to_position.ready",
+            "transport_to_position.sustaining",
+            "transport_to_position.completion",
+            "transport_to_position.motion_authorized"
+          ],
+          "$order": [
+            "accept_material.pre_1",
+            "accept_material.sustaining",
+            "accept_material.completion",
+            "advance_to_next_stop_point.pre_1",
+            "advance_to_next_stop_point.pre_2",
+            "advance_to_next_stop_point.sustaining",
+            "advance_to_next_stop_point.completion",
+            "move_by_distance.ready",
+            "move_by_distance.motion_authorized",
+            "move_by_distance.sustaining",
+            "move_by_distance.completion",
+            "transport_to_exit.pre_1",
+            "transport_to_exit.pre_2",
+            "transport_to_exit.sustaining",
+            "transport_to_exit.completion",
+            "release_material.pre_1",
+            "release_material.sustaining",
+            "release_material.completion",
+            "start_conveying.pre_1",
+            "start_conveying.pre_2",
+            "start_conveying.pre_3",
+            "start_conveying.sustaining",
+            "start_conveying.completion",
+            "set_speed.pre_1",
+            "set_speed.sustaining",
+            "set_speed.completion",
+            "stop_conveying.pre_1",
+            "stop_conveying.pre_2",
+            "stop_conveying.pre_3",
+            "stop_conveying.sustaining",
+            "stop_conveying.completion",
+            "reverse_conveying.pre_1",
+            "reverse_conveying.pre_2",
+            "reverse_conveying.pre_3",
+            "reverse_conveying.sustaining",
+            "reverse_conveying.completion",
+            "zone_accumulation.pre_1",
+            "zone_accumulation.pre_2",
+            "zone_accumulation.sustaining",
+            "zone_accumulation.completion",
+            "meter_release.pre_1",
+            "meter_release.pre_2",
+            "meter_release.sustaining",
+            "meter_release.completion",
+            "publish_drive_feedback.pre_1",
+            "publish_drive_feedback.pre_2",
+            "publish_drive_feedback.completion",
+            "publish_drive_feedback.sustaining",
+            "entry_region_clear",
+            "subject_at_exit",
+            "exit_arrival_confirmed",
+            "subject_on_conveyor"
+          ],
+          "accept_material.pre_1": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "accept_material.sustaining": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "accept_material.completion": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "advance_to_next_stop_point.pre_1": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "advance_to_next_stop_point.pre_2": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "advance_to_next_stop_point.sustaining": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "advance_to_next_stop_point.completion": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "move_by_distance.ready": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "move_by_distance.motion_authorized": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "move_by_distance.sustaining": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "move_by_distance.completion": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "transport_to_exit.pre_1": {
+            "status": "opaque",
+            "expr": {
+              "$remove": [
+                "args"
+              ],
+              "op": "opaque",
+              "source": "observation",
+              "key": "transport_to_exit.pre_1"
+            }
+          },
+          "transport_to_exit.pre_2": {
+            "status": "opaque",
+            "expr": {
+              "$remove": [
+                "binding"
+              ],
+              "op": "opaque",
+              "source": "observation",
+              "key": "transport_to_exit.pre_2"
+            }
+          },
+          "transport_to_exit.sustaining": {
+            "status": "opaque",
+            "expr": {
+              "$remove": [
+                "args"
+              ],
+              "op": "opaque",
+              "source": "observation",
+              "key": "transport_to_exit.sustaining"
+            }
+          },
+          "transport_to_exit.completion": {
+            "status": "opaque",
+            "expr": {
+              "$remove": [
+                "args"
+              ],
+              "op": "opaque",
+              "source": "observation",
+              "key": "transport_to_exit.completion"
+            }
+          },
+          "release_material.pre_1": {
+            "expr": {
+              "$order": [
+                "op",
+                "source",
+                "key"
+              ]
+            }
+          },
+          "release_material.sustaining": {
+            "expr": {
+              "$order": [
+                "op",
+                "source",
+                "key"
+              ]
+            }
+          },
+          "release_material.completion": {
+            "expr": {
+              "$order": [
+                "op",
+                "source",
+                "key"
+              ]
+            }
+          },
+          "start_conveying.pre_1": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "start_conveying.pre_2": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "start_conveying.pre_3": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "start_conveying.sustaining": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "start_conveying.completion": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "set_speed.pre_1": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "set_speed.sustaining": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "set_speed.completion": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "stop_conveying.pre_1": {
+            "expr": {
+              "$order": [
+                "op",
+                "source",
+                "key"
+              ]
+            }
+          },
+          "stop_conveying.pre_2": {
+            "expr": {
+              "$order": [
+                "op",
+                "source",
+                "key"
+              ]
+            }
+          },
+          "stop_conveying.pre_3": {
+            "expr": {
+              "$order": [
+                "op",
+                "source",
+                "key"
+              ]
+            }
+          },
+          "stop_conveying.sustaining": {
+            "expr": {
+              "$order": [
+                "op",
+                "source",
+                "key"
+              ]
+            }
+          },
+          "stop_conveying.completion": {
+            "expr": {
+              "$order": [
+                "op",
+                "source",
+                "key"
+              ]
+            }
+          },
+          "reverse_conveying.pre_1": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "reverse_conveying.pre_2": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "reverse_conveying.pre_3": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "reverse_conveying.sustaining": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "reverse_conveying.completion": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "zone_accumulation.pre_1": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "zone_accumulation.pre_2": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "zone_accumulation.sustaining": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "zone_accumulation.completion": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "meter_release.pre_1": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "meter_release.pre_2": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "meter_release.sustaining": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "meter_release.completion": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "publish_drive_feedback.pre_1": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "publish_drive_feedback.pre_2": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "publish_drive_feedback.completion": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "publish_drive_feedback.sustaining": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "entry_region_clear": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "subject_at_exit": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "exit_arrival_confirmed": {
+            "$remove": [
+              "note"
+            ]
+          },
+          "subject_on_conveyor": {
+            "$remove": [
+              "note"
+            ]
+          }
+        }
+      }
+    },
+    "runtime_execution_contract": {
+      "$remove": [
+        "position_transport"
+      ]
+    }
+  },
+  "lift_table/warehouse": {
+    "signal_ports": {
+      "$list": "port_id",
+      "entries": {
+        "request_id": {
+          "description": "目标参数写好后发起一次升降请求，采用公共握手",
+          "signal_role": "request_parameter",
+          "retention": "sampled_state"
+        },
+        "accepted": {
+          "description": "公共动作反馈；done 必须对应本次已接受任务",
+          "signal_role": "result_latched",
+          "retention": "latched_until_ack_or_new_request"
+        },
+        "done": {
+          "description": "公共动作反馈；done 必须对应本次已接受任务",
+          "signal_role": "result_latched",
+          "retention": "latched_until_ack_or_new_request"
+        },
+        "result_id": {
+          "description": "公共动作反馈；done 必须对应本次已接受任务",
+          "signal_role": "result_latched",
+          "retention": "latched_until_ack_or_new_request"
+        }
+      }
+    },
+    "transport_behaviors": {
+      "$list": "behavior_id",
+      "select": [
+        "accept_material",
+        "release_material",
+        "transfer_material",
+        "lift_to_location",
+        "lift_to_level",
+        "hold_lift"
+      ]
+    },
+    "runtime_contract": {
+      "observation_definitions": {
+        "$remove": [
+          "resume_lift.sustaining",
+          "resume_lift.completion",
+          "raise_transfer_chains.pre_1",
+          "raise_transfer_chains.pre_2",
+          "raise_transfer_chains.sustaining",
+          "raise_transfer_chains.completion",
+          "lower_transfer_chains.pre_1",
+          "lower_transfer_chains.pre_2",
+          "lower_transfer_chains.pre_3",
+          "lower_transfer_chains.sustaining",
+          "lower_transfer_chains.completion"
+        ]
+      },
+      "authorization_definitions": {
+        "$remove": [
+          "resume_lift.pre_1"
+        ]
+      },
+      "condition_model": {
+        "expressions": {
+          "$remove": [
+            "resume_lift.pre_1",
+            "resume_lift.sustaining",
+            "resume_lift.completion",
+            "raise_transfer_chains.pre_1",
+            "raise_transfer_chains.pre_2",
+            "raise_transfer_chains.sustaining",
+            "raise_transfer_chains.completion",
+            "lower_transfer_chains.pre_1",
+            "lower_transfer_chains.pre_2",
+            "lower_transfer_chains.pre_3",
+            "lower_transfer_chains.sustaining",
+            "lower_transfer_chains.completion"
+          ]
+        }
+      }
+    },
+    "description": "仓储升降机的竖直定位与平台货叉交接；由外部 linear_rail 设备搭载。",
+    "runtime_execution_contract": {
+      "$remove": [
+        "semantic_ports"
+      ]
+    }
+  },
+  "linear_rail/warehouse": {
+    "description": "固定导轨与移动设备组合的单自由度轴；只驱动挂载升降机整体，不直接输送独立物料。",
+    "signal_ports": {
+      "$list": "port_id",
+      "select": [
+        "target_position",
+        "execute",
+        "request_id",
+        "stop",
+        "enable",
+        "actual_position",
+        "actual_speed",
+        "accepted",
+        "busy",
+        "done",
+        "result_id",
+        "error",
+        "error_code"
+      ],
+      "entries": {
+        "request_id": {
+          "description": "request_id；必须关联当前运行与请求",
+          "signal_role": "request_parameter",
+          "retention": "sampled_state"
+        },
+        "accepted": {
+          "description": "accepted；必须关联当前运行与请求",
+          "signal_role": "result_latched",
+          "retention": "latched_until_ack_or_new_request"
+        },
+        "done": {
+          "description": "done；必须关联当前运行与请求",
+          "signal_role": "result_latched",
+          "retention": "latched_until_ack_or_new_request"
+        },
+        "result_id": {
+          "description": "result_id；必须关联当前运行与请求",
+          "signal_role": "result_latched",
+          "retention": "latched_until_ack_or_new_request"
+        },
+        "error_code": {
+          "plc_type": "DINT"
+        }
+      }
+    },
+    "runtime_execution_contract": {
+      "$remove": [
+        "semantic_ports"
+      ]
+    }
+  },
+  "storage_rack/warehouse": {
+    "$remove": [
+      "description"
+    ],
+    "signal_ports": {
+      "$list": "port_id",
+      "entries": {
+        "request_id": {
+          "description": "公共请求关联与故障复位；同一请求只允许一个操作入口",
+          "signal_role": "request_parameter",
+          "retention": "sampled_state"
+        },
+        "accepted": {
+          "description": "当前仓储操作的公共结果；不能代替搬运设备自身的完成反馈",
+          "signal_role": "result_latched",
+          "retention": "latched_until_ack_or_new_request"
+        },
+        "done": {
+          "description": "当前仓储操作的公共结果；不能代替搬运设备自身的完成反馈",
+          "signal_role": "result_latched",
+          "retention": "latched_until_ack_or_new_request"
+        },
+        "result_id": {
+          "description": "当前仓储操作的公共结果；不能代替搬运设备自身的完成反馈",
+          "signal_role": "result_latched",
+          "retention": "latched_until_ack_or_new_request"
+        }
+      }
+    }
+  }
+}

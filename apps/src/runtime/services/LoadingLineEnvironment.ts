@@ -1,5 +1,6 @@
 /** 按批次接纳空托盘和各供料线的物料，核实机械臂放置后登记槽位占用，并在满盘到达出口时生成交付回执。 */
 
+import { getDeviceModule } from "@/devices/registry";
 import { Quaternion, Vector3 } from "three";
 import type {
   CompiledSceneRuntime,
@@ -24,7 +25,8 @@ export class LoadingLineEnvironment implements DeviceActionPort {
   private confirmed = new Set<string>();
   private receipts: EnvironmentReceipt[] = [];
   private deliveries: SceneConditionWorld["deliveries"] = {};
-  private slots: Record<string, string> = {};
+  private readonly slots;
+  private readonly supply;
   private pending?: ObservationWrite;
   private readonly sourceOffset = new Map<string, number>();
   private readonly itemById;
@@ -38,6 +40,12 @@ export class LoadingLineEnvironment implements DeviceActionPort {
     private fitsSlot: (material: string) => boolean,
   ) {
     this.config = compiled.loading!;
+    this.slots = getDeviceModule("workpiece").createInventory(
+      this.config.pallets.flatMap((p) => p.items.map((i) => i.target)),
+    );
+    this.supply = getDeviceModule("material_source_station").createSupply(
+      physics,
+    );
     this.itemById = new Map(
       this.config.pallets.flatMap((p) =>
         p.items.map((i) => [i.material, i] as const),
@@ -71,17 +79,7 @@ export class LoadingLineEnvironment implements DeviceActionPort {
   }
   private admit(id: string) {
     if (this.active(id)) return;
-    const b = this.body(id);
-    this.physics.activateBodies!([
-      {
-        id: b.id,
-        pose: {
-          position: b.position,
-          rotation: b.rotation,
-          velocity: [0, 0, 0],
-        },
-      },
-    ]);
+    this.supply.presentAtRest([this.body(id)]);
   }
   private confirmSupport(id: string, support: string, tick: number) {
     if (this.confirmed.has(id) || !this.active(id)) return;
@@ -91,14 +89,7 @@ export class LoadingLineEnvironment implements DeviceActionPort {
     this.append("supply_confirmed", id, tick, [b.id]);
   }
   private settledOn(id: string, support: string) {
-    const b = this.body(id);
-    if (!this.active(id) || !this.physics.hasContactSupport!(b.id, support))
-      return false;
-    const pose = this.physics.readBody!(b.id);
-    return (
-      Math.hypot(...pose.velocity) <= 0.025 &&
-      Math.hypot(...(pose.angularVelocity ?? [])) <= 0.12
-    );
+    return this.supply.settledOn(this.body(id).id, support, 0.025, 0.12);
   }
   private supplied(route: LoadingConfig["supplies"][number]) {
     return route.materials[this.sourceOffset.get(route.device) ?? 0];
@@ -130,14 +121,14 @@ export class LoadingLineEnvironment implements DeviceActionPort {
       !route ||
       item?.target !== fields.target ||
       !this.current?.items.includes(item) ||
-      this.slots[item.target] ||
+      this.slots.at(item.target) ||
       !this.fitsSlot(item.material)
     )
       throw new Error(
         "Loading handoff evidence differs from the pallet manifest: " +
           fields.material,
       );
-    this.slots[item.target] = item.material;
+    this.slots.load(item.target, item.material, r.requestId);
     this.deliveries[item.material] = {
       handler: r.device,
       receiver: this.current.id,
@@ -173,7 +164,8 @@ export class LoadingLineEnvironment implements DeviceActionPort {
       target.id !== this.config.exchange.exit ||
       !this.atExit(target) ||
       !p.items.every(
-        (i) => this.slots[i.target] === i.material && this.fitsSlot(i.material),
+        (i) =>
+          this.slots.at(i.target) === i.material && this.fitsSlot(i.material),
       )
     )
       return false;
@@ -261,7 +253,8 @@ export class LoadingLineEnvironment implements DeviceActionPort {
       !!this.current &&
       this.atExit(exit) &&
       this.current.items.every(
-        (i) => this.slots[i.target] === i.material && this.fitsSlot(i.material),
+        (i) =>
+          this.slots.at(i.target) === i.material && this.fitsSlot(i.material),
       );
     const value: SceneConditionWorld = {
       bodies,
@@ -270,7 +263,7 @@ export class LoadingLineEnvironment implements DeviceActionPort {
       deliveries: this.deliveries,
       loading: {
         pallet: this.current?.id ?? null,
-        slots: this.slots,
+        slots: this.slots.snapshot(),
         fullAtExit,
       },
     };

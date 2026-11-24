@@ -1,0 +1,718 @@
+{
+  "conveyor/position": {
+    "$remove": [
+      "description"
+    ],
+    "signal_ports": {
+      "$list": "port_id",
+      "entries": {
+        "done": {
+          "description": "本次有限任务满足对应行为的完成契约；关联result_id，连续空转没有全局完成",
+          "signal_role": "result_latched",
+          "retention": "latched_until_ack_or_new_request"
+        },
+        "request_id": {
+          "description": "schema.md公共请求协议：request_id",
+          "signal_role": "request_parameter",
+          "retention": "latched_until_ack_or_new_request"
+        },
+        "accepted": {
+          "description": "schema.md公共请求协议：accepted",
+          "signal_role": "result_latched",
+          "retention": "latched_until_ack_or_new_request"
+        },
+        "result_id": {
+          "description": "schema.md公共请求协议：result_id",
+          "signal_role": "result_latched",
+          "retention": "latched_until_ack_or_new_request"
+        }
+      }
+    },
+    "runtime_execution_contract": {
+      "$remove": [
+        "semantic_ports"
+      ]
+    }
+  },
+  "material_source_station/position": {
+    "$remove": [
+      "description"
+    ],
+    "signal_ports": {
+      "$list": "port_id",
+      "entries": {
+        "request_id": {
+          "description": "请求生产一件；持续 TRUE 不连续创建重复请求",
+          "signal_role": "request_parameter",
+          "retention": "sampled_state"
+        },
+        "accepted": {
+          "description": "按需生产的请求与结果反馈；连续生产使用每件物料的事件日志和计数",
+          "signal_role": "result_latched",
+          "retention": "latched_until_ack_or_new_request"
+        },
+        "done": {
+          "description": "按需生产的请求与结果反馈；连续生产使用每件物料的事件日志和计数",
+          "signal_role": "result_latched",
+          "retention": "latched_until_ack_or_new_request"
+        },
+        "result_id": {
+          "description": "按需生产的请求与结果反馈；连续生产使用每件物料的事件日志和计数",
+          "signal_role": "result_latched",
+          "retention": "latched_until_ack_or_new_request"
+        }
+      }
+    }
+  },
+  "robot_arm/position": {
+    "version": "1.0.0",
+    "transport_behaviors": {
+      "$list": "behavior_id",
+      "select": [
+        "execute_job",
+        "pick_and_place",
+        "move_to_pose",
+        "grip",
+        "release",
+        "wait_time",
+        "wait_signal",
+        "set_output",
+        "pause_pick_intake",
+        "resume_pick_intake",
+        "hold_motion",
+        "resume_motion",
+        "publish_robot_state"
+      ]
+    },
+    "runtime_contract": {
+      "observation_definitions": {
+        "$remove": [
+          "pick_and_handoff.ready",
+          "pick_and_handoff.integrity",
+          "pick_and_handoff.complete",
+          "place_held_material.ready",
+          "place_held_material.integrity",
+          "place_held_material.complete"
+        ]
+      },
+      "authorization_definitions": {
+        "$remove": [
+          "pick_and_handoff.authorized",
+          "place_held_material.authorized"
+        ]
+      },
+      "condition_model": {
+        "bindings": {
+          "move_to_pose.busy_run": {
+            "kind": "signal",
+            "behavior": "move_to_pose",
+            "value_type": "boolean",
+            "unit": "1",
+            "device": "self",
+            "port": "busy",
+            "scope": "run",
+            "required_quality": "good",
+            "freshness": "signal_definition"
+          },
+          "move_to_pose.error_run": {
+            "kind": "signal",
+            "behavior": "move_to_pose",
+            "value_type": "boolean",
+            "unit": "1",
+            "device": "self",
+            "port": "error",
+            "scope": "run",
+            "required_quality": "good",
+            "freshness": "signal_definition"
+          },
+          "move_to_pose.pose_plan_valid": {
+            "kind": "observation",
+            "behavior": "move_to_pose",
+            "value_type": "boolean",
+            "unit": "1",
+            "provider": "scene.robot_arm.pose_plan_valid@1",
+            "description": "目标解析、关节限制、请求模式及可执行路径检查；使能命令由网关提交，不能等待自己的启动输入。",
+            "scope": "run",
+            "arguments": {
+              "device": {
+                "from": "self"
+              },
+              "target": {
+                "from": "payload",
+                "name": "target"
+              }
+            },
+            "sample_keys": [
+              "world/state"
+            ],
+            "max_age_ticks": 1,
+            "implementation_status": "pending_provider_binding"
+          },
+          "move_to_pose.matching_accepted": {
+            "kind": "request",
+            "behavior": "move_to_pose",
+            "value_type": "boolean",
+            "unit": "1",
+            "field": "matching_accepted",
+            "scope": "request",
+            "implementation_status": "pending_request_trace_binding"
+          },
+          "move_to_pose.motion_integrity": {
+            "kind": "observation",
+            "behavior": "move_to_pose",
+            "value_type": "boolean",
+            "unit": "1",
+            "provider": "scene.robot_arm.motion_integrity@1",
+            "description": "当前请求的实际运动与允许工作区证据。",
+            "scope": "request",
+            "arguments": {
+              "device": {
+                "from": "self"
+              },
+              "target": {
+                "from": "payload",
+                "name": "target"
+              }
+            },
+            "sample_keys": [
+              "{self}/robot_state"
+            ],
+            "max_age_ticks": 1,
+            "implementation_status": "pending_provider_binding"
+          },
+          "move_to_pose.matching_success": {
+            "kind": "request",
+            "behavior": "move_to_pose",
+            "value_type": "boolean",
+            "unit": "1",
+            "field": "matching_success",
+            "scope": "request",
+            "implementation_status": "pending_request_trace_binding"
+          },
+          "move_to_pose.tcp_position_error_m": {
+            "kind": "observation",
+            "behavior": "move_to_pose",
+            "value_type": "number",
+            "unit": "m",
+            "provider": "scene.robot_arm.tcp_position_error_m@1",
+            "description": "实际 TCP 相对本次目标的位置误差。",
+            "scope": "request",
+            "arguments": {
+              "device": {
+                "from": "self"
+              },
+              "target": {
+                "from": "payload",
+                "name": "target"
+              }
+            },
+            "sample_keys": [
+              "{self}/robot_state"
+            ],
+            "max_age_ticks": 1,
+            "implementation_status": "pending_provider_binding"
+          },
+          "move_to_pose.ik_position_tolerance_m": {
+            "kind": "parameter",
+            "behavior": "move_to_pose",
+            "value_type": "number",
+            "unit": "m",
+            "parameter": "ik_position_tolerance_m"
+          },
+          "move_to_pose.max_joint_speed_rad_s": {
+            "kind": "observation",
+            "behavior": "move_to_pose",
+            "value_type": "number",
+            "unit": "rad/s",
+            "provider": "scene.robot_arm.max_joint_speed_rad_s@1",
+            "description": "实际各关节角速度绝对值最大值。",
+            "scope": "request",
+            "arguments": {
+              "device": {
+                "from": "self"
+              },
+              "target": {
+                "from": "payload",
+                "name": "target"
+              }
+            },
+            "sample_keys": [
+              "{self}/robot_state"
+            ],
+            "max_age_ticks": 1,
+            "implementation_status": "pending_provider_binding"
+          },
+          "move_to_pose.settle_speed_rad_s": {
+            "kind": "parameter",
+            "behavior": "move_to_pose",
+            "value_type": "number",
+            "unit": "rad/s",
+            "parameter": "settle_speed_rad_s"
+          },
+          "move_to_pose.requested_orientation_satisfied": {
+            "kind": "observation",
+            "behavior": "move_to_pose",
+            "value_type": "boolean",
+            "unit": "1",
+            "provider": "scene.robot_arm.requested_orientation_satisfied@1",
+            "description": "仅在请求要求姿态时检查姿态误差；position_only 不能被表述为已完成任意姿态控制。",
+            "scope": "request",
+            "arguments": {
+              "device": {
+                "from": "self"
+              },
+              "target": {
+                "from": "payload",
+                "name": "target"
+              }
+            },
+            "sample_keys": [
+              "{self}/robot_state"
+            ],
+            "max_age_ticks": 1,
+            "implementation_status": "pending_provider_binding"
+          }
+        },
+        "expressions": {
+          "$remove": [
+            "pick_and_handoff.ready",
+            "pick_and_handoff.authorized",
+            "pick_and_handoff.integrity",
+            "pick_and_handoff.complete",
+            "place_held_material.ready",
+            "place_held_material.authorized",
+            "place_held_material.integrity",
+            "place_held_material.complete"
+          ],
+          "move_to_pose.pre_1": {
+            "status": "structured",
+            "expr": {
+              "$remove": [
+                "key",
+                "source"
+              ],
+              "op": "all",
+              "args": [
+                {
+                  "op": "not",
+                  "arg": {
+                    "op": "ref",
+                    "binding": "move_to_pose.busy_run"
+                  }
+                },
+                {
+                  "op": "not",
+                  "arg": {
+                    "op": "ref",
+                    "binding": "move_to_pose.error_run"
+                  }
+                },
+                {
+                  "op": "ref",
+                  "binding": "move_to_pose.pose_plan_valid"
+                }
+              ]
+            }
+          },
+          "move_to_pose.sustaining": {
+            "status": "structured",
+            "expr": {
+              "$remove": [
+                "key",
+                "source"
+              ],
+              "op": "all",
+              "args": [
+                {
+                  "op": "ref",
+                  "binding": "move_to_pose.matching_accepted"
+                },
+                {
+                  "op": "not",
+                  "arg": {
+                    "op": "ref",
+                    "binding": "move_to_pose.error_run"
+                  }
+                },
+                {
+                  "op": "ref",
+                  "binding": "move_to_pose.motion_integrity"
+                }
+              ]
+            }
+          },
+          "move_to_pose.completion": {
+            "status": "structured",
+            "expr": {
+              "$remove": [
+                "key",
+                "source"
+              ],
+              "op": "all",
+              "args": [
+                {
+                  "op": "ref",
+                  "binding": "move_to_pose.matching_success"
+                },
+                {
+                  "op": "compare",
+                  "operator": "le",
+                  "left": {
+                    "op": "ref",
+                    "binding": "move_to_pose.tcp_position_error_m"
+                  },
+                  "right": {
+                    "op": "ref",
+                    "binding": "move_to_pose.ik_position_tolerance_m"
+                  }
+                },
+                {
+                  "op": "compare",
+                  "operator": "le",
+                  "left": {
+                    "op": "ref",
+                    "binding": "move_to_pose.max_joint_speed_rad_s"
+                  },
+                  "right": {
+                    "op": "ref",
+                    "binding": "move_to_pose.settle_speed_rad_s"
+                  }
+                },
+                {
+                  "op": "ref",
+                  "binding": "move_to_pose.requested_orientation_satisfied"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "runtime_execution_contract": {
+      "payload_templates": {
+        "$remove": [
+          "pick_and_handoff",
+          "place_held_material"
+        ]
+      }
+    }
+  },
+  "workpiece_carrier/position": {
+    "type_specific_contract": {
+      "slots": {
+        "$remove": [
+          "rows_param",
+          "columns_param",
+          "pitch_x_param",
+          "pitch_z_param",
+          "margin_param",
+          "surface_height_param",
+          "id_rule"
+        ],
+        "layout": "explicit_from_prefab"
+      }
+    },
+    "runtime_contract": {
+      "observation_definitions": {
+        "reserve_carrier_slot.pre_1": {
+          "expression_ref": "reserve_carrier_slot.pre_1"
+        },
+        "reserve_carrier_slot.pre_2": {
+          "expression_ref": "reserve_carrier_slot.pre_2"
+        },
+        "reserve_carrier_slot.sustaining": {
+          "expression_ref": "reserve_carrier_slot.sustaining"
+        },
+        "reserve_carrier_slot.completion": {
+          "expression_ref": "reserve_carrier_slot.completion"
+        },
+        "cancel_carrier_reservation.pre_1": {
+          "expression_ref": "cancel_carrier_reservation.pre_1"
+        },
+        "cancel_carrier_reservation.sustaining": {
+          "expression_ref": "cancel_carrier_reservation.sustaining"
+        },
+        "cancel_carrier_reservation.completion": {
+          "expression_ref": "cancel_carrier_reservation.completion"
+        },
+        "confirm_load.pre_1": {
+          "expression_ref": "confirm_load.pre_1"
+        },
+        "confirm_load.sustaining": {
+          "expression_ref": "confirm_load.sustaining"
+        },
+        "confirm_load.completion": {
+          "expression_ref": "confirm_load.completion"
+        },
+        "carry_material.pre_1": {
+          "expression_ref": "carry_material.pre_1"
+        },
+        "carry_material.pre_2": {
+          "expression_ref": "carry_material.pre_2"
+        },
+        "carry_material.sustaining": {
+          "expression_ref": "carry_material.sustaining"
+        },
+        "carry_material.completion": {
+          "expression_ref": "carry_material.completion"
+        },
+        "release_material.sustaining": {
+          "expression_ref": "release_material.sustaining"
+        },
+        "release_material.completion": {
+          "expression_ref": "release_material.completion"
+        },
+        "be_transported_loaded.pre_1": {
+          "expression_ref": "be_transported_loaded.pre_1"
+        },
+        "be_transported_loaded.sustaining": {
+          "expression_ref": "be_transported_loaded.sustaining"
+        },
+        "be_transported_loaded.completion": {
+          "expression_ref": "be_transported_loaded.completion"
+        },
+        "publish_carrier_state.pre_1": {
+          "expression_ref": "publish_carrier_state.pre_1"
+        },
+        "publish_carrier_state.pre_2": {
+          "expression_ref": "publish_carrier_state.pre_2"
+        },
+        "publish_carrier_state.sustaining": {
+          "expression_ref": "publish_carrier_state.sustaining"
+        },
+        "publish_carrier_state.completion": {
+          "expression_ref": "publish_carrier_state.completion"
+        }
+      },
+      "authorization_definitions": {
+        "release_material.pre_1": {
+          "expression_ref": "release_material.pre_1"
+        }
+      },
+      "condition_model": {
+        "schema_version": "ac-condition/0.1",
+        "execution_mode": "declaration_only",
+        "unknown_policy": "three_valued_fail_closed",
+        "bindings": {},
+        "expressions": {
+          "reserve_carrier_slot.pre_1": {
+            "status": "opaque",
+            "expr": {
+              "op": "opaque",
+              "source": "observation",
+              "key": "reserve_carrier_slot.pre_1"
+            },
+            "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+          },
+          "reserve_carrier_slot.pre_2": {
+            "status": "opaque",
+            "expr": {
+              "op": "opaque",
+              "source": "observation",
+              "key": "reserve_carrier_slot.pre_2"
+            },
+            "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+          },
+          "reserve_carrier_slot.sustaining": {
+            "status": "opaque",
+            "expr": {
+              "op": "opaque",
+              "source": "observation",
+              "key": "reserve_carrier_slot.sustaining"
+            },
+            "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+          },
+          "reserve_carrier_slot.completion": {
+            "status": "opaque",
+            "expr": {
+              "op": "opaque",
+              "source": "observation",
+              "key": "reserve_carrier_slot.completion"
+            },
+            "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+          },
+          "cancel_carrier_reservation.pre_1": {
+            "status": "opaque",
+            "expr": {
+              "op": "opaque",
+              "source": "observation",
+              "key": "cancel_carrier_reservation.pre_1"
+            },
+            "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+          },
+          "cancel_carrier_reservation.sustaining": {
+            "status": "opaque",
+            "expr": {
+              "op": "opaque",
+              "source": "observation",
+              "key": "cancel_carrier_reservation.sustaining"
+            },
+            "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+          },
+          "cancel_carrier_reservation.completion": {
+            "status": "opaque",
+            "expr": {
+              "op": "opaque",
+              "source": "observation",
+              "key": "cancel_carrier_reservation.completion"
+            },
+            "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+          },
+          "confirm_load.pre_1": {
+            "status": "opaque",
+            "expr": {
+              "op": "opaque",
+              "source": "observation",
+              "key": "confirm_load.pre_1"
+            },
+            "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+          },
+          "confirm_load.sustaining": {
+            "status": "opaque",
+            "expr": {
+              "op": "opaque",
+              "source": "observation",
+              "key": "confirm_load.sustaining"
+            },
+            "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+          },
+          "confirm_load.completion": {
+            "status": "opaque",
+            "expr": {
+              "op": "opaque",
+              "source": "observation",
+              "key": "confirm_load.completion"
+            },
+            "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+          },
+          "carry_material.pre_1": {
+            "status": "opaque",
+            "expr": {
+              "op": "opaque",
+              "source": "observation",
+              "key": "carry_material.pre_1"
+            },
+            "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+          },
+          "carry_material.pre_2": {
+            "status": "opaque",
+            "expr": {
+              "op": "opaque",
+              "source": "observation",
+              "key": "carry_material.pre_2"
+            },
+            "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+          },
+          "carry_material.sustaining": {
+            "status": "opaque",
+            "expr": {
+              "op": "opaque",
+              "source": "observation",
+              "key": "carry_material.sustaining"
+            },
+            "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+          },
+          "carry_material.completion": {
+            "status": "opaque",
+            "expr": {
+              "op": "opaque",
+              "source": "observation",
+              "key": "carry_material.completion"
+            },
+            "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+          },
+          "release_material.sustaining": {
+            "status": "opaque",
+            "expr": {
+              "op": "opaque",
+              "source": "observation",
+              "key": "release_material.sustaining"
+            },
+            "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+          },
+          "release_material.completion": {
+            "status": "opaque",
+            "expr": {
+              "op": "opaque",
+              "source": "observation",
+              "key": "release_material.completion"
+            },
+            "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+          },
+          "be_transported_loaded.pre_1": {
+            "status": "opaque",
+            "expr": {
+              "op": "opaque",
+              "source": "observation",
+              "key": "be_transported_loaded.pre_1"
+            },
+            "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+          },
+          "be_transported_loaded.sustaining": {
+            "status": "opaque",
+            "expr": {
+              "op": "opaque",
+              "source": "observation",
+              "key": "be_transported_loaded.sustaining"
+            },
+            "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+          },
+          "be_transported_loaded.completion": {
+            "status": "opaque",
+            "expr": {
+              "op": "opaque",
+              "source": "observation",
+              "key": "be_transported_loaded.completion"
+            },
+            "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+          },
+          "publish_carrier_state.pre_1": {
+            "status": "opaque",
+            "expr": {
+              "op": "opaque",
+              "source": "observation",
+              "key": "publish_carrier_state.pre_1"
+            },
+            "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+          },
+          "publish_carrier_state.pre_2": {
+            "status": "opaque",
+            "expr": {
+              "op": "opaque",
+              "source": "observation",
+              "key": "publish_carrier_state.pre_2"
+            },
+            "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+          },
+          "publish_carrier_state.sustaining": {
+            "status": "opaque",
+            "expr": {
+              "op": "opaque",
+              "source": "observation",
+              "key": "publish_carrier_state.sustaining"
+            },
+            "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+          },
+          "publish_carrier_state.completion": {
+            "status": "opaque",
+            "expr": {
+              "op": "opaque",
+              "source": "observation",
+              "key": "publish_carrier_state.completion"
+            },
+            "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+          },
+          "release_material.pre_1": {
+            "status": "opaque",
+            "expr": {
+              "op": "opaque",
+              "source": "authorization",
+              "key": "release_material.pre_1"
+            },
+            "note": "保留既有提供者语义；尚未拆解，不推测内部 AND/OR，不表示已注册执行器。"
+          }
+        }
+      }
+    }
+  }
+}

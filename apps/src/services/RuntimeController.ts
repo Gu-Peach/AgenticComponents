@@ -1,3 +1,8 @@
+import {
+  compileTransferWorkcell,
+  type TransferSelection,
+} from "@/domain/runtime/compileTransferWorkcell";
+import { TransferSession } from "@/runtime/engine/TransferSession";
 import type { RobotCommand } from "@/contracts/robot-command";
 import type { RobotExperimentOptions } from "@/domain/runtime/compileRobotExperiment";
 import { validateRobotAsset } from "@/domain/runtime/validateRobotAsset";
@@ -18,6 +23,7 @@ export class RuntimeController {
   private value = emptySnapshot();
   private listeners = new Set<() => void>();
   private session?: SimulationSession;
+  private transfer?: TransferSession;
   private clock?: () => void;
   private generation = 0;
   snapshot = () => this.value;
@@ -26,6 +32,7 @@ export class RuntimeController {
     return () => this.listeners.delete(fn);
   };
   isBusy = () =>
+    !!this.transfer ||
     ["preparing", "ready", "running", "paused"].includes(this.value.status);
   private publish(value: RuntimeSnapshot) {
     this.value = value;
@@ -118,9 +125,94 @@ export class RuntimeController {
       throw e;
     }
   }
+  /** 多台独立模型共享同一世界、工艺调度器和工作区锁。 */
+  async prepareTransfer(
+    project: ProjectDocument,
+    selection: TransferSelection,
+    ir?: unknown,
+  ) {
+    if (useWorkspace.getState().documentLocked)
+      throw new Error("请先停止当前仿真");
+    const compiled = compileTransferWorkcell(project, selection, ir);
+    this.reset();
+    const generation = ++this.generation;
+    this.ownsDocumentLock = true;
+    useWorkspace.setState({ documentLocked: true });
+    this.publish({
+      ...emptySnapshot(),
+      status: "preparing",
+      instanceId: selection.robot,
+    });
+    const stale = () =>
+      generation !== this.generation ||
+      useWorkspace.getState().project !== project;
+    try {
+      for (const id of new Set(Object.values(selection))) {
+        const spec = project.instances.find((i) => i.instanceId === id)!.specId;
+        const definition = project.definitions.find((d) => d.specId === spec)!;
+        const blob =
+          definition.asset.assetId &&
+          (await projectRepository.getAsset(definition.asset.assetId));
+        if (!blob) throw new Error("组合设备缺少模型资源：" + id);
+        const bytes = await blob.arrayBuffer();
+        const hash = await sha256(bytes);
+        if (definition.asset.sha256 && hash !== definition.asset.sha256)
+          throw new Error("设备模型哈希不符：" + id);
+        if (id === selection.robot) {
+          if (hash !== compiled.robot.model.calibration.asset_sha256)
+            throw new Error("机械臂模型与标定不匹配");
+          validateRobotAsset(compiled.robot, bytes);
+        }
+      }
+      if (stale()) {
+        if (generation === this.generation) this.reset();
+        return;
+      }
+      const { assembleTransferWorkcell } =
+        await import("@/runtime/assembly/TransferWorkcell");
+      const program = await assembleTransferWorkcell(
+        compiled,
+        project.id,
+        crypto.randomUUID(),
+      );
+      if (stale()) {
+        program.dispose();
+        if (generation === this.generation) this.reset();
+        return;
+      }
+      this.transfer = new TransferSession(compiled, program);
+      program.start();
+      this.publish(this.transfer.snapshot());
+      this.clock = startRuntimeClock(
+        (dt) => this.step(dt),
+        () => program.needsStep(),
+        () => this.pause(),
+      );
+    } catch (e) {
+      if (generation === this.generation) {
+        this.reset();
+        this.publish({
+          ...emptySnapshot(),
+          status: "failed",
+          error: e instanceof Error ? e.message : String(e),
+        });
+      }
+      throw e;
+    }
+  }
   step(dt: number) {
     try {
-      if (this.session) this.publish(this.session.step(dt));
+      if (this.transfer) {
+        this.transfer.program.advance(dt);
+        this.publish(this.transfer.snapshot());
+        if (
+          !this.transfer.program.needsStep() &&
+          this.value.status !== "paused"
+        ) {
+          this.clock?.();
+          this.clock = undefined;
+        }
+      } else if (this.session) this.publish(this.session.step(dt));
     } catch (e) {
       this.stop();
       this.publish({ ...this.value, status: "failed", error: String(e) });
@@ -140,14 +232,30 @@ export class RuntimeController {
     this.submitAction(this.session.kernel.pickPlaceCommand(requestId));
   }
   pause() {
+    if (this.transfer) {
+      this.transfer.program.pause();
+      this.publish(this.transfer.snapshot());
+      return;
+    }
     this.session?.pause();
     if (this.session) this.publish(this.session.snapshot());
   }
   resume() {
+    if (this.transfer) {
+      this.transfer.program.resume();
+      this.publish(this.transfer.snapshot());
+      return;
+    }
     this.session?.resume();
     if (this.session) this.publish(this.session.snapshot());
   }
   stop() {
+    if (this.transfer) {
+      const p = this.transfer.program;
+      if (p.needsStep() || p.visualSnapshot().status === "paused") p.stop();
+      this.publish(this.transfer.snapshot());
+      return;
+    }
     ++this.generation;
     this.clock?.();
     this.clock = undefined;
@@ -159,6 +267,10 @@ export class RuntimeController {
     }
   }
   reset() {
+    if (this.transfer) {
+      this.transfer.reset();
+      this.transfer = undefined;
+    }
     this.stop();
     this.session = undefined;
     this.publish(emptySnapshot());

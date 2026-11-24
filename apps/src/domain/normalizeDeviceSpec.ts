@@ -1,3 +1,4 @@
+import { normalizeWorkpieceDefinition } from "@/devices/workpiece/behavior";
 import { normalizeUnifiedDevice } from "./normalizeUnifiedDevice";
 import { z } from "zod";
 import {
@@ -114,5 +115,5 @@ export function normalizeDeviceSpec(raw: unknown): DeviceDefinition {
     ["1.3", "1.4"].includes(String(def.source?.contract_version)),
   );
   if (errors.length) throw new Error(errors.join("；"));
-  return def;
+  return normalizeWorkpieceDefinition(def);
 }

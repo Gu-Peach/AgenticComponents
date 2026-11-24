@@ -3,6 +3,8 @@
 import type { ActionRequest, ActionFeedback } from "@/contracts/scheduler";
 import type { SceneSignalFrame, SignalWrite } from "@/contracts/scene-signals";
 import type { DeviceActionPort } from "./DeviceActionPort";
+import { DeviceRequestLatch } from "@/runtime/engine/DeviceRequestLatch";
+import { immutable } from "@/runtime/scheduler/expressions";
 export interface WarehouseJob {
   begin(): void;
   before(dt: number): void;
@@ -10,6 +12,8 @@ export interface WarehouseJob {
   cancel(): void;
   complete(): boolean;
   stopped(): boolean;
+  /** True only when the cause of this job's fault has actually cleared. */
+  canResetFault?(): boolean;
 }
 /** Shared request protocol only; device mechanics live in independent modules. */
 export class WarehouseActionAdapter implements DeviceActionPort {
@@ -17,11 +21,17 @@ export class WarehouseActionAdapter implements DeviceActionPort {
   job?: WarehouseJob;
   state: "idle" | "running" | "succeeded" | "stopped" | "failed" = "idle";
   error?: string;
-  private prepared?: { request: ActionRequest; job: WarehouseJob };
+  private prepared?: {
+    source: ActionRequest;
+    frozen: ActionRequest;
+    job: WarehouseJob;
+  };
+  private readonly latch: DeviceRequestLatch;
+  private hasFaultCodePort = false;
+  private resetHigh = false;
   private feedback: ActionFeedback[] = [];
   private signals: SignalWrite[] = [];
   private stopping = false;
-  private accepted = false;
   constructor(
     readonly id: string,
     readonly sceneId: string,
@@ -33,7 +43,10 @@ export class WarehouseActionAdapter implements DeviceActionPort {
       faulted: boolean,
     ) => Record<string, number | boolean> = () => ({}),
     private trigger = "execute",
-  ) {}
+    private onSucceeded?: (request: ActionRequest) => void,
+  ) {
+    this.latch = new DeviceRequestLatch(sceneId, runId, id, trigger);
+  }
   supports(b: string) {
     return this.behaviors.includes(b);
   }
@@ -53,31 +66,51 @@ export class WarehouseActionAdapter implements DeviceActionPort {
       subjectId: request?.subjectId,
     };
   }
-  prepare(r: ActionRequest, frame: Readonly<SceneSignalFrame>) {
+  sampleInputs(frame: Readonly<SceneSignalFrame>) {
+    this.latch.sample(frame);
+    const prefix = this.sceneId + "/" + this.id + "/";
+    this.hasFaultCodePort =
+      frame.samples[prefix + "error_code"]?.writer === "adapter:" + this.id;
+    const reset = frame.samples[prefix + "reset"];
+    const high = reset?.quality === "good" && reset.value === true;
     if (
-      r.runId !== this.runId ||
-      frame.runId !== this.runId ||
-      r.device !== this.id ||
+      high &&
+      !this.resetHigh &&
+      this.error &&
+      !this.stopping &&
+      this.physicalStopped() &&
+      this.job?.stopped() &&
+      this.job.canResetFault?.()
+    ) {
+      this.error = undefined;
+      this.state = "idle";
+    }
+    this.resetHigh = high;
+  }
+  prepare(r: ActionRequest, frame: Readonly<SceneSignalFrame>) {
+    this.latch.check(r, frame);
+    if (
       !this.supports(r.behavior) ||
+      this.error ||
       this.state === "running" ||
       this.stopping ||
       !this.physicalStopped()
     )
       throw new Error("Device request not admissible");
-    this.prepared = { request: r, job: this.plan(r) };
+    const frozen = immutable(structuredClone(r));
+    this.prepared = { source: r, frozen, job: this.plan(frozen) };
     return [
       this.write(this.trigger, true, "process", r),
       this.write("request_id", Number(r.requestId), "process", r),
     ];
   }
   submit(r: ActionRequest) {
-    if (this.prepared?.request !== r) throw new Error("Unprepared request");
-    this.request = r;
+    if (this.prepared?.source !== r) throw new Error("Unprepared request");
+    this.request = this.prepared.frozen;
+    this.latch.submit(this.request);
     this.job = this.prepared.job;
     this.prepared = undefined;
     this.state = "running";
-    this.accepted = false;
-    this.job.begin();
   }
   prepareCancel() {
     return [this.write(this.trigger, false)];
@@ -85,15 +118,15 @@ export class WarehouseActionAdapter implements DeviceActionPort {
   prepareStop() {
     return [this.write(this.trigger, false)];
   }
-  acknowledge() {
-    return [this.write(this.trigger, false)];
+  acknowledge(feedback: ActionFeedback, frame: Readonly<SceneSignalFrame>) {
+    return this.latch.acknowledge(feedback, frame);
   }
   cancel(r: ActionRequest) {
-    if (r.requestId !== this.request?.requestId || r.runId !== this.runId)
-      throw new Error("Foreign cancellation");
+    if (!this.latch.matches(r)) throw new Error("Foreign cancellation");
     this.requestStop();
   }
   requestStop() {
+    if (this.stopping) return;
     this.stopping = true;
     this.job?.cancel();
   }
@@ -101,12 +134,30 @@ export class WarehouseActionAdapter implements DeviceActionPort {
     return this.physicalStopped() && (!this.job || this.job.stopped());
   }
   beforePhysics(dt: number) {
-    if (this.request && !this.accepted && this.state === "running") {
-      this.feedback.push({ ...this.request, status: "accepted" });
-      this.accepted = true;
+    try {
+      const accepted =
+        !this.stopping && this.state === "running" && this.latch.accept();
+      if (accepted) {
+        this.feedback.push(accepted);
+        this.job!.begin();
+      }
+      if (this.job && (this.state === "running" || this.stopping))
+        this.job.before(dt);
+    } catch (error) {
+      this.fail(error);
     }
-    if (this.job && (this.state === "running" || this.stopping))
-      this.job.before(dt);
+  }
+  private fail(error: unknown) {
+    if (!this.request || !this.job) throw error;
+    this.error = String(error);
+    this.state = "failed";
+    this.latch.finish(false);
+    this.job.cancel();
+    this.feedback.push({
+      ...this.request,
+      status: "failed",
+      reason: this.error,
+    });
   }
   afterPhysics(_dt: number, tick: number) {
     if (this.request && this.job) {
@@ -115,37 +166,38 @@ export class WarehouseActionAdapter implements DeviceActionPort {
           this.state = "stopped";
           this.feedback.push({ ...this.request, status: "stopped" });
         }
-      } else if (this.state === "running" && this.job.complete()) {
-        this.state = "succeeded";
-        this.feedback.push({ ...this.request, status: "succeeded" });
-      } else if (this.state === "running") {
+      } else if (
+        !this.stopping &&
+        this.state === "running" &&
+        !this.latch.awaitingAcceptance
+      ) {
         try {
-          this.job.after(tick);
-        } catch (e) {
-          this.error = String(e);
-          this.state = "failed";
-          this.job.cancel();
-          this.feedback.push({
-            ...this.request,
-            status: "failed",
-            reason: this.error,
-          });
-        }
-        if (!this.stopping && this.state === "running" && this.job.complete()) {
-          this.state = "succeeded";
-          this.feedback.push({ ...this.request, status: "succeeded" });
+          if (!this.job.complete()) this.job.after(tick);
+          if (this.state === "running" && this.job.complete()) {
+            this.onSucceeded?.(this.request);
+            this.state = "succeeded";
+            this.latch.finish(true);
+            this.feedback.push({ ...this.request, status: "succeeded" });
+          }
+        } catch (error) {
+          this.fail(error);
         }
       }
     }
+    const writer = "adapter:" + this.id;
+    const { error_code, ...extra } = this.extraSignals(Boolean(this.error));
     for (const [port, value] of Object.entries({
-      accepted: this.accepted,
       busy: this.state === "running",
-      done: this.state === "succeeded",
       error: !!this.error,
-      result_id: Number(this.request?.requestId ?? 0),
-      ...this.extraSignals(Boolean(this.error)),
+      ...extra,
     }))
-      this.signals.push(this.write(port, value, "adapter:" + this.id));
+      this.signals.push(this.write(port, value, writer));
+    if (this.hasFaultCodePort) {
+      this.signals.push(
+        this.write("error_code", error_code ?? (this.error ? 1 : 0), writer),
+      );
+    }
+    this.signals.push(...this.latch.publish());
   }
   drainFeedback() {
     const v = this.feedback;

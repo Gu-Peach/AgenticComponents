@@ -219,6 +219,8 @@ describe("position transport with real Jolt contact physics", () => {
     const d = new PositionTransportAdapter(
       {
         sceneId: "S",
+        subjectIdPort: "subject_id",
+        behaviorCodes: { transport_to_position: 7 },
         runId: "run",
         leader: "C2",
         drives: [
@@ -249,7 +251,26 @@ describe("position transport with real Jolt contact physics", () => {
     try {
       for (let i = 0; i < 90; i++) p.step(1 / 60);
       expect(p.hasSupport("M1", "P1")).toBe(true);
-      d.prepare(request, { runId: "run", tick: 0, revision: 0, samples: {} });
+      const writes = d.prepare(request, {
+        runId: "run",
+        tick: 0,
+        revision: 0,
+        samples: {},
+      });
+      expect(writes).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            key: "S/C2/subject_id",
+            value: 1,
+            requestId: request.requestId,
+          }),
+          expect.objectContaining({
+            key: "S/C2/behavior_code",
+            value: 7,
+            requestId: request.requestId,
+          }),
+        ]),
+      );
       d.submit(request);
       let completed = false;
       for (let tick = 1; tick <= 1800; tick++) {

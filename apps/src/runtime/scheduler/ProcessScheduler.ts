@@ -24,6 +24,8 @@ interface Activation {
   index: number;
   children: Activation[];
   parentId?: string;
+  // Map lexical repeat nodes to their active iteration body, including nested repeats.
+  iterationBodies?: ReadonlyMap<string, string>;
   blockedBy: string[];
   values?: unknown[];
   request?: ActionRequest;
@@ -38,6 +40,7 @@ export class ProcessScheduler {
   private readonly requests: RequestBook;
   private root: Activation;
   private activations: Activation[] = [];
+  private readonly byId = new Map<string, Activation>();
   private nextId = 0;
   private requestId = 0;
   private tick = -1;
@@ -74,6 +77,7 @@ export class ProcessScheduler {
       blockedBy: [],
     };
     this.activations.push(a);
+    this.byId.set(a.id, a);
     return a;
   }
   private context(a: Activation): ConditionContext {
@@ -82,6 +86,7 @@ export class ProcessScheduler {
       : undefined;
     return {
       nodeId: a.node.id,
+      successfulPredecessor: (node) => this.successfulPredecessor(a.id, node),
       activationId: a.id,
       requestState: record
         ? {
@@ -132,6 +137,10 @@ export class ProcessScheduler {
   private child(a: Activation, node: ProcessNode, scope = a.scope) {
     const c = this.activate(node, scope, this.tick);
     c.parentId = a.id;
+    c.iterationBodies =
+      a.node.kind === "repeat"
+        ? new Map(a.iterationBodies).set(a.node.id, c.id)
+        : a.iterationBodies;
     a.children.push(c);
     return c;
   }
@@ -507,6 +516,39 @@ export class ProcessScheduler {
         this.status = "attention_required";
     }
     return Object.freeze([...this.effects]);
+  }
+  nodeForActivation(id: string) {
+    return this.byId.get(id)?.node.id;
+  }
+  successfulPredecessor(consumerId: string, producerNode: string) {
+    const consumer = this.byId.get(consumerId);
+    if (!consumer) return undefined;
+    for (let i = this.activations.length - 1; i >= 0; i--) {
+      const a = this.activations[i];
+      if (a.node.id !== producerNode || a.state !== "succeeded" || !a.request)
+        continue;
+      if (
+        consumer.request &&
+        Number(a.request.requestId) >= Number(consumer.request.requestId)
+      )
+        continue;
+      const sameIteration = [...(a.iterationBodies ?? [])].every(
+        ([loop, body]) => {
+          const shared = consumer.iterationBodies?.get(loop);
+          if (shared) return shared === body;
+          const repeatId = this.byId.get(body)?.parentId;
+          const repeat = repeatId && this.byId.get(repeatId);
+          return (
+            !!repeat &&
+            repeat.state === "succeeded" &&
+            repeat.children.at(-1)?.id === body
+          );
+        },
+      );
+      if (sameIteration)
+        return { requestId: a.request.requestId, activationId: a.id };
+    }
+    return undefined;
   }
   get currentStatus() {
     return this.status;

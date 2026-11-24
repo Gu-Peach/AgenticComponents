@@ -1,0 +1,732 @@
+{
+  "conveyor/declarative": {
+    "version": "1.1.0",
+    "signal_ports": {
+      "$list": "port_id",
+      "select": [
+        "runTag",
+        "target_distance",
+        "speedTag",
+        "speedFpmTag",
+        "release_waiting_material",
+        "runningTag",
+        "actual_speed",
+        "velocityTag",
+        "pulseTag",
+        "encoderTag",
+        "blocked",
+        "part_ready",
+        "capacity_available",
+        "done",
+        "request_id",
+        "execute",
+        "reset",
+        "accepted",
+        "busy",
+        "result_id",
+        "error",
+        "error_code"
+      ]
+    },
+    "transport_behaviors": {
+      "$list": "behavior_id",
+      "select": [
+        "accept_material",
+        "advance_to_next_stop_point",
+        "move_by_distance",
+        "transport_to_exit",
+        "release_material",
+        "start_conveying",
+        "set_speed",
+        "stop_conveying",
+        "reverse_conveying",
+        "zone_accumulation",
+        "meter_release",
+        "publish_drive_feedback"
+      ]
+    },
+    "runtime_contract": {
+      "$remove": [
+        "condition_model"
+      ],
+      "observation_definitions": {
+        "$remove": [
+          "transport_to_position.ready",
+          "transport_to_position.sustaining",
+          "transport_to_position.completion"
+        ],
+        "accept_material.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "accept_material.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "advance_to_next_stop_point.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "advance_to_next_stop_point.pre_2": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "advance_to_next_stop_point.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "advance_to_next_stop_point.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "transport_to_exit.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "transport_to_exit.pre_2": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "transport_to_exit.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "transport_to_exit.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "release_material.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "release_material.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "release_material.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "start_conveying.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "start_conveying.pre_2": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "start_conveying.pre_3": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "start_conveying.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "start_conveying.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "set_speed.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "set_speed.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "set_speed.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "stop_conveying.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "stop_conveying.pre_2": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "stop_conveying.pre_3": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "stop_conveying.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "stop_conveying.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "reverse_conveying.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "reverse_conveying.pre_2": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "reverse_conveying.pre_3": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "reverse_conveying.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "reverse_conveying.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "zone_accumulation.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "zone_accumulation.pre_2": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "zone_accumulation.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "zone_accumulation.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "meter_release.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "meter_release.pre_2": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "meter_release.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "meter_release.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "publish_drive_feedback.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "publish_drive_feedback.pre_2": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "publish_drive_feedback.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "publish_drive_feedback.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "entry_region_clear": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "subject_at_exit": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "exit_arrival_confirmed": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "subject_on_conveyor": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "move_by_distance.ready": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "move_by_distance.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "move_by_distance.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        }
+      },
+      "authorization_definitions": {
+        "$remove": [
+          "transport_to_position.motion_authorized"
+        ],
+        "accept_material.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "move_by_distance.motion_authorized": {
+          "$remove": [
+            "expression_ref"
+          ]
+        }
+      }
+    },
+    "runtime_execution_contract": {
+      "$remove": [
+        "position_transport"
+      ]
+    }
+  },
+  "robot_arm/declarative": {
+    "version": "1.0.0",
+    "transport_behaviors": {
+      "$list": "behavior_id",
+      "select": [
+        "execute_job",
+        "pick_and_place",
+        "move_to_pose",
+        "grip",
+        "release",
+        "wait_time",
+        "wait_signal",
+        "set_output",
+        "pause_pick_intake",
+        "resume_pick_intake",
+        "hold_motion",
+        "resume_motion",
+        "publish_robot_state"
+      ]
+    },
+    "runtime_contract": {
+      "$remove": [
+        "condition_model"
+      ],
+      "observation_definitions": {
+        "$remove": [
+          "pick_and_handoff.ready",
+          "pick_and_handoff.integrity",
+          "pick_and_handoff.complete",
+          "place_held_material.ready",
+          "place_held_material.integrity",
+          "place_held_material.complete"
+        ],
+        "execute_job.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "execute_job.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "pick_and_place.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "pick_and_place.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "pick_and_place.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "move_to_pose.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "move_to_pose.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "move_to_pose.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "grip.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "grip.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "grip.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "release.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "release.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "release.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "wait_time.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "wait_time.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "wait_time.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "wait_signal.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "wait_signal.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "wait_signal.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "set_output.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "set_output.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "set_output.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "pause_pick_intake.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "pause_pick_intake.pre_2": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "pause_pick_intake.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "pause_pick_intake.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "resume_pick_intake.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "resume_pick_intake.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "resume_pick_intake.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "hold_motion.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "hold_motion.pre_2": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "hold_motion.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "hold_motion.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "resume_motion.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "resume_motion.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "publish_robot_state.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "publish_robot_state.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "publish_robot_state.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        }
+      },
+      "authorization_definitions": {
+        "$remove": [
+          "pick_and_handoff.authorized",
+          "place_held_material.authorized"
+        ],
+        "execute_job.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "resume_motion.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        }
+      }
+    },
+    "runtime_execution_contract": {
+      "payload_templates": {
+        "$remove": [
+          "pick_and_handoff",
+          "place_held_material"
+        ]
+      }
+    }
+  },
+  "workpiece/declarative": {
+    "runtime_contract": {
+      "$remove": [
+        "condition_model"
+      ],
+      "observation_definitions": {
+        "be_picked.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "be_picked.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "be_picked.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "be_conveyed.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "be_conveyed.pre_2": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "be_conveyed.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "be_conveyed.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "be_carried.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "be_carried.pre_2": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "be_carried.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "be_carried.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "be_placed.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "be_placed.pre_2": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "be_placed.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "be_placed.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "be_released.pre_2": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "be_released.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "be_released.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "respond_to_physics.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "respond_to_physics.pre_2": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "respond_to_physics.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "respond_to_physics.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "publish_material_state.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "publish_material_state.pre_2": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "publish_material_state.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "publish_material_state.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        }
+      },
+      "authorization_definitions": {
+        "be_released.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        }
+      }
+    }
+  }
+}

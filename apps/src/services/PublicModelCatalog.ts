@@ -19,10 +19,14 @@ export async function fetchPublicDefinition(e: CatalogEntry) {
       new TextDecoder().decode(await bytes(e.schemaUrl, e.schemaSha256)),
     ),
   );
+  const compatibleCarrier =
+    e.deviceType === "workpiece_carrier" &&
+    d.deviceType === "workpiece" &&
+    d.source?.device_type === "workpiece_carrier";
   if (
     d.specId !== e.specId ||
     d.revision !== e.revision ||
-    d.deviceType !== e.deviceType
+    (d.deviceType !== e.deviceType && !compatibleCarrier)
   )
     throw new Error("目录与设备定义不一致，请重新生成目录");
   const resolved = new URL(

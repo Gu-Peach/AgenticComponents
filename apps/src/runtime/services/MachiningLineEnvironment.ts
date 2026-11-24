@@ -1,5 +1,6 @@
 /** 跟踪工件在原槽与机床加工点之间的交接，验证加工条件、登记成品状态，并核实所有工件回到原槽后整盘离场。 */
 
+import { getDeviceModule } from "@/devices/registry";
 import { Quaternion, Vector3 } from "three";
 import type { CompiledSceneRuntime } from "@/contracts/scene-execution";
 import type { PhysicsPort } from "@/contracts/physics";
@@ -18,7 +19,8 @@ export class MachiningLineEnvironment implements DeviceActionPort {
   readonly id = "@machining-environment";
   private stopped = false;
   private next = 0;
-  private readonly slots: Record<string, string> = {};
+  private readonly slots;
+  private readonly supply;
   private machineItem: string | null = null;
   private readonly operations: {
     material: string;
@@ -40,6 +42,12 @@ export class MachiningLineEnvironment implements DeviceActionPort {
     private robotStopped: () => boolean,
   ) {
     this.config = compiled.machining!;
+    this.slots = getDeviceModule("workpiece").createInventory(
+      this.config.pallets.flatMap((p) => p.items.map((i) => i.source)),
+    );
+    this.supply = getDeviceModule("material_source_station").createSupply(
+      physics,
+    );
     this.supportIds = [
       ...compiled.physics.surfaces!.flatMap((s) => [
         s.id,
@@ -49,7 +57,7 @@ export class MachiningLineEnvironment implements DeviceActionPort {
       ...this.config.pallets.map((p) => p.id + "/body"),
     ];
     for (const p of this.config.pallets)
-      for (const item of p.items) this.slots[item.source] = item.material;
+      for (const item of p.items) this.slots.load(item.source, item.material);
   }
   private get pallet() {
     return this.config.pallets[this.next];
@@ -96,7 +104,7 @@ export class MachiningLineEnvironment implements DeviceActionPort {
       this.pallet.items.every(
         (i) =>
           this.finished.has(i.material) &&
-          this.slots[i.source] === i.material &&
+          this.slots.at(i.source) === i.material &&
           this.physics.isCarriedBy!(
             i.material + "/body",
             this.pallet!.id + "/body",
@@ -114,24 +122,24 @@ export class MachiningLineEnvironment implements DeviceActionPort {
     if (
       f.target === this.config.point &&
       f.source === item.source &&
-      this.slots[item.source] === item.material &&
+      this.slots.at(item.source) === item.material &&
       !this.finished.has(item.material) &&
       !this.machineItem
     ) {
-      delete this.slots[item.source];
+      this.slots.unload(item.source, item.material);
       this.machineItem = item.material;
     } else if (
       f.source === this.config.point &&
       f.target === item.source &&
       this.machineItem === item.material &&
       this.finished.has(item.material) &&
-      !this.slots[item.source]
+      !this.slots.at(item.source)
     ) {
       this.physics.bindLoad!(
         this.pallet!.id + "/body",
         item.material + "/body",
       );
-      this.slots[item.source] = item.material;
+      this.slots.load(item.source, item.material);
       this.machineItem = null;
     } else throw new Error("Unexpected machining handoff: " + item.material);
   }
@@ -189,16 +197,7 @@ export class MachiningLineEnvironment implements DeviceActionPort {
       const bodies = [p.id, ...p.items.map((i) => i.material)].map((id) =>
         this.compiled.bodyMap.get(id + "/body")!,
       );
-      this.physics.activateBodies!(
-        bodies.map((b) => ({
-          id: b.id,
-          pose: {
-            position: b.position,
-            rotation: b.rotation,
-            velocity: [0, 0, 0],
-          },
-        })),
-      );
+      this.supply.presentAtRest(bodies);
     }
     this.physics.setSurfaceSpeeds!({
       [this.compiled.sourceDevice + "/surface"]: this.physics.getSurfaceSpeed!(
@@ -274,7 +273,7 @@ export class MachiningLineEnvironment implements DeviceActionPort {
         completedLoad,
         fullAtExit: completedLoad && at(this.config.exitTarget),
         machineItem: this.machineItem,
-        slots: { ...this.slots },
+        slots: this.slots.snapshot(),
         operations: [...this.operations],
         workSupported:
           !!this.machineItem && this.fits(this.machineItem, this.config.point),

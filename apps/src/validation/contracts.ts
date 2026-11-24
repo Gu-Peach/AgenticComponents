@@ -1,3 +1,4 @@
+import { normalizeWorkpieceDefinition } from "@/devices/workpiece/behavior";
 import { spatialInterfaceSchema } from "@/contracts/spatial";
 import { sceneInstanceSchema } from "@/contracts/scene-package";
 import { z } from "zod";
@@ -27,7 +28,7 @@ export const condition = z.object({
   key: z.string(),
   equals: value,
 });
-export const definitionSchema = z.object({
+const deviceFields = z.object({
   specId: z.string().min(1),
   revision: z.string(),
   name: z.string().min(1),
@@ -102,6 +103,7 @@ export const definitionSchema = z.object({
   source: z.record(z.string(), z.unknown()).optional(),
   diagnostics: z.array(z.string()),
 });
+export const definitionSchema = deviceFields.transform(normalizeWorkpieceDefinition);
 const vec = z.tuple([
   z.number().finite(),
   z.number().finite(),

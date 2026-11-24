@@ -62,12 +62,61 @@ it("executes a scene robot against the shared Jolt world without stepping it ins
       driver.beforePhysics(1 / 60, tick);
       physics.step(1 / 60);
       driver.afterPhysics(1 / 60, tick);
-      if (driver.drainFeedback().some((f) => f.status === "succeeded")) {
+      const feedback = driver.drainFeedback();
+      if (tick === 1) {
+        const out = driver.drainSignals();
+        expect(out.find((s) => s.key.endsWith("/accepted"))?.value).toBe(true);
+        expect(out.find((s) => s.key.endsWith("/result_id"))?.value).toBe(0);
+        const ack = feedback.find((f) => f.status === "accepted")!;
+        const key = "S/" + scene.instanceId + "/start_pick";
+        const frame = { runId: "run", tick, revision: tick, samples: {} };
+        expect(
+          driver.acknowledge({ ...ack, activationId: "another-action" }, frame),
+        ).toEqual([]);
+        const [withdraw] = driver.acknowledge(ack, frame);
+        expect(withdraw).toMatchObject({
+          key,
+          value: false,
+          activationId: request.activationId,
+          requestId: request.requestId,
+        });
+        driver.sampleInputs({
+          ...frame,
+          samples: {
+            [key]: {
+              ...withdraw,
+              quality: "good",
+              sampledTick: tick,
+              changedTick: tick,
+            },
+          },
+        });
+      }
+      if (feedback.some((f) => f.status === "succeeded")) {
         success = true;
         break;
       }
     }
     expect(success).toBe(true);
+    const result = driver.drainSignals();
+    expect(
+      result.filter((s) => s.key.endsWith("/accepted")).at(-1)?.value,
+    ).toBe(false);
+    expect(
+      result.filter((s) => s.key.endsWith("/result_id")).at(-1),
+    ).toMatchObject({
+      value: 1,
+      requestId: request.requestId,
+      activationId: request.activationId,
+    });
+    expect(() =>
+      driver.prepare(request, {
+        runId: "run",
+        tick: 1200,
+        revision: 0,
+        samples: {},
+      }),
+    ).toThrow(/identity/);
     expect(
       Math.hypot(
         ...physics.readBody!(scene.toolBodyId).position.map(

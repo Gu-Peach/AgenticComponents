@@ -1,5 +1,6 @@
 /** 场景运行时的装配入口，根据编译配置选择专用装配器，或在共享物理世界中组装输送带、机械臂及有限供收料流程。 */
 
+import { getDeviceModule,resolveDeviceAction } from "@/devices/registry";
 import { Quaternion, Vector3 } from "three";
 import { assembleWarehouseRuntime } from "./WarehouseRuntimeAssembler";
 import { assembleLoadingRuntime } from "./LoadingRuntimeAssembler";
@@ -14,14 +15,13 @@ import type {
   Truth,
 } from "@/contracts/conditions";
 import type { BodyPose } from "@/contracts/physics";
-import type { RobotStep } from "@/contracts/robot-command";
 import { createJoltBackend } from "@/runtime/physics/jolt/JoltPhysicsBackend";
-import {
+import type {
   PositionTransportAdapter,
-  type PositionTransportConfig,
-  type TransportTarget,
-} from "@/runtime/adapters/scene/PositionTransportAdapter";
-import { RobotSceneAdapter } from "@/runtime/adapters/scene/RobotSceneAdapter";
+  PositionTransportConfig,
+  TransportTarget,
+} from "@/devices/conveyor/behavior";
+import type { RobotSceneAdapter } from "@/devices/robot_arm/behavior";
 import type { DeviceActionPort } from "@/runtime/adapters/scene/DeviceActionPort";
 import {
   FiniteSceneEnvironment,
@@ -84,6 +84,11 @@ export async function assembleSceneRuntime(
   compiled: CompiledSceneRuntime,
   options: { conditionMode?: ConditionDiagnostics["mode"] } = {},
 ): Promise<AssembledScene> {
+  for (const {device,behavior} of compiled.bundle.calls) {
+    const selected = compiled.devices.get(device);
+    if (!selected) throw new Error("Unknown action device " + device);
+    resolveDeviceAction(selected.contract,behavior);
+  }
   if (compiled.indexedProcessing)
     return assembleIndexedProcessingRuntime(sceneId, runId, compiled);
   if (compiled.warehouse)
@@ -184,6 +189,8 @@ export async function assembleSceneRuntime(
   const physics = await createJoltBackend(compiled.physics);
   try {
     const environment = new FiniteSceneEnvironment(runId, physics, loads);
+    const carrier = (id: string) =>
+      getDeviceModule("workpiece").isCarryingWorkpiece(device(id).contract);
     const pointFor = (id: string, target: string): TransportTarget => {
       const d = device(id),
         flow = (
@@ -197,10 +204,9 @@ export async function assembleSceneRuntime(
       if (!target.startsWith("scene.")) {
         const half = Math.max(
           ...[...subjects.values()]
-            .filter((s) =>
-              (compiled.leaders.get(id)?.length ?? 0) > 1
-                ? device(s.id).contract.device_type === "workpiece_carrier"
-                : device(s.id).contract.device_type === "workpiece",
+            .filter(
+              (s) =>
+                carrier(s.id) === (compiled.leaders.get(id)?.length ?? 0) > 1,
             )
             .map((s) => Math.hypot(...body(s.id).size) / 2),
         );
@@ -221,10 +227,7 @@ export async function assembleSceneRuntime(
       target: TransportTarget,
     ): HandoffTarget => ({
       position: target.position,
-      referenceOffset:
-        device(subject).contract.device_type === "workpiece"
-          ? [0, 0, 0]
-          : reference(subject),
+      referenceOffset: carrier(subject) ? reference(subject) : [0, 0, 0],
       supportId: target.supportIds[0],
       tolerance: 0.035,
       speedTolerance: 0.03,
@@ -236,11 +239,7 @@ export async function assembleSceneRuntime(
         group = members.length > 1;
       const selected = new Map(
         [...subjects]
-          .filter(
-            ([, s]) =>
-              device(s.id).contract.device_type ===
-              (group ? "workpiece_carrier" : "workpiece"),
-          )
+          .filter(([, s]) => carrier(s.id) === group)
           .map(([key, value]) => [
             key,
             group ? value : { ...value, referenceOffset: [0, 0, 0] as Vec3 },
@@ -312,7 +311,7 @@ export async function assembleSceneRuntime(
         };
       }
       positionConfigs.set(id, config);
-      const adapter = new PositionTransportAdapter(
+      const adapter = getDeviceModule("conveyor").createSceneDriver(
         config,
         physics,
         (load, target, tick) => {
@@ -339,7 +338,7 @@ export async function assembleSceneRuntime(
     });
     factories.register("robot_arm@1.0.0", (id) => {
       const base = compiled.robots.get(id)!;
-      const adapter = new RobotSceneAdapter(
+      const adapter = getDeviceModule("robot_arm").createSceneDriver(
         sceneId,
         runId,
         base,
@@ -397,57 +396,13 @@ export async function assembleSceneRuntime(
             supportSurfaceId: surface(targetDevice.instance_id),
             placementCenter: place.toArray(),
           };
-          const safeY = Math.max(pose.position[1], place.y) + base.liftHeight;
-          const move = (
-            position: Vector3,
-            held = false,
-            clearance = false,
-          ): RobotStep => ({
-            kind: "move_to_pose",
-            position: position.toArray(),
-            frame: "world",
-            subject: held ? "held_material" : "tcp",
-            support_clearance: clearance,
-            ...(held ? { world_rotation: pose.rotation } : {}),
-          });
-          const lift = Array.from({ length: 10 }, (_, i) =>
-            move(
-              new Vector3(...pose.position).add(
-                new Vector3(0, ((safeY - pose.position[1]) * (i + 1)) / 10, 0),
-              ),
-              true,
-            ),
-          );
-          const descend = Array.from({ length: 10 }, (_, i) =>
-            move(
-              place
-                .clone()
-                .add(new Vector3(0, ((safeY - place.y) * (9 - i)) / 10, 0)),
-              true,
-              i === 9,
-            ),
-          );
-          const raised = new Vector3(pose.position[0], safeY, pose.position[2]),
-            clear = new Vector3(pose.position[0], safeY, place.z),
-            above = new Vector3(place.x, safeY, place.z);
-          const segment = (a: Vector3, b: Vector3) =>
-            Array.from({ length: 10 }, (_, i) =>
-              move(a.clone().lerp(b, (i + 1) / 10), true),
-            );
-          return {
+          return getDeviceModule("robot_arm").pickAndPlaceOnBelt(
             scene,
-            steps: [
-              move(capture.clone().add(new Vector3(0, base.liftHeight, 0))),
-              move(capture),
-              { kind: "grip", materialId: p.material },
-              ...lift,
-              ...segment(raised, clear),
-              ...segment(clear, above),
-              ...descend,
-              { kind: "release", materialId: p.material },
-              move(above),
-            ],
-          };
+            p.material,
+            pose,
+            place,
+            capture,
+          );
         },
       );
       const submit = adapter.submit.bind(adapter),
@@ -581,10 +536,9 @@ export async function assembleSceneRuntime(
             return false;
           const src = owner(String(p.source)),
             dest = owner(String(p.target));
-          const support =
-            src.contract.device_type === "workpiece_carrier"
-              ? body(src.instance_id).id
-              : surface(src.instance_id);
+          const support = carrier(src.instance_id)
+            ? body(src.instance_id).id
+            : surface(src.instance_id);
           return (
             load.supports.includes(support) &&
             !activeBodiesFrom(w).some(

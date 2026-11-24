@@ -1,5 +1,12 @@
 /** 为瓶体双臂交接场景装配输送带、机械臂和供收料环境，将 DSL 动作绑定到设备，并用交接记录和出口姿态验证交付。 */
 
+import {
+  connectedFactsHold,
+  factKey,
+  type FactReceipt,
+  type SemanticFact,
+} from "@/domain/runtime/compileSignalConnections";
+import { getDeviceModule } from "@/devices/registry";
 import type { CompiledSceneRuntime } from "@/contracts/scene-execution";
 import type { ActionBinding, ActionRequest } from "@/contracts/scheduler";
 import type {
@@ -14,8 +21,6 @@ import {
 } from "@/domain/runtime/bindDeviceBehavior";
 import { bindProcess } from "@/domain/runtime/bindProcess";
 import { compileConditions } from "@/domain/runtime/compileConditions";
-import { PositionTransportAdapter } from "@/runtime/adapters/scene/PositionTransportAdapter";
-import { WarehouseActionAdapter } from "@/runtime/adapters/scene/WarehouseActionAdapter";
 import { SceneRuntimeProgram } from "@/runtime/engine/SceneRuntimeProgram";
 import { createJoltBackend } from "@/runtime/physics/jolt/JoltPhysicsBackend";
 import { BottleHandoffLine } from "@/runtime/services/BottleHandoffLine";
@@ -27,9 +32,12 @@ import {
 import { ConditionTrace } from "@/runtime/signals/ConditionTrace";
 
 interface HandoffState {
+  factReceipts: FactReceipt[];
   active: string | null;
   arms: Record<string, { atHome: boolean; stopped: boolean; held?: string }>;
   onInfeed: boolean;
+  atPickup: boolean;
+  supportedOnInfeed: boolean;
   pickReady: boolean;
   onOutfeed: boolean;
   exitReady: boolean;
@@ -58,13 +66,64 @@ export async function assembleHandoffRuntime(
     let current = 0,
       closing = false;
     const receipts: HandoffState["delivered"] = [];
+    const mode = (r: { device: string; behavior: string }) =>
+      config.actionModes.get(r.device + "." + r.behavior) ?? r.behavior;
     const currentId = () => config.jobs[current]?.material;
     const location = (device: string, key: string) =>
       devices.get(device)!.locations[key];
+    const factReceipts: FactReceipt[] = [];
+    // Only receipts produced by successful, physically verified jobs may supply a downstream step.
+    function recordFacts(r: ActionRequest) {
+      const id =
+        (r.payload as { fields?: { material?: string } } | undefined)?.fields
+          ?.material ?? subject(r);
+      if (!id) return;
+      const step = program.scheduler
+        .snapshot()
+        .activations.find(
+          (a) => a.id === r.activationId && a.requestId === r.requestId,
+        );
+      if (!step)
+        throw new Error("Missing active fact producer: " + r.activationId);
+      const effects = (config.connections.get(id) ?? []).filter(
+        (e) => e.producer === step.node || e.alternatives.includes(step.node),
+      );
+      const distinct = new Map<string, SemanticFact>();
+      for (const e of effects) {
+        const f: SemanticFact = {
+          semantic: e.semantic,
+          subject: e.subject,
+          endpoint: e.endpoint,
+        };
+        if (f.subject !== id)
+          throw new Error("Incorrect handoff fact identity");
+        let confirmed = false;
+        if (f.semantic === "held_by") {
+          const arm = line.arm(f.endpoint);
+          confirmed = arm.holding && arm.held === id;
+        } else if (f.endpoint === input) {
+          confirmed =
+            f.semantic === "at"
+              ? line.atEndpoint(id, infeed, input)
+              : f.semantic === "supported_at" && line.onBelt(id, infeed);
+        }
+        if (!confirmed)
+          throw new Error("Unconfirmed handoff fact " + factKey(f));
+        distinct.set(factKey(f), f);
+      }
+      for (const fact of distinct.values())
+        factReceipts.push({
+          producer: step.node,
+          runId,
+          activationId: r.activationId,
+          requestId: r.requestId,
+          fact,
+        });
+    }
     const belts = [infeed, outfeed].map((id) => {
       const params = devices.get(id)!.parameters,
         speed = Number(params.speed_mps);
-      const belt = new PositionTransportAdapter(
+      const belt = getDeviceModule("conveyor").createSceneDriver(
         {
           sceneId,
           runId,
@@ -114,6 +173,7 @@ export async function assembleHandoffRuntime(
           },
           releasePermissionPort: "release_waiting_material",
           publishDriveState: true,
+          onSucceeded: recordFacts,
         },
         physics,
         id === outfeed
@@ -142,23 +202,27 @@ export async function assembleHandoffRuntime(
     });
     const robots = [giver, receiver].map((id) => {
       const arm = line.arm(id);
-      return new WarehouseActionAdapter(
+      return getDeviceModule("robot_arm").createJobDriver(
         id,
         sceneId,
         runId,
         [
           "move_to_pose",
           id === giver ? "pick_and_handoff" : "place_held_material",
+          ...(config.actionModes.has(id + ".pick_and_place")
+            ? ["pick_and_place"]
+            : []),
         ],
         (request) => line.prepare(request),
         () => arm.stopped,
-        (faulted) => ({
-          holding_material: arm.holding,
-          error_code: faulted ? 1 : 0,
-        }),
+        () => arm.holding,
         "start_pick",
+        recordFacts,
       );
     });
+    const supply = getDeviceModule("material_source_station").createSupply(
+      physics,
+    );
     let pending: ObservationWrite[] = [];
     const environment: DeviceActionPort = {
       id: "@handoff-environment",
@@ -181,16 +245,7 @@ export async function assembleHandoffRuntime(
         const id = currentId();
         if (!closing && id && !physics.isBodyActive!(line.body(id).id)) {
           const body = line.body(id);
-          physics.activateBodies!([
-            {
-              id: body.id,
-              pose: {
-                position: body.position,
-                rotation: body.rotation,
-                velocity: [0, 0, 0],
-              },
-            },
-          ]);
+          supply.presentAtRest([body]);
         }
         physics.setSurfaceSpeeds!({
           [source + "/surface"]: closing
@@ -204,11 +259,16 @@ export async function assembleHandoffRuntime(
         const eligible =
           !!active && physics.isBodyActive!(line.body(active).id);
         const state: HandoffState = {
+          factReceipts,
           active: active ?? null,
           arms: Object.fromEntries(
             [...line.arms].map(([id, a]) => [
               id,
-              { atHome: a.atHome, stopped: a.stopped, held: a.held },
+              {
+                atHome: a.atHome,
+                stopped: a.stopped,
+                held: a.holding ? a.held : undefined,
+              },
             ]),
           ),
           onInfeed:
@@ -218,6 +278,8 @@ export async function assembleHandoffRuntime(
                 line.body(active).id,
                 source + "/surface",
               )),
+          atPickup: eligible && line.atEndpoint(active, infeed, input),
+          supportedOnInfeed: eligible && line.onBelt(active, infeed),
           pickReady: eligible && line.checkPose(active, infeed, input),
           onOutfeed: eligible && line.onBelt(active, outfeed),
           exitReady: eligible && line.checkPose(active, outfeed, output),
@@ -308,9 +370,9 @@ export async function assembleHandoffRuntime(
     const footprint = (r: ActionRequest) => {
       const material = fields(r).material ?? subject(r);
       const devices =
-        r.behavior === "pick_and_handoff"
+        mode(r) === "pick_and_handoff"
           ? [giver, receiver, infeed]
-          : r.behavior === "place_held_material"
+          : mode(r) === "place_held_material"
             ? [receiver, outfeed]
             : [r.device];
       return [
@@ -322,15 +384,37 @@ export async function assembleHandoffRuntime(
       const s = c.frame.samples[sceneId + "/" + d + "/actual_speed"];
       return s?.quality === "good" && Math.abs(Number(s.value)) <= 0.02;
     };
+    function connected(c: ConditionContext, w: HandoffState, material: string) {
+      const edges = config.connections.get(material);
+      if (!edges || !c.nodeId || !c.activationId) return false;
+      const live = (f: SemanticFact) => {
+        if (w.active !== f.subject || f.subject !== material) return false;
+        if (f.semantic === "held_by")
+          return w.arms[f.endpoint]?.held === material;
+        if (f.endpoint === input && f.semantic === "at") return w.atPickup;
+        if (f.endpoint === input && f.semantic === "supported_at")
+          return w.supportedOnInfeed;
+        return undefined;
+      };
+      return connectedFactsHold(
+        edges,
+        c.nodeId,
+        c,
+        w.factReceipts,
+        live,
+        (producer) => c.successfulPredecessor?.(producer),
+      );
+    }
     const ready = (c: ConditionContext, r: ActionRequest, w: HandoffState) => {
       const material = fields(r).material ?? subject(r);
       const home = (id: string) => w.arms[id].atHome && !w.arms[id].held;
-      switch (r.behavior) {
+      switch (mode(r)) {
         case "move_to_pose":
           return w.arms[r.device].stopped && !w.arms[r.device].held;
         case "pick_and_handoff":
           return (
             material === w.active &&
+            connected(c, w, material) === true &&
             w.pickReady &&
             home(giver) &&
             home(receiver) &&
@@ -339,6 +423,7 @@ export async function assembleHandoffRuntime(
         case "place_held_material":
           return (
             material === w.active &&
+            connected(c, w, material) === true &&
             w.arms[receiver].held === material &&
             w.arms[receiver].stopped &&
             home(giver) &&
@@ -374,7 +459,7 @@ export async function assembleHandoffRuntime(
     ) => {
       if (c.requestState?.outcome !== "succeeded") return false;
       const material = fields(r).material ?? subject(r);
-      switch (r.behavior) {
+      switch (mode(r)) {
         case "move_to_pose":
           return w.arms[r.device].atHome;
         case "pick_and_handoff":
@@ -412,15 +497,12 @@ export async function assembleHandoffRuntime(
     const actions: ActionBinding[] = [];
     for (const call of unique.values()) {
       const d = devices.get(call.device)!;
+      const behavior = mode(call);
       if (
         !drivers.some((a) => a.id === call.device && a.supports(call.behavior))
       )
         throw new Error("Unsupported handoff action");
-      for (const rule of compileConditions(
-        call.device,
-        d.contract,
-        call.behavior,
-      )) {
+      for (const rule of compileConditions(call.device, d.contract, behavior)) {
         if (rule.expr.op !== "opaque")
           throw new Error(
             "Handoff action requires its native condition profile",
@@ -460,8 +542,8 @@ export async function assembleHandoffRuntime(
           );
         },
       });
-      actions.push(
-        bindDeviceBehavior(call.device, d.contract, call.behavior, {
+      actions.push({
+        ...bindDeviceBehavior(call.device, d.contract, behavior, {
           contractVersion: String(d.contract.version),
           parameters: d.parameters,
           stopped: [stopped],
@@ -476,9 +558,9 @@ export async function assembleHandoffRuntime(
                 | { binding?: string; fields?: Record<string, string> }
                 | undefined,
               f = v?.fields;
-            if (v?.binding !== call.device + "." + call.behavior || !f)
+            if (v?.binding !== call.device + "." + behavior || !f)
               throw new Error("Invalid handoff payload binding");
-            if (call.behavior === "move_to_pose") {
+            if (behavior === "move_to_pose") {
               if (f.target !== call.device + ".home")
                 throw new Error("Invalid retreat target");
               return;
@@ -486,7 +568,7 @@ export async function assembleHandoffRuntime(
             if (!compiled.subjectIds.has(f.material))
               throw new Error("Unknown bottle identity");
             if (
-              call.behavior === "pick_and_handoff" &&
+              behavior === "pick_and_handoff" &&
               (f.source !== input ||
                 f.target !== config.rendezvous ||
                 f.receiver !== receiver ||
@@ -495,13 +577,14 @@ export async function assembleHandoffRuntime(
             )
               throw new Error("Invalid head-to-tail route");
             if (
-              call.behavior === "place_held_material" &&
+              behavior === "place_held_material" &&
               (f.target !== place || f.grasp !== "tail")
             )
               throw new Error("Invalid inverted placement route");
           },
         }),
-      );
+        behavior: call.behavior,
+      });
     }
     providers.register("handoff/goal", {
       evaluate: (c) => {
@@ -552,18 +635,16 @@ export async function assembleHandoffRuntime(
       Math.hypot(...physics.readBody!(first.id).velocity) > 0.02
     )
       throw new Error("首件瓶体未在供料口稳定支承");
-    return {
-      compiled,
-      program: new SceneRuntimeProgram(
-        sceneId,
-        runId,
-        process,
-        signals,
-        physics,
-        drivers,
-        observations,
-      ),
-    };
+    const program: SceneRuntimeProgram = new SceneRuntimeProgram(
+      sceneId,
+      runId,
+      process,
+      signals,
+      physics,
+      drivers,
+      observations,
+    );
+    return { compiled, program };
   } catch (e) {
     physics.dispose();
     throw e;

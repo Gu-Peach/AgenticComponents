@@ -1,0 +1,20 @@
+{
+  "schema_version": "device-publication/1",
+  "entries": {
+    "schema.json": {
+      "type": "workpiece",
+      "profile": "workpiece/engine_block",
+      "template_revision": "1.0.0",
+      "inputs": {
+        "workpiece/contract.json": "87ec1fc471d0bf0c473155298b46baa414b85d90a67b30cba7f791c7ecd7d249",
+        "catalog.json#workpiece/position": "5ef73c4a096aabd02fffcd4bfef81eb385f15121a7decfacbaba90fe34c1dd52",
+        "catalog.json#workpiece/declarative": "dba7305756d804d87292fbcf619b8dc0655cecc8a2c4f672edd76e1825047264",
+        "public/scene/S03/contract-overrides.json#workpiece/declarative": "703a21ddc4b893fe3ec42a5b887b7dcdf3a6f22c4ee62d53007af1d606681d4b",
+        "catalog.json#workpiece/engine_block": "b6a3c03cb6608c1d9657816fdfb082f589d2478a2112b999a70558ae6eb6ac3f",
+        "public/modles/engine_block/contract-overrides.json#workpiece/engine_block": "ebc9763739df00b3e613460f9678deaf4d063eef0f6558f512fac7054a4d48ae",
+        "catalog.json#publications/modles/engine_block/schema.json": "3c48c0c2994ae1d670be53330ea68df940e04a1bc2de896902d6e3b9983ab0fc"
+      },
+      "snapshot_sha256": "33d84efa0d83ebb03d84c3be3fb40bc1e3e9e5a5fb1473942e296a45659ed19b"
+    }
+  }
+}

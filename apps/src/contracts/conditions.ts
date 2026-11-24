@@ -30,6 +30,9 @@ export interface ObservationFrame {
   samples: Readonly<Record<string, Readonly<ObservationSample>>>;
 }
 export interface ConditionContext {
+  successfulPredecessor?(
+    producerNode: string,
+  ): { requestId: string; activationId: string } | undefined;
   nodeId?: string;
   activationId?: string;
   phase?: ConditionPhase;
@@ -61,4 +64,16 @@ export interface ConditionProviderPort {
   validate(ids: readonly string[]): void;
   evaluate(id: string, context: ConditionContext): Truth;
   all(ids: readonly string[], context: ConditionContext): Truth;
+}
+
+/** 设备模块声明本机条件；装配器提供本运行的冻结观测、实例信号与工艺连接。 */
+export interface DeviceConditionBindings<World> {
+  register(
+    key: string,
+    evaluate: (world: World, context: ConditionContext) => Truth,
+  ): void;
+  signal(
+    port: string,
+    context: ConditionContext,
+  ): boolean | number | null | undefined;
 }

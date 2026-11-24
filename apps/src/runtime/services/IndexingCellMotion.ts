@@ -1,16 +1,11 @@
 /** 根据工单、工装占用和实测位姿构建搬运、分度与加工任务，记录每件物料的交接、转角和工具对准结果。 */
 
+import { getDeviceModule } from "@/devices/registry";
 import { Quaternion, Vector3 } from "three";
 import type { BodyPose, PhysicsPort } from "@/contracts/physics";
 import type { ActionRequest } from "@/contracts/scheduler";
 import type { CompiledSceneRuntime } from "@/contracts/scene-execution";
-import { HandoffArm } from "./HandoffMotion";
-import { HumanCarryMotion } from "../mechanisms/HumanCarryMotion";
-import { RotaryIndexMotion } from "../mechanisms/RotaryIndexMotion";
-import {
-  RobotProcessingMotion,
-  type ProcessEvidence,
-} from "../mechanisms/RobotProcessingMotion";
+import type { ProcessEvidence } from "@/devices/robot_arm/behavior";
 
 function isStable(p: BodyPose) {
   return (
@@ -64,7 +59,7 @@ export class IndexingCellMotion {
       return value;
     };
     this.tolerance = parameter(c.human, "position_tolerance_m");
-    this.human = new HumanCarryMotion(
+    this.human = getDeviceModule("human_operator").createMotion(
       physics,
       c.humanBody,
       c.handBody,
@@ -72,7 +67,7 @@ export class IndexingCellMotion {
       parameter(c.human, "lift_height_m"),
       this.tolerance,
     );
-    this.table = new RotaryIndexMotion(
+    this.table = getDeviceModule("rotary_table").createMotion(
       physics,
       c.tableBody,
       c.pivot,
@@ -82,8 +77,12 @@ export class IndexingCellMotion {
       parameter(c.table, "angle_tolerance_deg"),
       parameter(c.table, "settle_speed_deg_s"),
     );
-    this.robot = new RobotProcessingMotion(
-      new HandoffArm(compiled.robots.get(c.robot)!, c.toolAxis, physics),
+    this.robot = getDeviceModule("robot_arm").createProcessingMotion(
+      getDeviceModule("robot_arm").createArticulatedArm(
+        compiled.robots.get(c.robot)!,
+        c.toolAxis,
+        physics,
+      ),
       parameter(c.robot, "process_time_s"),
       parameter(c.robot, "process_position_tolerance_m"),
       parameter(c.robot, "process_angle_tolerance_deg"),

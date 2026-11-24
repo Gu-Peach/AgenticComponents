@@ -108,6 +108,7 @@ export class SceneRuntimeProgram {
     if (!["running", "stopping"].includes(current.status)) return;
     try {
       const frame = this.signals.snapshot(current.tick);
+      for (const driver of this.drivers.values()) driver.sampleInputs?.(frame);
       const proposed = this.scheduler.advance({
         frame,
         feedback: this.feedback,

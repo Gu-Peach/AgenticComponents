@@ -1,12 +1,12 @@
 /** 将人工搬运、转台分度和机器人加工绑定到同一场景，管理逐件供收料，并依据分度角、加工记录与交付顺序验收工单。 */
 
+import { getDeviceModule } from "@/devices/registry";
 import type { CompiledSceneRuntime } from "@/contracts/scene-execution";
 import type { ActionBinding, ActionRequest } from "@/contracts/scheduler";
 import type {
   ConditionContext,
   ObservationWrite,
 } from "@/contracts/conditions";
-import type { SceneSignalFrame, SignalWrite } from "@/contracts/scene-signals";
 import {
   bindDeviceBehavior,
   signalLayoutFromContract,
@@ -14,7 +14,6 @@ import {
 import { bindProcess } from "@/domain/runtime/bindProcess";
 import { compileConditions } from "@/domain/runtime/compileConditions";
 import type { DeviceActionPort } from "@/runtime/adapters/scene/DeviceActionPort";
-import { WarehouseActionAdapter } from "@/runtime/adapters/scene/WarehouseActionAdapter";
 import { SceneRuntimeProgram } from "@/runtime/engine/SceneRuntimeProgram";
 import { createJoltBackend } from "@/runtime/physics/jolt/JoltPhysicsBackend";
 import { IndexingCellMotion } from "@/runtime/services/IndexingCellMotion";
@@ -42,32 +41,6 @@ function requestedAngle(r: ActionRequest) {
 }
 function moduloAngle(angle: number) {
   return ((angle % 360) + 360) % 360;
-}
-
-/** Publish the target selected by the DSL on the same PLC transaction as the index request. */
-class TableIndexAdapter extends WarehouseActionAdapter {
-  override prepare(
-    r: ActionRequest,
-    frame: Readonly<SceneSignalFrame>,
-  ): SignalWrite[] {
-    const target = requestedAngle(r);
-    if (target !== 180 && target !== 0)
-      throw new Error(
-        "Indexing request requires a loading or processing station",
-      );
-    return [
-      ...super.prepare(r, frame),
-      {
-        key: this.sceneId + "/" + this.id + "/angleTag",
-        writer: "process",
-        runId: r.runId,
-        requestId: r.requestId,
-        activationId: r.activationId,
-        subjectId: r.subjectId,
-        value: target,
-      },
-    ];
-  }
 }
 
 export async function assembleIndexedProcessingRuntime(
@@ -112,41 +85,43 @@ export async function assembleIndexedProcessingRuntime(
           signalLayoutFromContract(sceneId, d.instance_id, d.contract),
         ),
     );
-    const createDriver = (id: string, behavior: string, trigger: string) => {
-      const Adapter = id === table ? TableIndexAdapter : WarehouseActionAdapter;
-      return new Adapter(
-        id,
+    const plan = (request: ActionRequest) => motion.job(request);
+    const actors = [
+      getDeviceModule("human_operator").createDriver(
         sceneId,
         runId,
-        [behavior],
-        (r) => motion.job(r),
-        () => motion.stopped(id),
-        (fault): Record<string, number | boolean> => {
-          const m = motion.snapshot();
-          if (id === human) return { holding_material: !!m.holding };
-          if (id === table)
-            return {
-              actual_angle: m.measuredAngleDeg,
-              occupied: !!m.tableMaterial,
-              rotating: !motion.stopped(table),
-              at_station:
-                motion.stopped(table) &&
-                (atAngle(m.measuredAngleDeg, 0) ||
-                  atAngle(m.measuredAngleDeg, 180)),
-            };
+        human,
+        plan,
+        () => motion.stopped(human),
+        () => !!motion.snapshot().holding,
+      ),
+      getDeviceModule("rotary_table").createDriver(
+        sceneId,
+        runId,
+        table,
+        plan,
+        () => motion.stopped(table),
+        () => {
+          const state = motion.snapshot();
           return {
-            holding_material: false,
-            error_code: fault ? 1 : 0,
+            angle: state.measuredAngleDeg,
+            occupied: !!state.tableMaterial,
           };
         },
-        trigger,
-      );
-    };
-    const actors = [
-      createDriver(human, "carry_material", "execute"),
-      createDriver(table, "rotate_to_station", "rotate_to_station"),
-      createDriver(robot, "process_material", "start_process"),
+        [0, 180],
+        angleTolerance,
+      ),
+      getDeviceModule("robot_arm").createProcessingDriver(
+        sceneId,
+        runId,
+        robot,
+        plan,
+        () => motion.stopped(robot),
+      ),
     ];
+    const supply = getDeviceModule("material_source_station").createSupply(
+      physics,
+    );
     // The palm and torch are physical tracking points even when their GLB
     // meshes are animated through the character and robot hierarchies.
     const movingBodies = [...compiled.bodyMap.values()].filter(
@@ -174,16 +149,7 @@ export async function assembleIndexedProcessingRuntime(
         const job = current();
         if (!closing && job && !physics.isBodyActive!(body(job.material).id)) {
           const b = body(job.material);
-          physics.activateBodies!([
-            {
-              id: b.id,
-              pose: {
-                position: b.position,
-                rotation: b.rotation,
-                velocity: [0, 0, 0],
-              },
-            },
-          ]);
+          supply.presentAtRest([b]);
         }
       },
       afterPhysics(_dt, tick) {

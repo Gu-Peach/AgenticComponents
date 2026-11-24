@@ -1,0 +1,63 @@
+{
+  "schema_version": "device-publication/1",
+  "entries": {
+    "contracts/conveyor.json": {
+      "type": "conveyor",
+      "profile": "conveyor/handoff",
+      "template_revision": "1.2.0",
+      "inputs": {
+        "conveyor/contract.json": "ed0ed89a0ed5d12c06a708566fc429378c1b6f89d820c591ff0b7c2c3ca85efd",
+        "catalog.json#conveyor/position": "bb7ddea52bf70d5b663f2b5670e2f2b5ee0866cc284851770ef797040f94cd83",
+        "public/scene/S01/contract-overrides.json#conveyor/position": "08ff52caf105e04bd40b5571d1e6ab8a7af853f0ac4b601c7a11eab09681fc04",
+        "catalog.json#conveyor/handoff": "2fccd0f4661a26711dcc0e00dad881ee548e67cf9b89d723136ce3cfc9827f2a",
+        "public/scene/S04/contract-overrides.json#conveyor/handoff": "6b845dc60262d34986fa0610dfbbd3d010aef33bf17e7101366f4124c9e0675f",
+        "catalog.json#publications/scene/S04/contracts/conveyor.json": "6aacee0a73d3d08ad49f362a3ef323a15610fae7628cea64e747fd0757655147",
+        "scene.json#asset": "12cb586223b79869004e681da8511e86b96d6557f78351a425210df114c7d51b"
+      },
+      "snapshot_sha256": "a886d04bf564d912c0682578b7c5600858e46404239dc4010b44057a0978483b"
+    },
+    "contracts/material_source_station.json": {
+      "type": "material_source_station",
+      "profile": "material_source_station/position",
+      "template_revision": "1.0.0",
+      "inputs": {
+        "material_source_station/contract.json": "a921147b264840567d5f48d3eb8bec5bfd0c7d43d935bca8e33b939382013966",
+        "catalog.json#material_source_station/position": "3ad92f6d4622d6c289bf084cc3100fc89e41715670d6938d23dfab1067bc6a5c",
+        "public/scene/S01/contract-overrides.json#material_source_station/position": "7c83d3054f6a0173f586f422e7faa54afbf0e44d4cab197dfdfabf8cbc9373fb",
+        "catalog.json#publications/scene/S04/contracts/material_source_station.json": "95b2482224fa74165dbe7fd2b7675a36be08aeeb314ea9018c8947458e7afc34",
+        "scene.json#asset": "12cb586223b79869004e681da8511e86b96d6557f78351a425210df114c7d51b"
+      },
+      "snapshot_sha256": "1bab7bb5e24ca64837cf3c6b5c097c28445cd885515d7b8d4b81d42b664e2edd"
+    },
+    "contracts/robot_arm.json": {
+      "type": "robot_arm",
+      "profile": "robot_arm/handoff",
+      "template_revision": "1.1.0",
+      "inputs": {
+        "robot_arm/contract.json": "d77ffd45bc8ef826977e485320b42ab38c3d3c44087e1e313845cdddce0ceaae",
+        "catalog.json#robot_arm/indexed": "7a6dbe83dfa2fb387e3c366afc091987ed4e2e1728a18b77559c52140bdf0e66",
+        "public/scene/S11/contract-overrides.json#robot_arm/indexed": "e0a12d62e4b71ef7596641226675bb7dddea0185e79a73907c583d4ec7ba4f26",
+        "catalog.json#robot_arm/handoff": "2de7452e532e094fd93cdbd250ab433c3d52a5571d5a6f453acb65e692fb2937",
+        "public/scene/S04/contract-overrides.json#robot_arm/handoff": "dad9aca5d1fba775f7f956a7f9431adf196d26f89f53ea2af65c5e06567f9f88",
+        "catalog.json#publications/scene/S04/contracts/robot_arm.json": "9346d0b97a1c3a91a8302e769c6c482d6bec0ae2b040d5a1f01475db33f175fb",
+        "scene.json#asset": "12cb586223b79869004e681da8511e86b96d6557f78351a425210df114c7d51b"
+      },
+      "snapshot_sha256": "01681b3afa727ca1fe2b4f333a0927736b4483b2162bdd1ea59c3c3291bfd2e6"
+    },
+    "contracts/workpiece.json": {
+      "type": "workpiece",
+      "profile": "workpiece/handoff",
+      "template_revision": "1.0.0",
+      "inputs": {
+        "workpiece/contract.json": "87ec1fc471d0bf0c473155298b46baa414b85d90a67b30cba7f791c7ecd7d249",
+        "catalog.json#workpiece/position": "5ef73c4a096aabd02fffcd4bfef81eb385f15121a7decfacbaba90fe34c1dd52",
+        "catalog.json#workpiece/declarative": "dba7305756d804d87292fbcf619b8dc0655cecc8a2c4f672edd76e1825047264",
+        "public/scene/S03/contract-overrides.json#workpiece/declarative": "703a21ddc4b893fe3ec42a5b887b7dcdf3a6f22c4ee62d53007af1d606681d4b",
+        "catalog.json#workpiece/handoff": "433a4a5a56b1be8e45f05b558cf934bc93f318db751ab8ee3402b4ef83c9a5e2",
+        "catalog.json#publications/scene/S04/contracts/workpiece.json": "3b24f0eee2e5a6e900e701c95dbb32e46012472c13ff7e737eae661a2b7023c1",
+        "scene.json#asset": "12cb586223b79869004e681da8511e86b96d6557f78351a425210df114c7d51b"
+      },
+      "snapshot_sha256": "d1da50c9d4fffe887f462304fe27d55e6ed7b7d1285108dc0aa4b7b9dfcccb26"
+    }
+  }
+}

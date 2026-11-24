@@ -1,0 +1,90 @@
+{
+  "schema_version": "device-publication/1",
+  "entries": {
+    "contracts/conveyor.json": {
+      "type": "conveyor",
+      "profile": "conveyor/warehouse",
+      "template_revision": "1.2.0",
+      "inputs": {
+        "conveyor/contract.json": "ed0ed89a0ed5d12c06a708566fc429378c1b6f89d820c591ff0b7c2c3ca85efd",
+        "catalog.json#conveyor/position": "bb7ddea52bf70d5b663f2b5670e2f2b5ee0866cc284851770ef797040f94cd83",
+        "public/scene/S01/contract-overrides.json#conveyor/position": "08ff52caf105e04bd40b5571d1e6ab8a7af853f0ac4b601c7a11eab09681fc04",
+        "catalog.json#conveyor/handoff": "2fccd0f4661a26711dcc0e00dad881ee548e67cf9b89d723136ce3cfc9827f2a",
+        "public/scene/S04/contract-overrides.json#conveyor/handoff": "6b845dc60262d34986fa0610dfbbd3d010aef33bf17e7101366f4124c9e0675f",
+        "catalog.json#conveyor/warehouse": "bb004c2f649c81d1b896e95f52b1b625561dadba31a7a2a9df963e1b662e461a",
+        "public/scene/S07/contract-overrides.json#conveyor/warehouse": "8691519cdf302eba82b204daa47833a774b8a9ec4c6272496adafbafaad5ae08",
+        "catalog.json#publications/scene/S07/contracts/conveyor.json": "12f3cb2e8431cc87785402da59fc11c3565c1ca4242803f0330a784b266938f9",
+        "scene.json#asset": "2a5534f2f785bcc514768c3d61fd390338b724eb72c584c6a958a65da9daf9be"
+      },
+      "snapshot_sha256": "c0665f979efbd002046da16867bc4589a76f2aef4147b7402f6fb35dc9947140"
+    },
+    "contracts/lift_table.json": {
+      "type": "lift_table",
+      "profile": "lift_table/warehouse",
+      "template_revision": "1.2.0",
+      "inputs": {
+        "lift_table/contract.json": "abce8bbefc45d116065e9d00770e9971c305be934bbf2d24ac5d6b3dc81bd1f0",
+        "catalog.json#lift_table/warehouse": "3807494c6617e32663646fe0c183ad017e6427c9fac9b2cc725ece6bc384a31b",
+        "public/scene/S07/contract-overrides.json#lift_table/warehouse": "c7c88135bda928cb9906ae0f7bb3fd3877e02fa3f4a63dac30a80198c64437c8",
+        "catalog.json#publications/scene/S07/contracts/lift_table.json": "ed7d40271c50a2387b8cf25ac31911b413836b6531085f8176e6769c1dab3e56",
+        "scene.json#asset": "2a5534f2f785bcc514768c3d61fd390338b724eb72c584c6a958a65da9daf9be"
+      },
+      "snapshot_sha256": "dae0816841c4a0688d04fb6e74efa9c9e01e68f22f5428a28dd9bd455bb99636"
+    },
+    "contracts/linear_rail.json": {
+      "type": "linear_rail",
+      "profile": "linear_rail/warehouse",
+      "template_revision": "1.1.0",
+      "inputs": {
+        "linear_rail/contract.json": "31670f0a04e57f3edb82551ffc6fae9a1266a8d660f8c065ebeee95fdc1edc81",
+        "catalog.json#linear_rail/warehouse": "e7453302e24f77c31f76a5bf8bc0cbeda2ca6c33b092451c3bcc0faf13688a18",
+        "public/scene/S07/contract-overrides.json#linear_rail/warehouse": "125aab948d944a5e71fe8e86c29f48a13c340f88654a20add2eead9e9d49b527",
+        "catalog.json#publications/scene/S07/contracts/linear_rail.json": "4ce0afae7df0857be3c00b6dd8f0ac84594b494706157594f5c3e58fbab62713",
+        "scene.json#asset": "2a5534f2f785bcc514768c3d61fd390338b724eb72c584c6a958a65da9daf9be"
+      },
+      "snapshot_sha256": "c72d4b82393084354b3f654f93a722551c0e65404f755f4631324a3ea203049b"
+    },
+    "contracts/material_source_station.json": {
+      "type": "material_source_station",
+      "profile": "material_source_station/warehouse",
+      "template_revision": "1.0.0",
+      "inputs": {
+        "material_source_station/contract.json": "a921147b264840567d5f48d3eb8bec5bfd0c7d43d935bca8e33b939382013966",
+        "catalog.json#material_source_station/position": "3ad92f6d4622d6c289bf084cc3100fc89e41715670d6938d23dfab1067bc6a5c",
+        "public/scene/S01/contract-overrides.json#material_source_station/position": "7c83d3054f6a0173f586f422e7faa54afbf0e44d4cab197dfdfabf8cbc9373fb",
+        "catalog.json#material_source_station/machining": "39da2bb6867c35b225d7597141dda10617ae915bfb82f4f5d78d86833560feb5",
+        "catalog.json#material_source_station/warehouse": "30bd7bb62085f188798b65925c1f98e264c521e8499e0059e5901ecd173609ac",
+        "catalog.json#publications/scene/S07/contracts/material_source_station.json": "e69f40b54f1ed803270c6e39fc01e60769be51d42e76e50afba3167c9ef947d0",
+        "scene.json#asset": "2a5534f2f785bcc514768c3d61fd390338b724eb72c584c6a958a65da9daf9be"
+      },
+      "snapshot_sha256": "c4409709898a2b809d13d17e1c8cc5dd15dfb6a7c45de3516f913f6079a7214c"
+    },
+    "contracts/storage_rack.json": {
+      "type": "storage_rack",
+      "profile": "storage_rack/warehouse",
+      "template_revision": "1.0.0",
+      "inputs": {
+        "storage_rack/contract.json": "42df25ecf7371b993d28f98112de6e161455c1f7c132675b0142d76981cc9473",
+        "catalog.json#storage_rack/warehouse": "0304bd81850980169c6ce6271a0c4657b2477edf7fe873cdeb685c1249f1125d",
+        "public/scene/S07/contract-overrides.json#storage_rack/warehouse": "e6c4353ef7898039f0b2b0851fffe083e35158ecca9cb4084880a9dd189dfc72",
+        "catalog.json#publications/scene/S07/contracts/storage_rack.json": "5f8ec175e556c9a0a8122c475be5d4db799c98be09d451d52078294f3f1e96cb",
+        "scene.json#asset": "2a5534f2f785bcc514768c3d61fd390338b724eb72c584c6a958a65da9daf9be"
+      },
+      "snapshot_sha256": "a68041e074e6c7d27c88ddf6e1c65607068343c1064cef35679033a53e8b76dd"
+    },
+    "contracts/workpiece.json": {
+      "type": "workpiece",
+      "profile": "workpiece/declarative",
+      "template_revision": "1.0.0",
+      "inputs": {
+        "workpiece/contract.json": "87ec1fc471d0bf0c473155298b46baa414b85d90a67b30cba7f791c7ecd7d249",
+        "catalog.json#workpiece/position": "5ef73c4a096aabd02fffcd4bfef81eb385f15121a7decfacbaba90fe34c1dd52",
+        "catalog.json#workpiece/declarative": "dba7305756d804d87292fbcf619b8dc0655cecc8a2c4f672edd76e1825047264",
+        "public/scene/S03/contract-overrides.json#workpiece/declarative": "703a21ddc4b893fe3ec42a5b887b7dcdf3a6f22c4ee62d53007af1d606681d4b",
+        "catalog.json#publications/scene/S07/contracts/workpiece.json": "b4dcd5e999bb7a67b3af8c775ecb267629f1833c2ed75fb2f2cbb47dd6e55fb1",
+        "scene.json#asset": "2a5534f2f785bcc514768c3d61fd390338b724eb72c584c6a958a65da9daf9be"
+      },
+      "snapshot_sha256": "690b9b811887a14efdcbf884b271e5347c0a554478edf0ed85a841e32fad8448"
+    }
+  }
+}

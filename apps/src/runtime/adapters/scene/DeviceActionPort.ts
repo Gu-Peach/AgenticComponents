@@ -8,6 +8,8 @@ import type { ObservationWrite } from "@/runtime/signals/ObservationRegistry";
 /** Only registered implementations implement this port. Schema descriptions are never executed. */
 export interface DeviceActionPort extends SceneDeviceDriver {
   supports(behavior: string): boolean;
+  /** Sample the preceding PLC scan, including command withdrawal and reset. */
+  sampleInputs?(frame: Readonly<SceneSignalFrame>): void;
   /** Pure preflight. No physical movement or writes before the whole batch validates. */
   prepare(
     request: ActionRequest,

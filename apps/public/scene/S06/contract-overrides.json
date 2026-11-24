@@ -1,0 +1,90 @@
+{
+  "machine_tool/machining": {
+    "description": "以一个加工点接收工件并执行有限加工周期。",
+    "interfaces": [
+      {
+        "interface_id": "work",
+        "name": "加工点",
+        "local_frame": {
+          "position": [
+            -5.682480352930952e-08,
+            0.6499999854713678,
+            0.7879999747574331
+          ],
+          "forward": [
+            0,
+            1,
+            0
+          ],
+          "up": [
+            0,
+            0,
+            1
+          ]
+        },
+        "capabilities": {
+          "snap": {
+            "role": "machining_station",
+            "accepts": [
+              "workpiece"
+            ]
+          }
+        }
+      }
+    ],
+    "signal_ports": {
+      "$list": "port_id",
+      "select": [
+        "execute",
+        "request_id",
+        "subject_id",
+        "accepted",
+        "busy",
+        "done",
+        "result_id",
+        "error"
+      ],
+      "entries": {
+        "request_id": {
+          "signal_role": "request_parameter",
+          "retention": "latched_until_ack_or_new_request",
+          "description": "本轮加工请求号"
+        },
+        "accepted": {
+          "signal_role": "result_latched",
+          "retention": "latched_until_ack_or_new_request",
+          "description": "当前请求已接受"
+        },
+        "done": {
+          "signal_role": "result_latched",
+          "retention": "latched_until_ack_or_new_request",
+          "description": "当前请求已完成且成品状态已提交"
+        },
+        "result_id": {
+          "signal_role": "result_latched",
+          "retention": "latched_until_ack_or_new_request",
+          "description": "本次结果对应的请求号"
+        }
+      }
+    },
+    "transport_behaviors": {
+      "$list": "behavior_id",
+      "entries": {
+        "machine_material": {
+          "output_signals": [
+            "accepted",
+            "busy",
+            "done",
+            "result_id",
+            "error"
+          ]
+        }
+      }
+    },
+    "runtime_execution_contract": {
+      "$remove": [
+        "semantic_ports"
+      ]
+    }
+  }
+}

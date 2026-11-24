@@ -1,9 +1,22 @@
+import { getDeviceModule } from "@/devices/registry";
+import {
+  bindFactRoles,
+  compileSignalConnections,
+  type StepFacts,
+} from "./compileSignalConnections";
 import { Quaternion, Vector3 } from "three";
 import { z } from "zod";
 import type { SceneBundle } from "@/contracts/scene-package";
 import type { SceneDevice, Vec3 } from "@/contracts/scene-execution";
-import type { HandoffConfig } from "@/contracts/robot-handoff";
-import { childrenOf, type ProcessNode } from "@/contracts/process-ir";
+import {
+  handoffCallBehavior,
+  type HandoffConfig,
+} from "@/contracts/robot-handoff";
+import {
+  childrenOf,
+  type ProcessNode,
+  type Expression,
+} from "@/contracts/process-ir";
 
 const name = z.string().min(1);
 const vector = z.tuple([z.number(), z.number(), z.number()]);
@@ -160,13 +173,68 @@ export function compileHandoffManifest(
       throw new Error("Missing head-down endpoint: " + key);
   }
   const calls: Extract<ProcessNode, { kind: "invoke" }>[] = [];
-  const visit = (n: ProcessNode) => {
-    if (n.kind === "invoke") calls.push(n);
-    childrenOf(n).forEach(visit);
+  const jobBinding = new Map<string, string>();
+  const visit = (n: ProcessNode, boundJob?: string) => {
+    if (
+      n.kind === "repeat" &&
+      "over" in n &&
+      n.over.kind === "field" &&
+      n.over.base.kind === "ref" &&
+      n.over.base.name === "task" &&
+      n.over.field === "jobs"
+    )
+      boundJob = n.bind;
+    if (n.kind === "invoke") {
+      calls.push(n);
+      if (boundJob) jobBinding.set(n.id, boundJob);
+    }
+    childrenOf(n).forEach((child) => visit(child, boundJob));
   };
   visit(root);
-  const pick = calls.filter((c) => c.behavior === "pick_and_handoff");
-  const place = calls.filter((c) => c.behavior === "place_held_material");
+  const actionModes = new Map<string, string>();
+  for (const call of calls) {
+    if (call.device.kind !== "ref")
+      throw new Error("Handoff requires a named device");
+    const id = call.device.name,
+      mode = handoffCallBehavior(call);
+    const key = id + "." + call.behavior,
+      previous = actionModes.get(key);
+    if (previous && previous !== mode)
+      throw new Error("Ambiguous handoff payload mode for " + key);
+    if (mode !== call.behavior) {
+      const record = z
+        .object({
+          fields: z.record(z.string(), z.string()),
+        })
+        .parse(
+          (
+            devices.get(id)?.contract.runtime_execution_contract as
+              | {
+                  payload_templates?: Record<string, unknown>;
+                }
+              | undefined
+          )?.payload_templates?.[mode],
+        );
+      if (
+        call.payload?.kind !== "payload" ||
+        Object.keys(record.fields).length !==
+          Object.keys(call.payload.kwargs).length ||
+        Object.keys(call.payload.kwargs).some(
+          (field) => !Object.hasOwn(record.fields, field),
+        )
+      )
+        throw new Error(
+          "Pick/place payload fields differ from the selected handoff contract",
+        );
+    }
+    actionModes.set(key, mode);
+  }
+  const pick = calls.filter(
+    (call) => handoffCallBehavior(call) === "pick_and_handoff",
+  );
+  const place = calls.filter(
+    (call) => handoffCallBehavior(call) === "place_held_material",
+  );
   if (
     pick.length !== 1 ||
     place.length !== 1 ||
@@ -183,7 +251,74 @@ export function compileHandoffManifest(
   );
   if (!rendezvous || giver === receiver)
     throw new Error("Handoff midpoint is missing");
+  const armPorts: Readonly<Record<string, unknown>> =
+    getDeviceModule("robot_arm").contract.runtime_execution_contract
+      .semantic_ports;
+  const beltPorts: Readonly<Record<string, unknown>> =
+    getDeviceModule("conveyor").contract.runtime_execution_contract
+      .semantic_ports;
+  const connections = new Map(
+    task.jobs.map((job) => {
+      const steps = new Map<string, StepFacts>();
+      for (const call of calls) {
+        if (call.device.kind !== "ref")
+          throw new Error("Expected a named device");
+        const self = call.device.name,
+          mode = handoffCallBehavior(call);
+        const role = (e: Expression | undefined): string | undefined => {
+          if (!e) return;
+          if (e.kind === "literal" && typeof e.value === "string")
+            return e.value;
+          if (e.kind === "ref" && devices.has(e.name)) return e.name;
+          if (e.kind === "field" && e.base.kind === "ref") {
+            if (e.base.name === jobBinding.get(call.id)) {
+              if (
+                e.field === "material" ||
+                e.field === "input" ||
+                e.field === "target" ||
+                e.field === "id"
+              )
+                return job[e.field];
+            } else if (
+              devices.get(e.base.name)?.locations[e.base.name + "." + e.field]
+            )
+              return e.base.name + "." + e.field;
+          }
+          throw new Error("Unknown semantic fact role in " + call.id);
+        };
+        const payload =
+          call.payload?.kind === "payload" ? call.payload.kwargs : {};
+        const subject = call.arguments.subject_id;
+        const material =
+          subject?.kind === "subject_id"
+            ? role(subject.args[0])
+            : subject?.kind === "literal" && typeof subject.value === "number"
+              ? ids[subject.value - 1]
+              : role(payload.material);
+        if (material !== undefined && material !== job.material)
+          throw new Error("Material role differs from indexed job: " + call.id);
+        const roles: Record<string, string> = { self, exit: self + ".exit" };
+        if (material) roles.material = material;
+        for (const [name, e] of Object.entries({
+          source: payload.source,
+          target: payload.target ?? call.arguments.target,
+          receiver: payload.receiver,
+        })) {
+          const v = role(e);
+          if (v) roles[name] = v;
+        }
+        const ports =
+          devices.get(self)?.contract.device_type === "robot_arm"
+            ? armPorts
+            : beltPorts;
+        steps.set(call.id, bindFactRoles(ports[mode], roles));
+      }
+      return [job.material, compileSignalConnections(root, steps)] as const;
+    }),
+  );
   const handoff: HandoffConfig = {
+    actionModes,
+    connections,
     jobs: task.jobs,
     source: supply.source_device,
     infeed: infeed.instance_id,

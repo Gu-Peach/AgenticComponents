@@ -1,3 +1,9 @@
+import {
+  normalizeSceneCarrying,
+  isCarryingWorkpiece,
+  carryingProperties,
+  validateCarrierManifest,
+} from "@/devices/workpiece/behavior";
 import { z } from "zod";
 import {
   compileLoadingManifest,
@@ -81,7 +87,11 @@ export function compileSceneRuntime(
   const blockers: string[] = [],
     warnings: string[] = [];
   for (const raw of bundle.devices) {
-    const d = deviceSchema.parse(raw);
+    const rawPrefab = raw.prefab as { slot_support_node?: string } | undefined;
+    const d = normalizeSceneCarrying(
+      deviceSchema.parse(raw),
+      rawPrefab?.slot_support_node,
+    );
     if (
       devices.has(d.instance_id) ||
       d.node_binding.model_sha256 !== bundle.model_sha256
@@ -141,6 +151,7 @@ export function compileSceneRuntime(
       devices,
       leaders,
     );
+    validateCarrierManifest(manifest.task.pallets, devices);
     const world = compilePalletWorld(
       bundle,
       modelBytes,
@@ -243,6 +254,7 @@ export function compileSceneRuntime(
       devices,
       leaders,
     );
+    validateCarrierManifest(manifest.loading.pallets, devices);
     const feederEntries = new Map(
       manifest.loading.supplies.map((s) => [s.device, s.entryDevice]),
     );
@@ -420,6 +432,7 @@ export function compileSceneRuntime(
       "Candidate validation: GLB convex parts and declared support proxies; robot motion is kinematic and full-link collision avoidance is not modeled; coupled-proxy float32 geometry join tolerance is 10 micrometres.",
     );
   if (blockers.length) throw new Error(blockers.join("\n"));
+  validateCarrierManifest(task.pallets, devices);
   const world = compilePalletWorld(
     bundle,
     modelBytes,
@@ -645,10 +658,10 @@ function compilePalletWorld(
       warnings.push(
         `${d.instance_id}: finite supply uses a simulated contact-feed surface`,
       );
-    } else if (type === "workpiece" || type === "workpiece_carrier") {
+    } else if (type === "workpiece") {
       const body = makeBody(
         d,
-        type === "workpiece" ? "material" : "carrier",
+        isCarryingWorkpiece(d.contract) ? "carrier" : "material",
         true,
       );
       const key = JSON.stringify([
@@ -709,14 +722,15 @@ function compilePalletWorld(
   );
   if (!first) throw new Error("No finite load bodies");
   const carrierBindings = preloaded.flatMap((p) => {
-    const mode = z
-      .object({
-        physics: z.object({
-          load_motion_mode: z.enum(["relative_constraint", "physical_support"]),
-        }),
-      })
-      .parse(devices.get(p.id)!.contract.type_specific_contract)
-      .physics.load_motion_mode;
+    const carrier = devices.get(p.id)!;
+    const carrying = carryingProperties(carrier.contract);
+    if (!carrying)
+      throw new Error(
+        "Preloaded inventory requires carrying properties: " + p.id,
+      );
+    const mode = carrying.load_motion_mode ?? "physical_support";
+    if (mode === "rigid_compound")
+      throw new Error("Unsupported compound carrier load mode");
     return mode === "relative_constraint"
       ? p.items.map((i) => ({
           carrier: p.id + "/body",

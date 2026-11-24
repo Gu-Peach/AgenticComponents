@@ -1,5 +1,6 @@
 /** 管理有限批次中托盘和物料的入场与离场，根据实际身份、支承和位置确认供料、物料交付及空盘移出。 */
 
+import { getDeviceModule } from "@/devices/registry";
 import { Quaternion, Vector3 } from "three";
 import type { BodyPose, PhysicsPort } from "@/contracts/physics";
 export interface EnvironmentBody {
@@ -41,12 +42,16 @@ export class FiniteSceneEnvironment {
   private departed = new Set<string>();
   private receipts: EnvironmentReceipt[] = [];
   private lastTick = 0;
+  private readonly supply;
   constructor(
     readonly runId: string,
     private physics: PhysicsPort,
     private loads: readonly CarrierLoad[],
   ) {
     this.loads = structuredClone(loads);
+    this.supply = getDeviceModule("material_source_station").createSupply(
+      physics,
+    );
     if (
       !physics.activateBodies ||
       !physics.deactivateBodies ||
@@ -136,7 +141,7 @@ export class FiniteSceneEnvironment {
           )
             throw new Error("Source volume is occupied");
         }
-      this.physics.activateBodies!(
+      this.supply.present(
         bodies.map((b) => ({ id: b.bodyId, pose: b.initial })),
       );
     }

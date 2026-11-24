@@ -1,0 +1,128 @@
+{
+  "material_source_station/machining-cell": {
+    "runtime_contract": {
+      "$remove": [
+        "condition_model"
+      ],
+      "observation_definitions": {
+        "produce_material.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "produce_material.pre_2": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "produce_material.pre_3": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "produce_material.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "produce_material.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "present_material.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "present_material.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "pause_production.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "pause_production.pre_2": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "pause_production.pre_3": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "pause_production.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "pause_production.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "resume_production.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "resume_production.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "resume_production.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "schedule_production_cycle.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "schedule_production_cycle.pre_2": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "schedule_production_cycle.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "schedule_production_cycle.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "publish_source_state.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "publish_source_state.sustaining": {
+          "$remove": [
+            "expression_ref"
+          ]
+        },
+        "publish_source_state.completion": {
+          "$remove": [
+            "expression_ref"
+          ]
+        }
+      },
+      "authorization_definitions": {
+        "present_material.pre_1": {
+          "$remove": [
+            "expression_ref"
+          ]
+        }
+      }
+    }
+  }
+}

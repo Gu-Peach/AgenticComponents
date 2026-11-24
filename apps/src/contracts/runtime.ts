@@ -52,6 +52,12 @@ export interface RuntimeSnapshot {
   atExit: boolean;
   request: RuntimeRequest | null;
   error?: string;
-  kind?: "conveyor_experiment" | "robot_experiment";
+  kind?: "conveyor_experiment" | "robot_experiment" | "assembled_transfer";
+  workcell?: {
+    status: string;
+    step?: string;
+    q: number[];
+    connections: readonly import("./semantic-ports").SignalConnection[];
+  };
   robot?: RobotObservation;
 }

@@ -1,7 +1,27 @@
-import { readdir, readFile, writeFile, realpath } from "node:fs/promises";
+import {
+  readdir,
+  readFile,
+  writeFile,
+  rename,
+  rm,
+  realpath,
+} from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { createHash } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
+import { execFileSync } from "node:child_process";
+// Python also builds scene snapshots, so both catalogs use the same profile resolver.
+execFileSync(
+  "python",
+  [
+    "-B",
+    fileURLToPath(new URL("./lib/device_library.py", import.meta.url)),
+    "--models",
+  ],
+  {
+    stdio: "inherit",
+  },
+);
 const root = fileURLToPath(new URL("../public/modles/", import.meta.url));
 const hash = (b) => createHash("sha256").update(b).digest("hex");
 const entries = [];
@@ -50,8 +70,19 @@ for (const dir of (await readdir(root, { withFileTypes: true }))
     modelSha256,
   });
 }
-await writeFile(
-  path.join(root, "index.json"),
-  JSON.stringify({ version: 1, entries }, null, 2) + "\n",
-);
+const target = path.join(root, "index.json");
+const contents = JSON.stringify({ version: 1, entries }, null, 2) + "\n";
+const previous = await readFile(target, "utf8").catch((error) => {
+  if (error.code === "ENOENT") return undefined;
+  throw error;
+});
+if (previous !== contents) {
+  const temporary = path.join(root, ".index." + randomUUID() + ".tmp");
+  try {
+    await writeFile(temporary, contents, { flag: "wx" });
+    await rename(temporary, target);
+  } finally {
+    await rm(temporary, { force: true });
+  }
+}
 console.log(`Published ${entries.length} public model packages`);

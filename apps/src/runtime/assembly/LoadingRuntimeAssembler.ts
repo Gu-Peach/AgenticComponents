@@ -1,5 +1,6 @@
 /** 装配托盘装载与逐件加工场景，将输送带、机械臂和可选机床接入调度器，并绑定工位互锁、放置回执与整盘离场条件。 */
 
+import { getDeviceModule } from "@/devices/registry";
 import type { CompiledSceneRuntime } from "@/contracts/scene-execution";
 import type { ActionBinding, ActionRequest } from "@/contracts/scheduler";
 import type {
@@ -23,7 +24,6 @@ import {
 import { ConditionTrace } from "@/runtime/signals/ConditionTrace";
 import { LoadingLineEnvironment } from "@/runtime/services/LoadingLineEnvironment";
 import { MachiningLineEnvironment } from "@/runtime/services/MachiningLineEnvironment";
-import { MachineToolAdapter } from "@/runtime/adapters/scene/MachineToolAdapter";
 import {
   createMachiningDevices,
   fitsMachiningLocation,
@@ -44,6 +44,7 @@ function trackPlacements(
   return {
     id: driver.id,
     supports: (b) => driver.supports(b),
+    sampleInputs: (f) => driver.sampleInputs?.(f),
     prepare: (r, f) => driver.prepare(r, f),
     prepareCancel: (r, f) => driver.prepareCancel(r, f),
     prepareStop: (f) => driver.prepareStop(f),
@@ -96,22 +97,24 @@ export async function assembleLoadingRuntime(
           environment.releasePallet(id, target, tick),
       },
     );
-    const environment: LoadingLineEnvironment | MachiningLineEnvironment = machining
-      ? new MachiningLineEnvironment(
-          runId,
-          compiled,
-          physics,
-          devices.configs.get(machining.leader)!,
-          (id, target) => fitsMachiningLocation(compiled, physics, id, target),
-          () => devices.robots.get(machining.robot)!.isStopped(),
-        )
-      : new LoadingLineEnvironment(
-          runId,
-          compiled,
-          physics,
-          devices.configs,
-          (id) => fitsLoadedSlot(compiled, physics, id),
-        );
+    const environment: LoadingLineEnvironment | MachiningLineEnvironment =
+      machining
+        ? new MachiningLineEnvironment(
+            runId,
+            compiled,
+            physics,
+            devices.configs.get(machining.leader)!,
+            (id, target) =>
+              fitsMachiningLocation(compiled, physics, id, target),
+            () => devices.robots.get(machining.robot)!.isStopped(),
+          )
+        : new LoadingLineEnvironment(
+            runId,
+            compiled,
+            physics,
+            devices.configs,
+            (id) => fitsLoadedSlot(compiled, physics, id),
+          );
     const machiningSlots = new Map(
       machining?.pallets.flatMap((p) =>
         p.items.map((i) => [i.material, i.source] as const),
@@ -124,7 +127,7 @@ export async function assembleLoadingRuntime(
       materialByNumber.get(Number(args.subject_id)) ?? "";
     const machineDriver =
       machining && environment instanceof MachiningLineEnvironment
-        ? new MachineToolAdapter(
+        ? getDeviceModule("machine_tool").createDriver(
             machining.machine,
             sceneId,
             runId,
@@ -199,14 +202,8 @@ export async function assembleLoadingRuntime(
           rule.expr.op === "opaque"
         ) {
           const key = rule.expr.key;
-          if (
-            ![
-              "machine_material.ready",
-              "machine_material.authorized",
-              "machine_material.sustaining",
-              "machine_material.completion",
-            ].includes(key)
-          )
+          const machine = getDeviceModule("machine_tool");
+          if (!machine.conditions.some((known) => known === key))
             throw new Error("Unknown machine condition: " + key);
           providers.registerExpression(rule, reader, (c) => {
             const sample = c.observations?.samples["world/state"];
@@ -217,37 +214,28 @@ export async function assembleLoadingRuntime(
             )
               return undefined;
             const w = sample.value as SceneConditionWorld,
-              m = w.machining!;
-            const id = subject(c.scope.arguments as Record<string, unknown>);
-            const held =
-              m.machineItem === id &&
-              m.workSupported &&
-              w.robotClear[machining.robot] &&
-              m.atStation;
-            const complete =
-              m.operations.some(
-                (o) => o.material === id && o.request === c.request!.requestId,
-              ) && w.bodies[id + "/body"]?.materialState === "finished";
-            if (key === "machine_material.completion")
-              return (
-                held && complete && c.requestState?.outcome === "succeeded"
-              );
-            if (key === "machine_material.sustaining")
-              return (
-                held &&
-                (w.bodies[id + "/body"]?.materialState === "raw" || complete)
-              );
-            const ready =
-              held && w.bodies[id + "/body"]?.materialState === "raw";
-            return key === "machine_material.ready"
-              ? ready
-              : ready &&
-                  [
-                    "device/" + device,
-                    "subject/" + id,
-                    "location/" + machining.point,
-                    "device/" + machining.robot,
-                  ].every((k) => c.owns(k));
+              m = w.machining!,
+              id = subject(c.scope.arguments as Record<string, unknown>);
+            return machine.evaluateCondition(
+              key,
+              {
+                occupiedBy: m.machineItem,
+                supported: m.workSupported,
+                interlocksClear: w.robotClear[machining.robot] && m.atStation,
+                materialState: w.bodies[id + "/body"]?.materialState,
+                operations: m.operations,
+              },
+              id,
+              c.request.requestId,
+              c.requestState?.outcome === "succeeded",
+              () =>
+                [
+                  "device/" + device,
+                  "subject/" + id,
+                  "location/" + machining.point,
+                  "device/" + machining.robot,
+                ].every((k) => c.owns(k)),
+            );
           });
           continue;
         }

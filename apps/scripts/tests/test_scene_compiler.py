@@ -87,6 +87,20 @@ class SceneCompiler(unittest.TestCase):
             self.assertAlmostEqual(x*x + y*y + z*z + w*w, 1)
         self.assertTrue(devices['C2']['contract']['type_specific_contract']['transport_pose']['verify_throughout'])
 
+    def test_canonical_handoff_requires_an_explicit_supported_start_and_receiver(self):
+        ir,devices,goal=self.scene('S04')
+        calls=[n for n in compiler.walk(ir['body']) if n.get('kind')=='invoke' and
+               n.get('behavior') in ('pick_and_handoff','place_held_material')]
+        self.assertEqual(len(calls),2)
+        for call in calls:call['behavior']='pick_and_place'
+        validate_inputs(ir,devices,goal,'robot-handoff@1')
+        with self.assertRaisesRegex(ValueError,'redirects'):
+            validate_inputs(ir,devices,goal)
+        # A different instance's payload must never acquire someone else's grip.
+        calls[1]['payload']['args'][0]['value']='R1.pick_and_handoff'
+        with self.assertRaisesRegex(ValueError,'redirects'):
+            validate_inputs(ir,devices,goal,'robot-handoff@1')
+
     def test_arbitrary_python_is_not_executed(self):
         for source in ['import os', 'print("hello")', 'x = 1']:
             with self.assertRaises(ValueError):compiler.SceneParser(source).compile()

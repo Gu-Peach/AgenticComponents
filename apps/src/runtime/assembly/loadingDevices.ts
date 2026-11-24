@@ -1,26 +1,21 @@
 /** 为托盘装载线创建输送带和机械臂适配器，根据当前托盘位姿和支承层计算放置位置，检查物料是否落入指定槽位。 */
 
+import { getDeviceModule } from "@/devices/registry";
 import { Quaternion, Vector3 } from "three";
-import {
-  bodyOf,
-  carrierPlacement,
-  homeAction,
-  topPickAndPlace,
-  createConveyorGroup,
-} from "./palletDeviceActions";
+
 import type { CompiledSceneRuntime } from "@/contracts/scene-execution";
 import type { PhysicsPort } from "@/contracts/physics";
 import type { ActionRequest } from "@/contracts/scheduler";
 import type { DeviceActionPort } from "@/runtime/adapters/scene/DeviceActionPort";
-import {
+import type {
   PositionTransportAdapter,
-  type PositionTransportConfig,
-  type TransportTarget,
-} from "@/runtime/adapters/scene/PositionTransportAdapter";
-import {
+  PositionTransportConfig,
+  TransportTarget,
+} from "@/devices/conveyor/behavior";
+import type {
   RobotSceneAdapter,
-  type PreparedRobotAction,
-} from "@/runtime/adapters/scene/RobotSceneAdapter";
+  PreparedRobotAction,
+} from "@/devices/robot_arm/behavior";
 
 interface LoadingHooks {
   releasePallet(id: string, target: TransportTarget, tick: number): boolean;
@@ -38,13 +33,19 @@ export function palletPlacement(
   if (!pallet)
     throw new Error("Material missing from pallet manifest: " + material);
   const item = pallet.items.find((row) => row.material === material)!;
-  const palletBody = bodyOf(c, pallet.id),
-    load = bodyOf(c, material);
+  const palletBody = getDeviceModule("workpiece").bodyOf(c, pallet.id),
+    load = getDeviceModule("workpiece").bodyOf(c, material);
   const {
     local,
     center,
     rotation: q,
-  } = carrierPlacement(c, physics, pallet.id, item.target, load.size[1]);
+  } = getDeviceModule("workpiece").carrierPlacement(
+    c,
+    physics,
+    pallet.id,
+    item.target,
+    load.size[1],
+  );
   const layer = local.support_layer;
   if (!layer) throw new Error("Missing declared support layer: " + item.target);
   const { loading_pose: policy } = c.devices.get(material)!.contract
@@ -77,7 +78,9 @@ export function palletPlacement(
       ? [palletBody.id]
       : pallet.items
           .filter((row) => row.category === layer)
-          .map((row) => bodyOf(c, row.material).id);
+          .map(
+            (row) => getDeviceModule("workpiece").bodyOf(c, row.material).id,
+          );
   if (!supports.length)
     throw new Error("Declared support layer has no material: " + item.target);
   return {
@@ -96,7 +99,7 @@ export function fitsLoadedSlot(
   physics: PhysicsPort,
   material: string,
 ): boolean {
-  const load = bodyOf(c, material);
+  const load = getDeviceModule("workpiece").bodyOf(c, material);
   if (!physics.isBodyActive?.(load.id) || physics.hasGraspForBody?.(load.id))
     return false;
   const slot = palletPlacement(c, physics, material);
@@ -130,7 +133,10 @@ function robotAction(
     throw new Error("Unbound loading robot payload");
   const p = payload.fields;
   if (request.behavior === "move_to_pose") {
-    return homeAction(base, c.devices.get(robot)!.locations[p.target]);
+    return getDeviceModule("robot_arm").homeAction(
+      base,
+      c.devices.get(robot)!.locations[p.target],
+    );
   }
   const config = c.loading!;
   const source = config.targets.get(p.source);
@@ -141,7 +147,7 @@ function robotAction(
     !c.leaders.get(supply.leader)?.includes(source.supportDevice)
   )
     throw new Error("Wrong loading supply or source");
-  const load = bodyOf(c, p.material),
+  const load = getDeviceModule("workpiece").bodyOf(c, p.material),
     pose = physics.readBody!(load.id);
   const bottom = new Vector3(0, -load.size[1] / 2, 0)
     .applyQuaternion(new Quaternion(...pose.rotation))
@@ -157,7 +163,7 @@ function robotAction(
   const slot = palletPlacement(c, physics, p.material);
   if (slot.target !== p.target)
     throw new Error("Robot target differs from loading manifest");
-  return topPickAndPlace(
+  return getDeviceModule("robot_arm").topPickAndPlace(
     base,
     p.material,
     load,
@@ -185,15 +191,21 @@ export function createLoadingDevices(
     const eligible = main
       ? config.pallets.map((p) => p.id)
       : supplies.flatMap((s) => s.materials);
-    const { belt, cfg } = createConveyorGroup(sceneId, runId, c, physics, {
-      leader: id,
-      members,
-      eligible,
-      targetLocations: config.targets,
-      supplySupports: supplies.map((s) => s.device + "/surface"),
-      palletExit: main ? config.exchange.exit : undefined,
-      releasePallet: hooks.releasePallet,
-    });
+    const { belt, cfg } = getDeviceModule("conveyor").createGroup(
+      sceneId,
+      runId,
+      c,
+      physics,
+      {
+        leader: id,
+        members,
+        eligible,
+        targetLocations: config.targets,
+        supplySupports: supplies.map((s) => s.device + "/surface"),
+        palletExit: main ? config.exchange.exit : undefined,
+        releasePallet: hooks.releasePallet,
+      },
+    );
     drivers.push(belt);
     configs.set(id, cfg);
     conveyors.set(id, belt);
@@ -201,7 +213,7 @@ export function createLoadingDevices(
   for (const [id, base] of c.robots) {
     if (c.devices.get(id)?.contract.version !== "1.0.0")
       throw new Error("Unsupported loading robot: " + id);
-    const robot = new RobotSceneAdapter(
+    const robot = getDeviceModule("robot_arm").createSceneDriver(
       sceneId,
       runId,
       base,

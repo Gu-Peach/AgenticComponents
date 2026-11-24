@@ -1,3 +1,4 @@
+import { normalizeWorkpieceDefinition } from "@/devices/workpiece/behavior";
 import parameters from "@/data/parameter-examples.json";
 import {
   deviceTypes,
@@ -30,7 +31,7 @@ export function createCatalog(): DeviceDefinition[] {
     const example = parameters.examples.find((p) => p.device_type === type)!;
     const [id, label] = actions[type];
     const passive = ["workpiece", "workpiece_carrier"].includes(type);
-    return {
+    return normalizeWorkpieceDefinition<DeviceDefinition>({
       specId: `template.${type}`,
       revision: "0.1.0",
       name: typeLabels[type],
@@ -107,7 +108,7 @@ export function createCatalog(): DeviceDefinition[] {
         "模板接口为最小示例，尚未配置完整设备契约。",
         "未关联实际 GLB，当前显示程序生成的示意模型。",
       ],
-    };
+    });
   });
 }
 export function instantiate(
@@ -133,7 +134,7 @@ export function createDemoProject(): ProjectDocument {
   const definitions = createCatalog();
   const instances = definitions.map((d, i) => ({
     ...instantiate(d, i),
-    instanceId: `demo-${d.deviceType}`,
+    instanceId: `demo-${d.specId.slice("template.".length)}`,
   }));
   const positions: [number, number, number][] = [
     [-2.3, 0, 0],

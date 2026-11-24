@@ -9,6 +9,7 @@ from declarative_frontend import Parser
 from scene_binding_check import validate_inputs
 from scene_prefabs import expand_prefabs
 from scene_devices import load_scene_devices
+from device_library import DeviceLibrary, PUBLIC
 from scene_layout import validate_sorting_station, bind_position_targets
 
 def read(path): return json.loads(path.read_text(encoding='utf-8-sig'))
@@ -128,6 +129,14 @@ def migrate(source, output, contracts):
 def build(root, scene=None, output=None):
     output=Path(output) if output is not None else root
     if scene is not None and (len(scene)!=3 or not scene.startswith('S') or not scene[1:].isdigit()):raise ValueError('Invalid scene selection')
+    # A standalone copy can always compile from its own published DeviceSpecs.
+    # Authoritative source packages resolve their explicit library profiles.
+    snapshots = {}
+    if root.resolve() == (PUBLIC / "scene").resolve():
+        library = DeviceLibrary()
+        snapshots = library.publish("scene", output, scene)
+        if output.resolve() == root.resolve():
+            library.publish_dispatch_index()
     entries=[]
     for folder in sorted(root.glob('S[0-9][0-9]')):
         if scene is not None and folder.name!=scene:continue
@@ -141,7 +150,7 @@ def build(root, scene=None, output=None):
         if raw[:4]!=b'glTF' or kind!=0x4e4f534a:raise ValueError('Invalid GLB')
         gltf=json.loads(raw[20:20+length].decode('utf-8'))
         inventory=[{'index':i,'name':n.get('name',''),'children':n.get('children',[]),'mesh':n.get('mesh')} for i,n in enumerate(gltf.get('nodes',[]))]
-        devices,device_sources=load_scene_devices(folder,manifest,gltf)
+        devices,device_sources=load_scene_devices(folder,manifest,gltf,snapshots)
         sorting_station=validate_sorting_station(manifest,devices)
         bind_position_targets(manifest,devices)
         inputs={manifest['process']:digest(source),manifest['goal']:digest(confined(folder,manifest['goal'])),'scene.json':digest(folder/'scene.json'),**device_sources};blockers=[]
@@ -196,7 +205,7 @@ def build(root, scene=None, output=None):
             if set(n['arguments'])-set(args) or {k for k,p in args.items() if p.get('required')}-set(n['arguments']):raise ValueError('Behavior arguments differ')
             calls.append({'node':n['id'],'device':id,'behavior':n['behavior'],'experimental':experimental})
             if experimental:blockers.append({'code':'EXPERIMENTAL_CONTRACT_NOT_ADMITTED','device':id})
-        validate_inputs(ir,devices,goal)
+        validate_inputs(ir,devices,goal,manifest.get("runtime_profile"))
         bundle={'schema_version':'scene-bundle/0.1','id':manifest['id'],'name':manifest['name'],'model_sha256':manifest['model_sha256'],
                 'model_url':'/scene/'+folder.name+'/'+quote(manifest['model'],safe='/'),'source_hashes':inputs,
                 'process':ir,'devices':list(devices.values()),'calls':calls,'nodes':inventory,'blockers':blockers,'executable':False,

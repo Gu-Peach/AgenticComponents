@@ -1,5 +1,6 @@
 /** 组装仓储场景的输送带、滑轨、升降台和货架库存，将 DSL 请求与轴运动、物料交接及格位预留关联起来。 */
 
+import { getDeviceModule } from "@/devices/registry";
 import { Vector3 } from "three";
 import type { CompiledSceneRuntime } from "@/contracts/scene-execution";
 import type {
@@ -10,15 +11,13 @@ import type {
 import type { BodyPose } from "@/contracts/physics";
 import type { ConditionContext } from "@/contracts/conditions";
 import type { DeviceActionPort } from "@/runtime/adapters/scene/DeviceActionPort";
-import { PositionTransportAdapter } from "@/runtime/adapters/scene/PositionTransportAdapter";
-import { LinearRailSceneAdapter } from "@/runtime/adapters/scene/LinearRailSceneAdapter";
-import {
+import type { PositionTransportAdapter } from "@/devices/conveyor/behavior";
+import type {
   LiftSceneAdapter,
-  transferFields,
-  type TransferRequest,
-} from "@/runtime/adapters/scene/LiftSceneAdapter";
+  TransferRequest,
+} from "@/devices/lift_table/behavior";
 import { DeviceMountService } from "@/runtime/services/DeviceMountService";
-import { StorageRackRuntime } from "@/runtime/services/StorageRackRuntime";
+import type { StorageRackRuntime } from "@/devices/storage_rack/behavior";
 import { createJoltBackend } from "@/runtime/physics/jolt/JoltPhysicsBackend";
 import { SceneRuntimeProgram } from "@/runtime/engine/SceneRuntimeProgram";
 import { SignalRegistry } from "@/runtime/signals/SignalRegistry";
@@ -84,7 +83,12 @@ export async function assembleWarehouseRuntime(
           ] as const,
       ),
     );
-    const storage = new StorageRackRuntime(
+    const supply = getDeviceModule("material_source_station").createSupply(
+      physics,
+    );
+    const liftDrivers = new Map<string, LiftSceneAdapter>();
+    const liftModule = getDeviceModule("lift_table");
+    const storage = getDeviceModule("storage_rack").createInventory(
       new Set(
         [...config.locations]
           .filter(([, l]) => l.kind === "slot")
@@ -178,10 +182,20 @@ export async function assembleWarehouseRuntime(
     };
     for (const m of mounts) {
       drivers.push(
-        new LinearRailSceneAdapter(sceneId, runId, m, config.locations),
+        getDeviceModule("linear_rail").createDriver(
+          sceneId,
+          runId,
+          m,
+          config.locations,
+        ),
       );
-      drivers.push(
-        new LiftSceneAdapter(sceneId, runId, m, config, physics, {
+      const liftDriver = liftModule.createDriver(
+        sceneId,
+        runId,
+        m,
+        config,
+        physics,
+        {
           validate: transferValidation,
           begin: (t) => {
             transferValidation(t);
@@ -206,11 +220,13 @@ export async function assembleWarehouseRuntime(
                 );
             owners.set(t.material, t.target);
           },
-        }),
+        },
       );
+      liftDrivers.set(liftDriver.id, liftDriver);
+      drivers.push(liftDriver);
     }
     for (const [id, c] of config.conveyors) {
-      const belt = new PositionTransportAdapter(
+      const belt = getDeviceModule("conveyor").createSceneDriver(
         {
           sceneId,
           runId,
@@ -295,10 +311,8 @@ export async function assembleWarehouseRuntime(
         };
       }
       const transfers = Object.fromEntries(
-        drivers.flatMap((d) =>
-          d instanceof LiftSceneAdapter && d.transfer
-            ? [[d.id, d.transfer.snapshot()]]
-            : [],
+        [...liftDrivers.values()].flatMap((d) =>
+          d.transfer ? [[d.id, d.transfer.snapshot()]] : [],
         ),
       );
       const state: WorldState = {
@@ -354,7 +368,7 @@ export async function assembleWarehouseRuntime(
           );
           if (!blocked && belts.get(entry.owner)!.isStopped()) {
             const m = config.materials.get(job.material)!;
-            physics.activateBodies!([
+            supply.present([
               {
                 id: m.body,
                 pose: {
@@ -410,7 +424,7 @@ export async function assembleWarehouseRuntime(
         base = ["device/" + r.device];
       if (m) base.push("device/" + m.config.rail, "device/" + m.config.lift);
       if (r.payload) {
-        const t = transferFields(r.device, r);
+        const t = liftModule.transferFields(r.device, r);
         base.push(
           "material/" + t.material,
           "location/" + t.source,
@@ -435,7 +449,7 @@ export async function assembleWarehouseRuntime(
       if (m) {
         if (!w.mounts[m.config.lift]?.stopped) return false;
         if (r.payload) {
-          const t = transferFields(r.device, r),
+          const t = liftModule.transferFields(r.device, r),
             source = config.locations.get(t.source),
             target = config.locations.get(t.target);
           if (
@@ -584,7 +598,7 @@ export async function assembleWarehouseRuntime(
                 behavior: call.behavior,
                 payload: p,
               } as ActionRequest;
-              transferFields(call.device, r);
+              liftModule.transferFields(call.device, r);
             } else if (p !== undefined)
               throw new Error("Unexpected action payload");
           },
@@ -666,17 +680,16 @@ export async function assembleWarehouseRuntime(
     )
       throw new Error("Initial material support not confirmed");
     // Conveyor-specific observations are not consumed by this profile; discard them each tick.
-    for (const d of drivers)
-      if (d instanceof PositionTransportAdapter) {
-        const after = d.afterPhysics.bind(d),
-          drain = d.drainObservations.bind(d);
-        d.afterPhysics = (dt, tick) => {
-          after(dt, tick);
-          drain();
-        };
+    for (const d of belts.values()) {
+      const after = d.afterPhysics.bind(d),
+        drain = d.drainObservations.bind(d);
+      d.afterPhysics = (dt, tick) => {
+        after(dt, tick);
         drain();
-        d.drainObservations = () => [];
-      }
+      };
+      drain();
+      d.drainObservations = () => [];
+    }
     return {
       compiled,
       program: new SceneRuntimeProgram(

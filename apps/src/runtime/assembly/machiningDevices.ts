@@ -1,18 +1,11 @@
 /** 为托盘加工线创建输送带和机械臂适配器，生成原槽与机床加工点之间的抓放动作，并核对工件的落点和支承。 */
 
+import { getDeviceModule } from "@/devices/registry";
 import { Quaternion, Vector3 } from "three";
 import type { PhysicsPort } from "@/contracts/physics";
 import type { CompiledSceneRuntime } from "@/contracts/scene-execution";
 import type { ActionRequest } from "@/contracts/scheduler";
 import type { TransportTarget } from "@/runtime/adapters/scene/PositionTransportAdapter";
-import { RobotSceneAdapter } from "@/runtime/adapters/scene/RobotSceneAdapter";
-import {
-  bodyOf,
-  carrierPlacement,
-  createConveyorGroup,
-  homeAction,
-  topPickAndPlace,
-} from "./palletDeviceActions";
 
 function location(
   c: CompiledSceneRuntime,
@@ -21,7 +14,7 @@ function location(
   target: string,
 ) {
   const machining = c.machining!;
-  const load = bodyOf(c, material);
+  const load = getDeviceModule("workpiece").bodyOf(c, material);
   const pallet = machining.pallets.find((p) =>
     p.items.some((i) => i.material === material),
   );
@@ -40,7 +33,7 @@ function location(
     throw new Error(
       "Material does not own the requested pallet slot: " + target,
     );
-  const { center, rotation } = carrierPlacement(
+  const { center, rotation } = getDeviceModule("workpiece").carrierPlacement(
     c,
     physics,
     pallet.id,
@@ -50,7 +43,7 @@ function location(
   return {
     center,
     rotation: rotation.toArray(),
-    support: bodyOf(c, pallet.id).id,
+    support: getDeviceModule("workpiece").bodyOf(c, pallet.id).id,
   };
 }
 
@@ -62,7 +55,7 @@ export function fitsMachiningLocation(
   target: string,
   requireContact = false,
 ) {
-  const load = bodyOf(c, material);
+  const load = getDeviceModule("workpiece").bodyOf(c, material);
   if (!physics.isBodyActive?.(load.id) || physics.hasGraspForBody?.(load.id))
     return false;
   const destination = location(c, physics, material, target);
@@ -95,15 +88,21 @@ export function createMachiningDevices(
   },
 ) {
   const m = c.machining!;
-  const { belt, cfg } = createConveyorGroup(sceneId, runId, c, physics, {
-    leader: m.leader,
-    members: c.leaders.get(m.leader)!,
-    eligible: m.pallets.map((p) => p.id),
-    targetLocations: m.targets,
-    supplySupports: [c.sourceDevice + "/surface"],
-    palletExit: m.exitTarget,
-    releasePallet: hooks.releasePallet,
-  });
+  const { belt, cfg } = getDeviceModule("conveyor").createGroup(
+    sceneId,
+    runId,
+    c,
+    physics,
+    {
+      leader: m.leader,
+      members: c.leaders.get(m.leader)!,
+      eligible: m.pallets.map((p) => p.id),
+      targetLocations: m.targets,
+      supplySupports: [c.sourceDevice + "/surface"],
+      palletExit: m.exitTarget,
+      releasePallet: hooks.releasePallet,
+    },
+  );
   const base = c.robots.get(m.robot)!;
   const fields = (r: ActionRequest) => {
     const payload = r.payload as {
@@ -114,7 +113,7 @@ export function createMachiningDevices(
       throw new Error("Unbound machining robot action");
     return payload.fields;
   };
-  const robot = new RobotSceneAdapter(
+  const robot = getDeviceModule("robot_arm").createSceneDriver(
     sceneId,
     runId,
     base,
@@ -122,7 +121,10 @@ export function createMachiningDevices(
     (request) => {
       const p = fields(request);
       if (request.behavior === "move_to_pose")
-        return homeAction(base, c.devices.get(m.robot)!.locations[p.target]);
+        return getDeviceModule("robot_arm").homeAction(
+          base,
+          c.devices.get(m.robot)!.locations[p.target],
+        );
       if ((p.target === m.point) === (p.source === m.point))
         throw new Error(
           "Machining transfer requires a pallet slot and a work point",
@@ -131,10 +133,10 @@ export function createMachiningDevices(
         throw new Error(
           "Machining part has not settled at its declared source: " + p.source,
         );
-      const load = bodyOf(c, p.material),
+      const load = getDeviceModule("workpiece").bodyOf(c, p.material),
         pose = physics.readBody!(load.id);
       const target = location(c, physics, p.material, p.target);
-      return topPickAndPlace(
+      return getDeviceModule("robot_arm").topPickAndPlace(
         base,
         p.material,
         load,

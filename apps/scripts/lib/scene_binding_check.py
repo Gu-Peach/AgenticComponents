@@ -5,7 +5,7 @@ class Quantity:
     def __init__(self,value,unit):self.value,self.unit=value,unit
 class DynamicInventory(list):pass
 
-def validate_inputs(ir,devices,goal):
+def validate_inputs(ir,devices,goal,runtime_profile=None):
     task=ir['task'];locations={key for d in devices.values() for key in d['locations']}
     materials={j['material'] for j in task['jobs']}|{j['material'] for p in task['pallets'] for j in p['items']}
     subjects=materials|{p['id'] for p in task['pallets']}
@@ -96,7 +96,11 @@ def validate_inputs(ir,devices,goal):
                 if p['type']=='recipe_ref':need(value in device.get('recipes',{}),'Unknown device recipe')
             if 'payload' in n:
                 payload=n['payload'];key=payload['args'][0]['value'];record=device['command_payloads'].get(key)
-                need(record and record['instance']==id and record['behavior']==n['behavior'],'Payload redirects behavior')
+                allowed={n['behavior']}
+                if runtime_profile=='robot-handoff@1' and contract.get('device_type')=='robot_arm' and n['behavior']=='pick_and_place':
+                    # Explicit existing signatures choose the acquire/handoff or held/place phase.
+                    allowed.update(b['behavior_id'] for b in bs if b.get('behavior_id') in ('pick_and_handoff','place_held_material') and key==id+'.'+b['behavior_id'])
+                need(record and record['instance']==id and record['behavior'] in allowed,'Payload redirects behavior')
                 need(set(record['fields'])==set(payload['kwargs']),'Payload fields differ')
                 fields={key:evaluate(expr,env) for key,expr in payload['kwargs'].items()}
                 for key,typ in record['fields'].items():

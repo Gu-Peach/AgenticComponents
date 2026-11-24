@@ -1,3 +1,4 @@
+import { handoffCallBehavior } from "@/contracts/robot-handoff";
 import type { SceneBundle } from "@/contracts/scene-package";
 import { decodeProcessNode, type ProcessNode } from "@/contracts/process-ir";
 import type { SceneLadder, SceneLadderRung } from "@/contracts/scene-ladder";
@@ -58,7 +59,9 @@ export function compileSceneLadder(bundle: SceneBundle): SceneLadder {
       rung.conditions = compileConditions(
         rung.device,
         device.contract,
-        rung.behavior,
+        bundle.runtime_profile === "robot-handoff@1" && n.kind === "invoke"
+          ? handoffCallBehavior(n)
+          : rung.behavior,
       );
     }
     rungs.push(rung);
