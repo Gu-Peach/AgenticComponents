@@ -1,8 +1,8 @@
 {
   "schema_version": "ac-flow-task/0.2",
-  "id": "batch_goal",
+  "id": "indexed_welding_goal",
   "scene_id": "S11",
-  "description": "四件装夹焊接与转位下料",
+  "description": "四件依次由人员上料、带载正向分度、焊枪对接加工、再次正向分度、人员送回小车。",
   "expected": {
     "material_ids": [
       "M01",
@@ -41,8 +41,12 @@
       "kind": "required_operations",
       "recipes": {
         "welding": {
-          "station": "W1",
-          "evidence": "request_material_recipe_matching_operation_record"
+          "station": "R1",
+          "evidence": "matching_tool_workpiece_interfaces_and_operation_receipt",
+          "tool": "torch",
+          "interface": "weld",
+          "table": "T1",
+          "point": "T1.slot1"
         }
       },
       "rule": "each_job_declared_recipe_or_all_route_recipes"

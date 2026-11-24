@@ -2,18 +2,33 @@
   "schema_version": "scene-device/0.2",
   "instance_id": "T1",
   "contract_ref": "../contracts/rotary_table.json",
-  "parameters": {
-    "position_mode": "angle"
-  },
   "node_binding": {
-    "status": "unresolved"
+    "status": "bound",
+    "node": "Indexing_Table(center)",
+    "model_sha256": "527ddb9592f311dda119b1a3006fffff540999a5bec21fee1b3ee3b5dc0bba11"
   },
+  "parameters": {},
   "locations": {
     "T1.slot1": {
-      "geometry_status": "pending_calibration"
-    },
-    "T1.slot2": {
-      "geometry_status": "pending_calibration"
+      "frame": "scene_world_m",
+      "position": [
+        -0.47999998927116394,
+        0.7000002513825834,
+        4.1962931823791294e-08
+      ],
+      "reference": "fixture_top_center_at_home",
+      "status": "mesh_bound_candidate"
+    }
+  },
+  "model": {
+    "simulation": {
+      "rotor_node": "Link1_005n",
+      "support_node": "Mesh_03dg",
+      "axis_world": [
+        0,
+        1,
+        0
+      ]
     }
   }
 }

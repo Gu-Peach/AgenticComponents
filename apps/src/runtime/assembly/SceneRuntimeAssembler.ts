@@ -2,6 +2,7 @@ import { Quaternion, Vector3 } from "three";
 import { assembleWarehouseRuntime } from "./WarehouseRuntimeAssembler";
 import { assembleLoadingRuntime } from "./LoadingRuntimeAssembler";
 import { assembleHandoffRuntime } from "./HandoffRuntimeAssembler";
+import { assembleIndexedProcessingRuntime } from "./IndexedProcessingRuntimeAssembler";
 import type { CompiledSceneRuntime, Vec3 } from "@/contracts/scene-execution";
 import type { ActionRequest, ActionBinding } from "@/contracts/scheduler";
 import type {
@@ -81,6 +82,8 @@ export async function assembleSceneRuntime(
   compiled: CompiledSceneRuntime,
   options: { conditionMode?: ConditionDiagnostics["mode"] } = {},
 ): Promise<AssembledScene> {
+  if (compiled.indexedProcessing)
+    return assembleIndexedProcessingRuntime(sceneId, runId, compiled);
   if (compiled.warehouse)
     return assembleWarehouseRuntime(sceneId, runId, compiled);
   if (compiled.loading || compiled.machining)

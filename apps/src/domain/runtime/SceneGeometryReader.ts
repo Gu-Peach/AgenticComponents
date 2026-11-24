@@ -112,6 +112,12 @@ export class SceneGeometryReader {
     this.matrices.set(i, result);
     return result;
   }
+  nodePose(index: number) {
+    const position = new Vector3(),
+      rotation = new Quaternion();
+    this.world(index).decompose(position, rotation, new Vector3());
+    return { position: position.toArray(), rotation: rotation.toArray() };
+  }
   convexParts(
     indices: readonly number[],
     center: readonly number[],

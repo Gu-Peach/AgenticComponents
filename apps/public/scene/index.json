@@ -93,12 +93,12 @@
     },
     {
       "id": "S11",
-      "name": "S11：四件装夹焊接与转位下料",
+      "name": "S11：人工搬运与转台分度焊接",
       "bundleUrl": "/scene/S11/.generated/scene.bundle.json",
-      "bundleSha256": "16fd53943c3f9c8fd92c33875782c2db4392aaca3b88d4a500cd91d944094e88",
-      "deviceCount": 8,
+      "bundleSha256": "2c6622d6e801ba42d9eba02f4b4b61fec4c424c8309bcc71d1dc029add5bbeec",
+      "deviceCount": 5,
       "nodeCount": 991,
-      "blockerCount": 19
+      "blockerCount": 8
     },
     {
       "id": "S12",

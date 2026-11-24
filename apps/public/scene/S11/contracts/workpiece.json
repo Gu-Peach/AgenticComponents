@@ -113,7 +113,95 @@
       "description": "是否允许作为合法堆叠对象"
     }
   },
-  "interfaces": [],
+  "interfaces": [
+    {
+      "interface_id": "handle",
+      "name": "搬运吸附点",
+      "local_frame": {
+        "position": [
+          -0.006725,
+          0.0574991,
+          0.0153417
+        ],
+        "forward": [
+          0,
+          1,
+          0
+        ],
+        "up": [
+          0,
+          0,
+          1
+        ]
+      },
+      "capabilities": {
+        "snap": {
+          "role": "grasp_target",
+          "accepts": [
+            "human_gripper"
+          ]
+        }
+      }
+    },
+    {
+      "interface_id": "weld",
+      "name": "焊接加工点",
+      "local_frame": {
+        "position": [
+          0.1423738,
+          0.109999,
+          -0.1180373
+        ],
+        "forward": [
+          0,
+          1,
+          0
+        ],
+        "up": [
+          0,
+          0,
+          1
+        ]
+      },
+      "capabilities": {
+        "snap": {
+          "role": "process_target",
+          "accepts": [
+            "weld_tool"
+          ]
+        }
+      }
+    },
+    {
+      "interface_id": "base",
+      "name": "工装承载面",
+      "local_frame": {
+        "position": [
+          -0.03413228912355848,
+          -1.1359534729526999e-06,
+          -0.02038335754610543
+        ],
+        "forward": [
+          0,
+          -1,
+          0
+        ],
+        "up": [
+          0,
+          0,
+          1
+        ]
+      },
+      "capabilities": {
+        "snap": {
+          "role": "workpiece",
+          "accepts": [
+            "fixture"
+          ]
+        }
+      }
+    }
+  ],
   "signal_ports": [
     {
       "port_id": "picked",
@@ -618,7 +706,7 @@
     "coordinate_system": {
       "up_axis": "Y",
       "length_unit": "m",
-      "origin": "material_bottom_center"
+      "origin": "glb_material_root"
     },
     "material_class": "workpiece",
     "geometry": {
@@ -643,21 +731,32 @@
     "process_geometry": {
       "regions": [
         {
-          "region_id": "grasp_surface",
-          "placement_rule": "top_center_from_geometry"
-        },
-        {
-          "region_id": "bottom",
-          "placement_rule": "bottom_center_from_geometry"
+          "region_id": "weld",
+          "placement_rule": "mesh_036g_top_face"
         }
       ]
     },
     "grasping": {
+      "preferred_grasp": "handle",
       "allowed_grasp_regions": [
-        "grasp_surface"
+        "handle"
       ],
-      "preferred_grasp": "top",
-      "frame_source": "process_geometry"
+      "frame_source": "material_local_m",
+      "frames": {
+        "handle": {
+          "position_m": [
+            -0.006725,
+            0.0574991,
+            0.0153417
+          ],
+          "approach_axis": [
+            0,
+            -1,
+            0
+          ],
+          "reference": "mesh_038g_top_face"
+        }
+      }
     },
     "placement": {
       "stable_regions": [
@@ -665,7 +764,13 @@
       ],
       "can_stack_param": "can_stack"
     },
-    "movement_role": "passive_subject"
+    "movement_role": "passive_subject",
+    "processing": {
+      "initial_state": "raw",
+      "finished_state": "finished",
+      "interface": "weld",
+      "recipe": "welding"
+    }
   },
   "runtime_contract": {
     "observation_definitions": {

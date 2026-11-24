@@ -5,6 +5,7 @@ import type {
   VisualBodyBinding,
 } from "@/contracts/scene-execution";
 import type { SceneVisualSnapshot } from "@/runtime/engine/SceneRuntimeProgram";
+import { bindCarryArm } from "./bindCarryArm";
 
 type VisualFrame = {
   previous: SceneVisualSnapshot;
@@ -29,7 +30,11 @@ export function bindSceneVisuals(
   model: Object3D,
   config: Pick<
     CompiledSceneRuntime,
-    "visualBodies" | "robots" | "robotNodes" | "hiddenMeshes"
+    | "visualBodies"
+    | "robots"
+    | "robotNodes"
+    | "hiddenMeshes"
+    | "indexedProcessing"
   >,
 ) {
   model.updateWorldMatrix(true, true);
@@ -42,9 +47,13 @@ export function bindSceneVisuals(
   // Capture GLB rest transforms before the original meshes become children of the first body.
   const inverseModel = model.matrixWorld.clone().invert();
   const templates = new Map<number, { node: Object3D; sceneMatrix: Matrix4 }>();
+  const visualNodes = (binding: VisualBodyBinding) =>
+    binding.rootNodeIndex === undefined
+      ? binding.meshes
+      : [binding.rootNodeIndex];
   for (const binding of config.visualBodies) {
     for (const index of [
-      ...binding.meshes,
+      ...visualNodes(binding),
       ...(binding.finishedVariant?.meshes ?? []),
     ]) {
       const node = nodes.get(index);
@@ -87,7 +96,7 @@ export function bindSceneVisuals(
     inverse.compose(group.position, group.quaternion, unit).invert();
     const raw = binding.finishedVariant ? new Group() : group;
     if (raw !== group) group.add(raw);
-    for (const index of binding.meshes) {
+    for (const index of visualNodes(binding)) {
       const template = templates.get(index);
       if (!template) continue;
       const node = binding.future ? template.node.clone(true) : template.node;
@@ -135,6 +144,8 @@ export function bindSceneVisuals(
   }
   for (const binding of config.visualBodies)
     if (!binding.future) attach(binding);
+  const character = config.indexedProcessing;
+  const arm = character && bindCarryArm(model, nodes, character.humanArm);
 
   const robots = [...config.robots].map(([id, robot]) => ({
     key: id + "/robot_state",
@@ -221,6 +232,15 @@ export function bindSceneVisuals(
         }
       }
     }
+    if (arm && character) {
+      const hand = world?.bodies[character.handBody]?.pose,
+        prior = previousWorld?.bodies[character.handBody]?.pose;
+      if (hand) {
+        const target = endPosition.fromArray(hand.position);
+        if (prior) target.lerp(position.fromArray(prior.position), 1 - blend);
+        arm.apply(target);
+      }
+    }
     for (const robot of robots) {
       const currentQ = reading<{ q: number[] }>(current, robot.key)?.q;
       if (!currentQ) continue;
@@ -244,6 +264,7 @@ export function bindSceneVisuals(
     }
   }
   function dispose() {
+    arm?.reset();
     for (const [node, visibility] of hidden) node.visible = visibility;
     for (const { node, parent, local } of originals) {
       if (parent) parent.add(node);

@@ -73,7 +73,8 @@ export function SceneRunPanel({ scene }: { scene: ScenePackageInstance }) {
           (controller.configuration(scene.id)?.warehouse ||
             controller.configuration(scene.id)?.loading ||
             controller.configuration(scene.id)?.machining ||
-            controller.configuration(scene.id)?.handoff) && (
+            controller.configuration(scene.id)?.handoff ||
+            controller.configuration(scene.id)?.indexedProcessing) && (
             <button onClick={() => act(() => controller.discard(scene.id))}>
               放弃本次仿真并恢复初态
             </button>

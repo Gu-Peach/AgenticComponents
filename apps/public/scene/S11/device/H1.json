@@ -1,0 +1,19 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "H1",
+  "contract_ref": "../contracts/human_operator.json",
+  "node_binding": {
+    "status": "bound",
+    "node": "Human",
+    "model_sha256": "527ddb9592f311dda119b1a3006fffff540999a5bec21fee1b3ee3b5dc0bba11"
+  },
+  "parameters": {},
+  "locations": {},
+  "model": {
+    "simulation": {
+      "hand_node": "RWrist_00Wn",
+      "shoulder_node": "RArm_00Sn",
+      "elbow_node": "RElbow_00Un"
+    }
+  }
+}

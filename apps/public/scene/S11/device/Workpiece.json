@@ -1,0 +1,19 @@
+{
+  "schema_version": "scene-device/0.2",
+  "instance_id": "Workpiece",
+  "contract_ref": "../contracts/workpiece.json",
+  "node_binding": {
+    "status": "bound",
+    "node": "Workpiece",
+    "model_sha256": "527ddb9592f311dda119b1a3006fffff540999a5bec21fee1b3ee3b5dc0bba11"
+  },
+  "parameters": {
+    "height_m": 0.11000023704094397,
+    "length_m": 0.4928217205519587,
+    "width_m": 0.8350036815925606,
+    "mass_kg": 1,
+    "shape": "box"
+  },
+  "locations": {},
+  "asset_kind": "material_prefab"
+}

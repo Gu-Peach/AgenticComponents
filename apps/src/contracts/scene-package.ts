@@ -65,6 +65,7 @@ export const sceneBundleSchema = z
         "warehouse.virtual-linear@1",
         "robot-handoff@1",
         "pallet-machining@1",
+        "human-indexed-processing@1",
       ])
       .optional(),
     initial: z.record(z.string(), z.unknown()).optional(),

@@ -72,6 +72,8 @@ export interface VisualBodyBinding {
   meshes: number[];
   initial: BodyPose;
   future: boolean;
+  /** Keep this entire articulated hierarchy together when adopting the real model. */
+  rootNodeIndex?: number;
   finishedVariant?: { meshes: number[]; initial: BodyPose };
 }
 export interface MachiningConfig {
@@ -91,6 +93,7 @@ export interface SceneReadiness {
   blockers: string[];
 }
 export interface CompiledSceneRuntime {
+  indexedProcessing?: import("./indexed-processing").IndexedProcessingConfig;
   machining?: MachiningConfig;
   hiddenMeshes?: number[];
   handoff?: import("./robot-handoff").HandoffConfig;

@@ -3,11 +3,23 @@
   "instance_id": "F1",
   "contract_ref": "../contracts/material_source_station.json",
   "node_binding": {
-    "status": "unresolved"
+    "status": "bound",
+    "node": "Pallet_Trolley",
+    "model_sha256": "527ddb9592f311dda119b1a3006fffff540999a5bec21fee1b3ee3b5dc0bba11"
+  },
+  "parameters": {
+    "product_spec": "Workpiece"
   },
   "locations": {
     "F1.work": {
-      "geometry_status": "pending_calibration"
+      "frame": "scene_world_m",
+      "position": [
+        -3.3452296623781557,
+        0.9076874339352372,
+        0.03706913486979957
+      ],
+      "reference": "material_bottom_center_on_trolley",
+      "status": "mesh_bound_candidate"
     }
   }
 }

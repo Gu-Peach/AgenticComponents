@@ -104,7 +104,18 @@ def validate_inputs(ir,devices,goal):
                         material=devices.get(fields.get('material'),{})
                         grasping=material.get('contract',{}).get('type_specific_contract',{}).get('grasping',{})
                         need(isinstance(fields[key],str) and fields[key] in grasping.get('frames',{}),'Unknown material grasp frame')
+                    elif typ in ('tool_interface_ref','process_interface_ref'):
+                        owner=device if typ=='tool_interface_ref' else devices.get(fields.get('material'),{})
+                        matches=[port for port in owner.get('contract',{}).get('interfaces',[]) if port.get('interface_id')==fields[key]]
+                        need(len(matches)==1,'Unknown or ambiguous interface on '+str(owner.get('instance_id'))+': '+str(fields[key]))
                     else:check(fields[key],typ)
+                if 'tool_interface_ref' in record['fields'].values() and 'process_interface_ref' in record['fields'].values():
+                    def interface(owner,typ):
+                        key=next(k for k,v in record['fields'].items() if v==typ)
+                        return next(p['capabilities']['snap'] for p in owner['contract']['interfaces'] if p['interface_id']==fields[key])
+                    tool=interface(device,'tool_interface_ref')
+                    port=interface(devices[fields['material']],'process_interface_ref')
+                    need(tool['role'] in port['accepts'] and port['role'] in tool['accepts'],'Tool and material process interfaces are incompatible')
                 if 'receiver' in fields and record['fields']['receiver']=='robot_ref':
                     need(fields['receiver']!=id,'Handoff receiver must differ from giver')
                 if {'giver_grasp','receiver_grasp'}<=fields.keys():

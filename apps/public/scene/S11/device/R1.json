@@ -3,15 +3,125 @@
   "instance_id": "R1",
   "contract_ref": "../contracts/robot_arm.json",
   "node_binding": {
-    "status": "unresolved"
+    "status": "bound",
+    "node": "robot(ARC-2000i)",
+    "model_sha256": "527ddb9592f311dda119b1a3006fffff540999a5bec21fee1b3ee3b5dc0bba11"
+  },
+  "parameters": {
+    "ik_position_tolerance_m": 0.004
   },
   "locations": {
-    "R1.tool": {
-      "geometry_status": "pending_calibration"
-    },
     "R1.home": {
-      "geometry_status": "pending_calibration",
-      "role": "outside_all_shared_motion_zones"
+      "node": "Link2_00In",
+      "frame": "flange_pose_scene_world_m",
+      "reference": "robot_rest_pose",
+      "status": "candidate_rest_pose"
+    }
+  },
+  "model": {
+    "calibration": {
+      "status": "pending",
+      "source": "六个轴依 ARC-2000i 的几何枢轴与腕部串联关系取候选关节局部轴；焊枪尖取实测工具末端节点。"
+    },
+    "urdf": {
+      "joints": [
+        {
+          "nodeName": "Axis1_009n",
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "limit": null
+        },
+        {
+          "nodeName": "Axis2_00An",
+          "axis": [
+            0,
+            0,
+            1
+          ],
+          "limit": null
+        },
+        {
+          "nodeName": "Axis3_00Bn",
+          "axis": [
+            0,
+            0,
+            1
+          ],
+          "limit": null
+        },
+        {
+          "nodeName": "Axis4_00Cn",
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "limit": null
+        },
+        {
+          "nodeName": "Axis5_00Dn",
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "limit": null
+        },
+        {
+          "nodeName": "Axis6_00En",
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "limit": null
+        }
+      ]
+    },
+    "tooling": {
+      "flange_node_name": "mountplate_00Fn",
+      "tcp_local_frame": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation_quaternion": [
+          0,
+          0,
+          0,
+          1
+        ]
+      },
+      "simulation_tool": true,
+      "tcp_node_name": "Link2_00In",
+      "approach_axis_local": [
+        0,
+        1,
+        0
+      ],
+      "process_interface": {
+        "id": "torch",
+        "frame": "tcp_local_m",
+        "recipe": "welding",
+        "match": "opposed_surface_normal"
+      }
+    },
+    "gripper": {
+      "type": "virtual_fixed_grasp",
+      "capture_radius_m": 0.06,
+      "max_relative_speed_mps": 0.08,
+      "max_payload_param": "max_payload_kg",
+      "tool_size_m": [
+        0.025,
+        0.025,
+        0.025
+      ],
+      "constraint_tolerance_m": 0.015,
+      "orientation_policy": "spherical_virtual_capture"
     }
   }
 }

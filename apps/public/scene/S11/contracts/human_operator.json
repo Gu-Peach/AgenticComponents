@@ -1,0 +1,368 @@
+{
+  "contract_version": "1.1",
+  "schema_type": "DeviceSpec",
+  "schema_id": "standard.human_operator",
+  "device_spec_id": "standard.human_operator",
+  "version": "1.0.0",
+  "device_type": "human_operator",
+  "display_name": "人工搬运员",
+  "description": "移动至抓取口，吸附同一件物料，搬至目标支承面后释放并撤离。",
+  "asset": {
+    "model_format": "glb",
+    "model_key": "../Robot Welding cell/Robot Welding cell.glb",
+    "sha256": "527ddb9592f311dda119b1a3006fffff540999a5bec21fee1b3ee3b5dc0bba11"
+  },
+  "params_schema": {
+    "travel_speed_mps": {
+      "type": "number",
+      "required": true,
+      "default": 1,
+      "unit": "m/s",
+      "min": 0.01,
+      "max": 4,
+      "mutability": "stopped_only",
+      "description": "人物搬运平移速度"
+    },
+    "lift_height_m": {
+      "type": "number",
+      "required": true,
+      "default": 0.16,
+      "unit": "m",
+      "min": 0.015,
+      "max": 1,
+      "mutability": "stopped_only",
+      "description": "搬运时的抬升净距"
+    },
+    "position_tolerance_m": {
+      "type": "number",
+      "required": true,
+      "default": 0.012,
+      "unit": "m",
+      "min": 0.0005,
+      "max": 0.05,
+      "mutability": "stopped_only",
+      "description": "吸附与放置允许的位置误差"
+    }
+  },
+  "interfaces": [
+    {
+      "interface_id": "hand",
+      "name": "右手吸附点",
+      "local_frame": {
+        "position": [
+          0.005268146982747525,
+          0.7104844476897586,
+          0.2653434688320012
+        ],
+        "forward": [
+          0,
+          -1,
+          0
+        ],
+        "up": [
+          0,
+          0,
+          1
+        ]
+      },
+      "capabilities": {
+        "snap": {
+          "role": "human_gripper",
+          "accepts": [
+            "grasp_target"
+          ]
+        }
+      }
+    }
+  ],
+  "signal_ports": [
+    {
+      "port_id": "execute",
+      "direction": "input",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "signal_role": "request_latched",
+      "retention": "latched_until_ack_or_new_request",
+      "description": "提交本次加工请求"
+    },
+    {
+      "port_id": "request_id",
+      "direction": "input",
+      "value_type": "integer",
+      "plc_type": "DINT",
+      "signal_role": "request_parameter",
+      "retention": "latched_until_ack_or_new_request",
+      "description": "本轮加工请求号"
+    },
+    {
+      "port_id": "accepted",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request",
+      "description": "当前请求已接受"
+    },
+    {
+      "port_id": "busy",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state",
+      "description": "机床正在加工"
+    },
+    {
+      "port_id": "done",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request",
+      "description": "当前请求已完成且成品状态已提交"
+    },
+    {
+      "port_id": "result_id",
+      "direction": "output",
+      "value_type": "integer",
+      "plc_type": "DINT",
+      "signal_role": "result_latched",
+      "retention": "latched_until_ack_or_new_request",
+      "description": "本次结果对应的请求号"
+    },
+    {
+      "port_id": "error",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state",
+      "description": "加工、互锁或停止期间发生故障"
+    },
+    {
+      "port_id": "holding_material",
+      "direction": "output",
+      "value_type": "boolean",
+      "plc_type": "BOOL",
+      "signal_role": "continuous_state",
+      "retention": "sampled_state",
+      "description": "手部约束已吸附物料"
+    }
+  ],
+  "transport_behaviors": [
+    {
+      "behavior_id": "carry_material",
+      "display_name": "吸附搬运",
+      "behavior_type": "action",
+      "schedulable": true,
+      "executor_ref": "human_operator.carry_material@1",
+      "implementation_status": "implemented",
+      "arguments_schema": {},
+      "trigger": {
+        "description": "冻结请求身份、动作参数和载荷后，由调度器提交一次请求。",
+        "authority": "single_gateway_or_declared_continuous_writer"
+      },
+      "input_signals": [
+        "execute",
+        "request_id"
+      ],
+      "output_signals": [
+        "accepted",
+        "busy",
+        "done",
+        "result_id",
+        "error",
+        "holding_material"
+      ],
+      "condition_contract": {
+        "preconditions": [
+          {
+            "id": "ready",
+            "label": "指定物料位于来源且已支承，目标可用，转台处于装卸位且机器人已退位。",
+            "source": "observation",
+            "key": "carry_material.ready",
+            "equals": true
+          },
+          {
+            "id": "authorized",
+            "label": "请求已获得人员、物料与装卸位的互斥资源。",
+            "source": "authorization",
+            "key": "carry_material.authorized",
+            "equals": true
+          }
+        ],
+        "sustaining_conditions": [
+          {
+            "id": "sustaining",
+            "label": "吸附期间保持当前物料身份，装卸转台持续停稳。",
+            "source": "observation",
+            "key": "carry_material.sustaining",
+            "equals": true
+          }
+        ],
+        "missing_value_policy": "unknown_blocks_execution"
+      },
+      "completion_contract": {
+        "mode": "observed",
+        "description": "同一物料在目标完成交接，人员已释放物料并撤离。",
+        "checks": [
+          {
+            "id": "completion",
+            "label": "同一物料在目标完成交接，人员已释放物料并撤离。",
+            "source": "observation",
+            "key": "carry_material.completion",
+            "equals": true
+          }
+        ],
+        "timer_or_progress_is_success": false
+      }
+    }
+  ],
+  "type_specific_contract": {},
+  "runtime_contract": {
+    "observation_definitions": {
+      "carry_material.ready": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "implemented",
+        "signal_refs": [
+          "execute",
+          "request_id",
+          "accepted",
+          "busy",
+          "done",
+          "result_id",
+          "error",
+          "holding_material"
+        ],
+        "expression_ref": "carry_material.ready"
+      },
+      "carry_material.sustaining": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "implemented",
+        "signal_refs": [
+          "execute",
+          "request_id",
+          "accepted",
+          "busy",
+          "done",
+          "result_id",
+          "error",
+          "holding_material"
+        ],
+        "expression_ref": "carry_material.sustaining"
+      },
+      "carry_material.completion": {
+        "value_type": "boolean",
+        "provider": "behavior_adapter",
+        "implementation_status": "implemented",
+        "signal_refs": [
+          "execute",
+          "request_id",
+          "accepted",
+          "busy",
+          "done",
+          "result_id",
+          "error",
+          "holding_material"
+        ],
+        "expression_ref": "carry_material.completion"
+      }
+    },
+    "authorization_definitions": {
+      "carry_material.authorized": {
+        "value_type": "boolean",
+        "provider": "authorization_service",
+        "implementation_status": "implemented",
+        "signal_refs": [
+          "execute",
+          "request_id",
+          "accepted",
+          "busy",
+          "done",
+          "result_id",
+          "error",
+          "holding_material"
+        ],
+        "expression_ref": "carry_material.authorized"
+      }
+    },
+    "condition_model": {
+      "schema_version": "ac-condition/0.1",
+      "execution_mode": "declaration_only",
+      "unknown_policy": "three_valued_fail_closed",
+      "bindings": {},
+      "expressions": {
+        "carry_material.ready": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "carry_material.ready"
+          }
+        },
+        "carry_material.authorized": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "authorization",
+            "key": "carry_material.authorized"
+          }
+        },
+        "carry_material.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "carry_material.sustaining"
+          }
+        },
+        "carry_material.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "carry_material.completion"
+          }
+        }
+      }
+    }
+  },
+  "runtime_execution_contract": {
+    "signal_management": {
+      "owner": "simulation_engine",
+      "status": "pending_engine",
+      "namespace": "instance_id/port_id",
+      "definition_source": "signal_ports",
+      "spatial_binding": false,
+      "write_policy": "single_writer_per_input",
+      "plc_mapping": "instance_bindings",
+      "sampling": "simulation_step_snapshot",
+      "unknown_policy": "invalid_until_provider_ready"
+    },
+    "status": "implemented",
+    "protocol": {
+      "basis": "schema.md公共请求协议",
+      "acceptance": "same request identity and frozen parameters",
+      "completion": "matching result_id plus observed completion checks",
+      "single_command_entry": true
+    },
+    "payload_binding_status": "requires_explicit_model_adapter",
+    "calibration_required": true,
+    "real_execution_available": false,
+    "raw_api_and_plc_simultaneous_writers": false,
+    "payload_templates": {
+      "carry_material": {
+        "fields": {
+          "material": "material_ref",
+          "source": "location_ref",
+          "target": "location_ref",
+          "grasp": "grasp_frame_ref"
+        },
+        "status": "candidate_profile_binding",
+        "target_payload_schema": null
+      }
+    }
+  }
+}

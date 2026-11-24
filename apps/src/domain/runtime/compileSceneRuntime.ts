@@ -6,6 +6,7 @@ import {
 import { compileWarehouseRuntime } from "./compileWarehouseRuntime";
 import { compileHandoffManifest, materialPose } from "./compileHandoffManifest";
 import { compileMachiningManifest } from "./compileMachiningManifest";
+import { compileIndexedProcessing } from "./compileIndexedProcessing";
 import { PropertyBinding, Quaternion, Vector3 } from "three";
 import type { SceneBundle } from "@/contracts/scene-package";
 import type {
@@ -91,6 +92,43 @@ export function compileSceneRuntime(
       blockers.push(`${d.instance_id}: node binding unresolved`);
   }
   const root = decodeProcessNode(bundle.process.body);
+  if (bundle.runtime_profile === "human-indexed-processing@1") {
+    if (mode !== "validation")
+      throw new Error("Indexed processing requires candidate simulation");
+    if (blockers.length) throw new Error(blockers.join("\n"));
+    const leaders = new Map<string, string[]>();
+    const geometry = new SceneGeometryReader(modelBytes);
+    const world = compilePalletWorld(
+      bundle,
+      geometry,
+      devices,
+      mode,
+      warnings,
+      leaders,
+      new Map(),
+      [],
+    );
+    const profile = compileIndexedProcessing(
+      bundle,
+      devices,
+      geometry,
+      world,
+      goal,
+      root,
+    );
+    warnings.push(
+      "候选仿真采用人物直线搬运与虚拟吸附。机器人按加工端口位姿执行定时工步。",
+    );
+    return {
+      bundle,
+      root,
+      devices,
+      ...world,
+      ...profile,
+      leaders,
+      readiness: { mode, warnings, blockers },
+    };
+  }
   const leaders = compileDriveGroups(bundle, devices, blockers);
   if (bundle.runtime_profile === "pallet-machining@1") {
     if (mode !== "validation")
@@ -460,7 +498,7 @@ function compileDriveGroups(
 
 function compilePalletWorld(
   bundle: SceneBundle,
-  modelBytes: ArrayBuffer,
+  modelBytes: ArrayBuffer | SceneGeometryReader,
   devices: Map<string, SceneDevice>,
   mode: "run" | "validation",
   warnings: string[],
@@ -468,7 +506,10 @@ function compilePalletWorld(
   feederEntries: Map<string, string>,
   preloaded: SceneLoad[],
 ) {
-  const geometry = new SceneGeometryReader(modelBytes),
+  const geometry =
+      modelBytes instanceof SceneGeometryReader
+        ? modelBytes
+        : new SceneGeometryReader(modelBytes),
     bodies: RuntimeBody[] = [],
     surfaces: RuntimeSurface[] = [],
     visualBodies: CompiledSceneRuntime["visualBodies"] = [],

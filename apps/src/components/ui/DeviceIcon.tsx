@@ -3,6 +3,7 @@ import {
   Box,
   Container,
   Factory,
+  PersonStanding,
   Layers3,
   MoveVertical,
   Rotate3D,
@@ -19,6 +20,7 @@ export const icons = {
   rotary_table: Rotate3D,
   storage_rack: Container,
   machine_tool: Factory,
+  human_operator: PersonStanding,
   workpiece: Box,
   workpiece_carrier: Layers3,
 };

@@ -5,7 +5,8 @@
   "device_spec_id": "standard.rotary_table",
   "version": "1.0.0",
   "device_type": "rotary_table",
-  "display_name": "旋转台：工位定位与可选台面输送",
+  "display_name": "带载分度转台",
+  "description": "通过同一个装卸接口承载工件，围绕竖直轴正向分度。",
   "asset": {
     "model_format": "glb",
     "model_key": "../Robot Welding cell/Robot Welding cell.glb",
@@ -52,15 +53,14 @@
       "mutability": "stopped_only",
       "description": "到位稳定的角速度阈值"
     },
-    "deck_radius_m": {
-      "type": "number",
+    "capacity": {
+      "type": "integer",
       "required": true,
-      "default": 0.6,
-      "unit": "m",
-      "min": 0.05,
-      "max": 5,
+      "default": 1,
+      "min": 1,
+      "max": 50,
       "mutability": "stopped_only",
-      "description": "转台支承面半径"
+      "description": "允许同时承载数量"
     },
     "max_payload_kg": {
       "type": "number",
@@ -71,60 +71,40 @@
       "max": 5000,
       "mutability": "stopped_only",
       "description": "允许载荷"
-    },
-    "capacity": {
-      "type": "integer",
-      "required": true,
-      "default": 2,
-      "min": 1,
-      "max": 50,
-      "mutability": "stopped_only",
-      "description": "允许同时承载数量"
-    },
-    "position_mode": {
-      "type": "enum",
-      "required": true,
-      "default": "station",
-      "options": [
-        "station",
-        "angle"
-      ],
-      "mutability": "stopped_only",
-      "description": "工位号或角度设定"
-    },
-    "transfer_module": {
-      "type": "boolean",
-      "required": true,
-      "default": false,
-      "mutability": "stopped_only",
-      "description": "是否含台面输送"
-    },
-    "deck_speed_mps": {
-      "type": "number",
-      "required": false,
-      "default": 0.4,
-      "unit": "m/s",
-      "min": -3,
-      "max": 3,
-      "mutability": "runtime_setpoint",
-      "description": "台面输送速度",
-      "required_when": {
-        "parameter": "transfer_module",
-        "equals": true
-      }
     }
   },
-  "interfaces": [],
-  "signal_ports": [
+  "interfaces": [
     {
-      "port_id": "target_station",
-      "direction": "input",
-      "value_type": "integer",
-      "plc_type": "INT",
-      "description": "工位编号，通过 stations 映射到角度；不把字符串工位名直接作为 REAL",
-      "signal_role": "continuous_command",
-      "retention": "sampled_state"
-    },
+      "interface_id": "slot1",
+      "name": "装卸承载点",
+      "local_frame": {
+        "position": [
+          0.47999998927116394,
+          0.7000002513825834,
+          -4.1962931823791294e-08
+        ],
+        "forward": [
+          0,
+          1,
+          0
+        ],
+        "up": [
+          0,
+          0,
+          1
+        ]
+      },
+      "capabilities": {
+        "snap": {
+          "role": "fixture",
+          "accepts": [
+            "workpiece"
+          ]
+        }
+      }
+    }
+  ],
+  "signal_ports": [
     {
       "port_id": "angleTag",
       "direction": "input",
@@ -152,24 +132,6 @@
       "description": "原 command 的 PLC 投影；参数先写入，再请求一次定位，映射公共 execute 角色",
       "signal_role": "request_parameter",
       "retention": "sampled_state"
-    },
-    {
-      "port_id": "enableTag",
-      "direction": "input",
-      "value_type": "boolean",
-      "plc_type": "BOOL",
-      "description": "转动使能；失能时按声明的减速保持策略处理，再使能后可继续原动作",
-      "signal_role": "continuous_command",
-      "retention": "sampled_state"
-    },
-    {
-      "port_id": "reset",
-      "direction": "input",
-      "value_type": "boolean",
-      "plc_type": "BOOL",
-      "description": "故障原因解除且允许恢复时复位",
-      "signal_role": "request_latched",
-      "retention": "latched_until_ack_or_new_request"
     },
     {
       "port_id": "actual_angle",
@@ -252,173 +214,68 @@
       "description": "公共任务反馈，done 关联当前定位请求",
       "signal_role": "result_latched",
       "retention": "latched_until_ack_or_new_request"
-    },
-    {
-      "port_id": "error_code",
-      "direction": "output",
-      "value_type": "integer",
-      "plc_type": "INT",
-      "description": "公共任务反馈，done 关联当前定位请求",
-      "signal_role": "result_latched",
-      "retention": "latched_until_ack_or_new_request"
-    },
-    {
-      "port_id": "speedTag",
-      "direction": "input",
-      "value_type": "number",
-      "plc_type": "REAL",
-      "description": "台面输送速度；纯定位转台不提供该接口",
-      "signal_role": "continuous_command",
-      "retention": "sampled_state",
-      "unit": "m/s"
-    },
-    {
-      "port_id": "speedFpmTag",
-      "direction": "input",
-      "value_type": "number",
-      "plc_type": "REAL",
-      "description": "台面输送速度；纯定位转台不提供该接口",
-      "signal_role": "continuous_command",
-      "retention": "sampled_state",
-      "unit": "ft/min"
-    },
-    {
-      "port_id": "transfer_enable",
-      "direction": "input",
-      "value_type": "boolean",
-      "plc_type": "BOOL",
-      "description": "台面出入料许可，与旋转使能分别定义",
-      "signal_role": "continuous_command",
-      "retention": "sampled_state"
     }
   ],
   "transport_behaviors": [
     {
-      "behavior_id": "accept_material",
-      "display_name": "接收物料",
-      "behavior_type": "action",
-      "schedulable": true,
-      "executor_ref": "pending.rotary_table.accept_material",
-      "implementation_status": "pending_adapter",
-      "arguments_schema": {},
-      "trigger": {
-        "description": "入料交接任务",
-        "authority": "single_gateway_or_declared_continuous_writer",
-        "request_context": "run/instance/request and registry mappings",
-        "payload_binding_status": "pending_model_specific_payload"
-      },
-      "input_signals": [],
-      "output_signals": [
-        "accepted",
-        "actual_angle",
-        "busy",
-        "done",
-        "error",
-        "error_code",
-        "occupied",
-        "result_id",
-        "rotating"
-      ],
-      "condition_contract": {
-        "preconditions": [
-          {
-            "id": "pre_1",
-            "label": "转台停稳且与来源对齐、容量可用、交接授权有效",
-            "source": "authorization",
-            "key": "accept_material.pre_1",
-            "equals": true
-          }
-        ],
-        "sustaining_conditions": [
-          {
-            "id": "sustaining",
-            "label": "持续条件与阶段身份",
-            "source": "observation",
-            "key": "accept_material.sustaining",
-            "equals": true
-          }
-        ],
-        "missing_value_policy": "unknown_blocks_execution"
-      },
-      "completion_contract": {
-        "mode": "observed",
-        "description": "物料进入支承区域并完成归属转移",
-        "checks": [
-          {
-            "id": "completion_evidence",
-            "label": "物料进入支承区域并完成归属转移",
-            "source": "observation",
-            "key": "accept_material.completion",
-            "equals": true
-          }
-        ],
-        "timer_or_progress_is_success": false
-      },
-      "applicability": {
-        "status": "must_check_configuration",
-        "conditions": []
-      }
-    },
-    {
       "behavior_id": "rotate_to_station",
-      "display_name": "工位",
+      "display_name": "带载转位",
       "behavior_type": "action",
       "schedulable": true,
-      "executor_ref": "pending.rotary_table.rotate_to_station",
-      "implementation_status": "pending_adapter",
+      "executor_ref": "rotary_table.rotate_to_station@1",
+      "implementation_status": "implemented",
       "arguments_schema": {
-        "target_station": {
-          "type": "integer",
-          "required": false,
-          "mutability": "stopped_only",
-          "description": "本次目标工位，索引到type_specific_contract.stations。",
-          "min": 0
-        },
         "angleTag": {
           "type": "number",
           "unit": "°",
-          "required": false,
-          "mutability": "stopped_only",
-          "description": "角度模式的目标角度，单位°；与target_station互斥。"
+          "min": 0,
+          "max": 360,
+          "required": true,
+          "description": "正向旋转到的归一化角度",
+          "mutability": "stopped_only"
         }
       },
       "trigger": {
-        "description": "rotate_to_station 请求与目标参数",
-        "authority": "single_gateway_or_declared_continuous_writer",
-        "request_context": "run/instance/request and registry mappings",
-        "payload_binding_status": "pending_model_specific_payload"
+        "description": "冻结请求身份、动作参数和载荷后，由调度器提交一次请求。",
+        "authority": "single_gateway_or_declared_continuous_writer"
       },
       "input_signals": [
-        "enableTag",
-        "request_id",
         "rotate_to_station",
-        "target_station"
+        "angleTag",
+        "request_id"
       ],
       "output_signals": [
         "accepted",
-        "actual_angle",
-        "at_station",
         "busy",
         "done",
-        "error",
-        "error_code",
         "result_id",
-        "rotating"
+        "error",
+        "actual_angle",
+        "occupied",
+        "rotating",
+        "at_station"
       ],
       "condition_contract": {
         "preconditions": [
           {
-            "id": "pre_1",
-            "label": "新请求、设备可接受、工位或角度有效、使能和旋转区域许可有效",
+            "id": "ready",
+            "label": "本件已固定于唯一工装，转台静止，人员撤离，机器人退位。",
             "source": "observation",
-            "key": "rotate_to_station.pre_1",
+            "key": "rotate_to_station.ready",
+            "equals": true
+          },
+          {
+            "id": "authorized",
+            "label": "请求已获得转台及其载荷的控制权。",
+            "source": "authorization",
+            "key": "rotate_to_station.authorized",
             "equals": true
           }
         ],
         "sustaining_conditions": [
           {
             "id": "sustaining",
-            "label": "持续条件与阶段身份",
+            "label": "载荷固定于同一工装，人员和机器人持续位于转位区外。",
             "source": "observation",
             "key": "rotate_to_station.sustaining",
             "equals": true
@@ -428,778 +285,154 @@
       },
       "completion_contract": {
         "mode": "observed",
-        "description": "实际角度及角速度满足阈值，at_station 有效并报告本次 done",
+        "description": "同件载荷仍在工装上，实际角度进入目标容差并停稳。",
         "checks": [
           {
-            "id": "completion_evidence",
-            "label": "实际角度及角速度满足阈值，at_station 有效并报告本次 done",
+            "id": "completion",
+            "label": "同件载荷仍在工装上，实际角度进入目标容差并停稳。",
             "source": "observation",
             "key": "rotate_to_station.completion",
             "equals": true
           }
         ],
         "timer_or_progress_is_success": false
-      },
-      "applicability": {
-        "status": "must_check_configuration",
-        "conditions": []
-      }
-    },
-    {
-      "behavior_id": "release_material",
-      "display_name": "出料交接",
-      "behavior_type": "action",
-      "schedulable": true,
-      "executor_ref": "pending.rotary_table.release_material",
-      "implementation_status": "pending_adapter",
-      "arguments_schema": {},
-      "trigger": {
-        "description": "出料交接任务",
-        "authority": "single_gateway_or_declared_continuous_writer",
-        "request_context": "run/instance/request and registry mappings",
-        "payload_binding_status": "pending_model_specific_payload"
-      },
-      "input_signals": [],
-      "output_signals": [
-        "accepted",
-        "actual_angle",
-        "busy",
-        "done",
-        "error",
-        "error_code",
-        "occupied",
-        "result_id",
-        "rotating"
-      ],
-      "condition_contract": {
-        "preconditions": [
-          {
-            "id": "pre_1",
-            "label": "台面停稳、出口对齐、下游及容量预留有效",
-            "source": "observation",
-            "key": "release_material.pre_1",
-            "equals": true
-          }
-        ],
-        "sustaining_conditions": [
-          {
-            "id": "sustaining",
-            "label": "持续条件与阶段身份",
-            "source": "observation",
-            "key": "release_material.sustaining",
-            "equals": true
-          }
-        ],
-        "missing_value_policy": "unknown_blocks_execution"
-      },
-      "completion_contract": {
-        "mode": "observed",
-        "description": "下游确认接收指定物料后更新 occupied",
-        "checks": [
-          {
-            "id": "completion_evidence",
-            "label": "下游确认接收指定物料后更新 occupied",
-            "source": "observation",
-            "key": "release_material.completion",
-            "equals": true
-          }
-        ],
-        "timer_or_progress_is_success": false
-      },
-      "applicability": {
-        "status": "must_check_configuration",
-        "conditions": []
-      }
-    },
-    {
-      "behavior_id": "hold_rotation",
-      "display_name": "减速保持",
-      "behavior_type": "action",
-      "schedulable": true,
-      "executor_ref": "pending.rotary_table.hold_rotation",
-      "implementation_status": "pending_adapter",
-      "arguments_schema": {},
-      "trigger": {
-        "description": "enableTag 失能",
-        "authority": "single_gateway_or_declared_continuous_writer",
-        "request_context": "run/instance/request and registry mappings",
-        "payload_binding_status": "signal_or_external_event"
-      },
-      "input_signals": [
-        "enableTag"
-      ],
-      "output_signals": [
-        "accepted",
-        "actual_angle",
-        "busy",
-        "done",
-        "error",
-        "error_code",
-        "result_id",
-        "rotating"
-      ],
-      "condition_contract": {
-        "preconditions": [
-          {
-            "id": "pre_1",
-            "label": "支持在途保持",
-            "source": "observation",
-            "key": "hold_rotation.pre_1",
-            "equals": true
-          },
-          {
-            "id": "pre_2",
-            "label": "支承物料和相关资源继续有效",
-            "source": "observation",
-            "key": "hold_rotation.pre_2",
-            "equals": true
-          }
-        ],
-        "sustaining_conditions": [
-          {
-            "id": "sustaining",
-            "label": "持续条件与阶段身份",
-            "source": "observation",
-            "key": "hold_rotation.sustaining",
-            "equals": true
-          }
-        ],
-        "missing_value_policy": "unknown_blocks_execution"
-      },
-      "completion_contract": {
-        "mode": "observed",
-        "description": "实际转动降至静止阈值，原定位任务仍未完成",
-        "checks": [
-          {
-            "id": "completion_evidence",
-            "label": "实际转动降至静止阈值，原定位任务仍未完成",
-            "source": "observation",
-            "key": "hold_rotation.completion",
-            "equals": true
-          }
-        ],
-        "timer_or_progress_is_success": false
-      },
-      "applicability": {
-        "status": "must_check_configuration",
-        "conditions": []
-      }
-    },
-    {
-      "behavior_id": "resume_rotation",
-      "display_name": "恢复转动",
-      "behavior_type": "action",
-      "schedulable": true,
-      "executor_ref": "pending.rotary_table.resume_rotation",
-      "implementation_status": "pending_adapter",
-      "arguments_schema": {},
-      "trigger": {
-        "description": "enableTag 恢复且有保持任务",
-        "authority": "single_gateway_or_declared_continuous_writer",
-        "request_context": "run/instance/request and registry mappings",
-        "payload_binding_status": "signal_or_external_event"
-      },
-      "input_signals": [
-        "enableTag"
-      ],
-      "output_signals": [
-        "accepted",
-        "actual_angle",
-        "busy",
-        "done",
-        "error",
-        "error_code",
-        "result_id",
-        "rotating"
-      ],
-      "condition_contract": {
-        "preconditions": [
-          {
-            "id": "pre_1",
-            "label": "原目标有效、故障解除、所需资源仍获准",
-            "source": "authorization",
-            "key": "resume_rotation.pre_1",
-            "equals": true
-          }
-        ],
-        "sustaining_conditions": [
-          {
-            "id": "sustaining",
-            "label": "持续条件与阶段身份",
-            "source": "observation",
-            "key": "resume_rotation.sustaining",
-            "equals": true
-          }
-        ],
-        "missing_value_policy": "unknown_blocks_execution"
-      },
-      "completion_contract": {
-        "mode": "observed",
-        "description": "继续向保留目标转动；最终结果由 rotate_to_station 判断",
-        "checks": [
-          {
-            "id": "completion_evidence",
-            "label": "继续向保留目标转动；最终结果由 rotate_to_station 判断",
-            "source": "observation",
-            "key": "resume_rotation.completion",
-            "equals": true
-          }
-        ],
-        "timer_or_progress_is_success": false
-      },
-      "applicability": {
-        "status": "must_check_configuration",
-        "conditions": []
-      }
-    },
-    {
-      "behavior_id": "convey_on_deck",
-      "display_name": "台面输送",
-      "behavior_type": "action",
-      "schedulable": true,
-      "executor_ref": "pending.rotary_table.convey_on_deck",
-      "implementation_status": "pending_adapter",
-      "arguments_schema": {},
-      "trigger": {
-        "description": "transfer_enable 和有效速度设定",
-        "authority": "single_gateway_or_declared_continuous_writer",
-        "request_context": "run/instance/request and registry mappings",
-        "payload_binding_status": "pending_model_specific_payload"
-      },
-      "input_signals": [
-        "speedTag",
-        "transfer_enable"
-      ],
-      "output_signals": [
-        "done",
-        "occupied",
-        "rotating"
-      ],
-      "condition_contract": {
-        "preconditions": [
-          {
-            "id": "pre_1",
-            "label": "配置实际输送模块、台面停稳、转台与目标对齐、输送许可有效",
-            "source": "observation",
-            "key": "convey_on_deck.pre_1",
-            "equals": true
-          }
-        ],
-        "sustaining_conditions": [
-          {
-            "id": "sustaining",
-            "label": "持续条件与阶段身份",
-            "source": "observation",
-            "key": "convey_on_deck.sustaining",
-            "equals": true
-          }
-        ],
-        "missing_value_policy": "unknown_blocks_execution"
-      },
-      "completion_contract": {
-        "mode": "continuous",
-        "description": "发布输送状态；物料交接由 release_material 确认，无独立全局 done",
-        "checks": [
-          {
-            "id": "completion_evidence",
-            "label": "发布输送状态；物料交接由 release_material 确认，无独立全局 done",
-            "source": "observation",
-            "key": "convey_on_deck.completion",
-            "equals": true
-          }
-        ],
-        "timer_or_progress_is_success": false
-      },
-      "applicability": {
-        "status": "must_check_configuration",
-        "conditions": [
-          {
-            "parameter": "transfer_module",
-            "equals": true
-          }
-        ]
-      }
-    },
-    {
-      "behavior_id": "publish_turntable_state",
-      "display_name": "发布角度与占用",
-      "behavior_type": "observer",
-      "schedulable": false,
-      "executor_ref": "pending.rotary_table.publish_turntable_state",
-      "implementation_status": "pending_adapter",
-      "arguments_schema": {},
-      "trigger": {
-        "description": "仿真步、占用或任务变化",
-        "authority": "single_gateway_or_declared_continuous_writer",
-        "request_context": "run/instance/request and registry mappings",
-        "payload_binding_status": "signal_or_external_event"
-      },
-      "input_signals": [],
-      "output_signals": [
-        "accepted",
-        "actual_angle",
-        "at_station",
-        "busy",
-        "done",
-        "error",
-        "error_code",
-        "occupied",
-        "result_id",
-        "rotating"
-      ],
-      "condition_contract": {
-        "preconditions": [
-          {
-            "id": "pre_1",
-            "label": "从实际角度、速度和支承区域观测状态",
-            "source": "observation",
-            "key": "publish_turntable_state.pre_1",
-            "equals": true
-          }
-        ],
-        "sustaining_conditions": [],
-        "missing_value_policy": "unknown_blocks_execution"
-      },
-      "completion_contract": {
-        "mode": "continuous",
-        "description": "更新 actual_angle、rotating、at_station、occupied 和任务结果",
-        "checks": [
-          {
-            "id": "completion_evidence",
-            "label": "更新 actual_angle、rotating、at_station、occupied 和任务结果",
-            "source": "observation",
-            "key": "publish_turntable_state.completion",
-            "equals": true
-          }
-        ],
-        "timer_or_progress_is_success": false
-      },
-      "applicability": {
-        "status": "must_check_configuration",
-        "conditions": []
       }
     }
   ],
   "type_specific_contract": {
-    "coordinate_system": {
-      "up_axis": "Y",
-      "length_unit": "m",
-      "angle_unit": "deg"
-    },
-    "rotary_geometry": {
-      "deck_radius_param": "deck_radius_m",
-      "deck_node": "turntable_deck",
-      "pivot_frame": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotation_euler_rad": [
-          0,
-          0,
-          0
-        ]
-      }
-    },
-    "rotation_axis": {
-      "direction": [
-        0,
-        1,
-        0
-      ],
-      "frame": "device_local",
-      "joint_name": "rotate"
-    },
-    "stations": [
-      {
-        "station_id": "station_a",
-        "angle_deg": 180
-      },
-      {
-        "station_id": "station_b",
-        "angle_deg": 0
-      }
-    ],
     "indexing_policy": {
-      "mode_param": "position_mode",
-      "speed_param": "rotate_speed_deg_s",
-      "acceleration_param": "rotate_accel_deg_s2",
-      "tolerance_param": "angle_tolerance_deg",
-      "settle_speed_param": "settle_speed_deg_s",
-      "angle_wrap": "minus180_to_180"
+      "direction": "positive",
+      "angle_reference": "normalized_degrees",
+      "home_deg": 0,
+      "process_deg": 180
     },
     "capacity_model": {
-      "capacity_param": "capacity",
-      "max_payload_param": "max_payload_kg"
-    },
-    "transfer": {
-      "enabled_param": "transfer_module",
-      "speed_param": "deck_speed_mps",
-      "requires_rotation_settled": true
-    },
-    "derived_values": {
-      "station_count": "length(stations)"
+      "capacity_param": "capacity"
     }
   },
   "runtime_contract": {
     "observation_definitions": {
-      "accept_material.sustaining": {
+      "rotate_to_station.ready": {
         "value_type": "boolean",
         "provider": "behavior_adapter",
-        "implementation_status": "pending_provider",
+        "implementation_status": "implemented",
         "signal_refs": [
-          "accepted",
-          "actual_angle",
-          "busy",
-          "done",
-          "error",
-          "error_code",
-          "occupied",
-          "result_id",
-          "rotating"
-        ]
-      },
-      "accept_material.completion": {
-        "value_type": "boolean",
-        "provider": "behavior_or_world_observer",
-        "implementation_status": "pending_provider",
-        "signal_refs": [
-          "accepted",
-          "actual_angle",
-          "busy",
-          "done",
-          "error",
-          "error_code",
-          "occupied",
-          "result_id",
-          "rotating"
-        ]
-      },
-      "rotate_to_station.pre_1": {
-        "value_type": "boolean",
-        "provider": "device_or_world_observer",
-        "implementation_status": "pending_provider",
-        "signal_refs": [
-          "enableTag",
-          "request_id",
           "rotate_to_station",
-          "target_station",
+          "angleTag",
+          "request_id",
           "accepted",
-          "actual_angle",
-          "at_station",
           "busy",
           "done",
-          "error",
-          "error_code",
           "result_id",
-          "rotating"
-        ]
+          "error",
+          "actual_angle",
+          "occupied",
+          "rotating",
+          "at_station"
+        ],
+        "expression_ref": "rotate_to_station.ready"
       },
       "rotate_to_station.sustaining": {
         "value_type": "boolean",
         "provider": "behavior_adapter",
-        "implementation_status": "pending_provider",
+        "implementation_status": "implemented",
         "signal_refs": [
-          "enableTag",
-          "request_id",
           "rotate_to_station",
-          "target_station",
+          "angleTag",
+          "request_id",
           "accepted",
-          "actual_angle",
-          "at_station",
           "busy",
           "done",
-          "error",
-          "error_code",
           "result_id",
-          "rotating"
-        ]
+          "error",
+          "actual_angle",
+          "occupied",
+          "rotating",
+          "at_station"
+        ],
+        "expression_ref": "rotate_to_station.sustaining"
       },
       "rotate_to_station.completion": {
         "value_type": "boolean",
-        "provider": "behavior_or_world_observer",
-        "implementation_status": "pending_provider",
+        "provider": "behavior_adapter",
+        "implementation_status": "implemented",
         "signal_refs": [
-          "enableTag",
-          "request_id",
           "rotate_to_station",
-          "target_station",
+          "angleTag",
+          "request_id",
           "accepted",
-          "actual_angle",
-          "at_station",
           "busy",
           "done",
-          "error",
-          "error_code",
           "result_id",
-          "rotating"
-        ]
-      },
-      "release_material.pre_1": {
-        "value_type": "boolean",
-        "provider": "device_or_world_observer",
-        "implementation_status": "pending_provider",
-        "signal_refs": [
-          "accepted",
-          "actual_angle",
-          "busy",
-          "done",
           "error",
-          "error_code",
+          "actual_angle",
           "occupied",
-          "result_id",
-          "rotating"
-        ]
-      },
-      "release_material.sustaining": {
-        "value_type": "boolean",
-        "provider": "behavior_adapter",
-        "implementation_status": "pending_provider",
-        "signal_refs": [
-          "accepted",
-          "actual_angle",
-          "busy",
-          "done",
-          "error",
-          "error_code",
-          "occupied",
-          "result_id",
-          "rotating"
-        ]
-      },
-      "release_material.completion": {
-        "value_type": "boolean",
-        "provider": "behavior_or_world_observer",
-        "implementation_status": "pending_provider",
-        "signal_refs": [
-          "accepted",
-          "actual_angle",
-          "busy",
-          "done",
-          "error",
-          "error_code",
-          "occupied",
-          "result_id",
-          "rotating"
-        ]
-      },
-      "hold_rotation.pre_1": {
-        "value_type": "boolean",
-        "provider": "device_or_world_observer",
-        "implementation_status": "pending_provider",
-        "signal_refs": [
-          "enableTag",
-          "accepted",
-          "actual_angle",
-          "busy",
-          "done",
-          "error",
-          "error_code",
-          "result_id",
-          "rotating"
-        ]
-      },
-      "hold_rotation.pre_2": {
-        "value_type": "boolean",
-        "provider": "device_or_world_observer",
-        "implementation_status": "pending_provider",
-        "signal_refs": [
-          "enableTag",
-          "accepted",
-          "actual_angle",
-          "busy",
-          "done",
-          "error",
-          "error_code",
-          "result_id",
-          "rotating"
-        ]
-      },
-      "hold_rotation.sustaining": {
-        "value_type": "boolean",
-        "provider": "behavior_adapter",
-        "implementation_status": "pending_provider",
-        "signal_refs": [
-          "enableTag",
-          "accepted",
-          "actual_angle",
-          "busy",
-          "done",
-          "error",
-          "error_code",
-          "result_id",
-          "rotating"
-        ]
-      },
-      "hold_rotation.completion": {
-        "value_type": "boolean",
-        "provider": "behavior_or_world_observer",
-        "implementation_status": "pending_provider",
-        "signal_refs": [
-          "enableTag",
-          "accepted",
-          "actual_angle",
-          "busy",
-          "done",
-          "error",
-          "error_code",
-          "result_id",
-          "rotating"
-        ]
-      },
-      "resume_rotation.sustaining": {
-        "value_type": "boolean",
-        "provider": "behavior_adapter",
-        "implementation_status": "pending_provider",
-        "signal_refs": [
-          "enableTag",
-          "accepted",
-          "actual_angle",
-          "busy",
-          "done",
-          "error",
-          "error_code",
-          "result_id",
-          "rotating"
-        ]
-      },
-      "resume_rotation.completion": {
-        "value_type": "boolean",
-        "provider": "behavior_or_world_observer",
-        "implementation_status": "pending_provider",
-        "signal_refs": [
-          "enableTag",
-          "accepted",
-          "actual_angle",
-          "busy",
-          "done",
-          "error",
-          "error_code",
-          "result_id",
-          "rotating"
-        ]
-      },
-      "convey_on_deck.pre_1": {
-        "value_type": "boolean",
-        "provider": "device_or_world_observer",
-        "implementation_status": "pending_provider",
-        "signal_refs": [
-          "speedTag",
-          "transfer_enable",
-          "done",
-          "occupied",
-          "rotating"
-        ]
-      },
-      "convey_on_deck.sustaining": {
-        "value_type": "boolean",
-        "provider": "behavior_adapter",
-        "implementation_status": "pending_provider",
-        "signal_refs": [
-          "speedTag",
-          "transfer_enable",
-          "done",
-          "occupied",
-          "rotating"
-        ]
-      },
-      "convey_on_deck.completion": {
-        "value_type": "boolean",
-        "provider": "behavior_or_world_observer",
-        "implementation_status": "pending_provider",
-        "signal_refs": [
-          "speedTag",
-          "transfer_enable",
-          "done",
-          "occupied",
-          "rotating"
-        ]
-      },
-      "publish_turntable_state.pre_1": {
-        "value_type": "boolean",
-        "provider": "device_or_world_observer",
-        "implementation_status": "pending_provider",
-        "signal_refs": [
-          "accepted",
-          "actual_angle",
-          "at_station",
-          "busy",
-          "done",
-          "error",
-          "error_code",
-          "occupied",
-          "result_id",
-          "rotating"
-        ]
-      },
-      "publish_turntable_state.sustaining": {
-        "value_type": "boolean",
-        "provider": "behavior_adapter",
-        "implementation_status": "pending_provider",
-        "signal_refs": [
-          "accepted",
-          "actual_angle",
-          "at_station",
-          "busy",
-          "done",
-          "error",
-          "error_code",
-          "occupied",
-          "result_id",
-          "rotating"
-        ]
-      },
-      "publish_turntable_state.completion": {
-        "value_type": "boolean",
-        "provider": "behavior_or_world_observer",
-        "implementation_status": "pending_provider",
-        "signal_refs": [
-          "accepted",
-          "actual_angle",
-          "at_station",
-          "busy",
-          "done",
-          "error",
-          "error_code",
-          "occupied",
-          "result_id",
-          "rotating"
-        ]
+          "rotating",
+          "at_station"
+        ],
+        "expression_ref": "rotate_to_station.completion"
       }
     },
     "authorization_definitions": {
-      "accept_material.pre_1": {
+      "rotate_to_station.authorized": {
         "value_type": "boolean",
         "provider": "authorization_service",
-        "implementation_status": "pending_provider",
+        "implementation_status": "implemented",
         "signal_refs": [
+          "rotate_to_station",
+          "angleTag",
+          "request_id",
           "accepted",
-          "actual_angle",
           "busy",
           "done",
+          "result_id",
           "error",
-          "error_code",
+          "actual_angle",
           "occupied",
-          "result_id",
-          "rotating"
-        ]
-      },
-      "resume_rotation.pre_1": {
-        "value_type": "boolean",
-        "provider": "authorization_service",
-        "implementation_status": "pending_provider",
-        "signal_refs": [
-          "enableTag",
-          "accepted",
-          "actual_angle",
-          "busy",
-          "done",
-          "error",
-          "error_code",
-          "result_id",
-          "rotating"
-        ]
+          "rotating",
+          "at_station"
+        ],
+        "expression_ref": "rotate_to_station.authorized"
+      }
+    },
+    "condition_model": {
+      "schema_version": "ac-condition/0.1",
+      "execution_mode": "declaration_only",
+      "unknown_policy": "three_valued_fail_closed",
+      "bindings": {},
+      "expressions": {
+        "rotate_to_station.ready": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "rotate_to_station.ready"
+          }
+        },
+        "rotate_to_station.authorized": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "authorization",
+            "key": "rotate_to_station.authorized"
+          }
+        },
+        "rotate_to_station.sustaining": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "rotate_to_station.sustaining"
+          }
+        },
+        "rotate_to_station.completion": {
+          "status": "opaque",
+          "expr": {
+            "op": "opaque",
+            "source": "observation",
+            "key": "rotate_to_station.completion"
+          }
+        }
       }
     }
   },
@@ -1215,7 +448,7 @@
       "sampling": "simulation_step_snapshot",
       "unknown_policy": "invalid_until_provider_ready"
     },
-    "status": "pending_adapter",
+    "status": "implemented",
     "protocol": {
       "basis": "schema.md公共请求协议",
       "acceptance": "same request identity and frozen parameters",
@@ -1225,29 +458,6 @@
     "payload_binding_status": "requires_explicit_model_adapter",
     "calibration_required": true,
     "real_execution_available": false,
-    "raw_api_and_plc_simultaneous_writers": false,
-    "argument_variants": {
-      "rotate_to_station": {
-        "selector_parameter": "position_mode",
-        "variants": {
-          "station": {
-            "required": [
-              "target_station"
-            ],
-            "forbidden": [
-              "angleTag"
-            ]
-          },
-          "angle": {
-            "required": [
-              "angleTag"
-            ],
-            "forbidden": [
-              "target_station"
-            ]
-          }
-        }
-      }
-    }
+    "raw_api_and_plc_simultaneous_writers": false
   }
 }
