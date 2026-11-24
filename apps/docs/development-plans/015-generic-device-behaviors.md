@@ -1,6 +1,74 @@
 # 015 通用设备行为与工艺信号连接
 
-本文确定十类设备的行为设计。编写 `contract.json` 和 `behavior.ts` 先看本文；对照已有型号的原始行为 ID、端口、载荷和执行范围时查 [兼容矩阵](015-device-behavior-contract-matrix.md)。目录、迁移顺序与分支验收见 [开发计划](015-2026-11-24-device-contract-library.md)。
+本文规定十类设备的通用行为和信号适配方案。建模时以 [设备接口与行为契约规范](../../../test1/docs/schema.md) 为信号与协议基准，按[设备契约](../../../test1/docs/设备契约.md)落入 DeviceSpec。已有型号文件用于核对迁移差异。目录、迁移顺序与分支验收见 [开发计划](015-2026-11-24-device-contract-library.md)。
+
+## 信号契约与按能力裁剪
+
+**规范来源。** [设备接口与行为契约（schema.md）](../../../test1/docs/schema.md) 定义设备视角的输入／输出、各类型接口、行为触发、公共请求协议及完成反馈。[设备契约](../../../test1/docs/设备契约.md) 规定这些定义如何写入 DeviceSpec。[统一条件表达式](../../../test1/docs/统一条件表达式.md) 规定行为条件如何引用端口、观测和授权。三者同时适用。行为合并后，与每个保留入口对应的信号语义和外部握手仍须可追溯。
+
+### 每个端口在模板里写什么
+
+一个 `signal_ports[]` 条目必须包含七个字段。以下是输送带持续运行许可的例子，采用已有独立型号的角色和保持方式。实例 PLC 地址在装配时绑定。
+
+```json
+{
+  "port_id": "runTag",
+  "direction": "input",
+  "value_type": "boolean",
+  "plc_type": "BOOL",
+  "description": "持续运行许可。撤销后目标速度归零，带面按设备减速度停稳。",
+  "signal_role": "level_permission",
+  "retention": "latest_value"
+}
+```
+
+| 项目 | 发布和校验规则 |
+| --- | --- |
+| 标识、方向与引用 | `port_id` 在设备内唯一。设备读取控制器写入的 `input`，设备或服务发布 `output`。行为的 `input_signals`、`output_signals` 逐项解析到同一份设备端口定义，方向须匹配。触发方式、前置／持续条件、完成检查与 I/O 引用随同一稳定 `behavior_id` 发布。 |
+| 标量与身份 | PLC 标签桥接采用 `BOOL ↔ boolean`、`INT/DINT ↔ integer`、`REAL ↔ number`。工件、格位、任务等业务 ID 经有版本的登记表映射为规定范围的整数，声明空值与未知值的含义。复杂路径、关节数组、配方或具名端点保留在有类型的 API 载荷或配置中，经网关解析为支持的命令／参数。 |
+| 单位与写入者 | 速度基线 m/s、高度 m、转台角度 °。选用 FPM 时声明换算。角度／层号／高度等模式按配置互斥。别名使用同一逻辑入口。手动、PLC、调度器与任务表的输入写入权按模式授予；每个实例端口在同一模式只有一个有效写入者。必须声明设备与关节轴的坐标系、角度单位和 TCP 偏移，有异构坐标约定的型号在适配层转换。 |
+| 保持与采样 | 在 `signal_role`、`retention` 和 `description` 中说明持续许可、设定值、实时状态、保持至确认的请求、锁存结果或采样脉冲，以及置位、确认和清除的时机。一次性通知选用带确认的锁存、可关联的序号或队列。编码器脉冲须证明采样分辨率足够。 |
+| 运行绑定 | `runtime_execution_contract.signal_management` 使用如下约定， `owner=simulation_engine`、`namespace=instance_id/port_id`、`definition_source=signal_ports`、`spatial_binding=false`、`write_policy=single_writer_per_input`、`plc_mapping=instance_bindings`、`sampling=simulation_step_snapshot`、`unknown_policy=invalid_until_provider_ready`。`status` 按实际接入填写。场景会话可再加场景／运行身份隔离同名端口。 |
+
+### 有限动作怎样握手
+
+下表适用于采用公共离散请求协议的能力。启动参数由同一网关提交并在接受后冻结。设备的专用启动口可以承担 `execute` 角色，例如机械臂的 `start_pick`、转台的 `rotate_to_station`。一次顶层请求使用一个有效启动入口，复合动作的子步骤沿用其请求上下文。
+
+| 设备方向 | 端口 | 规定的时序和含义 |
+| --- | --- | --- |
+| 入 | `request_id: DINT`、`execute: BOOL` 或专用启动口 | 参数有效、设备可接受且授权成立时提交。请求号和载荷在接受前稳定，触发保持到观察到接受，撤销后才能形成下一次请求。同一请求重复采样只启动一次。 |
+| 出 | `accepted: BOOL`、`busy: BOOL` | `accepted` 对应当前请求，保持到请求撤销。`busy` 表示任务尚未终止，减速保持或暂停时仍可能为真。 |
+| 出 | `done: BOOL`、`result_id: DINT` | 本次已接受请求的实际完成证据满足后，发布该请求的成功结果。成功锁存至下一次请求被接受，读取方核对结果号。设备上电空闲或工位本来就已到位，单凭这两个状态都不能产生本次成功回执。 |
+| 出 | `error: BOOL`、`error_code: INT` | 报告设备故障或本请求失败及原因，结果与请求身份关联。下游暂不可接、普通阻塞和正常等待分别反馈。 |
+| 入 | `reset: BOOL` | 仅在原因解除且设备允许时请求复位。接单超时、执行超时、受控停止、成功完成分别处置；故障和超时后继续保留实际持件、占用与预留，直至按契约确认处置。 |
+
+连续空转／发布反馈保留电平和逐件事件；输送带的按件离散输送可在外层采用公共请求协议。被动物料和托盘由外部执行器或交接服务更新状态。API 模式可以通过网关保持请求身份，型号文档须明确其可用入口和 PLC 支持范围。
+
+### 十类设备按哪些端口核对
+
+下表是选型时的接口索引。`schema.md` 有八张类型表，其中托盘表归到 `workpiece` 的承载属性。滑轨、机床、搬运人员是已有项目扩展，沿用上述公共规则并列出各自的扩展来源。下表中“公共”展开为上一节中该动作采用的公共输入和输出。每个型号按实际启用的模块、单位和运行模式选择；完整逐行为触发、条件和反馈以规范原表为依据。
+
+| 类型 | 设备输入（基线与模式） | 设备输出（基线与模式）及关键语义 |
+| --- | --- | --- |
+| 传送带 | `runTag: BOOL` 持续许可，`speedTag: REAL`（m/s）；可选 `speedFpmTag: REAL` 与之择一。`release_waiting_material: BOOL` 为持续放行许可。定距模块用 `target_distance: REAL`（m），接受时冻结。 | `runningTag: BOOL`、`actual_speed: REAL`（m/s）、`blocked: BOOL`、`part_ready: BOOL`、`capacity_available: BOOL`。选配 `velocityTag: REAL` 需标定，`pulseTag: BOOL` 需采样保证，`encoderTag: REAL` 为有符号带面行程（m）。配置停留区后逐区展开 `stop_point_occupied_i: BOOL`，可选 `stop_point_released_i: BOOL` 为可靠释放通知。有限任务的 `done: BOOL` 关联本次任务；连续运行发布实际状态。 |
+| 升降台 | 高度模式 `move_to_level: REAL`（m）或层号模式 `target_level: INT`，通过层高表映射。公共请求，`enableTag: BOOL`。选配横移模块可用 `popupTag: BOOL`、`speedTag: REAL`／`speedFpmTag: REAL`，横移速度独立于主轴。 | 公共结果，`actual_height: REAL`（m）、`moving: BOOL`、`at_level: BOOL`；横移模块可增 `transfer_ready: BOOL`。`at_level` 要求高度误差和速度稳定，本次任务另核对请求号。 |
+| 出料口 | `runTag: BOOL` 持续生产许可。按需生产用 `produce_request: BOOL` 和 `request_id: DINT`，保持请求只生产一件。`reset: BOOL` 按故障恢复条件生效。 | `countTag: DINT` 累计实际成功生成／呈送的数量，`material_available: BOOL` 表示出口当前有可取物料，`empty: BOOL`、`buffer_count: INT` 表示当前缓冲。按需任务用公共结果，连续生产用逐件记录与计数。 |
+| 机械臂 | `commandTag: INT` 选择任务；`start_pick: BOOL` 和 `request_id: DINT` 构成启动入口。`pause_pick: BOOL` 控制新抓取接单，兼容 `resume_pick: BOOL` 清除同一锁存。`enableTag: BOOL` 控制在途运动使能，`reset: BOOL` 用于复位。手动模式可用 `gripperTag: BOOL`；任务可选 `in1Tag～in4Tag: BOOL`。 | 公共结果、`holding_material: BOOL`（实际持有关系）、可选 `out1Tag～out4Tag: BOOL`（须说明保持与清除）。手动夹具和任务表分配写入权，等待外部输入须有有效采样。 |
+| 旋转台 | 工位模式 `target_station: INT` 或角度模式 `angleTag: REAL`（°）。`rotate_to_station: BOOL`、`request_id: DINT` 启动，`enableTag: BOOL`、`reset: BOOL`。选配台面输送可启用 `speedTag: REAL`／`speedFpmTag: REAL` 和 `transfer_enable: BOOL`。 | 公共结果、`actual_angle: REAL`（°）、`occupied: BOOL`、`rotating: BOOL`、`at_station: BOOL`。占用要注明台面或具体区域，到站是状态，分度完成须关联请求。 |
+| 仓储柜 | `cell_id: INT`、`material_id: DINT`、`owner_task_id: DINT`。`reserve_request: BOOL`、`store_request: BOOL`、`release_request: BOOL`、`cancel_reservation: BOOL` 按操作择一，公共 `request_id: DINT`、`reset: BOOL`。 | 公共结果、`reservation_granted: BOOL`、`reservation_id: DINT`、`cell_available: BOOL`、`cell_full: BOOL`、`free_cells: INT`。`stored: BOOL`、`released: BOOL` 是按 `result_id` 关联的存取锁存结果。预留与实际占用分别更新。 |
+| 物料（含托盘） | 无自主运动命令。装卸、搬运和预留由相应设备或服务发起。 | 按物料观测能力发布 `picked: BOOL`（持有建立后的关联通知）、`carried: BOOL`（持续持有）、`placed: BOOL`（确认放置）、`holder_id: DINT`（0 表示未持有）、`location_id: DINT`（声明未知编码）。承载选项保留 `loaded: BOOL`（至少一件）、`unloaded: BOOL`（盘中已确认装载数为 0）、`load_count: INT`、`free_slots: INT`（扣除占用和预留）、`slot_available: BOOL`（所查槽位）、`in_transport: BOOL`、`holder_id: DINT`（托盘的搬运者）。同一实例共用持有者端口，盘上每件物料仍有自己的身份。 |
+| 滑轨（扩展） | S07 使用 `target_position: REAL`（m）、`execute: BOOL`、`request_id: DINT`、`stop: BOOL`、`enable: BOOL`。具名工位由模型解析出目标。 | `actual_position: REAL`（m）、`actual_speed: REAL`（m/s）及请求结果。S07 旧包的 `error_code: DINT` 与公共表建议的 INT 有差异，见下文兼容处理。[滑轨规范](../../../test1/docs/直线滑轨契约.md) |
+| 机床（扩展） | S06 当前用 `execute: BOOL`、`request_id: DINT`、`subject_id: DINT`。 | 当前声明 `accepted: BOOL`、`busy: BOOL`、`done: BOOL`、`result_id: DINT`、`error: BOOL`。加工点支承与工件工艺记录是判定数据源。[机床型号契约](../../public/scene/S06/contracts/machine_tool.json) |
+| 人物（扩展） | S11 当前用 `execute: BOOL`、`request_id: DINT`，搬运端点和物料来自有类型的载荷。 | 当前声明 `accepted: BOOL`、`busy: BOOL`、`done: BOOL`、`result_id: DINT`、`error: BOOL`、`holding_material: BOOL`。吸附事实来自手部约束。[人物型号契约](../../public/scene/S11/contracts/human_operator.json) |
+
+### 裁剪决定与验收
+
+- **允许按适用性裁剪。** 在型号与能力清单中为每个规范端口记录原规范条目、适用条件、启用／未启用的理由及运行入口。未配置定距、分区或台面输送时，可省其专属端口；只支持角度模式时可省工位号输入。对应行为、条件引用和 PLC 绑定须随配置一起检查。主动／持续／被动的协议范围按上文分别验证。
+- **历史缺口单列。** 启用能力所需的端口缺失，或保持语义未验证，登记为待补实现或受限模式。S11 转台采用角度模式，省略 `target_station` 有模式依据；旧包还缺 `enableTag`、`reset`、`error_code`，须分别说明限制。S06 机床和 S11 人物的旧包亦缺 `reset` 和 `error_code`。若要发布完整公共 PLC 请求协议，须补齐并测试。滑轨故障码兼容旧 DINT 时保留旧修订，采用 INT 的新映射须验证所有码值可表示并明确转换版本。
+- **声明、支持和观测分别验证。** 例如独立输送带通过 `supported_io` 标明可用子集，某端口出现在 JSON 中仅能证明已声明。场景导入已有方向、类型及引用检查；新模板的规范覆盖、按扫描周期的锁存／撤销及重复请求验证属于实施验收。布尔观测能计算某个条件或为输出端口提供发布值，启用能力规定的外部端口仍要保留。
+- **验收用例。** 构建时按“类型＋型号＋模式＋行为”对照规范表和行为 I/O，拒绝缺失适用端口、类型或方向错误、悬空引用、双写者和未经声明的单位转换。执行时覆盖启动持续多扫描只接单一次、撤销后确认释放、成功结果锁存到下一次接受、旧结果号无法放行新请求、故障和阻塞分别反馈、持件复位与超时不误释放，以及低频 PLC 读取仍能收到已声明的离散通知。持续输送空转、物料被动跟随及可选模块关闭也要独立验收。
+
+**分度动作的绑定示例。** 角度模式下，网关先提供 `angleTag: REAL`（°）和 `request_id: DINT`，再置位 `rotate_to_station: BOOL`。转台读取授权、停稳和载荷保持条件；接单后冻结角度。到位检查读 `actual_angle`、`rotating` 和工装约束，结合本次请求生成完成证据，再发布 `done` 与 `result_id`。后继加工可以消费“同一工件所在工装已到站”的有效证据，机械臂的启动信号仍由其网关按本次请求写入。
 
 ## 1. 一条行为怎么定义
 
@@ -16,7 +84,7 @@
 
 ### 条件用哪些信号
 
-下文带参数的英文名是**拟议的通用逻辑信号**，用于在两个设备契约之间表达相同含义；现有 PLC 端口沿用原名。逻辑信号可以由多个物理观测计算。信号由各自的权威来源写入，编排器只读取、关联或路由。逻辑信号的声明包含角色参数、值类型、单位／参考系、生产者、采样时刻、有效期和关联范围。端口按 `instance_id/port_id` 解析，观测按已登记的提供者取值；事件另带序号或版本。条件的真假与信号有效性分开，过期、缺失或主体不匹配时结果为未知。
+下文带参数的英文名是**拟议的条件谓词和回执**，表达行为需要／提供的事实。其参数通过工艺上下文关联。只有显式投影为设备信号的量才占用已声明的标量端口，其余由参数、观测、请求或授权提供者取值。逻辑信号可以由多个物理观测计算。信号由各自的权威来源写入，编排器只读取、关联或路由。逻辑信号的声明包含角色参数、值类型、单位／参考系、生产者、采样时刻、有效期和关联范围。端口按 `instance_id/port_id` 解析，观测按已登记的提供者取值；事件另带序号或版本。条件的真假与信号有效性分开，过期、缺失或主体不匹配时结果为未知。
 
 | 逻辑信号或判定 | 含义、类型与来源 |
 | --- | --- |
@@ -34,7 +102,7 @@
 
 ### 各类型如何把判据绑定到端口或观测
 
-下表是实现模板时要登记的绑定。小写英文端口是当前型号中可核对的示例；右列给出组成条件还需读取的事实。具体型号发布哪些端口，以兼容矩阵为准。布尔信号必须携带其所属实例和有效性。缺少受支持的 PLC 信号时可以绑定已注册的物理或服务观测，两种来源均需声明。
+下表是**条件取证示例**。对外发布的信号须先按本文“信号契约与按能力裁剪”选型并登记。端口读取带实例身份和质量。物理或服务观测可以补充判定，或由指定发布者投影为输出；已启用能力规定的外部信号须独立通过 I/O 与时序验收。
 
 | 设备 | 可绑定的设备级信号示例 | 条件的具体取值方式 |
 | --- | --- | --- |
@@ -51,7 +119,7 @@
 
 ## 2. 十类设备的通用行为
 
-表内中文名称是设备行为的语义分组。括号或反引号中的 ID 是兼容入口，同组入口仍保有各自的参数、方向与结束条件。共用的有限动作协议沿用选定型号的命令及结果端口，各表主要写与该行为有关的信号。每一行的前置与完成栏同时给出逻辑信号或对应的实测来源。
+表内中文名称是设备行为的语义分组。括号或反引号中的 ID 是兼容入口，同组入口仍保有各自的参数、方向与结束条件。有限动作按上述协议及设备的合法专用入口核对。以下各表聚焦动作判据，完整信号元数据、各类型适用端口和握手时序见前文。每一行的前置与完成栏同时给出逻辑信号或对应的实测来源。
 
 ### 机械臂 `robot_arm`
 
@@ -103,7 +171,7 @@
 | 接触运输与观测：`be_conveyed`、`respond_to_physics`、`publish_material_state`、`observe_material` | 已登记的物料有有效物理采样或对应模式的预览观测。 | 对外提供位置、区域、支承和持有者快照。单件加工结果由加工执行方提交，物料保存该状态。 |
 | 可选承载属性 | 预留读同一槽位的可用性、尺寸与权属；装载确认读实际落槽、同件支承及有效预留；卸载读接方实收。 | 预留和取消更新预留令牌。确认装载后更新占用与数量，随盘运动保持同件约束，卸出后释放槽位。占用和运输状态由载荷台账发布。托盘没有主动动作。 |
 
-旧托盘的 `reserve_carrier_slot`、`cancel_carrier_reservation`、`confirm_load` 对应预留、取消和装载确认；`carry_material`、`release_material`、`be_transported_loaded` 对应被动随动、卸载和整盘运输；`publish_carrier_state`、`observe_slots` 对应状态查询或观测。物料和载具原有的触发、返回值及执行范围按兼容矩阵保留。
+旧托盘的 `reserve_carrier_slot`、`cancel_carrier_reservation`、`confirm_load` 对应预留、取消和装载确认；`carry_material`、`release_material`、`be_transported_loaded` 对应被动随动、卸载和整盘运输；`publish_carrier_state`、`observe_slots` 对应状态查询或观测。物料和载具原有的触发、返回值和执行范围按相应旧型号契约保留，托盘状态端口按 schema.md 第八类映射到承载属性。
 
 ### 滑轨 `linear_rail`
 
@@ -134,7 +202,7 @@
 | --- | --- | --- |
 | 搬运：`carry_material` | `Ready(人)`、`Empty(手)`，同件 `At(M,S)` 且可拾取，源抓取口匹配，路线可通过，`CanReceive(D,M)`。捕获瞬间核对可达、距离与吸附约束。 | 指定物料在 D 稳定受支承、手已释放，接收登记成立并按请求撤到安全位置。对外输出 `SupportedAt(M,D)`、`Transferred(M,S,D,…)`、`Empty(手)`，以及有实测依据的撤离状态。 |
 
-**实验兼容。** 旧 `processing_station` 的 `clamp` 与 `unclamp` 分别以同件实际夹紧、解除夹紧后仍有支承为完成条件；其 `process_material` 按已装夹工件、匹配配方、工艺就绪与互锁准入，以周期结束、同件同配方操作记录和工艺停止为证。继续按旧协议解析，其对照行保存在兼容矩阵中。
+**实验兼容。** 旧 `processing_station` 的 `clamp` 与 `unclamp` 分别以同件实际夹紧、解除夹紧后仍有支承为完成条件；其 `process_material` 按已装夹工件、匹配配方、工艺就绪与互锁准入，以周期结束、同件同配方操作记录和工艺停止为证。继续按[旧实验工站协议](../../public/scene/S05/contracts/processing_station.json)解析。
 
 ## 3. DSL 怎样自动连信号
 
