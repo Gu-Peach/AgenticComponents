@@ -32,7 +32,7 @@
 | [ActionGateway](../../src/runtime/engine/ActionGateway.ts) | 单主体输送请求、支承/到达/掉落/超时判定 | 统一跨设备行为入口、资源集原子授权、重复请求及取消/停止关联 |
 | [SimulationSession](../../src/runtime/engine/SimulationSession.ts) | 启动、暂停、恢复、step、stop | stop当前调用底层立即销毁式逻辑，场景运行需区分受控停止、已停稳和销毁 |
 | [compileDeclarativeScene](../../src/domain/runtime/compileDeclarativeScene.ts) | 已放入项目的契约1.3传送带+物料编译 | 名称里的Declarative不表示已经解析process.py；当前有水平输送面与单件实验约束 |
-| [模板注册](../../src/runtime/templates/registerTemplates.ts) | 注册输送与机械臂模板 | 升降、旋转、仓储服务、载具服务及加工设备不能因存在JSON就视为已有执行器 |
+| [模板注册](../../src/devices/registry.ts) | 注册输送与机械臂模板 | 升降、旋转、仓储服务、载具服务及加工设备不能因存在JSON就视为已有执行器 |
 | [AssetPanel](../../src/features/catalog/AssetPanel.tsx)、[build-model-catalog](../../scripts/build-model-catalog.mjs) | 单设备目录与设备/物料载具筛选 | 目录生成器扫描`public/modles`，尚无场景包导入事务 |
 | [PlcPanel](../../src/features/plc/PlcPanel.tsx) | ST编辑、导入导出，运行按钮明确未接入 | 现有内部DeviceDefinition.interfaces是规范化信号列表的历史字段名，不等于原始DeviceSpec空间interfaces；新场景模块直接读取contract.signal_ports，实时快照仍待接入 |
 

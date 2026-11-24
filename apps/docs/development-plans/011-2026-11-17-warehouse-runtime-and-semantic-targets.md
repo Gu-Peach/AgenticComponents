@@ -29,7 +29,7 @@
 
 | 已有代码 | 当前能力 | 本轮需要扩展 |
 | --- | --- | --- |
-| [registerTemplates.ts](../../src/runtime/templates/registerTemplates.ts) | 单设备注册传送带、机械臂 | 新设备可复用的执行核心 |
+| [设备模板注册表](../../src/devices/registry.ts) | 单设备注册传送带、机械臂 | 新设备可复用的执行核心 |
 | [SceneRuntimeAssembler.ts](../../src/runtime/assembly/SceneRuntimeAssembler.ts) | 场景主动工厂为 conveyor@1.2.0、robot_arm@1.0.0 | 升降台、滑轨、仓储服务及供料环境装配 |
 | [DeviceActionPort.ts](../../src/runtime/adapters/scene/DeviceActionPort.ts) | 命令预检、提交、取消、停止、反馈接口 | 新适配器沿用该协议；设备不自行推进世界 |
 | [KinematicToolDriver.ts](../../src/runtime/physics/jolt/KinematicToolDriver.ts) | 调用 Jolt MoveKinematic，将运动学刚体移至下一步位姿 | 复用运动原语，外部增加限速轨迹、交接状态机 |

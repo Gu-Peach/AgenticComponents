@@ -5,7 +5,7 @@ import { Quaternion, Vector3 } from "three";
 import type { PhysicsPort } from "@/contracts/physics";
 import type { CompiledSceneRuntime } from "@/contracts/scene-execution";
 import type { ActionRequest } from "@/contracts/scheduler";
-import type { TransportTarget } from "@/runtime/adapters/scene/PositionTransportAdapter";
+import type { TransportTarget } from "@/devices/conveyor/behavior";
 
 function location(
   c: CompiledSceneRuntime,

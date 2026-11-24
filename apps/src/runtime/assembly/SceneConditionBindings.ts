@@ -14,7 +14,7 @@ import type {
 } from "@/contracts/condition-expression";
 import type { BodyPose } from "@/contracts/physics";
 import type { ActionBinding } from "@/contracts/scheduler";
-import type { PositionTransportConfig } from "@/runtime/adapters/scene/PositionTransportAdapter";
+import type { PositionTransportConfig } from "@/devices/conveyor/behavior";
 import type { EnvironmentReceipt } from "@/runtime/services/FiniteSceneEnvironment";
 import { RobotKinematics } from "@/runtime/kinematics/RobotKinematics";
 import { CcdPositionIK } from "@/runtime/kinematics/CcdPositionIK";

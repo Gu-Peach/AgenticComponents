@@ -39,7 +39,7 @@ apps/src/devices/
 
 **现有函数如何归位。** 举例来说，`HumanCarryMotion` 的吸附搬运阶段归 `human_operator/behavior.ts`，`RotaryIndexMotion` 的带载分度归 `rotary_table/behavior.ts`。机械臂的抓放、交接、工具加工从 `RobotSceneAdapter`、`RobotJobRunner`、`BottleHandoffLine` 和 `RobotProcessingMotion` 等提取设备专属逻辑，集中到 `robot_arm/behavior.ts`。传送带的单机启停调速和场景定位输送均归 `conveyor/behavior.ts`，保留各自的输入与完成语义。升降台的虚拟交接和滑轨的定位分别归入各自脚本。
 
-**共用与场景逻辑的边界。** 关节轨迹、单轴轨迹、逆运动学和 Jolt 约束等共用算法由脚本调用。PLC 通用请求握手、信号注册、工艺调度与资源仲裁保留在运行时。场景继续提供批次、端点连接、共享区域和独立验收目标。例如双臂交接时，机械臂脚本负责当前手臂的动作，装配上下文提供对端实例、相遇点和共享工件的所有权。迁移期间旧文件可转导出新实现，最终以十个类型脚本为设备行为的维护入口。
+**共用与场景逻辑的边界。** 关节轨迹、单轴轨迹、逆运动学和 Jolt 约束等共用算法由脚本调用。PLC 通用请求握手、信号注册、工艺调度与资源仲裁保留在运行时。场景继续提供批次、端点连接、共享区域和独立验收目标。例如双臂交接时，机械臂脚本负责当前手臂的动作，装配上下文提供对端实例、相遇点和共享工件的所有权。设备执行器通过统一注册表创建。通用协议仍由 runtime/adapters/scene 提供，设备行为由十个类型脚本维护。
 
 ## 3. 行为覆盖基线
 
@@ -132,7 +132,7 @@ apps/src/devices/
 | --- | --- | --- |
 | 1. 登记实现 | 拟建 `src/devices/registry.ts` 静态导入各 `<type>/index.ts`；各工厂导入同目录 `contract.json` 与 `behavior.ts`，对照 `catalog.json` | 登记“类型、修订、运行模式 → 工厂”。检查重复键及清单与实际导出的差异。新型号只能选择其契约声明且有对应实现的可执行动作。 |
 | 2. 发布资产 | 单设备经过 `scripts/build-model-catalog.mjs`；场景经过 `scripts/build-scene-catalog.py` 的 `SceneParser.compile`、`scripts/lib/scene_devices.py` 的 `load_scene_devices`、`scene_prefabs.py` 的 `expand_prefabs` 及 `scene_binding_check.py` 的 `validate_inputs` | 将类型模板和型号绑定展开为完整 DeviceSpec。单设备生成型号定义与模型索引；场景从 `process.py` 编译 IR，输出含调用清单、实例和来源摘要的 `.generated/scene.bundle.json`。Python 只消费 JSON 声明，TypeScript 实现由静态注册表关联。 |
-| 3A. 单设备导入与加载 | `src/services/PublicModelCatalog.ts` → `src/domain/normalizeDeviceSpec.ts` → 统一契约分支 `normalizeUnifiedDevice.ts`。运行时经 `src/services/RuntimeController.ts` → `src/domain/runtime/compileRuntimeScene.ts` → `src/runtime/engine/RuntimeKernel.ts` → `src/runtime/programs/RuntimeProgramFactory.ts` → `RobotProgram.ts` 或 `ConveyorProgram.ts` | 从工程取得型号定义、实例覆盖与已选物料。当前两个程序在 `src/runtime/templates/registerTemplates.ts` 查模板并创建脚本；迁移后在同一位置经 `devices/registry.ts → <type>/index.ts → behavior.ts` 创建单设备驱动。原有手动信号和机械臂命令继续沿本入口提交。 |
+| 3A. 单设备导入与加载 | `src/services/PublicModelCatalog.ts` → `src/domain/normalizeDeviceSpec.ts` → 统一契约分支 `normalizeUnifiedDevice.ts`。运行时经 `src/services/RuntimeController.ts` → `src/domain/runtime/compileRuntimeScene.ts` → `src/runtime/engine/RuntimeKernel.ts` → `src/runtime/programs/RuntimeProgramFactory.ts` → `RobotProgram.ts` 或 `ConveyorProgram.ts` | 从工程取得型号定义、实例覆盖与已选物料。程序工厂经 `devices/registry.ts → <type>/index.ts → behavior.ts` 创建对应的单设备运行程序。原有手动信号和机械臂命令继续沿本入口提交。 |
 | 3B. 场景导入与加载 | `src/services/PublicSceneCatalog.ts` 的 `importScenePackage` → `SceneRuntimeController.ts` → `prepareScenePackage.ts` → `src/domain/runtime/compileSceneRuntime.ts` → `src/runtime/assembly/SceneRuntimeAssembler.ts` 和相应专用装配器 | 校验模型、场景包与输入文件哈希，编译实例与物理点位。当前使用 `RuntimeFactoryRegistry.ts` 或专用装配器创建驱动；迁移后统一向 `devices/registry.ts` 查询类型工厂。`<type>/index.ts` 接收型号、`instanceId`、`runId` 及物理／点位／资源服务，由本类型的 `behavior.ts` 创建该实例的动作处理器。 |
 | 4. 绑定 DSL 工步 | 装配器 → `src/domain/runtime/compileConditions.ts`、`bindDeviceBehavior.ts` → `bindProcess.ts` | 将行为签名、载荷、信号和条件绑定为工步使用的 `ActionBinding`。核对 DSL 中的实例、行为、单位和所需提供者。被动观测和待接入声明保留各自的状态。未来自搭场景也从用户选定的实例、连接和 DSL 形成同样的输入，复用同一组工厂。 |
 | 4B. 自动连接工艺信号（拟新增） | 场景准备根据 DSL 控制图和实例连接生成信号绑定表，再交给条件编译与调度入口 | 前驱成功结果开启后继的判定窗口。同物料、同端点、语义兼容的证据可绑定后继所需的外部条件。本机状态、物理支承与资源授权按当前有效值独立核验。首步可从初态获得证据。 |

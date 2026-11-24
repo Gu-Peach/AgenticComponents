@@ -2,7 +2,7 @@ import { it, expect } from "vitest";
 import { robotSetup } from "./robot-helpers";
 import { createJoltBackend } from "../src/runtime/physics/jolt/JoltPhysicsBackend";
 import { RobotKinematics } from "../src/runtime/kinematics/RobotKinematics";
-import { RobotSceneAdapter } from "../src/runtime/adapters/scene/RobotSceneAdapter";
+import { getDeviceModule } from "@/devices/registry";
 it("executes a scene robot against the shared Jolt world without stepping it inside the adapter", async () => {
   const { scene } = robotSetup();
   scene.model.urdf.joints.forEach((j) => (j.limit = null));
@@ -33,12 +33,18 @@ it("executes a scene robot against the shared Jolt world without stepping it ins
     ],
     surfaces: [],
   });
-  const driver = new RobotSceneAdapter("S", "run", scene, physics, () => ({
+  const driver = getDeviceModule("robot_arm").createSceneDriver(
+    "S",
+    "run",
     scene,
-    steps: [
-      { kind: "move_to_pose", position: target.position, frame: "world" },
-    ],
-  }));
+    physics,
+    () => ({
+      scene,
+      steps: [
+        { kind: "move_to_pose", position: target.position, frame: "world" },
+      ],
+    }),
+  );
   const request = {
     runId: "run",
     activationId: "move",

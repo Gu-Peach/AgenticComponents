@@ -30,8 +30,8 @@ S02若使用的设备能力已经支持，只需提供有效配置与DSL即可�
 | [bindProcess](../../src/domain/runtime/bindProcess.ts)、[bindDeviceBehavior](../../src/domain/runtime/bindDeviceBehavior.ts) | 控制树、行为版本、参数/条件、资源与执行模式绑定 | 自动从场景能力表建立完整绑定，不再由测试逐个手工拼装 |
 | [ProcessScheduler](../../src/runtime/scheduler/ProcessScheduler.ts)及signals目录 | 工步生命周期、请求/资源仲裁、条件、命令与反馈帧 | 得到真实设备执行器、条件提供者、对象身份和环境服务 |
 | [SceneRuntimeProgram](../../src/runtime/engine/SceneRuntimeProgram.ts) | 调度、请求提交、一次物理步及反馈发布的组合宿主 | 接收通用工厂生成的全场drivers/world，不额外创建第二个时钟 |
-| [compileSceneRobot](../../src/domain/runtime/compileSceneRobot.ts)、[RobotSceneAdapter](../../src/runtime/adapters/scene/RobotSceneAdapter.ts) | 米制场景运动学、显式无限位、复用轨迹/抓放执行器 | 为每次物料和目标构造正确RobotStep、支承与工具引用，验证碰撞与实际抓放 |
-| [PositionTransportAdapter](../../src/runtime/adapters/scene/PositionTransportAdapter.ts)、[bindPositionTransport](../../src/domain/runtime/bindPositionTransport.ts) | 位置目标输送、统一控制组成员、实际位置/速度/支承反馈及请求握手 | 从场景自动生成目标表、主体参考点、资源及下游交接回调 |
+| [compileSceneRobot](../../src/domain/runtime/compileSceneRobot.ts)、[RobotSceneAdapter](../../src/devices/robot_arm/behavior.ts) | 米制场景运动学、显式无限位、复用轨迹/抓放执行器 | 为每次物料和目标构造正确RobotStep、支承与工具引用，验证碰撞与实际抓放 |
+| [PositionTransportAdapter](../../src/devices/conveyor/behavior.ts)、[bindPositionTransport](../../src/domain/runtime/bindPositionTransport.ts) | 位置目标输送、统一控制组成员、实际位置/速度/支承反馈及请求握手 | 从场景自动生成目标表、主体参考点、资源及下游交接回调 |
 | [compileTransportTargets](../../src/domain/runtime/compileTransportTargets.ts)、[mergeCoupledConveyors](../../src/domain/runtime/mergeCoupledConveyors.ts) | 目标坐标解析，严格校验后的连续共面联合支承代理 | 由驱动组声明选择使用；几何不兼容时拒绝合并，不任意补平间隙 |
 | [JoltPhysicsBackend](../../src/runtime/physics/jolt/JoltPhysicsBackend.ts) | 多输送面、载具支承、寻址刚体、预分配实例启用/移除 | 从整个场景生成可靠的body/surface/tool配置，不能用未验证代理冒充真实几何 |
 | [FiniteSceneEnvironment](../../src/runtime/services/FiniteSceneEnvironment.ts) | 有限供盘、支承确认、物料交接、空盘移除与回执 | 接入每轮准入、出料行为和独立验收，按场景声明驱动而非测试直接调用 |

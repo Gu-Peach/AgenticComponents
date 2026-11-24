@@ -5,7 +5,7 @@ import type {
   ConditionContext,
 } from "@/contracts/conditions";
 import { ConditionProviders } from "@/runtime/signals/ConditionProviders";
-import type { PositionTransportConfig } from "@/runtime/adapters/scene/PositionTransportAdapter";
+import type { PositionTransportConfig } from "@/devices/conveyor/behavior";
 import { bindDeviceBehavior } from "./bindDeviceBehavior";
 const vector = z.tuple([
   z.number().finite(),

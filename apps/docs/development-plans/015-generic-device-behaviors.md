@@ -179,7 +179,7 @@
 
 现有测试示例：等待 `in1Tag == true`（超时 1 仿真秒），随后写 `out1Tag = true`，再等待 0.03 仿真秒。三步执行完毕，才回报这一个请求成功。当前十二个发布场景的 DSL 都没有直接调用此入口。[命令载荷](../../src/contracts/robot-command.ts) · [实际执行用例](../../tests/robot-runtime.test.ts)
 
-[抓放条件绑定](../../src/runtime/assembly/SceneConditionBindings.ts) · [双臂交接](../../src/runtime/assembly/HandoffRuntimeAssembler.ts) · [加工条件](../../src/runtime/assembly/IndexedProcessingRuntimeAssembler.ts) · [UR10 信号与状态](../../src/runtime/programs/RobotProgram.ts) · [机械臂步骤执行](../../src/runtime/templates/robot/RobotJobRunner.ts)
+[抓放条件绑定](../../src/runtime/assembly/SceneConditionBindings.ts) · [双臂交接](../../src/runtime/assembly/HandoffRuntimeAssembler.ts) · [加工条件](../../src/runtime/assembly/IndexedProcessingRuntimeAssembler.ts) · [UR10 信号与状态](../../src/runtime/programs/RobotProgram.ts) · [机械臂步骤执行](../../src/devices/robot_arm/behavior.ts)
 
 <details>
 <summary>通用行为语义与兼容入口</summary>
@@ -218,7 +218,7 @@
 | `meter_release` | 按规定的最小放行间隔逐件允许工件离开末区，控制出料节奏。 | 出口检测到该件、`release_waiting_material == true`；首件或距上次实际放行的仿真时间≥`release_gap_s`。 | 持续门控；每件通过检测点只记录一次实际放行并更新计时，最终接收由交接回执确认。 |
 | `publish_drive_feedback` | 按仿真步发布带面实速、运行状态和检测区状态，配置编码器时还发布行程或脉冲。 | 每步读取已配置的带面速度、支承及检测区观测。 | 持续输出 `actual_speed`、`runningTag`、`part_ready` 等有效采样；启用编码器时按实际速度与步长累计 `encoderTag`。 |
 
-[输送适配器与到位判定](../../src/runtime/adapters/scene/PositionTransportAdapter.ts) · [条件键与实际观测](../../src/runtime/assembly/SceneConditionBindings.ts) · [输送带契约](../../../test1/docs/schema.md)
+[输送适配器与到位判定](../../src/devices/conveyor/behavior.ts) · [条件键与实际观测](../../src/runtime/assembly/SceneConditionBindings.ts) · [输送带契约](../../../test1/docs/schema.md)
 
 <details>
 <summary>通用行为语义与兼容入口</summary>
@@ -248,7 +248,7 @@
 | `convey_on_deck` | 在转台停稳并对接后，驱动选配的台面输送机构，使工件沿台面进出。 | 台面输送模块启用，`rotating == false`、与接收端对齐，`transfer_enable == true` 且已选速度输入有效。 | 持续发布实际输送及占用状态。物料离台后由接收端确认 `release_material`。 |
 | `publish_turntable_state` | 持续报告台面角度、是否转动、是否到站和交接区占用情况。 | 每步读取转子角度、角速度与支承区占用。 | 持续更新 `actual_angle`、`rotating`、`at_station`、`occupied`。空载定位允许时不要求 `occupied == true`。 |
 
-[转台实测角度与制停](../../src/runtime/mechanisms/RotaryIndexMotion.ts) · [分度请求与回执](../../src/runtime/assembly/IndexedProcessingRuntimeAssembler.ts) · [其余转台型号声明](../../public/scene/S12/contracts/rotary_table.json)
+[转台实测角度与制停](../../src/devices/rotary_table/behavior.ts) · [分度请求与回执](../../src/runtime/assembly/IndexedProcessingRuntimeAssembler.ts) · [其余转台型号声明](../../public/scene/S12/contracts/rotary_table.json)
 
 <details>
 <summary>通用行为语义与兼容入口</summary>
@@ -285,7 +285,7 @@
 | 完成／`machine_material.completion` | **请求账本＋观测**：`requestState.outcome == "succeeded"`；`m.operations` 有 `material == M AND request == r.requestId` 的记录；本件 `materialState == "finished"`。同时保持同件在加工点、有效支承、区域清空及加工站到位。 |
 | 结果／PLC 投影 | **出** `accepted`、`busy`、`done`、`error`（BOOL）和 `result_id`（DINT）。消费者只将本次成功回执、上行完成证据与匹配结果号合在一起解释为成功。停稳条件另读有效的 `busy == false`。 |
 
-[机床条件提供者](../../src/runtime/assembly/LoadingRuntimeAssembler.ts) · [支承判据与容差](../../src/runtime/assembly/machiningDevices.ts) · [状态与加工记录](../../src/runtime/services/MachiningLineEnvironment.ts) · [命令端口及实际周期](../../src/runtime/adapters/scene/MachineToolAdapter.ts)
+[机床条件提供者](../../src/runtime/assembly/LoadingRuntimeAssembler.ts) · [支承判据与容差](../../src/runtime/assembly/machiningDevices.ts) · [状态与加工记录](../../src/runtime/services/MachiningLineEnvironment.ts) · [命令端口及实际周期](../../src/devices/machine_tool/behavior.ts)
 
 <details>
 <summary>通用行为语义与兼容入口</summary>
@@ -380,7 +380,7 @@
 | `move_to_position` | 直接按给定的米制轴坐标移动滑座及其搭载设备。 | 轴组停稳；S07 适配器取请求参数 `position_m.value`、单位 m，检查有限、限位和带载路径。设备契约另有 PLC 目标口 `target_position`，映射由输入模式选定。 | 同一到位判定，比较对象为冻结的数值目标。 |
 | `stop_motion` | 使轨道受控制动并确认滑座静止，同时保持既有载荷关系。 | 校验目标设备及制停能力，速度可读。S07 独立停止动作的预检要求装配停稳；运行中取消走驱动 `requestStop()` 的制动路径。 | 读取轨迹 `settled`：轴速度绝对值 < 0.001 m/s 且已制停或剩余误差 < 0.001 m。保持既有载荷归属；停止回执只关联本次停止。 |
 
-S07 驱动使用 `execute`、`request_id` 的请求握手；`actual_position`、`actual_speed` 是设备级输出。授权阶段由资源仲裁器复核当前请求持有的运动资源。[轨道适配器](../../src/runtime/adapters/scene/LinearRailSceneAdapter.ts) · [轴位姿与阈值](../../src/runtime/services/DeviceMountService.ts) · [仓储条件提供者](../../src/runtime/assembly/WarehouseRuntimeAssembler.ts)
+S07 驱动使用 `execute`、`request_id` 的请求握手；`actual_position`、`actual_speed` 是设备级输出。授权阶段由资源仲裁器复核当前请求持有的运动资源。[轨道适配器](../../src/devices/linear_rail/behavior.ts) · [轴位姿与阈值](../../src/runtime/services/DeviceMountService.ts) · [仓储条件提供者](../../src/runtime/assembly/WarehouseRuntimeAssembler.ts)
 
 <details>
 <summary>通用行为语义与兼容入口</summary>
@@ -410,7 +410,7 @@ S07 驱动使用 `execute`、`request_id` 的请求握手；`actual_position`、
 | `raise_transfer_chains` | 抬起选配的辅助横移链，使链条到达上工作位，准备接托或横移工件。 | `transfer_module == true`、主轴停稳、行程与资源允许；入 `popupTag == true`。 | 辅助机构实测到上位。按型号提供的实际位置或限位观测确认，启动命令和 `transfer_ready` 单独均不足以证明到位。 |
 | `lower_transfer_chains` | 将选配的辅助横移链降至下工作位，同时维持工件已建立的支承关系。 | `transfer_module == true`、主轴停稳、工件有可靠支承或已交接；入 `popupTag == false`。 | 辅助机构实测到下位，工件原有持有或支承关系仍有效。 |
 
-S07 虚拟交接与参考型号的辅助链属于不同配置。S07 的物理完成回执匹配 `runId`、`activationId` 和 `requestId`。[升降适配器](../../src/runtime/adapters/scene/LiftSceneAdapter.ts) · [物料接触与归属提交](../../src/runtime/services/MaterialTransferService.ts) · [选配横移接口](../../../test1/dsl_new/asset_contracts/assets/lift_transport.json)
+S07 虚拟交接与参考型号的辅助链属于不同配置。S07 的物理完成回执匹配 `runId`、`activationId` 和 `requestId`。[升降适配器](../../src/devices/lift_table/behavior.ts) · [物料接触与归属提交](../../src/runtime/services/MaterialTransferService.ts) · [选配横移接口](../../../test1/dsl_new/asset_contracts/assets/lift_transport.json)
 
 <details>
 <summary>通用行为语义与兼容入口</summary>
@@ -471,7 +471,7 @@ S07 虚拟交接与参考型号的辅助链属于不同配置。S07 的物理完
 | 持续／`carry_material.sustaining` | **出反馈＋观测**：人物 `error == false` 的样本有效，`w.robotHome && w.stopped[台]`。持件阶段另查本次吸附约束存在，掌面与抓取点的距离保持在容差内。 |
 | 完成／`carry_material.completion` | **物理＋账本**：放下时先确认 D 的实际支承、同件落点和静止，退回时再次确认。要求 `w.humanHome && w.holding == null`、`requestState.outcome == "succeeded"`，且 `w.transfers` 中同一记录匹配 `r.requestId/M/S/D`。反馈为 **出** `holding_material == false` 和本次请求的 `done/result_id`。 |
 
-[条件和资源](../../src/runtime/assembly/IndexedProcessingRuntimeAssembler.ts) · [实际支承与交接记录](../../src/runtime/services/IndexingCellMotion.ts) · [掌面吸附与撤离](../../src/runtime/mechanisms/HumanCarryMotion.ts)
+[条件和资源](../../src/runtime/assembly/IndexedProcessingRuntimeAssembler.ts) · [实际支承与交接记录](../../src/runtime/services/IndexingCellMotion.ts) · [掌面吸附与撤离](../../src/devices/human_operator/behavior.ts)
 
 <details>
 <summary>通用行为语义与兼容入口</summary>

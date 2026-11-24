@@ -251,7 +251,7 @@ runTag 许可与状态判断
 ## 14. 参考与本次交付
 
 - [第三轮架构与实现记录](003-2026-10-30-runtime-engine-and-device-templates.md)
-- [当前传送带脚本](../../src/runtime/templates/conveyor/ConveyorTemplate.ts)
+- [当前传送带脚本](../../src/devices/conveyor/behavior.ts)
 - [当前物理适配层](../../src/runtime/physics/jolt/JoltPhysicsBackend.ts)
 - [Open-Industry 直线皮带脚本](E:/project/Open-Industry/examples/parts/belt-conveyor/part.js)
 - [Open-Industry 接触处理](E:/project/Open-Industry/src/sim/conveyorContacts.ts)

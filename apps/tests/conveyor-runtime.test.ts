@@ -7,7 +7,7 @@ import { createJoltBackend } from "../src/runtime/physics/jolt/JoltPhysicsBacken
 import { RuntimeKernel } from "../src/runtime/engine/RuntimeKernel";
 import { SimulationSession } from "../src/runtime/engine/SimulationSession";
 import { SignalRegistry } from "../src/runtime/engine/SignalRegistry";
-import { registerTemplates } from "../src/runtime/templates/registerTemplates";
+import { getDeviceModule } from "@/devices/registry";
 const def = normalizeDeviceSpec(
   JSON.parse(readFileSync("tests/fixtures/conveyor-v1.2.json", "utf8")),
 );
@@ -92,7 +92,7 @@ describe("contact transport runtime", () => {
     expect(() => signals.command("speedTag", -1)).toThrow();
     expect(() => signals.command("runTag", 1)).toThrow();
     expect(() => signals.command("done", true)).toThrow();
-    expect(registerTemplates().get("robot.articulated").id).toBe(
+    expect(getDeviceModule("robot_arm").standaloneTemplate.id).toBe(
       "robot.articulated",
     );
     const c = config(),

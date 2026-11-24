@@ -4,8 +4,7 @@ import { robotSetup } from "./robot-helpers";
 import { robotModelSchema } from "../src/contracts/robot";
 import { RobotKinematics } from "../src/runtime/kinematics/RobotKinematics";
 import { CcdPositionIK } from "../src/runtime/kinematics/CcdPositionIK";
-import { RobotJobRunner } from "../src/runtime/templates/robot/RobotJobRunner";
-import { RobotState } from "../src/runtime/templates/robot/RobotState";
+import { getDeviceModule } from "@/devices/registry";
 import { SignalRegistry } from "../src/runtime/engine/SignalRegistry";
 it("accepts explicit null limits, rejects omitted limits, and runs finite multi-turn targets", () => {
   const { scene } = robotSetup();
@@ -14,13 +13,14 @@ it("accepts explicit null limits, rejects omitted limits, and runs finite multi-
   const missing = structuredClone(scene.model);
   delete (missing.urdf.joints[0] as { limit?: unknown }).limit;
   expect(robotModelSchema.safeParse(missing).success).toBe(false);
-  const state = new RobotState(),
-    signals = new SignalRegistry([
-      { id: "enableTag", direction: "input", type: "BOOL" },
-    ]);
+  const signals = new SignalRegistry([
+    { id: "enableTag", direction: "input", type: "BOOL" },
+  ]);
   signals.command("enableTag", true);
   signals.begin(0);
-  const runner = new RobotJobRunner(scene, state, signals);
+  const { state, runner } = getDeviceModule(
+    "robot_arm",
+  ).standaloneTemplate.create(scene, signals);
   runner.plan([{ kind: "move_joints", q: [Math.PI * 4, 0, 0, 0, 0, 0] }]);
   for (let i = 0; i < 2400 && !runner.finished; i++) {
     runner.before(1 / 60);

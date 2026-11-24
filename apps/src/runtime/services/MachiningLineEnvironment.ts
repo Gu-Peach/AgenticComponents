@@ -10,7 +10,7 @@ import type { DeviceActionPort } from "@/runtime/adapters/scene/DeviceActionPort
 import type {
   TransportTarget,
   PositionTransportConfig,
-} from "@/runtime/adapters/scene/PositionTransportAdapter";
+} from "@/devices/conveyor/behavior";
 import type { SceneConditionWorld } from "@/runtime/assembly/SceneConditionBindings";
 import type { EnvironmentReceipt } from "./FiniteSceneEnvironment";
 

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { TransportTarget } from "@/runtime/adapters/scene/PositionTransportAdapter";
+import type { TransportTarget } from "@/devices/conveyor/behavior";
 const vector = z.tuple([
   z.number().finite(),
   z.number().finite(),

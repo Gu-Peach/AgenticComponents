@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { createJoltBackend } from "../src/runtime/physics/jolt/JoltPhysicsBackend";
-import { PositionTransportAdapter } from "../src/runtime/adapters/scene/PositionTransportAdapter";
+import { getDeviceModule } from "@/devices/registry";
 import { mergeCoupledConveyors } from "../src/domain/runtime/mergeCoupledConveyors";
 import {
   FiniteSceneEnvironment,
@@ -177,7 +177,7 @@ describe("position transport with real Jolt contact physics", () => {
       program,
       signals,
       p,
-      [new PositionTransportAdapter(profile, p)],
+      [getDeviceModule("conveyor").createSceneDriver(profile, p)],
       new ObservationRegistry("run", bound.observations),
     );
     try {
@@ -216,7 +216,7 @@ describe("position transport with real Jolt contact physics", () => {
     const p = await createJoltBackend(
       mergeCoupledConveyors(config(), ["left", "right"], "mainline"),
     );
-    const d = new PositionTransportAdapter(
+    const d = getDeviceModule("conveyor").createSceneDriver(
       {
         sceneId: "S",
         subjectIdPort: "subject_id",

@@ -11,7 +11,7 @@
 | 物理实验 | [RuntimeKernel.ts](../../apps/src/runtime/engine/RuntimeKernel.ts)、[compileRuntimeScene.ts](../../apps/src/domain/runtime/compileRuntimeScene.ts) 支持受限单输送机/单物料，固定 1/60 s | 不可将单机自动停带等特例当作通用 with-control |
 | 信号 | [SignalRegistry.ts](../../apps/src/runtime/engine/SignalRegistry.ts) 有效性/tick，允许 runTag/speedTag 输入和有限输出 | 多实例命名空间、完整协议投影、writer 仲裁及授权；不是完全没有信号代码 |
 | 请求 | [ActionGateway.ts](../../apps/src/runtime/engine/ActionGateway.ts) 为单主体运输观察任务，重复请求抛错，依支承/出口观测给结果 | 幂等重发、摘要冲突、接受握手、停止确认、持久去重、资源释放；不能等同本文网关 |
-| 模板注册 | [registerTemplates.ts](../../apps/src/runtime/templates/registerTemplates.ts) 仅注册 ConveyorTemplate | reserved 名称不是实现；机械臂/交接/载具仍待接入 |
+| 模板注册 | 编写本页时仅注册 ConveyorTemplate，现行入口见[设备注册表](../../apps/src/devices/registry.ts) | reserved 名称不是实现；机械臂/交接/载具仍待接入 |
 | 历史场景 | [scene1](../docs/scene1/scene_document.json) 与其旧设备含 process_ports/事件信号 | 显式迁移；空间吸附不生成信号或授权 |
 | PLC 参考 | [test.st](test.st) 有模板占位和项目特有 LADDER 文本 | 不是已展开或通过验证的 PLC 对照 |
 
