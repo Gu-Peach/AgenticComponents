@@ -93,11 +93,11 @@ apps/src/devices/
 
 按上述发布场景、三个独立模型包、四个公共契约示例、参考设备模板、示意观测和机械臂命令取并集，共有 **82 个不同的旧类型与 ID 组合**（76＋3 个升降声明＋2 个示意观测＋1 个 `move_joints`）。归档协议、底层方法和 PLC 信号另外核验。实施时按“原来源／型号修订／调用模式／原 ID”生成映射，保留每一项的声明、实现或兼容去向。遇到同名动作跨类型或同修订不同型号时分别比对，避免静默覆盖。
 
-### 3.3 逐设备行为契约
+### 3.3 通用设备行为与历史兼容
 
-[设备行为、判定条件与信号接口附表](015-device-behavior-contract-matrix.md)是十类设备编写 `contract.json` 和 `behavior.ts` 时的逐项依据。每行同时给出适用来源、前置与持续条件、完成证据、输入及输出信号。先选择型号和运行模式，再采用该行的整套约定。普通物料和带承载属性的托盘通过被动响应与状态观测参与工艺。
+[通用设备行为与工艺信号连接](015-generic-device-behaviors.md) 确定每类设备行为自身的前置、持续、完成条件和信号绑定，也是编写十类设备模板的设计依据。行为只声明需要哪些主体和端点的状态，以及完成时可以证明哪些结果。来源由场景实例连接、物理观测和资源服务在准备时绑定。
 
-例如 S11 的人物搬运读取 `execute`、`request_id`，只有物料已到目标、得到支承、人物空手撤回，并取得同一请求的移交回执才完成。该行为声明的输出为 `accepted`、`busy`、`done`、`result_id`、`error`、`holding_material`。附表对其他行为按同一口径列示，并保留旧托盘、实验工站、独立模型与历史示例的协议差异。
+[历史行为与端口兼容矩阵](015-device-behavior-contract-matrix.md) 用于回归既有行为 ID、型号签名和信号协议。相同的通用动作可接受多种旧入口，例如滑轨的数值位置和具名工位均映射为轴定位，同时保留原单位、限位和到位判据。
 
 ## 4. 契约模板与运行绑定
 
@@ -131,6 +131,7 @@ apps/src/devices/
 | 3A. 单设备导入与加载 | `src/services/PublicModelCatalog.ts` → `src/domain/normalizeDeviceSpec.ts` → 统一契约分支 `normalizeUnifiedDevice.ts`。运行时经 `src/services/RuntimeController.ts` → `src/domain/runtime/compileRuntimeScene.ts` → `src/runtime/engine/RuntimeKernel.ts` → `src/runtime/programs/RuntimeProgramFactory.ts` → `RobotProgram.ts` 或 `ConveyorProgram.ts` | 从工程取得型号定义、实例覆盖与已选物料。当前两个程序在 `src/runtime/templates/registerTemplates.ts` 查模板并创建脚本；迁移后在同一位置经 `devices/registry.ts → <type>/index.ts → behavior.ts` 创建单设备驱动。原有手动信号和机械臂命令继续沿本入口提交。 |
 | 3B. 场景导入与加载 | `src/services/PublicSceneCatalog.ts` 的 `importScenePackage` → `SceneRuntimeController.ts` → `prepareScenePackage.ts` → `src/domain/runtime/compileSceneRuntime.ts` → `src/runtime/assembly/SceneRuntimeAssembler.ts` 和相应专用装配器 | 校验模型、场景包与输入文件哈希，编译实例与物理点位。当前使用 `RuntimeFactoryRegistry.ts` 或专用装配器创建驱动；迁移后统一向 `devices/registry.ts` 查询类型工厂。`<type>/index.ts` 接收型号、`instanceId`、`runId` 及物理／点位／资源服务，由本类型的 `behavior.ts` 创建该实例的动作处理器。 |
 | 4. 绑定 DSL 工步 | 装配器 → `src/domain/runtime/compileConditions.ts`、`bindDeviceBehavior.ts` → `bindProcess.ts` | 将行为签名、载荷、信号和条件绑定为工步使用的 `ActionBinding`。核对 DSL 中的实例、行为、单位和所需提供者。被动观测和待接入声明保留各自的状态。未来自搭场景也从用户选定的实例、连接和 DSL 形成同样的输入，复用同一组工厂。 |
+| 4B. 自动连接工艺信号（拟新增） | 场景准备根据 DSL 控制图和实例连接生成信号绑定表，再交给条件编译与调度入口 | 前驱成功结果开启后继的判定窗口。同物料、同端点、语义兼容的证据可绑定后继所需的外部条件。本机状态、物理支承与资源授权按当前有效值独立核验。首步可从初态获得证据。 |
 | 5. 调用与反馈 | `src/runtime/engine/SceneRuntimeProgram.ts` 的 `advance` → `src/runtime/scheduler/ProcessScheduler.ts` → 已绑定驱动的 `prepare` → 提交输入信号 → `submit` → `SceneWorldStepper.ts` | 每步依次执行设备的 `beforePhysics`、共享物理世界的 `step` 和设备的 `afterPhysics`。设备提交信号、观测和带请求身份的反馈；`src/runtime/signals/` 发布快照，调度器在下一步核对持续／完成条件并推进 DSL。取消、停稳确认与资源释放同样经过既有协议。 |
 
 **例：S11 的一次加工。** `R1.process_material` 从工步取得工件、工装、`torch` 和 `weld`。准备时，已有的 `compileIndexedProcessing.ts` 校验工具与物料接口；迁移后的 `IndexedProcessingRuntimeAssembler.ts` 通过 `registry.ts` 把 `R1` 绑定到 `robot_arm/index.ts` 创建的实例。工步触发时，`robot_arm/behavior.ts` 执行接近、对准、停留和退位，按原条件提交加工回执。DSL 收到本次完成证据后，才调度转台的下一次分度。`R1` 的位姿和当前工件由场景注入，同一脚本可以服务其他符合契约的实例。
@@ -141,7 +142,7 @@ apps/src/devices/
 | --- | --- | --- |
 | 1. 冻结迁移清单 | 从十二个场景、`public/modles/`、单设备命令 schema 和运行注册点反向建立清单；对照旧类型枚举、声明版本和实际行为 | 158 个静态调用的原始记录可复现，每个调用、内部步骤和隐式服务均有去向，实验与待接入项有独立状态 |
 | 2. 建立模板源和发布链 | 以十类设备为目标，同步更新设备契约规范、类型校验与旧托盘导入映射，再接入 `scripts/build-model-catalog.mjs`、`scripts/build-scene-catalog.py`、`scripts/lib/scene_devices.py`。Python、Node 与工作台读取同一套版本化 JSON；TS 函数由静态注册表加载 | 模板＋能力＋型号绑定能生成完整 DeviceSpec，单设备导入器及场景编译器接受相应发布物；同一输入生成一致的结果 |
-| 3. 打通最小纵向流程 | 先迁移传送带与工件。让既有单设备实验和场景输送分别从同一设备目录获取实现。用两个独立添加的设备实例、具名入口/出口及短 DSL 验证解析和执行 | 实际工件到达目标并停稳，PLC 回执可追溯；改实例名或摆放后仍按目标解析。端口缺失、方向不兼容或待标定时能指出原因 |
+| 3. 打通最小纵向流程 | 先迁移传送带与工件。让既有单设备实验和场景输送分别从同一设备目录获取实现。先验证传送带与物料的接触输送，再接入机械臂，以短 DSL 验证“到位输送 → 同件取放”的控制边、条件信号边和现场反馈 | 实际工件到达目标并停稳，PLC 回执可追溯；改实例名或摆放后仍按目标解析。端口缺失、方向不兼容或待标定时能指出原因 |
 | 4. 按依赖迁移其余行为 | 先接入物料的承载属性并迁移机械臂和机床，回归装载、加工与双臂交接。随后迁移滑轨、升降台和货架，最后迁移人物、转台与工具加工。同步归集各场景使用的供料能力与所需环境接口 | 每迁一组，旧入口先转调新库，比较相同输入下的动作、信号、到位证据与最终工件归属，再移除重复实现 |
 | 5. 收敛入口与合并 | `compileRuntimeScene.ts`、`compileSceneRuntime.ts`、单设备模板注册与各 `*RuntimeAssembler.ts` 改为消费设备库。场景保留批次、连接解析、跨设备授权和目标验收 | 入口扫描及覆盖测试通过，执行器均可从对应类型目录找到；完成全量回归后将本分支合入 `main` |
 
@@ -151,6 +152,7 @@ apps/src/devices/
 
 - **契约与组织。** 十个类型目录分别核对 `contract.json`、`behavior.ts` 和 `index.ts`。契约通过通用 DeviceSpec 校验，注册表导出的动作和条件与该型号声明一致。核对单设备与整场景均经工厂进入同一个类型脚本。普通工件、托盘都由物料模板导入，公共资产与场景契约可以追溯到唯一维护源。检验重复注册、签名冲突、悬空端口、输入输出方向或单位错误、缺少已用行为实现、条件提供者缺失和有限动作缺少完成证据。所有可执行项都有测试或真实回放对应。
 - **行为零遗漏。** 以第 3 节的逐项清单对比迁移前后：82 个来源限定的类型／ID 均可追溯，158 个静态调用点逐一比对，机器人顶层命令和内部步骤按模式核验。实现阶段对每个已运行路径比较原输入、位置／状态、PLC 回执和最终工件归属，待接入项保留原诊断。任一旧记录缺少去向、行为重名发生覆盖或已用调用缺少处理器，均阻止合并。
+- **自动连线。** 输出可检查的生产者、消费者及主体与端点映射。验证同一抓放行为分别取自输送端和托盘，只需替换来源绑定。错物料、过期信号、丢失支承、同槽并发和循环等待等情形按通用行为规范中的反例验收。
 - **单设备与组合。** 保留独立输送实验、真实工件刚体和 UR10 抓放。验证同类型两个实例的独立状态、角色兼容与实际物料交接，以及暂停、停止、取消、放弃会话后的约束和资源释放。
 - **托盘兼容。** 使用普通工件、空托盘和预装托盘三组样例。普通工件可省略承载属性。新配置与旧托盘格式应得到等价的槽位、所有权和交付结果。重点复验 S01 逐件取走后空盘离场、S02 的 12 个下层位、1 个盖板位和 12 个上层位及其支承顺序，S06 九件加工后各回原槽，以及 S10 旧托盘的显式点位导入。验收时检查取消预留后可再次占用，同一工件在同时刻只有一个承载归属。
 - **既有场景。** S01 三盘 36 件并行交付；S02 六盘清单、上下层各 12 件与盖板的原有约束，并复验已覆盖的连续抓放归位；S04 四瓶头尾换手、倒置出带；S06 九件各加工一次并回原槽；S07 单件、三件成功且原四件任务仍报告第四层不可达；S11 四件各两次正向分度、一次加工、一次交付。另对十二个场景做全目录构建，比较原有可运行或阻塞结果。
