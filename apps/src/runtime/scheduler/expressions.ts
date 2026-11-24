@@ -1,3 +1,5 @@
+/** 在工艺节点的作用域内求值 DSL 表达式，解析点位和动作载荷，传播未知值，并将逻辑时长换算为仿真步数。 */
+
 import type { Expression } from "@/contracts/process-ir";
 import type { ConditionContext } from "@/runtime/signals/ConditionProviders";
 import type { ExpressionReader } from "@/contracts/scheduler";

@@ -1,3 +1,5 @@
+/** 组合滑轨和升降轴的运动，更新移动部件与承载点的物理位姿，检查到位状态及带载路径上的障碍物。 */
+
 import { Vector3 } from "three";
 import type { BodyPose, PhysicsPort } from "@/contracts/physics";
 import type { WarehouseAssembly } from "@/contracts/warehouse";

@@ -1,3 +1,5 @@
+/** 为瓶体双臂交接场景装配输送带、机械臂和供收料环境，将 DSL 动作绑定到设备，并用交接记录和出口姿态验证交付。 */
+
 import type { CompiledSceneRuntime } from "@/contracts/scene-execution";
 import type { ActionBinding, ActionRequest } from "@/contracts/scheduler";
 import type {

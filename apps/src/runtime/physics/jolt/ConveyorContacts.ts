@@ -1,3 +1,5 @@
+/** 根据接触法线识别物料与托盘的支承面，并为输送带上的接触设置相对表面速度。 */
+
 import type initJolt from "jolt-physics";
 import type Jolt from "jolt-physics";
 import type { RuntimeSurface } from "@/contracts/physics";

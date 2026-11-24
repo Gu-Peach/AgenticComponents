@@ -1,3 +1,5 @@
+/** 把设备契约中的条件绑定到当前调度步的信号、物理观测、请求和资源状态，供调度器判定动作能否开始或完成。 */
+
 import { Quaternion, Vector3 } from "three";
 import type { CompiledSceneRuntime } from "@/contracts/scene-execution";
 import type {

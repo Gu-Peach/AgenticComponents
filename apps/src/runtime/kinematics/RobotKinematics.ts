@@ -1,3 +1,5 @@
+/** 沿六轴运动链计算关节轴线和工具中心点的世界位姿，并将基座坐标系中的目标换算为世界坐标。 */
+
 import { Matrix4, Quaternion, Vector3 } from "three";
 import type { CompiledRobotScene } from "@/contracts/robot";
 import type { BodyPose } from "@/contracts/physics";

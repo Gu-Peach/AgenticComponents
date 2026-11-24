@@ -1,3 +1,5 @@
+/** 为单设备仿真提供统一入口，将固定步进、信号命令和动作请求分派给输送带或机械臂运行程序。 */
+
 import type { RuntimeScene } from "@/contracts/runtime";
 import type { PhysicsPort } from "@/contracts/physics";
 import type { RobotCommand } from "@/contracts/robot-command";

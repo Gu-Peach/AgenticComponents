@@ -1,3 +1,5 @@
+/** 把工艺调度器、设备驱动和共享物理世界接入同一次场景运行，每步根据上一帧反馈下发动作并发布新的信号和观测。 */
+
 import type {
   BoundProcess,
   ActionFeedback,

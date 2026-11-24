@@ -1,3 +1,5 @@
+/** 管理物料与工具或载具之间的固定约束，在抓取、交接和释放时同步更新约束与碰撞过滤。 */
+
 import type initJolt from "jolt-physics";
 import type Jolt from "jolt-physics";
 import { BodyRegistry } from "./BodyRegistry";

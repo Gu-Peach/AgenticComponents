@@ -1,3 +1,5 @@
+/** 维护场景刚体 ID 与 Jolt 刚体的映射，记录激活状态，并支持从碰撞回调反查场景刚体。 */
+
 import type Jolt from "jolt-physics";
 import type { RuntimeBody } from "@/contracts/physics";
 export class BodyRegistry {

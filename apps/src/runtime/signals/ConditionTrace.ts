@@ -1,3 +1,5 @@
+/** 保存各条件的最新判定和有限条状态变化记录，供诊断时追溯判定依据及对照结果。 */
+
 import type {
   ConditionDecision,
   ConditionDiagnostics,

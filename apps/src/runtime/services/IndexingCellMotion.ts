@@ -1,3 +1,5 @@
+/** 根据工单、工装占用和实测位姿构建搬运、分度与加工任务，记录每件物料的交接、转角和工具对准结果。 */
+
 import { Quaternion, Vector3 } from "three";
 import type { BodyPose, PhysicsPort } from "@/contracts/physics";
 import type { ActionRequest } from "@/contracts/scheduler";

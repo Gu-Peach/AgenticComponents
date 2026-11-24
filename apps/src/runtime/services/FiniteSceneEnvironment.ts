@@ -1,3 +1,5 @@
+/** 管理有限批次中托盘和物料的入场与离场，根据实际身份、支承和位置确认供料、物料交付及空盘移出。 */
+
 import { Quaternion, Vector3 } from "three";
 import type { BodyPose, PhysicsPort } from "@/contracts/physics";
 export interface EnvironmentBody {

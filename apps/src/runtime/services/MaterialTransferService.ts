@@ -1,3 +1,5 @@
+/** 用临时抓取约束沿直线移动同一物料，抵达目标后释放并检查实际支承。交接到升降台时将物料绑定到平台。 */
+
 import { Vector3 } from "three";
 import type { BodyPose, PhysicsPort } from "@/contracts/physics";
 import type { WarehouseLocation } from "@/contracts/warehouse";

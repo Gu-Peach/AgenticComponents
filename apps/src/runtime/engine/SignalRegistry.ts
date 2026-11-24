@@ -1,3 +1,5 @@
+/** 管理单设备的本地信号，按端口方向和类型校验写入值，在每步开始时提交暂存的输入命令。 */
+
 import type { RuntimeSignal, SignalValue } from "@/contracts/runtime-signals";
 export interface SignalDefinition {
   id: string;

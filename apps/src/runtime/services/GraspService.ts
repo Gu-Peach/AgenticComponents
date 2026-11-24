@@ -1,3 +1,5 @@
+/** 根据物料身份、载荷、捕获距离和相对速度建立抓取约束，检测持件偏移，释放后核实物料是否稳定放置。 */
+
 import { Matrix4, Quaternion, Vector3 } from "three";
 import type { CompiledRobotScene } from "@/contracts/robot";
 import type { BodyPose, PhysicsPort } from "@/contracts/physics";

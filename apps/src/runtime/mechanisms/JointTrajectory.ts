@@ -1,3 +1,5 @@
+/** 根据各关节的速度与加速度限制生成五次多项式轨迹，使关节同步到位，并逐步输出关节角和角速度。 */
+
 // Quintic time scaling gives synchronized joints with zero endpoint velocity/acceleration.
 export class JointTrajectory {
   private elapsed = 0;

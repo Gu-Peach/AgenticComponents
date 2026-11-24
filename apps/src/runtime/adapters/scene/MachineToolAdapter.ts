@@ -1,3 +1,5 @@
+/** 执行指定工件的定时加工，每个仿真步检查工件和机械臂是否满足加工条件，周期结束后提交该工件的加工结果。 */
+
 import type { ActionRequest } from "@/contracts/scheduler";
 import type { SceneSignalFrame } from "@/contracts/scene-signals";
 import type { MachiningLineEnvironment } from "@/runtime/services/MachiningLineEnvironment";

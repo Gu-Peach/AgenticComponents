@@ -1,3 +1,5 @@
+/** 实现多个设备共用的有限动作请求协议，驱动具体任务的开始、逐步执行和取消，并发布与请求号对应的 PLC 信号和结果。 */
+
 import type { ActionRequest, ActionFeedback } from "@/contracts/scheduler";
 import type { SceneSignalFrame, SignalWrite } from "@/contracts/scene-signals";
 import type { DeviceActionPort } from "./DeviceActionPort";

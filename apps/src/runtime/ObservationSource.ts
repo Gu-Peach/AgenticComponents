@@ -1,3 +1,5 @@
+/** 按设备实例保存最新的预览观测快照，并在发布或清空观测时通知订阅者。 */
+
 import type { ParamValue } from "@/contracts/device";
 /** Populate from the future sensor/runtime integration, never from project metadata. */
 export class ObservationSource {

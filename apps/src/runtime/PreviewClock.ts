@@ -1,3 +1,5 @@
+/** 将浏览器动画帧的时间累积为每秒 60 步的预览时钟，页面隐藏时暂停预览并清除累积时间。 */
+
 import type { PreviewController } from "./PreviewController";
 export function startPreviewClock(controller: PreviewController) {
   let last = 0,

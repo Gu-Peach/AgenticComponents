@@ -1,3 +1,5 @@
+/** 管理一次场景运行的设备信号，整批校验并提交控制输入或设备反馈，提供只读信号帧与变更记录。 */
+
 import type {
   SceneSignalDefinition,
   SceneSignalFrame,

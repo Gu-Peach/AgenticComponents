@@ -1,3 +1,5 @@
+/** 驱动机械臂接近工件加工口，对准并停稳后累计加工时间，归位时报告实际对接误差和持续步数。 */
+
 import { Quaternion, Vector3 } from "three";
 import type { WarehouseJob } from "@/runtime/adapters/scene/WarehouseActionAdapter";
 import type { HandoffArm } from "@/runtime/services/HandoffMotion";

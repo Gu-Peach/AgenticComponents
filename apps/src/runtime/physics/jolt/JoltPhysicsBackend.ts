@@ -1,3 +1,5 @@
+/** 实现仿真引擎的物理接口，创建并推进 Jolt 世界，管理刚体进出、工具运动、接触支承和载荷约束。 */
+
 import { moveTool } from "./KinematicToolDriver";
 import { GraspConstraints } from "./GraspConstraints";
 import { BodyRegistry } from "./BodyRegistry";

@@ -1,3 +1,5 @@
+/** 跟踪单条输送请求，根据物料支承和出口观测确认到达，并在物料掉落或超时时报告失败。 */
+
 import { RequestLedger } from "./RequestLedger";
 import type { RuntimeRequest } from "@/contracts/runtime";
 export class ActionGateway {

@@ -1,3 +1,5 @@
+/** 组装工作台共用的行为预览服务，将执行器、场景对象、设备观测和日志接入预览控制器，并同步文档锁定状态。 */
+
 import { runtimeController } from "@/services/RuntimeController";
 import { ExecutorRegistry } from "./ExecutorRegistry";
 import { PreviewController } from "./PreviewController";

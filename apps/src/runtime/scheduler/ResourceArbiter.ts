@@ -1,3 +1,5 @@
+/** 为工艺节点一次性申请或释放所需的整组资源，优先处理较早等待同一资源的节点。 */
+
 /** All-or-nothing leases. Persistent occupancy is represented separately by providers. */
 export class ResourceArbiter {
   private owners = new Map<string, string>();

@@ -1,3 +1,5 @@
+/** 将升降台的高度或具名工位换算为升降轴目标。接放料时检查对位与支承，再交给物料转移服务执行直线交接。 */
+
 import { Vector3 } from "three";
 import type { ActionRequest } from "@/contracts/scheduler";
 import type { PhysicsPort } from "@/contracts/physics";

@@ -1,3 +1,5 @@
+/** 逐步执行已绑定的工艺节点，检查动作条件、申请所需资源，并依据设备反馈决定后续节点和取消请求。 */
+
 import type { ProcessNode, Expression } from "@/contracts/process-ir";
 import type {
   BoundProcess,

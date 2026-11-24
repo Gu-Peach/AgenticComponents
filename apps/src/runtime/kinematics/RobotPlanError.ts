@@ -1,3 +1,5 @@
+/** 记录机械臂规划失败的工步、目标坐标、求解残差和伸展范围检查结果，供调用方定位不可达或未收敛的原因。 */
+
 import { Quaternion, Vector3 } from "three";
 import type { IKResult } from "./PositionIK";
 import { RobotKinematics } from "./RobotKinematics";

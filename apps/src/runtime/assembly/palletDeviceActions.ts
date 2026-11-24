@@ -1,3 +1,5 @@
+/** 提供两类托盘线共用的动作构建函数，根据托盘位姿计算槽位，生成顶部抓放与归位步骤，并创建联动输送带组。 */
+
 import { Quaternion, Vector3 } from "three";
 import type {
   CompiledSceneRuntime,

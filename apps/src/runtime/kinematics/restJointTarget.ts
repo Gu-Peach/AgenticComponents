@@ -1,3 +1,5 @@
+/** 用正运动学校验回位目标是否与模型零位的工具位姿一致，校验通过后返回各关节的零角度。 */
+
 import { Quaternion, Vector3 } from "three";
 import type { CompiledRobotScene } from "@/contracts/robot";
 import type { BodyPose } from "@/contracts/physics";

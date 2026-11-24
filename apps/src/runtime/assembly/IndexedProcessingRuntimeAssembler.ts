@@ -1,3 +1,5 @@
+/** 将人工搬运、转台分度和机器人加工绑定到同一场景，管理逐件供收料，并依据分度角、加工记录与交付顺序验收工单。 */
+
 import type { CompiledSceneRuntime } from "@/contracts/scene-execution";
 import type { ActionBinding, ActionRequest } from "@/contracts/scheduler";
 import type {

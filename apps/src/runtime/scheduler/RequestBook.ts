@@ -1,3 +1,5 @@
+/** 在同一次场景运行中按请求号关联设备反馈，核对设备和节点执行身份，并记录接受、完成、失败和停稳状态。 */
+
 import type { ActionFeedback, ActionRequest } from "@/contracts/scheduler";
 export interface RequestRecord {
   request: ActionRequest;

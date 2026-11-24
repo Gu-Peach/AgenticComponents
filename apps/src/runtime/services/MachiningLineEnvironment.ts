@@ -1,3 +1,5 @@
+/** 跟踪工件在原槽与机床加工点之间的交接，验证加工条件、登记成品状态，并核实所有工件回到原槽后整盘离场。 */
+
 import { Quaternion, Vector3 } from "three";
 import type { CompiledSceneRuntime } from "@/contracts/scene-execution";
 import type { PhysicsPort } from "@/contracts/physics";

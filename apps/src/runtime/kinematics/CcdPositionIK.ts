@@ -1,3 +1,5 @@
+/** 使用循环坐标下降法从腕部向基座逐轴调整关节角，在关节限位内逼近指定的工具中心点位置。 */
+
 import { Vector3 } from "three";
 import type { PositionIK, IKResult } from "./PositionIK";
 import { RobotKinematics } from "./RobotKinematics";

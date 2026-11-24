@@ -1,3 +1,5 @@
+/** 校验目标位姿和时间步长，驱动 Jolt 运动学刚体在指定时间内移至目标位置和朝向。 */
+
 import type initJolt from "jolt-physics";
 import type Jolt from "jolt-physics";
 import type { BodyPose } from "@/contracts/physics";

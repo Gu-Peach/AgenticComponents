@@ -1,3 +1,5 @@
+/** 按请求号预留货架格位，在交接确认后更新格位占用并记录存取事件，取消时释放对应的预留。 */
+
 export interface StorageEvent {
   kind: "stored" | "retrieved";
   material: string;

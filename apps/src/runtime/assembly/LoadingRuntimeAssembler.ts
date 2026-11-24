@@ -1,3 +1,5 @@
+/** 装配托盘装载与逐件加工场景，将输送带、机械臂和可选机床接入调度器，并绑定工位互锁、放置回执与整盘离场条件。 */
+
 import type { CompiledSceneRuntime } from "@/contracts/scene-execution";
 import type { ActionBinding, ActionRequest } from "@/contracts/scheduler";
 import type {

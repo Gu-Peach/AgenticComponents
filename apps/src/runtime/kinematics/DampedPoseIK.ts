@@ -1,3 +1,5 @@
+/** 使用阻尼最小二乘法迭代求解机械臂关节角，同时约束工具中心点的位置和朝向。 */
+
 import { Quaternion, Vector3 } from "three";
 import { RobotKinematics } from "./RobotKinematics";
 /** Damped spatial Jacobian solve for transfers which must retain the load orientation. */

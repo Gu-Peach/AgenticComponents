@@ -1,3 +1,5 @@
+/** 预览设备行为时，按契约逐条比较参数、现场观测和授权值。缺少对应值的条件标记为未知。 */
+
 import type { Condition, ParamValue } from "@/contracts/device";
 export function evaluateConditions(
   conditions: Condition[],

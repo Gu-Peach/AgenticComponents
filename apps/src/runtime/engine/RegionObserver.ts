@@ -1,3 +1,5 @@
+/** 将物料位置换算到输送带的局部坐标，结合支承状态判断入口是否空闲、物料是否到达出口或掉落。 */
+
 import type { CompiledRuntimeScene } from "@/contracts/runtime";
 import type { BodyPose } from "@/contracts/physics";
 export function observeRegions(

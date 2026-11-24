@@ -1,3 +1,5 @@
+/** 将轨道位置或具名工位换算为轴坐标并检查行程，发布轨道实测位置和速度，同时提供滑轨与升降台共用的轴运动任务。 */
+
 import {
   WarehouseActionAdapter,
   type WarehouseJob,

@@ -1,3 +1,5 @@
+/** 保存机械臂任务执行中的关节角、角速度、当前阶段、逆运动学结果和误差，供执行器更新和读取。 */
+
 import type { IKResult } from "@/runtime/kinematics/PositionIK";
 export class RobotState {
   q = [0, 0, 0, 0, 0, 0];

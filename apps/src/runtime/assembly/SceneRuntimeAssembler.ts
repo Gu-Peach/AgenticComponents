@@ -1,3 +1,5 @@
+/** 场景运行时的装配入口，根据编译配置选择专用装配器，或在共享物理世界中组装输送带、机械臂及有限供收料流程。 */
+
 import { Quaternion, Vector3 } from "three";
 import { assembleWarehouseRuntime } from "./WarehouseRuntimeAssembler";
 import { assembleLoadingRuntime } from "./LoadingRuntimeAssembler";

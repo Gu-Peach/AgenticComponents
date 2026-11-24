@@ -1,3 +1,5 @@
+/** 校验设备行为的预览请求和契约条件，管理预览会话的启停、暂停、恢复与基线还原，并核对完成证据。 */
+
 import { runtimeController } from "@/services/RuntimeController";
 import { hasPendingContactModel } from "@/contracts/conveyor";
 import type { ProjectDocument, ParamValue } from "@/contracts/device";

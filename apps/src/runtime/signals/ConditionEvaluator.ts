@@ -1,3 +1,5 @@
+/** 根据绑定的信号和观测求值设备条件表达式，返回成立、不成立或未知的判定，并记录各子表达式的依据。 */
+
 import type { ConditionContext, Truth } from "@/contracts/conditions";
 import type {
   BindingReading,

@@ -1,3 +1,5 @@
+/** 按设备更新、物理步进、设备反馈的顺序推进共享世界，并在停止时协调各设备确认停稳。 */
+
 /** Phase owner for a shared physical world; adapters must never step or dispose it. */
 export interface SceneWorld {
   isMotionStopped?(): boolean;

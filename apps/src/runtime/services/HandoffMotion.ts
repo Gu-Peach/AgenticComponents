@@ -1,3 +1,5 @@
+/** 封装机械臂的逆运动学求解、关节轨迹步进和制动，并记录工具与持件的相对位姿，供双臂交接和工具加工使用。 */
+
 import { Matrix4, Quaternion, Vector3 } from "three";
 import type { BodyPose, PhysicsPort } from "@/contracts/physics";
 import type { CompiledRobotScene } from "@/contracts/robot";

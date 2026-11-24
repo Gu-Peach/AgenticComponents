@@ -1,3 +1,5 @@
+/** 将浏览器动画帧的时间按播放倍率换算为固定仿真步，提供帧间插值比例，并在页面隐藏时触发暂停。 */
+
 const fixedStep = 1 / 60;
 export const MIN_PLAYBACK_RATE = 0.1;
 export const MAX_PLAYBACK_RATE = 4;

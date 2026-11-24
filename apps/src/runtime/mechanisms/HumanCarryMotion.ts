@@ -1,3 +1,5 @@
+/** 驱动人物接近工件、吸附搬运和放置，确认工件得到支承后撤回。人体随手部水平移动。 */
+
 import { Vector3 } from "three";
 import type { BodyPose, PhysicsPort } from "@/contracts/physics";
 import type { WarehouseJob } from "@/runtime/adapters/scene/WarehouseActionAdapter";

@@ -1,3 +1,5 @@
+/** 根据参考速度、加减速时间和仿真步长，计算输送带向目标速度过渡时的下一步速度。 */
+
 export function ramp(
   current: number,
   target: number,

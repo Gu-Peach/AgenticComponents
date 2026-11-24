@@ -1,3 +1,5 @@
+/** 为托盘装载线创建输送带和机械臂适配器，根据当前托盘位姿和支承层计算放置位置，检查物料是否落入指定槽位。 */
+
 import { Quaternion, Vector3 } from "three";
 import {
   bodyOf,

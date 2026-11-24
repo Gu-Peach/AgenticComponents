@@ -1,3 +1,5 @@
+/** 控制单段或联动输送带的速度，根据指定物料与目标点的距离、支承和停稳状态确认到位，并处理配置好的出口交付。 */
+
 import { Vector3, Quaternion } from "three";
 import type { BodyPose, PhysicsPort } from "@/contracts/physics";
 import type { ActionRequest, ActionFeedback } from "@/contracts/scheduler";

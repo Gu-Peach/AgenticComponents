@@ -1,3 +1,5 @@
+/** 按模板 ID 注册和查找单设备仿真模板，在重复注册或请求未注册的模板时报告错误。 */
+
 import type { RobotArmTemplate } from "./robot/RobotArmTemplate";
 import type { DeviceTemplate } from "@/contracts/device-template";
 export class DeviceTemplateRegistry {

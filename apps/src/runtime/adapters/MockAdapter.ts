@@ -1,3 +1,5 @@
+/** 用模拟时间驱动预览会话，演示启动、暂停、恢复和取消，并将结果标记为模拟反馈。 */
+
 import type {
   AnimationAdapter,
   PreviewResult,

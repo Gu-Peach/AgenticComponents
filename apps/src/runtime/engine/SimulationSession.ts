@@ -1,3 +1,5 @@
+/** 管理单设备仿真会话的启动、暂停、恢复和停止，仅在运行状态下驱动内核步进。 */
+
 import type { RuntimeSnapshot } from "@/contracts/runtime";
 import { RuntimeKernel } from "./RuntimeKernel";
 export class SimulationSession {

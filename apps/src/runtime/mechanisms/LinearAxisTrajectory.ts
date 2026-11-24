@@ -1,3 +1,5 @@
+/** 在行程、速度和加速度限制内逐步推进单轴位置，支持从当前速度制动并判断是否停稳。 */
+
 /** Signed scalar axis, bounded acceleration, braking from the current velocity. */
 export class LinearAxisTrajectory {
   velocity = 0;

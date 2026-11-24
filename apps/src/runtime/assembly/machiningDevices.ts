@@ -1,3 +1,5 @@
+/** 为托盘加工线创建输送带和机械臂适配器，生成原槽与机床加工点之间的抓放动作，并核对工件的落点和支承。 */
+
 import { Quaternion, Vector3 } from "three";
 import type { PhysicsPort } from "@/contracts/physics";
 import type { CompiledSceneRuntime } from "@/contracts/scene-execution";

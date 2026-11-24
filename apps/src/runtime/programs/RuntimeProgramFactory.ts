@@ -1,3 +1,5 @@
+/** 根据已编译的单设备场景类型创建机械臂或输送带运行程序，并为输送仿真检查物理后端。 */
+
 import type { RuntimeScene } from "@/contracts/runtime";
 import type { PhysicsPort } from "@/contracts/physics";
 import { ConveyorProgram } from "./ConveyorProgram";

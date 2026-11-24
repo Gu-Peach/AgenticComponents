@@ -1,3 +1,5 @@
+/** 按批次接纳空托盘和各供料线的物料，核实机械臂放置后登记槽位占用，并在满盘到达出口时生成交付回执。 */
+
 import { Quaternion, Vector3 } from "three";
 import type {
   CompiledSceneRuntime,

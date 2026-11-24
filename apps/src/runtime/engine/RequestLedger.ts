@@ -1,3 +1,5 @@
+/** 为单设备运行程序记录当前动作请求及其结果，防止重复请求号和同时执行多个请求。 */
+
 import type { RuntimeRequest } from "@/contracts/runtime";
 export class RequestLedger {
   request: RuntimeRequest | null = null;

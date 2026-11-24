@@ -1,3 +1,5 @@
+/** 组装仓储场景的输送带、滑轨、升降台和货架库存，将 DSL 请求与轴运动、物料交接及格位预留关联起来。 */
+
 import { Vector3 } from "three";
 import type { CompiledSceneRuntime } from "@/contracts/scene-execution";
 import type {

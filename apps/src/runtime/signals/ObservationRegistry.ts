@@ -1,3 +1,5 @@
+/** 按运行身份和来源接收位姿、支承等现场观测，生成只读观测帧，并将过期采样标记出来。 */
+
 import type {
   ObservationWrite,
   ObservationDefinition,

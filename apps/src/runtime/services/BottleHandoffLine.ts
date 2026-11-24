@@ -1,3 +1,5 @@
+/** 按瓶头和瓶尾的抓取接口规划双臂交接，核对瓶体与夹具的位姿后转移抓持约束，并验证倒置放料的位置与朝向。 */
+
 import { Quaternion, Vector3 } from "three";
 import type { ActionRequest } from "@/contracts/scheduler";
 import type { BodyPose, PhysicsPort } from "@/contracts/physics";

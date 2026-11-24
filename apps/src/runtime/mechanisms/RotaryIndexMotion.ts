@@ -1,3 +1,5 @@
+/** 驱动转台绕指定轴正向分度，持续检查载荷保持与运动互锁，并依据实测角度和停稳状态确认到站。 */
+
 import { Quaternion, Vector3 } from "three";
 import type { PhysicsPort, Vec3 } from "@/contracts/physics";
 import type { WarehouseJob } from "@/runtime/adapters/scene/WarehouseActionAdapter";

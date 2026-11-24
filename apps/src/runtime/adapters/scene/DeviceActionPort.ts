@@ -1,3 +1,5 @@
+/** 定义场景调度器调用设备的接口，涵盖动作预检、提交、取消、停止，以及读取设备信号、执行回执和观测值。 */
+
 import type { ActionRequest, ActionFeedback } from "@/contracts/scheduler";
 import type { SignalWrite, SceneSignalFrame } from "@/contracts/scene-signals";
 import type { SceneDeviceDriver } from "@/runtime/engine/SceneWorldStepper";

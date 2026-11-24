@@ -1,3 +1,5 @@
+/** 注册设备条件及其数据来源，校验条件间的依赖关系，并用当前场景的信号和观测求值。 */
+
 import type {
   ConditionContext,
   ConditionProvider,
