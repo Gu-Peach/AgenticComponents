@@ -1,12 +1,11 @@
+import { assetModel } from "./asset-library";
 import { test, expect } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 test("neighboring conveyor interfaces snap and persist", async ({ page }) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("/");
-  const card = page
-    .locator(".asset-card")
-    .filter({ hasText: "Conveyor_aankws" });
+  const card = await assetModel(page, "Conveyor_aankws");
   await expect(card).toBeVisible();
   await card.click();
   await page.getByRole("button", { name: "添加到现场", exact: true }).click();
@@ -66,9 +65,7 @@ test("axis dragging commits on release and Escape cancels the next drag", async 
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("/");
-  const card = page
-    .locator(".asset-card")
-    .filter({ hasText: "Conveyor_aankws" });
+  const card = await assetModel(page, "Conveyor_aankws");
   await card.click();
   await page.getByRole("button", { name: "添加到现场", exact: true }).click();
   await page.getByText("模型节点与类型结构", { exact: true }).click();

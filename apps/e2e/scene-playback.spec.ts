@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { importSceneFromLibrary } from "./scene-library";
 
 test("the loading line keeps its PLC and responds to toolbar playback and speed controls", async ({
   page,
@@ -7,8 +8,7 @@ test("the loading line keeps its PLC and responds to toolbar playback and speed 
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/");
-  await page.getByRole("button", { name: "场景", exact: true }).click();
-  await page.getByRole("button", { name: /S02：六托盘三工位分层装载/ }).click();
+  await importSceneFromLibrary(page, "S02");
 
   const plc = page.getByRole("tab", { name: "PLC", exact: true });
   const panel = page.getByRole("region", { name: "场景运行" });
@@ -17,7 +17,14 @@ test("the loading line keeps its PLC and responds to toolbar playback and speed 
   await expect(panel).toBeVisible();
   await expect(toolbar).toContainText("S02");
 
-  await page.getByRole("button", { name: "传送带 01", exact: true }).click();
+  const scenes = page.getByRole("region", { name: "场景库" });
+  await scenes
+    .getByRole("button", {
+      name: "S02：六托盘三工位分层装载 · 场景",
+      exact: true,
+    })
+    .click();
+  await scenes.getByRole("button", { name: "选择 C1", exact: true }).click();
   await expect(panel).toBeVisible();
   const canvas = page.locator("canvas").first();
   await expect(canvas).toBeVisible();
@@ -36,6 +43,9 @@ test("the loading line keeps its PLC and responds to toolbar playback and speed 
   await expect(speed).toHaveValue("1.75");
   await toolbar.getByRole("button", { name: "播放场景", exact: true }).click();
   await expect(panel).toContainText("running", { timeout: 30_000 });
+  await expect(
+    scenes.getByRole("button", { name: "清理场景", exact: true }),
+  ).toBeDisabled();
   await expect(panel).toContainText(/tick [1-9]/);
   await toolbar.getByRole("button", { name: "暂停场景", exact: true }).click();
   await expect(panel).toContainText("paused");

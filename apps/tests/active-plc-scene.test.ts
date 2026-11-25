@@ -31,7 +31,17 @@ it("retains the PLC scene across viewport selections, locks, restore and removal
     dockOpen: true,
   });
 
+  const firstScene = workspace().project!.scenePackages![0];
+  const firstDefinition = workspace().project!.definitions[0];
   const second = await importScenePackage(entry);
+  expect(workspace().project!.scenePackages).toHaveLength(1);
+  // Imported project files can still contain multiple scenes.
+  workspace().updateProject((p) => ({
+    ...p,
+    scenePackages: [firstScene, ...p.scenePackages!],
+  }));
+  workspace().add(firstDefinition);
+
   const savedProject = workspace().project!;
   const device = savedProject.instances[0].instanceId;
   expect(workspace().activeSceneId).toBe(second);
@@ -71,5 +81,5 @@ it("retains the PLC scene across viewport selections, locks, restore and removal
   workspace().updateProject((p) => ({ ...p, scenePackages: [] }));
   expect(workspace().activeSceneId).toBeNull();
   workspace().initialize();
-  expect(workspace()).toMatchObject({ activeSceneId: null, dock: "assets" });
+  expect(workspace()).toMatchObject({ activeSceneId: null, dock: "plc" });
 });

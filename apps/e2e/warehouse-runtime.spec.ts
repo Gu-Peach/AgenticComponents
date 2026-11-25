@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { importSceneFromLibrary } from "./scene-library";
 
 test("warehouse import, physical preparation, pause, stop and reset", async ({
   page,
@@ -6,10 +7,7 @@ test("warehouse import, physical preparation, pause, stop and reset", async ({
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("/");
-  await page.getByRole("button", { name: "场景", exact: true }).click();
-  await page
-    .getByRole("button", { name: /S07：四件分层入库后按订单出库/ })
-    .click();
+  await importSceneFromLibrary(page, "S07");
   await expect(
     page.getByRole("tab", { name: "PLC", exact: true }),
   ).toHaveAttribute("aria-selected", "true");

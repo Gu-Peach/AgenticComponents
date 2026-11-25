@@ -43,6 +43,35 @@ function setup(
   return { c, p, request };
 }
 describe("preview lifecycle", () => {
+  it("does not reset a newer preview started while an inactive reset is awaiting", async () => {
+    const { c, p, request } = setup();
+    const resetting = c.reset();
+    const starting = c.start(request, p);
+    await Promise.all([resetting, starting]);
+    expect(c.getSnapshot().status).toBe("running");
+    expect(c.getSnapshot().request?.requestId).toBe(request.requestId);
+    await c.reset();
+    expect(c.getSnapshot().status).toBe("idle");
+  });
+  it("resets a preparing preview and rejects its late preparation", async () => {
+    let resolve!: (value: PreviewSession) => void;
+    const { c, p, request } = setup({
+      ...mockAdapter,
+      prepare: () =>
+        new Promise((r) => {
+          resolve = r;
+        }),
+    });
+    const starting = c.start(request, p);
+    await c.reset();
+    expect(c.getSnapshot().status).toBe("idle");
+    const dispose = vi.fn();
+    resolve({ dispose } as unknown as PreviewSession);
+    await starting;
+    expect(dispose).toHaveBeenCalledOnce();
+    expect(c.getSnapshot().status).toBe("idle");
+  });
+
   it("keeps previews out of the project, pauses time and completes as mock evidence", async () => {
     const { c, p, request } = setup();
     const before = JSON.stringify(p);

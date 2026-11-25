@@ -1,6 +1,11 @@
 import {
+  requireEditableScene,
+  replaceSceneContents,
+} from "@/commands/sceneCommands";
+import {
   sceneIndexSchema,
   sceneBundleSchema,
+  sceneBundleAssets,
   isSceneUrl,
   type SceneEntry,
 } from "@/contracts/scene-package";
@@ -25,7 +30,7 @@ export async function fetchSceneCatalog() {
     JSON.parse(new TextDecoder().decode(await bytes("/scene/index.json"))),
   ).entries;
 }
-export async function fetchSceneBundle(entry: SceneEntry) {
+async function readSceneBundle(entry: SceneEntry) {
   const bundle = sceneBundleSchema.parse(
     JSON.parse(
       new TextDecoder().decode(
@@ -34,6 +39,15 @@ export async function fetchSceneBundle(entry: SceneEntry) {
     ),
   );
   if (bundle.id !== entry.id) throw new Error("场景目录与包身份不一致");
+  return bundle;
+}
+
+export async function fetchSceneAssets(entry: SceneEntry) {
+  return entry.assets ?? sceneBundleAssets(await readSceneBundle(entry));
+}
+
+export async function fetchSceneBundle(entry: SceneEntry) {
+  const bundle = await readSceneBundle(entry);
   await Promise.all(
     Object.entries(bundle.source_hashes).map(async ([path, hash]) => {
       await verified(
@@ -49,6 +63,7 @@ export async function importScenePackage(entry: SceneEntry) {
     project = state.project;
   if (!project || state.documentLocked)
     throw new Error("请先停止运行再导入场景");
+  requireEditableScene(project);
   const bundle = await fetchSceneBundle(entry);
   const assetId = `scene-model-${bundle.model_sha256}`;
   const model = await verified(bundle.model_url, bundle.model_sha256);
@@ -68,33 +83,15 @@ export async function importScenePackage(entry: SceneEntry) {
   )
     throw new Error("导入期间项目已改变");
   const id = `${bundle.id}-${crypto.randomUUID()}`;
-  state.updateProject((p) => ({
-    ...p,
-    scenePackages: [
-      ...(p.scenePackages ?? []),
-      { id, assetId, bundleHash: entry.bundleSha256, bundle },
-    ],
-    assets: p.assets.some((a) => a.id === assetId)
-      ? p.assets
-      : [
-          ...p.assets,
-          {
-            id: assetId,
-            name: bundle.id + ".glb",
-            kind: "glb",
-            size: model.byteLength,
-          },
-        ],
-  }));
-  useWorkspace.setState((s) => ({
-    selectedId: id,
-    activeSceneId: id,
-    inspectorTarget: "scene",
-    selectedInterface: null,
-    dock: "plc",
-    dockOpen: true,
-    focusToken: s.focusToken + 1,
-  }));
+  await replaceSceneContents(project, {
+    scene: { id, assetId, bundleHash: entry.bundleSha256, bundle },
+    asset: {
+      id: assetId,
+      name: bundle.id + ".glb",
+      kind: "glb",
+      size: model.byteLength,
+    },
+  });
   state.log(
     `已导入 ${entry.id} 整场模型与工艺，${bundle.blockers.length} 项运行依赖待完成`,
   );

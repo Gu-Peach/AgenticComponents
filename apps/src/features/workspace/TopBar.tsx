@@ -10,6 +10,7 @@ import {
   Save,
   FolderOpen,
   FilePlus2,
+  Brush,
   Upload,
   Download,
   Cuboid,
@@ -35,6 +36,7 @@ export function TopBar() {
   const p = useWorkspace((s) => s.project);
   const dirty = useWorkspace((s) => s.dirty);
   const saving = useWorkspace((s) => s.saving);
+  const locked = useWorkspace((s) => s.documentLocked);
   const state = usePreview();
   const scene = useActiveScene();
   const runtime = useSyncExternalStore(
@@ -112,6 +114,13 @@ export function TopBar() {
           <button onClick={() => action(commandRegistry.new.run)}>
             <FilePlus2 size={15} />
             新建项目
+          </button>
+          <button
+            disabled={locked}
+            onClick={() => action(commandRegistry.clear_scene.run)}
+          >
+            <Brush size={15} />
+            清理场景
           </button>
           <button onClick={() => action(commandRegistry.save.run)}>
             <Save size={15} />

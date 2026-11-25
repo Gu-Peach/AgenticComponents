@@ -126,6 +126,15 @@ def migrate(source, output, contracts):
         from scene_authoring import compact_scene
         compact_scene(destination)
 
+def scene_asset_summary(device):
+    contract = device['contract']
+    return {
+        'id': device['instance_id'],
+        'type': contract.get('device_type') or contract.get('extension_id') or 'unknown',
+        'name': contract.get('display_name') or contract.get('definition', {}).get('label') or device['instance_id'],
+    }
+
+
 def build(root, scene=None, output=None):
     output=Path(output) if output is not None else root
     if scene is not None and (len(scene)!=3 or not scene.startswith('S') or not scene[1:].isdigit()):raise ValueError('Invalid scene selection')
@@ -177,7 +186,7 @@ def build(root, scene=None, output=None):
             dynamic_calibration=any(n['args'][0].get('name')==id and n['args'][1]['kind']!='literal' for n in calibration_refs)
             for key,calibration in d.get('calibrations',{}).items():
                 if (key in referenced or dynamic_calibration) and calibration.get('status')=='pending_calibration':blockers.append({'code':'CALIBRATION_REQUIRED','device':id,'requirement':key})
-        authored_count=len(devices)
+        assets=[scene_asset_summary(device) for device in devices.values()]
         if sorting_station:blockers.append({'code':'SORTING_STATION_CALIBRATION_REQUIRED','device':sorting_station['support_device']})
         devices=expand_prefabs(ir,devices)
         physical_mesh_owners={}
@@ -209,7 +218,7 @@ def build(root, scene=None, output=None):
         bundle={'schema_version':'scene-bundle/0.1','id':manifest['id'],'name':manifest['name'],'model_sha256':manifest['model_sha256'],
                 'model_url':'/scene/'+folder.name+'/'+quote(manifest['model'],safe='/'),'source_hashes':inputs,
                 'process':ir,'devices':list(devices.values()),'calls':calls,'nodes':inventory,'blockers':blockers,'executable':False,
-                'authored_device_count':authored_count,'runtime_instance_count':sum(d.get('asset_kind')not in ('carrier_prefab','material_prefab') for d in devices.values())}
+                'authored_device_count':len(assets),'runtime_instance_count':sum(d.get('asset_kind')not in ('carrier_prefab','material_prefab') for d in devices.values())}
         if sorting_station:
             bundle['coordinate_system']=manifest['coordinate_system']
             bundle['sorting_station']=sorting_station
@@ -224,7 +233,7 @@ def build(root, scene=None, output=None):
         if 'runtime_profile' in manifest:bundle['runtime_profile']=manifest['runtime_profile']
         target=output/folder.name/'.generated/scene.bundle.json';write_generated(target,bundle)
         entries.append({'id':manifest['id'],'name':manifest['name'],'bundleUrl':'/scene/'+folder.name+'/.generated/scene.bundle.json',
-                        'bundleSha256':digest(target),'deviceCount':authored_count,'nodeCount':len(inventory),'blockerCount':len(blockers)})
+                        'bundleSha256':digest(target),'deviceCount':len(assets),'assets':assets,'nodeCount':len(inventory),'blockerCount':len(blockers)})
     if scene is not None:
         if len(entries)!=1:raise ValueError('Selected scene not found')
         existing=read(root/'index.json')['entries'] if (root/'index.json').exists() else []

@@ -1,3 +1,5 @@
+import { openProjectFolder } from "./scene-library";
+import { assetModel } from "./asset-library";
 import { test, expect } from "@playwright/test";
 test("public model, inspector, orange interfaces and local persistence", async ({
   page,
@@ -5,9 +7,7 @@ test("public model, inspector, orange interfaces and local persistence", async (
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("/");
-  const card = page
-    .locator(".asset-card")
-    .filter({ hasText: "Conveyor_aankws" });
+  const card = await assetModel(page, "Conveyor_aankws");
   await expect(card).toBeVisible();
   await card.click();
   await expect(page.getByText("资产定义 · 只读")).toBeVisible();
@@ -21,7 +21,11 @@ test("public model, inspector, orange interfaces and local persistence", async (
   await expect(page.getByLabel("设备名称")).toHaveValue(/Conveyor_aankws/);
   await page.getByText("模型节点与类型结构", { exact: true }).click();
   await expect(page.locator(".node-list")).toContainText("Mesh");
-  const dots = page.locator(".interface-dot");
+  // Inspect the two conveyor endpoints separately from the base installation port.
+  const dots = page.locator('.interface-dot[data-interface-id^="end_"]');
+  await expect(
+    page.locator('.interface-dot[data-interface-id="mount_base"]'),
+  ).toHaveCount(1);
   await expect(dots).toHaveCount(2);
   await expect(dots.first()).toHaveAttribute(
     "data-local-position",
@@ -65,8 +69,8 @@ test("public model, inspector, orange interfaces and local persistence", async (
   await page.getByRole("button", { name: /保存到浏览器/ }).click();
   await expect(page.locator(".statusbar")).toContainText("本地项目");
   await page.reload();
-  await expect(card).toBeVisible();
-  const bom = page
+  await expect(await assetModel(page, "Conveyor_aankws")).toBeVisible();
+  const bom = (await openProjectFolder(page))
     .locator(".tree-select")
     .filter({ hasText: "Conveyor_aankws" });
   await bom.click();

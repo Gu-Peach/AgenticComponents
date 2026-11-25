@@ -1,8 +1,9 @@
+import { assetModel } from "./asset-library";
 import { expect, test, type Page } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 
 async function addModel(page: Page, name: string, position: number[], yaw = 0) {
-  await page.locator(".asset-card").filter({ hasText: name }).click();
+  await (await assetModel(page, name)).click();
   await page.getByRole("button", { name: "添加到现场", exact: true }).click();
   await expect(page.getByLabel("设备名称")).toHaveValue(new RegExp(name));
   for (const [index, value] of position.entries()) {
@@ -33,7 +34,9 @@ test("composes transport and pick/place from separately imported model instances
   await page.goto("/");
   await page.getByText("文件", { exact: true }).click();
   await page.getByRole("button", { name: "新建项目", exact: true }).click();
-  await expect(page.locator(".tree-select")).toHaveCount(0);
+  await expect(
+    page.getByRole("region", { name: "场景库" }).locator(".tree-select"),
+  ).toHaveCount(0);
 
   await addModel(page, "robot_UR10", [0, 0, 0]);
   // The conveyor exit and its center must both be within reach of the arm.
@@ -43,6 +46,7 @@ test("composes transport and pick/place from separately imported model instances
   await mass.fill("1");
   await mass.press("Tab");
   await page
+    .getByRole("region", { name: "场景库" })
     .locator(".tree-select")
     .filter({ hasText: "Conveyor_aankws" })
     .click();

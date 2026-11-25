@@ -23,10 +23,11 @@ interface WorkspaceState {
   selectAsset(id: string): void;
   project: ProjectDocument | null;
   selectedId: string | null;
+  selectedSceneDeviceId: string | null;
   activeSceneId: string | null;
   setActiveScene(id: string): void;
   selectedAsset: string | null;
-  dock: "assets" | "plc" | "terminal";
+  dock: "plc" | "terminal";
   dockOpen: boolean;
   dirty: boolean;
   saving: boolean;
@@ -37,7 +38,7 @@ interface WorkspaceState {
   modelNodes: Record<string, string[]>;
   modelErrors: Record<string, string>;
   initialize(project?: ProjectDocument): void;
-  select(id: string | null): void;
+  select(id: string | null, sceneDeviceId?: string): void;
   updateProject(fn: (p: ProjectDocument) => ProjectDocument): void;
   updateInstance(id: string, patch: Partial<DeviceInstance>): void;
   add(def: DeviceDefinition): void;
@@ -56,15 +57,17 @@ export const useWorkspace = create<WorkspaceState>((set, get) => ({
     set({
       selectedAsset: id,
       selectedId: null,
+      selectedSceneDeviceId: null,
       inspectorTarget: "catalog",
       selectedInterface: null,
     });
   },
   project: null,
   selectedId: null,
+  selectedSceneDeviceId: null,
   activeSceneId: null,
   selectedAsset: null,
-  dock: "assets",
+  dock: "plc",
   dockOpen: true,
   dirty: false,
   saving: false,
@@ -79,20 +82,22 @@ export const useWorkspace = create<WorkspaceState>((set, get) => ({
     set({
       project,
       activeSceneId,
-      dock: activeSceneId ? "plc" : "assets",
+      dock: "plc",
       dockOpen: true,
       inspectorTarget: "scene",
       selectedInterface: null,
       selectedId: project.instances[0]?.instanceId ?? null,
+      selectedSceneDeviceId: null,
       selectedAsset: project.definitions[0]?.specId ?? null,
       dirty: false,
       modelErrors: {},
       modelNodes: {},
     });
   },
-  select(id) {
+  select(id, sceneDeviceId) {
     set((s) => ({
       selectedId: id,
+      selectedSceneDeviceId: sceneDeviceId ?? null,
       inspectorTarget: "scene",
       selectedInterface: null,
       activeSceneId:
@@ -153,6 +158,7 @@ export const useWorkspace = create<WorkspaceState>((set, get) => ({
     get().updateProject((p) => ({ ...p, instances: [...p.instances, item] }));
     set({
       selectedId: item.instanceId,
+      selectedSceneDeviceId: null,
       inspectorTarget: "scene",
       selectedInterface: null,
     });

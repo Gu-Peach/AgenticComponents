@@ -91,6 +91,7 @@ function Device({
           e.stopPropagation();
           useWorkspace.setState((s) => ({
             selectedId: instance.instanceId,
+            selectedSceneDeviceId: null,
             focusToken: s.focusToken + 1,
           }));
         }}

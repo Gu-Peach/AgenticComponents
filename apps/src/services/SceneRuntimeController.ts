@@ -242,6 +242,21 @@ export class SceneRuntimeController {
     this.values.delete(id);
     this.listeners.forEach((f) => f());
   }
+  /** 移除已卸载场景的准备诊断，活动会话须先完成停止和重置。 */
+  forgetInactiveScenes(ids: readonly string[]) {
+    if (ids.some((id) => this.programs.has(id) || this.pending?.id === id))
+      throw new Error("请先停止并重置场景仿真");
+    for (const id of ids) {
+      this.clocks.get(id)?.();
+      this.clocks.delete(id);
+      this.preparation.delete(id);
+      this.compiled.delete(id);
+      this.sessions.delete(id);
+      this.visuals.delete(id);
+      this.values.delete(id);
+    }
+    if (ids.length) this.listeners.forEach((listener) => listener());
+  }
   discard(id: string) {
     const compiled = this.compiled.get(id);
     if (

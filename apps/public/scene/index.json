@@ -7,6 +7,53 @@
       "bundleUrl": "/scene/S01/.generated/scene.bundle.json",
       "bundleSha256": "c049e7c506be4b1890042df1e26d38b3675a9106a7f2e6a637c43b2614e36887",
       "deviceCount": 9,
+      "assets": [
+        {
+          "id": "C1",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "C2",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "C3",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "C4",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "R1",
+          "type": "robot_arm",
+          "name": "机械臂：可组合动作与任务执行"
+        },
+        {
+          "id": "R2",
+          "type": "robot_arm",
+          "name": "机械臂：可组合动作与任务执行"
+        },
+        {
+          "id": "F1",
+          "type": "material_source_station",
+          "name": "出料口／物料源工位：按需生产与节拍出料"
+        },
+        {
+          "id": "Pallet",
+          "type": "workpiece_carrier",
+          "name": "物料托盘／载具：槽位、承载与被动随动"
+        },
+        {
+          "id": "Workpiece",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        }
+      ],
       "nodeCount": 488,
       "blockerCount": 22
     },
@@ -16,6 +63,113 @@
       "bundleUrl": "/scene/S02/.generated/scene.bundle.json",
       "bundleSha256": "7dc60cee334f515ebd866a7a3774339a3a4c62f93a3b2102e04e2faa3a16655f",
       "deviceCount": 21,
+      "assets": [
+        {
+          "id": "C1",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "C2",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "C3",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "C4",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "C5",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "S1A",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "S1B",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "S2A",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "S2B",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "S3A",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "S3B",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "F1",
+          "type": "material_source_station",
+          "name": "出料口／物料源工位：按需生产与节拍出料"
+        },
+        {
+          "id": "LowerPart",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "R1",
+          "type": "robot_arm",
+          "name": "机械臂：可组合动作与任务执行"
+        },
+        {
+          "id": "F2",
+          "type": "material_source_station",
+          "name": "出料口／物料源工位：按需生产与节拍出料"
+        },
+        {
+          "id": "Cover",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "R2",
+          "type": "robot_arm",
+          "name": "机械臂：可组合动作与任务执行"
+        },
+        {
+          "id": "F3",
+          "type": "material_source_station",
+          "name": "出料口／物料源工位：按需生产与节拍出料"
+        },
+        {
+          "id": "UpperPart",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "R3",
+          "type": "robot_arm",
+          "name": "机械臂：可组合动作与任务执行"
+        },
+        {
+          "id": "Pallet",
+          "type": "workpiece_carrier",
+          "name": "物料托盘／载具：槽位、承载与被动随动"
+        }
+      ],
       "nodeCount": 1054,
       "blockerCount": 45
     },
@@ -25,6 +179,63 @@
       "bundleUrl": "/scene/S03/.generated/scene.bundle.json",
       "bundleSha256": "d1b7a643489b65e7bc44627079f049e4c362db9d7e876b93030ea429f0803c72",
       "deviceCount": 11,
+      "assets": [
+        {
+          "id": "R1",
+          "type": "robot_arm",
+          "name": "机械臂：可组合动作与任务执行"
+        },
+        {
+          "id": "R2",
+          "type": "robot_arm",
+          "name": "机械臂：可组合动作与任务执行"
+        },
+        {
+          "id": "LOOP",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "IN",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "OUT",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "M01",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M02",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M03",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M04",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M05",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M06",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        }
+      ],
       "nodeCount": 760,
       "blockerCount": 22
     },
@@ -34,6 +245,38 @@
       "bundleUrl": "/scene/S04/.generated/scene.bundle.json",
       "bundleSha256": "aa9f397418bdbbb5a1e153cab671534d55af2798d14f6f20b3533e2189016e28",
       "deviceCount": 6,
+      "assets": [
+        {
+          "id": "C1",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "C2",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "S",
+          "type": "material_source_station",
+          "name": "出料口／物料源工位：按需生产与节拍出料"
+        },
+        {
+          "id": "Bottle",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "R1",
+          "type": "robot_arm",
+          "name": "机械臂：可组合动作与任务执行"
+        },
+        {
+          "id": "R2",
+          "type": "robot_arm",
+          "name": "机械臂：可组合动作与任务执行"
+        }
+      ],
       "nodeCount": 208,
       "blockerCount": 14
     },
@@ -43,6 +286,53 @@
       "bundleUrl": "/scene/S05/.generated/scene.bundle.json",
       "bundleSha256": "b521c2e6b5cfc010a4c7b2dfb23a0393da3a030edcbbe63ebd9028d36bcf2293",
       "deviceCount": 9,
+      "assets": [
+        {
+          "id": "R1",
+          "type": "robot_arm",
+          "name": "机械臂：可组合动作与任务执行"
+        },
+        {
+          "id": "R2",
+          "type": "robot_arm",
+          "name": "机械臂：可组合动作与任务执行"
+        },
+        {
+          "id": "C1",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "D1",
+          "type": "processing_station",
+          "name": "加工设备"
+        },
+        {
+          "id": "F1",
+          "type": "material_source_station",
+          "name": "出料口／物料源工位：按需生产与节拍出料"
+        },
+        {
+          "id": "M01",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M02",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M03",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M04",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        }
+      ],
       "nodeCount": 423,
       "blockerCount": 22
     },
@@ -52,6 +342,53 @@
       "bundleUrl": "/scene/S06/.generated/scene.bundle.json",
       "bundleSha256": "55fe439b378359b1cea404654204f69e9e0cf769f454f01990f192d66b5e6ea4",
       "deviceCount": 9,
+      "assets": [
+        {
+          "id": "C1",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "C2",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "C3",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "R1",
+          "type": "robot_arm",
+          "name": "机械臂：可组合动作与任务执行"
+        },
+        {
+          "id": "F1",
+          "type": "material_source_station",
+          "name": "出料口／物料源工位：按需生产与节拍出料"
+        },
+        {
+          "id": "MC1",
+          "type": "machine_tool",
+          "name": "立式加工设备"
+        },
+        {
+          "id": "Pallet",
+          "type": "workpiece_carrier",
+          "name": "物料托盘／载具：槽位、承载与被动随动"
+        },
+        {
+          "id": "Workpiece",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "Finished",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        }
+      ],
       "nodeCount": 584,
       "blockerCount": 20
     },
@@ -61,6 +398,53 @@
       "bundleUrl": "/scene/S07/.generated/scene.bundle.json",
       "bundleSha256": "230f0ec56751e3deda59f9bb9dd935d47a561e1eff37d02f84c570590b2df93c",
       "deviceCount": 9,
+      "assets": [
+        {
+          "id": "C1",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "C2",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "F1",
+          "type": "material_source_station",
+          "name": "出料口／物料源工位：按需生产与节拍出料"
+        },
+        {
+          "id": "T1",
+          "type": "linear_rail",
+          "name": "直线滑轨：搭载设备水平定位"
+        },
+        {
+          "id": "L1",
+          "type": "lift_table",
+          "name": "升降台：高度定位与可选横移模块"
+        },
+        {
+          "id": "T2",
+          "type": "linear_rail",
+          "name": "直线滑轨：搭载设备水平定位"
+        },
+        {
+          "id": "L2",
+          "type": "lift_table",
+          "name": "升降台：高度定位与可选横移模块"
+        },
+        {
+          "id": "STORE",
+          "type": "storage_rack",
+          "name": "仓储柜：库位预留与存取服务"
+        },
+        {
+          "id": "Workpiece",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        }
+      ],
       "nodeCount": 440,
       "blockerCount": 20
     },
@@ -70,6 +454,48 @@
       "bundleUrl": "/scene/S08/.generated/scene.bundle.json",
       "bundleSha256": "38ab0cc9f5f8f85f50639bd85a010c058d827ecb84972a2fc72878b0b6e19f9e",
       "deviceCount": 8,
+      "assets": [
+        {
+          "id": "R1",
+          "type": "robot_arm",
+          "name": "机械臂：可组合动作与任务执行"
+        },
+        {
+          "id": "C1",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "C2",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "MC1",
+          "type": "processing_station",
+          "name": "加工设备"
+        },
+        {
+          "id": "M01",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M02",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M03",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M04",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        }
+      ],
       "nodeCount": 429,
       "blockerCount": 19
     },
@@ -79,6 +505,63 @@
       "bundleUrl": "/scene/S09/.generated/scene.bundle.json",
       "bundleSha256": "0d84ae906fec9172b8646b8912f3ed5156934eef17e67dc2fbf7c183255a8448",
       "deviceCount": 11,
+      "assets": [
+        {
+          "id": "R1",
+          "type": "robot_arm",
+          "name": "机械臂：可组合动作与任务执行"
+        },
+        {
+          "id": "C1",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "C2",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "MC1",
+          "type": "processing_station",
+          "name": "加工设备"
+        },
+        {
+          "id": "MC2",
+          "type": "processing_station",
+          "name": "加工设备"
+        },
+        {
+          "id": "M01",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M02",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M03",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M04",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M05",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M06",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        }
+      ],
       "nodeCount": 655,
       "blockerCount": 28
     },
@@ -88,6 +571,93 @@
       "bundleUrl": "/scene/S10/.generated/scene.bundle.json",
       "bundleSha256": "1dd542dd4cc5b18fc168b28f628125f6d116512a47dd49bea8d201d29c4d4c91",
       "deviceCount": 17,
+      "assets": [
+        {
+          "id": "R1",
+          "type": "robot_arm",
+          "name": "机械臂：可组合动作与任务执行"
+        },
+        {
+          "id": "C1",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "P01",
+          "type": "workpiece_carrier",
+          "name": "物料托盘／载具：槽位、承载与被动随动"
+        },
+        {
+          "id": "P02",
+          "type": "workpiece_carrier",
+          "name": "物料托盘／载具：槽位、承载与被动随动"
+        },
+        {
+          "id": "P03",
+          "type": "workpiece_carrier",
+          "name": "物料托盘／载具：槽位、承载与被动随动"
+        },
+        {
+          "id": "M01_1",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M01_2",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M01_3",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M01_4",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M02_1",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M02_2",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M02_3",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M02_4",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M03_1",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M03_2",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M03_3",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M03_4",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        }
+      ],
       "nodeCount": 385,
       "blockerCount": 34
     },
@@ -97,6 +667,33 @@
       "bundleUrl": "/scene/S11/.generated/scene.bundle.json",
       "bundleSha256": "cdf45bcd755d5c3e9e6317543bce3a773ec36eed77a84bc494fe2cb0704b35bc",
       "deviceCount": 5,
+      "assets": [
+        {
+          "id": "H1",
+          "type": "human_operator",
+          "name": "人工搬运员"
+        },
+        {
+          "id": "T1",
+          "type": "rotary_table",
+          "name": "带载分度转台"
+        },
+        {
+          "id": "R1",
+          "type": "robot_arm",
+          "name": "机械臂：可组合动作与任务执行"
+        },
+        {
+          "id": "F1",
+          "type": "material_source_station",
+          "name": "出料口／物料源工位：按需生产与节拍出料"
+        },
+        {
+          "id": "Workpiece",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        }
+      ],
       "nodeCount": 991,
       "blockerCount": 8
     },
@@ -106,6 +703,63 @@
       "bundleUrl": "/scene/S12/.generated/scene.bundle.json",
       "bundleSha256": "0e2a5771ac1838ad5313d141d9ed77695a0392318a20b6d6ba0daafc6f66a496",
       "deviceCount": 11,
+      "assets": [
+        {
+          "id": "R1",
+          "type": "robot_arm",
+          "name": "机械臂：可组合动作与任务执行"
+        },
+        {
+          "id": "R2",
+          "type": "robot_arm",
+          "name": "机械臂：可组合动作与任务执行"
+        },
+        {
+          "id": "T1",
+          "type": "rotary_table",
+          "name": "旋转台：工位定位与可选台面输送"
+        },
+        {
+          "id": "C1",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "C2",
+          "type": "conveyor",
+          "name": "传送带：连续输送与可选分区积放"
+        },
+        {
+          "id": "PS1",
+          "type": "processing_station",
+          "name": "加工设备"
+        },
+        {
+          "id": "PS2",
+          "type": "processing_station",
+          "name": "加工设备"
+        },
+        {
+          "id": "M01",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M02",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M03",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        },
+        {
+          "id": "M04",
+          "type": "workpiece",
+          "name": "物料：被动对象与状态观测"
+        }
+      ],
       "nodeCount": 809,
       "blockerCount": 28
     }

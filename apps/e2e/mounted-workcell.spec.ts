@@ -1,14 +1,12 @@
 import { expect, test } from "@playwright/test";
+import { importSceneFromLibrary } from "./scene-library";
 test("extracts a mounted pair and runs its numeric DSL from the standalone rail inspector", async ({
   page,
 }) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("/");
-  await page.getByRole("button", { name: "场景", exact: true }).click();
-  await page
-    .getByRole("button", { name: /S07：四件分层入库后按订单出库/ })
-    .click();
+  await importSceneFromLibrary(page, "S07");
   await page.getByRole("button", { name: "提取独立设备 · T1 / L1" }).click();
   const panel = page
     .locator("details")

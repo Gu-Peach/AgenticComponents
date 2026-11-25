@@ -323,7 +323,10 @@ export class PreviewController {
     this.log(`预览失败：${message}`);
   }
   async reset() {
-    await this.stop("工作区切换");
+    const stopping = this.stop("工作区切换");
+    const generation = this.generation;
+    await stopping;
+    if (generation !== this.generation) return;
     this.abort?.abort();
     ++this.generation;
     this.session?.dispose();

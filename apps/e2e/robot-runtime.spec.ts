@@ -1,12 +1,15 @@
+import { assetModel } from "./asset-library";
 import { test, expect, type Page } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 async function blank(page: Page) {
   await page.getByText("文件", { exact: true }).click();
   await page.getByRole("button", { name: "新建项目", exact: true }).click();
-  await expect(page.locator(".tree-select")).toHaveCount(0);
+  await expect(
+    page.getByRole("region", { name: "场景库" }).locator(".tree-select"),
+  ).toHaveCount(0);
 }
 async function add(page: Page, label: string) {
-  await page.locator(".asset-card").filter({ hasText: label }).click();
+  await (await assetModel(page, label)).click();
   await page.getByRole("button", { name: "添加到现场", exact: true }).click();
   await expect(page.getByLabel("设备名称")).toHaveValue(new RegExp(label));
 }
@@ -92,7 +95,11 @@ test("real engine_block fixed-constraint grasp job releases onto selected belt",
   const mass = page.getByLabel("mass_kg", { exact: true });
   await mass.fill("1");
   await mass.press("Tab");
-  await page.locator(".tree-select").filter({ hasText: "robot_UR10" }).click();
+  await page
+    .getByRole("region", { name: "场景库" })
+    .locator(".tree-select")
+    .filter({ hasText: "robot_UR10" })
+    .click();
   await page.getByText("固定约束物理抓放", { exact: true }).click();
   await page.getByLabel("机械臂运行物料").selectOption({ index: 1 });
   await page.getByLabel("机械臂目标支承").selectOption({ index: 1 });
@@ -132,7 +139,11 @@ test("distant support preflight names the stage and keeps the material unheld", 
   const mass = page.getByLabel("mass_kg", { exact: true });
   await mass.fill("1");
   await mass.press("Tab");
-  await page.locator(".tree-select").filter({ hasText: "robot_UR10" }).click();
+  await page
+    .getByRole("region", { name: "场景库" })
+    .locator(".tree-select")
+    .filter({ hasText: "robot_UR10" })
+    .click();
   await page.getByText("固定约束物理抓放", { exact: true }).click();
   await page.getByLabel("机械臂运行物料").selectOption({ index: 1 });
   await page.getByLabel("机械臂目标支承").selectOption({ index: 1 });

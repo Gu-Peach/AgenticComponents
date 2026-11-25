@@ -1,5 +1,5 @@
 import { MountedAxisBridge } from "./MountedAxisBridge";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Box3, type Object3D } from "three";
 import { Html } from "@react-three/drei";
 import { acquireModel } from "@/services/ModelRepository";
@@ -7,16 +7,26 @@ import { useWorkspace } from "@/stores/workspace";
 import { RobotSceneBridge } from "./RobotSceneBridge";
 import { SelectionHighlight } from "./SelectionHighlight";
 import { ScenePhysicsBridge } from "./ScenePhysicsBridge";
+import {
+  sceneMeshOwners,
+  type ScenePackageInstance,
+} from "@/contracts/scene-package";
+import {
+  sceneDeviceMaterials,
+  applyDeviceVisibility,
+  highlightDevice,
+} from "./sceneDeviceMaterials";
+
 export function ImportedModel({
   assetId,
   instanceId,
   selected,
-  scenePackage = false,
+  scenePackage,
 }: {
   assetId: string;
   instanceId: string;
   selected: boolean;
-  scenePackage?: boolean;
+  scenePackage?: ScenePackageInstance;
 }) {
   const [failure, setFailure] = useState("");
   const [retry, setRetry] = useState(0);
@@ -24,6 +34,25 @@ export function ImportedModel({
     null,
   );
   const model = asset?.model;
+  const bundle = scenePackage?.bundle;
+  const selectedDevice = useWorkspace((s) =>
+    s.selectedId === instanceId ? s.selectedSceneDeviceId : null,
+  );
+  const materials = useMemo(
+    () =>
+      model && bundle
+        ? sceneDeviceMaterials(model, sceneMeshOwners(bundle))
+        : undefined,
+    [model, bundle],
+  );
+  const hidden = scenePackage?.hiddenDeviceIds;
+  useEffect(() => {
+    if (materials && hidden) return applyDeviceVisibility(materials, hidden);
+  }, [materials, hidden]);
+  useEffect(() => {
+    if (materials && selectedDevice)
+      return highlightDevice(materials.get(selectedDevice));
+  }, [materials, selectedDevice]);
   useEffect(() => {
     let disposed = false;
     let release: (() => void) | undefined;
@@ -50,7 +79,7 @@ export function ImportedModel({
       // coordinates and remain the selection envelope while its children move.
       setAsset({
         model: owned,
-        bounds: scenePackage ? new Box3().setFromObject(owned) : undefined,
+        bounds: bundle ? new Box3().setFromObject(owned) : undefined,
       });
     })().catch((e) => {
       if (!disposed) {
@@ -65,7 +94,7 @@ export function ImportedModel({
       disposed = true;
       release?.();
     };
-  }, [assetId, instanceId, retry, scenePackage]);
+  }, [assetId, instanceId, retry, bundle]);
   useEffect(() => {
     if (model && useWorkspace.getState().selectedId === instanceId)
       useWorkspace.setState((s) => ({ focusToken: s.focusToken + 1 }));
@@ -97,7 +126,7 @@ export function ImportedModel({
       )}
       <SelectionHighlight
         model={model}
-        selected={selected}
+        selected={selected && !selectedDevice}
         packageBounds={asset?.bounds}
       />
     </>

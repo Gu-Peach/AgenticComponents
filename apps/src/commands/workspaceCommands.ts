@@ -1,3 +1,4 @@
+import { clearScene } from "./sceneCommands";
 import { withModelMount } from "@/domain/spatial/modelMount";
 import { runtimeController } from "@/services/RuntimeController";
 import { sceneRuntimeController } from "@/services/SceneRuntimeController";
@@ -67,6 +68,7 @@ export async function newProject() {
       plc: "",
     },
     selectedId: null,
+    selectedSceneDeviceId: null,
     dirty: true,
   }));
 }
@@ -97,9 +99,8 @@ export async function importDefinition(raw: unknown) {
   useWorkspace.setState({
     inspectorTarget: "catalog",
     selectedId: null,
+    selectedSceneDeviceId: null,
     selectedAsset: def.specId,
-    dock: "assets",
-    dockOpen: true,
   });
   state.log(`已导入设备定义 ${def.name}，模型与执行器需另行关联`);
 }
@@ -153,8 +154,8 @@ export async function associateGlb(file: File) {
   );
 }
 export async function removeSelected() {
-  const id = useWorkspace.getState().selectedId;
-  if (!id) return;
+  const { selectedId: id, selectedSceneDeviceId } = useWorkspace.getState();
+  if (!id || selectedSceneDeviceId) return;
   requireSceneReleased();
   runtimeController.reset();
   await preview.reset();
@@ -175,6 +176,7 @@ export async function removeSelected() {
   useWorkspace.getState().select(null);
 }
 export const commandRegistry = {
+  clear_scene: { label: "清理场景", run: clearScene },
   save: { label: "保存到浏览器", run: saveProject },
   export: { label: "导出项目数据", run: exportProject },
   new: { label: "新建项目", run: newProject },
@@ -189,7 +191,9 @@ export async function executeConsole(command: string) {
   if (!name) return;
   state.log(`› ${command}`);
   if (name === "help")
-    state.log("help · clear · inspect <instanceId> · save · export · focus");
+    state.log(
+      "help · clear · clear_scene · inspect <instanceId> · save · export · focus",
+    );
   else if (name === "clear") useWorkspace.setState({ logs: [] });
   else if (name === "inspect") {
     const instance = state.project?.instances.find(

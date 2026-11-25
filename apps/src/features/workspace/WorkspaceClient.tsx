@@ -10,7 +10,6 @@ import {
   type CSSProperties,
 } from "react";
 import {
-  Boxes,
   FileCode2,
   Terminal,
   ChevronDown,
@@ -31,7 +30,6 @@ import { ProjectMark } from "@/components/ui/ProjectMark";
 import { TopBar } from "./TopBar";
 import { SceneTree } from "@/features/bom/SceneTree";
 import { Inspector } from "@/features/inspector/Inspector";
-import { AssetPanel } from "@/features/catalog/AssetPanel";
 import { PlcPanel } from "@/features/plc/PlcPanel";
 import { TerminalPanel } from "@/features/terminal/TerminalPanel";
 import { useWorkspace } from "@/stores/workspace";
@@ -213,7 +211,6 @@ export default function WorkspaceClient() {
   }, []);
   const selected = project?.instances.find((i) => i.instanceId === selectedId);
   const tabs = [
-    { id: "assets", label: "资产", icon: Boxes },
     { id: "plc", label: "PLC", icon: FileCode2 },
     { id: "terminal", label: "终端", icon: Terminal },
   ] as const;
@@ -245,7 +242,7 @@ export default function WorkspaceClient() {
               <SceneTree />
             </div>
             <Splitter
-              label="调整 BOM 宽度"
+              label="调整左侧栏宽度"
               axis="x"
               value={left}
               min={200}
@@ -260,8 +257,8 @@ export default function WorkspaceClient() {
             <div className="viewport-toolstrip">
               <button
                 className="icon-button"
-                aria-label="切换 BOM"
-                title="显示/折叠 BOM"
+                aria-label="切换资产与场景侧栏"
+                title="显示或折叠左侧栏"
                 onClick={() => setShowLeft(!showLeft)}
               >
                 {showLeft ? (
@@ -386,7 +383,6 @@ export default function WorkspaceClient() {
               {t.id === "terminal" && <small>{logs.length}</small>}
             </button>
           ))}
-          <span className="dock-caption">WORKSPACE TOOLS</span>
           <div className="dock-buttons">
             <button
               className="icon-button"
@@ -420,13 +416,7 @@ export default function WorkspaceClient() {
               hidden={dock !== t.id}
               className="dock-panel"
             >
-              {t.id === "assets" ? (
-                <AssetPanel />
-              ) : t.id === "plc" ? (
-                <PlcPanel />
-              ) : (
-                <TerminalPanel />
-              )}
+              {t.id === "plc" ? <PlcPanel /> : <TerminalPanel />}
             </div>
           ))}
         </div>

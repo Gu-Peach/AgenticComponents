@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { importSceneFromLibrary } from "./scene-library";
 
 async function save(page: Page) {
   await page.getByText("文件", { exact: true }).click();
@@ -40,10 +41,7 @@ test("saving extracted GLBs and the document rolls back on a failed write and sk
   page,
 }) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "场景", exact: true }).click();
-  await page
-    .getByRole("button", { name: /S07：四件分层入库后按订单出库/ })
-    .click();
+  await importSceneFromLibrary(page, "S07");
   const extract = page.getByRole("button", { name: "提取独立设备 · T1 / L1" });
   await expect(extract).toBeVisible();
   await save(page);

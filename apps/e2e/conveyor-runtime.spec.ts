@@ -1,3 +1,4 @@
+import { assetModel } from "./asset-library";
 import { test, expect } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 test("physical conveyor experiment, pause, arrival and reset", async ({
@@ -6,20 +7,17 @@ test("physical conveyor experiment, pause, arrival and reset", async ({
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("/");
-  const card = page
-    .locator(".asset-card")
-    .filter({ hasText: "Conveyor_aankws" });
+  const card = await assetModel(page, "Conveyor_aankws");
   await expect(card).toBeVisible();
   await card.click();
   await page.getByRole("button", { name: "添加到现场", exact: true }).click();
   await expect(page.getByLabel("设备名称")).toHaveValue(/Conveyor_aankws/);
-  const cargoCard = page
-    .locator(".asset-card")
-    .filter({ hasText: "Engine block" });
+  const cargoCard = await assetModel(page, "Engine block");
   await cargoCard.click();
   await page.getByRole("button", { name: "添加到现场", exact: true }).click();
   await expect(page.getByLabel("设备名称")).toHaveValue(/Engine block/);
   await page
+    .getByRole("region", { name: "场景库" })
     .locator(".tree-select")
     .filter({ hasText: "Conveyor_aankws" })
     .click();

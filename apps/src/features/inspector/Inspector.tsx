@@ -41,6 +41,7 @@ export function Inspector() {
   const {
     project,
     selectedId,
+    selectedSceneDeviceId,
     modelErrors,
     modelNodes,
     inspectorTarget,
@@ -94,6 +95,46 @@ export function Inspector() {
             </>
           ) : (
             <p>正在读取设备定义…</p>
+          )}
+        </div>
+      </aside>
+    );
+  }
+  const scene = project?.scenePackages?.find((item) => item.id === selectedId);
+  const member = scene?.bundle.devices.find(
+    (item) => item.instance_id === selectedSceneDeviceId,
+  );
+  if (member && scene) {
+    const meta = member.contract.definition as { label?: string } | undefined;
+    const entries = Object.entries(member.parameters ?? {});
+    return (
+      <aside className="panel inspector">
+        <div className="panel-heading">
+          设备明细 <small>场景设备</small>
+        </div>
+        <div className="inspector-scroll">
+          <h3>
+            {String(
+              member.contract.display_name ?? meta?.label ?? member.instance_id,
+            )}
+          </h3>
+          <div className="id-line">
+            <span>实例 ID</span>
+            <code>{member.instance_id}</code>
+          </div>
+          <div className="id-line">
+            <span>所属场景</span>
+            <span>{scene.bundle.name}</span>
+          </div>
+          {entries.length > 0 && (
+            <Section title="设备参数" badge={String(entries.length)}>
+              {entries.map(([key, value]) => (
+                <div className="parameter-row" key={key}>
+                  <label>{key}</label>
+                  <code>{String(value)}</code>
+                </div>
+              ))}
+            </Section>
           )}
         </div>
       </aside>

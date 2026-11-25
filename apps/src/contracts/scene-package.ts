@@ -38,12 +38,20 @@ export const sortingStationSchema = z.object({
   capacity: z.number().int().positive(),
   status: z.literal("candidate"),
 });
+const sceneAssetSchema = z.object({
+  id: z.string().min(1),
+  type: z.string().min(1),
+  name: z.string().min(1),
+});
+export type SceneAsset = z.infer<typeof sceneAssetSchema>;
+
 export const sceneEntrySchema = z.object({
   id: z.string().regex(/^S\d{2}$/),
   name: z.string(),
   bundleUrl: sceneUrl,
   bundleSha256: hash,
   deviceCount: z.number().int().nonnegative(),
+  assets: z.array(sceneAssetSchema).optional(),
   nodeCount: z.number().int().nonnegative(),
   blockerCount: z.number().int().nonnegative(),
 });
@@ -180,8 +188,47 @@ export const sceneInstanceSchema = z.object({
   id: z.string().min(1),
   assetId: z.string().min(1),
   bundleHash: hash,
+  hiddenDeviceIds: z.array(z.string().min(1)).optional(),
   bundle: sceneBundleSchema,
 });
 export type SceneEntry = z.infer<typeof sceneEntrySchema>;
 export type SceneBundle = z.infer<typeof sceneBundleSchema>;
+
+/** Scene folders list authored instances and prototypes, before finite task expansion. */
+export function sceneBundleAssets(bundle: SceneBundle): SceneAsset[] {
+  return bundle.devices
+    .filter(
+      (d) =>
+        d.asset_kind !== "runtime_material" &&
+        d.asset_kind !== "runtime_carrier",
+    )
+    .map(({ instance_id: id, contract }) => {
+      const definition = contract.definition as { label?: string } | undefined;
+      return {
+        id,
+        type: String(
+          contract.device_type ?? contract.extension_id ?? "unknown",
+        ),
+        name: String(contract.display_name ?? definition?.label ?? id),
+      };
+    });
+}
+/** 将作者设备和原型的 GLB 网格对应到侧栏条目。生成物料共享原型的显示开关。 */
+export function sceneMeshOwners(bundle: SceneBundle) {
+  const owners = new Map<number, string>();
+  for (const device of bundle.devices) {
+    if (device.node_binding.status === "unresolved") continue;
+    const indices = device.node_binding.owned_mesh_indices;
+    if (!Array.isArray(indices)) continue;
+    const id =
+      typeof device.prototype_ref === "string"
+        ? device.prototype_ref
+        : device.instance_id;
+    for (const index of indices)
+      if (typeof index === "number" && Number.isInteger(index))
+        owners.set(index, id);
+  }
+  return owners;
+}
+
 export type ScenePackageInstance = z.infer<typeof sceneInstanceSchema>;
